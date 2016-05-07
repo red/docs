@@ -1,0 +1,18 @@
+{
+    "plugins": [ "versions" ],
+    "pluginsConfig": {
+        "versions": {
+            "gitbookConfigURL": "https://raw.githubusercontent.com/red/docs/master/book.json",
+            "options": [
+                {
+                    "value": "https://github.com/red/docs/tree/v0.6.0",
+                    "text": "Version 0.6.0",
+                    "selected": true
+                }, {
+                    "value": "https://github.com/red/docs/tree/master",
+                    "text": "Version 0.6.1"
+                }
+            ]
+        }
+    }
+}
