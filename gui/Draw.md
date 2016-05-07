@@ -29,7 +29,7 @@ Table of Content:
 
 Draw is a dialect (DSL) of Red language that provides a simple declarative way to specify 2D drawing operations. Such operations are expressed as lists of ordered commands (using blocks of values), which can be freely constructed and changed at run-time.
 
-Draw blocks can be rendered directly on top of an image using the `draw` function, or inside a View face using the `draw` facet (see [View documentation](https://github.com/red/red/wiki/Red-View-Graphic-System)).
+Draw blocks can be rendered directly on top of an image using the `draw` function, or inside a View face using the `draw` facet (see [View documentation](View.md)).
 
 # Commands
 
