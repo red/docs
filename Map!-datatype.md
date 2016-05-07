@@ -1,3 +1,5 @@
+# Map! datatype
+
 ###Abstract
 
 A map represents an associative array of key/value pairs. It provides a fast read access (using an hashtable internally) and a convenient, dedicated syntax. Unlike the `hash!` datatype, a map is not a series, so does not have a concept of offset or positions. Conceptually, the `map!` datatype lies between the `hash!` and `object!` datatypes.

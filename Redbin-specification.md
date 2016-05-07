@@ -1,3 +1,5 @@
+# Redbin format
+
 _Specification version 1_
 
 Redbin is a binary format that accurately represents Red values stored in memory, while enabling fast loading (avoiding the parsing and validation stage of the text representation format). Redbin format is largely inspired by [REBin](http://www.rebol.com/article/0044.html). Redbin can encode binding information for words and can handle cycles in any-block! values.

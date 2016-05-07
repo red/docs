@@ -1,4 +1,5 @@
-### Table of Contents
+# Coding Style Guide
+
 * [Introduction](#introduction)
 * [Line of code length](#line-of-code-length)
 * [Indentation](#indentation)
