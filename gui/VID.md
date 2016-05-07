@@ -1,3 +1,5 @@
+# Visual Interface Dialect
+
 Table of Contents:
 * [Overview](#overview)
 * [Code structure](#code-structure)
