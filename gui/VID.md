@@ -51,7 +51,7 @@ Table of Contents:
   
 # Overview
 
-VID stands for Visual Interface Dialect. Its purpose is to provide a simple dialect (DSL) for describing graphic user interfaces on top of the Red [View](https://github.com/red/red/wiki/Red-View-Graphic-System) engine.
+VID stands for Visual Interface Dialect. Its purpose is to provide a simple dialect (DSL) for describing graphic user interfaces on top of the Red [View](View.md) engine.
 
 VID allows you to specify each graphic component to display, giving the choice of different layout methods:
 * horizontal or vertical flowing
@@ -398,7 +398,7 @@ Sets the face's `data` facet to a list of values. Format of the list depends on 
     
 **Description**
 
-Sets the face's `draw` facet to a list of Draw dialect commands. See [Draw dialect](https://github.com/red/red/wiki/Draw-dialect) documentation for valid commands.
+Sets the face's `draw` facet to a list of Draw dialect commands. See [Draw dialect](Draw.md) documentation for valid commands.
 
 ***
 ### font
@@ -411,7 +411,7 @@ Sets the face's `draw` facet to a list of Draw dialect commands. See [Draw diale
     
 **Description**
 
-Sets the face's `font` facet to a new `font!` object. Font! object is described [here](https://github.com/red/red/wiki/Red-View-Graphic-System#font-object).
+Sets the face's `font` facet to a new `font!` object. Font! object is described [here](View.md#font-object).
 
 _Note_: It possible to use `font` along with other font-related settings, VID will merge them together, giving priority to the last one specified.
 
@@ -426,7 +426,7 @@ _Note_: It possible to use `font` along with other font-related settings, VID wi
     
 **Description**
 
-Sets the face's `para` facet to a new `para!` object. Para! object is described [here](https://github.com/red/red/wiki/Red-View-Graphic-System#para-object).
+Sets the face's `para` facet to a new `para!` object. Para! object is described [here](View.md#para-object).
 
 _Note_: It possible to use `para` along with other para-related settings, VID will merge them together, giving priority to the last one specified.
 
@@ -590,7 +590,7 @@ The created actor function full specification is:
 
     func [face [object!] event [event! none!]][...body...]
 
-The valid list of event names can be found [here](https://github.com/red/red/wiki/Red-View-Graphic-System#actors).
+The valid list of event names can be found [here](View.md#actors).
 
 When a block is passed without any actor name prefix, the default actor for the face type is created according to the definitions [here](https://github.com/red/red/blob/master/modules/view/styles.red).
 
