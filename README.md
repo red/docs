@@ -6,3 +6,6 @@ For more information about Red language, please visit http://red-lang.org
 
 For discussing about Red, please join our [chat room](https://gitter.im/red/red) on Gitter.
 
+
+
+[![Join the chat at https://gitter.im/red/docs](https://badges.gitter.im/red/docs.svg)](https://gitter.im/red/docs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
