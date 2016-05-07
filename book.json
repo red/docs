@@ -5,11 +5,11 @@
             "gitbookConfigURL": "https://raw.githubusercontent.com/red/docs/master/book.json",
             "options": [
                 {
-                    "value": "https://github.com/red/docs/tree/v0.6.0",
+                    "value": "https://dockimbel.gitbooks.io/red/content/v/v0.6.0/",
                     "text": "Version 0.6.0",
                     "selected": true
                 }, {
-                    "value": "https://github.com/red/docs/tree/master",
+                    "value": "https://www.gitbook.com/book/dockimbel/red/details",
                     "text": "Version 0.6.1"
                 }
             ]
