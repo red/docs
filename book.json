@@ -6,11 +6,11 @@
             "options": [
                 {
                     "value": "https://dockimbel.gitbooks.io/red/content/v/v0.6.0/",
-                    "text": "Version 0.6.0",
-                    "selected": true
+                    "text": "Version 0.6.0"
                 }, {
                     "value": "https://www.gitbook.com/book/dockimbel/red/details",
-                    "text": "Version 0.6.1"
+                    "text": "Version 0.6.1",
+                    "selected": true
                 }
             ]
         }
