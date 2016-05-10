@@ -567,6 +567,17 @@ Disables the face by default (the face will not process any event until it is en
 Sets the `selected` facet of the current face. Used mostly for lists to indicate which item is pre-selected.
 
 ***
+### focus
+
+**Syntax**
+
+    focus
+    
+**Description**
+
+Gives the focus to the current face when the window is displayed for the first time. Only one face can have the focus. If several `focus` options are used on different faces, only the last one will get the focus.
+
+***
 
 ## Datatypes
 
