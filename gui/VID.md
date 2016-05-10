@@ -554,6 +554,19 @@ Makes the face invisible by default.
 Disables the face by default (the face will not process any event until it is enabled).
 
 ***
+### select
+
+**Syntax**
+
+    select <index>
+    
+    <index> : index of selected item (integer!).
+    
+**Description**
+
+Sets the `selected` facet of the current face. Used mostly for lists to indicate which item is pre-selected.
+
+***
 
 ## Datatypes
 
