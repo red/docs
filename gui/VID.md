@@ -41,6 +41,8 @@
     * [all-over](#all-over)
     * [hidden](#hidden)
     * [disabled](#disabled)
+    * [select](#select)
+    * [focus](#focus)
   * [Datatypes](#datatypes)
   * [Actors](#actors)
 * [Panels](#panels)
