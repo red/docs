@@ -38,7 +38,7 @@ Commands can be drawing instructions or settings for the drawing instructions. W
 
 Most drawing commands require coordinates to be specified. The 2D coordinate system used is:
 * x axis: increasing from left to right of the display.
-* y axis: increasing from up to bottom of the display.
+* y axis: increasing from top to bottom of the display.
 
 Some drawing commands require lengths to be specified. The length required is number of pixels.
 
@@ -320,7 +320,7 @@ Sets the new line's ending cap mode for line operations. Following values are ac
 
 Turns on/off the anti-aliasing mode for following Draw commands.
 
-_Note_: Anti-aliasing gives nicer visual rendering, but degrades performances.
+_Note_: Anti-aliasing gives nicer visual rendering, but degrades performance.
 
 # Default values
 
