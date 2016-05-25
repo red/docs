@@ -289,7 +289,7 @@ Sets the new line joining mode for line operations. Following values are accepte
 
 ![](images/line-join.png)
 
-_Note_: `miter-bevel` mode selects automatically one or the other joining mode depending on the miter length (See [this](https://msdn.microsoft.com/en-us/library/windows/desktop/ms534148%28v=vs.85%29.aspx) for detailed explanation).
+_Note_: `miter-bevel` mode selects automatically one or the other joining mode depending on the miter length (See [this page](https://msdn.microsoft.com/en-us/library/windows/desktop/ms534148%28v=vs.85%29.aspx) for detailed explanation).
 
 ## Line-cap
 
