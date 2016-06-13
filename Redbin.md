@@ -114,6 +114,7 @@ Index:
 * [Tuple!](#tuple)
 * [Map!](#map)
 * [Binary!](#binary)
+* [Time!](#time)
 * [Reference!](#reference)
 
 ### Padding
@@ -438,7 +439,7 @@ Compact: TBD
 
 header/type=38
 ```
-The optional padding field is added to properly align the `value` field offset to a 64-bit value.
+Percent value is stored as a 64-bit float. The optional padding field is added to properly align the `value` field offset to a 64-bit value.
 
 ### Tuple!
 ```
@@ -465,6 +466,15 @@ Compact: TBD
 header/type=41
 ```
 Same encoding rules as block!.
+
+### Time!
+```
+Default: [padding=0 (4),] header (4), value (8)
+Compact: TBD
+
+header/type=44
+```
+Time value is stored as a 64-bit float. The optional padding field is added to properly align the `value` field offset to a 64-bit value.
 
 ### Reference!
 ```
