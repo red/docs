@@ -206,6 +206,20 @@ Notes:
 
 The `text` type is a static label to be displayed, with no default input handler.
 
+Facet | Description
+----- | -----------
+`type`	| `'text`
+`text`	| Label text.
+`data`	| Value to display as text.
+`options` | Supported fields: `default`.
+
+`data` facet is synchronized in real-time with `text` field using the following conversion rules:
+* when `text` changes, `data` is set to the `load`-ed `text` value, or none, or to `options/default` if defined.
+* when `data` changes, `text` is set to the `form`-ed `data` value.
+
+`options` facet accepts following properties:
+* `default`: can be set to any value, it will be used by the `data` facet if converting `text` returns `none`, like for non-loadable strings.
+
 ***
 
 #### Button
@@ -266,8 +280,17 @@ Facet | Description
 ----- | -----------
 `type`	| `'field`
 `text`	| Input text, read/write value.
+`data`	| Value to display as text.
+`options` | Supported fields: `default`.
 
-Notes:
+`data` facet is synchronized in real-time with `text` field using the following conversion rules:
+* when `text` changes, `data` is set to the `load`-ed `text` value, or none, or to `options/default` if defined.
+* when `data` changes, `text` is set to the `form`-ed `data` value.
+
+`options` facet accepts following properties:
+* `default`: can be set to any value, it will be used by the `data` facet if converting `text` returns `none`, like for non-loadable strings.
+
+Note:
 * `selected` will be used in future to control highlighted part of the input text.
 
 Event type | Handler | Description
