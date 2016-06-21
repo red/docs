@@ -43,6 +43,7 @@
     * [disabled](#disabled)
     * [select](#select)
     * [focus](#focus)
+    * [default](#default)
   * [Datatypes](#datatypes)
   * [Actors](#actors)
 * [Panels](#panels)
@@ -578,6 +579,21 @@ Sets the `selected` facet of the current face. Used mostly for lists to indicate
 **Description**
 
 Gives the focus to the current face when the window is displayed for the first time. Only one face can have the focus. If several `focus` options are used on different faces, only the last one will get the focus.
+
+***
+### default
+
+**Syntax**
+
+    default <value>
+    
+    <value>: a default value for `data` facet (any-type!).
+    
+**Description**
+
+Defines a default value for `data` facet when the conversion of `text` facet returns `none`. That default value is stored in `options` facet, as a key/value pair.
+
+Note: currently used only by `text` and `field` face types.
 
 ***
 
