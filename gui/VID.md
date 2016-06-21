@@ -605,11 +605,9 @@ An actor can be hooked to a face by specifying a literal block value or an actor
 
     <actor>
     on-<event> <actor>
-    on-<event> <actor> <extern>
     
-    <actor>  : actor's body block (block!).
-    <event>  : valid event name (word!).
-    <extern> : optional list of external words (block!).
+    <actor> : actor's body block (block!).
+    <event> : valid event name (word!). 
 
 **Description**
 
@@ -617,9 +615,7 @@ It is possible to specify actors in a simplified way by providing just the body 
 
 The created actor function full specification is:
 
-    function [face [object!] event [event! none!]][...body...]
-    
-Note that `function` constructor is used, capturing all set-words in body block. If external words are modified in the body block, they need to be listed in a separate *external* block.
+    func [face [object!] event [event! none!]][...body...]
 
 The valid list of event names can be found [here](View.md#actors).
 
