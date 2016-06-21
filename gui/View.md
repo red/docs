@@ -262,8 +262,6 @@ Event type | Handler | Description
 
 This type represents a single-line input field.
 
-
-
 Facet | Description
 ----- | -----------
 `type`	| `'field`
@@ -272,22 +270,17 @@ Facet | Description
 Notes:
 * `selected` will be used in future to control highlighted part of the input text.
 
-
-
 Event type | Handler | Description
 ---------- | ------- | -----------
 `enter` | `on-enter` | Occurs each time the Enter key is pressed down in the field.
 `change` | `on-change` | Occurs each time an input is made in the field.
 `key` | `on-key` | Occurs each time a key is pressed down in the field.
 
-
 ***
 
 #### Area
 
 This type represents a multi-line input field.
-
-
 
 Facet | Description
 ----- | -----------
@@ -297,8 +290,6 @@ Facet | Description
 Notes:
 * `selected` will be used in future to control highlighted part of the input text.
 * A vertical scroll-bar can appear if all lines of text cannot be visible in the area (might be controlled by a `flags` option in the future).
-
-
 
 Event type | Handler | Description
 ---------- | ------- | -----------
@@ -311,15 +302,11 @@ Event type | Handler | Description
 
 This type represents a vertical list of text strings, displayed in a fixed frame. A vertical scrollbar appears automatically if the content does not fit the frame.
 
-
-
 Facet | Description
 ----- | -----------
 `type`	| `'text-list`
 `data`	| List of strings to display (block! hash!).
 `selected` | Index of selected string or none value if no selection (read/write).
-
-
 
 Event type | Handler | Description
 ---------- | ------- | -----------
@@ -335,8 +322,6 @@ Notes:
 
 This type represents a vertical list of text strings, displayed in a foldable frame. A vertical scrollbar appears automatically if the content does not fit the frame.
 
-
-
 Facet | Description
 ----- | -----------
 `type`	| `'drop-list`
@@ -344,8 +329,6 @@ Facet | Description
 `selected` | Index of selected string or none value if no selection (read/write).
 
 The `data` facet accepts arbitrary values, but only string values will be added to the list and displayed. Extra values of non-string datatype can be used to create associative arrays, using strings as keys. The `selected` facet is a 1-based integer index indicating the position of the selected string in the list, and not in the `data` facet.
-
-
 
 Event type | Handler | Description
 ---------- | ------- | -----------
@@ -361,8 +344,6 @@ Notes:
 
 This type represents an edit field with a vertical list of text strings displayed in a foldable frame. A vertical scrollbar appears automatically if the content does not fit the frame.
 
-
-
 Facet | Description
 ----- | -----------
 `type`	| `'drop-down`
@@ -370,8 +351,6 @@ Facet | Description
 `selected` | Index of selected string or none value if no selection (read/write).
 
 The `data` facet accepts arbitrary values, but only string values will be added to the list and displayed. Extra values of non-string datatype can be used to create associative arrays, using strings as keys. The `selected` facet is a 1-based integer index indicating the position of the selected string in the list, and not in the `data` facet.
-
-
 
 Event type | Handler | Description
 ---------- | ------- | -----------
