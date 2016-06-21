@@ -240,7 +240,7 @@ Selects the font to be used for text printing. The font object is a clone of `fo
 
     pen <color>
     
-    <color> : new color to use for drawing (tuple! word!).
+    <color> : new color to use for drawing or `off` for no color (tuple! word!).
 
 **Description**
 
@@ -251,13 +251,32 @@ Selects the color to be used for line drawing operations.
 **Syntax**
 
     fill-pen <color>
+    fill-pen <grad-type> <grad-offset> <grad-start-rng> <grad-stop-rng>
+             <grad-angle> <grad-scale-x> <grad-scale-y> <grad-color> <offset>
+             <grad-color> <offset> ...
     fill-pen off
     
-    <color> : new color to use for filling (tuple! word!).
+    <color>          : new color to use for filling (tuple! word!).
+    <grad-type>      : gradient type (word!).
+    <grad-offset>    : offset from where should the gradient be rendered (pair!).
+    <grad-start-rng> : beginning of the gradient range (integer!).
+    <grad-stop-rng>  : end of the gradient range (integer!).
+    <grad-angle>     : (optional) rotation of the gradient in degrees (float!).
+    <grad-scale-x>   : (optional) scale X factor (float!).
+    <grad-scale-y>   : (optional) scale Y factor (float!).
+    <grad-color>     : color to use for gradient filling (tuple! word!).
+    <offset>         : (optional) offset of gradient color (float!).
 
 **Description**
 
-Selects the color to be used for filling operations. All closed shapes will get filled by the selected color until the fill pen is set to `off`.
+Selects the color or color gradient to be used for filling operations. All closed shapes will get filled by the selected color until the fill pen is set to `off`.
+
+Sets the gradient type, the following values are accepted:
+* `linear`
+* `radial`
+* `diamond`
+
+_Note_: the gradient can be defined by up to 256 colors.
 
 ## Line-width
 

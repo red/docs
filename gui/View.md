@@ -79,6 +79,7 @@ Facet | Datatype | Mandatory? | Applicability | Description
 **parent**	| object! 		| no	|  all	| Back-reference to parent face (if any).
 **pane**	| block! 		| no	|  some	| List of child face(s) displayed inside the face.
 **state**	| block! 		| no	|  all	| Internal face state info *(used by View engine only)*.
+**rate**	| integer! float! | no	|  all	| Face's timer. An integer sets a frequency, a float sets a duration, none stops it.
 **edge**	| object! 		| no	|  all	| *(reserved for future use)*
 **para**	| object! 		| no	|  all	| Para object reference for text positioning.
 **font**	| object! 		| no	|  all	| Font object reference for setting text facet's font properties.
@@ -204,7 +205,21 @@ Notes:
 
 #### Text
 
-The `text` type is a static label to be displayed, with no default input handler.
+The `text` type is a static label to be displayed.
+
+Facet | Description
+----- | -----------
+`type`	| `'text`
+`text`	| Label text.
+`data`	| Value to display as text.
+`options`	| Supported fields: `default`.
+
+`data` facet is synchronized in real-time with `text` facet using the following conversion rules:
+* when `text` changes, `data` is set to the `load`-ed `text` value, or `none`, or to `options/default` if defined.
+* when `data` changes, `text` is set to the `form`-ed `data` value.
+
+`options` facet accepts following properties:
+* `default`: can be set to any value, it will be used by the `data` facet if converting `text` returns `none`, like for non-loadable strings.
 
 ***
 
@@ -262,17 +277,22 @@ Event type | Handler | Description
 
 This type represents a single-line input field.
 
-
-
 Facet | Description
 ----- | -----------
 `type`	| `'field`
 `text`	| Input text, read/write value.
+`data`	| Value to display as text.
+`options`	| Supported fields: `default`.
 
-Notes:
+`data` facet is synchronized in real-time with `text` facet using the following conversion rules:
+* when `text` changes, `data` is set to the `load`-ed `text` value, or `none`, or to `options/default` if defined.
+* when `data` changes, `text` is set to the `form`-ed `data` value.
+
+`options` facet accepts following properties:
+* `default`: can be set to any value, it will be used by the `data` facet if converting `text` returns `none`, like for non-loadable strings.
+
+Note:
 * `selected` will be used in future to control highlighted part of the input text.
-
-
 
 Event type | Handler | Description
 ---------- | ------- | -----------
@@ -280,14 +300,11 @@ Event type | Handler | Description
 `change` | `on-change` | Occurs each time an input is made in the field.
 `key` | `on-key` | Occurs each time a key is pressed down in the field.
 
-
 ***
 
 #### Area
 
 This type represents a multi-line input field.
-
-
 
 Facet | Description
 ----- | -----------
@@ -297,8 +314,6 @@ Facet | Description
 Notes:
 * `selected` will be used in future to control highlighted part of the input text.
 * A vertical scroll-bar can appear if all lines of text cannot be visible in the area (might be controlled by a `flags` option in the future).
-
-
 
 Event type | Handler | Description
 ---------- | ------- | -----------
@@ -311,15 +326,11 @@ Event type | Handler | Description
 
 This type represents a vertical list of text strings, displayed in a fixed frame. A vertical scrollbar appears automatically if the content does not fit the frame.
 
-
-
 Facet | Description
 ----- | -----------
 `type`	| `'text-list`
 `data`	| List of strings to display (block! hash!).
 `selected` | Index of selected string or none value if no selection (read/write).
-
-
 
 Event type | Handler | Description
 ---------- | ------- | -----------
@@ -335,8 +346,6 @@ Notes:
 
 This type represents a vertical list of text strings, displayed in a foldable frame. A vertical scrollbar appears automatically if the content does not fit the frame.
 
-
-
 Facet | Description
 ----- | -----------
 `type`	| `'drop-list`
@@ -344,8 +353,6 @@ Facet | Description
 `selected` | Index of selected string or none value if no selection (read/write).
 
 The `data` facet accepts arbitrary values, but only string values will be added to the list and displayed. Extra values of non-string datatype can be used to create associative arrays, using strings as keys. The `selected` facet is a 1-based integer index indicating the position of the selected string in the list, and not in the `data` facet.
-
-
 
 Event type | Handler | Description
 ---------- | ------- | -----------
@@ -361,8 +368,6 @@ Notes:
 
 This type represents an edit field with a vertical list of text strings displayed in a foldable frame. A vertical scrollbar appears automatically if the content does not fit the frame.
 
-
-
 Facet | Description
 ----- | -----------
 `type`	| `'drop-down`
@@ -370,8 +375,6 @@ Facet | Description
 `selected` | Index of selected string or none value if no selection (read/write).
 
 The `data` facet accepts arbitrary values, but only string values will be added to the list and displayed. Extra values of non-string datatype can be used to create associative arrays, using strings as keys. The `selected` facet is a 1-based integer index indicating the position of the selected string in the list, and not in the `data` facet.
-
-
 
 Event type | Handler | Description
 ---------- | ------- | -----------
@@ -619,7 +622,7 @@ Name | Input type | Cause
 **aux&#8209;up**	| mouse | Auxiliary mouse button released.
 **drag&#8209;start**	| mouse | A face dragging starts.
 **drag**		| mouse | A face is being dragged.
-**drop**		| mouse | A dragged face has been dropped.			
+**drop**		| mouse | A dragged face has been dropped.
 **click**		| mouse | Left mouse click (button widgets only).
 **dbl&#8209;click**	| mouse | Left mouse double-click.
 **over**		| mouse | Mouse cursor passing over a face. This event is produced once when the mouse enters the face and once when it exits. If `flags` facet contains **all&#8209;over** flag, then all intermediary events are produced too.
@@ -636,10 +639,13 @@ Name | Input type | Cause
 **key**			| keyboard | A character was input or a special key has been pressed (except control, shift and menu keys).
 **key&#8209;up**	| keyboard | A pressed key is released.
 **enter**		| keyboard | Enter key is pressed down.
+**focus**		| any	| A face just got the focus.
+**unfocus**		| any	| A face just lost the focus.
 **select**		| any 	| A selection is made in a face with multiple choices.
 **change**		| any 	| A change occurred in a face accepting user inputs (text input or selection in a list).
 **menu**		| any 	| A menu entry is picked.
 **close**		| any 	| A window is closing.
+**time**		| timer | The delay set by face's `rate` facet expired.
 
 Notes:
 * touch events are not available for Windows XP.
@@ -654,6 +660,7 @@ Field | Returned value
 ----- | -----
 `type`		| Event type (word!).
 `face`		| Face object where the event occurred (object!).
+`window`	| Window face where the event occured (object!).
 `offset`	| Offset of mouse cursor relative to the face object when the event occurred (pair!). For gestures events, returns the center point coordinates.
 `key`		| Key pressed (char! word!).
 `picked`	| New item selected in a face (integer! percent!). For `menu` event, it returns the corresponding menu ID (word!). For zooming gesture, it returns a percent value representing the relative increase/decrease. For other gestures, its value is system-dependent for now (Windows: `ullArguments` field from [GESTUREINFO](https://msdn.microsoft.com/en-us/library/windows/desktop/dd353232(v=vs.85).aspx)).
