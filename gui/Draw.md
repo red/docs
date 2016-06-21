@@ -240,7 +240,7 @@ Selects the font to be used for text printing. The font object is a clone of `fo
 
     pen <color>
     
-    <color> : new color to use for drawing (tuple! word!).
+    <color> : new color to use for drawing or `off` for no color (tuple! word!).
 
 **Description**
 
