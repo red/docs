@@ -621,7 +621,7 @@ Name | Input type | Cause
 **aux&#8209;up**	| mouse | Auxiliary mouse button released.
 **drag&#8209;start**	| mouse | A face dragging starts.
 **drag**		| mouse | A face is being dragged.
-**drop**		| mouse | A dragged face has been dropped.			
+**drop**		| mouse | A dragged face has been dropped.
 **click**		| mouse | Left mouse click (button widgets only).
 **dbl&#8209;click**	| mouse | Left mouse double-click.
 **over**		| mouse | Mouse cursor passing over a face. This event is produced once when the mouse enters the face and once when it exits. If `flags` facet contains **all&#8209;over** flag, then all intermediary events are produced too.
@@ -638,6 +638,8 @@ Name | Input type | Cause
 **key**			| keyboard | A character was input or a special key has been pressed (except control, shift and menu keys).
 **key&#8209;up**	| keyboard | A pressed key is released.
 **enter**		| keyboard | Enter key is pressed down.
+**focus**		| any	| A face just got the focus.
+**unfocus**		| any	| A face just lost the focus.
 **select**		| any 	| A selection is made in a face with multiple choices.
 **change**		| any 	| A change occurred in a face accepting user inputs (text input or selection in a list).
 **menu**		| any 	| A menu entry is picked.
