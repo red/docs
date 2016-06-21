@@ -204,16 +204,16 @@ Notes:
 
 #### Text
 
-The `text` type is a static label to be displayed, with no default input handler.
+The `text` type is a static label to be displayed.
 
 Facet | Description
 ----- | -----------
 `type`	| `'text`
 `text`	| Label text.
 `data`	| Value to display as text.
-`options` | Supported fields: `default`.
+`options`	| Supported fields: `default`.
 
-`data` facet is synchronized in real-time with `text` field using the following conversion rules:
+`data` facet is synchronized in real-time with `text` facet using the following conversion rules:
 * when `text` changes, `data` is set to the `load`-ed `text` value, or none, or to `options/default` if defined.
 * when `data` changes, `text` is set to the `form`-ed `data` value.
 
@@ -281,9 +281,9 @@ Facet | Description
 `type`	| `'field`
 `text`	| Input text, read/write value.
 `data`	| Value to display as text.
-`options` | Supported fields: `default`.
+`options`	| Supported fields: `default`.
 
-`data` facet is synchronized in real-time with `text` field using the following conversion rules:
+`data` facet is synchronized in real-time with `text` facet using the following conversion rules:
 * when `text` changes, `data` is set to the `load`-ed `text` value, or none, or to `options/default` if defined.
 * when `data` changes, `text` is set to the `form`-ed `data` value.
 
