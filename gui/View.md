@@ -644,6 +644,7 @@ Name | Input type | Cause
 **change**		| any 	| A change occurred in a face accepting user inputs (text input or selection in a list).
 **menu**		| any 	| A menu entry is picked.
 **close**		| any 	| A window is closing.
+**time**		| timer | The delay set by a timer expired.
 
 Notes:
 * touch events are not available for Windows XP.
