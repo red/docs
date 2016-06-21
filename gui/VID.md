@@ -237,7 +237,7 @@ Modifies the layout current position by a relative offset. All the following fac
     
 **Description**
 
-Evaluates a block of regular Red code, for last-minute initialization needs.
+Evaluates a block of regular Red code, for last-minute initialization needs. `self` keyword can be used to refer to the container face (window or panel).
 
 ***
 
