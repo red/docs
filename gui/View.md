@@ -214,7 +214,7 @@ Facet | Description
 `options`	| Supported fields: `default`.
 
 `data` facet is synchronized in real-time with `text` facet using the following conversion rules:
-* when `text` changes, `data` is set to the `load`-ed `text` value, or none, or to `options/default` if defined.
+* when `text` changes, `data` is set to the `load`-ed `text` value, or `none`, or to `options/default` if defined.
 * when `data` changes, `text` is set to the `form`-ed `data` value.
 
 `options` facet accepts following properties:
@@ -284,7 +284,7 @@ Facet | Description
 `options`	| Supported fields: `default`.
 
 `data` facet is synchronized in real-time with `text` facet using the following conversion rules:
-* when `text` changes, `data` is set to the `load`-ed `text` value, or none, or to `options/default` if defined.
+* when `text` changes, `data` is set to the `load`-ed `text` value, or `none`, or to `options/default` if defined.
 * when `data` changes, `text` is set to the `form`-ed `data` value.
 
 `options` facet accepts following properties:
