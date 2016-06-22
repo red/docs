@@ -43,6 +43,7 @@
     * [disabled](#disabled)
     * [select](#select)
     * [focus](#focus)
+    * [rate](#rate)
     * [default](#default)
   * [Datatypes](#datatypes)
   * [Actors](#actors)
@@ -579,6 +580,19 @@ Sets the `selected` facet of the current face. Used mostly for lists to indicate
 **Description**
 
 Gives the focus to the current face when the window is displayed for the first time. Only one face can have the focus. If several `focus` options are used on different faces, only the last one will get the focus.
+
+***
+### rate
+
+**Syntax**
+
+    rate <value>
+    
+    <value>: duration or frequency (integer! time!).
+    
+**Description**
+
+Sets a timer for the face from a duration (time!) or a frequency (integer!). At each timer's tick, a `time` event will be generated for that face.
 
 ***
 ### default

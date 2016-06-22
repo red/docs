@@ -79,7 +79,7 @@ Facet | Datatype | Mandatory? | Applicability | Description
 **parent**	| object! 		| no	|  all	| Back-reference to parent face (if any).
 **pane**	| block! 		| no	|  some	| List of child face(s) displayed inside the face.
 **state**	| block! 		| no	|  all	| Internal face state info *(used by View engine only)*.
-**rate**	| integer! float! | no	|  all	| Face's timer. An integer sets a frequency, a float sets a duration, none stops it.
+**rate**	| integer! time! | no	|  all	| Face's timer. An integer sets a frequency, a time sets a duration, none stops it.
 **edge**	| object! 		| no	|  all	| *(reserved for future use)*
 **para**	| object! 		| no	|  all	| Para object reference for text positioning.
 **font**	| object! 		| no	|  all	| Font object reference for setting text facet's font properties.
