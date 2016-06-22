@@ -622,7 +622,7 @@ An actor can be hooked to a face by specifying a literal block value or an actor
     <actor>
     on-<event> <actor>
     
-    <actor> : actor's body block (block!).
+    <actor> : actor's body block or actor reference (block! get-word!).
     <event> : valid event name (word!). 
 
 **Description**
@@ -635,7 +635,9 @@ The created actor function full specification is:
 
 The valid list of event names can be found [here](View.md#actors).
 
-When a block is passed without any actor name prefix, the default actor for the face type is created according to the definitions [here](https://github.com/red/red/blob/master/modules/view/styles.red).
+When a block or a get-word is passed without any actor name prefix, the default actor for the face type is created according to the definitions [here](https://github.com/red/red/blob/master/modules/view/styles.red).
+
+The actor can also be defined outside of VID and a reference to it be passed as a get-word argument to <event>.
 
 # Panels
 
