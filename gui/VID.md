@@ -43,6 +43,7 @@
     * [disabled](#disabled)
     * [select](#select)
     * [focus](#focus)
+    * [rate](#rate)
     * [default](#default)
   * [Datatypes](#datatypes)
   * [Actors](#actors)
@@ -581,6 +582,19 @@ Sets the `selected` facet of the current face. Used mostly for lists to indicate
 Gives the focus to the current face when the window is displayed for the first time. Only one face can have the focus. If several `focus` options are used on different faces, only the last one will get the focus.
 
 ***
+### rate
+
+**Syntax**
+
+    rate <value>
+    
+    <value>: duration or frequency (integer! time!).
+    
+**Description**
+
+Sets a timer for the face from a duration (time!) or a frequency (integer!). At each timer's tick, a `time` event will be generated for that face.
+
+***
 ### default
 
 **Syntax**
@@ -622,7 +636,7 @@ An actor can be hooked to a face by specifying a literal block value or an actor
     <actor>
     on-<event> <actor>
     
-    <actor> : actor's body block (block!).
+    <actor> : actor's body block or actor reference (block! get-word!).
     <event> : valid event name (word!). 
 
 **Description**
@@ -635,7 +649,9 @@ The created actor function full specification is:
 
 The valid list of event names can be found [here](View.md#actors).
 
-When a block is passed without any actor name prefix, the default actor for the face type is created according to the definitions [here](https://github.com/red/red/blob/master/modules/view/styles.red).
+When a block or a get-word is passed without any actor name prefix, the default actor for the face type is created according to the definitions [here](https://github.com/red/red/blob/master/modules/view/styles.red).
+
+The actor can also be defined outside of VID and a reference to it be passed as a get-word argument to <event>.
 
 # Panels
 

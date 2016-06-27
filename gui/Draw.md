@@ -107,9 +107,9 @@ Draws a polygon using the provided vertices. The last point does not need to be 
     circle <center> <radius-x> <radius-y>
     
     <center>   : coordinates of the circle's center (pair!).
-    <radius>   : radius of the circle (integer!).
-    <radius-x> : (ellipse mode) radius of the circle along X axis (integer!).
-    <radius-y> : (ellipse mode) radius of the circle along Y axis (integer!).
+    <radius>   : radius of the circle (integer! float!).
+    <radius-x> : (ellipse mode) radius of the circle along X axis (integer! float!).
+    <radius-y> : (ellipse mode) radius of the circle along Y axis (integer! float!).
     
 **Description**
 
