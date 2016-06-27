@@ -18,13 +18,13 @@
 
 # Concept
 
-Since version 0.6.0, Red has introduced support for "reactive programming" which purpose is to reduce size and complexity of Red programs further. Red's reactive model relies on dataflow and object events, constructing a directed graph, allowing propagation of changes in objects, following the "push" model. More specifically, Red implements the [object-oriented reactive programming](https://en.wikipedia.org/wiki/Reactive_programming#Object-oriented) reactive model, where only object fields can be the source of change.
+Since version 0.6.0, Red has introduced support for "reactive programming" which purpose is to reduce size and complexity of Red programs further. Red's reactive model relies on dataflow and object events, constructing a directed graph, allowing propagation of changes in objects, following the "push" model. More specifically, Red implements the [object-oriented reactive programming](https://en.wikipedia.org/wiki/Reactive_programming#Object-oriented) model, where only object fields can be the source of change.
 
 If the description seems a bit abstract, the reactive API and usage are meant to be simple and practical.
 
 <insert graphic here>
 
-This graphic shows how two objects can be interconnected using a "reaction", a block of code which contains two source objects and a target object.
+This graphic shows how two objects can be interconnected using a *reaction*, a block of code which contains two source objects and a target object.
 
 Once set, reaction are run asynchronously, each time one of the source field(s) value is changed. This relation continues to exists until the reaction is explicitly destroyed, using `react/unlink` or `clear-reactions`.
 
@@ -103,9 +103,7 @@ Note: this operator creates reactive formula which are very close to Excel's for
     
     a/total
     == 3
-    
     a/x: 100
-    
     a/total
     == 102
 
