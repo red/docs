@@ -1,7 +1,10 @@
 # Reactive Programming
 
 * [Concept](#concept)
-* [Glossary](#glossary)
+	* [Glossary](#glossary)
+	* [Static Relations](#static-relations)
+	* [Dynamic Relations](#dynamic-relations)
+	* [Inner Relations](#inner-relations)
 * [API](#api)
 	* [react](#react)
 	* [is](#is)
@@ -11,9 +14,6 @@
 * [Reactive Objects](#reactive-objects)
 	* [reactor!](#reactor)
 	* [deep-reactor!](#deep-reactor)
-* [Static Relations](#static-relations)
-* [Dynamic Relations](#dynamic-relations)
-* [Inner Relations](#inner-relations)
 
 # Concept
 
@@ -32,7 +32,7 @@ Notes:
 * This is not a [FRP](https://en.wikipedia.org/wiki/Functional_reactive_programming) framework, though event streams could be supported in the future.
 * The Red/View GUI engine relies on *face!* objects in order to operate graphic objects. Faces are reactors, and they can be used for setting reactive relations between them or with non-reactor objects.
 
-# Glossary
+## Glossary
 
 Expression | Definition
 ---------- | ----------
@@ -44,6 +44,15 @@ Expression | Definition
 **reactive formula** | A reaction which returns the last expression result on evaluation.
 **reactive object** | An object which fields can be used as reactive sources.
 **reactor**	 | Alias for "reactive object".
+
+## Static Relations
+
+
+## Dynamic Relations
+
+
+## Inner Relations
+
 
 # API
 
@@ -178,11 +187,3 @@ Note: The body block can eventually contain `is` expressions.
 Constructs a new reactive object from the body block. Setting a field to a new value or changing a referred series deeply can trigger reactions (if defined for that field).
 
 Note: The body block can eventually contain `is` expressions.
-
-# Static Relations
-
-
-# Dynamic Relations
-
-
-# Inner Relations
