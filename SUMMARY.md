@@ -6,7 +6,7 @@
     * [View engine](gui/View.md)
     * [VID dialect](gui/VID.md)
     * [Draw dialect](gui/Draw.md)
-    * [Reactive GUI programming](README.md)
+* [Reactive Programming](reactivity.md)
 * [Redbin format specification](Redbin.md)
 * [Ownership system](README.md)
 * [Coding Style Guide](style-guide.md)
