@@ -27,6 +27,8 @@ This graphic shows how two objects can be interconnected using a *reaction*, a b
 
 Once set, reaction are run asynchronously, each time one of the source field(s) value is changed. This relation continues to exists until the reaction is explicitly destroyed, using `react/unlink` or `clear-reactions`.
 
+Only the source objects in a reactive expression need to be a reactor, the target can be a simple object. If the target is also a reactor, then reactions can be chained and a graph of relations can then be constructed.
+
 Notes: 
 * Red's reactive support could be extended in the future to support also a "pull" model.
 * This is not a [FRP](https://en.wikipedia.org/wiki/Functional_reactive_programming) framework, though event streams could be supported in the future.
@@ -39,7 +41,7 @@ Expression | Definition
 **reactive programming** | A programming paradigm, subset of dataflow programming, relying on events pushing changes.
 **reaction**	| A block of code which contains one or more reactive expressions.
 **reactive expression** | An expression which references at least one reactive source.
-**reactive relation** | A relation between two or more objects implemented as using reactive expression(s).
+**reactive relation** | A relation between two or more objects implemented using reactive expression(s).
 **reactive source** | A path! value referring to an reactive object field.
 **reactive formula** | A reaction which returns the last expression result on evaluation.
 **reactive object** | An object which fields can be used as reactive sources.
@@ -47,11 +49,41 @@ Expression | Definition
 
 ## Static Relations
 
+The simplest form of reactions is a so-called "static relation" created between *named* objects. It is *static* because it statically links objects, it uniquely applies to its source reactors, it cannot be re-used for other objects.
+
+**Example 1**
+	view [
+		sld: slider return
+		b: base react [b/color/1: to integer! 255 * sld/data]
+	]
+
+This example sets a reactive relation between a slider named `s` and a base face named `b`. When the slider is moved, the base face background red component is changed accordingly. The reactive expression cannot be re-used for a different set of faces. This is the simplest form of reactive behavior you can set for graphic objects in Red/View.
+
+**Example 2**
+    vec: make reactor! [x: 0 y: 10]
+    box: object [length: is [square-root (vec/x ** 2) + (vec/y ** 2)]]
+
+This other example is not related to GUI, it calculates the length of a vector defined by `vec/x` and `vec/y` using a reactive expression. Once again, the source object is statically specified, using its name (`vec`) in the reactive expression.
 
 ## Dynamic Relations
 
+Static relations are very simple to specify, but they don't scale well if you need to provide the same reaction to a great number of reactors, or if the reactors are anonymous (reminder: all objects are anonymous by default). In such case, the reaction needs to be specified using a *function* and `react/link` form.
+
+**Example**
+
+
 
 ## Inner Relations
+
+**Example 1**
+
+**Example 2**
+	vec: make reactor! [
+		x: 0
+		y: 10
+		length: is [square-root (x ** 2) + (y ** 2)]
+	]
+
 
 
 # API
