@@ -11,7 +11,6 @@
 * [Reactive Objects](#reactive-objects)
 	* [reactor!](#reactor)
 	* [deep-reactor!](#deep-reactor)
-* [The Face tree](#the-face-tree)
 * [Static Relations](#static-relations)
 * [Dynamic Relations](#dynamic-relations)
 * [Inner Relations](#inner-relations)
