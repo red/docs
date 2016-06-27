@@ -3,11 +3,11 @@
 * [Concept](#concept)
 * [Glossary](#glossary)
 * [API](#api)
-	* [React](#react)
-	* [Is](#is)
-	* [React?](#react-)
-	* [Clear-reactions](#clear-reactions)
-	* [Dump-reactions](#dump-reactions)
+	* [react](#react)
+	* [is](#is)
+	* [react?](#react-)
+	* [clear-reactions](#clear-reactions)
+	* [dump-reactions](#dump-reactions)
 * [Reactive Objects](#reactive-objects)
 	* [reactor!](#reactor)
 	* [deep-reactor!](#deep-reactor)
@@ -48,7 +48,7 @@ Expression | Definition
 
 # API
 
-## React
+## react
 
 **Syntax**
 
@@ -84,7 +84,7 @@ Removing a reaction is achieved by using `/unlink` refinement with a `<source>` 
 
 `/unlink` takes a reaction block or function as argument, so only relations created from *that* reaction will be removed.
 
-## Is
+## is
 
 **Syntax**
 
@@ -109,7 +109,7 @@ Note: this operator creates reactive formula which are very close to Excel's for
     a/total
     == 102
 
-## React?
+## react?
 
 **Syntax**
 
@@ -124,7 +124,7 @@ Note: this operator creates reactive formula which are very close to Excel's for
 
 Checks if an object's field is a reactive source. If it is true, then the first reaction found where that object's field is present will be returned, otherwise `none` is returned.
 
-## Clear-reactions
+## clear-reactions
 
 **Syntax**
 
@@ -134,7 +134,7 @@ Checks if an object's field is a reactive source. If it is true, then the first 
 
 Removes all defined reactions unconditionally.
 
-## Dump-reactions
+## dump-reactions
 
 **Syntax**
 
