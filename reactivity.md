@@ -24,13 +24,13 @@ If the description seems a bit abstract, the reactive API and usage are meant to
 ![](images/react-simple.png)
 </div>
 
-*Graph A & B are showing simple relations built between one or several reactors (an object acting as a reactive source).*
+*Graph A & B are showing simple relations built between one or several reactors (object(s) acting as a reactive source).*
 
 <div style="text-align:center">
 ![](images/react-graphs.png)
 </div>
 
-*Graphs C, D & E are showing chained reaction, where most targets are themselves reactors, setting up a chain of relations which can have any shape.*
+*Graphs C, D & E are showing chained reactions, where most targets are themselves reactors, setting up a chain of relations which can have any shape.*
 
 
 Once set, reactions are run asynchronously, each time one of the source field(s) value is changed. This relation continues to exists until the reaction is explicitly destroyed, using `react/unlink` or `clear-reactions`.
@@ -46,7 +46,7 @@ Notes:
 
 Expression | Definition
 ---------- | ----------
-**reactive programming** | A programming paradigm, subset of dataflow programming, relying on events pushing changes.
+**reactive programming** | A programming paradigm, subset of dataflow programming, relying on events "pushing" changes.
 **reaction**	| A block of code which contains one or more reactive expressions.
 **reactive expression** | An expression which references at least one reactive source.
 **reactive relation** | A relation between two or more objects implemented using reactive expression(s).
