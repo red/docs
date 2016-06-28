@@ -20,15 +20,11 @@ Since version 0.6.0, Red has introduced support for "reactive programming" which
 
 If the description seems a bit abstract, the reactive API and usage are meant to be simple and practical. Here are some graphs to help visualize the relationships created by reactive relations.
 
-<div style="text-align:center">
-![](images/react-simple.png)
-</div>
+<div style="text-align:center"><img src="images/react-simple.png" /></div>
 
 *Graph A & B are showing simple relations built between one or several reactors (object(s) acting as a reactive source).*
 
-<div style="text-align:center">
-![](images/react-graphs.png)
-</div>
+<div style="text-align:center"><img src="images/react-graphs.png" /></div>
 
 *Graphs C, D & E are showing chained reactions, where most targets are themselves reactors, setting up a chain of relations which can have any shape.*
 
