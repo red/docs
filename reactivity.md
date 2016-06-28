@@ -4,7 +4,6 @@
 	* [Glossary](#glossary)
 	* [Static Relations](#static-relations)
 	* [Dynamic Relations](#dynamic-relations)
-	* [Inner Relations](#inner-relations)
 * [API](#api)
 	* [react](#react)
 	* [is](#is)
@@ -21,11 +20,11 @@ Since version 0.6.0, Red has introduced support for "reactive programming" which
 
 If the description seems a bit abstract, the reactive API and usage are meant to be simple and practical.
 
-<insert graphic here>
+    <insert graphic here>
 
-This graphic shows how two objects can be interconnected using a *reaction*, a block of code which contains two source objects and a target object.
+    This graphic shows how two objects can be interconnected using a *reaction*, a block of code which contains two source objects and a target object.
 
-Once set, reaction are run asynchronously, each time one of the source field(s) value is changed. This relation continues to exists until the reaction is explicitly destroyed, using `react/unlink` or `clear-reactions`.
+Once set, reactions are run asynchronously, each time one of the source field(s) value is changed. This relation continues to exists until the reaction is explicitly destroyed, using `react/unlink` or `clear-reactions`.
 
 Only the source objects in a reactive expression need to be a reactor, the target can be a simple object. If the target is also a reactor, then reactions can be chained and a graph of relations can then be constructed.
 
@@ -65,25 +64,47 @@ This example sets a reactive relation between a slider named `s` and a base face
 
 This other example is not related to GUI, it calculates the length of a vector defined by `vec/x` and `vec/y` using a reactive expression. Once again, the source object is statically specified, using its name (`vec`) in the reactive expression.
 
+Another form of static relations can be defined using `is` operator, where the resulting value of the reaction evaluation will be set to a word (in any context). This form is the closest to the Excel formula model.
+
+**Example 3**
+
+	a: make reactor! [x: 1 y: 2 total: is [x + y]]
+	
+The word `total` above has its value set to the `x + y` expression. Each time `x` or `y` values change, `total` will be immediatly updated. Notice that path are not used in this case to specify the reactive sources, as `is` is used directly inside a reactor's body.
+
+**Example 4**
+
+	a: make reactor! [x: 1 y: 2]
+	total: is [a/x + a/y]
+
+This variation of Example 3 shows that a global word can also be the target of a reactive relation (but cannot be the source).
+
+Note: due to the size of global context, making it reactive could have a significant overall slowdown on Red's performances, though, that could be overcome in the future.
+
 ## Dynamic Relations
 
 Static relations are very simple to specify, but they don't scale well if you need to provide the same reaction to a great number of reactors, or if the reactors are anonymous (reminder: all objects are anonymous by default). In such case, the reaction needs to be specified using a *function* and `react/link` form.
 
 **Example**
 
-
-
-## Inner Relations
-
-**Example 1**
-
-**Example 2**
-	vec: make reactor! [
-		x: 0
-		y: 10
-		length: is [square-root (x ** 2) + (y ** 2)]
+	win: layout [
+		size 400x500
+		across
+		style ball: base 30x30 0.0.0.255 draw [fill-pen blue circle 15x15 14]
+		ball ball ball ball ball ball ball b: ball loose
+		do [b/draw/2: red]
 	]
+	
+	follow: func [left right][left/offset/y: to integer! right/offset/y * 108%]
+	
+	faces: win/pane
+	while [not tail? next faces][
+		react/link :follow [faces/1 faces/2]
+		faces: next faces
+	]
+	view win
 
+In this example, the reaction is a function (`follow`) which is applied to the ball faces by pairs, setting a chain of relations, linking together all the balls. The terms in the reaction are parametrized, so they can be reused for different sets of object arguments (unlike in the static relations case).
 
 
 # API
@@ -135,9 +156,9 @@ Removing a reaction is achieved by using `/unlink` refinement with a `<source>` 
     
 **Description**
 
-The `is` operator creates a reactive formula, which result will be assigned to an object's field. This means that `is` can only be used *inside* a reactor object.
+The `is` operator creates a reactive formula, which result will be assigned to a word. The `<code>` block can contain reference to both wrapping object's fields (if used in a reactor's body block), and external reactors fields.
 
-Note: this operator creates reactive formula which are very close to Excel's formulas model.
+Note: this operator creates reactive formula which are very close to Excel's formula model.
 
 **Example**
 
