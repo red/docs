@@ -171,7 +171,7 @@ Removing a reaction is achieved by using `/unlink` refinement with a `<source>` 
 
 The `is` operator creates a reactive formula, whose result will be assigned to a word. The `<code>` block can contain reference to both wrapping object's fields (if used in a reactor's body block), and external reactors fields.
 
-Note: this operator creates reactive formula which are very close to Excel's formula model.
+Note: This operator creates reactive formulas which closely mimic Excel's formula model.
 
 **Example**
 
@@ -236,7 +236,7 @@ Ordinary objects in Red do not exhibit reactive behaviors. In order for an objec
 
 Constructs a new reactive object from the body block. Only setting a field to a new value can trigger reactions (if defined for that field).
 
-Note: The body block can eventually contain `is` expressions.
+Note: It is possible for the body to contain `is` expressions.
 
 ## deep-reactor!
 
@@ -252,4 +252,4 @@ Note: The body block can eventually contain `is` expressions.
 
 Constructs a new reactive object from the body block. Setting a field to a new value or changing a referred series deeply can trigger reactions (if defined for that field).
 
-Note: The body block can eventually contain `is` expressions.
+Note: It is possible for the body block to contain `is` expressions.
