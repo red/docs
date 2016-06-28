@@ -261,9 +261,9 @@ Selects the color to be used for line drawing operations.
     <grad-offset>    : offset from where should the gradient be rendered (pair!).
     <grad-start-rng> : beginning of the gradient range (integer!).
     <grad-stop-rng>  : end of the gradient range (integer!).
-    <grad-angle>     : (optional) rotation of the gradient in degrees (float!).
-    <grad-scale-x>   : (optional) scale X factor (float!).
-    <grad-scale-y>   : (optional) scale Y factor (float!).
+    <grad-angle>     : (optional) rotation of the gradient in degrees (integer! float!).
+    <grad-scale-x>   : (optional) scale X factor (integer! float!).
+    <grad-scale-y>   : (optional) scale Y factor (integer! float!).
     <grad-color>     : color to use for gradient filling (tuple! word!).
     <offset>         : (optional) offset of gradient color (float!).
 
@@ -275,6 +275,12 @@ Sets the gradient type, the following values are accepted:
 * `linear`
 * `radial`
 * `diamond`
+
+For example:
+
+	fill-pen linear 0x100 0 400 red green blue box 0x100 400x300
+
+![](images/grad-pen.png)
 
 _Note_: the gradient can be defined by up to 256 colors.
 
@@ -444,4 +450,19 @@ The graphics in this documentation are generated using Red and Draw dialect, her
 		font Arial
 		text 205x12 "X"
 		text 12x205 "Y"
+	]
+
+	save %grad-pen.png draw 400x400 [
+		pen off
+		fill-pen linear 0x100 0 400 red green blue box 0x100 400x300
+	]
+
+	save %grad-pen-more.png draw 600x400 [
+		pen off
+		fill-pen linear 0x0 0 200 red green blue box 0x0 200x200
+		fill-pen linear 200x0 0 200 255.0.0 255.255.0 0.255.0 0.255.255 0.0.255 box 200x0 400x200
+		fill-pen linear 400x0 0 200 255.0.0 0.1 255.255.0 0.2 0.255.0 0.4 0.255.255 0.8 0.0.255 .9 255.0.255 1.0 box 400x0 600x200
+		fill-pen blue box 0x200 200x400 fill-pen radial 100x300 0 100 255.0.0 0.255.0 0.0.255 box 0x200 200x400
+		fill-pen blue box 200x200 400x400 fill-pen diamond 300x300 0 100 30 255.0.0 0.255.0 0.0.255 box 200x200 400x400
+		fill-pen diamond 500x300 0 100 30 3.0 1.5 255.0.0 0.255.0 0.0.255 box 400x200 600x400
 	]
