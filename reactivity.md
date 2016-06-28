@@ -16,25 +16,25 @@
 
 # Concept
 
-Since version 0.6.0, Red has introduced support for "reactive programming" whose purpose is to reduce size and complexity of Red programs further. Red's reactive model relies on dataflow and object events, constructing a directed graph, allowing propagation of changes in objects, following the "push" model. More specifically, Red implements the [object-oriented reactive programming](https://en.wikipedia.org/wiki/Reactive_programming#Object-oriented) model, where only object fields can be the source of change.
+In version 0.6.0, Red introduced support for "reactive programming" to help reduce the size and complexity of Red programs. Red's reactive model relies on dataflow and object events, constructing a directed graph, and propagating changes in objects, all using a "push" model. More specifically, Red implements the [object-oriented reactive programming](https://en.wikipedia.org/wiki/Reactive_programming#Object-oriented) model, where only object fields can be the source of change.
 
-If the description seems a bit abstract, the reactive API and usage are meant to be simple and practical. Here are some graphs to help visualize the relationships created by reactive relations.
+If the description seems a bit abstract, don't worry, the reactive API and its use are simple and practical. Here are some graphs to help visualize reactive relationships.
 
 <div style="text-align:center"><img src="images/react-simple.png" /></div>
 
-*Graph A & B are showing simple relations built between one or several reactors (object(s) acting as a reactive source).*
+*Graph A & B show simple relations between one or several reactors (objects that act as a reactive source).*
 
 <div style="text-align:center"><img src="images/react-graphs.png" /></div>
 
-*Graphs C, D & E are showing chained reactions, where most targets are themselves reactors, setting up a chain of relations which can have any shape.*
+*Graphs C, D & E show chained reactions, where some targets are, themselves, reactors, setting up a chain of relations that can have any shape.*
 
 
-Once set, reactions are run asynchronously, each time one of the source field(s) value is changed. This relation continues to exists until the reaction is explicitly destroyed, using `react/unlink` or `clear-reactions`.
+Reactions are run asynchronously, when a source field(s) value is changed. As long as the objects exist the reaction relationship exists, unless the reaction is explicitly destroyed using `react/unlink` or `clear-reactions`.
 
-Only the source objects in a reactive expression need to be a reactor, the target can be a simple object. If the target is also a reactor, then reactions can be chained and a graph of relations can then be constructed.
+Only the source objects in a reactive expression need to be a reactor. The target can be a simple object. If the target is also a reactor, reactions are chained and a graph of relations is constructed (with no extra work on your part).
 
 Notes: 
-* Red's reactive support could be extended in the future to support also a "pull" model.
+* Red's reactive support could be extended in the future to support a "pull" model.
 * This is not a [FRP](https://en.wikipedia.org/wiki/Functional_reactive_programming) framework, though event streams could be supported in the future.
 * The Red/View GUI engine relies on *face!* objects in order to operate graphic objects. Faces are reactors, and they can be used for setting reactive relations between them or with non-reactor objects.
 
@@ -53,7 +53,7 @@ Expression | Definition
 
 ## Static Relations
 
-The simplest form of reactions is a so-called "static relation" created between *named* objects. It is *static* because it statically links objects, it uniquely applies to its source reactors, it cannot be re-used for other objects.
+The simplest form of reactions is a "static relation" created between *named* objects. It is *static* because it statically links objects. It uniquely applies to its source reactors, and cannot be re-used for other objects.
 
 **Example 1**
 
@@ -62,35 +62,35 @@ The simplest form of reactions is a so-called "static relation" created between 
 		b: base react [b/color/1: to integer! 255 * s/data]
 	]
 
-This example sets a reactive relation between a slider named `s` and a base face named `b`. When the slider is moved, the base face background red component is changed accordingly. The reactive expression cannot be re-used for a different set of faces. This is the simplest form of reactive behavior you can set for graphic objects in Red/View.
+This example sets a reactive relation between a slider named `s` and a base face named `b`. When the slider is moved, the base face's background red component is changed accordingly. The reactive expression cannot be re-used for a different set of faces. This is the simplest form of reactive behavior you can set for graphic objects in Red/View.
 
 **Example 2**
 
     vec: make reactor! [x: 0 y: 10]
     box: object [length: is [square-root (vec/x ** 2) + (vec/y ** 2)]]
 
-This other example is not related to GUI, it calculates the length of a vector defined by `vec/x` and `vec/y` using a reactive expression. Once again, the source object is statically specified, using its name (`vec`) in the reactive expression.
+This example is not related to the GUI system. It calculates the length of a vector defined by `vec/x` and `vec/y` using a reactive expression. Once again, the source object is statically specified, using its name (`vec`) in the reactive expression.
 
-Another form of static relations can be defined using `is` operator, where the resulting value of the reaction evaluation will be set to a word (in any context).
+Another form of static relation can be defined using the `is` operator, where the value of the reaction evaluation is set to a word (in any context).
 
 **Example 3**
 
 	a: make reactor! [x: 1 y: 2 total: is [x + y]]
 	
-The word `total` above has its value set to the `x + y` expression. Each time `x` or `y` values change, `total` will be immediatly updated. Notice that path are not used in this case to specify the reactive sources, as `is` is used directly inside a reactor's body.
+The word `total` above has its value set to the `x + y` expression. Each time the `x` or `y` values change, `total` is immediately updated. Notice that paths are not needed in this case, to specify the reactive sources, because `is` is used directly inside the reactor's body and so knows its context.
 
 **Example 4**
 
 	a: make reactor! [x: 1 y: 2]
 	total: is [a/x + a/y]
 
-This variation of Example 3 shows that a global word can also be the target of a reactive relation (but cannot be the source). This form is the closest to the Excel formula model.
+This variation of Example 3 shows that a global word can also be the target of a reactive relation (though it can't be the source). This form is the closest to a spreadsheet's (e.g. Excel) formula model.
 
-Note: due to the size of global context, making it reactive could have a significant overall slowdown on Red's performances, though, that could be overcome in the future.
+Note: due to the size of global context, making it reactive could have significant performance overhead, though that could be overcome in the future.
 
 ## Dynamic Relations
 
-Static relations are very simple to specify, but they don't scale well if you need to provide the same reaction to a great number of reactors, or if the reactors are anonymous (reminder: all objects are anonymous by default). In such case, the reaction needs to be specified using a *function* and `react/link` form.
+Static relations are very easy to specify, but they don't scale well if you need to provide the same reaction to a number of reactors, or if the reactors are anonymous (reminder: all objects are anonymous by default). In such cases, the reaction should be specified using a *function* and `react/link`.
 
 **Example**
 
@@ -111,7 +111,9 @@ Static relations are very simple to specify, but they don't scale well if you ne
 	]
 	view win
 
-In this example, the reaction is a function (`follow`) which is applied to the ball faces by pairs, setting a chain of relations, linking together all the balls. The terms in the reaction are parametrized, so they can be reused for different sets of object arguments (unlike in the static relations case).
+In this example, the reaction is a function (`follow`) which is applied to the ball faces by pairs, creating a chain of relations, linking all the balls together. The terms in the reaction are parameters, so the can be used for different objects (unlike in the static relations case).
+
+To see how it works, paste the above example into the GUI console and drag the red ball up and down.
 
 
 # API
