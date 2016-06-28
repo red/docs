@@ -139,7 +139,7 @@ In this example, the reaction is a function (`follow`) which is applied to the b
 
 Sets a new reactive relation which contains at least one reactive source, from:
 * a block of code (sets a "static relation")
-* a function (sets a "dynamic relation")
+* a function (sets a "dynamic relation", requires the `/link` refinement)
 
 In both cases, the code is statically analyzed to determine the reactive sources, in the form of path! values, referring to reactor fields. The newly formed reaction **is called once** on creation (before the `react` function returns). This default behavior can be undesirable in some cases, this initial triggering can be avoided using the `/later` option.
 
