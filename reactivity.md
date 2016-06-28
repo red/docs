@@ -18,11 +18,16 @@
 
 Since version 0.6.0, Red has introduced support for "reactive programming" which purpose is to reduce size and complexity of Red programs further. Red's reactive model relies on dataflow and object events, constructing a directed graph, allowing propagation of changes in objects, following the "push" model. More specifically, Red implements the [object-oriented reactive programming](https://en.wikipedia.org/wiki/Reactive_programming#Object-oriented) model, where only object fields can be the source of change.
 
-If the description seems a bit abstract, the reactive API and usage are meant to be simple and practical.
+If the description seems a bit abstract, the reactive API and usage are meant to be simple and practical. Here are some graphs to help visualize the relationships created by reactive relations.
 
-    <insert graphic here>
+![](images/react-simple.png)
 
-    This graphic shows how two objects can be interconnected using a *reaction*, a block of code which contains two source objects and a target object.
+*Graph A & B are showing simple relations built between one or several reactors (an object acting as a reactive source).*
+
+![](images/react-graphs.png)
+
+*Graphs C, D & E are showing chained reaction, where most targets are themselves reactors, setting up a chain of relations which can have any shape.*
+
 
 Once set, reactions are run asynchronously, each time one of the source field(s) value is changed. This relation continues to exists until the reaction is explicitly destroyed, using `react/unlink` or `clear-reactions`.
 
@@ -53,8 +58,8 @@ The simplest form of reactions is a so-called "static relation" created between 
 **Example 1**
 
 	view [
-		sld: slider return
-		b: base react [b/color/1: to integer! 255 * sld/data]
+		s: slider return
+		b: base react [b/color/1: to integer! 255 * s/data]
 	]
 
 This example sets a reactive relation between a slider named `s` and a base face named `b`. When the slider is moved, the base face background red component is changed accordingly. The reactive expression cannot be re-used for a different set of faces. This is the simplest form of reactive behavior you can set for graphic objects in Red/View.
@@ -66,7 +71,7 @@ This example sets a reactive relation between a slider named `s` and a base face
 
 This other example is not related to GUI, it calculates the length of a vector defined by `vec/x` and `vec/y` using a reactive expression. Once again, the source object is statically specified, using its name (`vec`) in the reactive expression.
 
-Another form of static relations can be defined using `is` operator, where the resulting value of the reaction evaluation will be set to a word (in any context). This form is the closest to the Excel formula model.
+Another form of static relations can be defined using `is` operator, where the resulting value of the reaction evaluation will be set to a word (in any context).
 
 **Example 3**
 
@@ -79,7 +84,7 @@ The word `total` above has its value set to the `x + y` expression. Each time `x
 	a: make reactor! [x: 1 y: 2]
 	total: is [a/x + a/y]
 
-This variation of Example 3 shows that a global word can also be the target of a reactive relation (but cannot be the source).
+This variation of Example 3 shows that a global word can also be the target of a reactive relation (but cannot be the source). This form is the closest to the Excel formula model.
 
 Note: due to the size of global context, making it reactive could have a significant overall slowdown on Red's performances, though, that could be overcome in the future.
 
