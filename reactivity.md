@@ -62,7 +62,7 @@ The simplest form of reactions is a so-called "static relation" created between 
 		b: base react [b/color/1: to integer! 255 * s/data]
 	]
 
-This example sets a reactive relation between a slider named `s` and a base face named `b`. When the slider is moved, the base face background red component is changed accordingly. The reactive expression cannot be re-used for a different set of faces. This is the simplest form of reactive behavior you can set for graphic objects in Red/View.
+This example sets a reactive relation between a slider named `sld` and a base face named `b`. When the slider is moved, the base face background red component is changed accordingly. The reactive expression cannot be re-used for a different set of faces. This is the simplest form of reactive behavior you can set for graphic objects in Red/View.
 
 **Example 2**
 
