@@ -48,7 +48,7 @@ Expression | Definition
 **reactive relation** | A relation between two or more objects implemented using reactive expression(s).
 **reactive source** | A path! value referring to an reactive object field.
 **reactive formula** | A reaction which returns the last expression result on evaluation.
-**reactive object** | An object which fields can be used as reactive sources.
+**reactive object** | An object whose fields can be used as reactive sources.
 **reactor**	 | Alias for "reactive object".
 
 ## Static Relations
@@ -163,7 +163,7 @@ Removing a reaction is achieved by using `/unlink` refinement with a `<source>` 
     
 **Description**
 
-The `is` operator creates a reactive formula, which result will be assigned to a word. The `<code>` block can contain reference to both wrapping object's fields (if used in a reactor's body block), and external reactors fields.
+The `is` operator creates a reactive formula, whose result will be assigned to a word. The `<code>` block can contain reference to both wrapping object's fields (if used in a reactor's body block), and external reactors fields.
 
 Note: this operator creates reactive formula which are very close to Excel's formula model.
 
