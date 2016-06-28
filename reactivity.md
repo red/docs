@@ -29,9 +29,9 @@ If the description seems a bit abstract, don't worry, the reactive API and its u
 *Graphs C, D & E show chained reactions, where some targets are, themselves, reactors, setting up a chain of relations that can have any shape.*
 
 
-Reactions are run asynchronously, when a source field(s) value is changed. As long as the objects exist the reaction relationship exists, unless the reaction is explicitly destroyed using `react/unlink` or `clear-reactions`.
+Reactions are run asynchronously, when a source field(s) value is changed. The reaction relationship is maintained until the reaction is explicitly destroyed using `react/unlink` or `clear-reactions`.
 
-Only the source objects in a reactive expression need to be a reactor. The target can be a simple object. If the target is also a reactor, reactions are chained and a graph of relations is constructed (with no extra work on your part).
+Only the source objects in a reactive expression need to be a reactor. The target can be a simple object. If the target is also a reactor, reactions are chained and a graph of relations is constructed implicitly.
 
 Notes: 
 * Red's reactive support could be extended in the future to support a "pull" model.
@@ -94,6 +94,8 @@ Static relations are very easy to specify, but they don't scale well if you need
 
 **Example**
 
+	;-- Drag the red ball up and down with the mouse and see how other balls react!
+	
 	win: layout [
 		size 400x500
 		across
@@ -214,11 +216,11 @@ Removes all defined reactions unconditionally.
     
 **Description**
 
-Output a list of registered reactions for debugging purposes.
+Output a list of registered reactions for debugging purpose.
 
 # Reactive Objects
 
-Ordinary objects in Red do not exhibits reactive behaviors. In order for an object to be a reactive source, it needs to be constructed from one of the following reactor prototypes.
+Ordinary objects in Red do not exhibit reactive behaviors. In order for an object to be a reactive source, it needs to be constructed from one of the following reactor prototypes.
 
 ## reactor!
 
