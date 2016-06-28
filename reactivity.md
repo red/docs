@@ -51,6 +51,7 @@ Expression | Definition
 The simplest form of reactions is a so-called "static relation" created between *named* objects. It is *static* because it statically links objects, it uniquely applies to its source reactors, it cannot be re-used for other objects.
 
 **Example 1**
+
 	view [
 		sld: slider return
 		b: base react [b/color/1: to integer! 255 * sld/data]
@@ -59,6 +60,7 @@ The simplest form of reactions is a so-called "static relation" created between 
 This example sets a reactive relation between a slider named `s` and a base face named `b`. When the slider is moved, the base face background red component is changed accordingly. The reactive expression cannot be re-used for a different set of faces. This is the simplest form of reactive behavior you can set for graphic objects in Red/View.
 
 **Example 2**
+
     vec: make reactor! [x: 0 y: 10]
     box: object [length: is [square-root (vec/x ** 2) + (vec/y ** 2)]]
 
