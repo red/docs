@@ -121,9 +121,11 @@ In this example, the reaction is a function (`follow`) which is applied to the b
 **Syntax**
 
     react <code>
-    react/link <func> <objects>
     react/unlink <code> <source>
+    
+    react/link <func> <objects>
     react/unlink <func> <source>
+    
     react/later <code>
     
     <code>    : block of code containing at least one reactive source (block!).
