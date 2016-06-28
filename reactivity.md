@@ -18,7 +18,7 @@
 
 In version 0.6.0, Red introduced support for "reactive programming" to help reduce the size and complexity of Red programs. Red's reactive model relies on dataflow and object events, constructing a directed graph, and propagating changes in objects, all using a "push" model. More specifically, Red implements the [object-oriented reactive programming](https://en.wikipedia.org/wiki/Reactive_programming#Object-oriented) model, where only object fields can be the source of change.
 
-If the description seems a bit abstract, don't worry, the reactive API and its use are simple and practical. Here are some graphs to help visualize reactive relationships.
+The reactive API and its use are simple and practical, even if the description is abstract. Here are some graphs to help visualize reactive relationships.
 
 <div style="text-align:center"><img src="images/react-simple.png" /></div>
 
@@ -36,20 +36,20 @@ Only the source objects in a reactive expression need to be a reactor. The targe
 Notes: 
 * Red's reactive support could be extended in the future to support a "pull" model.
 * This is not a [FRP](https://en.wikipedia.org/wiki/Functional_reactive_programming) framework, though event streams could be supported in the future.
-* The Red/View GUI engine relies on *face!* objects in order to operate graphic objects. Faces are reactors, and they can be used for setting reactive relations between them or with non-reactor objects.
+* The Red/View GUI engine relies on *face!* objects in order to operate graphic objects. Faces are reactors, and they can be used for setting reactive relations between faces or with non-reactor objects.
 
 ## Glossary
 
 Expression | Definition
 ---------- | ----------
-**reactive programming** | A programming paradigm, subset of dataflow programming, relying on events "pushing" changes.
-**reaction**	| A block of code which contains one or more reactive expressions.
+**reactive programming** | A programming paradigm, subset of dataflow programming, based on events "pushing" changes.
+**reaction** | A block of code which contains one or more reactive expressions.
 **reactive expression** | An expression which references at least one reactive source.
-**reactive relation** | A relation between two or more objects implemented using reactive expression(s).
-**reactive source** | A path! value referring to an reactive object field.
+**reactive relation** | A relation between two or more objects implemented using reactive expressions.
+**reactive source** | A path! value referring to a field in a reactive object.
 **reactive formula** | A reaction which returns the last expression result on evaluation.
 **reactive object** | An object whose fields can be used as reactive sources.
-**reactor**	 | Alias for "reactive object".
+**reactor**	| Alias for "reactive object".
 
 ## Static Relations
 
@@ -62,16 +62,16 @@ The simplest form of reactions is a "static relation" created between *named* ob
 		b: base react [b/color/1: to integer! 255 * s/data]
 	]
 
-This example sets a reactive relation between a slider named `s` and a base face named `b`. When the slider is moved, the base face's background red component is changed accordingly. The reactive expression cannot be re-used for a different set of faces. This is the simplest form of reactive behavior you can set for graphic objects in Red/View.
+This example sets a reactive relation between a slider named `s` and a base face named `b`. When the slider is moved, the base face's background red component is changed accordingly. The reactive expression cannot be re-used for a different set of faces. This is the simplest form of reactive behavior for graphic objects in Red/View.
 
 **Example 2**
 
     vec: make reactor! [x: 0 y: 10]
     box: object [length: is [square-root (vec/x ** 2) + (vec/y ** 2)]]
 
-This example is not related to the GUI system. It calculates the length of a vector defined by `vec/x` and `vec/y` using a reactive expression. Once again, the source object is statically specified, using its name (`vec`) in the reactive expression.
-
 Another form of static relation can be defined using the `is` operator, where the value of the reaction evaluation is set to a word (in any context).
+
+This example is not related to the GUI system. It calculates the length of a vector defined by `vec/x` and `vec/y` using a reactive expression. Once again, the source object is statically specified, using its name (`vec`) in the reactive expression.
 
 **Example 3**
 
@@ -86,15 +86,15 @@ The word `total` above has its value set to the `x + y` expression. Each time th
 
 This variation of Example 3 shows that a global word can also be the target of a reactive relation (though it can't be the source). This form is the closest to a spreadsheet's (e.g. Excel) formula model.
 
-Note: due to the size of global context, making it reactive could have significant performance overhead, though that could be overcome in the future.
+Note: due to the size of global context, making it reactive (as above with `total`) could have significant performance overhead, though that could be overcome in the future.
 
 ## Dynamic Relations
 
-Static relations are very easy to specify, but they don't scale well if you need to provide the same reaction to a number of reactors, or if the reactors are anonymous (reminder: all objects are anonymous by default). In such cases, the reaction should be specified using a *function* and `react/link`.
+Static relations are easy to specify, but they don't scale well if you need to provide the same reaction to a number of reactors, or if the reactors are anonymous (reminder: all objects are anonymous by default). In such cases, the reaction should be specified using a *function* and `react/link`.
 
 **Example**
 
-	;-- Drag the red ball up and down with the mouse and see how other balls react!
+	;-- Drag the red ball up and down with the mouse. Watch how the other balls react.
 	
 	win: layout [
 		size 400x500
@@ -113,9 +113,7 @@ Static relations are very easy to specify, but they don't scale well if you need
 	]
 	view win
 
-In this example, the reaction is a function (`follow`) which is applied to the ball faces by pairs, creating a chain of relations, linking all the balls together. The terms in the reaction are parameters, so the can be used for different objects (unlike in the static relations case).
-
-To see how it works, paste the above example into the GUI console and drag the red ball up and down.
+In this example, the reaction is a function (`follow`) which is applied to the ball faces by pairs, creating a chain of relations, linking all the balls together. The terms in the reaction are parameters, so they can be used for different objects (unlike static relations).
 
 
 # API
@@ -141,22 +139,20 @@ To see how it works, paste the above example into the GUI console and drag the r
     
 **Description**
 
-Sets a new reactive relation which contains at least one reactive source, from:
-* a block of code (sets a "static relation")
-* a function (sets a "dynamic relation", requires the `/link` refinement)
+`react` sets a new reactive relation, which contains at least one reactive source, from a block of code (sets a "static relation") or a function (sets a "dynamic relation" and requires the `/link` refinement). In both cases, the code is statically analyzed to determine the reactive sources (in the form of path! values) referring to reactor fields.
 
-In both cases, the code is statically analyzed to determine the reactive sources, in the form of path! values, referring to reactor fields. The newly formed reaction **is called once** on creation (before the `react` function returns). This default behavior can be undesirable in some cases, this initial triggering can be avoided using the `/later` option.
+By default, the newly formed reaction **is called once on creation** before the `react` function returns. This can be undesirable in some cases, so can be avoided by using the `/later` option.
 
-A reaction can contain arbitrary Red code, have one or several reactive sources, one or several reactive expressions. It is up to the user to determine the granularity of relations to set up, which best fits his use-cases.
+A reaction contains arbitrary Red code, one or more reactive sources, and one or more reactive expressions. It is up to the user to determine the set of relations which best fit their needs.
 
 The `/link` option takes a function as the reaction and a list of arguments objects to be used when evaluating the reaction. This alternative form allows dynamic reactions, where the reaction code can be reused with different sets of objects (the basic `react` can only work with statically *named* objects).
 
-Removing a reaction is achieved by using `/unlink` refinement with a `<source>` argument which can take the following values:
-* `'all` word, will remove all reactive relations created by the reaction.
-* an object value, will remove only relations where that object is the reactive source.
-* a list of objects, will remove only relations where those objects are the reactive source.
+A reaction is removed by using the `/unlink` refinement with one of the following as a `<source>` argument:
+* The `'all` word, will remove all reactive relations created by the reaction.
+* An object value, will remove only relations where that object is the reactive source.
+* A list of objects, will remove only relations where those objects are the reactive source.
 
-`/unlink` takes a reaction block or function as argument, so only relations created from *that* reaction will be removed.
+`/unlink` takes a reaction block or function as argument, so only relations created from *that* reaction are removed.
 
 ## is
 
@@ -169,7 +165,7 @@ Removing a reaction is achieved by using `/unlink` refinement with a `<source>` 
     
 **Description**
 
-The `is` operator creates a reactive formula, whose result will be assigned to a word. The `<code>` block can contain reference to both wrapping object's fields (if used in a reactor's body block), and external reactors fields.
+`is` creates a reactive formula whose result will be assigned to a word. The `<code>` block can contain references to both the wrapping object's fields, if used in a reactor's body block, and to external reactor's fields.
 
 Note: This operator creates reactive formulas which closely mimic Excel's formula model.
 
@@ -196,7 +192,7 @@ Note: This operator creates reactive formulas which closely mimic Excel's formul
     
 **Description**
 
-Checks if an object's field is a reactive source. If it is true, then the first reaction found where that object's field is present will be returned, otherwise `none` is returned.
+`react?` checks if an object's field is a reactive source. If it is, the first reaction found where that object's field is present will be returned, otherwise `none` is returned.
 
 ## clear-reactions
 
@@ -206,7 +202,7 @@ Checks if an object's field is a reactive source. If it is true, then the first 
     
 **Description**
 
-Removes all defined reactions unconditionally.
+Removes all defined reactions, unconditionally.
 
 ## dump-reactions
 
@@ -216,7 +212,7 @@ Removes all defined reactions unconditionally.
     
 **Description**
 
-Output a list of registered reactions for debugging purpose.
+Outputs a list of registered reactions for debugging purposes.
 
 # Reactive Objects
 
@@ -234,9 +230,9 @@ Ordinary objects in Red do not exhibit reactive behaviors. In order for an objec
     
 **Description**
 
-Constructs a new reactive object from the body block. Only setting a field to a new value can trigger reactions (if defined for that field).
+Constructs a new reactive object from the body block. In the returned object, setting a field to a new value will trigger reactions defined for that field.
 
-Note: It is possible for the body to contain `is` expressions.
+Note: The body may contain `is` expressions.
 
 ## deep-reactor!
 
@@ -250,6 +246,21 @@ Note: It is possible for the body to contain `is` expressions.
     
 **Description**
 
-Constructs a new reactive object from the body block. Setting a field to a new value or changing a referred series deeply can trigger reactions (if defined for that field).
+Constructs a new reactive object from the body block. In the returned object, setting a field to a new value or changing a series the field refers to, including nested series, will trigger reactions defined for that field.
 
-Note: It is possible for the body block to contain `is` expressions.
+Note: The body may contain `is` expressions.
+
+**Example**
+
+This shows how changing a series, even a nested one, triggers a reaction.
+
+Note: It is up to the user to prevent triggering cycles at this time. For example, if a `deep-reactor!` changes series values in a reactor formula (e.g. `is`), it may create endless reaction cycles.
+
+    r: make deep-reactor! [
+        x: [1 2 3]
+        y: [[a b] [c d]]
+        total: is [append copy x copy y]
+    ]
+    append r/y/2 'e
+    print mold r/total
+ 
