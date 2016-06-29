@@ -28,14 +28,14 @@ The reactive API and its use are simple and practical, even if the description i
 
 *Graphs C, D & E show chained reactions, where some targets are, themselves, reactors, setting up a chain of relations that can have any shape.*
 
-Reactions are run asynchronously, when a source field(s) value is changed. The reaction relationship is maintained until the reaction is explicitly destroyed using `react/unlink` or `clear-reactions`.
+Reactions are run asynchronously, when a source field's value is changed. The reaction relationship is maintained until the reaction is explicitly destroyed using `react/unlink` or `clear-reactions`.
 
 Only the source objects in a reactive expression need to be a reactor. The target can be a simple object. If the target is also a reactor, reactions are chained and a graph of relations is constructed implicitly.
 
 Notes: 
-* Red's reactive support could be extended in the future to also support a "pull" model.
+* Red's reactive support could be extended in the future to support a "pull" model.
 * This is not a [FRP](https://en.wikipedia.org/wiki/Functional_reactive_programming) framework, though event streams could be supported in the future.
-* The Red/View GUI engine relies on *face!* objects in order to operate graphic objects. Faces are reactors, and they can be used for setting reactive relations between faces or with non-reactor objects.
+* The Red/View GUI engine relies on *face!* objects in order to operate on graphic objects. Faces are reactors, and they can be used for setting reactive relations between faces or with non-reactor objects.
 
 ## Glossary
 
@@ -61,7 +61,7 @@ The simplest form of reactions is a "static relation" created between *named* ob
 		b: base react [b/color/1: to integer! 255 * s/data]
 	]
 
-This example sets a reactive relation between a slider named `s` and a base face named `b`. When the slider is moved, the base face's background red component is changed accordingly. The reactive expression cannot be re-used for a different set of faces. This is the simplest form of reactive behavior for graphic objects in Red/View.
+This example sets a reactive relation between a slider named `s` and a base face named `b`. When the slider is moved, the red component of the base face's background color is changed accordingly. The reactive expression cannot be re-used for a different set of faces. This is the simplest form of reactive behavior for graphic objects in Red/View.
 
 **Example 2**
 
