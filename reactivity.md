@@ -16,9 +16,9 @@
 
 # Concept
 
-In version 0.6.0, Red introduced support for "reactive programming" to help reduce the size and complexity of Red programs. Red's reactive model relies on dataflow and object events, constructing a directed graph, and propagating changes in objects, all using a "push" model. More specifically, Red implements the [object-oriented reactive programming](https://en.wikipedia.org/wiki/Reactive_programming#Object-oriented) model, where only object fields can be the source of change.
+In version 0.6.0, Red introduced support for "reactive programming" to help reduce the size and complexity of Red programs. Red's reactive model relies on dataflow and object events, constructing a directed graph, and propagating changes in objects. It uses a "push" model. More specifically, Red implements the [object-oriented reactive programming](https://en.wikipedia.org/wiki/Reactive_programming#Object-oriented) model, where only object fields can be the source of change.
 
-The reactive API and its use are simple and practical, even if the description is abstract. Here are some graphs to help visualize reactive relationships.
+The reactive API and its use are simple and practical, even if the description is abstract. Here are some diagrams to help visualize reactive relationships.
 
 <div style="text-align:center"><img src="images/react-simple.png" /></div>
 
@@ -28,13 +28,12 @@ The reactive API and its use are simple and practical, even if the description i
 
 *Graphs C, D & E show chained reactions, where some targets are, themselves, reactors, setting up a chain of relations that can have any shape.*
 
-
 Reactions are run asynchronously, when a source field(s) value is changed. The reaction relationship is maintained until the reaction is explicitly destroyed using `react/unlink` or `clear-reactions`.
 
 Only the source objects in a reactive expression need to be a reactor. The target can be a simple object. If the target is also a reactor, reactions are chained and a graph of relations is constructed implicitly.
 
 Notes: 
-* Red's reactive support could be extended in the future to support a "pull" model.
+* Red's reactive support could be extended in the future to also support a "pull" model.
 * This is not a [FRP](https://en.wikipedia.org/wiki/Functional_reactive_programming) framework, though event streams could be supported in the future.
 * The Red/View GUI engine relies on *face!* objects in order to operate graphic objects. Faces are reactors, and they can be used for setting reactive relations between faces or with non-reactor objects.
 
@@ -42,7 +41,7 @@ Notes:
 
 Expression | Definition
 ---------- | ----------
-**reactive programming** | A programming paradigm, subset of dataflow programming, based on events "pushing" changes.
+**reactive programming** | A programming paradigm, a subset of dataflow programming, based on events "pushing" changes.
 **reaction** | A block of code which contains one or more reactive expressions.
 **reactive expression** | An expression which references at least one reactive source.
 **reactive relation** | A relation between two or more objects implemented using reactive expressions.
@@ -84,7 +83,7 @@ The word `total` above has its value set to the `x + y` expression. Each time th
 	a: make reactor! [x: 1 y: 2]
 	total: is [a/x + a/y]
 
-This variation of Example 3 shows that a global word can also be the target of a reactive relation (though it can't be the source). This form is the closest to a spreadsheet's (e.g. Excel) formula model.
+This variation of Example 3 shows that a global word can also be the target of a reactive relation (though it can't be the source). This form is the closest to that of a spreadsheet's (e.g. Excel) formula model.
 
 Note: due to the size of global context, making it reactive (as above with `total`) could have significant performance overhead, though that could be overcome in the future.
 
