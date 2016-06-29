@@ -99,7 +99,7 @@ Static relations are very easy to specify, but they don't scale well if you need
 	win: layout [
 		size 400x500
 		across
-		style ball: base 30x30 0.0.0.255 draw [fill-pen blue circle 15x15 14]
+		style ball: base 30x30 transparent draw [fill-pen blue circle 15x15 14]
 		ball ball ball ball ball ball ball b: ball loose
 		do [b/draw/2: red]
 	]
