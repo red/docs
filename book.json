@@ -7,12 +7,15 @@
             "gitbookConfigURL": "https://raw.githubusercontent.com/red/docs/master/book.json",
             "options": [
                 {
-                    "value": "https://dockimbel.gitbooks.io/red/content/v/v0.6.0/",
+                    "value": "http://doc.red-lang.org/v/v0.6.0/",
                     "text": "Version 0.6.0"
                 }, {
-                    "value": "https://www.gitbook.com/book/dockimbel/red/details",
+                    "value": "http://doc.red-lang.org/v/v0.6.1/",
                     "text": "Version 0.6.1",
                     "selected": true
+                }, {
+                    "value": "https://www.gitbook.com/book/dockimbel/red/details",
+                    "text": "Version 0.6.2"
                 }
             ]
         }
