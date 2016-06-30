@@ -11,11 +11,11 @@
                     "text": "Version 0.6.0"
                 }, {
                     "value": "http://doc.red-lang.org/v/v0.6.1/",
-                    "text": "Version 0.6.1",
-                    "selected": true
+                    "text": "Version 0.6.1"
                 }, {
                     "value": "https://www.gitbook.com/book/dockimbel/red/details",
-                    "text": "Version 0.6.2"
+                    "text": "Version 0.6.2",
+                    "selected": true
                 }
             ]
         }
