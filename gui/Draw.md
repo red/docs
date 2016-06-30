@@ -20,6 +20,15 @@
  * [Line-join](#line-join)
  * [Line-cap](#line-cap)
  * [Anti-alias](#anti-alias)
+ * [Matrix](#matrix)
+ * [Reset-matrix](#reset-matrix)
+ * [Invert-matrix](#invert-matrix)
+ * [Push](#push)
+ * [Rotate](#rotate)
+ * [Scale](#scale)
+ * [Translate](#translate)
+ * [Skew](#skew)
+ * [Transform](#transform)
 * [Default values](#default-values)
 * [Sub blocks](#sub-blocks)
 * [Source position](#source-position)
@@ -346,6 +355,131 @@ Sets the new line's ending cap mode for line operations. Following values are ac
 Turns on/off the anti-aliasing mode for following Draw commands.
 
 _Note_: Anti-aliasing gives nicer visual rendering, but degrades performance.
+
+## Matrix
+
+**Syntax**
+
+	matrix <matrix-setup>
+
+	<matrix-setup> : the matrix which is post-multiplied to current matrix (block!).
+
+**Description**
+
+Performs matrix multiplication. The current transformation matrix is post-multiplied by this matrix.
+
+The `matrix-setup` block must have 6 numbers (number!) in it. 
+
+	matrix [a b c d e f]
+
+The block values are used internally for building following transformation matrix:
+
+	|a c e|
+	|b d f|
+	|0 0 1|
+
+## Reset-matrix
+
+**Syntax**
+
+	reset-matrix
+
+**Description**
+
+Resets the current transformation matrix to a unit matrix.
+
+	|1 0 0|
+	|0 1 0|
+	|0 0 1|
+
+## Invert-matrix
+
+**Syntax**
+
+	invert-matrix
+
+**Description**
+
+Applies an algebraic matrix inversion operation on the current transformation matrix.
+
+## Push
+
+**Syntax**
+
+	push <draw-block>
+
+	<draw-block> : block of Draw commands (block!).
+
+**Description**
+
+Saves the current state (transformations, clipping region, and pen settings) on the stack. You can then change the current transformation matrix, pens etc. inside the PUSH command block. After the PUSH command block, the current state is restored by pop from the stack. The PUSH command can be nested.
+
+## Rotate
+
+**Syntax**
+
+	rotate <angle> <center>
+
+	<angle>  : the angle in degrees (integer! float!).
+	<center> : (optional) center of rotation (pair!).
+
+**Description**
+
+Sets the clockwise rotation about a given point, in degrees. If optional `center` is not supplied, the rotate is about the origin of the current user coordinate system. Negative numbers can be used for counter-clockwise rotation.
+
+## Scale
+
+**Syntax**
+
+	scale <scale-x> <scale-y>
+
+	<scale-x> : the scale amount in X (number!).
+	<scale-y> : the scale amount in Y (number!).
+
+**Description**
+
+Sets the scale amounts. The values given are multipliers; use values greater than one to increase the scale; use values less than one to decrease it.
+
+## Translate
+
+**Syntax**
+
+	translate <offset>
+
+	<offset> : the translation amounts (pair!).
+
+**Description**
+
+Sets the origin for drawing commands. Multiple translate commands will have a cumulative effect.
+
+## Skew
+
+**Syntax**
+
+	skew <skew-x> <skew-y>
+
+	<skew-x> : skew along the x-axis in degrees (integer! float!).
+	<skew-y> : (optional) skew along the y-axis in degrees (integer! float!).
+
+**Description**
+
+Sets a coordinate system skewed from the original by the given number of degrees. If `<skew-y>` is not provided, it is assumed to be zero.
+
+## Transform
+
+**Syntax**
+
+	transform <angle> <center> <scale-x> <scale-y> <translation>
+
+	<angle>       : the rotation angle in degrees (integer! float!).
+	<center>      : (optional) center of rotation (pair!).
+	<scale-x>     : the scale amount in X (number!).
+	<scale-y>     : the scale amount in Y (number!).
+	<translation> : the translation amounts (pair!).
+
+**Description**
+
+Sets a transformation such as translation, scaling, and rotation.
 
 # Default values
 
