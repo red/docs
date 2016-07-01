@@ -16,7 +16,7 @@
 
 # Concept
 
-In version 0.6.0, Red introduced support for "reactive programming" to help reduce the size and complexity of Red programs. Red's reactive model relies on dataflow and object events, constructing a directed graph, and propagating changes in objects. It uses a "push" model. More specifically, Red implements the [object-oriented reactive programming](https://en.wikipedia.org/wiki/Reactive_programming#Object-oriented) model, where only object fields can be the source of change.
+In version 0.6.0, Red introduced support for "reactive programming" to help reduce the size and complexity of Red programs. Red's reactive model relies on dataflow and object events to construct a directed graph and propagate changes in objects. It uses a "push" model. More specifically, Red implements the [object-oriented reactive programming](https://en.wikipedia.org/wiki/Reactive_programming#Object-oriented) model, where only object fields can be the source of change.
 
 The reactive API and its use are simple and practical, even if the description is abstract. Here are some diagrams to help visualize reactive relationships.
 
@@ -70,7 +70,7 @@ This example sets a reactive relation between a slider named `s` and a base face
 
 Another form of static relation can be defined using the `is` operator, where the value of the reaction evaluation is set to a word (in any context).
 
-This example is not related to the GUI system. It calculates the length of a vector defined by `vec/x` and `vec/y` using a reactive expression. Once again, the source object is statically specified, using its name (`vec`) in the reactive expression.
+This example is not related to the GUI system. It calculates the length of a vector defined by `vec/x` and `vec/y` using a reactive expression. Once again the source object is statically specified by its name (`vec`) in the reactive expression.
 
 **Example 3**
 
@@ -89,7 +89,7 @@ Note: due to the size of global context, making it reactive (as above with `tota
 
 ## Dynamic Relations
 
-Static relations are easy to specify, but they don't scale well if you need to provide the same reaction to a number of reactors, or if the reactors are anonymous (reminder: all objects are anonymous by default). In such cases, the reaction should be specified using a *function* and `react/link`.
+Static relations are easy to specify, but they don't scale well if you need to provide the same reaction to a number of reactors, or if the reactors are anonymous (reminder: all objects are anonymous by default). In such cases, the reaction should be specified with a *function* and `react/link`.
 
 **Example**
 
@@ -112,7 +112,7 @@ Static relations are easy to specify, but they don't scale well if you need to p
 	]
 	view win
 
-In this example, the reaction is a function (`follow`) which is applied to the ball faces by pairs, creating a chain of relations, linking all the balls together. The terms in the reaction are parameters, so they can be used for different objects (unlike static relations).
+In this example, the reaction is a function (`follow`) which is applied to the ball faces by pairs.  This creates a chain of relations that link all the balls together. The terms in the reaction are parameters, so they can be used for different objects (unlike static relations).
 
 
 # API
@@ -129,8 +129,8 @@ In this example, the reaction is a function (`follow`) which is applied to the b
     
     react/later <code>
     
-    <code>    : block of code containing at least one reactive source (block!).
-    <func>    : function containing at least one reactive source (function!).
+    <code>    : block of code that contain at least one reactive source (block!).
+    <func>    : function that contain at least one reactive source (function!).
     <objects> : list of objects used as arguments to a reactive function (block! of object! values).
     <source>  : 'all word, or an object or a list of objects (word! object! block!).
     
@@ -138,15 +138,15 @@ In this example, the reaction is a function (`follow`) which is applied to the b
     
 **Description**
 
-`react` sets a new reactive relation, which contains at least one reactive source, from a block of code (sets a "static relation") or a function (sets a "dynamic relation" and requires the `/link` refinement). In both cases, the code is statically analyzed to determine the reactive sources (in the form of path! values) referring to reactor fields.
+`react` sets a new reactive relation, which contains at least one reactive source, from a block of code (sets a "static relation") or a function (sets a "dynamic relation" and requires the `/link` refinement). In both cases, the code is statically analyzed to determine the reactive sources (in the form of path! values) that refer to reactor fields.
 
-By default, the newly formed reaction **is called once on creation** before the `react` function returns. This can be undesirable in some cases, so can be avoided by using the `/later` option.
+By default, the newly formed reaction **is called once on creation** before the `react` function returns. This can be undesirable in some cases, so can be avoided with the `/later` option.
 
 A reaction contains arbitrary Red code, one or more reactive sources, and one or more reactive expressions. It is up to the user to determine the set of relations which best fit their needs.
 
-The `/link` option takes a function as the reaction and a list of arguments objects to be used when evaluating the reaction. This alternative form allows dynamic reactions, where the reaction code can be reused with different sets of objects (the basic `react` can only work with statically *named* objects).
+The `/link` option takes a function as the reaction and a list of arguments objects to be used in evaluation of the reaction. This alternative form allows dynamic reactions, where the reaction code can be reused with different sets of objects (the basic `react` can only work with statically *named* objects).
 
-A reaction is removed by using the `/unlink` refinement with one of the following as a `<source>` argument:
+A reaction is removed by with the `/unlink` refinement and with one of the following as a `<source>` argument:
 * The `'all` word, will remove all reactive relations created by the reaction.
 * An object value, will remove only relations where that object is the reactive source.
 * A list of objects, will remove only relations where those objects are the reactive source.
@@ -160,7 +160,7 @@ A reaction is removed by using the `/unlink` refinement with one of the followin
     <word>: is <code>
     
     <word> : word to be set to the result of the reaction (set-word!).
-    <code> : block of code containing at least one reactive source (block!).
+    <code> : block of code that contain at least one reactive source (block!).
     
 **Description**
 
@@ -211,7 +211,7 @@ Removes all defined reactions, unconditionally.
     
 **Description**
 
-Outputs a list of registered reactions for debugging purposes.
+Outputs a list of registered reactions for debug purposes.
 
 # Reactive Objects
 
@@ -251,9 +251,9 @@ Note: The body may contain `is` expressions.
 
 **Example**
 
-This shows how changing a series, even a nested one, triggers a reaction.
+This shows how change to a serie, even a nested one, triggers a reaction.
 
-Note: It is up to the user to prevent triggering cycles at this time. For example, if a `deep-reactor!` changes series values in a reactor formula (e.g. `is`), it may create endless reaction cycles.
+Note: It is up to the user to prevent cycles at this time. For example, if a `deep-reactor!` changes series values in a reactor formula (e.g. `is`), it may create endless reaction cycles.
 
     r: make deep-reactor! [
         x: [1 2 3]
