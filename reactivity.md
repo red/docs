@@ -192,7 +192,7 @@ Note: This operator creates reactive formulas which closely mimic Excel's formul
     
 **Description**
 
-`react?` checks if an object's field is a reactive source . If it is, the first reaction found where that object's field is present as a source, will be returned, otherwise `none` is returned. `/target` refinement checks if the field is a target instead of a source, and will return the first reaction found targetting that field or `none` if none matches.
+`react?` checks if an object's field is a reactive source . If it is, the first reaction found where that object's field is present as a source, will be returned, otherwise `none` is returned. `/target` refinement checks if the field is a target instead of a source, and will return the first reaction found targeting that field or `none` if none matches.
 
 ## clear-reactions
 
