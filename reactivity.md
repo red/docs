@@ -183,18 +183,16 @@ Note: This operator creates reactive formulas which closely mimic Excel's formul
 **Syntax**
 
     react? <obj> <field>
-    react?/type <obj> <field>
+    react?/target <obj> <field>
     
     <obj>   : object to check (object!).
     <field> : object's field to check (word!).
     
-    Returns : a reaction (block! function!), a type or a none! value.
+    Returns : a reaction (block! function!) or a none! value.
     
 **Description**
 
-`react?` checks if an object's field is a reactive source or target. If it is, the first reaction found where that object's field is present will be returned, otherwise `none` is returned.
-
-When `/type` refinement is used, the return value is `source` word if the field is a reactive source, or `target` word if the field is a reactive target, or `none` value if the field is not involved in a reactive relation.
+`react?` checks if an object's field is a reactive source . If it is, the first reaction found where that object's field is present as a source, will be returned, otherwise `none` is returned. `/target` refinement checks if the field is a target instead of a source, and will return the first reaction found targetting that field or `none` if none matches.
 
 ## clear-reactions
 
