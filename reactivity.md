@@ -7,7 +7,7 @@
 * [API](#api)
 	* [react](#react)
 	* [is](#is)
-	* [react?](#react-)
+	* [react?](#react-1)
 	* [clear-reactions](#clear-reactions)
 	* [dump-reactions](#dump-reactions)
 * [Reactive Objects](#reactive-objects)
