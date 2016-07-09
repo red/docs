@@ -86,6 +86,8 @@ _Note_: All sections are optional, there is no mandatory content that must be pr
 
 # Container settings
 
+Note: `react` keyword can also be used at the container settings level in addition to face options level, see its description [there](#react).
+
 ## title
 
 **Syntax**
