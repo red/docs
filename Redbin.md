@@ -486,6 +486,16 @@ header/unit=1|2|4
 ```
 Same encoding rules as string!.
 
+### Email!
+```
+Default: header (4), head (4), length (4), data (unit*length)
+Compact: TBD
+
+header/type=45
+header/unit=1|2|4
+```
+Same encoding rules as string!.
+
 ### Reference!
 ```
 Default: header (4), count (4), index1 (4), index2 (4), ...
