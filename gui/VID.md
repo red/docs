@@ -86,6 +86,8 @@ _Note_: All sections are optional, there is no mandatory content that must be pr
 
 # Container settings
 
+Note: `react` keyword can also be used at the container settings level in addition to face options level, see its description [there](#react).
+
 ## title
 
 **Syntax**
@@ -118,7 +120,7 @@ Sets the size of the container face. If the size is not explicitly provided, the
 
     backdrop <color>
     
-    <color> : name or value of a color (word! tuple!).
+    <color> : name or value of a color (word! tuple! issue!).
     
 **Description**
 
@@ -477,7 +479,7 @@ Sets the current font size for the face's text.
 
     font-color <value>
     
-    <value> : color of the font (tuple! word!).
+    <value> : color of the font (tuple! word! issue!).
     
 **Description**
 
@@ -621,6 +623,7 @@ Datatype | Purpose
 integer!	| Specifies the width of the face. For panels, indicates the number of row or columns for the layout, depending on the current direction.
 pair!		| Specifies the width and height of the face.
 tuple!		| Specifies the color of the face's background (where applicable).
+issue!		| Specifies the color of the face's background using hex notation (#rgb, #rrggbb, #rrggbbaa).
 string!		| Specifies the text to be displayed by the face.
 percent!	| Sets the `data` facet (useful for `progress` and `slider` types).
 image!		| Sets the image to be displayed as face's background (where applicable).

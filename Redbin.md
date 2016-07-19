@@ -472,9 +472,29 @@ Same encoding rules as block!.
 Default: [padding=0 (4),] header (4), value (8)
 Compact: TBD
 
-header/type=44
+header/type=43
 ```
 Time value is stored as a 64-bit float. The optional padding field is added to properly align the `value` field offset to a 64-bit value.
+
+### Tag!
+```
+Default: header (4), head (4), length (4), data (unit*length)
+Compact: TBD
+
+header/type=44
+header/unit=1|2|4
+```
+Same encoding rules as string!.
+
+### Email!
+```
+Default: header (4), head (4), length (4), data (unit*length)
+Compact: TBD
+
+header/type=45
+header/unit=1|2|4
+```
+Same encoding rules as string!.
 
 ### Reference!
 ```
