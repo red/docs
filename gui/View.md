@@ -822,6 +822,7 @@ Word | Description
 `capturing?` | `yes` = enables event capturing stage and `detect` events generation (default to `no`).
 `auto-sync?` | `yes` = realtime faces updates (default), `no` = deferred faces updates.
 `debug?` | `yes` = output verbose logs of View internal events (default to `no`).
+`silent?` | `yes` = do not report VID or Draw dialects processing errors (default to `no`).
 
 
 # Including View component
