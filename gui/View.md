@@ -283,6 +283,10 @@ Facet | Description
 `text`	| Input text, read/write value.
 `data`	| Value to display as text.
 `options`	| Supported fields: `default`.
+`flags`	| Turn on/off some special field features (block!).
+
+**Supported flags:**
+* `no-border`: removes edge decorations made by the underlying GUI framework.
 
 `data` facet is synchronized in real-time with `text` facet using the following conversion rules:
 * when `text` changes, `data` is set to the `load`-ed `text` value, or `none`, or to `options/default` if defined.
@@ -310,6 +314,10 @@ Facet | Description
 ----- | -----------
 `type`	| `'area`
 `text`	| Input text, read/write value.
+`flags`	| Turn on/off some special area features (block!).
+
+**Supported flags:**
+* `no-border`: removes edge decoration made by the underlying GUI framework.
 
 Notes:
 * `selected` will be used in future to control highlighted part of the input text.
