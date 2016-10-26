@@ -31,7 +31,7 @@
 * [Two-way binding](#two-way-binding)
 * [Events](#events)
   * [Event names](#event-names)
-  * [Event! datatype](#event!-datatype)
+  * [Event! datatype](#event-datatype)
   * [Actors](#actors)
   * [Event flow](#event-flow)
   * [Global event handlers](#global-event-handlers)
@@ -671,7 +671,7 @@ Field | Returned value
 `window`	| Window face where the event occured (object!).
 `offset`	| Offset of mouse cursor relative to the face object when the event occurred (pair!). For gestures events, returns the center point coordinates.
 `key`		| Key pressed (char! word!).
-`picked`	| New item selected in a face (integer! percent!). For `menu` event, it returns the corresponding menu ID (word!). For zooming gesture, it returns a percent value representing the relative increase/decrease. For other gestures, its value is system-dependent for now (Windows: `ullArguments` field from [GESTUREINFO](https://msdn.microsoft.com/en-us/library/windows/desktop/dd353232(v=vs.85).aspx)).
+`picked`	| New item selected in a face (integer! percent!). For `menu` event, it returns the corresponding menu ID (word!). For zooming gesture, it returns a percent value representing the relative increase/decrease. For other gestures, its value is system-dependent for now (Windows: `ullArguments` field from [GESTUREINFO](https://msdn.microsoft.com/en-us/library/windows/desktop/dd353232.aspx)).
 `flags`		| Returns a list of one or more flags (see list below) (block!).
 `away?`		| Returns `true` if the mouse cursor exits the face boundaries (logic!). Applies only if `over` event is active. 
 `down?`		| Returns `true` if the mouse left button was pressed (logic!).
