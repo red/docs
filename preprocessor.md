@@ -56,7 +56,7 @@ Example:
 
 ## Execution context
 
-All the expressions used in directives are bound to a dedicated context to avoid leaking words in global context, causing unwanted side-effects. That context is extended with every set-words used in conditional expressions, macros and `#do` directive.
+All the expressions used in directives are bound to a dedicated context to avoid leaking words in global context, causing unwanted side-effects. That context is extended with every set-word used in conditional expressions, macros and `#do` directive.
 
 Tips:
 
@@ -126,7 +126,7 @@ The `<rule>` part can be:
 * a word! value: a Parse keyword, like a datatype name or `skip` for matching *all* values.
 * a block! value: a Parse dialect rule.
 
-`start` and `end` argument are references delimiting the matched pattern in the source code. The return value needs to a reference to the resuming position.
+`start` and `end` argument are references delimiting the matched pattern in the source code. The return value needs to be a reference to the resuming position.
 
 **Examples**
 
@@ -160,7 +160,7 @@ will result in:
 
     #if <expr> [<body>]
     
-    <expr> : any expression which last value will be used as a condition.
+    <expr> : expression whose last value will be used as a condition.
     <body> : code to be included if <expr> is true.
     
 **Description**
@@ -201,7 +201,7 @@ will result in:
 
     #either <expr> [<true>][<false>]
     
-    <expr>  : expression which last value will be used as a condition.
+    <expr>  : expression whose last value will be used as a condition.
     <true>  : code to be included if <expr> is true.
     <false> : code to be included if <expr> is false.
     
@@ -235,7 +235,7 @@ and otherwise, will result in:
     
     <valueN>  : value to match.
     <caseN>   : code to be included if last tested value matched.
-    <default> : code to be included no other value matched.
+    <default> : code to be included if no other value matched.
     
 **Description**
 
@@ -298,7 +298,7 @@ will result in:
     
 **Description**
 
-Read and include the argument file content at current position, when evaluated at compile-time. The file can contain a path, absolute or relative to current script place. When run by the Red interpreter, this directive is just replaced by a `do`, no file inclusion occurs.
+When evaluated at compile-time, read and include the argument file contents at the current position. The file can contain a path, absolute or relative to the current script. When run by the Red interpreter, this directive is just replaced by a `do`, and no file inclusion occurs.
 
 ## #do
 
@@ -311,7 +311,7 @@ Read and include the argument file content at current position, when evaluated a
     
 **Description**
 
-Evaluate the body block in the hidden execution context. If `keep` option is used, replace the directive and argument once evaluated, by its last value.
+Evaluate the body block in the hidden execution context. If `keep` is used, replace the directive and argument with the result of evaluating `body`.
 
 **Example**
 
@@ -345,17 +345,17 @@ will result in:
 
 Create a macro function.
 
-For a named macro, the specification block can declare as many arguments as needed. The body needs to return a value that will be used to replace the macro call and its arguments. Returning an empty block is equivalent to just remove the macro call and its arguments.
+For a named macro, the specification block can declare as many arguments as needed. The body needs to return a value that will be used to replace the macro call and its arguments. Returning an empty block will just remove the macro call and its arguments.
 
-For a pattern-matching macro, the specification block must declare only two arguments, the starting reference and ending reference of the matched pattern. By convention, the arguments names are: `func [start end]` or `func [s e]` as short form. This kind of macro needs to return the resuming position. If it needs to *reprocess* a replaced pattern, then `start` is the value to return. If it needs to *skip* the matched pattern, then `end` is the value to return. Other positions can also be returned, depending on the transformation achieved by the macro, and the desire to reprocess partially or fully the replaced value(s).
+For a pattern-matching macro, the specification block MUST declare only two arguments, the starting reference and ending reference of the matched pattern. By convention, the arguments names are: `func [start end]` or `func [s e]` as short form. This kind of macro needs to return the resuming position. If it needs to *reprocess* a replaced pattern, then `start` is the value to return. If it needs to *skip* the matched pattern, then `end` is the value to return. Other positions can also be returned, depending on the transformation achieved by the macro, and the desire to partially or fully reprocess the replaced value(s).
 
-A pattern-matching macros accepts:
+A pattern-matching macro accepts:
 
-* a block: specifies a pattern to match using Parse dialect.
+* a block: specifies a pattern to match using the Parse dialect.
 * a word: specifies a valid Parse dialect word (like a datatype name, or `skip` to match all values).
 * a lit-word: specifies a specific literal word to match.
 
-When using a lit-word for matching, the macro acts as a low-level version of a named macro, without automatic arguments handling/replacing and the necessity to return a resuming position.
+When using a lit-word for matching, the macro acts as a low-level version of a named macro, without automatic argument handling/replacing and the requirement to return a resuming position.
 
 **Example**
 
@@ -369,7 +369,7 @@ When using a lit-word for matching, the macro acts as a low-level version of a n
    
 **Description**
 
-Reset the hidden context, emptying it from all previously defined words, and remove all previously defined macros.
+Reset the hidden context, emptying it from all previously defined words and removing all previously defined macros.
 
 ## #process
 
@@ -379,7 +379,7 @@ Reset the hidden context, emptying it from all previously defined words, and rem
    
 **Description**
 
-Enable or disable the preprocessor (by default, it is enabled). This is an escape mechanism to avoid processing parts of Red files where directives are used literally and not meant for the preprocessor (for example, if used in a dialect with a different meaning).
+Enable or disable the preprocessor (it is enabled by default). This is an escape mechanism to avoid processing parts of Red files where directives are used literally and not meant for the preprocessor (for example, if used in a dialect with a different meaning).
 
 Implementation constraint: when enabling the preprocessor again after disabling it ealier, the `#process off` directive needs to be at same (or higher) level of nesting in the code.
 
