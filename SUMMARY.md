@@ -7,6 +7,7 @@
     * [VID dialect](gui/VID.md)
     * [Draw dialect](gui/Draw.md)
 * [Reactive Programming](reactivity.md)
+* [Preprocessor](preprocessor.md)
 * [Redbin format specification](Redbin.md)
 * [Ownership system](README.md)
 * [Coding Style Guide](style-guide.md)
