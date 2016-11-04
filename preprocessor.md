@@ -18,8 +18,8 @@
 	* [#local](##local)
 	* [#reset](##reset)
 	* [#process](##process)
-* [Runtime API](#runtime-api)	
-	* [#expand-directives](#expand-directives)
+* [Runtime API](#runtime-api)
+	* [expand-directives](#expand-directives)
 
 
 # Concept
@@ -131,10 +131,11 @@ The `<rule>` part can be:
 **Examples**
 
     Red []
- 
+    
     #macro integer! func [s e][s/1: s/1 + 1 next s]
- ...print 1 + 2
+    print 1 + 2
 will result in:
+
     Red []
     print 2 + 3 
     
@@ -147,6 +148,7 @@ Using a block rule to create a variable-arity function:
     ]
     print max 4 2 3 8 1
 will result in:
+
     Red []
     print 8 
 
