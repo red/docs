@@ -143,13 +143,13 @@ _Note_: `ellipse` provide a more compact and box-oriented way to specify a circl
 
 **Syntax**
 
-    arc <center> <radius> <begin> <end>
-    arc <center> <radius> <begin> <end> closed
+    arc <center> <radius> <begin> <sweep>
+    arc <center> <radius> <begin> <sweep> closed
     
     <center> : coordinates of the circle's center (pair!).
     <radius> : radius of the circle (pair!).
     <begin>  : starting angle in degrees (integer!).
-    <end>  : ending angle in degrees (integer!).
+    <sweep>  : angle between the starting and ending points of the arc in degrees (integer!).
     
 **Description**
 

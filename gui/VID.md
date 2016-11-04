@@ -589,12 +589,13 @@ Gives the focus to the current face when the window is displayed for the first t
 **Syntax**
 
     rate <value>
+    rate <value> now
     
     <value>: duration or frequency (integer! time!).
     
 **Description**
 
-Sets a timer for the face from a duration (time!) or a frequency (integer!). At each timer's tick, a `time` event will be generated for that face.
+Sets a timer for the face from a duration (time!) or a frequency (integer!). At each timer's tick, a `time` event will be generated for that face. If `now` option is used, a first time event is generated immediatly.
 
 ***
 ### default
