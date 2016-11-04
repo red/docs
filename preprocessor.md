@@ -145,7 +145,7 @@ Using a block rule to create a variable-arity function:
         change/part s first maximum-of copy/part next s e e	
         s
     ]
- ...print max 4 2 3 8 1
+    print max 4 2 3 8 1
 will result in:
     Red []
     print 8 
