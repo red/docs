@@ -32,7 +32,7 @@ The Red preprocessor is a dialect of Red, enabling transformation of Red source 
 
 The preprocessor is invoked after the LOADing phase, so it processes Red values, and not the source code in text form.
 
-Directive categories
+Directive categories:
 
 * conditional directives: include code depending on the result of an expression.
 * control directives: control the behavior of the preprocessor.
@@ -46,7 +46,7 @@ Notes: Red/System has its own [preprocessor](http://static.red-lang.org/red-syst
 
 ## Config object
 
-In conditional expressions and in macros, an implicit `config` object is provided, to provide access to the compilation options used to compile the source code. Those options are often used for conditional inclusion of code. The exhaustive list of options can be found [here](https://github.com/red/red/blob/master/system/compiler.r#L31).
+In conditional expressions and in macros, an implicit `config` object is provided, to give access to the settings used to compile the source code. Those settings are often used for conditional inclusion of code. The exhaustive list of settings can be found [here](https://github.com/red/red/blob/master/system/compiler.r#L31).
 
 Example:
     
@@ -61,14 +61,11 @@ All the expressions used in directives are bound to a dedicated context to avoid
 Tips:
 
 * It is possible to print out the content of that hidden context using the following expression:
-
     #do [probe self]
-    
 * When used at runtime, the hidden context can also be accessed directly using:
-
     probe preprocessor/exec
 
-## Implementation Note
+## Implementation note
 
 Currently, expressions in directives used at compile-time are evaluated using Rebol2 interpreter, as it is running the toolchain code. This is temporary and should be switched to a Red evaluator as soon as possible. In the meantime, ensure that  your expressions and macros code can be run with Red too, for compatibility with Red interpreter at run-time (and at compile-time in the future).
 
@@ -76,7 +73,7 @@ Currently, expressions in directives used at compile-time are evaluated using Re
 
 The Red preprocessor supports definining macro functions (called just *macros*) for achieving more complex transformations. Macros allow for an efficient form of metaprogramming, where the execution cost is paid at compile-time, rather than run-time. Red already has strong metaprogramming abilities at run-time, but, for the sake of enabling Red source code to be run equally well by the compiler and interpreter, macros can also be resolved at run-time.
 
-Note: There are no read-time (reader) macros. Given how simple it is to already preprocess sources in text form using Parse dialect, such support is redundant.
+Note: There are no read-time (reader) macros. Given how simple it is to already preprocess sources in text form using Parse dialect, such support would be redundant.
 
 The preprocessor supports two types of macros:
 
@@ -98,20 +95,16 @@ Note: specifying types for the arguments is not currently supported.
 **Examples**
 
     Red []
-    
     #macro make-KB: func [n][n * 1024]
-    
     print make-KB 64
 will result in:    
     
     Red []
-        
     print 65536
     
 Calling other macros, from within a macro:
 	
     Red []
-     
     #macro make-KB: func [n][n * 1024]
     #macro make-MB: func [n][make-KB make-KB n]
     
@@ -119,15 +112,13 @@ Calling other macros, from within a macro:
 will result in:    
     
     Red []
-        
     print 1048576
 
 ## Pattern-matching macros
 
 This is the lower-level version of macros, there are no implicit actions, but full control is given to the user. Instead of matching a word and fetching argument, it matches a pattern provided as a Parse dialect rule or keyword. No automatic replacement takes place, it is up to the macro function to apply the desired transformations and set the resume point of the processing. The typical form is:
-
     #macro <rule> func [start end /local word1 word2...][...code...]
-    
+
 The `<rule>` part can be:
 * a lit-word! value: for matching a specfic word.
 * a word! value: a Parse keyword, like a datatype name or `skip` for matching *all* values.
@@ -139,29 +130,22 @@ The `<rule>` part can be:
 
     Red []
  
- 	#macro integer! func [s e][s/1: s/1 + 1 next s]
- 	
- 	print 1 + 2
-will result in:    
-    
+    #macro integer! func [s e][s/1: s/1 + 1 next s]
+ ...print 1 + 2
+will result in:
     Red []
-             
     print 2 + 3 
     
 Using a block rule to create a variable-arity function:
 
     Red []
- 
     #macro ['max some [integer!]] func [s e][
         change/part s first maximum-of copy/part next s e e	
         s
     ]
- 	
- 	print max 4 2 3 8 1
-will result in:    
-    
+ ...print max 4 2 3 8 1
+will result in:
     Red []
-	        
     print 8 
 
 # Directives
@@ -190,7 +174,7 @@ will result in the following code if run on Windows:
 
     print "OS is Windows"
 
-and otherwise, will result in:
+and otherwise, will result in just:
 
     Red []
 
