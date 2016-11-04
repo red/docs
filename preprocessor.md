@@ -61,11 +61,11 @@ All the expressions used in directives are bound to a dedicated context to avoid
 Tips:
 
 * It is possible to print out the content of that hidden context using the following expression:
-....
-    #do [probe self]
+        
+        #do [probe self]
 * When used at runtime, the hidden context can also be accessed directly using:
-....
-    probe preprocessor/exec
+        
+        probe preprocessor/exec
 
 ## Implementation note
 
