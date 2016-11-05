@@ -357,9 +357,30 @@ A pattern-matching macro accepts:
 
 When using a lit-word for matching, the macro acts as a low-level version of a named macro, without automatic argument handling/replacing, but the requirement to return a resuming position.
 
-**Example**
+**Examples**
 
+    Red []
+    #macro pow2: func [n][to integer! n ** 2]
+    print pow2 10
+    print pow2 3 + pow2 4 = pow2 5
+will result in:
 
+    Red []
+    print 100
+    print 9 + 16 = 25
+    
+Pattern-matching macro example:
+
+    Red []
+    #macro [number! '+ number! '= number!] func [s e][
+        change/part s do (copy/part s e) e s
+    ]
+
+    print 9 + 16 = 25
+will result in:
+
+    Red []
+    print true
 
 ## #local
 
@@ -386,7 +407,7 @@ will result in:
 
     Red []
     print 1.0
-   	print [1 3 124]
+    print [1 3 124]
     print 2.0
 
 ## #reset
@@ -447,6 +468,6 @@ Invoke the preprocessor on a block value. The argument block will be modified an
 **Example**
 
     expand-directives [print #either config/OS = 'Windows ["Windows"]["Unix"]]
-will output on Windows platform:
+will return on Windows platform:
 
     [print "Windows"]
