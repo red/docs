@@ -355,11 +355,39 @@ A pattern-matching macro accepts:
 * a word: specifies a valid Parse dialect word (like a datatype name, or `skip` to match all values).
 * a lit-word: specifies a specific literal word to match.
 
-When using a lit-word for matching, the macro acts as a low-level version of a named macro, without automatic argument handling/replacing and the requirement to return a resuming position.
+When using a lit-word for matching, the macro acts as a low-level version of a named macro, without automatic argument handling/replacing, but the requirement to return a resuming position.
 
 **Example**
 
+
+
 ## #local
+
+**Syntax**
+
+    #local [<body>]
+    
+    <body> : arbitrary Red code containing local macros definitions.
+    
+**Description**
+
+Create a local context for macros. All macros defined in that context will be discarded on exit. Therefore, the local macros also need to be locally applied. This directive can be used recursively (`#local` is a valid directive in `<body>`).
+
+**Example**
+
+    Red []
+    print 1.0
+    #local [
+        #macro float! func [s e][s/1: to integer! s/1 next s]
+        print [1.23 2.54 123.789]
+    ]
+    print 2.0
+will result in:
+
+    Red []
+    print 1.0
+   	print [1 3 124]
+    print 2.0
 
 ## #reset
 
@@ -402,5 +430,23 @@ will result in:
 
 # Runtime API
 
+The Red preprocessor can also work at run-time, in order to be able to evaluate source code using preprocessor directives also from the interpreter. It will be invoked automatically when using `do` on a `file!` value. Note that the following form can be used to `do` a file without invoking the preprocessor: `do load %file`.
+
 ## expand-directives
 
+**Syntax**
+
+    expand-directives [<body>]
+
+    <body> : arbitrary Red code containing preprocessor directives.
+    
+**Description**
+
+Invoke the preprocessor on a block value. The argument block will be modified and used as returned value.
+
+**Example**
+
+    expand-directives [print #either config/OS = 'Windows ["Windows"]["Unix"]]
+will output on Windows platform:
+
+    [print "Windows"]
