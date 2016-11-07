@@ -18,6 +18,7 @@
 	* [#local](#local)
 	* [#reset](#reset)
 	* [#process](#process)
+	* [#trace](#trace)
 * [Runtime API](#runtime-api)
 	* [expand-directives](#expand-directives)
 
@@ -447,6 +448,16 @@ will result in:
     
     print "Conditional directives:"
     foreach d [#if #either #switch #case][probe d]
+
+## #trace
+
+**Syntax**
+
+    #trace [on | off]
+   
+**Description**
+
+Enable or disable the debugging output of evaluated expressions and macros on screen. There are no specific constraints on where this directive can be used in the Red sources.
 
 
 # Runtime API
