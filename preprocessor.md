@@ -469,12 +469,13 @@ The Red preprocessor can also work at run-time, in order to be able to evaluate 
 **Syntax**
 
     expand-directives [<body>]
+    expand-directives/keep [<body>]
 
     <body> : arbitrary Red code containing preprocessor directives.
     
 **Description**
 
-Invoke the preprocessor on a block value. The argument block will be modified and used as returned value.
+Invoke the preprocessor on a block value. The argument block will be modified and used as returned value. If `/keep` refinement is used, the previous preprocessor state is kept with all the macros and words previously defined, otherwise, the preprocessor will start with a clean state.
 
 **Example**
 
