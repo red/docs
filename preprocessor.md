@@ -119,21 +119,24 @@ will result in:
 
 ## Pattern-matching macros
 
-This is the lower-level version of macros, there are no implicit actions, but full control is given to the user. Instead of matching a word and fetching argument, it matches a pattern provided as a Parse dialect rule or keyword. No automatic replacement takes place, it is up to the macro function to apply the desired transformations and set the resume point of the processing. The typical form is:
-    #macro <rule> func [start end /local word1 word2...][...code...]
+Instead of matching a word and fetching argument(s), the macro matches a pattern provided as a Parse dialect rule or keyword. The returned value is replacing the matched pattern in default *auto* mode.
 
+In *manual* mode, there are no implicit actions, but full control is given to the user. No automatic replacement takes place, it is up to the macro function to apply the desired transformations and set the resume point of the processing. The typical default form is:
+    #macro <rule> func [start end /local word1 word2...][...code...]
+And for manual mode:
+    #macro <rule> func [[manual] start end /local word1 word2...][...code...]
 The `<rule>` part can be:
 * a lit-word! value: for matching a specfic word.
 * a word! value: a Parse keyword, like a datatype name or `skip` for matching *all* values.
 * a block! value: a Parse dialect rule.
 
-`start` and `end` argument are references delimiting the matched pattern in the source code. The return value needs to be a reference to the resuming position.
+`start` and `end` argument are references delimiting the matched pattern in the source code. In manual mode, the return value needs to be a reference to the resuming position.
 
 **Examples**
 
     Red []
     
-    #macro integer! func [s e][s/1: s/1 + 1 next s]
+    #macro integer! func [s e][s/1 + 1]
     print 1 + 2
 will result in:
 
@@ -144,8 +147,7 @@ Using a block rule to create a variable-arity function:
 
     Red []
     #macro ['max some [integer!]] func [s e][
-        change/part s first maximum-of copy/part next s e e	
-        s
+        first maximum-of copy/part next s e
     ]
     print max 4 2 3 8 1
 will result in:
@@ -348,7 +350,9 @@ Create a macro function.
 
 For a named macro, the specification block can declare as many arguments as needed. The body needs to return a value that will be used to replace the macro call and its arguments. Returning an empty block will just remove the macro call and its arguments.
 
-For a pattern-matching macro, the specification block MUST declare only two arguments, the starting reference and ending reference of the matched pattern. By convention, the arguments names are: `func [start end]` or `func [s e]` as short form. This kind of macro needs to return the resuming position. If it needs to *reprocess* a replaced pattern, then `start` is the value to return. If it needs to *skip* the matched pattern, then `end` is the value to return. Other positions can also be returned, depending on the transformation achieved by the macro, and the desire to partially or fully reprocess the replaced value(s).
+For a pattern-matching macro, the specification block MUST declare only two arguments, the starting reference and ending reference of the matched pattern. By convention, the arguments names are: `func [start end]` or `func [s e]` as short form. By default, the returned value is processed the same way as for named macros, but this automatic behavior can be disabled by inserting the `[manual]` attribute at the beginning of the function specification: `func [[manual] start end]`.
+
+In such *manual* mode, the macro needs to return the resuming position. If it needs to *reprocess* a replaced pattern, then `start` is the value to return. If it needs to *skip* the matched pattern, then `end` is the value to return. Other positions can also be returned, depending on the transformation achieved by the macro, and the desire to partially or fully reprocess the replaced value(s).
 
 A pattern-matching macro accepts:
 
@@ -370,10 +374,23 @@ will result in:
     print 100
     print 9 + 16 = 25
     
-Pattern-matching macro example:
+Pattern-matching macro example (auto mode):
 
     Red []
     #macro [number! '+ number! '= number!] func [s e][
+        do copy/part s e
+    ]
+
+    print 9 + 16 = 25
+will result in:
+
+    Red []
+    print true
+
+Pattern-matching macro example (manual mode):
+
+    Red []
+    #macro [number! '+ number! '= number!] func [[manual] s e][
         change/part s do (copy/part s e) e s
     ]
 
