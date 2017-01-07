@@ -1,0 +1,6 @@
+Red Programming Language Documentation
+
+* link:en[English]
+* link:cs[Česky]
+
+

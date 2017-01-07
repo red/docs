@@ -1,6 +1,9 @@
 {
     "title": "Red Programming Language Documentation",
     "author": "Nenad Rakocevic & Contributors",
+    "styles": {
+	  "website": "styles/website.css"
+	},
     "plugins": [ "versions" ],
     "pluginsConfig": {
         "versions": {

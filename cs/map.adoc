@@ -1,0 +1,230 @@
+= Datový typ map!
+:toc:
+:numbered:  
+
+== Anotace
+
+Mapa (`map!`) reprezentuje asociativní řadu (array) dvojic key/value. Poskytuje rychlý přístup pro čtení (s interním použitím hashtable) a vhodnou, zaměřenou skladbu. Na rozdíl od datového typu `hash!` nepatří mapa do skupiny `series`, tudíž nezná koncept offsetu nebo pozic. Koncepčně leží typ `map!` mezi datovými typy `hash!` a `object!`.
+
+== Literal syntax
+
+   #(<key> <value>...)
+
+   <key>  : hashed key, accepted types are:
+                 any-word!, any-string!, integer!, float!, char!
+
+   <value> : any-type! value
+
+== Creation syntax
+
+   make map! <spec>
+
+   <spec> : block of key/value pairs or an integer value
+
+Je-li argument _spec_ celé číslo, vytvoří se prázdný objekt typu map! s před-alokovaným počtem slotů (obvykle za účelem dynamického zaplnění mapy).
+
+Poznámka:
+ 
+* tělo mapy nebo blok _spec_ musejí obsahovat **sudý** počet prvků, nemá-li být generována chyba. 
+* hodnoty nejsou _redukovány_, takže pro některé specielní hodnoty (např logic!) je požadována "construction" skladba.
+
+Příklady:
+
+  #(a: 1 b: 2)
+  == #(
+     a: 1
+     b: 2
+  )
+
+  make map! [a 1 'b 2 "c" 3]
+  == #(
+     a: 1
+     b: 2
+     "c" 3
+  )
+
+Klíč (key) typu *any-word!* je v mapě konvertován na typ *set-word* aby její obsah připomínal dvojice klíčů a přiřazených hodnot. Ačkoliv, pro přístup ke klíči není potřebné poskytnout "set-word"; z praktických důvodů (snadnější konstrukce, zejména v cestách) je možné použít prostá slova. Taktéž reflektor `keys-of` (popsaný v odstavci Reflexe níže) vrátí slova místo 'set-words', protože to zjednodušuje další zpracování (zejména párování operací je snazší pro slova než set-words). 
+
+Poznámka: 
+
+* stejně jako hash! a block! je map! pro vyhledávání implicitně [undeline]#case-preserving# a [underline]#case-insensitive#.
+* je-li jako hodnota zadáno `none`, klíč se nevytvoří (viz sekce "Mazání klíčů").
+* hodnoty any-string a series! se při vytváření mapy nekopírují; volba je na uživateli (což optimalizuje zdroje pro obecné použití)
+
+Jinak lze vytvořit novou mapu kopírováním (`copy`) stávající.
+
+== Vyhledávání hodnot
+
+S použitím cesty:
+
+    <map>/<key>
+    get '<map>/<key>
+
+    <map> : jméno mapy
+    <key> : klíč mapy
+
+S použitím výběrové akce:
+
+    select <map> <key>
+
+    <map> : jméno mapy
+    <key> : libovolný typ klíče
+
+
+Všechny tyto přístupy jsou `case-insensitive`. Pro `case-sensitive` vyhledávání je zapotřebí uvést upřesnění `/case`:
+
+    get/case '<map>/<key>
+    select/case <map> <key>
+
+Pokus o vyhledání klíče v mapě nedefinovaného vrací hodnotu `none`.
+
+Příklady:
+
+   m: #(Ab: 2 aB: 5 ab: 10)
+   m/ab
+   == 2
+   select m 'aB
+   == 2
+   get/case 'm/aB
+   == 5
+   select/case m 'ab
+   == 10
+
+
+== Změna klíčů a hodnot
+
+S použitím cesty:
+
+    <map>/<key>: <value>
+    set '<map>/<key> <value>
+
+    <map>   : jméno mapy
+    <key>   : název klíče
+    <value> : libovolná hodnota
+
+
+S použitím modifikační akce:
+ 
+    put <map> <key> <value>
+
+    <map> : jméno mapy
+    <key> : libovolná platná hodnota klíče pro výběr hodnoty
+
+Provedení hromadné změny:
+
+    extend <map> <spec>
+
+    <map>  : název mapy
+    <spec> : blok s dvojicemi name/value (jednou či vícero)
+
+
+Všechny tyto přístupy jsou `case-insensitive`. `Case-sensitive` vyhledávání zajistí upřesnění `/case`:
+
+    set/case '<map>/<key> <value>
+    put/case <map> <key> <value>
+    extend/case <map> <spec>
+
+Nativní funkce `extend` může přijmout mnoho klíčů najednou, takže je vhodná pro hromadné (bulk) změny.
+
+Poznámky: 
+
+* zadání klíče, který dosud v mapě neexistuje, způsobí jeho vytvoření.
+* přidání existujícího klíče změní jeho hodnotu (implicitní je `case-insensitive` srovnávání).
+
+Příklady:
+
+   m: #(Ab: 2 aB: 5 ab: 10)
+   m/ab: 3
+   m
+   == #(
+      Ab: 3
+      aB: 5
+      ab: 10
+   )
+
+   put m 'aB "hello"
+   m
+   == #(
+      Ab: "hello"
+      aB: 5
+      ab: 10
+   )
+
+   set/case 'm/aB 0
+   m
+   == #(
+      Ab: "hello"
+      aB: 0
+      ab: 10
+   )
+   set/case 'm/ab 192.168.0.1
+   == #(
+      Ab: "hello"
+      aB: 0
+      ab: 192.168.0.1
+   )
+   
+   m: #(%cities.red 10)
+   extend m [%cities.red 99 %countries.red 7 %states.red 27]
+   m
+   == #(
+	   %cities.red 99
+	   %countries.red 7
+	   %states.red 27
+    )
+
+
+== Mazání klíčů
+
+Dvojici key/value jednoduše z mapy vymažeme přiřazením hodnoty `none` ke klíči - s použitím jednoho z možných způsobů:
+
+	m: #(a: 1 b 2 "c" 3 d: 99)
+	m
+	== #(
+		a: 1
+		b: 2
+		"c" 3
+		d: 99
+	)
+	m/b: none
+	put m "c" none
+	extend m [d #[none]]
+	m
+	== #(
+	    a: 1
+	)
+
+Poznámka: V uvedeném příkladu je potřebná "construction syntax" aby bylo možné zadat hodnotu `none!` a nikoli hodnotu `word!` (just one way to construct the spec block needed there).
+
+Je rovněž možné smazat všechny klíče najednou akcí `clear`:
+
+ clear #(a 1 b 2 c 3)
+ == #()
+
+
+== Reflexe
+
+* `find` ověří přítomnost klíče v mapě a vrátí `true`, byl-li nalezen, v opačném případě vrátí `none`.
+
+ find #(a 123 b 456) 'b
+ == true
+
+* `length?` vrací počet dvjic key/valu v mapě.
+
+ length? #(a 123 b 456)
+ == 2
+
+* `keys-of` vrací seznam klíčů v mapě formou bloku (set-words are converted to words).
+
+ keys-of #(a: 123 b: 456)
+ == [a b]
+
+* `values-of` vrací seznam hodnot v mapě.
+
+ values-of #(a: 123 b: 456)
+ == [123 456]
+
+* `body-of` vrací všechny dvojice key/value v mapě.
+
+ body-of #(a: 123 b: 456)
+ == [a: 123 b: 456]
