@@ -6,6 +6,7 @@
 ** link:vid.adoc[VID Dialect]
 ** link:draw.adoc[Draw Dialect]
 * link:reactivity.adoc[Reactive Programming]
+* link:libred.adoc[LibRed API]
 * link:preprocessor.adoc[Preprocessor]
 * link:redbin.adoc[Redbin Format Specification]
 * link:README.adoc[Ownership System]

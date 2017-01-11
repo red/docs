@@ -1,0 +1,142 @@
+= LibRed API
+:imagesdir: ../images
+:toc:
+:toclevels: 3
+:numbered:
+
+
+== Abstract 
+
+
+
+== Building libRed
+
+== C API
+=== Setting up
+
+
+
+==== redOpen()
+
+*Syntax*
+----
+redOpen()
+----
+*Description*
+
+
+==== redClose() 
+
+=== Running Red code
+
+==== redDo()
+
+==== redDoBlock()
+
+==== redCall()
+
+=== Registering a callback function
+
+==== redRoutine()
+
+=== Making Red values from C
+
+==== redSymbol()
+
+==== redUnset()
+
+==== redNone()
+
+==== redLogic()
+
+==== redInteger()
+
+==== redFloat()
+
+==== redPair()
+
+==== redString()
+
+==== redWord()
+
+==== redBlock()
+
+==== redPath()
+
+==== redLoadPath()
+
+==== redMakeSeries()
+
+=== Making C values from Red
+
+==== redCInt32()
+
+==== redDouble()
+
+==== redCString()
+
+==== redTypeOf()
+
+=== Calling a Red action
+
+==== redAppend()
+
+==== redChange()
+
+==== redClear()
+
+==== redCopy()
+
+==== redFind()
+
+==== redIndex()
+
+==== redLength()
+
+==== redMake()
+
+==== redMold()
+
+==== redPick()
+
+==== redPoke()
+
+==== redPut()
+
+==== redRemove()
+
+==== redSelect()
+
+==== redSkip()
+
+==== redTo()
+
+=== Accessing a Red word
+
+==== redSet()
+
+==== redGet()
+
+=== Accessing a Red path
+
+==== redSetPath()
+
+==== redGetPath()
+
+=== Debugging
+
+==== redPrint()
+
+==== redProbe()
+
+==== redHasError()
+
+==== redFormError()
+
+==== redOpenDebugConsole()
+
+==== redCloseDebugConsole()
+
+=== Datatypes definition
+
+
