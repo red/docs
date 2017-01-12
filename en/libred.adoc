@@ -12,130 +12,274 @@
 == Building libRed
 
 == C API
-=== Setting up
 
-
+=== Managing the library
 
 ==== redOpen()
-
-*Syntax*
 ----
-redOpen()
+void redOpen()
 ----
-*Description*
+Initializes a new Red runtime library session. This function _must_ be called first, before calling any other API function. It is safe to call it several times in the same process, only one session will be opened anyway.
 
+Note: If another function is called before `redOpen`, the return value will be `-2`, indicating an illegal access attempt.
 
-==== redClose() 
+==== redClose()
+----
+void redClose()
+----
+Terminates the current Red runtime library session, freeing all allocated resources.
 
 === Running Red code
 
 ==== redDo()
+----
+red_value redDo(const char* source)
+----
 
 ==== redDoBlock()
+----
+red_value redDoBlock(red_block code)
+----
+
 
 ==== redCall()
+----
+red_value redCall(red_word name, ...)
+----
 
 === Registering a callback function
 
 ==== redRoutine()
+----
+red_value redRoutine(red_word name, const char* spec, void* func_ptr)
+----
 
 === Making Red values from C
 
 ==== redSymbol()
+----
+long redSymbol(const char* word)
+----
 
 ==== redUnset()
+----
+red_unset redUnset()
+----
 
 ==== redNone()
+----
+red_none redNone()
+----
 
 ==== redLogic()
+----
+red_logic redLogic(long logic)
+----
 
 ==== redInteger()
+----
+red_integer redInteger(long number)
+----
 
 ==== redFloat()
+----
+red_float redFloat(double number)
+----
 
 ==== redPair()
+----
+red_pair redPair(long x, long y)
+----
 
 ==== redString()
+----
+red_string redString(const char* string)
+----
 
 ==== redWord()
+----
+red_word redWord(const char* word)
+----
 
 ==== redBlock()
+----
+red_block redBlock(red_value v,...)
+----
 
 ==== redPath()
+----
+red_path redPath(red_value v, ...)
+----
 
 ==== redLoadPath()
+----
+red_path redLoadPath(const char* path)
+----
 
 ==== redMakeSeries()
+----
+red_value redMakeSeries(unsigned long type, unsigned long slots)
+----
 
 === Making C values from Red
 
 ==== redCInt32()
+----
+long redCInt32(red_integer number)
+----
 
-==== redDouble()
+==== redCDouble()
+----
+double redCDouble(red_float number)
+----
 
 ==== redCString()
+----
+const char* redCString(red_string string)
+----
 
 ==== redTypeOf()
+----
+long redTypeOf(red_value value)
+----
 
 === Calling a Red action
 
 ==== redAppend()
+----
+red_value redAppend(red_series series, red_value value)
+----
 
 ==== redChange()
+----
+red_value redChange(red_series series, red_value value)
+----
 
 ==== redClear()
+----
+red_value redClear(red_series series)
+----
 
 ==== redCopy()
+----
+red_value redCopy(red_series series)
+----
 
 ==== redFind()
+----
+red_value redFind(red_series series, red_value value)
+----
 
 ==== redIndex()
+----
+red_value redIndex(red_series series)
+----
 
 ==== redLength()
+----
+red_value redLength(red_series series)
+----
 
 ==== redMake()
+----
+red_value redMake(red_value proto, red_value spec)
+----
 
 ==== redMold()
+----
+red_value redMold(red_series series)
+----
 
 ==== redPick()
+----
+red_value redPick(red_series series, red_value value)
+----
 
 ==== redPoke()
+----
+red_value redPoke(red_series series, red_value index, red_value value)
+----
 
 ==== redPut()
+----
+red_value redPut(red_series series, red_value index, red_value value)
+----
 
 ==== redRemove()
+----
+red_value redRemove(red_series series)
+----
 
 ==== redSelect()
+----
+red_value redSelect(red_series series, red_value value)
+----
 
 ==== redSkip()
+----
+red_value redSkip(red_series series, red_integer offset)
+----
 
 ==== redTo()
+----
+red_value redTo(red_value proto, red_value spec)
+----
 
 === Accessing a Red word
 
 ==== redSet()
+----
+red_value redSet(long id, red_value value)
+----
 
 ==== redGet()
+----
+red_value redGet(long id)
+----
 
 === Accessing a Red path
 
 ==== redSetPath()
+----
+red_value redSetPath(red_path path, red_value value)
+----
 
 ==== redGetPath()
+----
+red_value redGetPath(red_path path)
+----
 
 === Debugging
 
 ==== redPrint()
+----
+void redPrint(red_value value)
+----
 
 ==== redProbe()
+----
+red_value redProbe(red_value value)
+----
 
 ==== redHasError()
+----
+red_value redHasError(void)
+----
 
 ==== redFormError()
+----
+const char* redFormError(void)
+----
 
 ==== redOpenDebugConsole()
+----
+int redOpenDebugConsole()
+----
 
 ==== redCloseDebugConsole()
+----
+int redCloseDebugConsole()
+----
 
 === Datatypes definition
 
