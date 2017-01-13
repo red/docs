@@ -35,17 +35,35 @@ Terminates the current Red runtime library session, freeing all allocated resour
 ----
 red_value redDo(const char* source)
 ----
+Evaluates the Red expression passed as string and returns the last value.
+
+*Examples*
+----
+redDo("a: 123");
+
+redDo("view [text {hello}]");
+
+char *s = (char *) malloc(100);
+const char *caption = "Hello";
+redDo(sprintf(s, "view [text {%s}]", caption));
+----
 
 ==== redDoBlock()
 ----
 red_value redDoBlock(red_block code)
 ----
+Evaluates the argument block and returns the last value.
 
+*Example*
+----
+redDoBlock(redBlock(redWord("print"), redInteger(42)));
+----
 
 ==== redCall()
 ----
 red_value redCall(red_word name, ...)
 ----
+Invokes the Red function (of `any-function!` type) referenced by _name_ word, passing it eventually some arguments (as Red values). Returns the function's last value.
 
 === Registering a callback function
 
@@ -53,12 +71,37 @@ red_value redCall(red_word name, ...)
 ----
 red_value redRoutine(red_word name, const char* spec, void* func_ptr)
 ----
+Defines as new Red routine named _name_, with _spec_ as specification block and _func-ptr_ C function pointer as body. The C function *must* return a Red value (`redUnset()` can be used to signify that the return value is not used).
+
+*Example*
+----
+#include "red.h"
+#include <stdio.h>
+
+red_integer add(red_integer a, red_integer b) {
+    return redInteger(redCInt32(a) + redCInt32(b));
+}
+
+int main(void) {
+	redRoutine(redWord("c-add"), "[a [integer!] b [integer!]]", (void*) &add);
+	printf(redCInt32(redDo("c-add 2 3")));
+	return 0;
+}
+----
 
 === Making Red values from C
 
 ==== redSymbol()
 ----
 long redSymbol(const char* word)
+----
+Returns a symbol ID associated with the loaded _word_ (provided as a C string). This ID can then be passed to other libRed API functions requiring a symbol ID instead of a word value.
+
+*Example*
+----
+long a = redSymbol("a");
+redSet(a, redInteger(42));
+printf("%l\n", redGet(a));
 ----
 
 ==== redUnset()
