@@ -139,7 +139,7 @@ A reaction contains arbitrary Red code, one or more reactive sources, and one or
 
 The `/link` option takes a function as the reaction and a list of arguments objects to be used in evaluation of the reaction. This alternative form allows dynamic reactions, where the reaction code can be reused with different sets of objects (the basic `react` can only work with statically _named_ objects).
 
-A reaction is removed by with the `/unlink` refinement and with one of the following as a `<source>` argument:
+A reaction is removed using the `/unlink` refinement and with one of the following as a `<source>` argument:
 
 * The `'all` word, will remove all reactive relations created by the reaction.
 * An object value, will remove only relations where that object is the reactive source.
