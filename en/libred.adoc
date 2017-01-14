@@ -38,15 +38,15 @@ red_value redDo(const char* source)
 Evaluates the Red expression passed as string and returns the last value.
 
 *Examples*
-```red
+----
 redDo("a: 123");
 
 redDo("view [text {hello}]");
 
 char *s = (char *) malloc(100);
 const char *caption = "Hello";
-redDo(sprintf(s, "view [text {%s}]", caption));
-```
+redDo(sprintf(s, "view [text \"%s\"]", caption));
+----
 
 ==== redDoBlock()
 ----
