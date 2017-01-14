@@ -63,7 +63,7 @@ redDoBlock(redBlock(redWord("print"), redInteger(42)));
 ----
 red_value redCall(red_word name, ...)
 ----
-Invokes the Red function (of `any-function!` type) referenced by _name_ word, passing it eventually some arguments (as Red values). Returns the function's last value.
+Invokes the Red function (of `any-function!` type) referenced by _name_ word, passing it eventually some arguments (as Red values). Returns the function's last value. The arguments list *must* terminate with a `null` or `0` value, as end marker.
 
 === Registering a callback function
 
@@ -83,9 +83,9 @@ red_integer add(red_integer a, red_integer b) {
 }
 
 int main(void) {
-	redRoutine(redWord("c-add"), "[a [integer!] b [integer!]]", (void*) &add);
-	printf(redCInt32(redDo("c-add 2 3")));
-	return 0;
+    redRoutine(redWord("c-add"), "[a [integer!] b [integer!]]", (void*) &add);
+    printf(redCInt32(redDo("c-add 2 3")));
+    return 0;
 }
 ----
 
@@ -108,45 +108,61 @@ printf("%l\n", redGet(a));
 ----
 red_unset redUnset(void)
 ----
+Returns an `unset!` value.
 
 ==== redNone()
 ----
 red_none redNone(void)
 ----
+Returns a `none!` value.
 
 ==== redLogic()
 ----
 red_logic redLogic(long logic)
 ----
+Returns an `logic!` value. A `logic` value of `0` gives a `false` value, all other values give a `true`.
 
 ==== redInteger()
 ----
 red_integer redInteger(long number)
 ----
+Returns an `integer!` value from `number`.
 
 ==== redFloat()
 ----
 red_float redFloat(double number)
 ----
+Returns an `float!` value from `number`.
 
 ==== redPair()
 ----
 red_pair redPair(long x, long y)
 ----
+Returns a `pair!` value from two integer values.
 
 ==== redString()
 ----
 red_string redString(const char* string)
 ----
+Returns a `string!` value from `string` pointer. Default expected encoding for the argument string is UTF-8. Other encodings can be defined using the `redSetEncoding()` function.
 
 ==== redWord()
 ----
 red_word redWord(const char* word)
 ----
+Returns a `word!` value from a C string. Default expected encoding for the argument string is UTF-8. Other encodings can be defined using the `redSetEncoding()` function. Strings which cannot be loaded as words will return an `error!` value.
 
 ==== redBlock()
 ----
 red_block redBlock(red_value v,...)
+----
+
+Returns a new block! series built from the arguments list. The list *must* terminate with a `null` or `0` value, as end marker.
+
+*Example*
+----
+redBlock(0);                                  // Creates an empty block
+redBlock(redInteger(42), redWord("hi"), 0);   // Creates [42 "hi"] block
 ----
 
 ==== redPath()
