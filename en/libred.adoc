@@ -196,13 +196,13 @@ redDo(redLoadPath("a/b"));    // Creates and evaluates the a/b path! value.
 red_value redMakeSeries(unsigned long type, unsigned long slots)
 ----
 
-Returns a new series! of type `type` and enough size to store `slots` elements. This is a generic series constructor function. The type needs to be one of the `RedType` enumeration values.
+Returns a new series! of type `type` and enough size to store `slots` elements. This is a generic series constructor function. The type needs to be one of the `RedType` enumeration values. 
 
 *Examples*
 ----
 redMakeSeries(RED_TYPE_PAREN, 2);    // Creates a paren! series
 
-long path = redMakeSeries(RED_TYPE_SET_PATH, 2);    // Creates a set-path! series
+long path = redMakeSeries(RED_TYPE_SET_PATH, 2); // Creates a set-path!
 redAppend(path, redWord("a"));
 redAppend(path, redInteger(2));    // Now path is `a/2:`
 ----
@@ -221,15 +221,21 @@ Returns a 32-bit signed integer from a Red integer! value.
 double redCDouble(red_float number)
 ----
 
+Returns a C double floating point value from a Red float! value.
+
 ==== redCString()
 ----
 const char* redCString(red_string string)
 ----
 
+Returns a UTF-8 string buffer pointer from a Red string! value. Other encodings can be defined using the `redSetEncoding()` function.
+
 ==== redTypeOf()
 ----
 long redTypeOf(red_value value)
 ----
+
+Returns the type ID of a Red value. The type ID values are defined in the `RedType` enumeration. See link:libred.adoc#_datatypes_definition[Datatypes] section.
 
 === Calling a Red action
 
