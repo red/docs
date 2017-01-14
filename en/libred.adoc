@@ -159,7 +159,7 @@ red_block redBlock(red_value v,...)
 
 Returns a new block! series built from the arguments list. The list *must* terminate with a `null` or `0` value, as end marker.
 
-*Example*
+*Examples*
 ----
 redBlock(0);                                  // Creates an empty block
 redBlock(redInteger(42), redWord("hi"), 0);   // Creates [42 "hi"] block
@@ -170,14 +170,41 @@ redBlock(redInteger(42), redWord("hi"), 0);   // Creates [42 "hi"] block
 red_path redPath(red_value v, ...)
 ----
 
+Returns a new path! series built from the arguments list. The list *must* terminate with a `null` or `0` value, as end marker.
+
+*Example*
+----
+redDo("a: [b 123]");
+long res = redDo(redPath(redWord("a"), redWord("b"), 0);
+printf("%l\n", redCInt32(res));    // will output 123
+----
+
 ==== redLoadPath()
 ----
 red_path redLoadPath(const char* path)
 ----
 
+Returns a path! series built from a path expressed as a C string. This provides a quick way to build paths without constructing individually each element.
+
+*Example*
+----
+redDo(redLoadPath("a/b"));    // Creates and evaluates the a/b path! value.
+----
+
 ==== redMakeSeries()
 ----
 red_value redMakeSeries(unsigned long type, unsigned long slots)
+----
+
+Returns a new series! of type `type` and enough size to store `slots` elements. This is a generic series constructor function. The type needs to be one of the `RedType` enumeration values.
+
+*Examples*
+----
+redMakeSeries(RED_TYPE_PAREN, 2);    // Creates a paren! series
+
+long path = redMakeSeries(RED_TYPE_SET_PATH, 2);    // Creates a set-path! series
+redAppend(path, redWord("a"));
+redAppend(path, redInteger(2));    // Now path is `a/2:`
 ----
 
 === Making C values from Red
