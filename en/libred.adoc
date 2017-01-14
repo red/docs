@@ -214,6 +214,8 @@ redAppend(path, redInteger(2));    // Now path is `a/2:`
 long redCInt32(red_integer number)
 ----
 
+Returns a 32-bit signed integer from a Red integer! value.
+
 ==== redCDouble()
 ----
 double redCDouble(red_float number)
