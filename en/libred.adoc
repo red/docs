@@ -200,7 +200,7 @@ Returns a new series! of type `type` and enough size to store `slots` elements. 
 
 *Examples*
 ----
-redMakeSeries(RED_TYPE_PAREN, 2);    // Creates a paren! series
+redMakeSeries(RED_TYPE_PAREN, 2);  // Creates a paren! series
 
 long path = redMakeSeries(RED_TYPE_SET_PATH, 2); // Creates a set-path!
 redAppend(path, redWord("a"));
@@ -244,80 +244,112 @@ Returns the type ID of a Red value. The type ID values are defined in the `RedTy
 red_value redAppend(red_series series, red_value value)
 ----
 
+Appends a `value` to a `series` and returns the series at head.
+
 ==== redChange()
 ----
 red_value redChange(red_series series, red_value value)
 ----
+
+Changes a `value` in `series` and returns the series after the changed part.
 
 ==== redClear()
 ----
 red_value redClear(red_series series)
 ----
 
+Removes `series` values from current index to tail and returns series at new tail.
+
 ==== redCopy()
 ----
-red_value redCopy(red_series series)
+red_value redCopy(red_value value)
 ----
+
+Returns a copy of a non-scalar value.
 
 ==== redFind()
 ----
 red_value redFind(red_series series, red_value value)
 ----
 
+Returns the `series` where a `value` is found, or NONE.
+
 ==== redIndex()
 ----
 red_value redIndex(red_series series)
 ----
+
+Returns the current index of `series` relative to the head, or of word in a context. 
 
 ==== redLength()
 ----
 red_value redLength(red_series series)
 ----
 
+Returns the number of values in the `series`, from the current index to the tail.
+
 ==== redMake()
 ----
 red_value redMake(red_value proto, red_value spec)
 ----
 
+Returns a new value made from a `spec` for that `proto`'s type. 
+
 ==== redMold()
 ----
-red_value redMold(red_series series)
+red_value redMold(red_value value)
 ----
+
+Returns a source format string representation of a value.
 
 ==== redPick()
 ----
 red_value redPick(red_series series, red_value value)
 ----
 
+Returns the `series` at a given index `value`. 
+
 ==== redPoke()
 ----
 red_value redPoke(red_series series, red_value index, red_value value)
 ----
+
+Replaces the `series` at a given `index` with the `value`, and returns the new value.
 
 ==== redPut()
 ----
 red_value redPut(red_series series, red_value index, red_value value)
 ----
 
+Replaces the value following a key in a `series` or map! value, and returns the new value.
+
 ==== redRemove()
 ----
 red_value redRemove(red_series series)
 ----
+
+Removes a value at current `series` index and returns series after removal.
 
 ==== redSelect()
 ----
 red_value redSelect(red_series series, red_value value)
 ----
 
+Find a `value` in a `series` and return the next value, or NONE.
+
 ==== redSkip()
 ----
 red_value redSkip(red_series series, red_integer offset)
 ----
 
+Returns the `series` relative to the current index.
+
 ==== redTo()
 ----
 red_value redTo(red_value proto, red_value spec)
 ----
+
+Converts `spec` value to a datatype specified by `proto`.
 
 === Accessing a Red word
 
