@@ -120,7 +120,7 @@ Returns a _none!_ value.
 ----
 red_logic redLogic(long logic)
 ----
-Returns an _logic!_ value. A _logic_ value of `0` gives a `false` value, all other values give a `true`.
+Returns a `logic!` value. A _logic_ value of `0` gives a `false` value, all other values give a `true`.
 
 ==== redInteger()
 ----

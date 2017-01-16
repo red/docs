@@ -13,7 +13,7 @@ The GUI code engine contains several parts:
 * Platform-independent faces management engine
 * Reactive actions events
 * Draw dialect interpreter
-* Platform backends
+* Platform-specific backends
 
 === React
 
@@ -27,12 +27,10 @@ Draw is a Red dialect for 2D vector drawing. It can be specified in different wa
 * directly in the `draw` property of any face object
 * using the DRAW function to draw directly onto an image
 
-=== OS-specific backends
+=== Platform-specific backends
 
-
-An internal API allows the implementation of as many backends as are needed for the View engine. A backend must  be capable of extensive 2D drawing for complete support of Draw dialect.
-
+An internal API allows supports multiple backends (OS/graphic system combinations) so that the View engine can be implemented in different environments. Each backend must be capable of extensive 2D drawing for complete support of Draw dialect.
 
 .Disclaimer
 
-The initial design of VID, Draw and most of View (except for the reactive parts) were created by Carl Sassenrath and implemented in Rebol. Red View is a completely new, independent implementation providing similar features with some improvements when desirable. Reactive actions being a prime example.
+The initial design of VID, Draw and most of View (except for the reactive parts) were created by Carl Sassenrath and implemented in Rebol. Red View is a completely new, independent implementation providing similar features with some desirable improvements. Reactive actions being a prime example.
