@@ -29,7 +29,7 @@ Draw is a Red dialect for 2D vector drawing. It can be specified in different wa
 
 === Platform-specific backends
 
-An internal API allows supports multiple backends (OS/graphic system combinations) so that the View engine can be implemented in different environments. Each backend must be capable of extensive 2D drawing for complete support of Draw dialect.
+An internal API allows multiple backends (OS/graphic system combinations) so that the View engine can be implemented in different environments. Each backend must be capable of extensive 2D drawing for complete support of Draw dialect.
 
 .Disclaimer
 
