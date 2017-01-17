@@ -358,10 +358,14 @@ Converts _spec_ value to a datatype specified by _proto_.
 red_value redSet(long id, red_value value)
 ----
 
+Sets a word defined from _id_ symbol to _value_. The word created from the symbol is bound to global context. _value_ is returned by this function.
+
 ==== redGet()
 ----
 red_value redGet(long id)
 ----
+
+Returns the value of a word defined from _id_ symbol. The word created from the symbol is bound to global context.
 
 === Accessing a Red path
 
@@ -370,10 +374,14 @@ red_value redGet(long id)
 red_value redSetPath(red_path path, red_value value)
 ----
 
+Sets a _path_ to a _value_ and returns that _value.
+
 ==== redGetPath()
 ----
 red_value redGetPath(red_path path)
 ----
+
+Returns the _value_ referenced by the _path_.
 
 === Debugging
 
@@ -382,30 +390,46 @@ red_value redGetPath(red_path path)
 void redPrint(red_value value)
 ----
 
+Prints the _value_ on the standard output, or in the debug console if opened.
+
 ==== redProbe()
 ----
 red_value redProbe(red_value value)
 ----
+
+Probes the _value_ on the standard output, or in the debug console if opened. The _value_ is returned from this function call.
 
 ==== redHasError()
 ----
 red_value redHasError(void)
 ----
 
+Returns an error! value if an error has occured in previous API call, or `null` if there no error occured.
+
 ==== redFormError()
 ----
 const char* redFormError(void)
 ----
 
-==== redOpenDebugConsole()
+Returns a UTF-8 string pointer containing a formatted error if an error has occured, or `null` if there no error occured.
+
+==== redOpenLogWindow()
 ----
-int redOpenDebugConsole(void)
+int redOpenLogWindow(void)
 ----
 
-==== redCloseDebugConsole()
+Opens the log window and redirects all the Red printing output to that window. This feature is useful if the host application is not run from the system shell, which is used by default for the printing output. Calling this function several times will have no effect if the log window is already opened. Returns `1` on success, `0` on failure.
+
+NOTE: Only for Windows platforms.
+
+==== redCloseLogWindow()
 ----
-int redCloseDebugConsole(void)
+int redCloseLogWindow(void)
 ----
+
+Closes the log window. Calling this function when the log window is already closed will have no effect. Returns `1` on success, `0` on failure.
+
+NOTE: Only for Windows platforms.
 
 === Datatypes definition
 
