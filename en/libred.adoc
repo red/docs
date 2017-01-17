@@ -7,11 +7,56 @@
 
 == Abstract 
 
+LibRed is a special version of the Red interpreter and runtime library, suitable for integration in a foreign software built using a non-Red programming language. In order to interact with Red, libRed exposes to the foreign software, a dedicated C-level API which is described in this document. Among the supported features, there is:
 
+* Ability to set/get a word's value from global or local context.
+* Shortcut contructors for the most common Red datatypes
+* Conversion functions for Red datatypes compatible with C ones.
+* Series manipulation from foreign language.
+* Callbacks allowing Red to call foreign language functions.
+* Console-oriented debugging functions.
+
+Terminology: the term _host_ is used to designated the host language or application embedding libRed.
+
+Samples of libRed usage can be found https://github.com/red/red/tree/master/tests/libRed[here].
 
 == Building libRed
 
+Building your local version of libRed is simple:
+----
+red build libRed
+----
+or from Rebol's console and Red sources:
+----
+rc "build libRed"
+----
+Those command-lines will build the libRed version for C language (using the `cdecl` ABI). If you need the `stdcall` ABI (for Microsoft apps compatibility), you need to use:
+----
+red build libRed stdcall
+----
+
+== Value references
+
+Red values can be returned by libRed function calls. They are represented as _opaque_ 32-bit references. Those references are short-lived, so they are suitable only for local use, like passing that reference to another libRed function call. Setting such reference to a host variable is possible, but it should be used *immediatly after*. Those references are using a specific memory manager that will only keep references alive for about the next 50 API calls. For example:
+----
+long a, blk;
+
+a = redSymbol("a");
+redSet(a, redBlock(0));                   // returned reference is used immediatly here
+
+blk = redGet(a);
+redPrint(blk);                            // safe reference usage
+
+for(i = 0; i < 100, i++) {
+    // redAppend(blk, redNone());	  // unsafe reference usage!
+    redAppend(redGet("a"), redNone());    // safe version
+}
+----
+
+
 == C API
+
+The C API can be used with C/C++ applications, but also for integrating Red within any other programming language having a C-compatible https://en.wikipedia.org/wiki/Foreign_function_interface[FFI].
 
 === Managing the library
 
