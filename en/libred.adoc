@@ -177,6 +177,12 @@ red_logic redLogic(long logic)
 ----
 Returns a `logic!` value. A _logic_ value of `0` gives a `false` value, all other values give a `true`.
 
+==== redDatatype()
+----
+red_datatype redDatatype(long type)
+----
+Returns a `datatype!` value corresponding to the _type_ ID, which is a value from `RedType` enumeration.
+
 ==== redInteger()
 ----
 red_integer redInteger(long number)
@@ -194,6 +200,18 @@ Returns an `float!` value from _number_.
 red_pair redPair(long x, long y)
 ----
 Returns a `pair!` value from two integer values.
+
+==== redTuple()
+----
+red_tuple redTuple(long r, long g, long b)
+----
+Returns a `tuple!` value from three integer values (usually for representing RGB colors). Passed arguments will be truncated to 8-bit values.
+
+==== redTuple4()
+----
+red_tuple redTuple4(long r, long g, long b, long a)
+----
+Returns a `tuple!` value from four integer values (usually for representing RGBA colors). Passed arguments will be truncated to 8-bit values.
 
 ==== redString()
 ----
