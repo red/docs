@@ -60,6 +60,10 @@ The C API can be used with C/C++ applications, but also for integrating Red with
 
 === Managing the library
 
+A libRed _instance_ needs to be create in order to use any function from the API. 
+
+NOTE: Currently, only a single libRed session per process is allowed. This will be extended in the future to allow multi-instances support.
+
 ==== redOpen()
 ----
 void redOpen(void)
@@ -75,6 +79,8 @@ void redClose(void)
 Terminates the current Red runtime library session, freeing all allocated resources.
 
 === Running Red code
+
+The host software can run Red code directly, using different level of control, from providing Red code in text form to be evaluated, down to calling any Red function directly, passing arguments contructed from the host side.
 
 ==== redDo()
 ----
@@ -112,6 +118,8 @@ Invokes the Red function (of `any-function!` type) referenced by _name_ word, pa
 
 === Registering a callback function
 
+Responding to an event occuring in Red, or redirecting some Red calls to the host side (like redirecting `print` or `ask`) requires a way to call back a host function from Red side. This can be achieved using `redRoutine()` function.
+
 ==== redRoutine()
 ----
 red_value redRoutine(red_word name, const char* spec, void* func_ptr)
@@ -135,6 +143,8 @@ int main(void) {
 ----
 
 === Making Red values from C
+
+Many functions from the libRed API require passing Red values (as _references_). The following functions are simple constructors for the most commonly used datatypes.
 
 ==== redSymbol()
 ----
@@ -254,6 +264,8 @@ redAppend(path, redInteger(2));    // Now path is `a/2:`
 
 === Making C values from Red
 
+Converting Red values to host side is possible, though, restricted by the limited number of types in C language.
+
 ==== redCInt32()
 ----
 long redCInt32(red_integer number)
@@ -283,6 +295,8 @@ long redTypeOf(red_value value)
 Returns the type ID of a Red value. The type ID values are defined in the `RedType` enumeration. See link:libred.adoc#_datatypes_definition[Datatypes] section.
 
 === Calling a Red action
+
+It is possible to call any Red function using `redCall`, though, for the most common actions, some shortcuts are provided for convenience and better performances.
 
 ==== redAppend()
 ----
@@ -398,6 +412,8 @@ Converts _spec_ value to a datatype specified by _proto_.
 
 === Accessing a Red word
 
+Setting a Red word or getting the value of a Red word is the most direct way to pass values between the host and Red runtime environment.
+
 ==== redSet()
 ----
 red_value redSet(long id, red_value value)
@@ -414,6 +430,8 @@ Returns the value of a word defined from _id_ symbol. The word created from the 
 
 === Accessing a Red path
 
+Paths are very flexible way to access data in Red, so they have their dedicated accessor functions in libRed. Notably, they allow access to words in object contexts.
+
 ==== redSetPath()
 ----
 red_value redSetPath(red_path path, red_value value)
@@ -429,6 +447,8 @@ red_value redGetPath(red_path path)
 Returns the _value_ referenced by the _path_.
 
 === Debugging
+
+Some handy debugging functions are also provided. Most of them require a system shell window for the output, though, it is possible to force the opening of a log window, or redirect the output to a file.
 
 ==== redPrint()
 ----
@@ -476,6 +496,27 @@ Closes the log window. Calling this function when the log window is already clos
 
 NOTE: Only for Windows platforms.
 
+==== redOpenLogFile()
+----
+void redOpenLogFile(const string *name)
+----
+
+Redirects the output from Red printing functions to the file specified by _name_. A relative or absolute path can be provided in _name_ using OS-specific file path format.
+
+==== redCloseLogFile()
+----
+void redCloseLogFile(void)
+----
+
+Closes the log file opened with `redOpenLogFile()`.
+
+NOTE: Currently, the log file *must* be closed on exit, otherwise a lock is kept on it and this can even cause freezing or crashes in some hosts (like MS Office applications).
+
 === Datatypes definition
 
+Some functions from libRed API can refer to Red datatypes: `redTypeOf()`, `redMakeSeries()` and `redDatatype()`. Red datatypes are represented on the host side, as an enumeration (`RedType`), where types are names using the following scheme:
+----
+RED_TYPE_<DATATYPE>
+----
 
+The exhaustive list can be found https://github.com/red/red/blob/master/libRed/red.h#L105[here].
