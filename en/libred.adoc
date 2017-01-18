@@ -99,6 +99,18 @@ const char *caption = "Hello";
 redDo(sprintf(s, "view [text \"%s\"]", caption));
 ----
 
+==== redDoFile()
+----
+red_value redDoFile(const char* filename)
+----
+Loads and evaluates the Red script referred by _filename_ and returns the last value. The _filename_ is formatted using Red OS-independent conventions (basically Unix-style).
+
+*Examples*
+----
+redDoFile("hello.red");
+redDoFile("/c/dev/red/demo.red");
+----
+
 ==== redDoBlock()
 ----
 red_value redDoBlock(red_block code)
@@ -537,4 +549,4 @@ Some functions from libRed API can refer to Red datatypes: `redTypeOf()`, `redMa
 RED_TYPE_<DATATYPE>
 ----
 
-The exhaustive list can be found https://github.com/red/red/blob/master/libRed/red.h#L105[here].
+The exhaustive list can be found https://github.com/red/red/blob/master/libRed/red.h#L120[here].
