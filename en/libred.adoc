@@ -247,7 +247,7 @@ Returns a new block! series built from the arguments list. The list *must* termi
 *Examples*
 ----
 redBlock(0);                                  // Creates an empty block
-redBlock(redInteger(42), redWord("hi"), 0);   // Creates [42 "hi"] block
+redBlock(redInteger(42), redWord("hi"), 0);   // Creates [42 hi] block
 ----
 
 ==== redPath()
@@ -550,3 +550,47 @@ RED_TYPE_<DATATYPE>
 ----
 
 The exhaustive list can be found https://github.com/red/red/blob/master/libRed/red.h#L120[here].
+
+== Visual Basic API
+
+The Visual Basic API can be used both for VB and VBA (from MS Office applications). It is essentially the same as the C API, so only differences will be described in the sections below.
+
+In order to use libRed with VB/VBA, you need to a version of the libRed binary that is compiled using `stdcall` ABI. If you need to recompile such version:
+----
+red build libRed stdcall
+----
+
+You will also need to import the https://github.com/red/red/blob/master/libRed/libRed.bas[`libRed.bas`] module file in your project.
+
+==== redLogic()
+----
+Function redLogic(bool As Boolean) As Long
+----
+Returns a Red `logic!` value constructed from a VB `boolean` one.
+
+
+==== redBlock()
+----
+Function redBlock(ParamArray args() As Variant) As Long
+----
+Returns a new block! series built from the arguments list. The arguments number is variable. 
+
+*Examples*
+----
+redProbe redBlock()                             ' Creates an empty block
+redProbe redBlock(42, "hello", redWord("hi"))   ' Creates [42 "hello" hi] block
+----
+
+==== redPath()
+----
+red_path redPath(red_value v, ...)
+----
+
+Returns a new path! series built from the arguments list. The list *must* terminate with a `null` or `0` value, as end marker.
+
+*Example*
+----
+redDo("a: [b 123]");
+long res = redDo(redPath(redWord("a"), redWord("b"), 0);
+printf("%l\n", redCInt32(res));    // will output 123
+----
