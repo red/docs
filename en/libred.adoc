@@ -128,6 +128,11 @@ red_value redCall(red_word name, ...)
 ----
 Invokes the Red function (of `any-function!` type) referenced by _name_ word, passing it eventually some arguments (as Red values). Returns the function's last value. The arguments list *must* terminate with a `null` or `0` value, as end marker.
 
+*Example*
+----
+redCall(redWord("random"), redInteger(6));     // returns a random integer! value between 1 and 6
+----
+
 === Registering a callback function
 
 Responding to an event occuring in Red, or redirecting some Red calls to the host side (like redirecting `print` or `ask`) requires a way to call back a host function from Red side. This can be achieved using `redRoutine()` function.
@@ -553,9 +558,25 @@ The exhaustive list can be found https://github.com/red/red/blob/master/libRed/r
 
 == Visual Basic API
 
-The Visual Basic API can be used both for VB and VBA (from MS Office applications). It is essentially the same as the C API, so only differences will be described in the sections below.
+The Visual Basic API can be used both for VB and VBA (from MS Office applications). It is essentially the same as the C API, so only differences will be described in the sections below. The differences are mostly in the variadic functions, which are split into two flavors:
 
-In order to use libRed with VB/VBA, you need to a version of the libRed binary that is compiled using `stdcall` ABI. If you need to recompile such version:
+* `redBlock()`, `redPath()`, `redCall()` only accept Red values, and do not require a terminal `null` or `0` value, like the C version.
+* `redBlockVB()`, `redPathVB()`, `redCallVB()` only accept VB values, which are automatically converted according to the following table:
+
+[cols="1,4", options="header"]
+|===
+|VisualBasic | Red
+|`vbInteger`| `integer!`
+|`vbLong`| `integer!`
+|`vbSingle`| `float!`
+|`vbDouble`| `float!`
+|`vbString`| `string!`
+|===
+
+
+==== Setting up
+
+In order to use libRed with VB/VBA, you need to a version of the libRed binary that is compiled for `stdcall` ABI. If you need to recompile such version:
 ----
 red build libRed stdcall
 ----
@@ -566,31 +587,58 @@ You will also need to import the https://github.com/red/red/blob/master/libRed/l
 ----
 Function redLogic(bool As Boolean) As Long
 ----
-Returns a Red `logic!` value constructed from a VB `boolean` one.
+Returns a Red `logic!` value constructed from a VB `boolean` value.
 
 
-==== redBlock()
+==== redBlockVB()
 ----
-Function redBlock(ParamArray args() As Variant) As Long
+Function redBlockVB(ParamArray args() As Variant) As Long
 ----
-Returns a new block! series built from the arguments list. The arguments number is variable. 
+Returns a new block! series built from the arguments list. The arguments number is variable and composed of VisualBasic values only. 
 
 *Examples*
 ----
-redProbe redBlock()                             ' Creates an empty block
-redProbe redBlock(42, "hello", redWord("hi"))   ' Creates [42 "hello" hi] block
+redProbe redBlockVB()              ' Creates an empty block
+redProbe redBlockVB(42, "hello")   ' Creates the [42 "hello" hi] block
 ----
 
-==== redPath()
+==== redPathVB()
 ----
-red_path redPath(red_value v, ...)
+Function redPathVB(ParamArray args() As Variant) As Long
 ----
 
-Returns a new path! series built from the arguments list. The list *must* terminate with a `null` or `0` value, as end marker.
+Returns a new path! series built from the arguments list. The arguments number is variable and composed of VisualBasic values only.
+
+*Examples*
+----
+redDo("a: [b 123]")
+res = redDo(redPathVB("a", "b"))
+Debug.print redCInt32(res))        ' will output 123
+----
+
+==== redCallVB()
+----
+Function redCallVB(ParamArray args() As Variant) As Long
+----
+Invokes the Red function (of `any-function!` type) referenced by the string passed (first argument), passing it eventually some arguments (as VisualBasic values). Returns the function's last value. The arguments number is variable and composed of VisualBasic values only.
 
 *Example*
 ----
-redDo("a: [b 123]");
-long res = redDo(redPath(redWord("a"), redWord("b"), 0);
-printf("%l\n", redCInt32(res));    // will output 123
+redCallVB("random", 6);            ' returns a random integer! value between 1 and 6
+----
+
+=== Registering a callback function
+
+Creating a VisualBasic function that can be called from Red side is done like in C API, using the `redRoutine()` call. The last argument for that function is a function pointer. In VB, such pointer can be acquired only for a function defined in a _module_, but not in a _UserForm_.
+
+This is the callback used by the Excel "Red Console" demo:
+----
+Sub RegisterConsoleCB()
+    redRoutine redWord("print"), "[msg [string!]]", AddressOf onConsolePrint
+End Sub
+
+Function onConsolePrint(ByVal msg As Long) As Long
+    If redTypeOf(msg) <> red_unset Then Sheet2.AppendOutput redCString(msg)
+    onConsolePrint = redUnset
+End Function
 ----
