@@ -9,9 +9,9 @@
 
 LibRed is a special version of the Red interpreter and runtime library, suitable for integration in a foreign software built using a non-Red programming language. In order to interact with Red, libRed exposes to the foreign software, a dedicated C-level API which is described in this document. Among the supported features, there are:
 
-* Ability to set/get a word's value from global or local context.
+* Ability to set/get a word's value from global or a local context.
 * Shortcut contructors for the most common Red datatypes.
-* Conversion functions for Red datatypes compatible with C ones.
+* Conversion functions for Red datatypes compatible with foreign language ones.
 * Series manipulation from foreign language.
 * Callbacks allowing Red to call foreign language functions.
 * Console-oriented debugging functions.
