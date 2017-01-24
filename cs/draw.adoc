@@ -1,15 +1,16 @@
 = Dialekt Draw
+:imagesdir: ../images
 :toc:
 :numbered:
 
 
-== Anotace anchor:anotace[]
+== Anotace
 
 Draw je dialekt jazyka (DSL) Red, který poskytuje jednoduchý deklarativní způsob kreslení rovinných útvarů. Operace kreslení jsou vyjádřeny jako seznamy uspořádaných příkazů (používajících bloky hodnot), které je snadné sestavovat a měnit při běhu programu.
 
 Bloky dialektu Draw lze vykreslovat přímo do obrázku s použitím funkce `draw` nebo uvnitř piškotu View s použitím aspektu `draw` (viz View documentation).
 
-== Příkazy anchor:commands[]
+== Příkazy
 
 Příkazy mohou být kreslící instrukce nebo nastavení kreslících instrukcí. Je-li nastaven určitý režim, platí pro všechny následující operace aktuální seance Draw.
 
@@ -20,120 +21,128 @@ Většina kreslících příkazů je doplněna určením souřadnic. Používá 
 
 Některé příkazy zahrnují určení délky. Délka se udává v pixelech.
 
-image:../images/coord-system.png[Coord-system]
+image::../images/coord-system.png[Coord-system,align="center"]
 
 
-=== Line anchor:line[] 
+=== Line
 
 *Syntaxe*
 
-    line <point> <point> ...
+----
+line <point> <point> ...
     
-    <point> : souřadnice bodu (pair!).
+<point> : souřadnice bodu (pair!).
+----
     
 *Popis*
 
 Příkaz nakreslí přímku (line) mezi dvěma body. Je-li zadáno více bodů, kreslí se další přímky v daném pořadí.
 
-=== Triangle anchor:triangle[]  
+=== Triangle
 
 *Syntaxe*
-
-    triangle <point> <point> <point>
+----
+triangle <point> <point> <point>
     
-    <point> : souřadnice vrcholu trojúhelníku (pair!).
+<point> : souřadnice vrcholu trojúhelníku (pair!).
+----
 
-Poznámka: Vrchol (vertex) je bod, kde se setkávají dvě přímky trojúhelníka.
+NOTE: Vrchol (vertex) je bod, kde se setkávají dvě přímky trojúhelníka.
     
 *Popis*
 
 Nakreslí trojúhelník (triangle) se stranami mezi zadanými vrcholy.
 
-=== Box anchor:box[]  
+=== Box 
 
 *Syntaxe*
-
-    box <top-left> <bottom-right>
-    box <top-left> <bottom-right> <corner>
+----
+box <top-left> <bottom-right>
+box <top-left> <bottom-right> <corner>
     
-    <top-left>     : souřadnice levého horního rohu obdélníka (pair!).
-    <bottom-right> : souřadnice pravého dolního rohu obdélníka (pair!).
-    <corner>       : (nepovinné) poloměr oblouku při kreslení zaoblených rohů (integer!).
+<top-left>     : souřadnice levého horního rohu obdélníka (pair!).
+<bottom-right> : souřadnice pravého dolního rohu obdélníka (pair!).
+<corner>       : (nepovinné) poloměr oblouku při kreslení zaoblených rohů (integer!).
+----
     
 *Popis*
 
 Nakreslí obdélník (box), daný polohou levého horního (první argument) a pravého dolního (druhý argument) rohu. Nepovinný poloměr určuje poloměr zaoblení jeho rohů.
 
-=== Polygon anchor:polygon[]  
+=== Polygon
 
 *Syntaxe*
-
-    polygon <point> <point> ...
+----
+polygon <point> <point> ...
     
-    <point> : souřadnice vrcholu (pair!).
+<point> : souřadnice vrcholu (pair!).
+----
     
 *Popis*
 
 Nakreslí mnohoúhelník (polygon) s použitím zadaných vrcholů. Poslední zadaný vrchol nemusí být vrcholem výchozím, neboť si funkce závěrnou stranu nakreslí sama. Minimální počet zadaných bodů je 3.
 
-=== Circle anchor:circle[]  
+=== Circle
 
 *Syntaxe*
-
-    circle <center> <radius>
-    circle <center> <radius-x> <radius-y>
+----
+circle <center> <radius>
+circle <center> <radius-x> <radius-y>
     
-    <center>   : souřadnice středu kružnice (pair!).
-    <radius>   : poloměr kružnice (integer! float!).
-    <radius-x> : (režim elipsy) poloměr kružnice ve směru osy X (integer! float!).
-    <radius-y> : (režim elipsy) poloměr kružnice ve směru osy Y (integer! float!).
+<center>   : souřadnice středu kružnice (pair!). <radius>   : poloměr kružnice (integer! float!).
+<radius-x> : (režim elipsy) poloměr kružnice ve směru osy X (integer! float!).
+<radius-y> : (režim elipsy) poloměr kružnice ve směru osy Y (integer! float!).
+----
     
 *Popis*
 
 Nakreslí kružnici (circle) z daného středu o daném poloměru. Kružnice může být deformována na elipsu přidáním dalšího argumentu, představujícího poloměr ve směru osy Y (čímž se z prvního poloměru stává poloměr ve směru osy X).
 
-=== Ellipse anchor:ellipse[]  
+=== Ellipse  
 
 *Syntaxe*
-
-    ellipse <top-left> <size>
+----
+ellipse <top-left> <size>
     
-    <top-left> : souřadnice levého horního rohu opsaného obdélníka (pair!).
-    <size>     : velikost opsaného obdélníka (pair!).
+<top-left> : souřadnice levého horního rohu opsaného obdélníka (pair!).
+<size>     : velikost opsaného obdélníka (pair!).
+----
     
 *Popis*
 
 Nakreslí elipsu v opsaném obdélníku. Argument `size` představuje rozměry obdélníka.
 
-Poznámka:  Příkaz `ellipse` je pregnantnější než elipsa coby deformovaná kružnice (`circle`).
+NOTE:  Příkaz `ellipse` je pregnantnější než elipsa coby deformovaná kružnice (`circle`).
 
-=== Arc anchor:arc[]  
+=== Arc
 
 *Syntaxe*
-
-    arc <center> <radius> <begin> <sweep>
-    arc <center> <radius> <begin> <sweep> closed
+----
+arc <center> <radius> <begin> <sweep>
+arc <center> <radius> <begin> <sweep> closed
     
-    <center> : souřadnice středu kruhového oblouku (pair!).
-    <radius> : poloměr kruhového oblouku (pair!).
-    <begin>  : počáteční úhel průvodiče ve stupních (integer!).
-    <sweep>  : úhel mezi počátečním a koncovým průvodičem oblouku ve stupních (integer!).
+<center> : souřadnice středu kruhového oblouku (pair!).
+<radius> : poloměr kruhového oblouku (pair!).
+<begin>  : počáteční úhel průvodiče ve stupních (integer!).
+<sweep>  : úhel mezi počátečním a koncovým průvodičem oblouku ve stupních (integer!).
+----
     
 *Popis*
 
 Nakreslí kruhový oblouk (arc) se zadaným středem a poloměrem. Průběh oblouku je určen dvěma úhly. Nepovinné klíčové slovo `closed` doplní oblouk na kruhovou výseč.
 
-=== Curve anchor:curve[]  
+=== Curve
 
 *Syntaxe*
-
-    curve <end-A> <control-A> <end-B>
-    curve <end-A> <control-A> <control-B> <end-B>
+----
+curve <end-A> <control-A> <end-B>
+curve <end-A> <control-A> <control-B> <end-B>
     
-    <end-A>     : koncový bod A (pair!).
-    <control-A> : kontrolní bod A (pair!).
-    <control-B> : kontrolní bod B (pair!).
-    <end-B>     : koncový bod B (pair!).
+<end-A>     : koncový bod A (pair!).
+<control-A> : kontrolní bod A (pair!).
+<control-B> : kontrolní bod B (pair!).
+<end-B>     : koncový bod B (pair!).
+----	
 
 *Popis*
 
@@ -144,14 +153,15 @@ Nakreslí Beziérovu křivku (curve) ze 3 nebo 4 bodů:
 
 Čtyři body umožňují vytvoření složitější křivky.
 
-=== Spline anchor:spline[]  
+=== Spline
 
 *Syntaxe*
-
-    spline <point> <point> ...
-    spline <point> <point> ... closed
+----
+spline <point> <point> ...
+spline <point> <point> ... closed
     
-    <point> : kontrolní bod (pair!).
+<point> : kontrolní bod (pair!).
+----
 
 *Popis*
 
@@ -159,94 +169,99 @@ Nakreslí polynomickou bázovou křivku (b-spline) pro zadané alespoň tři bod
 
 Poznámka: Dva body jsou akceptovány, vrací se ale přímka.
 
-=== Image anchor:image[]  
+=== Image
 
 *Syntaxe*
-
-    image <image>
-    image <image> <top-left>
-    image <image> <top-left> <bottom-right>
-    image <image> <top-left> <top-right> <bottom-left> <bottom-right>
-    image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color>
-    image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color> border
+----
+image <image>
+image <image> <top-left>
+image <image> <top-left> <bottom-right>
+image <image> <top-left> <top-right> <bottom-left> <bottom-right>
+image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color>
+image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color> border
     
-    <image>        : zobrazovaný obrázek (image! word!).
-    <top-left>     : (nepovinné) souřadnice levého horního okraje (pair!).
-    <top-right>    : (nepovinné) souřadnice pravého horního okraje (pair!).
-    <bottom-left>  : (nepovinné) souřadnice levého dolního okraje (pair!).
-    <bottom-right> : (nepovinné) souřadnice pravého dolního okraje (pair!).
-    <color>        : (nepovinné) transparentně zobrazená barva(tuple! word!).
+<image>        : zobrazovaný obrázek (image! word!).
+<top-left>     : (nepovinné) souřadnice levého horního okraje (pair!).
+<top-right>    : (nepovinné) souřadnice pravého horního okraje (pair!).
+<bottom-left>  : (nepovinné) souřadnice levého dolního okraje (pair!).
+<bottom-right> : (nepovinné) souřadnice pravého dolního okraje (pair!).
+<color>        : (nepovinné) transparentně zobrazená barva(tuple! word!).
+----
     
 *Popis*
 
 Nakreslí obrázek s použitím poskytnutých inforací o pozici a šířce. Má-li obrázek zadané poziční informace, potom je nakreslen v souřadnici 0x0. Případně poskytnutá hodnota barvy bude použita pro transparentnost.
 
-Poznámka:
+NOTE:
  
 * Čtyři body nejsou dosud zavedeny. Budou umožňovat roztažení (stretch) obrázku s použitím čtyř libovolně umístěných hran. 
 Four points mode is not yet implemented. It will allow to stretch the image using 4 arbitrary-positioned edges.
 * `border` Tento nepovinný režim není dosud zaveden.
 
-=== Text anchor:text[]  
+=== Text
 
 *Syntaxe*
-
-    text <position> <string>
+----
+text <position> <string>
     
-    <position> : souřadnice polohy textu (pair!).
-    <string>   : tištěný text (string!).
+<position> : souřadnice polohy textu (pair!).
+<string>   : tištěný text (string!).
+----
 
 *Popis*
 
 Tiskne textový řetězec v určeném místě s aktuálním fontem.
 
-Poznámka: Není-li žádný font vybrán nebo jeho barva je nastavena na `none`, použije se místo toho barva pera.
+NOTE: Není-li žádný font vybrán nebo jeho barva je nastavena na `none`, použije se místo toho barva pera.
 
-=== Font anchor:font[]  
+=== Font 
 
 *Syntaxe*
-
-    font <font>
+----
+font <font>
     
-    <font> : new font object to use (object! word!).
+<font> : new font object to use (object! word!).
+----
 
 *Popis*
 
 Výběr fontu pro zobrazení textu. Objekt fontu je klonem šablony typu `font!`.
 
 
-=== Pen anchor:pen[]  
+=== Pen 
 
 *Syntaxe*
-
-    pen <color>
+----
+pen <color>
     
-    <color> : název barvy nebo `off` pro žádnou barvu (tuple! word!).
+<color> : název barvy nebo `off` pro žádnou barvu (tuple! word!).
+----
 
 *Popis*
 
 Vybere barvu pro kreslení čar.
 
-=== Fill-pen anchor:fill-pen[]  
+=== Fill-pen 
 
 *Syntaxe*
-
-    fill-pen <color>
-    fill-pen <grad-type> <grad-offset> <grad-start-rng> <grad-stop-rng>
-             <grad-angle> <grad-scale-x> <grad-scale-y> <grad-color> <offset>
-             <grad-color> <offset> ...
-    fill-pen off
+----
+fill-pen <color>
+fill-pen <grad-type> <grad-offset> <grad-start-rng> <grad-stop-rng>
+          <grad-angle> <grad-scale-x> <grad-scale-y> <grad-color> <offset>
+          <grad-color> <offset> ...
+fill-pen off
     
-    <color>          : volená barva výplně (tuple! word!).
-    <grad-type>      : typ gradientu (word!).
-    <grad-offset>    : odsazení okraje plochy, vyplněné gradientem (pair!).
-    <grad-start-rng> : začátek rozsahu gradientu (integer!).
-    <grad-stop-rng>  : konec rozsahu gradientu (integer!).
-    <grad-angle>     : (nepovinné) rotace gradientu ve stupních (integer! float!).
-    <grad-scale-x>   : (nepovinné) měřítko pro osu X (integer! float!).
-    <grad-scale-y>   : (nepovinné) měřítko pro osu Y (integer! float!).
-    <grad-color>     : barva pro výplň gradientu (tuple! word!).
-    <offset>         : (nepovinné) odsazení barvy gradientu (float!).
+<color>          : volená barva výplně (tuple! word!).
+<grad-type>      : typ gradientu (word!).
+<grad-offset>    : odsazení okraje plochy, vyplněné gradientem (pair!).
+<grad-start-rng> : začátek rozsahu gradientu (integer!).
+<grad-stop-rng>  : konec rozsahu gradientu (integer!).
+<grad-angle>     : (nepovinné) rotace gradientu ve stupních (integer! float!).
+<grad-scale-x>   : (nepovinné) měřítko pro osu X (integer! float!).
+<grad-scale-y>   : (nepovinné) měřítko pro osu Y (integer! float!).
+<grad-color>     : barva pro výplň gradientu (tuple! word!).
+<offset>         : (nepovinné) odsazení barvy gradientu (float!).
+----
 
 *Popis*
 
@@ -261,29 +276,31 @@ For example:
 
 	fill-pen linear 0x100 0 400 red green blue box 0x100 400x300
 
-image:../images/grad-pen.png[Grad-pen]
+image::../images/grad-pen.png[Grad-pen, aling="center"]
 
 Poznámka: Gradient lze definovat až 256 ti barvami.
 
-=== Line-width anchor:line-width[]  
+=== Line-width
 
 *Syntaxe*
-
-    line-width <value>
+----
+line-width <value>
     
-    <value> : nová tlouštku čáry v pixelech (integer!).
+<value> : nová tlouštku čáry v pixelech (integer!).
+----
 
 *Popis*
 
 Nastaví novou tlouštku (width) čar.
 
-=== Line-join anchor:line-join[]  
+=== Line-join  
 
 *Syntaxe*
-
-    line-join <mode>
+----
+line-join <mode>
     
-    <mode> : způsob spojení dvou čar (word!).
+<mode> : způsob spojení dvou čar (word!).
+----
 
 *Popis*
 
@@ -293,17 +310,18 @@ Nastaví způsob spojování čar při kreslení. Přípustné jsou tyto hodnoty
 * `bevel`
 * `miter-bevel`
 
-image:../images/line-join.png[Line-join]
+image::../images/line-join.png[Line-join,align="center"]
 
-Poznámka: miter-bevel usekne špičku tvaru miter na tvar bevel, přesáhne-li její délka stanovenou mez  (Viz https://msdn.microsoft.com/en-us/library/windows/desktop/ms534148%28v=vs.85%29.aspx[zde]).
+NOTE: miter-bevel usekne špičku tvaru miter na tvar bevel, přesáhne-li její délka stanovenou mez  (Viz https://msdn.microsoft.com/en-us/library/windows/desktop/ms534148%28v=vs.85%29.aspx[zde]).
 
-=== Line-cap anchor:line-cap[]  
+=== Line-cap  
 
 *Syntaxe*
-
-    line-cap <mode>
+----
+line-cap <mode>
     
-    <mode> : tvar ukončení čáry (word!).
+<mode> : tvar ukončení čáry (word!).
+----
 
 *Popis*
 
@@ -312,30 +330,32 @@ Nastaví tvar ukončení kreslených čar. Jsou používány následující tvar
 * `square`
 * `round`
 
-image:../images/line-cap.png[Line-cap]
+image::../images/line-cap.png[Line-cap,align="center"]
 
-=== Anti-alias anchor:anti-alias[]  
+=== Anti-alias 
 
 *Syntaxe*
-
-    anti-alias <mode>
+----
+anti-alias <mode>
     
-    <mode> : `on` pro umožnění `off` pro znemožnění.
+<mode> : `on` pro umožnění `off` pro znemožnění.
+----
     
 *Popis*
 
 Přepíná (on/off) režim vyhlazování (anti-aliasing) pro následné příkazy Draw.
 
-Poznámka: Vyhlazení zubatých obrysů poskytuje hezčí vzhled ale degraduje výkon.
+NOTE: Vyhlazení zubatých obrysů poskytuje hezčí vzhled ale degraduje výkon.
 
 
-=== Matrix anchor:matrix[]  
+=== Matrix
 
 *Syntaxe*
+----
+matrix <matrix-setup>
 
-	matrix <matrix-setup>
-
-	<matrix-setup> : the matrix which is post-multiplied to current matrix (block!).
+<matrix-setup> : the matrix which is post-multiplied to current matrix (block!).
+----
 
 *Popis*
 
@@ -351,11 +371,12 @@ Hodnoty bloku jsou interně použity pro vytvoření následující transformač
 	|b d f|
 	|0 0 1|
 
-=== Reset-matrix anchor:reset-matrix[]  
+=== Reset-matrix
 
 *Syntaxe*
-
-	reset-matrix
+----
+reset-matrix
+----
 
 *Popis*
 
@@ -365,120 +386,127 @@ Převede aktuální transformační matici na jednotkovou matici.
 	|0 1 0|
 	|0 0 1|
 
-=== Invert-matrix anchor:invert-matrix[]  
+=== Invert-matrix   
 
 *Syntaxe*
-
-	invert-matrix
+----
+invert-matrix
+----
 
 *Popis*
 
 Provede algebraickou inverzi aktuální transformační matice. 
 
 
-=== Push anchor:push[]  
+=== Push 
 
 *Syntaxe*
+----
+push <draw-block>
 
-	push <draw-block>
-
-	<draw-block> : blok příkazů Draw (block!).
+<draw-block> : blok příkazů Draw (block!).
+----
 
 *Popis*
 
 Uloží aktuální stav (transformace, clipping region a nastavení pera) do zásobníku (stack). Poté lze uvnitř příkazového bloku PUSH měnit stávající transformační matici, pera atp. Po bloku PUSH se aktuální stav obnoví načtením (pop) ze zásobníku. Příkaz PUSH může být vnořený.
 
-=== Rotate anchor:rotate[]  
+=== Rotate
 
 *Syntaxe*
+----
+rotate <angle> <center>
 
-	rotate <angle> <center>
-
-	<angle>  : úhel ve stupních (integer! float!).
-	<center> : (nepovinné) střed otáčení (pair!).
+<angle>  : úhel ve stupních (integer! float!).
+<center> : (nepovinné) střed otáčení (pair!).
+----	
 
 *Popis*
 
 Nastaví pravotočivou rotaci ve stupních kolem daného bodu. Není-li zadán nepovinný parametr `center`, provede se rotace kolem počátku aktuálního souřadného systému. Negativní hodnoty lze použít pro levotočivou rotaci.
 
-=== Scale anchor:scale[]  
+=== Scale   
 
 *Syntaxe*
+----
+scale <scale-x> <scale-y>
 
-	scale <scale-x> <scale-y>
-
-	<scale-x> : měřítko pro osu X (number!).
-	<scale-y> : měřítko pro osu Y (number!).
+<scale-x> : měřítko pro osu X (number!).
+<scale-y> : měřítko pro osu Y (number!).
+----
 
 *Popis*
 
-Sets the scale amounts. The values given are multipliers; use values greater than one to increase the scale; use values less than one to decrease it.
+Nastaví velikost zvětšení. Zadané hodnoty jsou násobitelé; hodnoty větší než jedna zvětšují; hodnoty menší než jedna zmenšují.
 
-=== Translate anchor:translate[]  
+=== Translate 
 
 *Syntaxe*
+----
+translate <offset>
 
-	translate <offset>
-
-	<offset> : the translation amounts (pair!).
+<offset> : the translation amounts (pair!).
+----
 
 *Popis*
 
 Nastaví počátek pro kreslící příkazy. Víceré příkazy `translate` mají kumulativní účinek.
 
-=== Skew anchor:skew[] 
+=== Skew 
 
 *Syntaxe*
+----
+skew <skew-x> <skew-y>
 
-	skew <skew-x> <skew-y>
-
-	<skew-x> : zkosení k ose x ve stupních (integer! float!).
-	<skew-y> : (nepovinné) zkosení k ose y ve stupních (integer! float!).
+<skew-x> : zkosení k ose x ve stupních (integer! float!).
+<skew-y> : (nepovinné) zkosení k ose y ve stupních (integer! float!).
+----
 
 *Popis*
 
 Nastaví zkosení souřadných os, zadané úhlem pootočení ve stupních. Není-li zadáno `<skew-y>`, předpokládá se, že je nulové.
 
 
-=== Transform anchor:transform[]  
+=== Transform   
 
 *Syntaxe*
+----
+transform <angle> <center> <scale-x> <scale-y> <translation>
 
-	transform <angle> <center> <scale-x> <scale-y> <translation>
-
-	<angle>       : úhel rotace ve stupních (integer! float!).
-	<center>      : (nepovinné) střed rotace (pair!).
-	<scale-x>     : měřítko pro osu X (number!).
-	<scale-y>     : měřítko pro osu Y (number!).
-	<translation> : velikost posunu (pair!).
+<angle>       : úhel rotace ve stupních (integer! float!).
+<center>      : (nepovinné) střed rotace (pair!).
+<scale-x>     : měřítko pro osu X (number!).
+<scale-y>     : měřítko pro osu Y (number!).
+<translation> : velikost posunu (pair!).
+----
 
 *Popis*
 
 Nastaví transformaci - posunutí, úpravu velikosti a pootočení.
 
 
-== Implicitní hodnoty anchor:default-values[] 
+== Implicitní hodnoty
 
 Při spouštění nové seance Draw jsou použity následující počáteční hodnoty:
 
 [cols="2,3", options="header"]
 |===
-|Property | Value
-|background	| `white`
-|pen color	| `black`
-|filling	| `off`
-|anti-alias	| `on`
-|font		| `none`
-|line width	| `1`
-|line join	| `miter`
-|line cap	| `flat`
+|*Property* | Value
+|*background*	| `white`
+|*pen color*	| `black`
+|*filling*	| `off`
+|*anti-alias*	| `on`
+|*font*		| `none`
+|*line width*	| `1`
+|*line join*	| `miter`
+|*line cap*	| `flat`
 |===
 
-== Sub bloky anchor:sub-blocks[]
+== Sub bloky 
  
 Příkazy uvnitř kódu Draw mohou být libovolně seskupovány do bloků. Sémantika příkazů se nemění, neboť se jedná o pouhé "cukrátko", umožňující snadnější skupinovou manipulaci s příkazy (zejména skupinové vyjmutí, vložení či odebrání). Prázdné bloky jsou přípustné.
 
-== Aktuální pozice anchor:source-position[] 
+== Aktuální pozice  
 
 Slova typu `set-words`, použitá mezi příkazy zaznamenávají aktuální pozici v bloku Draw a jsou snadno později dostupná.
 
@@ -486,97 +514,98 @@ Slova typu `set-words`, použitá mezi příkazy zaznamenávají aktuální pozi
 NOTE: změní-li se délka bloku Draw před slovem `set-word`, zaznamenaná pozice se neaktualizuje.
 
 
-== Funkce draw anchor:draw-function[] 
+== Funkce draw 
 
 Blok Draw je možné vykreslit přímo do obrázku s použitím funkce `draw`.
 
 *Syntaxe*
-
-    draw <size> <spec>
-    draw <image> <spec>
+----
+draw <size> <spec>
+draw <image> <spec>
     
-    <size>  : size of a new image (pair!).
-    <image> : image to use as canvas (image!).
-    <spec>  : block of Draw commands (block!).
+<size>  : size of a new image (pair!).
+<image> : image to use as canvas (image!).
+<spec>  : block of Draw commands (block!).
+----
 
 *Popis*
 
 Přenese poskytnuté příkazy Draw do existujícího nebo nového obrázku. Vratnou hodnotou funkce je obsah obrázku.
 
-== Zdrojový kód grafiky anchor:graphics-source-code[] 
+== Zdrojový kód grafiky
 
 Grafika v této dokumentaci je generována s použitím jazyka Red a jeho dialektu Draw. Následuje příklad zdrojového kódu, který si čtenář může vyzkoušet překopírováním do své redové konzoly:
+----
+Red [
+	Title:	"Graphics generator for Draw documentation"
+	Author: "Nenad Rakocevic"
+	File:   %draw-graphics.red
+	Needs:	View
+]
 
-	Red [
-		Title:	"Graphics generator for Draw documentation"
-		Author: "Nenad Rakocevic"
-		File:   %draw-graphics.red
-		Needs:	View
-	]
+Arial: make font! [name: "Consolas" style: 'bold]
+small: make font! [size: 9 name: "Consolas" style: 'bold]
 
-	Arial: make font! [name: "Consolas" style: 'bold]
-	small: make font! [size: 9 name: "Consolas" style: 'bold]
+save %line-cap.png draw 240x240 [
+	font Arial
+	text 20x220  "Flat"
+	text 90x220  "Square"
+	text 180x220 "Round"
 
-	save %line-cap.png draw 240x240 [
-		font Arial
-		text 20x220  "Flat"
-		text 90x220  "Square"
-		text 180x220 "Round"
+	line-width 20 pen gray
+	line-cap flat	line 40x40  40x200
+	line-cap square line 120x40 120x200
+	line-cap round	line 200x40 200x200
 
-		line-width 20 pen gray
-		line-cap flat	line 40x40  40x200
-		line-cap square line 120x40 120x200
-		line-cap round	line 200x40 200x200
+	line-width 1 pen black
+	line 20x40  220x40
+	line 20x200 220x200
+]
 
-		line-width 1 pen black
-		line 20x40  220x40
-		line 20x200 220x200
-	]
+save %line-join.png draw 500x100 [
+	font Arial
+	text 10x20  "Miter"
+	text 170x20 "Round"
+	text 330x20 "Bevel"
 
-	save %line-join.png draw 500x100 [
-		font Arial
-		text 10x20  "Miter"
-		text 170x20 "Round"
-		text 330x20 "Bevel"
+	line-width 20 pen gray
+	line-join miter line 140x20 40x80  140x80
+	line-join round line 300x20 200x80 300x80
+	line-join bevel line 460x20 360x80 460x80
 
-		line-width 20 pen gray
-		line-join miter line 140x20 40x80  140x80
-		line-join round line 300x20 200x80 300x80
-		line-join bevel line 460x20 360x80 460x80
+	line-join miter
+	line-width 1 pen black
+	line 140x20 40x80  140x80
+	line 300x20 200x80 300x80
+	line 460x20 360x80 460x80
+]
 
-		line-join miter
-		line-width 1 pen black
-		line 140x20 40x80  140x80
-		line 300x20 200x80 300x80
-		line 460x20 360x80 460x80
-	]
+save %coord-system.png draw 240x240 [
+	font small
+	text 5x5 "0x0"
+	line-width 2
+	line 20x20 200x20 195x16
+	line 200x20 195x24
 
-	save %coord-system.png draw 240x240 [
-		font small
-		text 5x5 "0x0"
-		line-width 2
-		line 20x20 200x20 195x16
-		line 200x20 195x24
+	line 20x20 20x200 16x195
+	line 20x200 24x195
 
-		line 20x20 20x200 16x195
-		line 20x200 24x195
+    font Arial
+	text 205x12 "X"
+	text 12x205 "Y"
+]
 
-		font Arial
-		text 205x12 "X"
-		text 12x205 "Y"
-	]
+save %grad-pen.png draw 400x400 [
+	pen off
+	fill-pen linear 0x100 0 400 red green blue box 0x100 400x300
+]
 
-	save %grad-pen.png draw 400x400 [
-		pen off
-		fill-pen linear 0x100 0 400 red green blue box 0x100 400x300
-	]
-
-	save %grad-pen-more.png draw 600x400 [
-		pen off
-		fill-pen linear 0x0 0 200 red green blue box 0x0 200x200
-		fill-pen linear 200x0 0 200 255.0.0 255.255.0 0.255.0 0.255.255 0.0.255 box 200x0 400x200
-		fill-pen linear 400x0 0 200 255.0.0 0.1 255.255.0 0.2 0.255.0 0.4 0.255.255 0.8 0.0.255 .9 255.0.255 1.0 box 400x0 600x200
-		fill-pen blue box 0x200 200x400 fill-pen radial 100x300 0 100 255.0.0 0.255.0 0.0.255 box 0x200 200x400
-		fill-pen blue box 200x200 400x400 fill-pen diamond 300x300 0 100 30 255.0.0 0.255.0 0.0.255 box 200x200 400x400
-		fill-pen diamond 500x300 0 100 30 3.0 1.5 255.0.0 0.255.0 0.0.255 box 400x200 600x400
-	]
+save %grad-pen-more.png draw 600x400 [
+	pen off
+	fill-pen linear 0x0 0 200 red green blue box 0x0 200x200
+	fill-pen linear 200x0 0 200 255.0.0 255.255.0 0.255.0 0.255.255 0.0.255 box 200x0 400x200
+	fill-pen linear 400x0 0 200 255.0.0 0.1 255.255.0 0.2 0.255.0 0.4 0.255.255 0.8 0.0.255 .9 255.0.255 1.0 box 400x0 600x200
+	fill-pen blue box 0x200 200x400 fill-pen radial 100x300 0 100 255.0.0 0.255.0 0.0.255 box 0x200 200x400
+	fill-pen blue box 200x200 400x400 fill-pen diamond 300x300 0 100 30 255.0.0 0.255.0 0.0.255 box 200x200 400x400
+	fill-pen diamond 500x300 0 100 30 3.0 1.5 255.0.0 0.255.0 0.0.255 box 400x200 600x400
+]
