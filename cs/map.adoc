@@ -6,7 +6,7 @@
 
 Mapa (`map!`) reprezentuje asociativní řadu (array) dvojic key/value. Poskytuje rychlý přístup pro čtení (s interním použitím hashtable) a vhodnou, zaměřenou skladbu. Na rozdíl od datového typu `hash!` nepatří mapa do skupiny `series`, tudíž nezná koncept offsetu nebo pozic. Koncepčně leží typ `map!` mezi datovými typy `hash!` a `object!`.
 
-== Literal syntax
+== Skladba literálů
 ----
 #(<key> <value>...)
 
@@ -16,11 +16,11 @@ Mapa (`map!`) reprezentuje asociativní řadu (array) dvojic key/value. Poskytuj
 <value> : any-type! value
 ----
 
-== Creation syntax
+== Vytvoření objektu
 ----
 make map! <spec>
 
-<spec> : block of key/value pairs or an integer value
+<spec> : blok párů key/value pairs nebo celočíselná hodnota
 ----
 
 Je-li argument _spec_ celé číslo, vytvoří se prázdný objekt typu map! s před-alokovaným počtem slotů (obvykle za účelem dynamického zaplnění mapy).

@@ -50,9 +50,9 @@ Tipy:
         
     probe preprocessor/exec
 
-=== Implementační poznámka
+=== Aplikační poznámka
 
-V současné době jsou výrazy v direktivách, použitých při běhu programu, vyhodnocovány interpretem Rebol2, neboť ten spouští "toolchain code". Toto je dočasné a mělo by být co nejdříve převedeno na vyhodnocování přímo Redem. 
+V současné době jsou výrazy v direktivách, použitých při kompilaci, vyhodnocovány interpretem Rebol2, neboť ten spouští "toolchain code". Toto je dočasné a mělo by být co nejdříve převedeno na vyhodnocování přímo Redem. 
 
 In the meantime, ensure that  your expressions and macros code can be run with Red too, for compatibility with Red interpreter at run-time (and at compile-time in the future).
 

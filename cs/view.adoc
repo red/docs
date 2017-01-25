@@ -79,7 +79,7 @@ Nový piškot se vytvoří klonováním objektu face! doplněném alespoň jedn�
 
 Jakmile je piškot vytvořen, nelze měnit pole `type`.
 
-=== Aspekty options 
+=== Aspekt ,options' 
 
 Aspekt (facet) `options` obsahuje volitelné aspekty, používané pro specifické chování:
 

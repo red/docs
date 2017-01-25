@@ -1,4 +1,4 @@
-= Redbin format
+= Formát Redbin
 :toc:
 :numbered:
 
@@ -45,7 +45,7 @@ Při použití komprese jsou data za záhlavím považovaná za payload, jenž m
 
 == Tabulka symbolů
 
-Tabulka symbolů (symbol table) následuje bezprostředně za daty záhlaví. Je nepovinná a měla by být použita v případě, že slova jsou přítomná ve zbytku payloadu Redbinu. Tabulka má dvě části:
+Tabulka symbolů následuje bezprostředně za daty záhlaví. Je nepovinná a měla by být použita v případě, že slova jsou přítomná ve zbytku payloadu Redbinu. Tabulka má dvě části:
 
 * a table of offsets to string representation of each symbol
 * strings buffers, NUL-terminated and concatenated to each other
@@ -66,9 +66,9 @@ During the decoding process, these symbols are merged within Red's own symbol ta
 
 After the Symbol Table, Red values are stored as records in sequence with no special delimiter or end marker. The loaded values from root level are usually stored in a block! series.
 
-== Records definitions
+== Definice záznamů
 
-Each records starts with a 32-bit `header` field defined as:
+Každý záznam (record) začíná polem `header`, definovaným jako:
 ****
  * bit31    : new-line flag
  * bit30    : no-values flag (for contexts)

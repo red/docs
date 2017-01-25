@@ -215,7 +215,7 @@ dump-reactions
 
 Vytvoří seznam registrovaných reakcí pro ladící účely.
 
-== Reactive Objects  
+== Reaktivní objekty  
 
 Obyčejné objekty v Redu nevykazují reaktivní chování. Aby se objekt stal reaktivním zdrojem, musí být vytvořen z jednoho z následujících prototypů:
 
