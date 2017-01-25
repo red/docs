@@ -748,9 +748,7 @@ Seznam možných flagů z `event/flags`:
 * `control`
 * `shift`
 
-NOTE:
-
-* Všechna pole (kromě `type`) jsou pouze pro čtení. Nastavení aspektu `type` provádí pouze interně prostředí View.
+NOTE: Všechna pole (kromě `type`) jsou pouze pro čtení. Nastavení aspektu `type` provádí pouze interně prostředí View.
 
 Zde je seznam specielních kláves, vracených jako slova polem `event/key`:
 

@@ -36,7 +36,7 @@ Example:
 
 Poznámka: when using the preprocessor at runtime (from Red's interpreter), the `config` object is also available, and will reflect the options used for compiling the Red executable currently used to run the code.
 
-== Prováděcí kontext
+=== Prováděcí kontext
 
 Všechny výrazy, použité v direktivách, jsou vázány na dedikovaný kontext aby se předešlo upouštění (leaking) slov v globálním kontextu, jež může mít nechtěné vedlejší účinky. Tento kontext je rozšířen o každé zadané slovo (set-word), použité v podmínkových výrazech, makrech a direktivách `#do`.
 
@@ -50,7 +50,7 @@ Tipy:
         
     probe preprocessor/exec
 
-== Implementační poznámka
+=== Implementační poznámka
 
 V současné době jsou výrazy v direktivách, použitých při běhu programu, vyhodnocovány interpretem Rebol2, neboť ten spouští "toolchain code". Toto je dočasné a mělo by být co nejdříve převedeno na vyhodnocování přímo Redem. 
 

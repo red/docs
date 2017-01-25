@@ -134,7 +134,7 @@ Default: header (4), head (4), length (4), ...
 Compact: TBD
  
 header/type=5
----
+----
 
 The `head` field indicates the offset of the block reference, using a zero-based integer. The `length` field contains the number of values to be stored in the block. The block values simply follow the block definition, no separator or end delimiter is required.
 

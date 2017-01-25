@@ -10,7 +10,7 @@ Mapa (`map!`) reprezentuje asociativní řadu (array) dvojic key/value. Poskytuj
 ----
 #(<key> <value>...)
 
-<key>  : hashed key, accepted types are:
+<key>  : hashed key, akceptované typy jsou:
          any-word!, any-string!, integer!, float!, char!
 
 <value> : any-type! value
@@ -179,7 +179,7 @@ m
 	%countries.red 7
 	%states.red 27
 )
-
+----
 
 == Mazání klíčů
 

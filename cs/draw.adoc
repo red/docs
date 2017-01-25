@@ -508,7 +508,7 @@ Příkazy uvnitř kódu Draw mohou být libovolně seskupovány do bloků. Séma
 
 == Aktuální pozice  
 
-Slova typu `set-words`, použitá mezi příkazy zaznamenávají aktuální pozici v bloku Draw a jsou snadno později dostupná.
+Slova typu `set-words`, mohou být použita *mezi* příkazy kódu Draw, kde zaznamenávají aktuální pozici v bloku Draw a jsou snadno později dostupná.
 
 
 NOTE: změní-li se délka bloku Draw před slovem `set-word`, zaznamenaná pozice se neaktualizuje.

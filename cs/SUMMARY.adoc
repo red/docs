@@ -9,5 +9,5 @@
 * link:libred.adoc[Libred API]
 * link:preprocessor.adoc[Preprocesor]
 * link:redbin.adoc[Redbin format specification]
-* link:README.adoc[Ownership system]
 * link:style-guide.adoc[Coding Style Guide]
+* link:README.adoc[Ownership system]

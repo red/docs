@@ -32,14 +32,14 @@ Poznámky:
 [cols="1,2", options="header"]
 |===
 |Expression | Definition
-|*reactive programming* | A programming paradigm, a subset of dataflow programming, based on events "pushing" changes.
-|*reaction* | A block of code which contains one or more reactive expressions.
-|*reactive expression* | An expression which references at least one reactive source.
-|*reactive relation* | A relation between two or more objects implemented using reactive expressions.
-|*reactive source* | A path! value referring to a field in a reactive object.
-|*reactive formula* | A reaction which returns the last expression result on evaluation.
-|*reactive object* | An object whose fields can be used as reactive sources.
-|*reactor*	| Alias for "reactive object".
+|*reaktivní programování* | Programovací paradigma, podmnožina programování toku dat, založené na událostech, které "push" (posílaní) změny.
+|*reakce* | Blok kódu, který obsahuje jeden nebo víc reaktivních výrazů.
+|*reaktivní výraz* | Výraz, který odkazuje alespoň na jeden reaktivní zdroj.
+|*reaktivní vztah* | Vztah mezi dvěma či více objekty, zavedený s použitím reaktivních vztahů.
+|*reaktivní zdroj* | Hodnota path!, odkazující na pole reaktivního objektu.
+|*reaktivní formule* | Reakce, která vrací poslední výsledek vyhodnoceného vyrazu.
+|*reaktivní objekt* | Objekt, jehož pole mohou byt použita jako raktivní zdroje.
+|*reaktor*	| Alias pro "reaktivní objekt".
 |===
 
 === Statické vztahy 
