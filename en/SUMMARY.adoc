@@ -1,8 +1,8 @@
 = Summary
 :numbered:
 
-* link:README.adoc[Red/Core Language]
-** link:map.adoc[Map! datatype]
+### link:README.adoc[Red/Core Language]
+#### link:map.adoc[Map! datatype]
 
 * link:gui.adoc[GUI System]
 ** link:view.adoc[View Engine]
