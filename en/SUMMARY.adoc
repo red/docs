@@ -1,11 +1,10 @@
+= Summary
+:numbered:
 
-### Red Language
-
+* link:README.adoc[Red/Core Language]
 ** link:map.adoc[Map! datatype]
 
-### GUI System
-
-** link:gui.adoc[Overview]
+* link:gui.adoc[GUI System]
 ** link:view.adoc[View Engine]
 ** link:vid.adoc[VID Dialect]
 ** link:draw.adoc[Draw Dialect]
