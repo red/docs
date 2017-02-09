@@ -1,13 +1,20 @@
 
+### Red Language
+
 * link:README.adoc[Red/Core Language]
 ** link:map.adoc[Map! datatype]
+
+### GUI System
+
 * link:gui.adoc[GUI]
 ** link:view.adoc[View Engine]
 ** link:vid.adoc[VID Dialect]
 ** link:draw.adoc[Draw Dialect]
+
+### Other Docs
+
 * link:reactivity.adoc[Reactive Programming]
 * link:libred.adoc[LibRed API]
 * link:preprocessor.adoc[Preprocessor]
 * link:redbin.adoc[Redbin Format Specification]
-* link:README.adoc[Ownership System]
 * link:style-guide.adoc[Coding Style Guide]
