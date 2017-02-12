@@ -522,7 +522,7 @@ Notes:
 
 * Both `data` and `pane` facets need to be filled in order for the tab-panel to display properly.
 * If `pane` contains more panels than specified tabs, they will be ignored.
-* When adding/removing a tab, the corresponding panel needs to be added*/removed* too in*/from* `pane` list.
+* When adding/removing a tab, the corresponding panel needs to be added/removed too in/from `pane` list.
 
 
 
