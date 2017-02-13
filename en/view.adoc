@@ -515,7 +515,7 @@ A tab-panel is list of panels where only one can be visible at a given time. A l
 [cols="1, 1, 3", options="header"]
 |===
 |Event type| Handler| Description
-|`change`| on-change| Occurs when the user selects a new tab. |`event/picked` holds the index of the newly selected tab.
+|`change`| on-change| Occurs when the user selects a new tab. `event/picked` holds the index of the newly selected tab.
 |===
 
 Notes:
