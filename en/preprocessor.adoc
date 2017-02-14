@@ -103,9 +103,14 @@ print 1048576
 ----
 === Pattern-matching macros
 
-This is the lower-level version of macros, there are no implicit actions, but full control is given to the user. Instead of matching a word and fetching argument, it matches a pattern provided as a Parse dialect rule or keyword. No automatic replacement takes place, it is up to the macro function to apply the desired transformations and set the resume point of the processing. The typical form is:
-    #macro <rule> func [start end /local word1 word2...][...code...]
+Instead of matching a word and fetching argument, this type of macros matches a pattern provided as a Parse dialect rule or keyword. Like for the named macros, the returned value is used as replacement for the matched pattern.
 
+Thought, there is also a lower-level version of this type of macros, which is triggered by the usage of the `[manual]` attribute. In such case, there are no implicit actions, but full control is given to the user.  No automatic replacement takes place, it is up to the macro function to apply the desired transformations and set the resuming point of the processing.
+
+The typical form of pattern-matching macros is:
+----
+ #macro <rule> func [<attribute> start end /local word1 word2...][...code...]
+----
 The `<rule>` part can be:
 
 * a lit-word! value: for matching a specfic word.
@@ -114,24 +119,33 @@ The `<rule>` part can be:
 
 `start` and `end` argument are references delimiting the matched pattern in the source code. The return value needs to be a reference to the resuming position.
 
+`<attribute>` can be `[manual]`, which triggers the low-level manual mode for the macro.
+
 *Examples:*
 ----
 Red []
 
-#macro integer! func [s e][s/1: s/1 + 1 next s]
+#macro integer! func [s e][s/1 + 1]
 print 1 + 2
 ----
 will result in:
 ----
 Red []
 print 2 + 3 
-----    
+----
+Using manual mode, the same macro would be written as:
+----
+Red []
+
+#macro integer! func [[manual] s e][s/1: s/1 + 1 next s]
+print 1 + 2
+----
+  
 Using a block rule to create a variable-arity function:
 ----
 Red []
 #macro ['max some [integer!]] func [s e][
-    change/part s first maximum-of copy/part next s e e	
-    s
+    first maximum-of copy/part next s e
 ]
 print max 4 2 3 8 1
 ----
@@ -340,15 +354,15 @@ Create a macro function.
 
 For a named macro, the specification block can declare as many arguments as needed. The body needs to return a value that will be used to replace the macro call and its arguments. Returning an empty block will just remove the macro call and its arguments.
 
-For a pattern-matching macro, the specification block MUST declare only two arguments, the starting reference and ending reference of the matched pattern. By convention, the arguments names are: `func [start end]` or `func [s e]` as short form. This kind of macro needs to return the resuming position. If it needs to *reprocess* a replaced pattern, then `start` is the value to return. If it needs to *skip* the matched pattern, then `end` is the value to return. Other positions can also be returned, depending on the transformation achieved by the macro, and the desire to partially or fully reprocess the replaced value(s).
+For a pattern-matching macro, the specification block must declare only **two** arguments, the starting reference and ending reference of the matched pattern. By convention, the arguments names are: `func [start end]` or `func [s e]` as short form. By default, the body needs to return a value that will be used to replace the matched pattern. Returning an empty block will just remove the matched pattern. 
+
+A *manual* mode is also available for pattern-matching macros. It can be set by putting a `[manual]` attribute in the function *spec* block: `func [[manual] start end]`. Such manual mode requires the macro to return the resuming position (instead of a replacement value). If it needs to *reprocess* a replaced pattern, then `start` is the value to return. If it needs to *skip* the matched pattern, then `end` is the value to return. Other positions can also be returned, depending on the transformation achieved by the macro, and the desire to partially or fully reprocess the replaced value(s).
 
 A pattern-matching macro accepts:
 
 * a block: specifies a pattern to match using the Parse dialect.
 * a word: specifies a valid Parse dialect word (like a datatype name, or `skip` to match all values).
 * a lit-word: specifies a specific literal word to match.
-
-When using a lit-word for matching, the macro acts as a low-level version of a named macro, without automatic argument handling/replacing, but the requirement to return a resuming position.
 
 *Examples*
 ----
@@ -367,7 +381,7 @@ Pattern-matching macro example:
 ----
 Red []
 #macro [number! '+ number! '= number!] func [s e][
-    change/part s do (copy/part s e) e s
+    do copy/part s e
 ]
 
 print 9 + 16 = 25
@@ -377,6 +391,30 @@ will result in:
 Red []
 print true
 ----
+A pattern-matching macro in manual mode:
+----
+Red []
+#macro ['sqrt number!] func [[manual] s e][
+    if negative? s/2 [
+        print [
+            "*** SQRT Error: no negative number allowed" lf
+            "*** At:" copy/part s e
+        ]
+        halt
+    ]
+    e             ;-- returns position passed the matched pattern
+]
+
+print sqrt 9
+print sqrt -4
+----
+will result in:
+----
+*** SQRT Error: no negative number allowed 
+*** At: sqrt -4
+(halted)
+----
+
 === #local 
 
 *Syntax*
@@ -394,7 +432,7 @@ Create a local context for macros. All macros defined in that context will be di
 Red []
 print 1.0
 #local [
-    #macro float! func [s e][s/1: to integer! s/1 next s]
+    #macro float! func [s e][to integer! s/1]
     print [1.23 2.54 123.789]
 ]
 print 2.0
