@@ -133,7 +133,7 @@ will result in:
 Red []
 print 2 + 3 
 ----
-Using manual mode, the same macro would be written as:
+Using *manual* mode, the same macro would be written as:
 ----
 Red []
 
