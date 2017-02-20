@@ -7,11 +7,11 @@
 
 == Abstract 
 
-LibRed is a special version of the Red interpreter and runtime library, suitable for building into software built in a languages other than Red. In order to allow the non-Red software interact with Red, libRed exposes a dedicated low level API (following either C  cdecl or Microsoft stdcall standards) which is described in this document. Among the supported features are:
+LibRed is a special version of the Red interpreter and runtime library, suitable for integrating into software built in languages other than Red. In order to allow the non-Red software interact with Red, libRed exposes a dedicated low level API (following either C cdecl or Microsoft stdcall standards) which is described in this document. Among the supported features are:
 
 * Ability to set/get a word's value from global or a local context.
 * Shortcut constructors for the most common Red datatypes.
-* Conversion functions for Red datatypes compatible with C.
+* Conversion functions for Red datatypes compatible with the host language (mostly C).
 * Series manipulation from the host language.
 * Callbacks allowing Red to call host language functions.
 * Console-oriented debugging functions.
@@ -124,13 +124,13 @@ redDoBlock(redBlock(redWord("print"), redInteger(42)));
 
 ==== redCall()
 ----
-red_value redCall(red_word name, ..., red_integer 0)
+red_value redCall(red_word name, ...)
 ----
 Invokes the Red function (of `any-function!` type) referenced by _name_ word, passing it any required arguments (as Red values). Returns the function's last Red value. The arguments list *must* terminate with a `null` or `0` value, as end marker.
 
 *Example*
 ----
-redCall(redWord("random"), redInteger(6));     // returns a random integer! value between 1 and 6
+redCall(redWord("random"), redInteger(6), 0);     // returns a random integer! value between 1 and 6
 ----
 
 === Registering a callback function
@@ -265,7 +265,7 @@ Returns a new path! series built from the arguments list. The list *must* termin
 *Example*
 ----
 redDo("a: [b 123]");
-long res = redDo(redPath(redWord("a"), redWord("b"), 0);
+long res = redGetPath(redPath(redWord("a"), redWord("b"), 0));
 printf("%l\n", redCInt32(res));    // will output 123
 ----
 
@@ -278,7 +278,7 @@ Returns a path! series built from a path expressed as a C string. This provides 
 
 *Example*
 ----
-redDo(redLoadPath("a/b"));    // Creates and evaluates the a/b path! value.
+redGetPath(redLoadPath("a/b"));    // Creates and evaluates the a/b path! value.
 ----
 
 ==== redMakeSeries()
@@ -612,7 +612,7 @@ Returns a new path! series built from the arguments list. The arguments number i
 *Examples*
 ----
 redDo("a: [b 123]")
-res = redDo(redPathVB("a", "b"))
+res = redGetPath(redPathVB("a", "b"))
 Debug.print redCInt32(res))        ' will output 123
 ----
 
