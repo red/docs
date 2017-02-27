@@ -1,8 +1,9 @@
 = Grafické prostředí Red/View
+:imagesdir: ../images
 :toc:
 :numbered:
 
-== Záměry anchor:design-goals[]
+== Záměry 
 
 Složka Red/View (nebo prostě View) je grafický systém jazyka Red. Jeho cíle lze shrnout do těchto bodů:
 
@@ -17,7 +18,7 @@ Složka Red/View (nebo prostě View) je grafický systém jazyka Red. Jeho cíle
 Virtuální strom je sestavován pomocí piškotů (face objects). Každý piškot je propojen se zobrazeným grafickým komponentem dvoucestnou vazbou.
 
 
-== Piškoty anchor:face-objects[]
+== Piškoty 
 
 Piškoty (face objects) jsou klony šablony `face!`. Pole piškotu se nazývá _aspekt_ (_facet_).
 
@@ -78,9 +79,9 @@ Nový piškot se vytvoří klonováním objektu face! doplněném alespoň jedn�
 
 Jakmile je piškot vytvořen, nelze měnit pole `type`.
 
-=== Aspekty anchor:options-facet[]
+=== Aspekt ,options' 
 
-Aspekt `options` obsahuje volitelné aspekty, používané pro specifické chování:
+Aspekt (facet) `options` obsahuje volitelné aspekty, používané pro specifické chování:
 
 [cols="1,4", options="header"]
 |===
@@ -90,7 +91,7 @@ Aspekt `options` obsahuje volitelné aspekty, používané pro specifické chov�
 |*drag&#8209;on* | Možnými aspekty jsou: 'down, 'mid-down, 'alt-down, 'aux-down. Používá se pro uplatnění operace drag'n drop.
 |===
 	
-== Fonty anchor:font-object[]
+== Fonty 
 
 Objekty fontů jsou klony šablony `font!`. Na jeden font může odkazovat jeden či více piškotů, umožňujíc tak kontrolu vlastností skupiny piškotů z jediného místa.
 
@@ -104,7 +105,7 @@ Objekty fontů jsou klony šablony `font!`. Na jeden font může odkazovat jeden
 |*style*	| word!, block!		| no	| Styl nebo blok stylů.
 |*angle*	| integer!		| yes	| Sklon textu ve stupních (default is 0).
 |*color*	| tuple!		| yes	| Barva fontu ve formátu R.G.B nebo R.G.B.A.
-|*anti-alias?*	| logic!, word!		| no	| Režim vyhlazení (anti-aliasing mode - active/inactive nebo specielní).  
+|*anti-alias?	| logic!, word!		| no	| Režim vyhlazení (anti-aliasing mode - active/inactive nebo specielní).  
 |*shadow*	| _(reserved_		| no	| _(vyhrazeno pro budoucí použití)_
 |*state*	| block!		| no	| Informace o interním stavu piškotu _(používané pouze prostředím View)_.
 |*parent*	| block!		| no	| Interní odkaz na rodičovský piškot _(používané pouze prostředím View)_.
@@ -129,7 +130,7 @@ Nabízené režimy vyhlazení:
 * ClearType mode (`anti-alias?: 'ClearType`)
 
 
-== Para anchor:para-object[]
+== Para 
 
 Objekty para jsou klony šablony `para!`. Na jeden objekt para může odkazovat jeden či více piškotů, umožňujíc tak kontrolu vlastností skupiny piškotů z jediného místa.
  
@@ -138,20 +139,20 @@ Objekty para jsou klony šablony `para!`. Na jeden objekt para může odkazovat 
 
 |Facet | Datový typ |  Popis
 
-|origin	| _(reserved)_		| _(vyhraženo pro budoucí použití)_
-|padding	| _(reserved)_		| _(vyhraženo pro budoucí použití)_
-|scroll	| _(reserved)_		| _(vyhraženo pro budoucí použití)_
-|align	| word!			| Nastavení horizontálního přiřazení textu: `left`, `center`, `right`.
-|v-align	| _(reserved)_		| Nastavení vertikálního přiřazení textu: top, middle, bottom.
-|wrap?	| logic!		| Umožnit/znemožnit zarovnání (wrapping) textu v piškotu.
-|parent	| block!		| Interní odkaz na rodičovský piškot (používané pouze prostředím `View`).
+|*origin*	| _(reserved)_		| _(vyhraženo pro budoucí použití)_
+|*padding*	| _(reserved)_		| _(vyhraženo pro budoucí použití)_
+|*scroll*	| _(reserved)_		| _(vyhraženo pro budoucí použití)_
+|*align*	| word!			| Nastavení horizontálního přiřazení textu: `left`, `center`, `right`.
+|*v-align*	| _(reserved)_		| Nastavení vertikálního přiřazení textu: top, middle, bottom.
+|*wrap?*	| logic!		| Umožnit/znemožnit zarovnání (wrapping) textu v piškotu.
+|*parent*	| block!		| Interní odkaz na rodičovský piškot (používané pouze prostředím `View`).
 |===
 
 Poznámky:
 
 * Všechna pole objektu para mohou být nastavena na hodnotu `none`.
 
-== Strom piškotů anchor:face-tree[]
+== Strom piškotů 
 
 Piškoty jsou organizovány do stromu, který odpovídá hierarchii grafických komponent v zobrazení. Vztahy u stromu jsou odvozeny z:
 
@@ -165,26 +166,26 @@ Kořenem stromu piškotů je piškot `screen`. Piškot `screen` může zobrazit 
 Aby mohl být kterýkoli piškot zobrazen na obrazovce, musí být spojen s piškotem screen přímo (pro okna) nebo nepřímo (pro jiné typy piškotů).
 
 
-image:../images/face-tree.png[]
+image::face-tree.png[Face tree,align="center"]
 
 
 
-== Typy piškotů anchor:face-types[]
+== Typy piškotů 
 
-=== Base anchor:base[]
+=== Base 
 
-Piškot typu `base` je nejzákladnějším a nejvšestrannějším typem piškotů. Implicitně zobrazí pouze pozadí barvy `128.128.128`.
+Piškot (face) typu `base` je nejzákladnějším a nejvšestrannějším typem piškotů. Implicitně zobrazí pouze pozadí barvy `128.128.128`.
 
 [cols="1,3", options="header"]
 |===
 
 |Facet | Popis
 
-|`type`	| `'base`
-|`image`	| Lze určit hodnotu typu `image!`, kanál alfa je podporován.
-|`color`	| Lze určit barvu pozadí, kanál alfa je podporován.
-|`text`  | Uvnitř piškotu lze zobrazit libovolný text.
-|`draw`	| Transparentnost je plně podporována pro primitiva systému Draw.
+|*type*	| `'base`
+|*image*	| Lze určit hodnotu typu `image!`, kanál alfa je podporován.
+|*color*	| Lze určit barvu pozadí, kanál alfa je podporován.
+|*text*  | Uvnitř piškotu lze zobrazit libovolný text.
+|*draw*	| Transparentnost je plně podporována pro primitiva systému Draw.
 |===
 
 Poznámky:
@@ -196,7 +197,7 @@ _Tento typ piškotu může být použit pro implementaci libovolnéhé grafické
 
 
 
-=== Text anchor:text[]
+=== Text 
 
 Typ `text` tvoří statický popisek.
 
@@ -204,10 +205,10 @@ Typ `text` tvoří statický popisek.
 |===
 
 |Facet | Popis
-|`type`	| `'text`
-|`text`	| Text popisku.
-|`data`	| Hodnota, zobrazená jako text.
-|`options`	| Podporovaná pole: `default`.
+|*type*	| `'text`
+|*text*	| Text popisku.
+|*data*	| Hodnota, zobrazená jako text.
+|*options*	| Podporovaná pole: `default`.
 |===
 
 Aspekt `data` je synchronizován v reálném čase s aspektem `text` s použitím následujících pravidel:
@@ -220,78 +221,78 @@ Aspekt `options` přijímá následující vlastnosti:
 * `default`: může být nastaven na libovolnou hodnotu, bude použit aspektem `data`, vrací-li konverze aspektu `text` hodnotu `none`, stejně jako u nenačítatelných řetězců.
 
 
-=== Button anchor:button[]
+=== Button 
 
 Tento typ piškotu představuje jednoduché tlačítko.
 
 [cols="1,4", options="header"]
 |===
 |Facet | Popis
-|`type`	| `'button`
-|`text`	| Popisek tlačítka.
-|`image`	| Uvnitř tlačítka se zobrazí obrázek. Lze kombinovat s textem..
+|*type*	| `'button`
+|*text*	| Popisek tlačítka.
+|*image*	| Uvnitř tlačítka se zobrazí obrázek. Lze kombinovat s textem..
 |===
 
 [cols="1,1,3", options="header"]
 |===
 |Typ události | Ovladač | Popis
-|`click`	| `on-click` | Triggered when the user clicks on the button.
+|*click*	| `on-click` | Triggered when the user clicks on the button.
 |===
 
 
-=== Check anchor:check[]
+=== Check 
 
 Tento typ představuje zatržítko s libovolným popiskem na levé či právé straně.
 
 [cols="1,4", options="header"]
 |===
 |Facet | Popis
-|`type`	| `'check`
-|`text`	| Text popisku.
-|`para`	| Pole `align` určuje, zda je text zobrazen na levé nebo pravé straně.
-|`data`	| `true`:  zatrženo, `false`: nezatrženo (default).
+|*type*	| `'check`
+|*text*	| Text popisku.
+|*para*	| Pole `align` určuje, zda je text zobrazen na levé nebo pravé straně.
+|*data*	| `true`:  zatrženo, `false`: nezatrženo (default).
 |===
 
 [cols="1,1,3", options="header"]
 |===
 |Event type | Ovladač | Popis
-|`change` | `on-change` | Spustí se změnou stavu zatržení uživatelem.
+|*change* | `on-change` | Spustí se změnou stavu zatržení uživatelem.
 |===
 
 
-=== Radio anchor:radio[]
+=== Radio 
 
 Tento typ představuje výběrové tlačítko s popiskem na levé či pravé straně. Ve skupině tlačítek na jednom panelu může být zvoleno pouze jedno tlačítko.
 
 [cols="1,4", options="header"]
 |===
 |Facet | Popis
-|`type`	| `'radio`
-|`text`	| Text popisku.
-|`para`	| Pole `align` určuje, zda je text zobrazen na levé nebo pravé straně.
-|`data`	| `true`: checked, `false`: unchecked (default).
+|*type*	| `'radio`
+|*text*	| Text popisku.
+|*para*	| Pole `align` určuje, zda je text zobrazen na levé nebo pravé straně.
+|*data*	| `true`: checked, `false`: unchecked (default).
 |===
 
 [cols="1,1,3", options="header"]
 |===
 |Event type | Ovladač | Popis
-|`change` | `on-change` | Spustí se změnou stavu po akci uživatele.
+|*change* | `on-change` | Spustí se změnou stavu po akci uživatele.
 
 |===
 
 
-=== Field anchor:field[]
+=== Field 
 
 Tento typ představuje jednořádkové vstupní pole.
 
 [cols="1,4", options="header"]
 |===
 |Facet | Popis
-|`type`	| `'field`
-|`text`	| Vkládaný text, hodnota read/write.
-|`data`	| Hodnota, zobrazená jako text.
-|`options`	| Podporovaná pole: `default`.
-|`flags`	| Zapnout či vypnout některé speciální vlastnosti polí (block!).
+|*type*	| `'field`
+|*text*	| Vkládaný text, hodnota read/write.
+|*data*	| Hodnota, zobrazená jako text.
+|*options*	| Podporovaná pole: `default`.
+|*flags*	| Zapnout či vypnout některé speciální vlastnosti polí (block!).
 |===
 
 *Podporované flagy:*
@@ -307,29 +308,29 @@ Aspekt `options` přijímá následující vlastnosti:
 
 * `default`:  může být nastaven na libovolnou hodnotu, bude použit aspektem `data`, vrací-li konverze aspektu `text` hodnotu `none`, stejně jako u nenačítatelných řetězců.
 
-Poznámka:
+NOTE:
 
 * V budoucnu bude možné použit aspekt `selected` pro označení zvýrazněné části vkládaného textu.
 
 [cols="1,1,3", options="header"]
 |===
 |Event type | Ovladač | Popis
-|`enter` | `on-enter` | Vyskytne se při každém stisku klávesnice Enter v poli.
-|`change` | `on-change` | Vyskytne se při každém vložení hodnoty do pole.
-|`key` | `on-key` | Vyskytne se při každém stisku libovolné klávesnice v poli.
+|*enter* | `on-enter` | Vyskytne se při každém stisku klávesnice Enter v poli.
+|*change* | `on-change` | Vyskytne se při každém vložení hodnoty do pole.
+|*key* | `on-key` | Vyskytne se při každém stisku libovolné klávesnice v poli.
 |===
 
 
-=== Area anchor:area[]
+=== Area 
 
 Tento typ představuje víceřádkové vstupní pole.
 
 [cols="1,4", options="header"]
 |===
 |Facet | Popis
-|`type`	| `'area`
-|`text`	| Zadávaný text, hodnota read/write.
-|`flags`| Zapnout či vypnout některé speciální vlastnosti (block!).
+|*type*	| `'area`
+|*text*	| Zadávaný text, hodnota read/write.
+|*flags*| Zapnout či vypnout některé speciální vlastnosti (block!).
 |===
 
 *Podporované flagy:*
@@ -344,45 +345,45 @@ Poznámky:
 [cols="1,1,2", options="header"]
 |===
 |Event type | Ovladač | Popis
-|`change` | `on-change` | Vyskytne se při každém vložení hodnoty do oblasti.
-|`key` | `on-key` | Vyskytne se při každém stisku libovolné klávesnice v oblasti.
+|*change* | `on-change` | Vyskytne se při každém vložení hodnoty do oblasti.
+|*key* | `on-key` | Vyskytne se při každém stisku libovolné klávesnice v oblasti.
 |===
 
 
-=== Text-list anchor:text-list[]
+=== Text-list 
 
 Tento typ představuje svislý seznam textových řetězců, zobrazený v pevném rámečku. Automaticky se objeví vertikální posuvník, jestliže se všechny řádky nevejdou do rámečku.
 
 [cols="1,4", options="header"]
 |===
 |Facet | Popis
-|`type`	| `'text-list`
-|`data`	| Seznam zobrazovaných řetězců (block! hash!).
-|`selected` | Index vybraného řetězce nebo hodnota none, není-li žádný vybrán (read/write).
+|*type*	| `'text-list`
+|*data*	| Seznam zobrazovaných řetězců (block! hash!).
+|*selected* | Index vybraného řetězce nebo hodnota none, není-li žádný vybrán (read/write).
 |===
 
 [cols="1,1,3", options="header"]
 |===
 |Event type | Ovladač | Popis
-|`select` | `on-select` | Vyskytne se při výběru položky seznamu. Aspekt `selected` odkazuje na index starší vybrané položky.
-|`change` | `on-change` | Vyskytne se po události `select`. Aspekt `selected` odkazuje na index nově vybrané položky.
+|*select* | `on-select` | Vyskytne se při výběru položky seznamu. Aspekt `selected` odkazuje na index starší vybrané položky.
+|*change* | `on-change` | Vyskytne se po události `select`. Aspekt `selected` odkazuje na index nově vybrané položky.
 |===
 
-Poznámka:
+NOTE:
 
 * počet viditelných položek zatím nemůže být určen uživatelem.
 
 
-=== Drop-list anchor:drop-list[]
+=== Drop-list 
 
 Tento typ představuje vertikální seznam textových řetězců, zobrazený ve svinutelném rámečku. Automaticky se objeví svislý posuvník, přesahuje-li obsah velikost rámečku.
 
 [cols="1,4", options="header"]
 |===
 |Facet | Popis
-|`type`	| `'drop-list`
-|`data`	| Seznam zobrazovaných řetězců (block! hash!).
-|`selected` | Index vybraného řetězce nebo hodnota none, není-li žádný vybrán (read/write).
+|*type*	| `'drop-list`
+|*data*	| Seznam zobrazovaných řetězců (block! hash!).
+|*selected* | Index vybraného řetězce nebo hodnota none, není-li žádný vybrán (read/write).
 |===
 
 Aspekt `data` přijímá libovolné hodnoty avšak pouze hodnoty typu string jsou zařazeny do seznamu a zobrazeny. Neřetězcové hodnoty lze použít pro vytvoření slovníku (associative array) v němž řetězce slouží jako klíče. Aspekt `selected` je pořadové číslo počínající jedničkou, indikující pozici vybraného řetězce v seznamu.
@@ -390,24 +391,24 @@ Aspekt `data` přijímá libovolné hodnoty avšak pouze hodnoty typu string jso
 [cols="1,1,3", options="header"]
 |===
 |Event type | Ovladač | Popis
-|`select` | `on-select` | Vyskytne se při výběru položky v seznamu. Aspekt `selected` odkazuje na index starší vybrané položky.
-|`change` | `on-change` | Vyskytne se po události `select`. Aspekt `selected` odkazuje na index nově vybrané položky.
+|*select* | `on-select` | Vyskytne se při výběru položky v seznamu. Aspekt *selected* odkazuje na index starší vybrané položky.
+|*change* | `on-change` | Vyskytne se po události `select`. Aspekt `selected` odkazuje na index nově vybrané položky.
 |===
 
-Poznámka:
+NOTE:
 * počet viditelných položek zatím nemůže být určen uživatelem.
 
 
-=== Drop-down anchor:drop-down[]
+=== Drop-down 
 
 Tento typ představuje editovatelné pole s vertikálním seznamem zobrazeným ve svinovacím rámečku. Automaticky se objeví svislý posuvník, překraočuje-li obsah velikost rámečku.
 
 [cols="1,4", options="header"]
 |===
 |Facet | Popis
-|`type`	| `'drop-down`
-|`data`	| Seznam zobrazovaných řetězců (block! hash!).
-|`selected` | Index vybraného řetězce nebo hodnota none, není-li žádný vybrán (read/write).
+|*type*	| `'drop-down`
+|*data*	| Seznam zobrazovaných řetězců (block! hash!).
+|*selected* | Index vybraného řetězce nebo hodnota none, není-li žádný vybrán (read/write).
 |===
 
 Aspekt `data` přijímá libovolné hodnoty avšak pouze hodnoty typu string jsou zařazeny do seznamu a zobrazeny. Neřetězcové hodnoty lze použít pro vytvoření slovníku (associative array) v němž řetězce slouží jako klíče. Aspekt `selected` je pořadové číslo počínající jedničkou, indikující pozici vybraného řetězce v seznamu.
@@ -415,56 +416,56 @@ Aspekt `data` přijímá libovolné hodnoty avšak pouze hodnoty typu string jso
 [cols="1,1,3", options="header"]
 |===
 |Event type | Ovladač | Popis
-|`select` | `on-select` | Vyskytne se při výběru položky v seznamu. Aspekt `selected` odkazuje na index starší vybrané položky.
-|`change` | `on-change` | Vyskytne se po události `select`. Aspekt `selected` odkazuje na index nově vybrané položky.
+|*select* | `on-select` | Vyskytne se při výběru položky v seznamu. Aspekt *selected* odkazuje na index starší vybrané položky.
+|*change* | `on-change` | Vyskytne se po události `select`. Aspekt `selected` odkazuje na index nově vybrané položky.
 |===
 
-Poznámka:
+NOTE:
 
 * počet viditelných položek zatím nemůže být určen uživatelem
 
 
-=== Progress anchor:progress[]
+=== Progress 
 
 Tento typ představuje horizontální nebo vertikální průběhovou lištu.
 
 [cols="1,4", options="header"]
 |===
 |Facet | Popis
-|`type`	| `'progress`
-|`data`	| Hodnota, představující průběh postupu (hodnota percent! nebo float!).
+|*type*	| `'progress`
+|*data*	| Hodnota, představující průběh postupu (hodnota percent! nebo float!).
 |===
 
-Poznámka:
+NOTE:
 
 * Je-li pro zobrazení průběhu použita v aspektu `data` hodnota typu float, musí být v rozsahu od 0.0 do 1.0.
 
 
-=== Slider anchor:slider[]
+=== Slider 
 
 Tento typ představuje kurzor, posuvný podél horizontální nebo vertikální osy.
 
 [cols="1,4", options="header"]
 |===
 |Facet | Popis
-|`type`	| `'slider`
-|`data`	| Hodnota, představující pozici kurzoru (percent! nebo float!).
+|*type*	| `'slider`
+|*data*	| Hodnota, představující pozici kurzoru (percent! nebo float!).
 |===
 
-Poznámka:
+NOTE:
 * Je-li pro zobrazení průběhu použita v aspektu `data` hodnota typu float, musí být v rozsahu od 0.0 do 1.0.
 
 
-=== Camera anchor:camera[]
+=== Camera 
 
 Tento typ se používá k zobrazení "video camera feed".
 
 [cols="1,4", options="header"]
 |===
 |Facet | Popis
-|`type`	| `'camera`
-|`data` 	| Seznam názvů kamer jako blok řetězců.
-|`selected` | Vybraný název kamery ze seznamu `data`, s použitím celočíselného indexu. Nastaveno-li na `none`, není "camera feed" povolen.
+|*type*	| `'camera`
+|*data* 	| Seznam názvů kamer jako blok řetězců.
+|*selected* | Vybraný název kamery ze seznamu `data`, s použitím celočíselného indexu. Nastaveno-li na `none`, není "camera feed" povolen.
 |===
 
 Poznámky:
@@ -473,15 +474,15 @@ Poznámky:
 * It is possible to capture the content of a camera face using `to-image` on the face.
 
 
-=== Panel anchor:panel[]
+=== Panel 
 
 Panel je kontejner pro další piškoty.
 
 [cols="1,4", options="header"]
 |===
 |Facet | Popis
-|`type`	| `'panel`
-|`pane` 	| Blok dětských piškotů. Pořadí v bloku definu Block of children faces. Order in block určuje zetové pořadí při zobrazení.
+|*type*	| `'panel`
+|*pane* 	| Blok dětských piškotů. Pořadí v bloku definu Block of children faces. Order in block určuje zetové pořadí při zobrazení.
 |===
 
 Poznámky:
@@ -490,24 +491,24 @@ Poznámky:
 * Piškoty dětí jsou vloženy do rámečku (frame) panelu.
 
 
-=== Tab-panel anchor:tab-panel[]
+=== Tab-panel 
 
 Tab-panel je seznam karet (tabs), z nichž pouze jedna může být v daném okamžiku viditelná. Seznam názvů těchto karet je zobrazen jako "tabs" a používá se k přepínání mezi kartami.
 
 [cols="1,4", options="header"]
 |===
 |Facet | Popis
-|`type`	| `'tab-panel`
-|`data`	| Blok názvů karet (hodnoty string).
-|`pane` 	| Seznam panelů, odpovídající seznamu karet (block!).
-|`selected` | Index vybraného panelu nebo hodnota none (integer!, read/write).
+|*type*	| `'tab-panel`
+|*data*	| Blok názvů karet (hodnoty string).
+|*pane* 	| Seznam panelů, odpovídající seznamu karet (block!).
+|*selected* | Index vybraného panelu nebo hodnota none (integer!, read/write).
 |===
 
 
 [cols="1,1,3", options="header"]
 |===
 |Event type | Ovladač | Popis
-|change	| on-change | Vyskytne se při výběru nové karty (tab). Aspekt `event/picked` obsahuje index nově vybrané karty.
+|*change*	| on-change | Vyskytne se při výběru nové karty (tab). Aspekt `event/picked` obsahuje index nově vybrané karty.
 |===
 
 Poznámky:
@@ -518,21 +519,20 @@ Poznámky:
 
 
 
-=== Window anchor:window[]
-
+=== Window 
 Reprezentuje okno, zobrazené na monitoru počítače.
 
 [cols="1,4", options="header"]
 |===
 |Facet | Popis
-|`type`	| `'window`
-|`text`	| Název okna (string!).
-|`offset` | Odsazení okna od levého horního rohu obrazovky, nezahrnujíce v to dekoraci rámečku okna (pair!).
-|`size`	| Velikost okna bez dekorací rámečku (pair!).
-|`flags`	| Zapíná či vypíná některé speciální vlastnosti okna (block!).
-|`menu`	| Zobrazí nabídkovou lištu v okně (block!).
-|`pane` 	| Seznam piškotů, zobrazených uvnitř okna (block!).
-|`selected` | Výběr piškotu, jež se stane nositelem zaměření (object!).
+|*type*	| `'window`
+|*text*	| Název okna (string!).
+|*offset* | Odsazení okna od levého horního rohu obrazovky, nezahrnujíce v to dekoraci rámečku okna (pair!).
+|*size*	| Velikost okna bez dekorací rámečku (pair!).
+|*flags*	| Zapíná či vypíná některé speciální vlastnosti okna (block!).
+|*menu*	| Zobrazí nabídkovou lištu v okně (block!).
+|*pane* 	| Seznam piškotů, zobrazených uvnitř okna (block!).
+|*selected* | Výběr piškotu, jež se stane nositelem zaměření (object!).
 |===
 
 *Podporované flagy:*
@@ -546,35 +546,35 @@ Reprezentuje okno, zobrazené na monitoru počítače.
 * `no-buttons`: odebrat všechna tlačítka z přesuvné lišty okna
 * `popup`: alternativní menší dekorace rámečku (jen u Windows).
 
-Poznámka:
+NOTE:
 
 * Použití klíčového slova `popup` na počátku bloku se specifikacemi menu vynutí kontextuální menu v okně namísto nabídkové lišty.
 
 
-=== Screen anchor:screen[]
+=== Screen 
 
 Představuje grafickou zobrazovací jednotku, připojenou k počítači (obvykle monitor).  
 
 [cols="1,4", options="header"]
 |===
 |Facet | Popis
-|`type`	| `'screen`
-|`size`	| Velikost zobrazení monitoru v pixelech. Nastaveno při startu prostředím View (pair!).
-|`pane` 	| Seznam zobrazovaných oken na monitoru (block!).
+|*type*	| `'screen`
+|*size*	| Velikost zobrazení monitoru v pixelech. Nastaveno při startu prostředím View (pair!).
+|*pane* 	| Seznam zobrazovaných oken na monitoru (block!).
 |===
 
 Všechny zobrazené piškoty oken musí být dětmi piškotu screen.
 
 
-=== Group-box anchor:group-box[]
+=== Group-box 
 
 Group-box je kontejner pro jiné piškoty s viditelným rámečkem. _Tento dočasný formát bude odebrán až bude k dispozici podpora pro aspekt `edge`_.
 
 [cols="1,4", options="header"]
 |===
 |Facet | Popis
-|`type`	| `'group-box`
-|`pane` 	| Blok s dětskými piškoty. Pořadí v bloku určuje zetové pořadí (z-order) při zobrazení.
+|*type*	| `'group-box`
+|*pane* 	| Blok s dětskými piškoty. Pořadí v bloku určuje zetové pořadí (z-order) při zobrazení.
 |===
 
 Poznámky:
@@ -582,7 +582,7 @@ Poznámky:
 * Souřadnice odsazení (offset) dětí jsou relativní k levému hornímu rohu group-boxu.
 * Dětské piškoty jsou připojeny do rámečku group-boxu.
 
-== Životní cyklus piškotu anchor:face-life-cycle[]
+== Životní cyklus piškotu 
 
 . Vytvořte piškot pomocí prototypu `face!`.
 . Vložte piškot do stromu piškotů spojeného s piškotem screen. 
@@ -592,18 +592,18 @@ Poznámky:
 . Odebráním piškotu z panelu (pane) jej odeberete ze zobrazení. 
 . Vymizí-li odkazy na piškot, postará se garbage collector o uvolnění obsazených zdrojů.
 
-Poznámka:
+NOTE:
 
 * U aplikací, hladových na zdroje, lze použít funkci `free` pro manuální uvolnění systémových zdrojů.
 
 == Funkce SHOW anchor:show-function[]
 
 *Syntax*
-
-    show <face>
+----
+show <face>
     
-    <face>: klon objektu face! nebo blok objektů nebo názvů (using word! values).
-   
+<face>: klon objektu face! nebo blok objektů nebo názvů (using word! values).
+----   
 
 *Popis*
 
@@ -617,10 +617,10 @@ _Následující informace je uváděna jen pro úplnost, při normálním použ�
 [cols="1,4", options="header"]
 |===
 |Position/Field | Popis
-|1 (handle)	|  OS-specific handle for the graphic object (integer!).
-|2 (changes) | Bit flags array marking which facet has been changed since last call to `show` (integer!).
-|3 (deferred) | List of deferred changes since last call to `show`, when realtime updates are turned off (block! none!).
-|4 (drag-offset) | Stores the starting mouse cursor offset position when entering face dragging mode (pair! none!).
+|*1 (handle)*	|  OS-specific handle for the graphic object (integer!).
+|*2 (changes)* | Bit flags array marking which facet has been changed since last call to `show` (integer!).
+|*3 (deferred)* | List of deferred changes since last call to `show`, when realtime updates are turned off (block! none!).
+|*4 (drag-offset)* | Stores the starting mouse cursor offset position when entering face dragging mode (pair! none!).
 |===
 
 Poznámky:
@@ -628,7 +628,7 @@ Poznámky:
 * After a call to `show`, `changes` field is reset to 0 and `deferred` field block is cleared.
 * A `handle!` datatype will be used in the future for opaque OS handles.
 
-== Aktualizace zobrazení anchor:realtime-vs-deferred-updating[]
+== Aktualizace zobrazení
 
 Prostředí (engine) View má dva různé režimy pro aktualizaci zobrazení po úpravě piškotu (face): 
 
@@ -647,11 +647,11 @@ Motivací pro implicitní nastavení aktualizace v reálném čase jsou:
 
 Odložená aktualizace realizuje mnoho změn na monitoru zároveň, což vede ke snížení zádrhelů a je rychlejší.
 
-Poznámka:
+NOTE:
 
 * Prostředí Rebol/View podporuje pouze režim odložené aktualizace.
 
-== Dvojsměrné propojení anchor:two-way-binding[]
+== Dvojsměrné propojení 
 
 Objekty piškotů se při svém propojení s řadami (series), použitými v aspektech, opírají o vlastnický systém Redu. Jakákoli změna v některém z aspektů je piškotem detekována a vyřízena ve shodě s aktuálním režimem (v reálném čase či odloženém) aktualizace.
 
@@ -660,16 +660,17 @@ Na druhé straně změny, provedené v zobrazených grafických objektech, jsou 
 Toto dvojsměrné propojení zjednodušuje programátorovi interakci s grafickými objekty bez potřeby jakéhokoliv specifického API. Zcela postačí úprava aspektů s použitím akcí na řadách.
 
 Příklad:
+----
+view [
+    list: text-list data ["John" "Bob" "Alice"]
+    button "Add" [append list/data "Sue"]
+    button "Change" [lowercase list/data/1]
+]
+----
 
-    view [
-    	list: text-list data ["John" "Bob" "Alice"]
-    	button "Add" [append list/data "Sue"]
-    	button "Change" [lowercase list/data/1]
-    ]
+== Události 
 
-== Události anchor:events[]
-
-=== Názvy událostí anchor:event-names[]
+=== Názvy událostí 
 
 [cols="1,1,3", options="header"]
 |===
@@ -707,7 +708,7 @@ Příklad:
 |*change*		| any 	| A change occurred in a face accepting user inputs (text input or selection in a list).
 |*menu*		| any 	| A menu entry is picked.
 |*close*		| any 	| A window is closing.
-|**time*		| timer | The delay set by face's `rate` facet expired.
+|*time*		| timer | The delay set by face's `rate` facet expired.
 |===
 
 Poznámky:
@@ -715,26 +716,26 @@ Poznámky:
 * Jedna či více _pohybových_ událostí vždy předchází událost `move`.
 * Jedna či více událostí _měnících rozměr_ vždy předchází událost `resize`.
 
-===Datový typ Event! anchor:event!-datatype[]
+===Datový typ Event! 
 
 Událost je opaktní objekt, obsahující všechny informace o dané události. K polím události se přistupuje pomocí cesty (path notation).
 
 [cols="1,4", options="header"]
 |===
 |Field | Returned value
-|`type`		| Typ události (word!).
-|`face`		| Piškot, ve kterém došlo k události (object!).
-|`window`	| Okno (piškot), ve kterém došlo k události (object!).
-|`offset`	| Odsazení kurzoru myši od piškotu při vzniku události (pair!). Pro gesta se vracejí souřadnice středu.
-|`key`		| Stisknutá klávesa (char! word!).
-|`picked`	| Nová položka, vybraná v piškotu (integer! percent!). Pro událost `menu` se vrací odpovídající ID nabídky. (word!) U zoomovacího gesta se vrací procentní hodnota představující relativní zvětšení/zmenšení. U jiných gest je tato hodnota prozatím závislá na systému (Windows: pole `allArguments` z https://msdn.microsoft.com/en-us/library/windows/desktop/dd353232(v=vs.85[GESTUREINFO].aspx).
-|`flags`		| Vrací seznam s jedním či více flagy (viz list níže) (block!).
-|`away?`		| Vrací `true`, opouští-li kurzor hranice piškotu (logic!). Platí pouze při aktivní události `over`. 
-|`down?`		| Vrací true při stisknutí levého tlačítka myši (logic!).
-|`mid-down?`	| Vrací true při stisknutí prostředního tlačítka myši (logic!).
-|`alt-down?`	| Vrací true při stisknutí pravého tlačítka myši (logic!).
-|`ctrl?`		| Vrací true při stisku klávesy CTRL (logic!).
-|`shift?`	| Vrací true při stisku klávesy SHIFT (logic!).
+|*type*		| Typ události (word!).
+|*face*		| Piškot, ve kterém došlo k události (object!).
+|*window*	| Okno (piškot), ve kterém došlo k události (object!).
+|*offset*	| Odsazení kurzoru myši od piškotu při vzniku události (pair!). Pro gesta se vracejí souřadnice středu.
+|*key*		| Stisknutá klávesa (char! word!).
+|*picked*	| Nová položka, vybraná v piškotu (integer! percent!). Pro událost `menu` se vrací odpovídající ID nabídky. (word!) U zoomovacího gesta se vrací procentní hodnota představující relativní zvětšení/zmenšení. U jiných gest je tato hodnota prozatím závislá na systému (Windows: pole `allArguments` z https://msdn.microsoft.com/en-us/library/windows/desktop/dd353232(v=vs.85[GESTUREINFO].aspx).
+|*flags*		| Vrací seznam s jedním či více flagy (viz list níže) (block!).
+|*away?*		| Vrací `true`, opouští-li kurzor hranice piškotu (logic!). Platí pouze při aktivní události `over`. 
+|*down?*		| Vrací true při stisknutí levého tlačítka myši (logic!).
+|*mid-down?*	| Vrací true při stisknutí prostředního tlačítka myši (logic!).
+|*alt-down?*	| Vrací true při stisknutí pravého tlačítka myši (logic!).
+|*ctrl?*		| Vrací true při stisku klávesy CTRL (logic!).
+|*shift?*	| Vrací true při stisku klávesy SHIFT (logic!).
 |===
 
 Seznam možných flagů z `event/flags`:
@@ -747,9 +748,7 @@ Seznam možných flagů z `event/flags`:
 * `control`
 * `shift`
 
-Poznámka:
-
-* Všechna pole (kromě `type`) jsou pouze pro čtení. Nastavení aspektu `type` provádí pouze interně prostředí View.
+NOTE: Všechna pole (kromě `type`) jsou pouze pro čtení. Nastavení aspektu `type` provádí pouze interně prostředí View.
 
 Zde je seznam specielních kláves, vracených jako slova polem `event/key`:
 
@@ -786,28 +785,28 @@ Následující názvy kláves mohou být vráceny polem `event/key` pouze pro sd
 * `right-menu`
 
 
-=== Aktéři anchor:actors[]
+=== Aktéři 
 
 Aktéři (actors) jsou ovládací funkce pro události prostředí View. Jsou definovány v objektu, vytvořeném volnou formou (nemají prototyp) a odkazuje na ně aspekt objektu `actors` . Všichni aktéři mají stejný blok specifikací.
 
 *Syntaxe*
-
-    on-<event>: func [face [object!] event [event!]]
+----
+on-<event>: func [face [object!] event [event!]]
     
-    <event> : jakýkoliv platný název události (viz tabulka výše)
-    face    : piškot, který je příjemcem události
-    event   : hodnota události.
-
+<event> : jakýkoliv platný název události (viz tabulka výše)
+face    : piškot, který je příjemcem události
+event   : hodnota události.
+----
 Kromě událostí GUI je také možné definovat aktéra `on-create`, který je volán při zobrazení piškotu, ještě před tím, než jsou pro něj alokovány systémové zdroje. Na rozdíl od jiných aktérů má `on-create` pouze jeden argument a to `face`.
 
 *Vratná hodnota*
-
-	'stop : opustit smyčku událostí.
-	'done : zabrání události přetéci do jiného piškotu.
-
+----
+'stop : opustit smyčku událostí.
+'done : zabrání události přetéci do jiného piškotu.
+----
 Ostatní vratné hodnoty nemají žádný účinek.
 
-=== Tok událostí anchor:event-flow[]
+=== Tok událostí 
 
 Události jsou obvykle generovány pro určitou pozici na obrazovce a jsou přiřazeny k nejbližšímu čelnímu (front) piškotu. Události ovšem cestují od jednoho piškotu ke druhému v hierarchii předchůdců ve dvou směrech, obecně známých jako:
 
@@ -816,7 +815,7 @@ Události jsou obvykle generovány pro určitou pozici na obrazovce a jsou při�
 * *probublávání události*: událost postupuje od čelního piškotu k rodičovskému oknu. Pro každý piškot je volán lokální ovladač události.
 
 
-image:../images/event-flow.png[]
+image::event-flow.png[Event flow,align="center"]
 
 Typická cesta toku událostí:
 
@@ -835,24 +834,24 @@ Poznámky:
 * Zrušení události se docílí vrácením slova `'done` z jakéhokoli ovladače.
 * Odchycení události není implicitně povoleno z kapacitních důvodů. Odchycení povolíte nastavením `system/view/capturing?: yes`.
 
-=== Globální ovladače událostí anchor:global-event-handlers[]
+=== Globální ovladače událostí
 
 Před vstupem do cesty toku událostí je možné zajistit specifické předzpracování použitím takzvaných "globálních ovladačů událostí". Jsou k disposici následující API pro jejich přidání a odebrání.
 
 ==== insert-event-func
 
 *Syntaxe*
+----
+insert-event-func <handler>
 
-    insert-event-func <handler>
-
-	<handler> : funkce ovladače nebo blok kódu pro předzpracování události
+<handler> : funkce ovladače nebo blok kódu pro předzpracování události
     
-    specifikace funkce ovladače:: func [face [object!] event [event!]]
-    
+specifikace funkce ovladače:: func [face [object!] event [event!]]
+----    
 *Vratná hodnota*
-
-   Nově přidaná funkce ovladače (function!).
-    
+----
+Nově přidaná funkce ovladače (function!).
+----    
 *Popis*
 
 Instaluje funkci globálního ovladače, která umí předzpracovat události před tím, než se dostanou k ovladači piškotu. Pro každou událost jsou volány všechny globální ovladače, takže kód těla ovladače potřebuje optimalizovat rychlost a využití paměti. Je-li jako argument poskytnut blok, je konvertován na funkci s použitím konstruktoru function.
@@ -869,48 +868,48 @@ Vrací se odkaz na funkci ovladače a ten by být uložen, má-li být ovladač 
 ==== remove-event-func
 
 *Syntaxe*
+----
+remove-event-func <handler>
 
-    remove-event-func <handler>
-
-	<handler> : předchozí instalovaná funkce ovladače události
-
+<handler> : předchozí instalovaná funkce ovladače události
+----
 *Popis*
 
 Zablokuje předchozí instalovaný globální ovladač události jeho odebráním z interniho seznamu.
 
-== Objekt system/view anchor:system-view-object[] 
+== Objekt system/view 
 
 [cols="1,4", options="header"]
 |===
 |Word | Popis
-|`screens` | Seznam piškotů (screen faces), reprezentujících připojená zobrazení.
-|`event-port` | _reserved for future use_
-|`metrics` | _reserved for future use_
-|`platform` | Nízko úrovňový kód prostředí View (includes backend code).
-|`VID` | Procesní kód VIDu.
-|`handlers` | Seznam globálních ovladačů událostí
-|`reactors` | Interní asociativní tabulka pro reaktivní piškoty a jejich akční bloky.
-|`evt-names` | Interní tabulka pro konverzi události na název aktéra.
-|`init` | Inicializační funkce prostředí View; případně může být volána i uživatelem.
-|`awake` | Funkce vstupního bodu pro hlavní 'high-level' události.
-|`capturing?` | `yes` = umožňuje etapu odchycení události a detekovat generování událostí (impicitně `no`).
-|`auto-sync?` | `yes` = aktualizace piškotů v reálném čase (default), `no` = odložená aktualizace piškotů.
-|`debug?` |  `yes` = výstup verbózních záznamů interních událostí prostředí View (implicitně `no`).
-|`silent?` | `yes` = nehlásit procestní chyby dialektů VID nebo Draw (implicitně `no`).
+|*screens* | Seznam piškotů (screen faces), reprezentujících připojená zobrazení.
+|*event-port* | _reserved for future use_
+|*metrics* | _reserved for future use_
+|*platform* | Nízko úrovňový kód prostředí View (includes backend code).
+|*VID* | Procesní kód VIDu.
+|*handlers* | Seznam globálních ovladačů událostí
+|*reactors* | Interní asociativní tabulka pro reaktivní piškoty a jejich akční bloky.
+|*evt-names* | Interní tabulka pro konverzi události na název aktéra.
+|*init* | Inicializační funkce prostředí View; případně může být volána i uživatelem.
+|*awake* | Funkce vstupního bodu pro hlavní 'high-level' události.
+|*capturing?* | `yes` = umožňuje etapu odchycení události a detekovat generování událostí (impicitně `no`).
+|*auto-sync?* | `yes` = aktualizace piškotů v reálném čase (default), `no` = odložená aktualizace piškotů.
+|*debug?* |  `yes` = výstup verbózních záznamů interních událostí prostředí View (implicitně `no`).
+|*silent?* | `yes` = nehlásit procestní chyby dialektů VID nebo Draw (implicitně `no`).
 |===
 
 
-== Připojení View anchor:including-view-component[]
+== Připojení View 
 
 Komponenta View není implicitně připravena pro kompilaci. Za účelem jejího připojení musí hlavní skript Redu deklarovat svou závislost ve svém záhlaví použitím pole `Needs` :
+----
+Red [
+    Needs: 'View
+]
+----
+NOTE: Při použití konzol, automaticky generovaných binárkou `red`, je komponenta View implicitně připojena na podporujících platformách; pole Needs v záhlaví tedy není požadováno ve skriptech, spouštěných z těchto konzol.
 
-    Red [
-    	Needs: 'View
-    ]
-
-Poznámka: Při použití konzol, automaticky generovaných binárkou `red`, je komponenta View implicitně připojena na podporujících platformách; pole Needs v záhlaví tedy není požadováno ve skriptech, spouštěných z těchto konzol.
-
-== Extra funkce anchor:extra-functions[]
+== Extra funkce 
 
 [cols="1,4", options="header"]
 |===

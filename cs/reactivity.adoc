@@ -1,18 +1,19 @@
 = Reaktivní programování
+:imagesdir: ../images
 :toc:
 :numbered:
 
-== Koncept anchor:concept[] 
+== Koncept 
 
 Ve verzi 0.6.0 byla zavedena podpora pro "reaktivní programování" se záměrem snížit velikost a složitost programů Red. Reaktivní model Redu se při sestavování orientovaného (directed) grafu a propagaci změn u objektů opírá o tok dat a události objektů. Používá model "push". Přesněji řečeno, Red používá model https://en.wikipedia.org/wiki/Reactive_programming#Object-oriented[objektově orientovaného programování], kde pouze pole objektů mohou být zdrojem změn.
 
 Reaktivní API a jeho používání je jednoduché i když jeho popis je poněkud abstraktní. Zde je několik ilustrací reaktivních vztahů.
 
-image:../images/react-simple.png[style="text-align:center"]
+image::react-simple.png[react-simple,align="center"]
 
 _Grafy A a B zobrazují jednoduché vztahy mezi jedním nebo několika reaktory (objekty, které slouží jako zdroj reaktivity)_
 
-image:../images/react-graphs.png[style="text-align:center"]
+image::react-graphs.png[react-graph,align:"center"]
 
 _Grafy C, D a E zobrazují zřetězené reakce, kde některé cíle jsou samy reaktory, tvoříce tak řetěz vztahů, jež mohou mít různý tvar_
 
@@ -26,53 +27,55 @@ Poznámky:
 * Toto není framework FRP https://en.wikipedia.org/wiki/Functional_reactive_programming[(Funkctional reactive programming)], i když proudy událostí mohou být v budoucnu podporovány.
 * Strojek Red/View GUI se při operacích s grafickými objekty opírá o objekty (piškoty) typu *face!* Piškoty jsou reaktory a mohou být použity pro ustavení reaktivních vztahů mezi piškoty nebo s nereaktorovými objekty.
 
-=== Glosář anchor:glossary[] 
+=== Glosář 
 
 [cols="1,2", options="header"]
 |===
 |Expression | Definition
-|reactive programming | A programming paradigm, a subset of dataflow programming, based on events "pushing" changes.
-|reaction | A block of code which contains one or more reactive expressions.
-|reactive expression | An expression which references at least one reactive source.
-|reactive relation | A relation between two or more objects implemented using reactive expressions.
-|reactive source | A path! value referring to a field in a reactive object.
-|reactive formula | A reaction which returns the last expression result on evaluation.
-|reactive object | An object whose fields can be used as reactive sources.
-|reactor	| Alias for "reactive object".
+|*reaktivní programování* | Programovací paradigma, podmnožina programování toku dat, založené na událostech, které "push" (posílaní) změny.
+|*reakce* | Blok kódu, který obsahuje jeden nebo víc reaktivních výrazů.
+|*reaktivní výraz* | Výraz, který odkazuje alespoň na jeden reaktivní zdroj.
+|*reaktivní vztah* | Vztah mezi dvěma či více objekty, zavedený s použitím reaktivních vztahů.
+|*reaktivní zdroj* | Hodnota path!, odkazující na pole reaktivního objektu.
+|*reaktivní formule* | Reakce, která vrací poslední výsledek vyhodnoceného vyrazu.
+|*reaktivní objekt* | Objekt, jehož pole mohou byt použita jako raktivní zdroje.
+|*reaktor*	| Alias pro "reaktivní objekt".
 |===
 
-=== Statické vztahy anchor:static-relations[] 
+=== Statické vztahy 
 
 Nejjednodušší formou reakcí je _statický vztah_, vytvořený mezi _pojmenovanými_ objekty. Říkáme statický proto, že staticky spojuje objekty. Vztahuje se výlučně na své zdrojové reaktory a nemůže být použit pro jiné objekty.
 
 *Příklad 1*
-
-	view [
-		s: slider return
-		b: base react [b/color/1: to integer! 255 * s/data]
-	]
-
+----
+view [
+    s: slider return
+	b: base react [b/color/1: to integer! 255 * s/data]]
+----
 Tento příklad zavádí reaktivní vztah mezi posuvníkem (slider), zvaným `s` a bázovým piškotem (base face), zvaným `b`. Při pohybu posuvníku se odpovídajícím způsobem mění barva pozadí bázového piškotu. Reaktivní výraz nemůže být použit pro jinou sadu piškotů. Toto je nejjednoduší forma reaktivního chování grafických objektů v Red/View.
 
 *Příklad 2*
-
-    vec: make reactor! [x: 0 y: 10]
-    box: object [length: is [square-root (vec/x ** 2) + (vec/y ** 2)]]
+----
+vec: make reactor! [x: 0 y: 10]
+box: object [length: is [square-root (vec/x ** 2) + (vec/y ** 2)]]
+----
 
 Jiná forma statického vztahu může být definována s použitím operátoru `is`, kde hodnota reaktivního výpočtu je vztažena ke slovu (v jakékoli souvislosti).
 
 Tento příklad nesouvisí se systémem GUI. Počítá délku vektoru, určeného parametry `vec/x` a `vec/y`, s použitím reaktivního výrazu. Zde opět je zdrojový objekt staticky určen svým jménem (`vec`) v reaktivním výrazu.
 
 *Příklad 3*
-
-	a: make reactor! [x: 1 y: 2 total: is [x + y]]
+----
+a: make reactor! [x: 1 y: 2 total: is [x + y]]
+----
 	
 Slovo `total` má svou hodnotu vztaženu k výrazu `x + y`. S každou změnou hodnot `x` nebo `y` je okamžitě aktualizována hodnota slova `total`. Všimněte si, že v tomto případě není zapotřebí určovat cesty k reaktivním zdrojům, neboť funkce `is` je použita přímo uvnitř těla reaktoru, jenž zná její souvislosti.
 
 *Příklad 4*
-
-	a: make reactor! [x: 1 y: 2]
-	total: is [a/x + a/y]
+----
+a: make reactor! [x: 1 y: 2]
+total: is [a/x + a/y]
+----
 
 Tato variace příkladu 3 ukazuje, že i globální slovo může být cílem reaktivního vztahu (i když nemůže být zdrojem). Tato forma je nejbližší modelu, používaného v aplikaci Ecxel (a jiných spreadsheetech).
 
@@ -83,49 +86,51 @@ Poznámka: vzhledem k velikosti globálního kontextu, může mít jeho reaktivn
 Statické vztahy se snadno definují ale nesnadno se přizpůsobují při potřebě poskytnout tutéž reakci určitému počtu reaktorů nebo jsou-li tyto anonymní (připomínka: všechny objekty jsou implicitně anonymní). V takových případech by měla být reakce určena s použitím funkce `follow` a `react/link`.
 
 *Příklad*
-
-	;-- Pohybuj červeným balonem myší nahoru a dolu. Pozoruj, jak reagují ostatní balony..
+----
+;-- Pohybuj červeným balonem myší nahoru a dolu. Pozoruj, jak reagují ostatní balony..
 	
-	win: layout [
-		size 400x500
-		across
-		style ball: base 30x30 transparent draw [fill-pen blue circle 15x15 14]
-		ball ball ball ball ball ball ball b: ball loose
-		do [b/draw/2: red]
-	]
+win: layout [
+	size 400x500
+	across
+	style ball: base 30x30 transparent draw [fill-pen blue circle 15x15 14]
+	ball ball ball ball ball ball ball b: ball loose
+	do [b/draw/2: red]
+]
 	
-	follow: func [left right][left/offset/y: to integer! right/offset/y * 108%]
+follow: func [left right][left/offset/y: to integer! right/offset/y * 108%]
 	
-	faces: win/pane
-	while [not tail? next faces][
-		react/link :follow [faces/1 faces/2]
-		faces: next faces
-	]
-	view win
+faces: win/pane
+while [not tail? next faces][
+	react/link :follow [faces/1 faces/2]
+	faces: next faces
+]
+view win
+----
 
 V tomto příkladě je reakcí funkce (`follow`), která je aplikována na piškoty balonů (by pairs). To vytváří řetězec vztahů, které spojují všechny balony. Termíny v reakcích jsou názvy parametrů, takže mohou být použity pro jiné objekty (narozdíl od statických vztahů).
 
-== API anchor:api[] 
+== API 
 
-=== react anchor:react[] 
+=== react
 
 *Syntaxe*
-
-    react <code>
-    react/unlink <code> <source>
+----
+react <code>
+react/unlink <code> <source>
     
-    react/link <func> <objects>
-    react/unlink <func> <source>
+react/link <func> <objects>
+react/unlink <func> <source>
     
-    react/later <code>
+react/later <code>
     
-    <code>    : blok kódu, který obsahuje alespoń jeden reaktivní zdroj (block!).
-    <func>    : funkce, která obsahuje alespoň jeden reaktivní zdroj (function!).
-    <objects> : seznam objektů, použitých jako argumenty reaktivní funkce (block! of object! values).
-    <source>  : slovo 'all nebo objekt či seznam objektů (word! object! block!).
+<code>    : blok kódu, který obsahuje alespoń jeden reaktivní zdroj (block!).
+<func>    : funkce, která obsahuje alespoň jeden reaktivní zdroj (function!).
+<objects> : seznam objektů, použitých jako argumenty reaktivní funkce (block! of object! values).
+<source>  : slovo 'all nebo objekt či seznam objektů (word! object! block!).
     
-    Returns   : <code> nebo <func> pro další odkazy na reakci
-    
+Returns   : <code> nebo <func> pro další odkazy na reakci
+---- 
+   
 *Popis*
 
 Funkce `react` zavádí nový reaktivní vztah, který obsahuje alespoň jeden reaktivní zdroj, jímž může být blok kódu (zavádí "statický vztah") nebo funkce (zavádí "dynamický vztah" a vyžaduje upřesnění `/link`). V obou případech je kód staticky analyzován za účelem určení reaktivních zdrojů (s hodnotami typu path!), které odkazují na pole reaktoru.
@@ -144,14 +149,15 @@ Reakci lze odebrat upřesněním `/unlink` a jedním z následujících `<zdrojo
 
 Funkce `/unlink` přijímá reaktivní blok nebo funkci jako argument, takže jsou odebrány pouze vztahy, vytvořené z této reakce.
 
-=== is anchor:is[] 
+=== is 
 
 *Syntaxe*
-
-    <word>: is <code>
+----
+<word>: is <code>
     
-    <word> : slovo, které má být přiřazeno k výsledku reakce (set-word!).
-    <code> : blok kódu, který obsahuje alespoň jeden reaktivní zdroj (block!).
+<word> : slovo, které má být přiřazeno k výsledku reakce (set-word!).
+<code> : blok kódu, který obsahuje alespoň jeden reaktivní zdroj (block!).
+----
     
 *Popis*
 
@@ -160,98 +166,104 @@ Operátor `is` vytváří reaktivní formuli, jejíž výsledek bude přiřazen 
 Poznámka: Tento operátor vytváří reaktivní formule, napodobující formule modelu Excel.
 
 *Příklad*
-
-    a: make reactor! [x: 1 y: 2 total: is [x + y]]
+----
+a: make reactor! [x: 1 y: 2 total: is [x + y]]
     
-    a/total
-    == 3
-    a/x: 100
-    a/total
-    == 102
+a/total
+== 3
+a/x: 100
+a/total
+== 102
+----
 
-=== react? anchor:react-1[] 
+=== react? 
 
 *Syntaxe*
-
-    react? <obj> <field>
-    react?/target <obj> <field>
+----
+react? <obj> <field>
+react?/target <obj> <field>
     
-    <obj>   : kontrolovaný objekt (object!).
-    <field> : pole kontrolovaného objektu (word!).
+<obj>   : kontrolovaný objekt (object!).
+<field> : pole kontrolovaného objektu (word!).
     
-    pole kontrolovaného objektu
+Vrací   : reakci (block! function!) nebo hodnotu none!
+----
     
 *Popis*
 
 Funkce `react?` kontroluje, zda je pole objektu reaktivním zdrojem. Pokud ano, vrátí se první reakce, nalezená jako zdroj v poli objektu; pokud ne, vrací se hodnota `none`. Upřesnění `/target` kontroluje, zda je pole cílem místo zdrojem a vrátí první reakci, zacílenou na toto pole nebo vrátí `none` při absenci shody.
 
-=== clear-reactions anchor:clear-reactions[] 
+=== clear-reactions 
 
 *Syntaxe*
-
-    clear-reactions
+----
+clear-reactions
+----
     
 *Popis*
 
 Odstraní bezpodmínečně všechny definované reakce.
 
-=== dump-reactions anchor:dump-reactions[] 
+=== dump-reactions 
 
 *Syntaxe*
-
-=== dump-reactions anchor:dump-reactions[] 
+----
+dump-reactions
+----
     
 *Popis*
 
 Vytvoří seznam registrovaných reakcí pro ladící účely.
 
-== Reactive Objects anchor:reactive-objects[] 
+== Reaktivní objekty  
 
 Obyčejné objekty v Redu nevykazují reaktivní chování. Aby se objekt stal reaktivním zdrojem, musí být vytvořen z jednoho z následujících prototypů:
 
-=== reactor! anchor:reactor[] 
+=== reactor! 
 
 *Syntaxe*
-
-    make reactor! <body>
+----
+make reactor! <body>
     
-    <body> : blok s tělem objektu   (block!).
+<body> : blok s tělem objektu   (block!).
     
-    Returns : reaktivní objekt.
+Vrací  : reaktivní objekt.
+----
     
 *Popis*
 
 Vytvoří nový reaktivní objekt z těla bloku. Nastavení pole vráceného objektu na novou hodnotu spustí reakce pro toto pole definované.
 
-Poznámka: Tělo může obsahovat výrazy s `is` .
+NOTE: Tělo může obsahovat výrazy s `is` .
 
-=== deep-reactor! anchor:deep-reactor[] 
+=== deep-reactor! 
 
 *Syntaxe*
-
-    make deep-reactor! <body>
+----
+make deep-reactor! <body>
     
-    <body> : blok s tělem objektu  (block!).
+<body> : blok s tělem objektu  (block!).
     
-    Returns : reaktivní objekt.
+Vrací  : reaktivní objekt.
+----
     
 *Popis*
 
 Vytvoří nový reaktivní objekt z těla bloku. Nastavení pole vráceného objektu na novou hodnotu nebo změna řady (series), na kterou pole odkazuje (včetně vnořených řad), spustí reakce prot toto pole definované.
 
-Poznámka: Tělo může obsahovat výrazy s `is`.
+NOTE: Tělo může obsahovat výrazy s `is`.
 
 *Příklad*
 
 Ukazuje, jak změna serie - dokonce i vnořené, spustí reakci.
 
-Poznámka: Je na uživateli aby v tomto případě zabránil cyklování. Když například `deep-reactor!` mění ve formuli reaktoru (e.g. `is` hodnoty řad, může vytvořit nekonečné reaktivní cyckly.
-
-    r: make deep-reactor! [
-        x: [1 2 3]
-        y: [[a b] [c d]]
-        total: is [append copy x copy y]
-    ]
-    append r/y/2 'e
-    print mold r/total
- 
+NOTE: Je na uživateli aby v tomto případě zabránil cyklování. Když například `deep-reactor!` mění ve formuli reaktoru (e.g. `is` hodnoty řad, může vytvořit nekonečné reaktivní cyckly.
+----
+r: make deep-reactor! [
+    x: [1 2 3]
+    y: [[a b] [c d]]
+    total: is [append copy x copy y]
+]
+append r/y/2 'e
+print mold r/total
+---- 
