@@ -464,7 +464,7 @@ Reset the hidden context, emptying it from all previously defined words and remo
 
 Enable or disable the preprocessor (it is enabled by default). This is an escape mechanism to avoid processing parts of Red files where directives are used literally and not meant for the preprocessor (for example, if used in a dialect with a different meaning).
 
-Implementation constraint: when enabling the preprocessor again after disabling it ealier, the `#process off` directive needs to be at same (or higher) level of nesting in the code.
+Implementation constraint: when enabling the preprocessor again after disabling it earlier, the `#process off` directive needs to be at same (or higher) level of nesting in the code.
 
 *Example*
 ----
