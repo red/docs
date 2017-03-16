@@ -36,7 +36,7 @@ Example:
 
 Poznámka: when using the preprocessor at runtime (from Red's interpreter), the `config` object is also available, and will reflect the options used for compiling the Red executable currently used to run the code.
 
-== Prováděcí kontext
+=== Prováděcí kontext
 
 Všechny výrazy, použité v direktivách, jsou vázány na dedikovaný kontext aby se předešlo upouštění (leaking) slov v globálním kontextu, jež může mít nechtěné vedlejší účinky. Tento kontext je rozšířen o každé zadané slovo (set-word), použité v podmínkových výrazech, makrech a direktivách `#do`.
 
@@ -44,14 +44,15 @@ Tipy:
 
 * Obsah takového skrytého kontextu je možné vytisknout tímto výrazem:
         
-        #do [probe self]
+    #do [probe self]
+		
 * Při použití při běhu programu (runtime) lze ke skrytému kontextu přistoupit přímo použitím výrazu:
         
-        probe preprocessor/exec
+    probe preprocessor/exec
 
-== Implementační poznámka
+=== Aplikační poznámka
 
-V současné době jsou výrazy v direktivách, použitých při běhu programu, vyhodnocovány interpretem Rebol2, neboť ten spouští "toolchain code". Toto je dočasné a mělo by být co nejdříve převedeno na vyhodnocování přímo Redem. 
+V současné době jsou výrazy v direktivách, použitých při kompilaci, vyhodnocovány interpretem Rebol2, neboť ten spouští "toolchain code". Toto je dočasné a mělo by být co nejdříve převedeno na vyhodnocování přímo Redem. 
 
 In the meantime, ensure that  your expressions and macros code can be run with Red too, for compatibility with Red interpreter at run-time (and at compile-time in the future).
 
@@ -59,7 +60,7 @@ In the meantime, ensure that  your expressions and macros code can be run with R
 
 Preprocesor Redu podporuje definování maker pro realizaci složitějších transformací. Makra umožňují účinnější formu metaprogramování, kdy se náklady na provedení uplatňují spíše při kompilaci než při běhu programu. Red již vykazuje silné metaprogramovací schopnosti při běhu programu. Aby však bylo možné zpracovávat zdrojový kód stejně dobře kompilátorem i interpretem, mohou být makra řešena také při běhu programu.
 
-NOTE: Neexistují žádná "read-time" makra. Vzhledem k tomu, jak jednoduché je předzpracovávat zdroje v textové formě s použitím dialektu Parse, byla by podpora (reader) maker nadbytečná.
+NOTE: Neexistují žádná "read-time (reader)" makra. Vzhledem k tomu, jak jednoduché je předzpracovávat zdroje v textové formě s použitím dialektu Parse, byla by taková podpora (aktuálně) maker nadbytečná.
 
 Preprocesor podporuje dva typy maker:
 
@@ -79,26 +80,29 @@ Poté, co je takové makro definováno, je spuštěno při každém výskytu slo
 Poznámka: určení typů argumentů není aktuálně podporováno.
 
 *Příklady*
-
-    Red []
-    #macro make-KB: func [n][n * 1024]
-    print make-KB 64
+----
+Red []
+#macro make-KB: func [n][n * 1024]
+print make-KB 64
+----	
 will result in:    
-    
-    Red []
-    print 65536
-    
+----    
+Red []
+print 65536
+----    
 Calling other macros, from within a macro:
-	
-    Red []
-    #macro make-KB: func [n][n * 1024]
-    #macro make-MB: func [n][make-KB make-KB n]
+----	
+Red []
+#macro make-KB: func [n][n * 1024]
+#macro make-MB: func [n][make-KB make-KB n]
     
-    print make-MB 1
+print make-MB 1
+----	
 will result in:    
-    
-    Red []
-    print 1048576
+----    
+Red []
+print 1048576
+----
 
 === Makra s porovnávacími vzory
 
@@ -115,175 +119,188 @@ Toto je typ nižší úrovně maker (pattern-matching), kde nejsou implicitní a
 Argumenty `start` a `end` jsou reference, vymezující porovnávané hodnoty ve zdrojovém kódu. Vratná hodnota musí být referencí na počáteční pozici.
 
 *Příklady*
-
-    Red []
+----
+Red []
     
-    #macro integer! func [s e][s/1: s/1 + 1 next s]
-    print 1 + 2
+#macro integer! func [s e][s/1: s/1 + 1 next s]
+print 1 + 2
+----	
 will result in:
-
-    Red []
-    print 2 + 3 
-    
+----
+Red []
+print 2 + 3 
+----    
 Použití blokového pravidla pro vytvoření funkce s proměnnou aritou:
-
-    Red []
-    #macro ['max some [integer!]] func [s e][
-        change/part s first maximum-of copy/part next s e e	
-        s
-    ]
-    print max 4 2 3 8 1
+----
+Red []
+#macro ['max some [integer!]] func [s e][
+    change/part s first maximum-of copy/part next s e e	
+    s
+]
+print max 4 2 3 8 1
+----	
 will result in:
-
+----
     Red []
     print 8 
+----
 
 == Direktiva
 
 === #if
 
 *Skladba*
-
-    #if <expr> [<body>]
+----
+#if <expr> [<body>]
     
-    <expr> : výtaz, jehož poslední hodnota bude použita jako podmínka.
-    <body> : vložený kód při splnění podmínky <expr>.
-    
+<expr> : výtaz, jehož poslední hodnota bude použita jako podmínka.
+<body> : vložený kód při splnění podmínky <expr>.
+---- 
+   
 *Popis*
 
 Vloží blok kódu, je-li podmínkový výraz pravdivý. Je-li blok `<body>` vložen, bude rovněž postoupen preprocesoru.
 
 *Příklady*
-
-    Red []
+----
+Red []
     
-    #if config/OS = 'Windows [print "OS is Windows"]
-	
+#if config/OS = 'Windows [print "OS is Windows"]
+----	
 bude mít za následek následující kód při běhu na Windows:	
+----
+Red []
 
-
-    Red []
-
-    print "OS is Windows"
-
+print "OS is Windows"
+----
 pokud ne, vrací pouze:
-
-    Red []
-
+----
+Red []
+----
 Je také možné definovat vlastní slovo použitím direktivy `#do`, 
 jež může být použito v podmínkových výrazech později:
-
-    Red []
+----
+Red []
     
-    #do [debug?: yes]
+#do [debug?: yes]
     
-    #if debug? [print "running in debug mode"]
+#if debug? [print "running in debug mode"]
+----	
 bude mít za následek:
-
-    Red []
+----
+Red []
     
-    print "running in debug mode"
+print "running in debug mode"
+----
 
 === #either
 
 *Skladba*
-
-    #either <expr> [<true>][<false>]
+----
+#either <expr> [<true>][<false>]
     
-    <expr>  : výraz, jehož poslední hodnota bude použita jako podmínka.
-    <true>  : vkládaný kód při splnění podmínky <expr>.
-    <false> : vkládaný kód při nesplnění podmínky <expr>.
+<expr>  : výraz, jehož poslední hodnota bude použita jako podmínka.
+<true>  : vkládaný kód při splnění podmínky <expr>.
+<false> : vkládaný kód při nesplnění podmínky <expr>.
+----
     
 *Popis*
 
 Výběr vkládaného bloku s kódem v závislosti na splnění podmínkového výrazu. Vkládaný blok bude rovněž předán preprocesoru.
 
 *Příklad*
-
-    Red []
+----
+Red []
     
-    print #either config/OS = 'Windows ["Windows"]["Unix"]
+print #either config/OS = 'Windows ["Windows"]["Unix"]
+----	
 bude mít za následek následující kód při běhu na Wincows:
+----
+Red []
 
-    Red []
-
-    print "Windows"
-
+print "Windows"
+----
 v opačném případě bude výsledkem:
-
-    Red []
+----
+Red []
     
-    print "Unix"
+print "Unix"
+----
     
 === #switch
 
 *Skladba*
-
-    #switch <expr> [<value1> [<case1>] <value2> [<case2>] ...]
-    #switch <expr> [<value1> [<case1>] <value2> [<case2>] ... #default [<default>]]
+----
+#switch <expr> [<value1> [<case1>] <value2> [<case2>] ...]
+#switch <expr> [<value1> [<case1>] <value2> [<case2>] ... #default [<default>]]
     
-    <valueN>  : porovnávaná hodnota.
-    <caseN>   : vložený kód při shodě poslední testované hodnoty	
-    <default> : vložený kód, nedojde-li ke shodě u žádné hodnoty.
-    
+<valueN>  : porovnávaná hodnota.
+<caseN>   : vložený kód při shodě poslední testované hodnoty	
+<default> : vložený kód, nedojde-li ke shodě u žádné hodnoty.
+---- 
+   
 *Popis*
 
 Výběr vkládaného bloku kódu mezi několika možnostmi v závislosti na hodnotě. Vložený blok bude rovněž předán preprocesoru.
 
 *Příklad*
-
-    Red []
+----
+Red []
     
-    print #switch config/OS [
-    	Windows ["Windows"]
-    	Linux   ["Unix"]
-    	MacOSX  ["macOS"]
-    ]
-    
+print #switch config/OS [
+    Windows ["Windows"]
+    Linux   ["Unix"]
+    MacOSX  ["macOS"]
+]
+----    
 bude mít za následek následující kód při běhu na Windows:
+----
+Red []
 
-    Red []
-
-    print "Windows"
+print "Windows"
+----
 
 === #case
 
 *Skladba*
-
-    #case [<expr1> [<case1>] <expr2> [<case2>] ...]
+----
+#case [<expr1> [<case1>] <expr2> [<case2>] ...]
     
-    <exprN> : podmínkový výraz.
-    <caseN> : příslušná varianta vkládaného kódu
+<exprN> : podmínkový výraz.
+<caseN> : příslušná varianta vkládaného kódu
+----
     
 *Popis*
 
 Výběr bloku kódu, který odpovídá splněné podmínce. Vložený blok bude rovněž předán preprocesoru.
 
 *Příklad*
-
-    Red []
+----
+Red []
     
-    #do [level: 2]
+#do [level: 2]
     
-    print #case [
-    	level = 1  ["Easy"]
-    	level >= 2 ["Medium"]
-    	level >= 4 ["Hard"]
-    ]
-    
+print #case [
+    level = 1  ["Easy"]
+    level >= 2 ["Medium"]
+    level >= 4 ["Hard"]
+]
+----    
 bude mít za následek:
+----
+Red []
 
-    Red []
-
-    print "Medium"
+print "Medium"
+----
 
 === #include
 
 *Skladba*
-
-    #include <file>
+----
+#include <file>
     
-    <file> : Vkládaný soubor Redu (file!).
+<file> : Vkládaný soubor Redu (file!).
+----
     
 *Popis*
 
@@ -292,43 +309,46 @@ Při vyhodnocení při kompilaci přečte a vloží obsah souboru v aktuální p
 === #do
 
 *Skladba*
-
-    #do [<body>]
-    #do keep [<body>]
+----
+#do [<body>]
+#do keep [<body>]
     
-    <body> : jakýkoliv kód Redu.
+<body> : jakýkoliv kód Redu.
+----
     
 *Popis*
 
 Vyhodnotí tělo bloku ve skrytém prováděcím kontextu. Při použití slova `keep` nahradí direktivu a argument výsledkem vyhodnoceného těla (`body`).
 
 *Příklad*
-
-    Red []
+----
+Red []
     
-    #do [a: 1]
+#do [a: 1]
     
-    print ["2 + 3 =" #do keep [2 + 3]]
+print ["2 + 3 =" #do keep [2 + 3]]
         
-    #if a < 0 [print "negative"]
-    
+#if a < 0 [print "negative"]
+----    
 vyústí v:
+----
+Red []
 
-    Red []
-
-    print ["2 + 3 =" 5]
+print ["2 + 3 =" 5]
+----
 
 === #macro
 
 *Skladba*
-
-    #macro <name> func <spec> <body>
-    #macro <pattern> func <spec> <body>
+----
+#macro <name> func <spec> <body>
+#macro <pattern> func <spec> <body>
     
-    <name>    : jméno funkce makra (set-word!).
-    <pattern> : srovnávací pravidlo pro spuštění makra (block!, word!, lit-word!).
-    <spec>    : blok specifikací pro funkci makra.
-    <body>    : blok s tělem funkce makra.
+<name>    : jméno funkce makra (set-word!).
+<pattern> : srovnávací pravidlo pro spuštění makra (block!, word!, lit-word!).
+<spec>    : blok specifikací pro funkci makra.
+<body>    : blok s tělem funkce makra.
+----
     
 *Popis*
 
@@ -347,63 +367,70 @@ Makro s porovnávacími vzory přijímá:
 Při použití lit-wordu pro porovnávání, působí makro jako nízko úrovňová verze pojmenovaného makra, bez automatické náhrady či ošetření argumentu, avšak s požadavkem vrátit se do pokračovací pozice.
 
 *Příklady*
-
-    Red []
-    #macro pow2: func [n][to integer! n ** 2]
-    print pow2 10
-    print pow2 3 + pow2 4 = pow2 5
+----
+Red []
+#macro pow2: func [n][to integer! n ** 2]
+print pow2 10
+print pow2 3 + pow2 4 = pow2 5
+----	
 vyústí v:
-
-    Red []
-    print 100
-    print 9 + 16 = 25
-    
+----
+Red []
+print 100
+print 9 + 16 = 25
+----    
 Pattern-matching macro example:
+----
+Red []
+#macro [number! '+ number! '= number!] func [s e][
+     change/part s do (copy/part s e) e s
+]
 
-    Red []
-    #macro [number! '+ number! '= number!] func [s e][
-        change/part s do (copy/part s e) e s
-    ]
-
-    print 9 + 16 = 25
+print 9 + 16 = 25
+----
 vyústí v:
-
-    Red []
-    print true
+----
+Red []
+print true
+----
 
 === #local
 
 *Skladba*
-
-    #local [<body>]
+----
+#local [<body>]
     
-    <body> : libovolný kód Redu obsahující lokální definice maker
+<body> : libovolný kód Redu obsahující lokální definice maker
+----
     
 *Popis*
 
 Vytvoří lokální kontex maker. Všechna makra, definovaná v tomto kontextu, budou při exitu odvržena. Lokální makra tedy potřebují být lokálně použita. Tato direktiva může být použita rekurzivně (`#local` je platná direktiva v `<body>`).
 
 *Příklad*
-
-    Red []
-    print 1.0
-    #local [
-        #macro float! func [s e][s/1: to integer! s/1 next s]
-        print [1.23 2.54 123.789]
+----
+Red []
+print 1.0
+#local [
+    #macro float! func [s e][s/1: to integer! s/1 next s]
+    print [1.23 2.54 123.789]
     ]
-    print 2.0
+print 2.0
+----	
 will result in:
-
-    Red []
-    print 1.0
-    print [1 3 124]
-    print 2.0
+----
+Red []
+print 1.0
+print [1 3 124]
+print 2.0
+----
 
 === #reset
 
 *Skladba*
-
-    #reset
+----
+#reset
+----
    
 *Popis*
 
@@ -412,8 +439,9 @@ Resetovat skrytý kontext, uvolňujíce z něj všechna předtím definovaná sl
 === #process
 
 *Skladba*
-
-    #process [on | off]
+----
+#process [on | off]
+----
    
 *Popis*
 
@@ -422,26 +450,28 @@ Povolit či zamezit použití preprocesoru (implicitně je povoleno). Toto je ú
 Omezení implementace: při opětovném povolení preprocesoru po jeho předchozím nepovolení, potřebuje být direktiva `#process off` na stejné (nebo vyšší) úrovni zanoření v kódu.
 
 *Příklad*
-
-    Red []
+----
+Red []
     
-    print "Conditional directives:"
-    #process off
-    foreach d [#if #either #switch #case][probe d]
-    #process on
-    
+print "Conditional directives:"
+#process off
+foreach d [#if #either #switch #case][probe d]
+#process on
+----    
 vyústí v:
-
-    Red []
+----
+Red []
     
-    print "Conditional directives:"
-    foreach d [#if #either #switch #case][probe d]
+print "Conditional directives:"
+foreach d [#if #either #switch #case][probe d]
+----
 
 === #trace
 
 *Skladba*
-
-    #trace [on | off]
+----
+#trace [on | off]
+----
    
 *Popis*
 
@@ -454,19 +484,22 @@ Preprocesor Redu umí také pracovat při běhu programu (run-time) a to proto a
 === expand-directives
 
 *Skladba*
+----
+expand-directives [<body>]
+expand-directives/keep [<body>]
 
-    expand-directives [<body>]
-    expand-directives/keep [<body>]
-
-    <body> : libovolný kód Redu, obsahující direktiva preprocesoru.
+<body> : libovolný kód Redu, obsahující direktiva preprocesoru.
+----
     
 *Popis*
 
 Invokovat preprocesor pro hodnotu bloku. Blok argumentu bude modifikován a použit jako vratná hodnota. Je-li použito zjemnění `/keep`, je předchozí stav preprocesoru zachován se všemi jeho makry a slovy předtím definovanými. V opačném případě se preprocesor spustí s čistým štítem (clean state).
 
 *Příklad*
-
-    expand-directives [print #either config/OS = 'Windows ["Windows"]["Unix"]]
+----
+expand-directives [print #either config/OS = 'Windows ["Windows"]["Unix"]]
+----	
 na platformě Windows vrátí:
-
-    [print "Windows"]
+----
+[print "Windows"]
+----
