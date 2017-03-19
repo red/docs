@@ -466,45 +466,89 @@ shape [<commands>]
 ----
 *Description*
 
-The `shape` keywords gives access to the Shape sub-dialect drawing commands. This sub-dialect provides an alternative API to some basic drawing commands.
+The `shape` keywords gives access to the Shape sub-dialect drawing commands. This sub-dialect provides an alternative API to some basic drawing commands. The specific features of this drawing dialect are: 
 
-NOTE: Absolute vs relative coordinates...
+* the pen position for drawing can be moved independently of drawing operations.
+* each drawing command starts from the current pen position.
+* shapes are automatically closed (no need to draw the last stroke back to start position).
+* coordinates can be absolute (like in Draw) or relative to the last pen position.
 
-=== move
+NOTE: All drawing commands are using absolute coordinates by default, using the lit-word version of the command switches the command to relative coordinates.
 
-=== line
+=== Move
 
-=== arc
+*Syntax*
+----
+ move <position>            (absolute)
+'move <position>            (relative)
 
-=== curve
+<position> : new pen position (pair!).
+----
+*Description*
 
-=== curv
+Moves the pen to a new position. No drawing happens.
 
-=== qcurve
+=== Line
 
-=== qcurv
+*Syntax*
+----
+ line <point> <point> ...   (absolute)
+'line <point> <point> ...   (relative)
 
-=== hline
+<point> : coordinates of a point (pair!).
+----
+*Description*
 
-=== vline
+Draws a line between two points. If more points are specified, additional lines are drawn, connecting each point in the provided order.
 
-=== line-width
+=== Arc
+
+*Syntax*
+----
+ arc <end> <radius-x> <radius-y> <angle> sweep closed       (absolute)
+'arc <end> <radius-x> <radius-y> <angle> sweep closed       (relative)
+
+<end>      : arc's end point (pair!).
+<radius-x> : radius of the circle along x axis (integer! float!).
+<radius-y> : x coordinate of radius of the circle (integer! float!).
+<angle>    : angle between the starting and ending points of the arc in degrees (integer! float!).
+sweep      : (optional) draw the arc in the positive angle direction.
+large      : (optional) produces an inflated arc (goes with 'sweep option).
+
+----
+*Description*
+
+Draws the arc of a circle between the current pen position and the end point, using radius values. The arc is defined by one angle value.
+
+=== Curve
+
+=== Curv
+
+=== Qcurve
+
+=== Qcurv
+
+=== Hline
+
+=== Vline
+
+=== Line-width
 
 Same as the Draw dialect version.
 
-=== line-join
+=== Line-join
 
 Same as the Draw dialect version.
 
-=== line-cap
+=== Line-cap
 
 Same as the Draw dialect version.
 
-=== pen
+=== Pen
 
 Same as the Draw dialect version.
 
-=== fill-pen
+=== Fill-pen
 
 Same as the Draw dialect version.
 
