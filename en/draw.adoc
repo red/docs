@@ -523,35 +523,107 @@ Draws the arc of a circle between the current pen position and the end point, us
 
 === Curve
 
+*Syntax*
+----
+ curve <point> <point> <point> ...   (absolute)
+'curve <point> <point> <point> ...   (relative)
+
+<point> : coordinates of a point (pair!).
+----
+*Description*
+
+Draws a cubic Bezier curve from a sequence of points, starting from the current pen position. At least 3 points are required to produce a curve (the first point is the implicit starting point).
+
 === Curv
+
+*Syntax*
+----
+ curv <point> <point> ...   (absolute)
+'curv <point> <point> ...   (relative)
+
+<point> : coordinates of a point (pair!).
+----
+*Description*
+
+Draws a smooth cubic Bezier curve from a sequence of points, starting from the current pen position. At least 2 points are required to produce a curve (the first point is the implicit starting point).
+
+NOTE: From http://www.w3.org/TR/SVG11/paths.html
+
+"The first control point is assumed to be the reflection of the second control point on the previous command relative to the current point. (If there is no previous curve command, the first control point is the current point.)"
 
 === Qcurve
 
+*Syntax*
+----
+ qcurve <point> <point> ...   (absolute)
+'qcurve <point> <point> ...   (relative)
+
+<point> : coordinates of a point (pair!).
+----
+*Description*
+
+Draws a quadratic Bezier curve from a sequence of points, starting from the current pen position. At least 2 points are required to produce a curve (the first point is the implicit starting point).
+
 === Qcurv
+
+*Syntax*
+----
+ qcurv <point>   (absolute)
+'qcurv <point>   (relative)
+
+<point> : coordinates of the ending point (pair!).
+----
+*Description*
+
+Draws a smooth quadratic Bezier curve from the current pen position to the specified point.
+
+NOTE: See See: http://www.w3.org/TR/SVG11/paths.html
 
 === Hline
 
+*Syntax*
+----
+ hline <point>   (absolute)
+'hline <point>   (relative)
+
+<point> : coordinates of the ending point (pair!).
+----
+*Description*
+
+Draws a horizontal line from the current pen position.
+
 === Vline
+
+*Syntax*
+----
+ vline <point>   (absolute)
+'vline <point>   (relative)
+
+<point> : coordinates of the ending point (pair!).
+----
+*Description*
+
+Draws a vertical line from the current pen position.
 
 === Line-width
 
-Same as the Draw dialect version.
+Same as the Draw dialect.
 
 === Line-join
 
-Same as the Draw dialect version.
+Same as the Draw dialect.
 
 === Line-cap
 
-Same as the Draw dialect version.
+Same as the Draw dialect.
 
 === Pen
 
-Same as the Draw dialect version.
+Same as the Draw dialect.
 
 === Fill-pen
 
-Same as the Draw dialect version.
+Same as the Draw dialect.
 
 
 == Default values 
