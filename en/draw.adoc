@@ -629,10 +629,11 @@ NOTE: See See: http://www.w3.org/TR/SVG11/paths.html
 
 *Syntax*
 ----
- hline <point>   (absolute)
-'hline <point>   (relative)
+ hline <end-x>   (absolute)
+'hline <length>  (relative)
 
-<point> : coordinates of the ending point (pair!).
+<end-x>  : ending position along X axis (integer! float!).
+<length> : length of the line segment (integer! float!).
 ----
 *Description*
 
@@ -642,10 +643,11 @@ Draws a horizontal line from the current pen position.
 
 *Syntax*
 ----
- vline <point>   (absolute)
-'vline <point>   (relative)
+ vline <end-y>   (absolute)
+'vline <length>  (relative)
 
-<point> : coordinates of the ending point (pair!).
+<end-y>  : ending position along Y axis (integer! float!).
+<length> : length of the line segment (integer! float!).
 ----
 *Description*
 
