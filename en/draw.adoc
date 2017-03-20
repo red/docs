@@ -10,7 +10,7 @@ Draw is a dialect (DSL) of Red language that provides a simple declarative way t
 
 Draw blocks can be rendered directly on top of an image using the `draw` function, or inside a View face using the `draw` facet (see link:View.html[View documentation]).
 
-== Commands 
+== Draw commands
 
 Commands can either be drawing instructions or settings for the drawing instructions. When a mode is set, it will affect all subsequent operations in the current Draw session (or until changed).
 
@@ -456,7 +456,7 @@ transform <angle> <center> <scale-x> <scale-y> <translation>
 
 Sets a transformation such as translation, scaling, and rotation.
 
-== Shape
+== Shape commands
 
 *Syntax*
 ----
@@ -466,11 +466,12 @@ shape [<commands>]
 ----
 *Description*
 
-The `shape` keywords gives access to the Shape sub-dialect drawing commands. This sub-dialect provides an alternative API to some basic drawing commands. The specific features of this drawing dialect are: 
+The `shape` keywords gives access to the Shape sub-dialect drawing commands. The specific features of this drawing dialect are: 
 
 * the pen position for drawing can be moved independently of drawing operations.
 * each drawing command starts from the current pen position.
 * shapes are automatically closed (no need to draw the last stroke back to start position).
+* the generated shapes can be fed to `fill-pen` for simple or sophisticated filling.
 * coordinates can be absolute (like in Draw) or relative to the last pen position.
 
 NOTE: All drawing commands are using absolute coordinates by default, using the lit-word version of the command switches the command to relative coordinates.
