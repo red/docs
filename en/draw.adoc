@@ -171,6 +171,7 @@ image <image> <top-left> <bottom-right>
 image <image> <top-left> <top-right> <bottom-left> <bottom-right>
 image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color>
 image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color> border
+image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color> crop <offset> <size>
 
 <image>        : image to display (image! word!).
 <top-left>     : (optional) coordinate of top left edge of the image (pair!).
@@ -178,6 +179,8 @@ image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color> border
 <bottom-left>  : (optional) coordinate of bottom left edge of the image (pair!).
 <bottom-right> : (optional) coordinate of bottom right edge of the image (pair!).
 <color>        : (optional) key color to be made transparent (tuple! word!).
+<offset>       : (optional) position for starting cropping (pair!).
+<size>         : (optional) size of cropping (pair!).
 ----
 *Description*
 
@@ -337,42 +340,57 @@ NOTE: Anti-aliasing gives nicer visual rendering, but degrades performance.
 ----
 matrix <matrix-setup>
 
-<matrix-setup> : the matrix which is post-multiplied to current matrix (block!).
+<matrix-setup> : the matrix which is pre/post-multiplied to current matrix (block!).
 ----
 *Description*
 
 Performs matrix multiplication. The current transformation matrix is post-multiplied by this matrix.
 
 The `matrix-setup` block must have 6 numbers (number!) in it. 
-
-	matrix [a b c d e f]
-
+----
+matrix [a b c d e f]
+----
 The block values are used internally for building following transformation matrix:
+----
+|a c e|
+|b d f|
+|0 0 1|
+----
 
-	|a c e|
-	|b d f|
-	|0 0 1|
+=== Matrix-order
+
+*Syntax*
+----
+matrix-order <mode>
+
+<mode> : 'append or 'prepend (word!).
+----
+*Description*
+
+Defines if new matrices in subsequent matrix operations, are pre-multiplied (`prepend`) or post-multiplied (`append`, default mode) to the current matrix.
 
 === Reset-matrix 
 
 *Syntax*
-
-	reset-matrix
-
+----
+reset-matrix
+----
 *Description*
 
 Resets the current transformation matrix to a unit matrix.
 
-	|1 0 0|
-	|0 1 0|
-	|0 0 1|
+----
+|1 0 0|
+|0 1 0|
+|0 0 1|
+----
 
 === Invert-matrix 
 
 *Syntax*
-
-	invert-matrix
-
+----
+invert-matrix
+----
 *Description*
 
 Applies an algebraic matrix inversion operation on the current transformation matrix.
@@ -455,6 +473,34 @@ transform <angle> <center> <scale-x> <scale-y> <translation>
 *Description*
 
 Sets a transformation such as translation, scaling, and rotation.
+
+=== Clip
+
+*Syntax*
+----
+clip <start> <end> <mode>
+clip <start> <end> <mode> [<commands>]
+clip [<shape>] <mode>
+clip [<shape>] <mode> [<commands>]
+
+<start>    : top-left corner point of clipping area (pair!)
+<end>      : bottom-right corner point of clipping area (pair!)
+<mode>     : (optional) merging mode between clipped regions (word!)
+<commands> : Draw dialect commands.
+<shape>    : Shape dialect commands.
+----
+*Description*
+
+Defines a clipping rectangular region defined with two points (start and end) or an arbitrarily shaped region defined by a block of Shape sub-dialect commands. Such clipping applies to all subsequent Draw commands. When a block is provided as last argument, the clipping will be applied only to the commands in that block.
+
+Additionally, the combining mode between a new clipping region and the previous one, can be set to one of the following:
+
+* `replace` (default)
+* `intersect`
+* `union`
+* `xor`
+* `exclude`
+
 
 == Shape commands
 
