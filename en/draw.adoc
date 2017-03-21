@@ -232,42 +232,112 @@ Selects the color to be used for line drawing operations.
 
 === Fill-pen 
 
+This command defines the filling mode for other commands requiring filling operations (closed shapes). Many different options are possible from a simple color, to nested custom shapes and gradients.
+
+==== Color fill
+
 *Syntax*
 ----
 fill-pen <color>
-fill-pen <grad-type> <grad-offset> <grad-start-rng> <grad-stop-rng>
-         <grad-angle> <grad-scale-x> <grad-scale-y> <grad-color> <offset>
-         <grad-color> <offset> ...
-fill-pen off
 
-<color>          : new color to use for filling (tuple! word!).
-<grad-type>      : gradient type (word!).
-<grad-offset>    : offset from where should the gradient be rendered (pair!).
-<grad-start-rng> : beginning of the gradient range (integer!).
-<grad-stop-rng>  : end of the gradient range (integer!).
-<grad-angle>     : (optional) rotation of the gradient in degrees (integer! float!).
-<grad-scale-x>   : (optional) scale X factor (integer! float!).
-<grad-scale-y>   : (optional) scale Y factor (integer! float!).
-<grad-color>     : color to use for gradient filling (tuple! word!).
-<offset>         : (optional) offset of gradient color (float!).
+<color> : new color to use for filling (tuple! word!).
 ----
 *Description*
 
-Selects the color or color gradient to be used for filling operations. All closed shapes will get filled by the selected color until the fill pen is set to `off`.
+Selects the color to be used for filling operations. All closed shapes will get filled by the selected color until the fill pen is set to `off`.
 
-Sets the gradient type, the following values are accepted:
+==== Linear gradient fill
 
-* `linear`
-* `radial`
-* `diamond`
+*Syntax*
+----
+fill-pen linear <color1> <offset> ... <colorN> <offset> <start> <end> <spread>
 
-For example:
+<offset>   : (optional) offset of gradient color (float!).
+<color1/N> : list of colors for the gradient (tuple! word!).
+<start>    : (optional) starting point (pair!). 
+<end>      : (optional unless <start>) ending point (pair!).
+<spread>   : (optional) spread method (word!).
+----
 
-	fill-pen linear 0x100 0 400 red green blue box 0x100 400x300
+Sets a linear gradient to be used for filling operations. The following values are accepted for the spread method: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
 
-image::../images/grad-pen.png[Grad-pen,align="center"]
+When used, the start/end points define a line where the gradient paints along. If they are not used,
+the gradient will be paint along a horizontal line inside the shape currently drawing.
 
-NOTE: the gradient can be defined by up to 256 colors.
+==== Radial gradient fill
+
+*Syntax*
+----
+fill-pen radial  <color1> <offset> ... <colorN> <offset> <center> <radius> <focal> <spread>
+
+<offset>   : (optional) offset of gradient color (float!).
+<color1/N> : list of colors for the gradient (tuple! word!).
+<center>   : (optional) center point (pair!).
+<radius>   : (optional unless <center>) radius of the circle to paint along (integer! float!).
+<focal>    : (optional) focal point (pair!).
+<spread>   : (optional) spread method (word!).
+----
+
+Sets a radial gradient to be used for filling operations. The following values are accepted for the spread method: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
+
+The radial gradient will be painted from focal point to the edge of a circle defined by center point and radius. The start color will be painted in focal point and the end color will be painted in the edge of the circle.
+
+==== Diamond gradient fill
+
+*Syntax*
+----
+fill-pen diamond <color1> <offset> ... <colorN> <offset> <upper> <lower> <focal> <spread>
+
+<offset>   : (optional) offset of gradient color (float!).
+<color1/N> : list of colors for the gradient (tuple! word!).
+<upper>    : (optional) upper corner of a rectangle. (pair!). 
+<lower>    : (optional unless <upper>) lower corner of a rectangle (pair!).
+<focal>    : (optional) focal point (pair!).
+<spread>   : (optional) spread method (word!).
+----
+
+Sets a diamond-shaped gradient to be used for filling operations. The following values are accepted for the spread method: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
+
+The diamond gradient will be painted from focal point to the edge of a rectangle defined by upper and lower. The start color will be painted in focal point and the end color will be painted in the edge of the circle.
+
+==== Pattern fill
+
+*Syntax*
+----
+fill-pen pattern <size> <start> <end> <mode> [<commands>]
+
+<size>     : size of the internal image where <commands> will be drawn (pair!).
+<start>    : (optional, default: 0x0) upper corner for crop section within internal image (pair!).
+<end>      : (optional, default: <size>) lower corner for crop section within internal image (pair!).
+<mode>     : (optional) tile mode. (word!).
+<commands> : block of Draw commands to define the pattern.
+----
+
+Sets a custom shape as pattern to be used for filling operations. The following values are accepted for the tile mode: `tile` (default), `flip-x`, `flip-y`, `flip-xy`, `clamp`.
+
+==== Bitmap fill
+
+*Syntax*
+----
+fill-pen bitmap  <image> <start> <end> <mode>
+
+<image> : image used for tiling (image!)
+<start> : (optional, default: 0x0) upper corner for crop section within image (pair!)
+<end>   : (optional, default: <image> size) lower corner for crop section within image (pair!)
+<mode>  : (optional) tile mode. (word!).
+----
+
+Sets an image as pattern to be used for filling operations. The following values are accepted for the tile mode: `tile` (default), `flip-x`, `flip-y`, `flip-xy`, `clamp`.
+
+==== Turning off the filling
+
+*Syntax*
+----
+fill-pen off
+----
+*Description*
+
+Stop all filling operations for subsequent commands.
 
 === Line-width 
 
@@ -721,6 +791,47 @@ draw <image> <spec>
 *Description*
 
 Renders the provided Draw commands to an existing or a new image. The image value is returned by the function.
+
+== Deprecated API
+
+Fill-pen also supports a deprecated API which exists only for sake of compatibility with Rebol/Draw, it should not be used by new Red scripts.
+
+*Syntax*
+----
+fill-pen linear <grad-offset> <grad-start-rng> <grad-stop-rng>
+         <grad-angle> <grad-scale-x> <grad-scale-y> <grad-color> <offset>
+         <grad-color> <offset> ...
+
+fill-pen radial <grad-offset> <grad-focal> <grad-radius>
+         <grad-angle> <grad-scale-x> <grad-scale-y> <grad-color> <offset>
+         <grad-color> <offset> ...
+
+fill-pen diamond <grad-offset> <grad-focal> <grad-radius>
+         <grad-angle> <grad-scale-x> <grad-scale-y> <grad-color> <offset>
+         <grad-color> <offset> ...
+
+<grad-type>      : gradient type (word!).
+<grad-offset>    : offset from where should the gradient be rendered (pair!).
+<grad-start-rng> : beginning of the gradient range (integer!).
+<grad-stop-rng>  : end of the gradient range (integer!).
+<grad-focal>     : focal point of the gradient (pair!).
+<grad-radius>    : radius of the gradient (integer!).
+<grad-angle>     : (optional) rotation of the gradient in degrees (integer! float!).
+<grad-scale-x>   : (optional) scale X factor (integer! float!).
+<grad-scale-y>   : (optional) scale Y factor (integer! float!).
+<grad-color>     : color to use for gradient filling (tuple! word!).
+----
+*Description*
+
+Sets the color gradient to be used for filling operations. The following values are accepted for the type: `linear`, `radial`, `diamond`.
+
+For example:
+
+	fill-pen linear 0x100 0 400 red green blue box 0x100 400x300
+
+image::../images/grad-pen.png[Grad-pen,align="center"]
+
+NOTE: the gradient can be defined by up to 256 colors.
 
 == Graphics source code 
 
