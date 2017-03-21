@@ -252,12 +252,13 @@ Selects the color to be used for filling operations. All closed shapes will get 
 ----
 fill-pen linear <color1> <offset> ... <colorN> <offset> <start> <end> <spread>
 
-<offset>   : (optional) offset of gradient color (float!).
 <color1/N> : list of colors for the gradient (tuple! word!).
+<offset>   : (optional) offset of gradient color (float!).
 <start>    : (optional) starting point (pair!). 
 <end>      : (optional unless <start>) ending point (pair!).
 <spread>   : (optional) spread method (word!).
 ----
+*Description*
 
 Sets a linear gradient to be used for filling operations. The following values are accepted for the spread method: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
 
@@ -268,15 +269,16 @@ the gradient will be paint along a horizontal line inside the shape currently dr
 
 *Syntax*
 ----
-fill-pen radial  <color1> <offset> ... <colorN> <offset> <center> <radius> <focal> <spread>
+fill-pen radial <color1> <offset> ... <colorN> <offset> <center> <radius> <focal> <spread>
 
-<offset>   : (optional) offset of gradient color (float!).
 <color1/N> : list of colors for the gradient (tuple! word!).
+<offset>   : (optional) offset of gradient color (float!).
 <center>   : (optional) center point (pair!).
 <radius>   : (optional unless <center>) radius of the circle to paint along (integer! float!).
 <focal>    : (optional) focal point (pair!).
 <spread>   : (optional) spread method (word!).
 ----
+*Description*
 
 Sets a radial gradient to be used for filling operations. The following values are accepted for the spread method: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
 
@@ -288,13 +290,14 @@ The radial gradient will be painted from focal point to the edge of a circle def
 ----
 fill-pen diamond <color1> <offset> ... <colorN> <offset> <upper> <lower> <focal> <spread>
 
-<offset>   : (optional) offset of gradient color (float!).
 <color1/N> : list of colors for the gradient (tuple! word!).
+<offset>   : (optional) offset of gradient color (float!).
 <upper>    : (optional) upper corner of a rectangle. (pair!). 
 <lower>    : (optional unless <upper>) lower corner of a rectangle (pair!).
 <focal>    : (optional) focal point (pair!).
 <spread>   : (optional) spread method (word!).
 ----
+*Description*
 
 Sets a diamond-shaped gradient to be used for filling operations. The following values are accepted for the spread method: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
 
@@ -307,13 +310,16 @@ The diamond gradient will be painted from focal point to the edge of a rectangle
 fill-pen pattern <size> <start> <end> <mode> [<commands>]
 
 <size>     : size of the internal image where <commands> will be drawn (pair!).
-<start>    : (optional, default: 0x0) upper corner for crop section within internal image (pair!).
-<end>      : (optional, default: <size>) lower corner for crop section within internal image (pair!).
-<mode>     : (optional) tile mode. (word!).
+<start>    : (optional) upper corner for crop section within internal image (pair!).
+<end>      : (optional) lower corner for crop section within internal image (pair!).
+<mode>     : (optional) tile mode (word!).
 <commands> : block of Draw commands to define the pattern.
 ----
+*Description*
 
 Sets a custom shape as pattern to be used for filling operations. The following values are accepted for the tile mode: `tile` (default), `flip-x`, `flip-y`, `flip-xy`, `clamp`.
+
+Starting default point is 0x0 and ending point is `<size>`.
 
 ==== Bitmap fill
 
@@ -321,13 +327,16 @@ Sets a custom shape as pattern to be used for filling operations. The following 
 ----
 fill-pen bitmap  <image> <start> <end> <mode>
 
-<image> : image used for tiling (image!)
-<start> : (optional, default: 0x0) upper corner for crop section within image (pair!)
-<end>   : (optional, default: <image> size) lower corner for crop section within image (pair!)
-<mode>  : (optional) tile mode. (word!).
+<image> : image used for tiling (image!).
+<start> : (optional) upper corner for crop section within image (pair!).
+<end>   : (optional) lower corner for crop section within image (pair!).
+<mode>  : (optional) tile mode (word!).
 ----
+*Description*
 
 Sets an image as pattern to be used for filling operations. The following values are accepted for the tile mode: `tile` (default), `flip-x`, `flip-y`, `flip-xy`, `clamp`.
+
+Starting default point is 0x0 and ending point is image's size.
 
 ==== Turning off the filling
 
