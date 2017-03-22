@@ -220,7 +220,7 @@ Selects the font to be used for text printing. The font object is a clone of `fo
 
 === Pen 
 
-This command defines the outlines drawing mode for other commands. Many different options are possible from a simple color, to nested custom shapes and gradients.
+This command defines the outlines drawing mode for other commands. Many different options are available from a simple color, to nested custom shapes and gradients.
 
 ==== Color pen
 
@@ -338,7 +338,7 @@ Stop all outline drawing operations for subsequent commands.
 
 === Fill-pen 
 
-This command defines the filling mode for other commands requiring filling operations (closed shapes). Many different options are possible from a simple color, to nested custom shapes and gradients.
+This command defines the filling mode for other commands requiring filling operations (closed shapes). Many different options are available from a simple color, to nested custom shapes and gradients.
 
 ==== Color fill
 
