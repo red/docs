@@ -220,15 +220,121 @@ Selects the font to be used for text printing. The font object is a clone of `fo
 
 === Pen 
 
+This command defines the outlines drawing mode for other commands. Many different options are possible from a simple color, to nested custom shapes and gradients.
+
+==== Color pen
+
 *Syntax*
 ----
 pen <color>
 
-<color> : new color to use for drawing or `off` for no color (tuple! word!).
+<color> : new color to use for drawing (tuple! word!).
 ----
 *Description*
 
-Selects the color to be used for line drawing operations.
+Selects the color to be used for drawing operations. All shapes will be drawn by the selected color until the pen is set to `off`.
+
+==== Linear gradient pen
+
+*Syntax*
+----
+pen linear <color1> <offset> ... <colorN> <offset> <start> <end> <spread>
+
+<color1/N> : list of colors for the gradient (tuple! word!).
+<offset>   : (optional) offset of gradient color (float!).
+<start>    : (optional) starting point (pair!). 
+<end>      : (optional unless <start>) ending point (pair!).
+<spread>   : (optional) spread method (word!).
+----
+*Description*
+
+Sets a linear gradient to be used for drawing operations. The following values are accepted for the spread method: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
+
+When used, the start/end points define a line where the gradient paints along. If they are not used,
+the gradient will be paint along a horizontal line inside the shape currently drawing.
+
+==== Radial gradient pen
+
+*Syntax*
+----
+pen radial <color1> <offset> ... <colorN> <offset> <center> <radius> <focal> <spread>
+
+<color1/N> : list of colors for the gradient (tuple! word!).
+<offset>   : (optional) offset of gradient color (float!).
+<center>   : (optional) center point (pair!).
+<radius>   : (optional unless <center>) radius of the circle to paint along (integer! float!).
+<focal>    : (optional) focal point (pair!).
+<spread>   : (optional) spread method (word!).
+----
+*Description*
+
+Sets a radial gradient to be used for drawing operations. The following values are accepted for the spread method: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
+
+The radial gradient will be painted from focal point to the edge of a circle defined by center point and radius. The start color will be painted in focal point and the end color will be painted in the edge of the circle.
+
+==== Diamond gradient pen
+
+*Syntax*
+----
+pen diamond <color1> <offset> ... <colorN> <offset> <upper> <lower> <focal> <spread>
+
+<color1/N> : list of colors for the gradient (tuple! word!).
+<offset>   : (optional) offset of gradient color (float!).
+<upper>    : (optional) upper corner of a rectangle. (pair!). 
+<lower>    : (optional unless <upper>) lower corner of a rectangle (pair!).
+<focal>    : (optional) focal point (pair!).
+<spread>   : (optional) spread method (word!).
+----
+*Description*
+
+Sets a diamond-shaped gradient to be used for drawing operations. The following values are accepted for the spread method: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
+
+The diamond gradient will be painted from focal point to the edge of a rectangle defined by upper and lower. The start color will be painted in focal point and the end color will be painted in the edge of the circle.
+
+==== Pattern pen
+
+*Syntax*
+----
+pen pattern <size> <start> <end> <mode> [<commands>]
+
+<size>     : size of the internal image where <commands> will be drawn (pair!).
+<start>    : (optional) upper corner for crop section within internal image (pair!).
+<end>      : (optional) lower corner for crop section within internal image (pair!).
+<mode>     : (optional) tile mode (word!).
+<commands> : block of Draw commands to define the pattern.
+----
+*Description*
+
+Sets a custom shape as pattern to be used for drawing operations. The following values are accepted for the tile mode: `tile` (default), `flip-x`, `flip-y`, `flip-xy`, `clamp`.
+
+Starting default point is 0x0 and ending point is `<size>`.
+
+==== Bitmap pen
+
+*Syntax*
+----
+pen bitmap  <image> <start> <end> <mode>
+
+<image> : image used for tiling (image!).
+<start> : (optional) upper corner for crop section within image (pair!).
+<end>   : (optional) lower corner for crop section within image (pair!).
+<mode>  : (optional) tile mode (word!).
+----
+*Description*
+
+Sets an image as pattern to be used for drawing operations. The following values are accepted for the tile mode: `tile` (default), `flip-x`, `flip-y`, `flip-xy`, `clamp`.
+
+Starting default point is 0x0 and ending point is image's size.
+
+==== Turning off the pen
+
+*Syntax*
+----
+pen off
+----
+*Description*
+
+Stop all outline drawing operations for subsequent commands.
 
 === Fill-pen 
 
