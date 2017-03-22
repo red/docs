@@ -1,5 +1,15 @@
 /* CSS for website */
 
+body {
+    font-smoothing: antialiased;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    letter-spacing: .2px;
+    text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%
+}
+
 .ulist ul {
 	line-height: 1.3em;
 }
