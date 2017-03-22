@@ -597,6 +597,8 @@ Saves the current state (transformations, clipping region, and pen settings) on 
 *Syntax*
 ----
 rotate <angle> <center> [<commands>]
+rotate pen <angle>
+rotate fill-pen <angle>
 
 <angle>    : the angle in degrees (integer! float!).
 <center>   : (optional) center of rotation (pair!).
@@ -606,11 +608,15 @@ rotate <angle> <center> [<commands>]
 
 Sets the clockwise rotation about a given point, in degrees. If optional `center` is not supplied, the rotate is about the origin of the current user coordinate system. Negative numbers can be used for counter-clockwise rotation. When a block is provided as last argument, the rotation will be applied only to the commands in that block.
 
+When the `pen` or `fill-pen` words are used, the rotation is applied respectively to the current pen or current fill-pen.
+
 === Scale 
 
 *Syntax*
 ----
 scale <scale-x> <scale-y> [<commands>]
+scale pen <scale-x> <scale-y>
+scale fill-pen <scale-x> <scale-y>
 
 <scale-x>  : the scale amount in X (number!).
 <scale-y>  : the scale amount in Y (number!).
@@ -620,11 +626,15 @@ scale <scale-x> <scale-y> [<commands>]
 
 Sets the scale amounts. The values given are multipliers; use values greater than one to increase the scale; use values less than one to decrease it. When a block is provided as last argument, the scaling will be applied only to the commands in that block.
 
+When the `pen` or `fill-pen` words are used, the scaling is applied respectively to the current pen or current fill-pen.
+
 === Translate 
 
 *Syntax*
 ----
 translate <offset> [<commands>]
+translate pen <offset>
+translate fill-pen <offset>
 
 <offset>   : the translation amounts (pair!).
 <commands> : (optional) Draw dialect commands.
@@ -633,11 +643,15 @@ translate <offset> [<commands>]
 
 Sets the origin for drawing commands. Multiple translate commands will have a cumulative effect. When a block is provided as last argument, the translation will be applied only to the commands in that block.
 
+When the `pen` or `fill-pen` words are used, the translation is applied respectively to the current pen or current fill-pen.
+
 === Skew 
 
 *Syntax*
 ----
 skew <skew-x> <skew-y> [<commands>]
+skew pen <skew-x> <skew-y>
+skew fill-pen <skew-x> <skew-y>
 
 <skew-x>   : skew along the x-axis in degrees (integer! float!).
 <skew-y>   : (optional) skew along the y-axis in degrees (integer! float!).
@@ -646,6 +660,8 @@ skew <skew-x> <skew-y> [<commands>]
 *Description*
 
 Sets a coordinate system skewed from the original by the given number of degrees. If `<skew-y>` is not provided, it is assumed to be zero. When a block is provided as last argument, the skewing will be applied only to the commands in that block.
+
+When the `pen` or `fill-pen` words are used, the skewing is applied respectively to the current pen or current fill-pen.
 
 === Transform 
 
