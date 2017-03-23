@@ -233,7 +233,7 @@ This type represents a simple button.
 |===
 
 
-==== Check 
+=== Check 
 
 This type represents a check box, with an optional label text, displayed on left or right side.
 
@@ -254,7 +254,7 @@ This type represents a check box, with an optional label text, displayed on left
 |===
 
 
-==== Radio 
+=== Radio 
 
 This type represents a radio button, with an optional label text, displayed on left or right side. Only one radio button per pane is allowed to be checked.
 
