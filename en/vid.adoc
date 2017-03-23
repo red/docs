@@ -1,6 +1,7 @@
 = Visual Interface Dialect
 :imagesdir: ../images
 :toc:
+:toclevels: 3
 :numbered:
 
   
@@ -197,7 +198,7 @@ do <body>
 
 Evaluates a block of regular Red code, for last-minute initialization needs. `self` keyword can be used to refer to the container face (window or panel).
 
-== Extra styles
+== Additional styles
 
 View engine provides many buit-in widgets, VID dialect extends them by defining additional commonly used styles, with associated keywords. They can be used with the same options as their underlying face type. They can also be re-styled freely using `style` command.
 	
