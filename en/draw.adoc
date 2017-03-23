@@ -1,6 +1,7 @@
 = Draw dialect
 :imagesdir: ../images
 :toc:
+:toclevels: 3
 :numbered:
 
 
