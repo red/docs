@@ -202,31 +202,31 @@ Evaluates a block of regular Red code, for last-minute initialization needs. `se
 
 View engine provides many buit-in widgets, VID dialect extends them by defining additional commonly used styles, with associated keywords. They can be used with the same options as their underlying face type. They can also be re-styled freely using `style` command.
 	
-=== H1
+=== h1
 
 The `H1` style is a `text` type with a font size set to 32.
 
-=== H2
+=== h2
 
 The `H1` style is a `text` type with a font size set to 26.
 
-=== H3
+=== h3
 
 The `H1` style is a `text` type with a font size set to 22.
 
-=== H4
+=== h4
 
 The `H1` style is a `text` type with a font size set to 17.
 
-=== H5
+=== h5
 
 The `H1` style is a `text` type with a font size set to 13.
 
-=== Box
+=== box
 
 The `box` style is a `base` type with a default transparent color.
 
-=== Image
+=== image
 
 The `image` style is a `base` type of default size 100x100. It expects an `image!` option, if none is provided, an empty image with white background color, and of same size as the face, is provided.
 
@@ -571,6 +571,18 @@ focus
 *Description*
 
 Gives the focus to the current face when the window is displayed for the first time. Only one face can have the focus. If several `focus` options are used on different faces, only the last one will get the focus.
+
+==== hint
+
+*Syntax*
+----
+hint <message>
+
+<message> : hint text (string!).
+---- 
+*Description*
+
+Provides a hint message inside `field` faces, when the field's content is empty. That text disappears when any new content is provided (user action or setting the `face/text` facet).
 
 
 ==== rate
