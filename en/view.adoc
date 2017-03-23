@@ -728,7 +728,7 @@ Notes:
 * One or more `moving` events always precedes a `move` one.
 * One or more `resizing` events always precedes a `resize` one.
 
-==== Event! datatype 
+=== Event! datatype 
 
 An event value is an opaque object holding all the information about a given event. You access the event fields using path notation.
 
@@ -945,4 +945,3 @@ _To be added:_
 
 * menu facet specification
 * Image! datatype description
-* Reactive programming model
