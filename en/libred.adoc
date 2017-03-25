@@ -70,7 +70,7 @@ void redOpen(void)
 ----
 Initializes a new Red runtime library session. This function _must_ be called before calling any other API function. It is safe to call it several times in the same process, only one session will be opened anyway.
 
-Note: If another function is called before `redOpen`, the return value will be `-2`, indicating an illegal access attempt.
+Note: If another function is called before `redOpen`, the return value of that function will be `-2`, indicating an illegal access attempt.
 
 ==== redClose()
 ----
