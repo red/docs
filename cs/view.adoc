@@ -1,6 +1,7 @@
 = Grafické prostředí Red/View
 :imagesdir: ../images
 :toc:
+:toclevels: 3
 :numbered:
 
 == Záměry 
@@ -693,6 +694,7 @@ view [
 |*resize*		| mouse | A window has been resized.
 |*moving*		| mouse | A window is being moved.
 |*resizing*		| mouse | A window is being resized.
+|*wheel*| mouse| The mouse wheel is being moved.
 |*zoom*		| touch | A zooming gesture (pinching) has been recognized.
 |*pan*			| touch | A panning gesture (sweeping) has been recognized.
 |*rotate*		| touch | A panning gesture (sweeping) has been recognized.
@@ -716,7 +718,7 @@ Poznámky:
 * Jedna či více _pohybových_ událostí vždy předchází událost `move`.
 * Jedna či více událostí _měnících rozměr_ vždy předchází událost `resize`.
 
-===Datový typ Event! 
+=== Datový typ Event! 
 
 Událost je opaktní objekt, obsahující všechny informace o dané události. K polím události se přistupuje pomocí cesty (path notation).
 
@@ -728,7 +730,7 @@ Událost je opaktní objekt, obsahující všechny informace o dané události. 
 |*window*	| Okno (piškot), ve kterém došlo k události (object!).
 |*offset*	| Odsazení kurzoru myši od piškotu při vzniku události (pair!). Pro gesta se vracejí souřadnice středu.
 |*key*		| Stisknutá klávesa (char! word!).
-|*picked*	| Nová položka, vybraná v piškotu (integer! percent!). Pro událost `menu` se vrací odpovídající ID nabídky. (word!) U zoomovacího gesta se vrací procentní hodnota představující relativní zvětšení/zmenšení. U jiných gest je tato hodnota prozatím závislá na systému (Windows: pole `allArguments` z https://msdn.microsoft.com/en-us/library/windows/desktop/dd353232(v=vs.85[GESTUREINFO].aspx).
+|*picked*	| Nová položka, vybraná v piškotu (integer! percent!). Pro událost `wheel` vrací počet kroků rotace. Pozitivní hodnota indikuje pootočení kolečka vpřed, od uživatele; negativní hodnota indikuje pootočení kolečka zpět, směrem k uživateli. Pro událost `menu` se vrací odpovídající ID nabídky. (word!) U zoomovacího gesta se vrací procentní hodnota představující relativní zvětšení/zmenšení. U jiných gest je tato hodnota prozatím závislá na systému (Windows: pole `allArguments` z https://msdn.microsoft.com/en-us/library/windows/desktop/dd353232(v=vs.85[GESTUREINFO].aspx).
 |*flags*		| Vrací seznam s jedním či více flagy (viz list níže) (block!).
 |*away?*		| Vrací `true`, opouští-li kurzor hranice piškotu (logic!). Platí pouze při aktivní události `over`. 
 |*down?*		| Vrací true při stisknutí levého tlačítka myši (logic!).
@@ -932,4 +934,3 @@ NOTE: Při použití konzol, automaticky generovaných binárkou `red`, je kompo
 
 * specifikace aspektu `menu`
 * popis datového typu `Image!`
-* Model reaktivního programování

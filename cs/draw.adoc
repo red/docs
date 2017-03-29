@@ -1,6 +1,7 @@
 = Dialekt Draw
 :imagesdir: ../images
 :toc:
+:toclevels: 3
 :numbered:
 
 
@@ -179,13 +180,16 @@ image <image> <top-left> <bottom-right>
 image <image> <top-left> <top-right> <bottom-left> <bottom-right>
 image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color>
 image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color> border
+image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color> crop <offset> <size>
     
 <image>        : zobrazovaný obrázek (image! word!).
 <top-left>     : (nepovinné) souřadnice levého horního okraje (pair!).
 <top-right>    : (nepovinné) souřadnice pravého horního okraje (pair!).
 <bottom-left>  : (nepovinné) souřadnice levého dolního okraje (pair!).
 <bottom-right> : (nepovinné) souřadnice pravého dolního okraje (pair!).
-<color>        : (nepovinné) transparentně zobrazená barva(tuple! word!).
+<color>        : (nepovinné) transparentně zobrazená barva(tuple! word!)
+<offset>       : (nepovinné) poloha pro začátek zkrácení (pair!).
+<size>         : (nepovinné) velikost zkrácení (pair!).
 ----
     
 *Popis*
@@ -228,7 +232,11 @@ font <font>
 Výběr fontu pro zobrazení textu. Objekt fontu je klonem šablony typu `font!`.
 
 
-=== Pen 
+=== Pen
+
+Tento příkaz určuje typ kreslených obrysů pro jiné příkazy. Nabízeny jsou mnohé možnosti od jednoduché barvy k vnořeným uživatelským tvarům a gradientům.
+
+==== Color pen
 
 *Syntaxe*
 ----
@@ -239,46 +247,228 @@ pen <color>
 
 *Popis*
 
-Vybere barvu pro kreslení čar.
+Vybere barvu pro kreslení. Všechny tvary se kreslí vybranou barvou, dokud není pero nastaveno na 'off'.
+
+
+==== Linear gradient pen
+
+*Syntaxe*
+----
+pen linear <color1> <offset> ... <colorN> <offset> <start> <end> <spread>
+
+<color1/N> : seznam barev gradientu (tuple! word!).
+<offset>   : (nepovinné) odsazení barvy gradientu (float!).
+<start>    : (nepovinné) počáteční bod (pair!). 
+<end>      : (nepovinné bez <start>) koncový bod (pair!).
+<spread>   : (nepovinné) způsob šíření (word!).
+----
+*Popis*
+
+Nastaví lineární gradient pro kreslící operace. Pro metodu "spread" jsou akceptované následující hodnoty: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
+
+Je-li zadána metoda spread, definují koncové body směr gradientu. Nejsou-li body zadány, rozvíjí se gradient v horizontálním směru uvnitř kresleného obrazce.
+
+==== Radial gradient pen
+
+*Syntaxe*
+----
+pen radial <color1> <offset> ... <colorN> <offset> <center> <radius> <focal> <spread>
+
+<color1/N> : seznam barev gradientu (tuple! word!).
+<offset>   : (nepovinné) odsazení barvy gradientu (float!).
+<center>   : (nepovinné) střed kružnice(pair!).
+<radius>   : (nepovinné bez <center>) poloměr kružnice gradientu (integer! float!).
+<focal>    : (nepovinné) ohnisko (pair!).
+<spread>   : (nepovinné) způsob šíření (word!).
+----
+*Popis*
+
+Nastaví radiální gradient pro kreslící operace. Pro metodu "spread" jsou akceptovány následující hodnoty: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
+
+Radiální gradient bude vykreslován od ohniska k okraji kružnice, definované středem a poloměrem. Počáteční barva se vykreslí v ohnisku, koncová na okraji kruhu.
+
+==== Diamond gradient pen
+
+*Syntaxe*
+----
+pen diamond <color1> <offset> ... <colorN> <offset> <upper> <lower> <focal> <spread>
+
+<color1/N> : seznam barev v gradientu (tuple! word!).
+<offset>   : (nepovinné) odsazení barvy gradientu (float!).
+<upper>    : (nepovinné) horní roh kosočtverce. (pair!). 
+<lower>    : (nepovinné bez <upper>) spodní roh kosočtverce (pair!).
+<focal>    : (nepovinné) ohnisko (pair!).
+<spread>   : (nepovinné) způsob šíření (word!).
+----
+*Popis*
+
+Nastaví gradient ve tvaru kosočterce. Pro metodu "spread" jsou akceptovány následující hodnoty: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
+
+Kosočtvercový gradient se vykreslí ve směru od ohniska k okraji kosočtverce, definovaného horním a dolním rohem. Počáteční barva se vykreslí v ohnisku, koncová barva na okraji čtyřúhelníka.
+
+==== Pattern pen
+
+*Syntax*
+----
+pen pattern <size> <start> <end> <mode> [<commands>]
+
+<size>     : velikost vnitřního zobrazení, určeného příkazy (<commands>) (pair!).
+<start>    : (nepovinné) horní roh výřezu uvnitř vnitřního zobrazení (pair!).
+<end>      : (nepovinné) spodní roh výřezu uvnitř vnitřního zobrazení (pair!).
+<mode>     : (nepovinné) dlaždicové uspořádání (word!).
+<commands> : blok příkazů Draw  pro určení vzorků.
+----
+*Popis*
+
+Nastaví uživatelský tvar jako vzorek pro kreslící operace. Pro dlaždicové uspořádání jsou akceptováný následující hodnoty: `tile` (default), `flip-x`, `flip-y`, `flip-xy`, `clamp`.
+
+Výchozím bodem je 0x0 a koncovým bodem je `<size>`.
+
+==== Bitmap pen
+
+*Syntaxe*
+----
+pen bitmap  <image> <start> <end> <mode>
+
+<image> : obrázek pro dlaždice (image!).
+<start> : (nepovinné) horní roh výřezu uvnitř zobrazení (pair!).
+<end>   : (nepovinné) dolní roh výřezu uvnitř zobrazení (pair!).
+<mode>  : (nepovinné) dlaždicové uspořádání (word!).
+----
+*Popis*
+
+Nastaví obrázek jako vzorek pro kreslící operace. Pro dlaždicové uspořádání jsou akceptovány tyto hodnoty: `tile` (default), `flip-x`, `flip-y`, `flip-xy`, `clamp`.
+
+Výchozím bodem je 0x0 a koncovým bodem je velikost obrázku.
+
+==== Vypnutí pera
+
+*Syntaxe*
+----
+pen off
+----
+*Popis*
+
+Zastaví všechny liniové kreslící operace u následných přákazů.
+
 
 === Fill-pen 
+
+Tento příkaz definuje výplňový režim pro další příkazy, vyžadující výplňové operace (uzavřené tvary). Lze použít mnoho různých možností od jednoduché barvy až k vnořeným uživatelským tvarům a gradientům.
+
+==== Color fill
 
 *Syntaxe*
 ----
 fill-pen <color>
-fill-pen <grad-type> <grad-offset> <grad-start-rng> <grad-stop-rng>
-          <grad-angle> <grad-scale-x> <grad-scale-y> <grad-color> <offset>
-          <grad-color> <offset> ...
-fill-pen off
-    
-<color>          : volená barva výplně (tuple! word!).
-<grad-type>      : typ gradientu (word!).
-<grad-offset>    : odsazení okraje plochy, vyplněné gradientem (pair!).
-<grad-start-rng> : začátek rozsahu gradientu (integer!).
-<grad-stop-rng>  : konec rozsahu gradientu (integer!).
-<grad-angle>     : (nepovinné) rotace gradientu ve stupních (integer! float!).
-<grad-scale-x>   : (nepovinné) měřítko pro osu X (integer! float!).
-<grad-scale-y>   : (nepovinné) měřítko pro osu Y (integer! float!).
-<grad-color>     : barva pro výplň gradientu (tuple! word!).
-<offset>         : (nepovinné) odsazení barvy gradientu (float!).
+<color>   : volená barva výplně (tuple! word!).
+----
+*Popis*
+
+Výběr barvy pro použití ve výplňových operacích. Všechny uzavřené tvary se plní vybranou barvou, pokud se plnící pero nenastaví na `off`.
+
+==== Linear gradient fill
+
+*Syntaxe*
+----
+fill-pen linear <color1> <offset> ... <colorN> <offset> 
+<color1/N> : seznam barev gradientu (tuple! word!).
+<offset>      : (nepovinné) odsazení barvy gradientu (float!).
+<start>    : (nepovinné) počáteční bod (pair!). 
+<end>      : (nepovinné bez <start>) koncový bod (pair!).
+<spread>   : (nepovinné) způsob šíření (word!).
 ----
 
 *Popis*
 
-Vybere barvu nebo barevný gradient pro výplň. Všechny uzavřené tvary lze vyplnit vybranou barvou, pokud není `fill-pen` nastaven na off.
+Nastaví lineární gradient pro výplňové operace. Pro metodu "spread" jsou akceptovány následující hodnoty: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
 
-Pro určení typu gradientu jsou akceptovány následující hodnoty:
-* `linear`
-* `radial`
-* `diamond`
+Jsou-li použito, definují počáteční a koncové body směr rozvoje gradientu. Nejsou-li použity, rozvíjí se gradient vodorovně uvnitř kresleného tvaru.
 
-For example:
+==== Radial gradient fill
 
-	fill-pen linear 0x100 0 400 red green blue box 0x100 400x300
+*Syntaxe*
+----
+fill-pen radial <color1> <offset> ... <colorN> <offset> <center> <radius> <focal> <spread>
 
-image::../images/grad-pen.png[Grad-pen, aling="center"]
+<color1/N> : seznam barev gradientu (tuple! word!).
+<offset>   : (nepovinné)  odsazení barvy gradientu (float!).
+<center>   : (nepovinné) střed kružnice (pair!).
+<radius>   : (nepovinné bez <center>) poloměr vymezující kružnice (integer! float!).
+<focal>    : (nepovinné) ohnisko (pair!).
+<spread>   : (nepovinné) způsob šíření (word!).
+----
+*Popis*
 
-Poznámka: Gradient lze definovat až 256 ti barvami.
+Nastaví radiální gradient pro plnící operace. Pro metodu šíření (spread) jsou akceptovány následující hodnoty: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
+
+Radiální gradient se rozvíjí od ohniska až po okraj kruhu, určeného středem a poloměrem. Počáteční barva začíná v ohnisku, koncová barva končí na kružnici.
+
+
+==== Diamond gradient fill
+
+*Syntaxe*
+----
+fill-pen diamond <color1> <offset> ... <colorN> <offset> <upper> <lower> <focal> <spread>
+
+<color1/N> : seznam barev gradientu (tuple! word!).
+<offset>   : (volitelné) odsazení barvy gradientu (float!).
+<upper>    : (volitelné) horní roh čtyřúhelníka. (pair!). 
+<lower>    : (volitelné bez <upper>) dolní roh čtyřúhelníka (pair!).
+<focal>    : (volitelné) ohnisko (pair!).
+<spread>   : (volitelné) metoda šíření (word!).
+----
+*Popis*
+
+Nastaví gradient ve tvaru kosočtverce pro výplňové operace. Pro metodu spread jsou akceptovány následující hodnoty: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
+
+Kosočtvercový gradient se rozvíjí z ohniska až po okraj čtyřúhelníku, daného horním a dolním rohem. Počáteční barva začíná v ohnisku, koncová končí na hraně kosočtverce.
+
+==== Pattern fill
+
+*Syntaxe*
+----
+fill-pen pattern <size> <start> <end> <mode> [<commands>]
+
+<size>     : velikost vnitřního obrázku, u něhož budou použity příkazy (<commands> (pair!).
+<start>    : (volitelné) horní roh výřezu ve vnitřním zobrazení (pair!).
+<end>      : (volitelné) dolní roh výřezu ve vnitřním zobrazení (pair!).
+<mode>     : (volitelné) dlaždicové uspořádání (word!).
+<commands> : blok příkazů Draw k určení vzorku.
+----
+*Popis*
+
+Nastaví uživatelský tvar vzorku pro plnící operace. Pro parametr <mode> jsou akceptovány tyot hodnoty: `tile` (default), `flip-x`, `flip-y`, `flip-xy`, `clamp`.
+
+Výchozím bodem je 0x0 a koncovým bodem je `<size>`.
+
+==== Bitmap fill
+
+*Syntaxe*
+----
+fill-pen bitmap  <image> <start> <end> <mode>
+
+<image> : obrázek použitý při dlaždicovém uspořádání (image!).
+<start> : (optional) horní roh výřezu uvnitř obrázku (pair!).
+<end>   : (optional) spodní roh výřezu uvnitř obrázku (pair!).
+<mode>  : (optional) uspořádání dlaždic (word!).
+----
+*Popis*
+
+Nastaví obrázek jako vzorek, použitý při plnících operacích. V režimu <mode> jsou akceptovány následující hodnoty: `tile` (default), `flip-x`, `flip-y`, `flip-xy`, `clamp`.
+
+Výchozím bodem je 0x0 a koncovým bodem je velikost obrázku.
+
+==== Vypnutí vyplňování
+
+*Syntaxe*
+----
+fill-pen off
+----
+*Popis*
+
+Zastaví všechny plnící operace pro následné příkazy.
+
 
 === Line-width
 
@@ -354,7 +544,7 @@ NOTE: Vyhlazení zubatých obrysů poskytuje hezčí vzhled ale degraduje výkon
 ----
 matrix <matrix-setup>
 
-<matrix-setup> : the matrix which is post-multiplied to current matrix (block!).
+<matrix-setup> : the matrix which is pre/post-multiplied to current matrix (block!).
 ----
 
 *Popis*
@@ -362,29 +552,44 @@ matrix <matrix-setup>
 Provádí násobení matic. Aktuální transformační matice je touto maticí násobena zprava.
 
 Blok matice matrix-setup musí mít 6 čísel (number!). 
-
-	matrix [a b c d e f]
-
+----
+matrix [a b c d e f]
+----
 Hodnoty bloku jsou interně použity pro vytvoření následující transformační matice:
-	
-	|a c e|
-	|b d f|
-	|0 0 1|
+----
+|a c e|
+|b d f|
+|0 0 1|
+----
 
-=== Reset-matrix
+=== Matrix-order
+
+*Syntaxe*
+----
+matrix-order <mode>
+
+<mode> : 'append or 'prepend (word!).
+----
+
+*Popis*
+
+Definuje, zda nové matice v následných operacích jsou pre-multiplied (`prepend`) nebo post-multiplied (`append`, default mode) ke stávající matici.
+
+=== Reset-matrix 
 
 *Syntaxe*
 ----
 reset-matrix
 ----
-
 *Popis*
 
-Převede aktuální transformační matici na jednotkovou matici.
+Převede stávající transformační matici na jednotkovou matici.
 
-	|1 0 0|
-	|0 1 0|
-	|0 0 1|
+----
+|1 0 0|
+|0 1 0|
+|0 0 1|
+----
 
 === Invert-matrix   
 
@@ -409,80 +614,304 @@ push <draw-block>
 
 *Popis*
 
-Uloží aktuální stav (transformace, clipping region a nastavení pera) do zásobníku (stack). Poté lze uvnitř příkazového bloku PUSH měnit stávající transformační matici, pera atp. Po bloku PUSH se aktuální stav obnoví načtením (pop) ze zásobníku. Příkaz PUSH může být vnořený.
+Uloží aktuální stav (transformace, výřez a nastavení pera) do zásobníku (stack). Poté lze uvnitř příkazového bloku PUSH měnit stávající transformační matici, pera atp. Po bloku PUSH se aktuální stav obnoví načtením (pop) ze zásobníku. Příkaz PUSH může být vnořený.
 
 === Rotate
 
 *Syntaxe*
 ----
-rotate <angle> <center>
+rotate <angle> <center> [<commands>]
+rotate pen <angle>
+rotate fill-pen <angle>
 
 <angle>  : úhel ve stupních (integer! float!).
 <center> : (nepovinné) střed otáčení (pair!).
+<commands> : (nepovinné) Příkazy dialektu Draw.
 ----	
 
 *Popis*
 
 Nastaví pravotočivou rotaci ve stupních kolem daného bodu. Není-li zadán nepovinný parametr `center`, provede se rotace kolem počátku aktuálního souřadného systému. Negativní hodnoty lze použít pro levotočivou rotaci.
 
+Při použití volby 'rotate pen' či 'rotate fill-pen' je rotace provedena vzhledem ke stávající volbě 'pen' či 'fill-pen'.
+
+
 === Scale   
 
 *Syntaxe*
 ----
-scale <scale-x> <scale-y>
+scale <scale-x> <scale-y> [<commands>]
+scale pen <scale-x> <scale-y>
+scale fill-pen <scale-x> <scale-y>
 
 <scale-x> : měřítko pro osu X (number!).
 <scale-y> : měřítko pro osu Y (number!).
+<commands> : (nepovinné) Příkazy dialektu Draw.
 ----
 
 *Popis*
 
 Nastaví velikost zvětšení. Zadané hodnoty jsou násobitelé; hodnoty větší než jedna zvětšují; hodnoty menší než jedna zmenšují.
 
+Při použití volby 'scale pen' či 'scale fill-pen' je zvětšení provedeno vzhledem ke stávající volbě 'pen' či 'fill-pen'.
+
 === Translate 
 
 *Syntaxe*
 ----
-translate <offset>
+translate <offset> [<commands>]
+translate pen <offset>
+translate fill-pen <offset>
 
-<offset> : the translation amounts (pair!).
+<offset> : velikosti posunu (pair!).
+<commands> : (nepovinné) Příkazy dialektu Draw.
 ----
 
 *Popis*
 
-Nastaví počátek pro kreslící příkazy. Víceré příkazy `translate` mají kumulativní účinek.
+Nastaví počátek pro kreslící příkazy. Víceré příkazy `translate` mají kumulativní účinek. Je-li blok zadán jako poslední argument, použijí se posuny pouze u příkazů z tohoto bloku.
+
+Při použití volby 'translate pen' či 'translate fill-pen' je posunutí provedeno vzhledem ke stávající volbě 'pen' či 'fill-pen'.
 
 === Skew 
 
 *Syntaxe*
 ----
-skew <skew-x> <skew-y>
+skew <skew-x> <skew-y> [<commands>]
+skew pen <skew-x> <skew-y>
+skew fill-pen <skew-x> <skew-y>
 
 <skew-x> : zkosení k ose x ve stupních (integer! float!).
 <skew-y> : (nepovinné) zkosení k ose y ve stupních (integer! float!).
+<commands> : (optional) Příkazy dialektu Draw.
 ----
 
 *Popis*
 
-Nastaví zkosení souřadných os, zadané úhlem pootočení ve stupních. Není-li zadáno `<skew-y>`, předpokládá se, že je nulové.
+Nastaví zkosení souřadných os, zadané úhlem pootočení ve stupních. Není-li zadáno `<skew-y>`, předpokládá se, že je nulové. Je-li blok zadán jako poslední argument, použije se zkosení pouze u příkazů z tohoto bloku.
+
+Při použití volby 'skew pen' či 'skew fill-pen' je zkosení provedeno vzhledem ke stávající volbě 'pen' či 'fill-pen'.
 
 
 === Transform   
 
 *Syntaxe*
 ----
-transform <angle> <center> <scale-x> <scale-y> <translation>
+transform <angle> <center> <scale-x> <scale-y> <translation> [<commands>]
 
 <angle>       : úhel rotace ve stupních (integer! float!).
 <center>      : (nepovinné) střed rotace (pair!).
 <scale-x>     : měřítko pro osu X (number!).
 <scale-y>     : měřítko pro osu Y (number!).
 <translation> : velikost posunu (pair!).
+<commands>    : (optional) příkazy dialektu Draw.
 ----
 
 *Popis*
 
-Nastaví transformaci - posunutí, úpravu velikosti a pootočení.
+Nastaví transformaci jako je posunutí, měřítko a pootočení. Je-li blok zadán jako poslední argument, použije se transformace pouze u příkazů z tohoto bloku.
+
+=== Clip
+
+*Syntaxe*
+----
+clip <start> <end> <mode> [<commands>]
+clip [<shape>] <mode> [<commands>]
+
+<start>    : horní levý roh výřezu (pair!)
+<end>      : spodní pravý roh výřezu (pair!)
+<mode>     : (nepovinné) způsob sloučení výřezů (word!)
+<commands> : (optional) příkazy dialektu Draw.
+<shape>    : příkazy dialektu Shape.
+----
+*Popis*
+
+Určuje pravoúhlý výřez definovaný dvěma body (start, end) nebo libovolně tvarovaný výřez, definovaný blokem příkazů sub-dialektu Shape. Takto určený výřez je platný pro všechny následné příkazy dialektu Draw. Je-li blok zadán jako poslední argument, použije se výřez pouze u příkazů z tohoto bloku.
+
+Způsob spojení nového výřezu se stávajícím může být zadán jako jeden z následujících způsobů:
+
+* `replace` (default)
+* `intersect`
+* `union`
+* `xor`
+* `exclude`
+
+
+== Shape commands
+
+*Syntaxe*
+----
+shape [<commands>]
+
+<commands> : příkazy dialektu Shape
+----
+*Popis*
+
+Klíčová slova `shape` umožňují přístup k příkazům sub-dialektu Shape. Specifickými rysy tohoto kreslícího dialektu jsou:
+
+* pozici pera (pen) lze měnit nezávisle na kreslících operacích.
+* každý kreslící příkaz začíná na aktuální pozici pera.
+* tvary jsou automaticky uzavírány (bez potřeby kreslit poslední úsek k výchozí pozici).
+* generované tvary lze zadat do `fill-pen` pro vytváření jednoduchých i sofistikovaných výplní.
+* souřadnice mohou být absolutní (jako ve Draw) nebo relativní vzhledem k poslední pozici.
+
+NOTE: Všechny kreslící příkazy používají implicitně absolutní souřadnice. Použití 'lit-word' verze příkazu přepne na relativní souřadnice.
+
+=== Move
+
+*Syntaxe*
+----
+ move <position>            (absolute)
+'move <position>            (relative)
+
+<position> : nová pozice pera (pair!).
+----
+*Popis*
+
+Přemístí pero na novou pozici. Nic se nekreslí.
+
+=== Line
+
+*Syntax*
+----
+ line <point> <point> ...   (absolute)
+'line <point> <point> ...   (relative)
+
+<point> : souřadnice bodu (pair!).
+----
+*Popis*
+
+Nakreslí úsečku mezi dvěma body. Je-li zadáno více bodů, kreslí se další úsečky, napojované na předchozí v daném pořadí.
+
+=== Arc
+
+*Syntax*
+----
+ arc <end> <radius-x> <radius-y> <angle> sweep closed       (absolute)
+'arc <end> <radius-x> <radius-y> <angle> sweep closed       (relative)
+
+<end>      : koncový bod oblouku (pair!).
+<radius-x> : radius of the circle along x axis (integer! float!).
+<radius-y> : x coordinate of radius of the circle (integer! float!).
+<angle>    : úhel mezi počátečním a koncovým bodem oblouku ve stupních (integer! float!).
+sweep      : (optional) oblouk je kreslen ve směru pozitivního úhlu.
+large      : (optional) vytvoří konvexní oblouk (souvisí s volbou 'sweep).
+
+----
+*Popis*
+
+Kreslí kruhový oblouk mezi aktuální polohou pera a koncovým bodem oblouku. Oblouk je definován poloměrem nebo úhlem (angle) mezi koncovými průvodiči.
+
+=== Curve
+
+*Syntaxe*
+----
+ curve <point> <point> <point> ...   (absolute)
+'curve <point> <point> <point> ...   (relative)
+
+<point> : souřadnice bodu (pair!).
+----
+*Popis*
+
+Kreslí kubickou Bezierovu křivku, danou třemi body. Počátečním bodem je aktuální pozice pera.
+
+=== Curv
+
+*Syntaxe*
+----
+ curv <point> <point> ...   (absolute)
+'curv <point> <point> ...   (relative)
+
+<point> : souřadnice bodu (pair!).
+----
+*Popis*
+
+Kreslí hladkou kubickou Bezierovu křivku, danou pořadím alespoň dvou bodů. Implicitně prvním bodem je aktuální pozice pera.
+
+NOTE: From http://www.w3.org/TR/SVG11/paths.html
+
+"The first control point is assumed to be the reflection of the second control point on the previous command relative to the current point. (If there is no previous curve command, the first control point is the current point.)"
+
+=== Qcurve
+
+*Syntaxe*
+----
+ qcurve <point> <point> ...   (absolute)
+'qcurve <point> <point> ...   (relative)
+
+<point> : souřadnice bodu (pair!).
+----
+*Popis*
+
+Kreslí kvadratickou Bezierovu křivku, danou pořadím alespoň dvou bodů. Implicitně prvním bodem je aktuální pozice pera.
+
+=== Qcurv
+
+*Syntaxe*
+----
+ qcurv <point>   (absolute)
+'qcurv <point>   (relative)
+
+<point> : souřadnice koncového bodu (pair!).
+----
+*Popis*
+
+Kreslí hladkou kvadratickou Bezierovu křivku z aktuální pozice pera k určenému bodu.
+
+NOTE: See See: http://www.w3.org/TR/SVG11/paths.html
+
+=== Hline
+
+*Syntax*
+----
+ hline <end-x>   (absolute)
+'hline <length>  (relative)
+
+<end-x>  : koncová pozice ve směru osy X (integer! float!).
+<length> : délka úsečky (integer! float!).
+----
+*Popis*
+
+Kreslí horizontální úsečku z aktuální pozice pera.
+
+=== Vline
+
+*Syntaxe*
+----
+ vline <end-y>   (absolute)
+'vline <length>  (relative)
+
+<end-y>  : koncová pozice ve směru osy Y (integer! float!).
+<length> : délka úsečky (integer! float!).
+----
+*Popis*
+
+Kreslí vertikální úsečku z aktuální pozice pera.
+
+=== Line-width
+
+Totéž jako v dialektu Draw.
+
+=== Line-join
+
+Totéž jako v dialektu Draw.
+
+
+=== Line-cap
+
+Totéž jako v dialektu Draw.
+
+
+=== Pen
+
+Totéž jako v dialektu Draw.
+
+
+=== Fill-pen
+
+Totéž jako v dialektu Draw.
+
+
 
 
 == Implicitní hodnoty
@@ -508,7 +937,7 @@ Příkazy uvnitř kódu Draw mohou být libovolně seskupovány do bloků. Séma
 
 == Aktuální pozice  
 
-Slova typu `set-words`, mohou být použita *mezi* příkazy kódu Draw, kde zaznamenávají aktuální pozici v bloku Draw a jsou snadno později dostupná.
+Slova typu `set-words` mohou být použita *mezi* příkazy kódu Draw k zaznamenání aktuální pozice do bloku Draw, snadno přístupného při eventuelní pozdější potřebě.
 
 
 NOTE: změní-li se délka bloku Draw před slovem `set-word`, zaznamenaná pozice se neaktualizuje.
@@ -523,14 +952,55 @@ Blok Draw je možné vykreslit přímo do obrázku s použitím funkce `draw`.
 draw <size> <spec>
 draw <image> <spec>
     
-<size>  : size of a new image (pair!).
-<image> : image to use as canvas (image!).
-<spec>  : block of Draw commands (block!).
+<size>  : velikost nového obrázku (pair!).
+<image> : obrázek použitý jako 'canvas' (image!).
+<spec>  : blok příkazů Draw (block!).
 ----
 
 *Popis*
 
 Přenese poskytnuté příkazy Draw do existujícího nebo nového obrázku. Vratnou hodnotou funkce je obsah obrázku.
+
+== Deprecated API
+
+Fill-pen také podporuje překonané API, které existuje jenom kvůli kompatibilitě s Rebol/Draw; v nových skriptech Redu by se nemělo používat.
+
+*Syntaxe*
+----
+fill-pen linear <grad-offset> <grad-start-rng> <grad-stop-rng>
+         <grad-angle> <grad-scale-x> <grad-scale-y> <grad-color> <offset>
+         <grad-color> <offset> ...
+
+fill-pen radial <grad-offset> <grad-focal> <grad-radius>
+         <grad-angle> <grad-scale-x> <grad-scale-y> <grad-color> <offset>
+         <grad-color> <offset> ...
+
+fill-pen diamond <grad-offset> <grad-focal> <grad-radius>
+         <grad-angle> <grad-scale-x> <grad-scale-y> <grad-color> <offset>
+         <grad-color> <offset> ...
+
+<grad-type>      : typ gradientu (word!).
+<grad-offset>    : odsazení počátku zobrazení gradientu (pair!).
+<grad-start-rng> : počátek rozsahu gradientu (integer!).
+<grad-stop-rng>  : konec rozsahu gradientu (integer!).
+<grad-focal>     : ohnisko gradientu (pair!).
+<grad-radius>    : poloměr gradientu (integer!).
+<grad-angle>     : (nepovinné) rotace gradientu ve stupních (integer! float!).
+<grad-scale-x>   : (optional) zvětšení pro směr X (integer! float!).
+<grad-scale-y>   : (optional) zvětšení pro směr Y (integer! float!).
+<grad-color>     : barva gradované výplně (tuple! word!).
+----
+*Popis*
+
+Nastaví barvu gradientu pro plnící operace. Pro typ gradientu jsou akceptované tyto hodnoty: `linear`, `radial`, `diamond`.
+
+For example:
+
+	fill-pen linear 0x100 0 400 red green blue box 0x100 400x300
+
+image::../images/grad-pen.png[Grad-pen,align="center"]
+
+NOTE: gradient lze zadat až 256 ti barvami.
 
 == Zdrojový kód grafiky
 
