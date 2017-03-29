@@ -48,7 +48,7 @@ blk = redGet(a);
 redPrint(blk);                            // safe reference usage
 
 for(i = 0; i < 100, i++) {
-    // redAppend(blk, redNone());	        // unsafe reference usage!
+    // redAppend(blk, redNone());         // unsafe reference usage!
     redAppend(redGet("a"), redNone());    // safe version
 }
 ----
