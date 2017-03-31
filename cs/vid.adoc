@@ -1,6 +1,7 @@
 = Visual Interface Dialect
 :imagesdir:: ../images
 :toc:
+:toclevels:3
 :numbered:
 
   
@@ -193,6 +194,38 @@ do <body>
 *Popis*
 
 Vyhodnotí blok regulérního kódu Redu pro následné inicializační použití. Lze použít klíčové slovo self jako odkaz na piškot kontejneru (okno či panel).
+
+== Dodatečné styly
+
+Strojovna (machine) View poskytuje mnoho vestavěných piškotů. Dialekt VID je rozšiřuje definováním dalších obecně používaných stylů s přiřazenými klíčovými slovy. Lze je použít se stejnými volbami jako jejich výchozí typ piškotu (face). Mohou byt také redefinovány použitím příkazu `style`.
+	
+=== h1
+
+Styl `H1` je typu `text` s velikostí fontu 32.
+
+=== h2
+
+Styl `H2` je typu `text` s velikostí fontu 26.
+
+=== h3
+
+Styl `H3` je typu `text` s velikostí fontu 22.
+
+=== h4
+
+Styl `H4` je typu `text` s velikostí fontu 17.
+
+=== h5
+
+Styl `H5` je typu `text` s velikostí fontu 13.
+
+=== box
+
+Styl `box` je typu `base` s implicitně nastavenou transparentní barvou.
+
+=== image
+
+Styl `image` je typu `base` s implicitní velikostí 100x100.
 
 
 == Definice piškotů 
@@ -510,6 +543,19 @@ focus
 *Popis*
 
 Dodává zaměření (focus) aktuálnímu piškotu při prvním zobrazení okna. Zaměření lze udělit pouze jednomu piškotu. Je-li použito několik voleb `focus` pro různé piškoty, dostane se zaměření jen tomu poslednímu.
+
+==== hint
+
+*Syntaxe*
+----
+hint <message>
+
+<message> : text návodu (string!).
+---- 
+*Popis*
+
+Poskytuje text návodu uvnitř polí piškotů, které dosud nemají žádný obsah. Tento text zmizí při zadání nového obsahu (akcí uživatele nebo nastavením parametru `face/text`).
+
 
 ==== rate
 
