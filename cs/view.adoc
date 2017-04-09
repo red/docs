@@ -10,18 +10,18 @@ Složka Red/View (nebo prostě View) je grafický systém jazyka Red. Jeho cíle
 
 * Minimální, datově orientované API
 * Virtuální strom objektů jako programovací rozhraní
-* Synchronizace mezi virtuálním stromem a zobrazovacím systémem v reálném čase nebo zadržená
-* Vytvoření jednoduše podporované dvojité vazby (binding)
+* Synchronizace mezi virtuálním stromem a zobrazovacím systémem v reálném čase nebo pozdržená
+* Vytvoření jednoduše podporované dvoucestné vazby (two-way binding)
 *Schopnost mít různé backendy pro různé platformy
-* Podpora OS a uživatelských sad piškotů (faces, alias widgets)
+* Podpora OS a uživatelských sad widgetů
 * Malé provozní nároky
 
-Virtuální strom je sestavován pomocí piškotů (face objects). Každý piškot je propojen se zobrazeným grafickým komponentem dvoucestnou vazbou.
+Virtuální strom je sestavován pomocí piškotů (face objects). Každý 'face object' je propojen se zobrazeným grafickým komponentem dvoucestnou vazbou.
 
 
 == Piškoty 
 
-Piškoty (face objects) jsou klony šablony `face!`. Pole piškotu se nazývá _aspekt_ (_facet_).
+Piškoty (face objects) jsou klony šablony `face!`. Pole piškotu se nazývá *facet* (aspekt).
 
 Seznam vytvořených aspektů:
 
@@ -56,7 +56,7 @@ Seznam vytvořených aspektů:
 
 |===
 
-Seznam globálně použitelných flagů pro aspekt (facet) `flags`:
+Seznam globálně použitelných flagů pro facet `flags`:
 
 [cols="1,4", options="header"]
 |===
@@ -65,13 +65,13 @@ Seznam globálně použitelných flagů pro aspekt (facet) `flags`:
 |*all-over* | Poslat všechny události `over` do piškotu.
 |===
 
-Ostatní specifické flagy piškotu jsou dokumentovány v příslušných sekcích.
+Ostatní specifické flagy piškotů jsou dokumentovány v příslušných sekcích.
 
 Poznámky:
 
-* Nepovinné aspekty pole) mohou být nastaveny na`none`.
+* Nepovinné facety mohou být nastaveny na `none`.
 * `offset` a `size` se uvádějí v  pixelech
-* `offset` a `size` mohou být někdy před zobrazením nastaveny na `none`; prostředí View zajistí nastavení těchto hodnot (jako u panelu v typu `tab-panel`).
+* `offset` a `size` mohou být někdy před zobrazením nastaveny na `none`; prostředí (engine) View zajistí nastavení těchto hodnot (jako u panelů v typu `tab-panel`).
 * Pořadí zobrazení (from back to front): color, image, text, draw.
 
 Nový piškot se vytvoří klonováním objektu face! doplněném alespoň jedním názvem `typu`.
@@ -80,9 +80,9 @@ Nový piškot se vytvoří klonováním objektu face! doplněném alespoň jedn�
 
 Jakmile je piškot vytvořen, nelze měnit pole `type`.
 
-=== Aspekt ,options' 
+=== Options facet 
 
-Aspekt (facet) `options` obsahuje volitelné aspekty, používané pro specifické chování:
+Facet `options` obsahuje volitelné aspekty, používané pro specifické chování:
 
 [cols="1,4", options="header"]
 |===

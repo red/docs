@@ -5,7 +5,7 @@ image::../images/view-overview.png[Přehledné schema,align="center"]
 
 === VID
 
-VID je zkratkou označení Visual Interface Dialect. Je to dialekt Redu, umožňující určovat grafické komponenty aplikace včetně jejich vlastností, rozmístění a dokonce i ovladačů událostí. Kód VIDu je při aktivaci kompilován do stromu piškotů (faces, alias widgets), vhodných pro zobrazení. 
+VID je zkratkou označení Visual Interface Dialect. Je to dialekt Redu, umožňující určovat grafické komponenty aplikace včetně jejich vlastností, rozmístění a dokonce i ovladačů událostí. Kód VIDu je při RT (runtime) kompilován do stromu piškotů (faces, alias widgets), vhodných pro zobrazení. 
 
 === View 
 
@@ -26,13 +26,13 @@ Draw je dialekt Redu pro vektorové kreslení ve 2D. Lze jej specifikovat různ�
 
 * v rozvrženích (layouts) VIDu
 * přímo ve vlastnosti `draw` libovolného piškotu
-* použitím funkce DRAW pro příme kreslení do obrázku
+* použitím funkce DRAW pro přímé kreslení do obrázku
 
 
 === Backendy pro různé OS
 
 
-Interní API umožňuje implementaci tolika backendů, kolik jich je pro strojek View zapotřebí. Pro kompletní podporu dialektu Draw je zapotřebí aby byl backend v široké míře schopen kreslit ve 2D.
+Interní API umožňuje implementaci vícero backendů (kombinací OS a grafického systému), takže lze View engine použít v různých prostředích. Pro kompletní podporu dialektu Draw je zapotřebí aby byl backend v široké míře schopen kreslit ve 2D.
 
 
 .Vyhrazení
