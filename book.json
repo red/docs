@@ -16,8 +16,11 @@
                     "value": "http://doc.red-lang.org/v/v0.6.1/",
                     "text": "Version 0.6.1"
                 }, {
+                    "value": "http://doc.red-lang.org/v/v0.6.2/",
+                    "text": "Version 0.6.2"
+                }, {
                     "value": "https://www.gitbook.com/book/dockimbel/red/details",
-                    "text": "Version 0.6.2",
+                    "text": "Version 0.6.3",
                     "selected": true
                 }
             ]
