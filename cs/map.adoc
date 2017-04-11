@@ -5,14 +5,13 @@
 
 == Úvod
 
-Struktura typu `map!` reprezentuje asociativní řadu (array) dvojic key/value. Poskytuje rychlý přístup pro čtení s interním použitím hashtable. Na rozdíl od datového typu `hash!` nepatří `map` do skupiny `series`, tudíž nezná koncept offsetu nebo pozic. Koncepčně leží typ `map!` mezi datovými typy `hash!` a `object!`. Uživatelsky připomíná  slovník.
+Struktura typu `map!` reprezentuje asociativní řadu (array) dvojic key/value. Poskytuje rychlý přístup pro čtení s interním použitím hashtable. Na rozdíl od datového typu `hash!` nepatří `map!` do skupiny `series!`, tudíž nezná koncept pozic (nevlastní interní iterátor). Koncepčně leží typ `map!` mezi datovými typy `hash!` a `object!`. Uživatelsky připomíná  slovník.
 
 == Literálová skladba
 ----
 #(<key> <value>...)
 
-<key>  : hashed key, akceptované typy jsou:
-         any-word!, any-string!, integer!, float!, char!
+<key>  : any-word!, any-string!, integer!, float!, char!
 
 <value> : any-type! value
 ----
@@ -61,7 +60,7 @@ Poznámka:
 * pro přístup ke klíči je možné použít prosté slovo (word) i jeho formu "set-word".
 * je-li jako hodnota zadáno `none`, klíč se nevytvoří 
 
-Novou mapu lze vytvořit kopírováním (`copy`) stávající.
+Novou mapu lze vytvořit kopírováním stávající.
 ----
 cmp: copy mp
 == #()
@@ -127,7 +126,7 @@ m/a: true
 
 set 'm/b false
 
-put m 'aB "hello"
+put m 'Ab "hello"
 
 set/case 'm/aB 0
 
