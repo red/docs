@@ -11,7 +11,7 @@ Struktura typu `map!` reprezentuje asociativní řadu (array) dvojic key/value. 
 ----
 #(<key> <value>...)
 
-<key>  : any-word!, any-string!, integer!, float!, char!
+<key>  : hashovaný klíč typu any-word!, any-string!, integer!, float!, char!
 
 <value> : any-type! value
 ----
