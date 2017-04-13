@@ -10,7 +10,7 @@ A map represents an associative array of key/value pairs. It provides a fast rea
 ----
 #(<key> <value>...)
 
-<key>   : hashed key, accepted types are: any-word!, any-string!, integer!, float!, char!
+<key>   : hashed key, accepted types are: any-word!, any-string!, any-number!, char!, pair!, tuple!
 <value> : any-type! value
 ----
 == Creation syntax
@@ -47,7 +47,8 @@ Notes:
 
 * Like hash! and block!, map! is **case-preserving**, and **case-insensitive for lookup** by default.
 * If a `none` value is specified as value, the key will not be created (see "Deleting keys" section).
-* Any-string! keys and series! values are not copied on creation of the map, the choice is left to the user (this optimizes resources for the common use-case).
+* All the keys are deep copied on creation of the map.
+* Series! values are not copied on creation of the map, the choice is left to the user (this optimizes resources for the common use-case).
 
 Another way to create a new map is to use the `copy` action on an existing one.
 
