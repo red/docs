@@ -24,7 +24,7 @@ If the _spec_ argument is an integer, an empty map! is created with a pre-alloca
 Notes:
 
 * the map body or the spec block have to contain an *even* number of elements, or else, an error will be generated. 
-* values are not_reduced_, so construction syntax is required for some special values, like logic!.
+* values are not *reduced*, so construction syntax is required for some special values, like logic!.
 
 Examples:
 ----
@@ -45,7 +45,7 @@ If the key is of *any-word!* type, the key type is converted to *set-word!* in t
 
 Notes:
 
-* Like hash! and block!, map! is [underline]#case-preserving#, and [underline]#case-insensitive for lookup# by default.
+* Like hash! and block!, map! is **case-preserving**, and **case-insensitive for lookup** by default.
 * If a `none` value is specified as value, the key will not be created (see "Deleting keys" section).
 * Any-string! keys and series! values are not copied on creation of the map, the choice is left to the user (this optimizes resources for the common use-case).
 
@@ -128,7 +128,7 @@ extend/case <map> <spec>
 
 Notes:
 
-* setting a key that does not exist previously in the map, <u>will simply create it</u>.
+* setting a key that does not exist previously in the map, **will simply create it**.
 * adding an existing key will change the key value and not add a new one (case-insensitive matching by default).
 
 Examples:
