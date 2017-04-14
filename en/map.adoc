@@ -10,7 +10,7 @@ A map represents an associative array of key/value pairs. It provides a fast rea
 ----
 #(<key> <value>...)
 
-<key>   : hashed key, accepted types are: any-word!, any-string!, any-number!, char!, pair!, tuple!
+<key>   : hashed key, accepted types are: any-word!, any-string!, number!, char!, pair!, tuple!
 <value> : any-type! value
 ----
 == Creation syntax
