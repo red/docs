@@ -5,8 +5,6 @@
 
 == Úvod
 
-To se podívejme!
-
 Struktura typu `map!` reprezentuje asociativní řadu (array) dvojic key/value. Poskytuje rychlý přístup pro čtení s interním použitím hashtable. Na rozdíl od datového typu `hash!` nepatří `map!` do skupiny `series!`, tudíž nezná koncept pozic (nevlastní interní iterátor). Koncepčně leží typ `map!` mezi datovými typy `hash!` a `object!`. Uživatelsky připomíná  slovník.
 
 == Literálová skladba
