@@ -1,7 +1,8 @@
 = Architektura Red-GUI
+:toc:
+:numbered:
 
-image::view-overview.png[Přehledné schema,align="center"]
-
+image::../images/view-overview.png[Přehledné schema,align="center"]
 
 === VID
 
@@ -11,7 +12,7 @@ VID je zkratkou označení Visual Interface Dialect. Je to dialekt Redu, umožň
 
 Kód grafického prostředí (GUI engine) se skládá z několika částí: 
 
-* Strojek (engine) pro správu piškotů, nezávislý na platformě
+* Engine (strojek) pro správu piškotů, nezávislý na platformě
 * Události reaktivních akcí
 * Interpret dialogu Draw
 * Backendy pro různé platformy
