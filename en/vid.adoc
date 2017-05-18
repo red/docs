@@ -41,7 +41,7 @@ NOTE: All sections are optional, there is no mandatory content that must be prov
 NOTE: `react` keyword can also be used at the container settings level in addition to face options level, see its description <<anchor:react, there>>
 
 
-=== title anchor:title[]
+=== title
 
 *Syntax*
 ----
@@ -91,12 +91,13 @@ Defaults:
 * origin: `10x10`
 * space: `10x10`
 * direction: `across`
+* alignment: `top`
 
 This is how faces are laid out in `across` mode:
 
 image::across.png[across,align="center"]
 
-This is how faces are laid out in `below` mode:
+This is how faces are laid out in `below` mode (using default `left` alignment):
 
 image::below.png[below,align="center"]
 
@@ -105,33 +106,39 @@ image::below.png[below,align="center"]
 
 *Syntax*
 ----
-across
+across <alignment>
+
+<alignment> : (optional) possible values: top | middle | bottom.
 ----
 *Description*
 
-Sets the layout direction to horizontal, from left to right.
+Sets the layout direction to horizontal, from left to right. An alignment modifier can be optionally provided to change the default (`top`) alignment of faces in the row.
 
 
 === below 
 
 *Syntax*
 ----
-below
+below <alignment>
+
+<alignment> : (optional) possible values: left | center | right.
 ----
 *Description*
 
-Sets the layout direction to vertical, from top to bottom.
+Sets the layout direction to vertical, from top to bottom. An alignment modifier can be optionally provided to change the default (`left`) alignment of faces in the column.
 
 
 === return 
 
 *Syntax*
 ----
-return
+return <alignment>
+
+<alignment> : (optional) possible values: left | center | right | top | middle | bottom.
 ---- 
 *Description*
 
-Moves the position to the next row or column of faces, depending of the current layout direction.
+Moves the position to the next row or column of faces, depending of the current layout direction. An alignment modifier can be optionally provided to change the current alignment of faces in the row or column.
 
 
 === space 
