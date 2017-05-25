@@ -438,7 +438,7 @@ NOTE: It possible to use `para` along with other para-related settings, VID will
 wrap
 ----
 
-*Description**
+*Description*
 
 Wrap the face's text when displaying.
 
