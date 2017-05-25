@@ -398,7 +398,7 @@ draw <commands>
 ---- 
 *Description*
 
-Sets the face's `draw` facet to a list of Draw dialect commands. See [Draw dialect](Draw.md) documentation for valid commands.
+Sets the face's `draw` facet to a list of Draw dialect commands. See [Draw dialect](draw.html) documentation for valid commands.
 
 
 ==== font
@@ -411,7 +411,7 @@ font <spec>
 ----
 *Description*
 
-Sets the face's `font` facet to a new `font!` object. Font! object is described [here](View.md#font-object).
+Sets the face's `font` facet to a new `font!` object. Font! object is described [here](view.html#_font_object).
 
 NOTE: It possible to use `font` along with other font-related settings, VID will merge them together, giving priority to the last one specified.
 
@@ -426,7 +426,7 @@ para <spec>
 ----
 *Description*
 
-Sets the face's `para` facet to a new `para!` object. Para! object is described [here](View.md#para-object).
+Sets the face's `para` facet to a new `para!` object. Para! object is described [here](view.html#_para_object).
 
 NOTE: It possible to use `para` along with other para-related settings, VID will merge them together, giving priority to the last one specified.
 
