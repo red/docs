@@ -38,7 +38,7 @@ NOTE: All sections are optional, there is no mandatory content that must be prov
 
 == Container settings 
 
-NOTE: `react` keyword can also be used at the container settings level in addition to face options level, see its description <<anchor:react, there>>
+NOTE: `react` keyword can also be used at the container settings level in addition to face options level, see its description <<anchor:_react, there>>
 
 
 === title
