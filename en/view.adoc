@@ -28,7 +28,7 @@ List of available facets:
 |===
 
 |Facet | Datatype | Mandatory? | Applicability | Description
-|type| word!| yes| all| Type of graphic component (see below for a list).
+|type| word!| yes| all| Type of graphic component (see link:view.html#_face_types[below]).
 |offset| pair!| yes| all| Offset position from parent top-left origin.
 |size| pair!| yes| all| Size of the face.
 |text| string!| no| all| Label text displayed in the face.
