@@ -215,19 +215,19 @@ The `H1` style is a `text` type with a font size set to 32.
 
 === h2
 
-The `H1` style is a `text` type with a font size set to 26.
+The `H2` style is a `text` type with a font size set to 26.
 
 === h3
 
-The `H1` style is a `text` type with a font size set to 22.
+The `H3` style is a `text` type with a font size set to 22.
 
 === h4
 
-The `H1` style is a `text` type with a font size set to 17.
+The `H4` style is a `text` type with a font size set to 17.
 
 === h5
 
-The `H1` style is a `text` type with a font size set to 13.
+The `H5` style is a `text` type with a font size set to 13.
 
 === box
 
