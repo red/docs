@@ -230,6 +230,12 @@ red_tuple redTuple4(long r, long g, long b, long a)
 ----
 Returns a `tuple!` value from four integer values (usually for representing RGBA colors). Passed arguments will be truncated to 8-bit values.
 
+==== redBinary()
+----
+red_binary redBinary(const char* buffer, long bytes)
+----
+Returns a `binary!` value from a memory `buffer` pointer and the buffer's length in bytes. The input buffer will be copied internally.
+
 ==== redString()
 ----
 red_string redString(const char* string)
