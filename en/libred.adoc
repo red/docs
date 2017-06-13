@@ -236,6 +236,15 @@ red_binary redBinary(const char* buffer, long bytes)
 ----
 Returns a `binary!` value from a memory `buffer` pointer and the buffer's length in bytes. The input buffer will be copied internally.
 
+==== redImage()
+----
+red_image redImage(long width, long height, const void* buffer, long format)
+----
+Returns an `image!` value from a memory `buffer` pointer. Image's size is defined in pixels by `width` and `height`. The input buffer will be copied internally. Accepted buffer formats are:
+
+* `RED_IMAGE_FORMAT_RGB`: 24-bit per pixel.
+* `RED_IMAGE_FORMAT_ARGB`: 32-bit per pixel, alpha channel leading.
+
 ==== redString()
 ----
 red_string redString(const char* string)
