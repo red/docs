@@ -496,6 +496,26 @@ red_value redGetPath(red_path path)
 
 Returns the _value_ referenced by the _path_.
 
+=== Accessing a Red object field
+
+When multiple setting/getting accesses are needed on a object's fields, using the object value directly instead of building paths is simpler and preferable. The following two functions are tailored for such access.
+
+Note: these accessors can work with any other associated array types, not just `object!`. So passing a `map!` is allowed too.
+
+==== redSetField()
+----
+red_value redSetField(red_value object, long field, red_value value)
+----
+
+Sets an _object_'s _field_ to a _value_ and returns that _value. The _field_ argument is a symbol ID created using `redSymbol()`.
+
+==== redGetField()
+----
+red_value redGetField(red_value obj, long field)
+----
+
+Returns the _value_ stored in the _object_'s _field_. The _field_ argument is a symbol ID created using `redSymbol()`.
+
 === Debugging
 
 Some handy debugging functions are also provided. Most of them require a system shell window for the output, though, it is possible to force the opening of a log window, or redirect the output to a file.
