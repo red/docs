@@ -458,7 +458,7 @@ Same encoding rules as string!.
 Default: header (4), date (4), time (8)
 Compact: TBD
 
-header/type=48
+header/type=47
 ----
 Date is packed into a 32-bit integer (same as in `red-date!`). Time value is stored as a 64-bit float.
 
