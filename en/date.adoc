@@ -66,8 +66,8 @@ Note:
 Many different input formats for literal dates are accepted. Out of range values (exceeding the specified digit numbers or beyond a field's norm) will result in a syntax error. When serialized again (e.g. for displaying), only the following canonical display formats are used:
 
 ----
-<yyyy>-<mon>-<dd>/<hour>:<min>:<sec><sign><hour>:<min15>
-<yyyy>-<mon>-<dd>
+<dd>-<mon>-<yyyy>/<hour>:<min>:<sec><sign><hour>:<min15>
+<dd>-<mon>-<yyyy>
 ----
 When the time and zone fields are unset or set to zero, they are both omitted. For negative dates, the `/` separator is used instead of `-` for better readability.
 
