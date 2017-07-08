@@ -159,7 +159,7 @@ Path accessors provide a convenient way for getting and setting access to all th
 <date>/year
 <date>/year: <year>
 
-<date> : a word referring to a date! value
+<date> : a word or path expression referring to a date! value
 <year> : an integer! value
 ----
 *Description*
@@ -173,7 +173,7 @@ Gets or sets the year field of a date. Years are returned as integers. Out of ra
 <date>/month
 <date>/month: <month>
 
-<date>  : a word referring to a date! value
+<date>  : a word or path expression referring to a date! value
 <month> : an integer! value
 ----
 *Description*
@@ -187,7 +187,7 @@ Gets or sets the month field of a date. Months are returned as integers. Out of 
 <date>/day
 <date>/day: <day>
 
-<date> : a word referring to a date! value
+<date> : a word or path expression referring to a date! value
 <day>  : an integer! value
 ----
 *Description*
@@ -201,7 +201,7 @@ Gets or sets the day field of a date. Days are returned as integers. Out of rang
 <date>/time
 <date>/time: <time>
 
-<date> : a word referring to a date! value
+<date> : a word or path expression referring to a date! value
 <time> : a time! value
 ----
 *Description*
@@ -215,7 +215,7 @@ Gets or sets the time field of a date. Times are returned as `time!` values. Out
 <date>/hour
 <date>/hour: <hour>
 
-<date> : a word referring to a date! value
+<date> : a word or path expression referring to a date! value
 <hour> : an integer! value
 ----
 *Description*
@@ -229,7 +229,7 @@ Gets or sets the time field of a date. Hours are returned as integer values betw
 <date>/minute
 <date>/minute: <minute>
 
-<date>   : a word referring to a date! value
+<date>   : a word or path expression referring to a date! value
 <minute> : an integer! value
 ----
 *Description*
@@ -243,7 +243,7 @@ Gets or sets the minute field of a date. Minutes are returned as integer values 
 <date>/second
 <date>/second: <second>
 
-<date>   : a word referring to a date! value
+<date>   : a word or path expression referring to a date! value
 <second> : an integer! or float! value
 ----
 *Description*
@@ -257,7 +257,7 @@ Gets or sets the second field of a date. Seconds are returned as `integer!` or `
 <date>/zone
 <date>/zone: <zone>
 
-<date> : a word referring to a date! value
+<date> : a word or path expression referring to a date! value
 <zone> : an integer!, time! or pair! value
 ----
 *Description*
@@ -288,7 +288,7 @@ d/zone: 12x15
 <date>/timezone
 <date>/timezone: <zone>
 
-<date>     : a word referring to a date! value
+<date>     : a word or path expression referring to a date! value
 <timezone> : an integer!, time! or pair! value
 ----
 *Description*
@@ -323,7 +323,7 @@ Note:
 <date>/yearday
 <date>/yearday: <day>
 
-<date>    : a word referring to a date! value
+<date>    : a word or path expression referring to a date! value
 <yearday> : an integer! value
 ----
 *Description*
@@ -341,7 +341,7 @@ Note:
 <date>/weekday
 <date>/weekday: <day>
 
-<date>    : a word referring to a date! value
+<date>    : a word or path expression referring to a date! value
 <weekday> : an integer! value
 ----
 *Description*
@@ -355,7 +355,7 @@ Gets the week day number, ranging from 1 for Monday, to 7 for Sunday. When used 
 <date>/week
 <date>/week: <day>
 
-<date> : a word referring to a date! value
+<date> : a word or path expression referring to a date! value
 <week> : an integer! value
 ----
 *Description*
@@ -373,7 +373,7 @@ Note:
 <date>/isoweek
 <date>/isoweek: <day>
 
-<date>    : a word referring to a date! value
+<date>    : a word or path expression referring to a date! value
 <isoweek> : an integer! value
 ----
 *Description*
@@ -387,7 +387,7 @@ In addition to using words for accessing the date fields, it is also possible to
 ----
 <date>/<index>
 
-<date>  : a word referring to a date! value
+<date>  : a word or path expression referring to a date! value
 <index> : an integer! value referring to a date field.
 ----
 
@@ -410,6 +410,20 @@ Such ordinal accessor can be used both for getting or setting fields. The follow
 |12| week
 |13| isoweek
 |===
+
+=== Accessing date fields using Pick
+
+It is possible to access date fields without using a path, which can be more convenient in some cases. `pick` can be used for that on dates.
+
+*Syntax*
+----
+pick <date> <field>
+
+<date>  : a date! value
+<field> : an integer! value
+----
+
+An integer argument represent the ordinal accessor for dates. See "Ordinal accessors" table above.
 
 == Conversions
 
