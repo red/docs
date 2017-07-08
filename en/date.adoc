@@ -380,7 +380,7 @@ Note:
 
 Gets the week number using the https://en.wikipedia.org/wiki/ISO_week_date[ISO 8601] week definition, ranging from 1 for first week of the year, to 52 (or 53 for some years). When used for setting the week number, the date is recalculated to match the first day of that week (a Monday). Out of range argument values will result in a normalized date.
 
-=== Ordinal acccessors
+=== Ordinal accessors
 
 In addition to using words for accessing the date fields, it is also possible to use an integer index in path expression:
 
@@ -429,9 +429,11 @@ to date! <epoch>
 Epoch time are expressed in UTC, so timezones should be set to zero (if not the case already), before converting a date to an epoch time. This can be achieved easily using the `/timezone` accessor:
 ----
 d: 8-Jul-2017/17:49:27+08:00
-== 8-Jul-2017/17:49:27+08:00
 d/timezone: 0
 == 8-Jul-2017/9:49:27
+
+to integer! 8-Jul-2017/9:49:27
+== 1499507367
 
 to date! to integer! d
 == 8-Jul-2017/9:49:27
@@ -445,11 +447,11 @@ to date! <spec>
 
 <spec> : a block of values for date fields
 ----
-The argument block will be converted to a `date!` value according to the same syntax as for `make` (see 2.2 Runtime creation). Out of range argument values will result in a normalized date. For a restrictive conversion, use `make`.
+The argument block will be converted to a `date!` value according to the same syntax as for `make` (see 2.2 Runtime creation). Out of range argument values will result in a normalized date. For a restrictive conversion from block, use `make`.
 
 == Comparisons
 
-All comparators can be applied on dates: `=, ==, <>, >, <, >=, <=, same?`. In addition to that, `min`, `max` and `sort` are also supported.
+All comparators can be applied on dates: `=, ==, <>, >, <, >=, &lt;=, same?`. In addition to that, `min`, `max` and `sort` are also supported.
 
 *Examples*
 ----
