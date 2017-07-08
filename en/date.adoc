@@ -364,7 +364,7 @@ Gets the week number using a casual week definition (week starts on Sunday, firs
 
 Note:
 
-* The casual week definition allows first and last weeks of the year to be week fragments, ranging from 1 day to 7 days. For accurate week calculations across years, use the `/isoweek` accessor.
+* The casual week definition allows first and last weeks of the year to be partial weeks, ranging from 1 day to 7 days. For accurate week calculations across years, use the `/isoweek` accessor.
 
 === /isoweek
 
