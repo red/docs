@@ -1,6 +1,7 @@
 = Summary
 
 . link:README.adoc[Red/Core Language]
+.. link:date.adoc[Date! datatype]
 .. link:map.adoc[Map! datatype]
 
 . link:gui.adoc[GUI System]
