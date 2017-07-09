@@ -28,6 +28,12 @@ Note:
     <yyyy><sep><m><sep><dd>
     <dd><sep><m><sep><yyyy>
     <dd><sep><m><sep><yy>
+    
+Additional <date> formats when followed by T:
+    <yyyy><mm><dd>
+    <yyyy>-W<ww>    
+    <yyyy>-W<ww>-<d>
+    <yyyy>-<ddd>  
 
 <m> formats (month):
     <mm>
@@ -37,6 +43,12 @@ Note:
 <time> formats:
     <hour>:<min>:<sec>
     <hour>:<min>:<sec><zone>
+    <hhmmss>
+    <hhmmss><zone>
+	<hhmmss>.<dec>
+	<hhmmss>.<dec><zone>
+    <hhmm>
+	<hhmm><zone>
 
 <zone> formats (timezone):
     <sign><hour>
@@ -47,20 +59,23 @@ Note:
     <ss>
     <ss>.<dec>
 
-<yyyy>  : 4 digits representing the year
-<yy>    : 2 digits representing the year relative to 2000
-<mm>    : 1 or 2 digits representing the month
-<mon>	: 3 letters representing the beginning of the month
-<month> : full name of the month
-<dd>    : 1 or 2 digits representing the day of the month
-<time>  : time! value
-<hour>  : 1 or 2 digits representing the hours
-<min>   : 1 or 2 digits representing the minutes
-<ss>    : 1 or 2 digits representing the seconds
-<dec>   : decimals for seconds
-<sign>  : `+` or `-` character (cannot be omitted)
-<min15> : same as <min> but rounded to 15 minutes steps.
-<hhmm>  : 4 digits representing hour and minutes (no separator)
+<yyyy>   : 4 digits representing the year
+<yy>     : 2 digits representing the year relative to 2000
+<mm>     : 1 or 2 digits representing the month
+<mon>	 : 3 letters representing the beginning of the month
+<month>  : full name of the month
+<d>      : a digit representing the day of the week (1 to 7)
+<dd>     : 1 or 2 digits representing the day of the month
+<ddd>    : 3 digits representing the day of the year
+<time>   : time! value
+<hour>   : 1 or 2 digits representing the hours
+<min>    : 1 or 2 digits representing the minutes
+<ss>     : 1 or 2 digits representing the seconds
+<dec>    : decimals for seconds
+<sign>   : `+` or `-` character (cannot be omitted)
+<min15>  : same as <min> but rounded to 15 minutes steps.
+<hhmm>   : 4 digits for hours and minutes (no separator)
+<hhmmss> : 6 digits for hours, minutes and seconds (no separator)
 ----
 
 Many different input formats for literal dates are accepted. Out of range values (exceeding the specified digit numbers or beyond a field's norm) will result in a syntax error. When serialized again (e.g. for displaying), only the following canonical display formats are used:
@@ -102,8 +117,21 @@ Examples of valid input dates:
 2017-07-07T08:22:23+00:00
 2017-07-07T08:22:23Z
 20170707T082223Z
+20170707T0822Z
+20170707T082223+0530
+
+2017-W01
+2017-W23-5
+2017-W23-5T10:50Z
+2017-001
+2017-153T10:50:00-4:00
 ----
 
+Note that the current Red compiler does not support:
+
+* the `<yyyy>-W<ww>` format, so such literal dates when used in compiled code need to be wrapped as `load "<yyyy>-W<ww>"`.
+
+* time zones with 15 increment (`:15` and `:45`). Use `load` also to wrap such dates when used literally in compiled code.
 
 === Runtime creation
 ----
