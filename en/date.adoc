@@ -561,3 +561,28 @@ now/utc
 == Other date-related functions
 
 === Random
+
+*Syntax*
+----
+random <date>
+
+<date> : a date! value
+----
+*Description*
+
+Returns a randomized date using the argument date as upper limit. If the argument date has no time/timezone component, the resulting date will not too.
+
+Examples:
+----
+random 09/07/2017
+== 18-May-1972
+
+random 09/07/2017
+== 13-Aug-0981
+
+random 09/07/2017/12:00:00+8
+== 28-Feb-0341/17:57:12+04:00
+
+random 09/07/2017/12:00:00+8
+== 13-Dec-1062/5:09:12-00:30
+----
