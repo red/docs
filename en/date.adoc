@@ -25,9 +25,9 @@ Note:
 <date>T<time><zone>
 
 <date> formats:
-    <yyyy><sep><m><sep><dd>
-    <dd><sep><m><sep><yyyy>
-    <dd><sep><m><sep><yy>
+    <yyyy><sep><mmm><sep><dd>
+    <dd><sep><mmm><sep><yyyy>
+    <dd><sep><mmm><sep><yy>
     
 Additional <date> formats when followed by T:
     <yyyy><mm><dd>
@@ -35,8 +35,8 @@ Additional <date> formats when followed by T:
     <yyyy>-W<ww>-<d>
     <yyyy>-<ddd>  
 
-<m> formats (month):
-    <mm>
+<mmm> formats (month):
+    <m>
     <mon>
     <month>
 
@@ -61,12 +61,14 @@ Additional <date> formats when followed by T:
 
 <yyyy>   : 4 digits representing the year
 <yy>     : 2 digits representing the year relative to 2000
-<mm>     : 1 or 2 digits representing the month
+<m>      : 1 or 2 digits representing the month
+<mm>     : 2 digits representing the month
 <mon>	 : 3 letters representing the beginning of the month
 <month>  : full name of the month
 <d>      : a digit representing the day of the week (1 to 7)
 <dd>     : 1 or 2 digits representing the day of the month
 <ddd>    : 3 digits representing the day of the year
+<ww>     : 2 digits reprensenting the week of the year
 <time>   : time! value
 <hour>   : 1 or 2 digits representing the hours
 <min>    : 1 or 2 digits representing the minutes
