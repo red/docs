@@ -61,7 +61,7 @@ Additional <date> formats when followed by T:
     <ss>
     <ss>.<dec>
 
-<yyyy>   : 4 digits representing the year
+<yyyy>   : 3 or 4 digits representing the year (4 digits for ISO dates)
 <yy>     : 2 digits representing the year relative to 2000
 <m>      : 1 or 2 digits representing the month
 <mm>     : 2 digits representing the month
