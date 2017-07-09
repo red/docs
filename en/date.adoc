@@ -136,8 +136,6 @@ Note that the current Red compiler does not support:
 
 * the `<yyyy>-W<ww>` format, so such literal dates when used in compiled code need to be wrapped as `load "<yyyy>-W<ww>"`.
 
-* time zones with 15 increment (`:15` and `:45`). Use `load` also to wrap such dates when used literally in compiled code.
-
 === Runtime creation
 ----
 make date! [<day> <month> <year>]
