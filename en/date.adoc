@@ -17,6 +17,8 @@ Note:
 `Date!` values can be created using a literal syntax, or at runtime using `make` constructor or a `to` conversion.
 
 === Literal syntax
+
+Many different input formats are supported, including all the Rebol date formats and most of ISO date standard.
 ----
 <date>/<time>
 <date>/<time><zone>
