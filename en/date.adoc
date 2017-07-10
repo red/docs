@@ -291,7 +291,7 @@ Gets or sets the second field of a date. Seconds are returned as `integer!` or `
 
 Gets or sets the timezone field of a date. Timezones are returned as `time!` values between -16:00 and +15:00. Setting the timezone with `/zone` will only modify that field, time is kept the same. Out of range argument values will result in a normalized date.
 
-When the timezone is set to an `integer!` argument, the argument represents hours and minutes are set to 0. When the timezone is set to a `pair!` argument, the left pair part is the hours and the right part, the minutes.
+When the timezone is set to an `integer!` argument, the argument represents hours, while minutes are set to 0. When the timezone is set to a `pair!` argument, the left pair part is the hours and the right part, the minutes.
 
 The granularity for timezone's minutes is 15, non-conforming values will be truncated to closest 15 minutes values.
 
@@ -320,9 +320,9 @@ d/zone: 12x15
 ----
 *Description*
 
-Gets or sets the timezone field of a date. Timezones are returned as `time!` values between -16:00 and +15:00. Setting the timezone with `/timezone` will modify both the time and the timezone, keeping the new time equivalent to the old one in the new timezone. Out of range argument values will result in a normalized date.
+Gets or sets the timezone field of a date. Timezones are returned as `time!` values between -16:00 and +15:00. Setting the timezone with `/timezone` will modify both the time and the zone, keeping the new time equivalent to the old one in the new zone. Out of range argument values will result in a normalized date.
 
-When the timezone is set to an `integer!` argument, the argument represents hours and minutes are set to 0. When the timezone is set to a `pair!` argument, the left pair part is the hours and the right part, the minutes.
+When the timezone is set to an `integer!` argument, the argument represents hours, while minutes are set to 0. When the timezone is set to a `pair!` argument, the left pair part is the hours and the right part, the minutes.
 
 The granularity for timezone's minutes is 15, non-conforming values will be truncated to closest 15 minutes values.
 
