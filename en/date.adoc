@@ -560,7 +560,11 @@ difference 08/07/2017/10:45:00 20-Feb-1980/05:30:0
 
 == Getting current date
 
-The `now` function returns the operating system's current date and time (including timezone). All the date path accessors are available to `now` as refinements. There is an additional `/utc` refinement to get the date in UTC format.
+The `now` function returns the operating system's current date and time (including timezone). All the date path accessors are available to `now` as refinements, with some additions:
+
+* `/utc`: get the date in UTC format.
+
+* `/precise`: get time with higher precision (1/50th of a second on Windows, micro-seconds on Unix)
 
 *Examples*
 ----
