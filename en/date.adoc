@@ -460,23 +460,23 @@ Dates can be converted from/to https://en.wikipedia.org/wiki/Unix_time[Unix epoc
 
 *Syntax*
 ----
-to integer! <date>
-to date! <epoch>
+to-integer <date>
+to-date <epoch>
 
 <date>  : a date! value
 <epoch> : an integer value representing an epoch time
 ----
 
-Epoch time are expressed in UTC, so timezones should be set to zero (if not the case already), before converting a date to an epoch time. This can be achieved easily using the `/timezone` accessor:
+Epoch time are expressed in UTC. If the argument date is not in UTC, it will be converted internally before converting to epoch time.
 ----
 d: 8-Jul-2017/17:49:27+08:00
-d/timezone: 0
-== 8-Jul-2017/9:49:27
-
-to integer! 8-Jul-2017/9:49:27
+to-integer d
 == 1499507367
 
-to date! to integer! d
+to-integer 8-Jul-2017/9:49:27
+== 1499507367
+
+to-date to-integer d
 == 8-Jul-2017/9:49:27
 ----
 
