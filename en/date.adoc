@@ -560,7 +560,7 @@ The `now` function returns the operating system's current date and time (includi
 
 * `/utc`: get the date in UTC format.
 
-* `/precise`: get time with higher precision (1/50th of a second on Windows, micro-seconds on Unix)
+* `/precise`: get time with higher precision (1/60th of a second on Windows, micro-seconds on Unix)
 
 *Examples*
 ----
