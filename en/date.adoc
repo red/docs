@@ -10,7 +10,7 @@ Note:
 
 * `date!` uses a https://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar[proleptic Gregorian calendar], extending its usage backward, beyond the year 1582. Care should be taken when trying to represent historical, pre-Gregorian dates using `date!` values.
 
-* Supported dates range from `1/Jan/-32768` to `31/Dec/32767`, wrapping around on overflowing math operations. On input, that range is reduced to `1/Jan/-9999` to `31/Dec/9999` for practical reasons.
+* Supported dates range from `1/Jan/-16384` to `31/Dec/16383`, wrapping around on overflowing math operations. On input, that range is reduced to `1/Jan/-9999` to `31/Dec/9999` for practical reasons.
 
 == Creation
 
@@ -90,7 +90,7 @@ Many different input formats for literal dates are accepted. Out of range values
 <dd>-<mon>-<yyyy>/<hour>:<min>:<sec>
 <dd>-<mon>-<yyyy>/<hour>:<min>:<sec><sign><hour>:<min15>
 ----
-When the time and/or zone fields are unset, or set to zero, they are omitted. For negative dates, the `/` separator is used instead of `-` for better readability.
+When the time and/or zone fields are unset, they are omitted. For negative dates, the `/` separator is used instead of `-` for better readability.
 
 Notes:
 
@@ -315,11 +315,13 @@ d
 <date>/time: <time>
 
 <date> : a word or path expression referring to a date! value
-<time> : a time! value
+<time> : a time! or none! value
 ----
 *Description*
 
-Gets or sets the time field of a date. Times are returned as `time!` values. Out of range argument values will result in a normalized date.
+Gets or sets the time field of a date. Times are returned as `time!` values, or `none!` value if time is not set, or has been reset (see below). Out of range argument values will result in a normalized date.
+
+If the time is set to a `none!` value, the time and zone fields are set to zero and will not be shown further.
 
 *Examples*
 ----
@@ -329,6 +331,8 @@ d/time: 1:2:3
 == 1:02:03
 d
 == 10-Jul-2017/1:02:03-06:00
+d/time: none
+== 10-Jul-2017
 ----
 
 === /hour
