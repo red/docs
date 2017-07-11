@@ -212,15 +212,15 @@ Gets or sets the year field of a date. Years are returned as integers. Out of ra
 
 *Examples*
 ----
->> d:  now
+d:  now
 == 10-Jul-2017/22:46:22-06:00
->> d/year: 10000
+d/year: 10000
 == 10000
->> d
+d
 == 10-Jul-10000/22:46:22-06:00
->> d/year: 32768
+d/year: 32768
 == 32768
->> d
+d
 == 10/Jul/-32768/22:46:22-06:00     ; Note wrap on overflow
 ----
 
@@ -240,17 +240,17 @@ Gets or sets the month field of a date. Months are returned as integers. Out of 
 
 *Examples*
 ----
->> d: now
+d: now
 == 10-Jul-2017/22:48:31-06:00
->> d/month: 12
+d/month: 12
 == 12
->> d
+d
 == 10-Dec-2017/22:48:31-06:00
->> d/month: 13
+d/month: 13
 == 13
->> d
+d
 == 10-Jan-2018/22:48:31-06:00   ; Note wrap to the next year
->> d/month
+d/month
 == 1                            ; Month is now normalized
 ----
 
@@ -270,15 +270,15 @@ Gets or sets the day field of a date. Days are returned as integers. Out of rang
 
 *Examples*
 ----
->>  d: 1-jan-2017
+ d: 1-jan-2017
 == 1-Jan-2017
->> d/day: 32
+d/day: 32
 == 32
->> d
+d
 == 1-Feb-2017
->> d/day: 0         ; Note how zero works, for proper date math
+d/day: 0         ; Note how zero works, for proper date math
 == 0
->> d
+d
 == 31-Jan-2017
 ----
 
@@ -298,11 +298,11 @@ Gets or sets the time field of a date. Times are returned as `time!` values. Out
 
 *Examples*
 ----
->> d: now
+d: now
 == 10-Jul-2017/23:18:54-06:00
->> d/time: 1:2:3
+d/time: 1:2:3
 == 1:02:03
->> d
+d
 == 10-Jul-2017/1:02:03-06:00
 ----
 
@@ -322,15 +322,15 @@ Gets or sets the time field of a date. Hours are returned as integer values betw
 
 *Examples*
 ----
->> d: now
+d: now
 == 10-Jul-2017/23:19:40-06:00
->> d/hour: 0
+d/hour: 0
 == 0
->> d
+d
 == 10-Jul-2017/0:19:40-06:00
->> d/hour: 24
+d/hour: 24
 == 24
->> d
+d
 == 11-Jul-2017/0:19:40-06:00
 ----
 
@@ -352,13 +352,13 @@ Gets or sets the minute field of a date. Minutes are returned as integer values 
 ----
 
 == 10-Jul-2017/23:20:25-06:00
->> d/minute: 0
+d/minute: 0
 == 0
->> d
+d
 == 10-Jul-2017/23:00:25-06:00
->> d/minute: 60
+d/minute: 60
 == 60
->> d
+d
 == 11-Jul-2017/0:00:25-06:00
 ----
 
@@ -378,19 +378,19 @@ Gets or sets the second field of a date. Seconds are returned as `integer!` or `
 
 *Examples*
 ----
->> d: now
+d: now
 == 10-Jul-2017/23:21:15-06:00
->> d/second: 0
+d/second: 0
 == 0
->> d
+d
 == 10-Jul-2017/23:21:00-06:00
->> d/second: -1
+d/second: -1
 == -1
->> d
+d
 == 10-Jul-2017/23:20:59-06:00
->> d/second: 60
+d/second: 60
 == 60
->> d
+d
 == 10-Jul-2017/23:21:00-06:00
 ----
 
@@ -480,24 +480,24 @@ Note:
 
 *Examples*
 ----
->> d: 1-jan-2017
+d: 1-jan-2017
 == 1-Jan-2017
->> d/yearday
+d/yearday
 == 1
->> d: 31-dec-2017
+d: 31-dec-2017
 == 31-Dec-2017
->> d/yearday
+d/yearday
 == 365
->> d: 31-dec-2020
+d: 31-dec-2020
 == 31-Dec-2020
->> d/yearday
+d/yearday
 == 366                  ; Leap year
 
->> d: 31-dec-2017
+d: 31-dec-2017
 == 31-Dec-2017
->> d/yearday: 366
+d/yearday: 366
 == 366
->> d
+d
 == 1-Jan-2018
 ----
 
@@ -517,21 +517,21 @@ Gets the week day number, ranging from 1 for Monday, to 7 for Sunday. When used 
 
 *Examples*
 ----
->> d: now
+d: now
 == 10-Jul-2017/23:25:35-06:00
->> d/weekday
+d/weekday
 == 1
->> d/weekday: 2
+d/weekday: 2
 == 2
->> d
+d
 == 11-Jul-2017/23:25:35-06:00
->> d/weekday: 7
+d/weekday: 7
 == 7
->> d
+d
 == 16-Jul-2017/23:25:35-06:00
->> d/weekday: 8
+d/weekday: 8
 == 8
->> d
+d
 == 17-Jul-2017/23:25:35-06:00
 ----
 
@@ -556,25 +556,25 @@ Note:
 
 *Examples*
 ----
->> d: now
+d: now
 == 10-Jul-2017/23:28:07-06:00
->> d/week
+d/week
 == 28
->> d/week: 29
+d/week: 29
 == 29
->> d
+d
 == 16-Jul-2017/23:28:07-06:00
->> d/week: 52
+d/week: 52
 == 52
->> d
+d
 == 24-Dec-2017/23:28:07-06:00
->> d/week: 53
+d/week: 53
 == 53
->> d
+d
 == 31-Dec-2017/23:28:07-06:00
->> d/week: 54
+d/week: 54
 == 54
->> d
+d
 == 7-Jan-2018/23:28:07-06:00
 ----
 
@@ -594,21 +594,21 @@ Gets the week number using the https://en.wikipedia.org/wiki/ISO_week_date[ISO 8
 
 *Examples*
 ----
->> d: now
+d: now
 == 10-Jul-2017/23:29:13-06:00
->> d/isoweek
+d/isoweek
 == 28
->> d/isoweek: 29
+d/isoweek: 29
 == 29
->> d
+d
 == 17-Jul-2017/23:29:13-06:00
->> d/isoweek: 52
+d/isoweek: 52
 == 52
->> d
+d
 == 25-Dec-2017/23:29:13-06:00
->> d/isoweek: 53
+d/isoweek: 53
 == 53
->> d
+d
 == 1-Jan-2018/23:29:13-06:00
 ----
 
@@ -659,9 +659,9 @@ An integer argument represent the ordinal accessor for dates. See "Ordinal acces
 
 *Examples*
 ----
->> d: now
+d: now
 == 10-Jul-2017/23:35:01-06:00
->> repeat i 13 [print [i pick d i]]
+repeat i 13 [print [i pick d i]]
 1   2017
 2   7
 3   10
