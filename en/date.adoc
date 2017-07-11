@@ -158,7 +158,7 @@ Notes:
 
 * `year` and `day` fields are interchangeable, but only for low year values. The year can be used in first position *only* if its value is >= 100 and less than the value of the third field. When that rule is not satisfied, the third field is considered the year. Negative years should always be specified in the third position.
 
-Examples:
+*Examples*
 ----
 make date! [1978 2 3]
 == 3-Feb-1978
@@ -210,8 +210,8 @@ Path accessors provide a convenient way for getting and setting all `date!` valu
 
 Gets or sets the year field of a date. Years are returned as integers. Out of range argument values will result in a normalized date.
 
-Examples:
----
+*Examples*
+----
 >> d:  now
 == 10-Jul-2017/22:46:22-06:00
 >> d/year: 10000
@@ -222,7 +222,7 @@ Examples:
 == 32768
 >> d
 == 10/Jul/-32768/22:46:22-06:00     ; Note wrap on overflow
----
+----
 
 === /month
 
@@ -239,7 +239,7 @@ Examples:
 Gets or sets the month field of a date. Months are returned as integers. Out of range argument values will result in a normalized date.
 
 *Examples*
----
+----
 >> d: now
 == 10-Jul-2017/22:48:31-06:00
 >> d/month: 12
@@ -252,7 +252,7 @@ Gets or sets the month field of a date. Months are returned as integers. Out of 
 == 10-Jan-2018/22:48:31-06:00   ; Note wrap to the next year
 >> d/month
 == 1                            ; Month is now normalized
----
+----
 
 === /day
 
@@ -269,7 +269,7 @@ Gets or sets the month field of a date. Months are returned as integers. Out of 
 Gets or sets the day field of a date. Days are returned as integers. Out of range argument values will result in a normalized date.
 
 *Examples*
----
+----
 >>  d: 1-jan-2017
 == 1-Jan-2017
 >> d/day: 32
@@ -280,7 +280,7 @@ Gets or sets the day field of a date. Days are returned as integers. Out of rang
 == 0
 >> d
 == 31-Jan-2017
----
+----
 
 === /time
 
@@ -297,14 +297,14 @@ Gets or sets the day field of a date. Days are returned as integers. Out of rang
 Gets or sets the time field of a date. Times are returned as `time!` values. Out of range argument values will result in a normalized date.
 
 *Examples*
----
+----
 >> d: now
 == 10-Jul-2017/23:18:54-06:00
 >> d/time: 1:2:3
 == 1:02:03
 >> d
 == 10-Jul-2017/1:02:03-06:00
----
+----
 
 === /hour
 
@@ -321,7 +321,7 @@ Gets or sets the time field of a date. Times are returned as `time!` values. Out
 Gets or sets the time field of a date. Hours are returned as integer values between 0 and 23. Out of range argument values will result in a normalized date.
 
 *Examples*
----
+----
 >> d: now
 == 10-Jul-2017/23:19:40-06:00
 >> d/hour: 0
@@ -332,7 +332,7 @@ Gets or sets the time field of a date. Hours are returned as integer values betw
 == 24
 >> d
 == 11-Jul-2017/0:19:40-06:00
----
+----
 
 === /minute
 
@@ -349,7 +349,7 @@ Gets or sets the time field of a date. Hours are returned as integer values betw
 Gets or sets the minute field of a date. Minutes are returned as integer values between 0 and 59. Out of range argument values will result in a normalized date.
 
 *Examples*
----
+----
 
 == 10-Jul-2017/23:20:25-06:00
 >> d/minute: 0
@@ -360,7 +360,7 @@ Gets or sets the minute field of a date. Minutes are returned as integer values 
 == 60
 >> d
 == 11-Jul-2017/0:00:25-06:00
----
+----
 
 === /second
 
@@ -377,7 +377,7 @@ Gets or sets the minute field of a date. Minutes are returned as integer values 
 Gets or sets the second field of a date. Seconds are returned as `integer!` or `float!` values between 0 and 59. Out of range argument values will result in a normalized date.
 
 *Examples*
----
+----
 >> d: now
 == 10-Jul-2017/23:21:15-06:00
 >> d/second: 0
@@ -392,7 +392,7 @@ Gets or sets the second field of a date. Seconds are returned as `integer!` or `
 == 60
 >> d
 == 10-Jul-2017/23:21:00-06:00
----
+----
 
 === /zone
 
@@ -479,7 +479,7 @@ Note:
 * a `/julian` alias for `/yearday` is also available, for compatibility with Rebol.
 
 *Examples*
----
+----
 >> d: 1-jan-2017
 == 1-Jan-2017
 >> d/yearday
@@ -499,7 +499,7 @@ Note:
 == 366
 >> d
 == 1-Jan-2018
----
+----
 
 === /weekday
 
@@ -516,7 +516,7 @@ Note:
 Gets the week day number, ranging from 1 for Monday, to 7 for Sunday. When used for setting the day of the week, the date is recalculated to match that day in the current week. Out of range argument values will result in a normalized date.
 
 *Examples*
----
+----
 >> d: now
 == 10-Jul-2017/23:25:35-06:00
 >> d/weekday
@@ -533,7 +533,7 @@ Gets the week day number, ranging from 1 for Monday, to 7 for Sunday. When used 
 == 8
 >> d
 == 17-Jul-2017/23:25:35-06:00
----
+----
 
 
 === /week
@@ -555,7 +555,7 @@ Note:
 * The casual week definition allows first and last weeks of the year to be partial weeks, ranging from 1 day to 7 days. For accurate week calculations across years, use the `/isoweek` accessor.
 
 *Examples*
----
+----
 >> d: now
 == 10-Jul-2017/23:28:07-06:00
 >> d/week
@@ -576,7 +576,7 @@ Note:
 == 54
 >> d
 == 7-Jan-2018/23:28:07-06:00
----
+----
 
 === /isoweek
 
@@ -593,7 +593,7 @@ Note:
 Gets the week number using the https://en.wikipedia.org/wiki/ISO_week_date[ISO 8601] week definition, ranging from 1 for first week of the year, to 52 (or 53 for some years). When used for setting the week number, the date is recalculated to match the first day of that week (a Monday). Out of range argument values will result in a normalized date.
 
 *Examples*
----
+----
 >> d: now
 == 10-Jul-2017/23:29:13-06:00
 >> d/isoweek
@@ -610,7 +610,7 @@ Gets the week number using the https://en.wikipedia.org/wiki/ISO_week_date[ISO 8
 == 53
 >> d
 == 1-Jan-2018/23:29:13-06:00
----
+----
 
 === Ordinal accessors
 
@@ -658,7 +658,7 @@ pick <date> <field>
 An integer argument represent the ordinal accessor for dates. See "Ordinal accessors" table above.
 
 *Examples*
----
+----
 >> d: now
 == 10-Jul-2017/23:35:01-06:00
 >> repeat i 13 [print [i pick d i]]
@@ -675,7 +675,7 @@ An integer argument represent the ordinal accessor for dates. See "Ordinal acces
 11  -6:00:00
 12  28
 13  28
----
+----
 
 == Conversions
 
@@ -830,7 +830,7 @@ random <date>
 
 Returns a randomized date using the argument date as upper limit. If the argument date has no time/timezone component, the resulting date won't either.
 
-Examples:
+*Examples*
 ----
 random 09/07/2017
 == 18-May-1972
