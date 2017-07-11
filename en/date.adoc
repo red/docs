@@ -770,6 +770,7 @@ Supported math operations on dates include:
 
 * adding or subtracting values from any date field: the result is normalized.
 * adding or subtracting an integer value with a date value: interpreted as a number of days.
+* adding or subtracting a time value with a date value: will add/subtract it from the date's time.
 * subtracting two date values: result is a signed number of days between those two dates.
 * using the `difference` function on two date values: result is the signed difference, as a `time!` value, between those two dates.
 
@@ -798,6 +799,10 @@ d/month: d/month + 5
 d: 28-Feb-1980/8:30:00
 d/hour: d/hour + 48
 == 1-Mar-1980/8:30:00
+
+d: 28-Feb-1980/8:30:00
+d + 20:30:45
+== 29-Feb-1980/5:00:45
 
 08/07/2017/10:45:00 - 20-Feb-1980/05:30:0
 == 13653
