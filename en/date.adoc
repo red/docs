@@ -196,6 +196,31 @@ make date! [99 12 31]
 
 Path accessors provide a convenient way for getting and setting all `date!` value fields.
 
+=== /date
+
+*Syntax*
+----
+<date>/date
+<date>/date: <date2>
+
+<date>  : a word or path expression referring to a date! value
+<date2> : a date! value
+----
+*Description*
+
+Gets or sets the date field of a date (excluding time and zone). Dates are returned as `date!` values.
+
+*Examples*
+----
+d:  now
+== 10-Jul-2017/22:46:22-06:00
+d/date
+== 10-Jul-2017
+
+d/date: 15/09/2017
+== 15-Sep-2017/22:46:22-06:00
+----
+
 === /year
 
 *Syntax*
@@ -628,19 +653,20 @@ Such ordinal accessor can be used both for getting or setting fields. The follow
 [cols="1,1",options="header",align="center"]
 |===
 |Index | Name
-| 1| year
-| 2| month
-| 3| day
-| 4| zone
-| 5| time
-| 6| hour
-| 7| minute
-| 8| second
-| 9| weekday
-|10| yearday
-|11| timezone
-|12| week
-|13| isoweek
+| 1| date
+| 2| year
+| 3| month
+| 4| day
+| 5| zone
+| 6| time
+| 7| hour
+| 8| minute
+| 9| second
+|10| weekday
+|11| yearday
+|12| timezone
+|13| week
+|14| isoweek
 |===
 
 === Accessing date fields using Pick
@@ -661,20 +687,21 @@ An integer argument represent the ordinal accessor for dates. See "Ordinal acces
 ----
 d: now
 == 10-Jul-2017/23:35:01-06:00
-repeat i 13 [print [i pick d i]]
-1   2017
-2   7
-3   10
-4   -6:00:00
-5   23:35:01
-6   23
-7   35
-8   1.0
-9   1
-10  191
-11  -6:00:00
-12  28
+repeat i 14 [print [i pick d i]]
+1   10-Jul-2017
+2   2017
+3   7
+4   10
+5   -6:00:00
+6   23:35:01
+7   23
+8   35
+9   1.0
+10  1
+11  191
+12  -6:00:00
 13  28
+14  28
 ----
 
 == Conversions
