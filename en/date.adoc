@@ -683,21 +683,22 @@ An integer argument represent the ordinal accessor for dates. See "Ordinal acces
 ----
 d: now
 == 10-Jul-2017/23:35:01-06:00
-repeat i 14 [print [i pick d i]]
-1   10-Jul-2017
-2   2017
-3   7
-4   10
-5   -6:00:00
-6   23:35:01
-7   23
-8   35
-9   1.0
-10  1
-11  191
-12  -6:00:00
-13  28
-14  28
+names: system/catalog/accessors/date!
+repeat i 14 [print [pad i 4 pad names/:i 10 pick d i]]
+1    date       11-Jul-2017
+2    year       2017
+3    month      7
+4    day        11
+5    zone       8:00:00
+6    time       21:43:52
+7    hour       21
+8    minute     43
+9    second     52.0
+10   weekday    2
+11   yearday    192
+12   timezone   8:00:00
+13   week       28
+14   isoweek    28
 ----
 
 == Conversions
