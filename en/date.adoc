@@ -183,13 +183,11 @@ make date! [100 12 31]
 make date! [100 12 32]
 *** Script Error: cannot MAKE/TO date! from: [100 12 32]
 *** Where: make
-*** Stack: 
 
 ; First field is < 100, so not considered as a year
 make date! [99 12 31]
 *** Script Error: cannot MAKE/TO date! from: [99 12 31]
 *** Where: make
-*** Stack: 
 ----
 
 == Path accessors
