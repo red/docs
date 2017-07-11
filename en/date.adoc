@@ -78,7 +78,7 @@ Additional <date> formats when followed by T:
 <ss>     : 1 or 2 digits representing the seconds
 <dec>    : decimals for seconds
 <sign>   : `+` or `-` character (cannot be omitted)
-<min15>  : same as <min> but rounded to 15 minutes steps.
+<min15>  : same as <min> but rounded to a multiple of 15.
 <hhmm>   : 4 digits for hours and minutes (no separator)
 <hhmmss> : 6 digits for hours, minutes and seconds (no separator)
 ----
@@ -439,7 +439,7 @@ Gets or sets the timezone field of a date. Timezones are returned as `time!` val
 
 When the timezone is set to an `integer!` argument, the argument represents hours, while minutes are set to 0.
 
-The granularity for timezone's minutes is 15, non-conforming values will be truncated to closest 15 minutes values.
+The granularity for timezone's minutes is 15, non-conforming values will be rounded to closest 15 minutes inferior multiple.
 
 *Examples*
 ----
@@ -467,7 +467,7 @@ Gets or sets the timezone field of a date. Timezones are returned as `time!` val
 
 When the timezone is set to an `integer!` argument, the argument represents hours, while minutes are set to 0.
 
-The granularity for timezone's minutes is 15, non-conforming values will be truncated to closest 15 minutes values.
+The granularity for timezone's minutes is 15, non-conforming values will be rounded to closest 15 minutes inferior multiple
 
 *Examples*
 ----
