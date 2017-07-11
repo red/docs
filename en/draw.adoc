@@ -185,7 +185,7 @@ image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color> crop <
 ----
 *Description*
 
-Paints an image using the provided information for position and width. If the image has positioning information provided, then the image is painted at 0x0 coordinates. A color value can be optionally provided, it will be used for transparency. 
+Paints an image using the provided information for position and width. If the image has no positioning information provided, then the image is painted at 0x0 coordinates. A color value can be optionally provided, it will be used for transparency. 
 
 NOTE:
 
