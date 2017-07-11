@@ -427,13 +427,13 @@ d
 <date>/zone: <zone>
 
 <date> : a word or path expression referring to a date! value
-<zone> : an integer!, time! or pair! value
+<zone> : a time! or integer! value
 ----
 *Description*
 
 Gets or sets the timezone field of a date. Timezones are returned as `time!` values between -16:00 and +15:00. Setting the timezone with `/zone` will only modify that field, time is kept the same. Out of range argument values will result in a normalized date.
 
-When the timezone is set to an `integer!` argument, the argument represents hours, while minutes are set to 0. When the timezone is set to a `pair!` argument, the left pair part is the hours and the right part, the minutes.
+When the timezone is set to an `integer!` argument, the argument represents hours, while minutes are set to 0.
 
 The granularity for timezone's minutes is 15, non-conforming values will be truncated to closest 15 minutes values.
 
@@ -445,9 +445,6 @@ d/zone: 8
 
 d/zone: -4:00
 == 1-Mar-2017/5:30:00-04:00
-
-d/zone: 12x15
-== 1-Mar-2017/5:30:00+12:15
 ----
 
 === /timezone
@@ -464,7 +461,7 @@ d/zone: 12x15
 
 Gets or sets the timezone field of a date. Timezones are returned as `time!` values between -16:00 and +15:00. Setting the timezone with `/timezone` will modify both the time and the zone, keeping the new time equivalent to the old one in the new zone. Out of range argument values will result in a normalized date.
 
-When the timezone is set to an `integer!` argument, the argument represents hours, while minutes are set to 0. When the timezone is set to a `pair!` argument, the left pair part is the hours and the right part, the minutes.
+When the timezone is set to an `integer!` argument, the argument represents hours, while minutes are set to 0.
 
 The granularity for timezone's minutes is 15, non-conforming values will be truncated to closest 15 minutes values.
 
@@ -476,9 +473,6 @@ d/timezone: 8
 
 d/timezone: -4:00
 == 1-Mar-2017/1:30:00-04:00
-
-d/timezone: 12x15
-== 1-Mar-2017/17:45:00+12:15
 ----
 
 Note:
