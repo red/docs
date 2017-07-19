@@ -28,7 +28,7 @@ List of available facets:
 |===
 
 |Facet | Datatype | Mandatory? | Applicability | Description
-|type| word!| yes| all| Type of graphic component (see below for a list).
+|type| word!| yes| all| Type of graphic component (see link:view.html#_face_types[below]).
 |offset| pair!| yes| all| Offset position from parent top-left origin.
 |size| pair!| yes| all| Size of the face.
 |text| string!| no| all| Label text displayed in the face.
@@ -36,7 +36,7 @@ List of available facets:
 |color| tuple!| no| some| Background color of the face in R.G.B or R.G.B.A format.
 |menu| block!| no| all| Menu bar or contextual menu.
 |data| any-type!| no| all| Content data of the face.
-|enable?| logic!| yes| all| Enable or disable input events on the face.
+|enabled?| logic!| yes| all| Enable or disable input events on the face.
 |visible?| logic!|	yes| all| Display or hide the face.
 |selected| integer!| no| some| For lists types,  index of currently selected element.
 |flags| block!, word!| no|	some| List of special keywords altering the display or behavior of the face.

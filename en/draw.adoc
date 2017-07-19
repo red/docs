@@ -185,7 +185,7 @@ image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color> crop <
 ----
 *Description*
 
-Paints an image using the provided information for position and width. If the image has positioning information provided, then the image is painted at 0x0 coordinates. A color value can be optionally provided, it will be used for transparency. 
+Paints an image using the provided information for position and width. If the image has no positioning information provided, then the image is painted at 0x0 coordinates. A color value can be optionally provided, it will be used for transparency. 
 
 NOTE:
 
@@ -525,12 +525,14 @@ NOTE: Anti-aliasing gives nicer visual rendering, but degrades performance.
 *Syntax*
 ----
 matrix <matrix-setup>
+matrix 'pen <matrix-setup>
+matrix 'fill-pen <matrix-setup>
 
 <matrix-setup> : the matrix which is pre/post-multiplied to current matrix (block!).
 ----
 *Description*
 
-Performs matrix multiplication. The current transformation matrix is post-multiplied by this matrix.
+Performs matrix multiplication. The current transformation matrix is pre-multiplied by this matrix.
 
 The `matrix-setup` block must have 6 numbers (number!) in it. 
 ----
@@ -543,6 +545,8 @@ The block values are used internally for building following transformation matri
 |0 0 1|
 ----
 
+When the `'pen` or `'fill-pen` lit-words are used, the multiplication is applied respectively to the current pen or current fill-pen.
+
 === Matrix-order
 
 *Syntax*
@@ -553,17 +557,21 @@ matrix-order <mode>
 ----
 *Description*
 
-Defines if new matrices in subsequent matrix operations, are pre-multiplied (`prepend`) or post-multiplied (`append`, default mode) to the current matrix.
+Defines if new matrices in subsequent matrix operations, are pre-multiplied (`prepend`, default mode) or post-multiplied (`append`) to the current matrix.
 
 === Reset-matrix 
 
 *Syntax*
 ----
 reset-matrix
+reset-matrix 'pen
+reset-matrix 'fill-pen
 ----
 *Description*
 
 Resets the current transformation matrix to a unit matrix.
+
+When the `'pen` or `'fill-pen` lit-words are used, the reset is applied respectively to the current pen or current fill-pen.
 
 ----
 |1 0 0|
@@ -576,10 +584,14 @@ Resets the current transformation matrix to a unit matrix.
 *Syntax*
 ----
 invert-matrix
+invert-matrix 'pen
+invert-matrix 'fill-pen
 ----
 *Description*
 
 Applies an algebraic matrix inversion operation on the current transformation matrix.
+
+When the `'pen` or `'fill-pen` lit-words are used, the inversion is applied respectively to the current pen or current fill-pen.
 
 === Push 
 
@@ -598,8 +610,8 @@ Saves the current state (transformations, clipping region, and pen settings) on 
 *Syntax*
 ----
 rotate <angle> <center> [<commands>]
-rotate pen <angle>
-rotate fill-pen <angle>
+rotate 'pen <angle>
+rotate 'fill-pen <angle>
 
 <angle>    : the angle in degrees (integer! float!).
 <center>   : (optional) center of rotation (pair!).
@@ -609,15 +621,15 @@ rotate fill-pen <angle>
 
 Sets the clockwise rotation about a given point, in degrees. If optional `center` is not supplied, the rotate is about the origin of the current user coordinate system. Negative numbers can be used for counter-clockwise rotation. When a block is provided as last argument, the rotation will be applied only to the commands in that block.
 
-When the `pen` or `fill-pen` words are used, the rotation is applied respectively to the current pen or current fill-pen.
+When the `'pen` or `'fill-pen` lit-words are used, the rotation is applied respectively to the current pen or current fill-pen.
 
 === Scale 
 
 *Syntax*
 ----
 scale <scale-x> <scale-y> [<commands>]
-scale pen <scale-x> <scale-y>
-scale fill-pen <scale-x> <scale-y>
+scale 'pen <scale-x> <scale-y>
+scale 'fill-pen <scale-x> <scale-y>
 
 <scale-x>  : the scale amount in X (number!).
 <scale-y>  : the scale amount in Y (number!).
@@ -627,15 +639,15 @@ scale fill-pen <scale-x> <scale-y>
 
 Sets the scale amounts. The values given are multipliers; use values greater than one to increase the scale; use values less than one to decrease it. When a block is provided as last argument, the scaling will be applied only to the commands in that block.
 
-When the `pen` or `fill-pen` words are used, the scaling is applied respectively to the current pen or current fill-pen.
+When the `'pen` or `'fill-pen` lit-words are used, the scaling is applied respectively to the current pen or current fill-pen.
 
 === Translate 
 
 *Syntax*
 ----
 translate <offset> [<commands>]
-translate pen <offset>
-translate fill-pen <offset>
+translate 'pen <offset>
+translate 'fill-pen <offset>
 
 <offset>   : the translation amounts (pair!).
 <commands> : (optional) Draw dialect commands.
@@ -644,15 +656,15 @@ translate fill-pen <offset>
 
 Sets the origin for drawing commands. Multiple translate commands will have a cumulative effect. When a block is provided as last argument, the translation will be applied only to the commands in that block.
 
-When the `pen` or `fill-pen` words are used, the translation is applied respectively to the current pen or current fill-pen.
+When the `'pen` or `'fill-pen` lit-words are used, the translation is applied respectively to the current pen or current fill-pen.
 
 === Skew 
 
 *Syntax*
 ----
 skew <skew-x> <skew-y> [<commands>]
-skew pen <skew-x> <skew-y>
-skew fill-pen <skew-x> <skew-y>
+skew 'pen <skew-x> <skew-y>
+skew 'fill-pen <skew-x> <skew-y>
 
 <skew-x>   : skew along the x-axis in degrees (integer! float!).
 <skew-y>   : (optional) skew along the y-axis in degrees (integer! float!).
@@ -662,13 +674,15 @@ skew fill-pen <skew-x> <skew-y>
 
 Sets a coordinate system skewed from the original by the given number of degrees. If `<skew-y>` is not provided, it is assumed to be zero. When a block is provided as last argument, the skewing will be applied only to the commands in that block.
 
-When the `pen` or `fill-pen` words are used, the skewing is applied respectively to the current pen or current fill-pen.
+When the `'pen` or `'fill-pen` lit-words are used, the skewing is applied respectively to the current pen or current fill-pen.
 
 === Transform 
 
 *Syntax*
 ----
 transform <angle> <center> <scale-x> <scale-y> <translation> [<commands>]
+transform 'pen <angle> <center> <scale-x> <scale-y> <translation>
+transform 'fill-pen <angle> <center> <scale-x> <scale-y> <translation>
 
 <angle>       : the rotation angle in degrees (integer! float!).
 <center>      : (optional) center of rotation (pair!).
@@ -680,6 +694,8 @@ transform <angle> <center> <scale-x> <scale-y> <translation> [<commands>]
 *Description*
 
 Sets a transformation such as translation, scaling, and rotation. When a block is provided as last argument, the transformation will be applied only to the commands in that block.
+
+When the `'pen` or `'fill-pen` lit-words are used, the transformation is applied respectively to the current pen or current fill-pen.
 
 === Clip
 
