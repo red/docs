@@ -6,7 +6,7 @@
 
 == Záměry a cíle
 
-Systém Red/View (nebo prostě View či View engine) je grafický systém jazyka Red. Jeho cíle lze shrnout do těchto bodů:
+Systém Red/View (View engine) je grafický systém jazyka Red. Jeho cíle lze shrnout do těchto bodů:
 
 * Minimální, datově orientované API
 * Virtuální strom objektů (strom piškotů) jako programovací rozhraní
@@ -20,21 +20,21 @@ Virtuální strom se skládá z piškotů. Každý piškot koresponduje s přís
 
 == Piškoty
 
-Piškot (tvář neboli face) je objekt, který vznikne buď kompilací funkce `layout` z dialogu VID (viz Dialekt VID) nebo se vytvoří klonováním objektu face! doplněném alespoň jedním platným názvem `typu`:
+Piškot (tvář neboli face, také  widget) je objekt, který vznikne buď kompilací funkce `layout` z dialogu link:vid.adoc[Red/VID] nebo se vytvoří klonováním objektu face! doplněném alespoň jedním platným názvem `typu`:
 ----
 button: make face! [type: 'button]
 ----
 
-Kromě předdefinovaných typů piškotů (area, box, base, button, camera, drop-down, drop-list, field, group-box, h1-h5, check, panel, progress, radio, slider, screen, text, text-list, tab-panel, window; viz odstavec 7) lze vytvořit piškot vlastní.
+Kromě předdefinovaných typů piškotů (area, base, button, camera, drop-down, drop-list, field, group-box, h1-h5, check, panel, progress, radio, slider, screen, text, text-list, tab-panel, window - viz odstavec 7) lze vytvořit piškot vlastní.
 
-Grafický objekt na obrazovce se vytvoří zobrazením (funkce `view`) virtuálního stromu. Virtuální strom je sestavován při kompilaci z piškotů (faces). Každý piškot (face object) je propojen se zobrazeným grafickým komponentem dvoucestnou vazbou.
+Grafický objekt na obrazovce se vytvoří zobrazením (funkce `view`) virtuálního stromu. Virtuální strom je sestavován při kompilaci z piškotů (faces). Každý piškot je propojen se zobrazeným grafickým komponentem dvoucestnou vazbou.
 
 
 
 
 == Strom piškotů 
 
-Piškoty jsou organizovány do stromu, který odpovídá hierarchii jejich vztahů v zobrazení. Vztahy u stromu jsou odvozeny z:
+Piškoty jsou organizovány do stromu, který vyjadřuje hierarchii jejich vztahů v zobrazení. Vztahy u stromu jsou odvozeny z:
 
 * facetu `pane`: výpis jednoho či více dětí piškotu v bloku.
 * facetu `parent`: odkaz na rodičovský piškot.
@@ -54,7 +54,7 @@ image::face-tree.png[Face tree,align="center"]
 
 === Base 
 
-Piškot (face) typu `base` je nejzákladnějším a nejvšestrannějším typem piškotů. Implicitně zobrazí pouze pozadí barvy `128.128.128`.
+Piškot typu `base` je nejzákladnějším a nejvšestrannějším typem piškotů. Implicitně zobrazí pouze pozadí barvy `128.128.128`.
 
 [cols="1,3", options="header"]
 |===
@@ -73,7 +73,7 @@ Poznámky:
 * Úplná skladba následujících facetů je podporována a zobrazována v uvedeném pořadí: `color`, `image`, `text`, `draw`.
 * Průhlednost lze zařídit u facetů `color`, `image`, `text` a `draw` určením hodnoty kanálu alfa v entici `R.G.B.A`, kde `A = 0` indikuje úplnou neprůhlednost a `A = 255` indikuje úplnou průhlednost.
 
-_Tento typ piškotu může být použit pro zavedení libovolné grafické komponenty uživatele._
+_Tento typ piškotu může být použit pro zavedení libovolné grafické komponenty._
 
 
 

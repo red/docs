@@ -11,9 +11,9 @@ Struktura typu `map!` reprezentuje asociativní řadu (array) dvojic key/value. 
 ----
 #(<key> <value>...)
 
-<key>  : hashovaný klíč typu any-word!, any-string!, integer!, float!, char!
+<key>  : hashovaný klíč typu any-word!, any-string!, number! (integer!, float!, percent!), char!, pair!, tuple!
 
-<value> : any-type! value
+<value> : hodnota typu any-type!
 ----
 
 Příklad:
@@ -25,7 +25,10 @@ Příklad:
 )
 ----
 
-== Funkcionální skladba
+Je-li klíč typu *any-word*, je v mapě kvůli lepší přehlednosti konvertován na typ *set-word*. Nicméně, při dotazování na hodnotu klíčů, lze pro klíč z praktických důvodů (jednodušší zápis, zejména v cestách) použít jednoduchý tvar slova.
+Podobně reflektor `keys-of` (popsaný v sekci Reflexe níže) vrací slova ve formátu `words` místo `set-words`, protože to zjednodušuje další zpracování (zejména shodování operací je snadnější se slovy než se set-slovy).
+
+== Konstrukční skladba
 
 ----
 make map! <spec>
@@ -56,11 +59,14 @@ type? lp/a             ; == logic!
 
 Poznámka:
  
-* tělo mapy (blok specifikací) musí obsahovat **sudý** počet prvků, nemá-li být generována chyba. 
-* pro přístup ke klíči je možné použít prosté slovo (word) i jeho formu "set-word".
-* je-li jako hodnota zadáno `none`, klíč se nevytvoří 
+* Tělo mapy (blok specifikací) musí obsahovat **sudý** počet prvků, nemá-li být generována chyba. 
+* Pro přístup ke klíči je možné použít prosté slovo (word) i jeho formu "set-word".
+* Je-li jako hodnota zadáno `none` (typu none!), klíč se nevytvoří, případně existující klíč stejného jména se smaže. 
+* Při vytváření mapy jsou všechny klíče hluboce kopírovány.
+* Hodnoty typu series! se při vytváření mapy implicitně nekopírují (což optimalizuje zdroje v běžných způsobech použití).
 
-Novou mapu lze vytvořit kopírováním stávající.
+Další způsob vytvoření nové mapy je kopírování existující:
+
 ----
 cmp: copy mp
 == #()
@@ -68,7 +74,7 @@ cmp: copy mp
 
 == Vyhledávání hodnot
 
-Stejně jako hash! a block! je map! pro vyhledávání implicitně [underline]#case-preserving# a [underline]#case-insensitive#.
+Stejně jako hash! a block! je map! implicitně [underline]#case-preserving# a [underline]#case-insensitive#.
 
 ----
 m: #(Ab: 2 aB: 5 ab: 10)
@@ -101,12 +107,13 @@ Pokus o vyhledání v mapě nedefinovaného klíče vrací hodnotu `none`.
 == Změna klíčů a hodnot
 
 ----
-<map>/<key>: <value>
-set '<map>/<key> <value>
-put <map> <key> <value>
+<map>/<key>: <value>                ; změna pouze hodnoty
+set '<map>/<key> <value>            ; dtto
 
-extend <map> <spec>
+put <map> <key> <value>             ; vložení dvojice
 
+extend <map> <spec>                 ; dtto                 
+zde je
 <spec> : blok s dvojicemi name/value (jednou či vícero)
 ----
 
@@ -115,7 +122,7 @@ Nativní funkce `extend` může přijmout více klíčů najednou, takže je vho
 Poznámky: 
 
 * zadání klíče, který dosud v mapě neexistuje, způsobí jeho vytvoření.
-* přidání existujícího klíče změní jeho hodnotu (implicitní je `case-insensitive` srovnávání).
+* přidání existujícího klíče změní jeho hodnotu, přičemž se implicitně provádí*case-insensitive* porovnávání.
 
 Příklady:
 
@@ -161,7 +168,7 @@ m: #(a: 1 b 2 "c" 3 d: 99)
 
 m/b: none
 put m "c" none
-extend m [d #[none]]   ; "konstrukční vyjádření" hodnoty `none`
+extend m [d #[none]]   ; "konstrukční syntaxe" hodnoty `none`
 
 m
 == #(
@@ -175,12 +182,17 @@ clear m
 == #()
 ----
 
-NOTE: U funkce `extend` je nutné použít takzvanou "construction syntax" aby se docílilo zadání `none` v datovém typu `none!` a nikoli `word!`.
+NOTE: U funkce `extend` je nutné použít takzvanou "construction syntax" aby se docílilo zadání `none` typu `none!` a nikoli typu `word!`.
 
 Vložit slovo `none` v datovém typu `word!` lze pouze funkcí `extend`: 
 ----
 extend m [a none]
+nebo:
+extend m #(b none)
+
 type? m/a
+== word!
+type? m/b
 == word!
 ----
 
@@ -194,7 +206,7 @@ Pro práci s mapou (slovníkem) se s výhodou použijí další pomocné funkce:
  find #(a 123 b 456) 'b
  == true
 
-* `length?` vrací počet dvjic `key/value` v mapě.
+* `length?` vrací počet dvojic `key/value` v mapě.
 
  length? #(a 123 b 456)
  == 2

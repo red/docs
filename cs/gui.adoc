@@ -1,8 +1,9 @@
 = Architektura Red-GUI
+:imagesdir:: ../images
 :toc:
 :numbered:
 
-image::../images/view-overview.png[Přehledné schema,align="center"]
+image::view-overview.png[Přehledné schema,align="center"]
 
 === VID
 

@@ -16,9 +16,9 @@ VID umožňuje určení polohy každého grafického elementu a to třemi způso
 * umístění elementu do mřížky
 * absolutní zadání pozice
 
-VID automaticky vytvoří kontejnerový piškot pro popis vytvářených piškotů. Implicitně je kontejnerový piškot typu `window`.
+VID automaticky vytvoří kontejnerový piškot pro popis zadaných piškotů. Implicitně je kontejnerový piškot typu `window`.
 
-Kód VIDu je ošetřen funkcí `layout` (jež je interně volána funkcí `view`). Kód je poté kompilován do stromu piškotů, vhodného pro přímé zobrazení.
+Kód VIDu je vyhodnocen funkcí `layout` (jež je interně volána funkcí `view`). Kód je poté kompilován do stromu piškotů, vhodného pro přímé zobrazení.
 
 NOTE: 
 * Použijte `help view` a `help layout` v konzole Redu k získání přehledné informace.
@@ -29,8 +29,8 @@ NOTE:
 Typický blok kódu VID má následující strukturu:
 
    [
-       <container settings>
-       <layout description>
+       <nastavení kontejneru>
+       <popis rozvržení>
    ]
 
 * *nastavení kontejneru*: údaje, které ovlivňují objekt kontejneru (jímž může být panel nebo window).
@@ -81,7 +81,17 @@ backdrop <color>
 
 Nastavuje barvu pozadí kontejnerového piškotu.
 
-== Rozvržení - layout 
+Příklad:
+----
+view layout [
+    title "Frontální útok"
+	size 300x60
+	backdrop 205.180.200
+	button "Nazdar"
+]
+----
+
+== Popis rozvržení (layout) 
 
 VID umisťuje piškoty do kontejnerového piškotu podle jednoduchých pravidel:
 
