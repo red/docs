@@ -7,7 +7,8 @@
   
 == Úvod 
 
-VID je zkratka pro Visual Interface Dialect. Jeho účelem je poskytnout jednoduchý DSL (Domain Specific Language) pro popis uživatelského grafického rozhranní s použitím strojku link:view.adoc[Red/View].
+VID (Visual Interface Dialect) je extenze Redu pro snadné vytváření grafickych uživatelských rozhranní nad systémem link:view.adoc[Red/View] engine.
+
 
 VID umožňuje určení polohy každého grafického elementu a to třemi způsoby:
 
@@ -15,30 +16,32 @@ VID umožňuje určení polohy každého grafického elementu a to třemi způso
 * umístění elementu do mřížky
 * absolutní zadání pozice
 
-VID automaticky vytvoří kontejnerový piškot pro popis vytvářených piškotů. Implicitně je kontejnerový piškot typu `window`.
+VID automaticky vytvoří kontejnerový piškot pro popis zadaných piškotů. Implicitně je kontejnerový piškot typu `window`.
 
-Kód VIDu je ošetřen funkcí `layout` (jež je interně volána funkcí `view`). Kód je poté kompilován do stromu piškotů, vhodného pro přímé zobrazení.
+Kód VIDu je vyhodnocen funkcí `layout` (jež je interně volána funkcí `view`). Kód je poté kompilován do stromu piškotů, vhodného pro přímé zobrazení.
 
-NOTE: Použijte `help view` a `help layou`t v konzole Redu k získání přehledné informace.
+NOTE: 
+* Použijte `help view` a `help layout` v konzole Redu k získání přehledné informace.
+* Typy piškotů nepatří mezi datové typy!
 
 == Struktura kódu 
 
 Typický blok kódu VID má následující strukturu:
 
    [
-       <container settings>
-       <layout description>
+       <nastavení kontejneru>
+       <popis rozvržení>
    ]
 
 * *nastavení kontejneru*: údaje, které ovlivňují objekt kontejneru (jímž může být panel nebo window).
 
-* *popis uspořádání*: poziční příkazy, definice stylů a popisy piškotů.
+* *popis rozvržení*: poziční příkazy, definice stylů a popisy piškotů.
 
 NOTE: Všechny sekce jsou nepovinné; blok VIDu nemá předepsaný obsah.
 
-== Nastavení kontejneru anchor:container-settings[] 
+== Nastavení kontejnerů
 
-NOTE: Na této úrovni lze použít globální klíčové slovo react - viz podrobný popis v odstavci <<react, zde>>.
+NOTE: Na této úrovni lze použít klíčové slovo `react` - viz podrobný popis v odstavci <<anchor:react, zde>>.
 
 === title 
 
@@ -78,7 +81,17 @@ backdrop <color>
 
 Nastavuje barvu pozadí kontejnerového piškotu.
 
-== Rozvržení 
+Příklad:
+----
+view layout [
+    title "Frontální útok"
+	size 300x60
+	backdrop 205.180.200
+	button "Nazdar"
+]
+----
+
+== Popis rozvržení (layout) 
 
 VID umisťuje piškoty do kontejnerového piškotu podle jednoduchých pravidel:
 
@@ -167,7 +180,7 @@ at <offset>
 ----    
 *Popis*
 
-Umisťuje piškot do absolutně zadané pozice. Tento poziční režim se vztahuje pouze k následujícímu piškotu a nemění zadaný průběhový režim pro piškoty další.
+Umisťuje další piškot do absolutně zadané pozice. Tento poziční režim se vztahuje pouze k následujícímu piškotu a nemění zadaný způsob umístění pro piškoty další. 
 
 
 === pad 
@@ -193,11 +206,11 @@ do <body>
 ----    
 *Popis*
 
-Vyhodnotí blok regulérního kódu Redu pro následné inicializační použití. Lze použít klíčové slovo self jako odkaz na piškot kontejneru (okno či panel).
+Vyhodnotí blok regulérního kódu Redu pro následné "last-minute" inicializační použití. Lze použít klíčové slovo `self` jako odkaz na piškot kontejneru (okno či panel).
 
 == Dodatečné styly
 
-Strojovna (machine) View poskytuje mnoho vestavěných piškotů. Dialekt VID je rozšiřuje definováním dalších obecně používaných stylů s přiřazenými klíčovými slovy. Lze je použít se stejnými volbami jako jejich výchozí typ piškotu (face). Mohou byt také redefinovány použitím příkazu `style`.
+View engine poskytuje mnoho vestavěných piškotů. Dialekt VID je rozšiřuje definováním dalších obecně používaných stylů s přiřazenými klíčovými slovy. Lze je použít se stejnými volbami jako jejich výchozí typ piškotu. Mohou byt také redefinovány použitím příkazu `style`.
 	
 === h1
 
@@ -230,7 +243,7 @@ Styl `image` je typu `base` s implicitní velikostí 100x100.
 
 == Definice piškotů 
 
-Piškot (face) lze vložit do aktuální pozice rozvržení (layout) pouhým uvedením jména existujícího typu piškotu nebo dostupného stylu.
+Piškot lze vložit do aktuální pozice rozvržení (layout) pouhým uvedením jména existujícího typu piškotu nebo dostupného stylu.
 
 *Syntaxe*
 ----
