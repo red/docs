@@ -256,7 +256,7 @@ This type represents a check box, with an optional label text, displayed on left
 
 === Radio 
 
-This type represents a radio button, with an optional label text, displayed on left or right side. Only one radio button per pane is allowed to be checked.
+This type represents a radio button, with an optional label text, displayed on left or right side. Only one radio button per panel is allowed to be checked.
 
 [cols="1, 4", options="header"]
 |===
