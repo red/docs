@@ -675,7 +675,7 @@ Example:
 view [
     list: text-list data ["John" "Bob" "Alice"]
     button "Add" [append list/data "Sue"]
-    button "Change" [lowercase list/data/(list/selected)]
+    button "Change" [lowercase pick list/data list/selected]
 ]
 ----
 == Events 
