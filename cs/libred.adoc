@@ -233,6 +233,22 @@ red_tuple redTuple4(long r, long g, long b, long a)
 ----
 Vrací hodnotu `tuple!` ze čtyř celočíselných hodot (obvykle pro prezentaci barev RGBA). Zadané argumenty jsou zkráceny na  8-bitové hodnoty.
 
+==== redBinary()
+----
+red_binary redBinary(const char* buffer, long bytes)
+----
+Vrací hodnotu ve formátu `binary!`, vytvořenou z pointeru na vyrovnávací paměť (buffer). Zadaný buffer je kopírován interně.
+
+==== redImage()
+----
+red_image redImage(long width, long height, const void* buffer, long format)
+----
+Vrací hodnotu ve formátu `image!`, vytvořenou z pointeru na vyrovnávací paměť. Velikost obrázku  je určena `délkou` a `šířkou` v pixelech. Zadaný buffer je kopírován interně. Akceptované formáty bufferu jsou:
+
+* `RED_IMAGE_FORMAT_RGB`: 24-bit per pixel.
+* `RED_IMAGE_FORMAT_ARGB`: 32-bit per pixel, alpha channel leading.
+
+
 ==== redString()
 ----
 red_string redString(const char* string)
@@ -482,7 +498,29 @@ Přiřadí _path_ k _value_ a vrací tuto hodnotu.
 red_value redGetPath(red_path path)
 ----
 
-Vrací _hodnotu_ označenou _cestou_.
+Vrací _hodnotu_ označenou cestou (_path_).
+
+=== Přístup k poli objektu
+
+Je-li zapotřebí vícero přístupů `setting/getting` k polím objektu, doporučuje se použít přímo hodnotu objektu místo vytváření cesy. K tomu účelu slouží dvě následující funkce.
+
+Note: Tyto accesory akceptují jakýkéli další asociované typy kolektorů (arrays), nikoliv pouze objekty typu `object!`. Zadání objektu typu `map!` je tedy také dovoleno.
+
+==== redSetField()
+----
+red_value redSetField(red_value object, long field, red_value value)
+----
+
+Nastaví _pole_ _objektu_ na _hodnotu_ a vrátí tuto _hodnotu_. Argument _pole_ je ID symbol, vytvořený s použitím `redSymbol()`.
+
+==== redGetField()
+----
+red_value redGetField(red_value obj, long field)
+----
+
+Vrátí _hodnotu_ uloženou v _poli_  _objektu_. Argument _pole_ je ID symbol, vytvořený s použitím `redSymbol()`.
+
+
 
 === Ladění
 

@@ -20,17 +20,129 @@ Virtuální strom se skládá z piškotů. Každý piškot koresponduje s přís
 
 == Piškoty
 
-Piškot (tvář neboli face, také  widget) je objekt, který vznikne buď kompilací funkce `layout` z dialogu link:vid.adoc[Red/VID] nebo se vytvoří klonováním objektu face! doplněném alespoň jedním platným názvem `typu`:
-----
-button: make face! [type: 'button]
-----
+Piškoty (tvář neboli face) jsou klony výchozího objektu `face!`. Pole piškotu se nazývá _facet_.
 
-Kromě předdefinovaných typů piškotů (area, base, button, camera, drop-down, drop-list, field, group-box, h1-h5, check, panel, progress, radio, slider, screen, text, text-list, tab-panel, window - viz odstavec 7) lze vytvořit piškot vlastní.
+Seznam existujících facetů:
 
-Grafický objekt na obrazovce se vytvoří zobrazením (funkce `view`) virtuálního stromu. Virtuální strom je sestavován při kompilaci z piškotů (faces). Každý piškot je propojen se zobrazeným grafickým komponentem dvoucestnou vazbou.
+[cols="1,1,1,1,2", options="header"]
+|===
+
+|Facet | Datatype | Mandatory? | Applicability | Description
+|type| word!| yes| all| Typ grafického prvku (viz link:view.html#_face_types[dole]).
+|offset| pair!| yes| all| Odsazení od top-left rohu rodiče.
+|size| pair!| yes| all| Velikost piškotu (face).
+|text| string!| no| all| Text popisku, zobrazený v piškotu.
+|image| image!| no| some| Obraz na pozadí piškotu.
+|color| tuple!| no| some| Barva pozadí piškotu ve formátu R.G.B nebo R.G.B.A.
+|menu| block!| no| all| Lišta nabídky (menu) nebo kontextuální nabídka.
+|data| any-type!| no| all| Data o piškotu.
+|enabled?| logic!| yes| all| Povolit nebo nepovolit na piškotu vstupní události.
+|visible?| logic!|	yes| all| Zobrazit nebo skrýt piškot (face).
+|selected| integer!| no| some| Index aktuálně vybraného elementu seznamu.
+|flags| block!, word!| no|	some| Seznam speciálních klíčových slov, měnících zobrazení nebo chování piškotu.
+|options| block!| no| some| Další vlastnosti piškotu ve formátu [name: value].
+|parent| object!| no| all|	Odkaz na rodičovský piškot (pokud existuje).
+|pane| block!| no| some| Seznam dětí (child faces), zobrazených uvnitř piškotu.
+|state| block| no| all| Informace o interním stavu piškotu (používané pouze prostředím View engine).
+|rate| integer!, time!| no| all| Časovač piškotu. Celé číslo udává frekvenci, time nastavuje trvání a none činnost končí.
+|edge|	object!| no| all| _(reserved for future use)_
+|para| object!| no| all| Odkaz na objekt _para_ pro pozicování textu.
+|font|	object!| no| all| Nastavení atributů fontu (styl, velikost, barva, zarovnání a jiné). 
+|actors| object!| no| all|	Uživatelsky vytvořené ovladače událostí.
+|extra| any-type!| no|	all| Uživatelská data připojená k piškotu (free usage).
+|draw| block!| no| all| Seznam příkazů Draw, jež mají být provedeny v piškotu.
+|===
+
+Seznam globálně použitelný flagů pro facet `flags`:
+
+[cols="1,4", options="header"]
+|===
+|Flag | Description
+|*all-over*| Poslat všechny události typu `over` do piškotu.
+|===
 
 
+Ostatní specifické flagy piškotů jsou dokumentovány v příslušných sekcích.
 
+Notes:
+
+* Nepovinné facety mohou být nastaveny na `none`.
+* Velikosti `offset` a `size` se určují v pixelech;
+* `offset` a `size` lze někdy před zobrazením nastavit na `none`. Systém View se postará o jejich nastavení (jako u panelů v typu tab-panel).
+* Pořadí zobrazení (odzadu dopředu): color, image, text, draw.
+
+Nový piškot (face) se vytvoří klonováním objektu face! object a zadáním  *alespoň* platného názvu `typu`.
+
+    button: make face! [type: 'button]
+
+Měnit pole `type` není u deklarovaného piškotu dovoleno.
+
+=== Options facet
+
+Facet možností (options) obsahuje volitelné facety, kterými se zadává specifické chování:
+
+[cols="1,4" options="header"]
+|===
+|Option| Description
+|*drag&#8209;on*| Can be one of: `'down`, `'mid-down`, `'alt-down`, `'aux-down`. Used for enabling a drag'n drop operation.
+|===
+
+== Font object
+
+Objekty fontů jsou klony šablony `font!`. Na jeden font se může odkazovat více piškotů, čímž je umožněno centrální řízení skupiny piškotů.
+
+[cols="1,1,1,3", options="header"]
+|===
+|Field| Datatype| Mandatory?| Popis
+|name| string!| no| Platný název fontu, instalovaného v OS.
+|size| integer!| no| Velikost fontu v bodech (points).
+|style| word!, block!| no| Styl nebo blok stylů.
+|angle| integer!| yes| Sklon textu ve stupních (default is `0`).
+|color| tuple!| yes| Barva fontu ve formátu R.G.B nebo R.G.B.A.
+|anti-alias?| logic!, word!| no| Režim vyhlazení (active/inactive or special mode). 
+|shadow| _(reserved)_| no| _(reserved for future use)_
+|state| block!| no| Informace o interním stavu piškotu _(používané pouze prostředím View_.
+|parent| block!| no| Interní odkaz na rodičovský piškot _(používané pouze prostředím View)_.
+|===
+
+Notes:
+
+* Nepovinné facety mohou byt nastaveny na hodnotu `none`.
+* Pole `angle` zatím nepracuje jak má.
+* V budoucnu se hodnoty všech polí mají stát nepovinné.
+
+Dostupné styly fontů:
+
+* `bold`
+* `italic`
+* `underline`
+* `strike`
+
+Dostupné režimy vyhlazení:
+
+* active/inactive (`anti-alias?: yes/no`)
+* ClearType mode (`anti-alias?: 'ClearType`)
+
+== Para object 
+
+Objekty para jsou klony šablony `para!`. Na jeden objekt para se může odkazovat více piškotů, což umožňuje ovládat vlastnosti para z jednoho místa pro celou skupinu piškotů.
+
+[cols="1,1,3" options="header"]
+|===
+|Field| Datatype| Description
+
+|origin| _(reserved)_| _(reserved for future use)_
+|padding| _(reserved)_| _(reserved for future use)_
+|scroll| _(reserved)_| _(reserved for future use)_
+|align| word!| Nastavení horizontálního přiřazení textu: `left`, `center`, `right`.
+|v-align| _(reserved)_| Nastavení vertikálního přiřazení textu:  `top`, `middle`, `bottom`.
+|wrap?| logic!| Umožnit/znemožnit zarovnání (wrapping) textu v piškotu.
+|parent| block!| Interní odkaz na rodičovský piškot  _(used by View engine only)_.
+|===
+
+Notes:
+
+* Všechna pole objektu para mohou být nastavena na hodnotu `none`.
 
 == Strom piškotů 
 
@@ -64,8 +176,8 @@ Piškot typu `base` je nejzákladnějším a nejvšestrannějším typem piškot
 |*type*	| `'base`
 |*image*	| Lze určit hodnotu typu `image!`, kanál alfa je podporován.
 |*color*	| Lze určit barvu pozadí, kanál alfa je podporován.
-|*text*  | Uvnitř piškotu lze zobrazit libovolný text.
-|*draw*	| Transparentnost je plně podporována pro primitiva systému Draw.
+|*text*     | Uvnitř piškotu lze zobrazit libovolný text.
+|*draw*	    | Transparentnost je plně podporována pro primitiva systému Draw.
 |===
 
 Poznámky:
@@ -399,6 +511,7 @@ Poznámky:
 
 
 === Window 
+
 Reprezentuje okno, zobrazené na monitoru počítače.
 
 [cols="1,4", options="header"]
@@ -477,7 +590,7 @@ NOTE:
 
 == Facety 
 
-Pole piškotu zvané *facet* (aspekt) určuje jeho různé vlastnosti.
+Pole piškotu zvané *facet* určuje jeho různé vlastnosti.
 
 Seznam vytvořených facetů:
 
@@ -489,7 +602,7 @@ Seznam vytvořených facetů:
 |*type*	| word!			| yes	|  all	| Interně používané pro ověření, že je objekt strukturován jako piškot.
 |*offset*	| pair!			| yes	|  all	| Odsazení od piškotu rodiče vlevo nahoře.
 |*size*	| pair!			| yes	|  all	| Velikost piškotu.
-|*text*	| string!		| no	|  all	| Text, zobrazený v piškotu. Atributy textu jsou určeny aspekty `font` a `para`.
+|*text*	| string!		| no	|  all	| Text, zobrazený v piškotu. Atributy textu jsou určeny facety `font` a `para`.
 |*image*	| image!		| no	|  some	| Obraz na pozadí piškotu.
 |*color*	| tuple!		| no	|  some	| Barva pozadí piškotu ve formátu R.G.B nebo R.G.B.A.
 |*menu*	| block! 		| no	|  all	| Lišta nabídky (menu) nebo kontextuálního menu.
@@ -943,7 +1056,6 @@ NOTE: Při použití konzol, automaticky generovaných binárkou `red`, je kompo
 |*draw* | Vykreslí blok dialektu Draw do obrázku.
 |*to&#8209;image* | Přemění jakýkoliv vykreslovaný piškot na obrázek. 
 |*size&#8209;text* | Změří v pixelech velikost textu v piškotu (berouce v úvahu vybraný font).
-
 |===
 
 
@@ -951,3 +1063,7 @@ NOTE: Při použití konzol, automaticky generovaných binárkou `red`, je kompo
 
 * specifikace facetu `menu`
 * popis datového typu `Image!`
+
+
+
+
