@@ -237,14 +237,22 @@ Gets or sets the year field of a date. Years are returned as integers. Out of ra
 ----
 d:  now
 == 10-Jul-2017/22:46:22-06:00
-d/year: 10000
-== 10000
+d/year: 16383
+== 16383
 d
-== 10-Jul-10000/22:46:22-06:00
+== 10-Jul-16383/22:46:22-06:00
+d/year: 16384
+== 16384
+d
+== 10/Jul/-16384/22:46:22-06:00     ; note wrap on overflow past year 16384
+d/year: 32767
+== 32767
+d
+== 10/Jul/-1/22:46:22-06:00
 d/year: 32768
 == 32768
 d
-== 10/Jul/-32768/22:46:22-06:00     ; Note wrap on overflow
+== 10-Jul-0000/22:46:22-06:00
 ----
 
 === /month
