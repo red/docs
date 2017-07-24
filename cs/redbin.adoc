@@ -478,7 +478,16 @@ header/unit=1|2|4
 ----
 Same encoding rules as string!.
 
-=== Reference! 
+=== Date! anchor:date[] 
+----
+Default: header (4), date (4), time (8)
+Compact: TBD
+
+header/type=47
+----
+Date is packed into a 32-bit integer (same as in `red-date!`). Time value is stored as a 64-bit float.
+
+=== Reference! anchor: reference[] 
 ---- 
 Default: header (4), count (4), index1 (4), index2 (4), ...
 Compact: TBD

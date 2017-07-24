@@ -2,6 +2,7 @@
 
 * link:README.adoc[Readme-cs]
 ** link:map.adoc[Datový typ Map!]
+** link:date.adoc[Datový typ Date!]
 
 * link:gui.adoc[Red-GUI]
 ** link:view.adoc[Prostředí View]

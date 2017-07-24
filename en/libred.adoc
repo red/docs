@@ -230,6 +230,21 @@ red_tuple redTuple4(long r, long g, long b, long a)
 ----
 Returns a `tuple!` value from four integer values (usually for representing RGBA colors). Passed arguments will be truncated to 8-bit values.
 
+==== redBinary()
+----
+red_binary redBinary(const char* buffer, long bytes)
+----
+Returns a `binary!` value from a memory `buffer` pointer and the buffer's length in bytes. The input buffer will be copied internally.
+
+==== redImage()
+----
+red_image redImage(long width, long height, const void* buffer, long format)
+----
+Returns an `image!` value from a memory `buffer` pointer. Image's size is defined in pixels by `width` and `height`. The input buffer will be copied internally. Accepted buffer formats are:
+
+* `RED_IMAGE_FORMAT_RGB`: 24-bit per pixel.
+* `RED_IMAGE_FORMAT_ARGB`: 32-bit per pixel, alpha channel leading.
+
 ==== redString()
 ----
 red_string redString(const char* string)
@@ -480,6 +495,26 @@ red_value redGetPath(red_path path)
 ----
 
 Returns the _value_ referenced by the _path_.
+
+=== Accessing a Red object field
+
+When multiple setting/getting accesses are needed on a object's fields, using the object value directly instead of building paths is simpler and preferable. The following two functions are tailored for such access.
+
+Note: these accessors can work with any other associated array types, not just `object!`. So passing a `map!` is allowed too.
+
+==== redSetField()
+----
+red_value redSetField(red_value object, long field, red_value value)
+----
+
+Sets an _object_'s _field_ to a _value_ and returns that _value. The _field_ argument is a symbol ID created using `redSymbol()`.
+
+==== redGetField()
+----
+red_value redGetField(red_value obj, long field)
+----
+
+Returns the _value_ stored in the _object_'s _field_. The _field_ argument is a symbol ID created using `redSymbol()`.
 
 === Debugging
 

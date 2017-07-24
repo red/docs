@@ -7,7 +7,7 @@
   
 == Overview 
 
-VID stands for Visual Interface Dialect. Its purpose is to provide a simple dialect (DSL) for describing graphic user interfaces on top of the Red [View](View.md) engine.
+VID stands for Visual Interface Dialect. Its purpose is to provide a simple dialect (DSL) for describing graphic user interfaces on top of the Red link:view.html[View] engine.
 
 VID allows you to specify each graphic component to display, giving the choice of different layout methods:
 
@@ -38,10 +38,10 @@ NOTE: All sections are optional, there is no mandatory content that must be prov
 
 == Container settings 
 
-NOTE: `react` keyword can also be used at the container settings level in addition to face options level, see its description <<anchor:react, there>>
+NOTE: `react` keyword can also be used at the container settings level in addition to face options level, see its description <<anchor:_react, there>>
 
 
-=== title anchor:title[]
+=== title
 
 *Syntax*
 ----
@@ -91,12 +91,13 @@ Defaults:
 * origin: `10x10`
 * space: `10x10`
 * direction: `across`
+* alignment: `top`
 
 This is how faces are laid out in `across` mode:
 
 image::across.png[across,align="center"]
 
-This is how faces are laid out in `below` mode:
+This is how faces are laid out in `below` mode (using default `left` alignment):
 
 image::below.png[below,align="center"]
 
@@ -105,33 +106,39 @@ image::below.png[below,align="center"]
 
 *Syntax*
 ----
-across
+across <alignment>
+
+<alignment> : (optional) possible values: top | middle | bottom.
 ----
 *Description*
 
-Sets the layout direction to horizontal, from left to right.
+Sets the layout direction to horizontal, from left to right. An alignment modifier can be optionally provided to change the default (`top`) alignment of faces in the row.
 
 
 === below 
 
 *Syntax*
 ----
-below
+below <alignment>
+
+<alignment> : (optional) possible values: left | center | right.
 ----
 *Description*
 
-Sets the layout direction to vertical, from top to bottom.
+Sets the layout direction to vertical, from top to bottom. An alignment modifier can be optionally provided to change the default (`left`) alignment of faces in the column.
 
 
 === return 
 
 *Syntax*
 ----
-return
+return <alignment>
+
+<alignment> : (optional) possible values: left | center | right | top | middle | bottom.
 ---- 
 *Description*
 
-Moves the position to the next row or column of faces, depending of the current layout direction.
+Moves the position to the next row or column of faces, depending of the current layout direction. An alignment modifier can be optionally provided to change the current alignment of faces in the row or column.
 
 
 === space 
@@ -208,19 +215,19 @@ The `H1` style is a `text` type with a font size set to 32.
 
 === h2
 
-The `H1` style is a `text` type with a font size set to 26.
+The `H2` style is a `text` type with a font size set to 26.
 
 === h3
 
-The `H1` style is a `text` type with a font size set to 22.
+The `H3` style is a `text` type with a font size set to 22.
 
 === h4
 
-The `H1` style is a `text` type with a font size set to 17.
+The `H4` style is a `text` type with a font size set to 17.
 
 === h5
 
-The `H1` style is a `text` type with a font size set to 13.
+The `H5` style is a `text` type with a font size set to 13.
 
 === box
 
@@ -391,7 +398,7 @@ draw <commands>
 ---- 
 *Description*
 
-Sets the face's `draw` facet to a list of Draw dialect commands. See [Draw dialect](Draw.md) documentation for valid commands.
+Sets the face's `draw` facet to a list of Draw dialect commands. See [Draw dialect](draw.html) documentation for valid commands.
 
 
 ==== font
@@ -404,7 +411,7 @@ font <spec>
 ----
 *Description*
 
-Sets the face's `font` facet to a new `font!` object. Font! object is described [here](View.md#font-object).
+Sets the face's `font` facet to a new `font!` object. Font! object is described link:view.html#_font_object[here].
 
 NOTE: It possible to use `font` along with other font-related settings, VID will merge them together, giving priority to the last one specified.
 
@@ -419,7 +426,7 @@ para <spec>
 ----
 *Description*
 
-Sets the face's `para` facet to a new `para!` object. Para! object is described [here](View.md#para-object).
+Sets the face's `para` facet to a new `para!` object. Para! object is described link:view.html#_para_object[here].
 
 NOTE: It possible to use `para` along with other para-related settings, VID will merge them together, giving priority to the last one specified.
 
@@ -431,7 +438,7 @@ NOTE: It possible to use `para` along with other para-related settings, VID will
 wrap
 ----
 
-*Description**
+*Description*
 
 Wrap the face's text when displaying.
 
@@ -493,12 +500,13 @@ This keyword can be used both as a face option or as a global keyword. Arbitrary
 *Syntax*
 ----
 react [<body>]
+react later [<body>]
 
 <body> : regular Red code (block!).
 ----
 *Description*
 
-Creates a new reactor from the body block. When `react` is used as a face option, the body can refer to the current face using `face` word. When `react` is used globally, target faces need to be accessed using a name.
+Creates a new reactor from the body block. When `react` is used as a face option, the body can refer to the current face using `face` word. When `react` is used globally, target faces need to be accessed using a name. The optional `later` keyword skips the first reaction happening immediately after the `body` block is processed.
 
 NOTE:
 
@@ -621,16 +629,18 @@ In addition to keywords, it is allowed to pass settings to faces using literal v
 
 [cols="1,3", options="header"]
 |===
-|Datatype| Purpose
-|integer!| Specifies the width of the face. For panels, indicates the number of row or columns for the layout, depending on the current direction.
-|pair!| Specifies the width and height of the face.
-|tuple!| Specifies the color of the face's background (where applicable).
-|issue!| Specifies the color of the face's background using hex notation (#rgb, #rrggbb, #rrggbbaa).
-|string!| Specifies the text to be displayed by the face.
-|percent!| Sets the `data` facet (useful for `progress` and `slider` types).
-|image!| Sets the image to be displayed as face's background (where applicable).
-|url!| Loads the resource pointed to by the URL, then process the resource according to its loaded type.
+|Datatype|	Purpose
+|integer!|	Specifies the width of the face. For panels, indicates the number of row or columns for the layout, depending on the current direction.
+|pair!|		Specifies the width and height of the face.
+|tuple!|	Specifies the color of the face's background (where applicable).
+|issue!|	Specifies the color of the face's background using hex notation (#rgb, #rrggbb, #rrggbbaa).
+|string!|	Specifies the text to be displayed by the face.
+|percent!|	Sets the `data` facet (useful for `progress` and `slider` types).
+|logic!|	Sets the `data` facet (useful for `check` and `radio` types).
+|image!| 	Sets the image to be displayed as face's background (where applicable).
+|url!| 		Loads the resource pointed to by the URL, then process the resource according to its loaded type.
 |block!|	Sets the action for the default event of the face. For panels, specifies their content.
+|get-word!| Uses an existing function as actor.
 |char!| _(reserved for future use)_.
 |===
 
@@ -654,7 +664,7 @@ The created actor function full specification is:
 ----
 func [face [object!] event [event! none!]][...body...]
 ----
-The valid list of event names can be found link:View.md#actors[here].
+The valid list of event names can be found link:view.html#_actors[here].
 
 When a block or a get-word is passed without any actor name prefix, the default actor for the face type is created according to the definitions https://github.com/red/red/blob/master/modules/view/styles.red[here]
 
