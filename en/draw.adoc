@@ -921,7 +921,7 @@ Inside Draw code, commands can be arbitrarily grouped using blocks. Semantics re
 
 Set-words can be used in the Draw code *in-between* commands to record the current position in Draw block and be able to easily access it later.
 
-NOTE: If the Draw block length preceeding a set-word is changed, the recorded position will not be updated.
+NOTE: If the Draw block length preceeding a set-word is changed, the original position will be changed accordingly, so the set-word will not point to the same reference anymore.
 
 == Draw function 
 
