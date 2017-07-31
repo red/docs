@@ -38,7 +38,7 @@ NOTE: All sections are optional, there is no mandatory content that must be prov
 
 == Container settings 
 
-NOTE: `react` keyword can also be used at the container settings level in addition to face options level, see its description <<anchor:_react, there>>
+NOTE: `react` keyword can also be used at the container settings level in addition to face options level, see its description <<anchor:_react, here>>.
 
 
 === title
@@ -138,7 +138,7 @@ return <alignment>
 ---- 
 *Description*
 
-Moves the position to the next row or column of faces, depending of the current layout direction. An alignment modifier can be optionally provided to change the current alignment of faces in the row or column.
+Moves the position to the next row or column of faces, depending on the current layout direction. An alignment modifier can be optionally provided to change the current alignment of faces in the row or column.
 
 
 === space 
@@ -207,7 +207,7 @@ Evaluates a block of regular Red code, for last-minute initialization needs. `se
 
 == Additional styles
 
-View engine provides many buit-in widgets, VID dialect extends them by defining additional commonly used styles, with associated keywords. They can be used with the same options as their underlying face type. They can also be re-styled freely using `style` command.
+View engine provides many built-in widgets, VID dialect extends them by defining additional commonly used styles, with associated keywords. They can be used with the same options as their underlying face type. They can also be re-styled freely using `style` command.
 	
 === h1
 
@@ -239,7 +239,7 @@ The `image` style is a `base` type of default size 100x100. It expects an `image
 
 == Faces definition 
 
-A face can be inserted in the layout, at the current position, by just using the name of an existing face type or one of the available styles.
+A face can be inserted in the layout, at the current position, simply by using the name of an existing face type or one of the available styles.
 
 *Syntax*
 ----
@@ -413,7 +413,7 @@ font <spec>
 
 Sets the face's `font` facet to a new `font!` object. Font! object is described link:view.html#_font_object[here].
 
-NOTE: It possible to use `font` along with other font-related settings, VID will merge them together, giving priority to the last one specified.
+NOTE: It's possible to use `font` along with other font-related settings, VID will merge them together, giving priority to the last one specified.
 
 
 ==== para
@@ -604,7 +604,7 @@ rate <value> now
 ----
 *Description*
 
-Sets a timer for the face from a duration (time!) or a frequency (integer!). At each timer's tick, a `time` event will be generated for that face. If `now` option is used, a first time event is generated immediatly.
+Sets a timer for the face from a duration (time!) or a frequency (integer!). At each timer's tick, a `time` event will be generated for that face. If `now` option is used, a first time event is generated immediately.
 
 
 ==== default
@@ -666,7 +666,7 @@ func [face [object!] event [event! none!]][...body...]
 ----
 The valid list of event names can be found link:view.html#_actors[here].
 
-When a block or a get-word is passed without any actor name prefix, the default actor for the face type is created according to the definitions https://github.com/red/red/blob/master/modules/view/styles.red[here]
+When a block or a get-word is passed without any actor name prefix, the default actor for the face type is created according to the definitions https://github.com/red/red/blob/master/modules/view/styles.red[here].
 
 
 == Panels 
@@ -688,8 +688,8 @@ panel <options> [<content>]
 
 Constructs a child panel inside the current container, where the content is another VID block. In addition to other face options, an integer divider option can be provided, setting a grid-mode layout:
 
-* if the direction is across, divider represents number of columns.
-* if the direction is below, divider represents number of rows.
+* if the direction is `across`, divider represents number of columns.
+* if the direction is `below`, divider represents number of rows.
 
 
 
@@ -710,7 +710,7 @@ Constructs a child group-box panel inside the current container, where the conte
 * if the direction is `across`, divider represents number of columns.
 * if the direction is `below`, divider represents number of rows.
 
-NOTE: Providing a string! value as option will set the group-box title text.
+NOTE: Providing a `string!` value as option will set the group-box title text.
 
 
 === tab-panel 
@@ -725,7 +725,7 @@ tab-panel <options> [<name> <body>...]
 ----
 *Description*
 
-Constructs a tab-panel panel inside the current container. The spec block must contain a pair of name and content description for each tab. Each tab's content body is a new child panel face, acting as any other panels.
+Constructs a tab-panel inside the current container. The spec block must contain a pair of name and content description for each tab. Each tab's content body is a new child panel face, acting as any other panels.
 
 
 == Styling 
