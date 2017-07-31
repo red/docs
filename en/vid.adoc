@@ -398,7 +398,7 @@ draw <commands>
 ---- 
 *Description*
 
-Sets the face's `draw` facet to a list of Draw dialect commands. See [Draw dialect](draw.html) documentation for valid commands.
+Sets the face's `draw` facet to a list of Draw dialect commands. See link:draw.html[Draw dialect documentation] for valid commands.
 
 
 ==== font
