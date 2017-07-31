@@ -4,7 +4,7 @@
 
 == Abstract
 
-A map represents an associative array of key/value pairs. It provides a fast read access (using an hashtable internally) and a convenient, dedicated syntax. Unlike the `hash!` datatype, a map is not a series, so does not have a concept of offset or positions. Conceptually, the `map!` datatype lies between the `hash!` and `object!` datatypes.
+A map represents an associative array of key/value pairs. It provides a fast read access (using a hashtable internally) and a convenient, dedicated syntax. Unlike the `hash!` datatype, a map is not a series, so does not have a concept of offset or positions. Conceptually, the `map!` datatype lies between the `hash!` and `object!` datatypes.
 
 == Literal syntax
 ----
@@ -19,12 +19,12 @@ make map! <spec>
 
 <spec> : block of key/value pairs or an integer value
 ----
-If the _spec_ argument is an integer, an empty map! is created with a pre-allocated number of slots (usually in order to populate the map dynamically).
+If the _spec_ argument is an integer, an empty `map!` is created with a pre-allocated number of slots (usually in order to populate the map dynamically).
 
 Notes:
 
-* the map body or the spec block have to contain an *even* number of elements, or else, an error will be generated. 
-* values are not *reduced*, so construction syntax is required for some special values, like logic!.
+* the map body or the spec block have to contain an *even* number of elements, otherwise an error will be generated. 
+* values are not *reduced*, so construction syntax is required for some special values, like `logic!`.
 
 Examples:
 ----
@@ -45,7 +45,7 @@ If the key is of *any-word!* type, the key type is converted to *set-word!* in t
 
 Notes:
 
-* Like hash! and block!, map! is **case-preserving**, and **case-insensitive for lookup** by default.
+* Like `hash!` and `block!`, `map!` is **case-preserving**, and **case-insensitive for lookup** by default.
 * If a `none` value is specified as value, the key will not be created (see "Deleting keys" section).
 * All the keys are deep copied on creation of the map.
 * Series! values are not copied on creation of the map, the choice is left to the user (this optimizes resources for the common use-case).
@@ -108,7 +108,7 @@ Using modifying action:
 put <map> <key> <value>
 
 <map> : map value
-<key> : any valid key value to a select a value in the map
+<key> : any valid key value to select a value in the map
 ----
 Making bulk changes:
 ----
@@ -129,7 +129,7 @@ extend/case <map> <spec>
 
 Notes:
 
-* setting a key that does not exist previously in the map, **will simply create it**.
+* setting a key that did not exist previously in the map, **will simply create it**.
 * adding an existing key will change the key value and not add a new one (case-insensitive matching by default).
 
 Examples:
