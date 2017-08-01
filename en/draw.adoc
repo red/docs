@@ -901,16 +901,15 @@ When a new Draw session starts, the following default values are used:
 
 [cols="2,3", options="header"]
 |===
-|Property | Value
-
-|background | `white`
-|pen color |  `black`
-|filling|    `off`
-|anti-alias|	 `on`
-|font|	 `none`
-|line width|	 `1`
-|line join|	 `miter`
-|line cap| `flat`
+|Property|   Value
+|background|   `white`
+|pen color|   `black`
+|filling|   `off`
+|anti-alias|   `on`
+|font|   `none`
+|line width|   `1`
+|line join|   `miter`
+|line cap|   `flat`
 |===
 
 == Sub blocks 
