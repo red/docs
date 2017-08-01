@@ -16,7 +16,7 @@ LibRed is a special version of the Red interpreter and runtime library, suitable
 * Callbacks allowing Red to call host language functions.
 * Console-oriented debugging functions.
 
-Terminology: the term _host_ is used to designated the host language or application embedding libRed.
+Terminology: the term _host_ is used to designate the host language or application embedding libRed.
 
 Samples of libRed usage can be found https://github.com/red/red/tree/master/tests/libRed[here].
 
@@ -60,7 +60,7 @@ The C API can be used with C/C++ applications, but also for integrating Red with
 
 === Managing the library
 
-A libRed _instance_ needs to be create in order to use any function from the API. 
+A libRed _instance_ needs to be created in order to use any function from the API.
 
 NOTE: Currently, only a single libRed session per process is allowed. It is intended that this will be extended in the future to allow multi-instances support.
 
@@ -126,7 +126,7 @@ redDoBlock(redBlock(redWord("print"), redInteger(42)));
 ----
 red_value redCall(red_word name, ...)
 ----
-Invokes the Red function (of `any-function!` type) referenced by _name_ word, passing it any required arguments (as Red values). Returns the function's last Red value. The arguments list *must* terminate with a `null` or `0` value, as end marker.
+Invokes the Red function (of `any-function!` type) referenced by _name_ word, passing to it any required arguments (as Red values). Returns the function's last Red value. The arguments list *must* terminate with a `null` or `0` value, as end marker.
 
 *Example*
 ----
@@ -141,7 +141,7 @@ Responding to an event occuring in Red, or redirecting some Red calls to the hos
 ----
 red_value redRoutine(red_word name, const char* spec, void* func_ptr)
 ----
-Defines as new Red routine named _name_, with _spec_ as specification block and _func-ptr_ C function pointer as body. The C function *must* return a Red value (`redUnset()` can be used to signify that the return value is not used).
+Defines a new Red routine named _name_, with _spec_ as specification block and _func-ptr_ C function pointer as body. The C function *must* return a Red value (`redUnset()` can be used to signify that the return value is not used).
 
 *Example*
 ----
@@ -180,13 +180,13 @@ printf("%l\n", redGet(a));
 ----
 red_unset redUnset(void)
 ----
-Returns an _unset!_ value.
+Returns an `unset!` value.
 
 ==== redNone()
 ----
 red_none redNone(void)
 ----
-Returns a _none!_ value.
+Returns a `none!` value.
 
 ==== redLogic()
 ----
@@ -210,7 +210,7 @@ Returns an `integer!` value from _number_.
 ----
 red_float redFloat(double number)
 ----
-Returns an `float!` value from _number_.
+Returns a `float!` value from _number_.
 
 ==== redPair()
 ----
@@ -262,7 +262,7 @@ Returns a `word!` value from a C string. Default expected encoding for the argum
 red_block redBlock(red_value v,...)
 ----
 
-Returns a new block! series built from the arguments list. The list *must* terminate with a `null` or `0` value, as end marker.
+Returns a new `block!` series built from the arguments list. The list *must* terminate with a `null` or `0` value, as end marker.
 
 *Examples*
 ----
@@ -275,7 +275,7 @@ redBlock(redInteger(42), redWord("hi"), 0);   // Creates [42 hi] block
 red_path redPath(red_value v, ...)
 ----
 
-Returns a new path! series built from the arguments list. The list *must* terminate with a `null` or `0` value, as end marker.
+Returns a new `path!` series built from the arguments list. The list *must* terminate with a `null` or `0` value, as end marker.
 
 *Example*
 ----
@@ -289,7 +289,7 @@ printf("%l\n", redCInt32(res));    // will output 123
 red_path redLoadPath(const char* path)
 ----
 
-Returns a path! series built from a path expressed as a C string. This provides a quick way to build paths without constructing individually each element.
+Returns a `path!` series built from a path expressed as a C string. This provides a quick way to build paths without constructing individually each element.
 
 *Example*
 ----
@@ -301,7 +301,7 @@ redGetPath(redLoadPath("a/b"));    // Creates and evaluates the a/b path! value.
 red_value redMakeSeries(unsigned long type, unsigned long slots)
 ----
 
-Returns a new series! of type _type_ and enough size to store _slots_ elements. This is a generic series constructor function. The type needs to be one of the `RedType` enumeration values. 
+Returns a new `series!` of type _type_ and enough size to store _slots_ elements. This is a generic series constructor function. The type needs to be one of the `RedType` enumeration values. 
 
 *Examples*
 ----
@@ -314,28 +314,28 @@ redAppend(path, redInteger(2));    // Now path is `a/2:`
 
 === Making C values from Red
 
-Converting Red values to host side is possible, though, restricted by the limited number of types in C language.
+Converting Red values to _host_ side is possible, though, restricted by the limited number of types in C language.
 
 ==== redCInt32()
 ----
 long redCInt32(red_integer number)
 ----
 
-Returns a 32-bit signed integer from a Red integer! value.
+Returns a 32-bit signed integer from a Red `integer!` value.
 
 ==== redCDouble()
 ----
 double redCDouble(red_float number)
 ----
 
-Returns a C double floating point value from a Red float! value.
+Returns a C double floating point value from a Red `float!` value.
 
 ==== redCString()
 ----
 const char* redCString(red_string string)
 ----
 
-Returns a UTF-8 string buffer pointer from a Red string! value. Other encodings can be defined using the `redSetEncoding()` function.
+Returns a UTF-8 string buffer pointer from a Red `string!` value. Other encodings can be defined using the `redSetEncoding()` function.
 
 ==== redTypeOf()
 ----
@@ -381,7 +381,7 @@ Returns a copy of a non-scalar value.
 red_value redFind(red_series series, red_value value)
 ----
 
-Returns the _series_ where a _value_ is found, or NONE.
+Returns the _series_ where a _value_ is found, or `none`.
 
 ==== redIndex()
 ----
@@ -430,7 +430,7 @@ Replaces the _series_ at a given _index_ with the _value_, and returns the new v
 red_value redPut(red_series series, red_value index, red_value value)
 ----
 
-Replaces the value following a key in a _series_ or map! value, and returns the new value.
+Replaces the value following a key in a _series_ or `map!` value, and returns the new value.
 
 ==== redRemove()
 ----
@@ -444,7 +444,7 @@ Removes a value at current _series_ index and returns series after removal.
 red_value redSelect(red_series series, red_value value)
 ----
 
-Find a _value_ in a _series_ and return the next value, or NONE.
+Find a _value_ in a _series_ and return the next value, or `none`.
 
 ==== redSkip()
 ----
@@ -462,7 +462,7 @@ Converts _spec_ value to a datatype specified by _proto_.
 
 === Accessing a Red word
 
-Setting a Red word or getting the value of a Red word is the most direct way to pass values between the host and Red runtime environment.
+Setting a Red word or getting the value of a Red word is the most direct way to pass values between the _host_ and Red runtime environment.
 
 ==== redSet()
 ----
@@ -487,7 +487,7 @@ Paths are very flexible way to access data in Red, so they have their dedicated 
 red_value redSetPath(red_path path, red_value value)
 ----
 
-Sets a _path_ to a _value_ and returns that _value.
+Sets a _path_ to a _value_ and returns that _value_.
 
 ==== redGetPath()
 ----
@@ -498,7 +498,7 @@ Returns the _value_ referenced by the _path_.
 
 === Accessing a Red object field
 
-When multiple setting/getting accesses are needed on a object's fields, using the object value directly instead of building paths is simpler and preferable. The following two functions are tailored for such access.
+When multiple setting/getting accesses are needed on an object's fields, using the object value directly instead of building paths is simpler and preferable. The following two functions are tailored for such access.
 
 Note: these accessors can work with any other associated array types, not just `object!`. So passing a `map!` is allowed too.
 
@@ -507,7 +507,7 @@ Note: these accessors can work with any other associated array types, not just `
 red_value redSetField(red_value object, long field, red_value value)
 ----
 
-Sets an _object_'s _field_ to a _value_ and returns that _value. The _field_ argument is a symbol ID created using `redSymbol()`.
+Sets an _object_'s _field_ to a _value_ and returns that _value_. The _field_ argument is a symbol ID created using `redSymbol()`.
 
 ==== redGetField()
 ----
@@ -539,7 +539,7 @@ Probes the _value_ on the standard output, or in the debug console if opened. Th
 red_value redHasError(void)
 ----
 
-Returns an error! value if an error has occured in previous API call, or `null` if there no error occured.
+Returns an `error!` value if an error has occured in previous API call, or `null` if there no error occured.
 
 ==== redFormError()
 ----
@@ -611,7 +611,7 @@ The Visual Basic API can be used both for VB and VBA (from MS Office application
 
 ==== Setting up
 
-In order to use libRed with VB/VBA, you need to a version of the libRed binary that is compiled for `stdcall` ABI. If you need to recompile such version:
+In order to use libRed with VB/VBA, you need a version of the libRed binary that is compiled for `stdcall` ABI. If you need to recompile such version:
 ----
 red build libRed stdcall
 ----
@@ -629,7 +629,7 @@ Returns a Red `logic!` value constructed from a VB `boolean` value.
 ----
 Function redBlockVB(ParamArray args() As Variant) As Long
 ----
-Returns a new block! series built from the arguments list. The arguments number is variable and composed of VisualBasic values only. 
+Returns a new `block!` series built from the arguments list. The arguments number is variable and composed of VisualBasic values only. 
 
 *Examples*
 ----
@@ -642,7 +642,7 @@ redProbe redBlockVB(42, "hello")   ' Creates the [42 "hello" hi] block
 Function redPathVB(ParamArray args() As Variant) As Long
 ----
 
-Returns a new path! series built from the arguments list. The arguments number is variable and composed of VisualBasic values only.
+Returns a new `path!` series built from the arguments list. The arguments number is variable and composed of VisualBasic values only.
 
 *Examples*
 ----
