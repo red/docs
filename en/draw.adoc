@@ -959,7 +959,7 @@ fill-pen diamond <grad-offset> <grad-focal> <grad-radius>
          <grad-color> <offset> ...
 
 <grad-type>      : gradient type (word!).
-<grad-offset>    : offset from where should the gradient be rendered (pair!).
+<grad-offset>    : offset from where the gradient should be rendered (pair!).
 <grad-start-rng> : beginning of the gradient range (integer!).
 <grad-stop-rng>  : end of the gradient range (integer!).
 <grad-focal>     : focal point of the gradient (pair!).
