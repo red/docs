@@ -37,7 +37,7 @@ Notes:
 |reaction|  A block of code which contains one or more reactive expressions.
 |reactive expression|  An expression which references at least one reactive source.
 |reactive relation|  A relation between two or more objects implemented using reactive expressions.
-|reactive source| A path! value referring to a field in a reactive object.
+|reactive source| A `path!` value referring to a field in a reactive object.
 |reactive formula|  A reaction which returns the last expression result on evaluation.
 |reactive object|  An object whose fields can be used as reactive sources.
 |reactor|	 Alias for "reactive object".
@@ -78,7 +78,7 @@ The word `total` above has its value set to the `x + y` expression. Each time th
 
 This variation of Example 3 shows that a global word can also be the target of a reactive relation (though it can't be the source). This form is the closest to that of a spreadsheet's (e.g. Excel) formula model.
 
-NOTE: due to the size of global context, making it reactive (as above with `total`) could have significant performance overhead, though that could be overcome in the future.
+NOTE: due to the size of global context, making it reactive (as above with `total`) could have significant performance overhead, though that could be overcomed in the future.
 
 === Dynamic Relations 
 
@@ -105,7 +105,7 @@ while [not tail? next faces][
 ]
 view win
 ----
-In this example, the reaction is a function (`follow`) which is applied to the ball faces by pairs.  This creates a chain of relations that link all the balls together. The terms in the reaction are parameters, so they can be used for different objects (unlike static relations).
+In this example, the reaction is a function (`follow`) which is applied to the ball faces by pairs. This creates a chain of relations that link all the balls together. The terms in the reaction are parameters, so they can be used for different objects (unlike static relations).
 
 
 == API 
@@ -122,16 +122,16 @@ react/unlink <func> <source>
 
 react/later <code>
 
-<code>    : block of code that contain at least one reactive source (block!).
-<func>    : function that contain at least one reactive source (function!).
+<code>    : block of code that contains at least one reactive source (block!).
+<func>    : function that contains at least one reactive source (function!).
 <objects> : list of objects used as arguments to a reactive function (block! of object! values).
-<source>  : 'all word, or an object or a list of objects (word! object! block!).
+<source>  : 'all word, or an object, or a list of objects (word! object! block!).
 
 Returns   : <code> or <func> for further references to the reaction.
 ----
 *Description*
 
-`react` sets a new reactive relation, which contains at least one reactive source, from a block of code (sets a "static relation") or a function (sets a "dynamic relation" and requires the `/link` refinement). In both cases, the code is statically analyzed to determine the reactive sources (in the form of path! values) that refer to reactor fields.
+`react` sets a new reactive relation, which contains at least one reactive source, from a block of code (sets a "static relation") or a function (sets a "dynamic relation" and requires the `/link` refinement). In both cases, the code is statically analyzed to determine the reactive sources (in the form of `path!` values) that refer to reactor fields.
 
 By default, the newly formed reaction *is called once on creation* before the `react` function returns. This can be undesirable in some cases, so can be avoided with the `/later` option.
 
@@ -246,7 +246,7 @@ NOTE: The body may contain `is` expressions.
 
 *Example*
 
-This shows how change to a serie, even a nested one, triggers a reaction.
+This shows how change to a series, even a nested one, triggers a reaction.
 
 NOTE: It is up to the user to prevent cycles at this time. For example, if a `deep-reactor!` changes series values in a reactor formula (e.g. `is`), it may create endless reaction cycles.
 ----
