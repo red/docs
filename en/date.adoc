@@ -747,7 +747,7 @@ to date! <spec>
 
 <spec> : a block of values for date fields
 ----
-The argument block will be converted to a `date!` value according to the same syntax as for `make` (see 2.2 <<runtime_creation>>). Out of range argument values will result in a normalized date. For a strict conversion from a block, that will error out instead of normalizing, use `make`.
+The argument block will be converted to a `date!` value according to the same syntax as for `make` (see 2.2 <<runtime-creation>>). Out of range argument values will result in a normalized date. For a strict conversion from a block, that will error out instead of normalizing, use `make`.
 
 == Comparisons
 
