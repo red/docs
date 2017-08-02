@@ -78,7 +78,7 @@ The word `total` above has its value set to the `x + y` expression. Each time th
 
 This variation of Example 3 shows that a global word can also be the target of a reactive relation (though it can't be the source). This form is the closest to that of a spreadsheet's (e.g. Excel) formula model.
 
-NOTE: due to the size of global context, making it reactive (as above with `total`) could have significant performance overhead, though that could be overcomed in the future.
+NOTE: due to the size of global context, making it reactive (as above with `total`) could have significant performance overhead, though that could be overcome in the future.
 
 === Dynamic Relations 
 
