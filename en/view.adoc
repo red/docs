@@ -243,8 +243,8 @@ This type represents a check box, with an optional label text, displayed on left
 
 |`type`| `'check`
 |`text`| Label text.
-|`para`|	The `align` field controls if the text is displayed on the `left` or on the `right` side.
-`data`, `true`: checked; `false`: unchecked (default).
+|`para`| The `align` field controls if the text is displayed on the `left` or on the `right` side.
+|`data`| `true`: checked; `false`: unchecked (default).
 |===
 
 [cols="1, 1, 3", options="header"]
