@@ -1,11 +1,11 @@
 = Char! datatype
-Version: Draft 2
+Version: Draft 3
 :toc:
 :numbered:
 
 == Abstract
 
-`Char!` values represent a Unicode code point. It is an integer number in the range hexadecimal 00 to hexadecimal 10FFFF. (0 to 1,114,111 in decimal.) 
+`Char!` values represent a Unicode code point. They are integer numbers in the range hexadecimal 00 to hexadecimal 10FFFF. (0 to 1,114,111 in decimal.) 
 
 == Characteristics
 'Char!' values are 'direct', 'atomic' and 'passive'.
@@ -21,7 +21,7 @@ Note: This assumes that Type Characteristics have been defined earlier in the do
 The basic literal formats for `char!` values is:
 ----
 #"<character>"
-<character> : UTF-8 encoding for a single Unicode codepoint
+<character> : a single Unicode codepoint (usually entered via keystrokes)
 ----
 
 The literal syntax also supports "escaped" characters for control characters and those characters which are not easily typed.
