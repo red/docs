@@ -1,0 +1,10 @@
+= プログラミング言語Red ドキュメント
+
+== 日本語版  
+
+_ドキュメントは現在作成中です。リファレンスドキュメントとして、いくつかのみが完成しています。_
+
+Red言語についてさらに知りたい場合、次のサイトを訪問してください。 http://red-lang.org
+
+
+Gitterのチャットにも参加してください。  https://gitter.im/red/docs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge[image:https://badges.gitter.im/red/docs.svg[https://gitter.im/red/docs]]
