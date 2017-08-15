@@ -30,6 +30,8 @@ Compiler::
     
 Console::
     
+Context::
+    
 Datatype::
   Datatypes are the foundation of Red...
 default!::
@@ -60,11 +62,15 @@ List::
   
 Mezzanine::
   Another name for a Red function.
+Module::
+    
 Native:: 
   Functions written in Red/System, and exposed for use in Red.  
 Number::
     
 number!::
+    
+Object::
     
 Pane::
     
