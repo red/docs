@@ -172,11 +172,7 @@ The `base` type is the most basic face type, but also the most versatile one. By
 |===
 |Facet| Description
 |`type`|	`'base`
-<<<<<<< HEAD
 |`image`| An `image!` value can be specified, alpha channel is supported.
-=======
-|`image`| An image! value can be specified, alpha channel is supported.
->>>>>>> refs/remotes/red/master
 |`color`| A background color can be specified, alpha channel is supported.
 |`text`| An optional text to be displayed inside the face.
 |`draw`| Transparency is fully supported for Draw primitives.
@@ -244,14 +240,9 @@ This type represents a check box, with an optional label text, displayed on left
 [cols="1, 4", options="header"]
 |===
 |Facet| Description
-
 |`type`| `'check`
 |`text`| Label text.
-<<<<<<< HEAD
-|`para`|	The `align` field controls if the text is displayed on the `left` or on the `right` side.
-=======
 |`para`| The `align` field controls if the text is displayed on the `left` or on the `right` side.
->>>>>>> refs/remotes/red/master
 |`data`| `true`: checked; `false`: unchecked (default).
 |===
 
