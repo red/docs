@@ -10,7 +10,7 @@ Note:
 
 * `date!` uses a https://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar[proleptic Gregorian calendar], extending its usage backward, beyond the year 1582. Care should be taken when trying to represent historical, pre-Gregorian dates using `date!` values.
 
-* Supported dates range from `1/Jan/-16384` to `31/Dec/16383`, wrapping around on overflowing math operations. On input, that range is reduced to `1/Jan/-9999` to `31/Dec/9999` for practical reasons.
+* Supported dates range from `1/Jan/-16384` to `31/Dec/16383`, wrapping around on overflowing math operations. On input, that range is reduced from `1/Jan/-9999` to `31/Dec/9999` for practical reasons.
 
 == Creation
 
@@ -71,7 +71,7 @@ Additional <date> formats when followed by T:
 <d>      : a digit representing the day of the week (1 to 7)
 <dd>     : 1 or 2 digits representing the day of the month
 <ddd>    : 3 digits representing the day of the year
-<ww>     : 2 digits reprensenting the week of the year
+<ww>     : 2 digits representing the week of the year
 <time>   : time! value
 <hour>   : 1 or 2 digits representing the hours
 <min>    : 1 or 2 digits representing the minutes
@@ -473,7 +473,7 @@ Gets or sets the timezone field of a date. Timezones are returned as `time!` val
 
 When the timezone is set to an `integer!` argument, the argument represents hours, while minutes are set to 0.
 
-The granularity for timezone's minutes is 15, non-conforming values will be rounded to closest 15 minutes inferior multiple
+The granularity for timezone's minutes is 15, non-conforming values will be rounded to closest 15 minutes inferior multiple.
 
 *Examples*
 ----
@@ -685,7 +685,7 @@ pick <date> <field>
 <field> : an integer! value
 ----
 
-An integer argument represent the ordinal accessor for dates. See "Ordinal accessors" table above.
+An integer argument represents the ordinal accessor for dates. See "Ordinal accessors" table above.
 
 *Examples*
 ----
@@ -747,7 +747,7 @@ to date! <spec>
 
 <spec> : a block of values for date fields
 ----
-The argument block will be converted to a `date!` value according to the same syntax as for `make` (see 2.2 Runtime creation). Out of range argument values will result in a normalized date. For a strict conversion from a block, that will error out instead of normalizing, use `make`.
+The argument block will be converted to a `date!` value according to the same syntax as for `make` (see 2.2 <<runtime-creation>>). Out of range argument values will result in a normalized date. For a strict conversion from a block, that will error out instead of normalizing, use `make`.
 
 == Comparisons
 
@@ -777,7 +777,7 @@ Supported math operations on dates include:
 
 * adding or subtracting values from any date field: the result is normalized.
 * adding or subtracting an integer value with a date value: interpreted as a number of days.
-* adding or subtracting a time value with a date value: will add/subtract it from the date's time.
+* adding or subtracting a time value with a date value: will add/subtract it to/from the date's time.
 * subtracting two date values: result is a signed number of days between those two dates.
 * using the `difference` function on two date values: result is the signed difference, as a `time!` value, between those two dates.
 
@@ -867,7 +867,7 @@ random <date>
 ----
 *Description*
 
-Returns a randomized date using the argument date as upper limit. If the argument date has no time/timezone component, the resulting date won't either.
+Returns a randomized date using the argument date as upper limit. If the argument date has no time/timezone component, the resulting date won't have it either.
 
 *Examples*
 ----

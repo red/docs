@@ -901,16 +901,15 @@ When a new Draw session starts, the following default values are used:
 
 [cols="2,3", options="header"]
 |===
-|Property | Value
-
-|background | `white`
-|pen color |  `black`
-|filling|    `off`
-|anti-alias|	 `on`
-|font|	 `none`
-|line width|	 `1`
-|line join|	 `miter`
-|line cap| `flat`
+|Property|   Value
+|background|   `white`
+|pen color|   `black`
+|filling|   `off`
+|anti-alias|   `on`
+|font|   `none`
+|line width|   `1`
+|line join|   `miter`
+|line cap|   `flat`
 |===
 
 == Sub blocks 
@@ -959,7 +958,7 @@ fill-pen diamond <grad-offset> <grad-focal> <grad-radius>
          <grad-color> <offset> ...
 
 <grad-type>      : gradient type (word!).
-<grad-offset>    : offset from where should the gradient be rendered (pair!).
+<grad-offset>    : offset from where the gradient should be rendered (pair!).
 <grad-start-rng> : beginning of the gradient range (integer!).
 <grad-stop-rng>  : end of the gradient range (integer!).
 <grad-focal>     : focal point of the gradient (pair!).

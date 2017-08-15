@@ -4,13 +4,13 @@
 
 == Introduction 
 
-Red is an homoiconic language where code is represented as data. A consequence of that feature is that the language is almost totally free-form, in order to cope with all possible ways to format data, as well as being flexible enough for DSL-specific formatting needs. The following content is _just one of many, many ways_ to format Red code.
+Red is a homoiconic language where code is represented as data. A consequence of that feature is that the language is almost totally free-form, in order to cope with all possible ways to format data, as well as being flexible enough for DSL-specific formatting needs. The following content is _just one of many, many ways_ to format Red code.
 
-This document describes the _official coding style used in the Red source code_, so respecting this coding style is a prerequisite of every pull request submitted to red/red Github repository.
+This document describes the _official coding style used in the Red source code_, so respecting this coding style is a prerequisite of every pull request submitted to `red/red` Github repository.
 
 As Red/System is a dialect of Red, it shares the same syntax and coding style rules. Specific Red/System rules are marked as such.
 
-The objectives of the following rules are to maximise readability including keeping an optimum number of lines of code visible on-screen while minimizing the need for comments.
+The objectives of the following rules are to maximise readability, including keeping an optimum number of lines of code visible on-screen while minimizing the need for comments.
 
 == Line of code length 
 
@@ -20,7 +20,7 @@ There is no strictly-defined maximum number of columns for a single line of code
 
 Red codebase uses tabulations with size of *4* columns to indent the source code. This gives a good trade-off between too small values (like 2 columns) and too big ones (like 8 columns). Using tabs also means that you can adjust it to your personal preference in your editor, while respecting the rule (just pay attention to right alignments using tabs then).
 
-All the contributed Red files to red/red repo should contain the following field in their header:
+All the contributed Red files to `red/red` repo should contain the following field in their header:
 
  Tabs: 4
 
@@ -114,7 +114,7 @@ If the first block is small enough and can fit on the same line, then only the s
 
 == Naming conventions 
 
-*Variable names* should be single-word *nouns*. Choose words which are short and capturing the meaning as best as possible. Common words should be used first (_especially if they are already used in existing Red source code in the same context_). If needed, use a http://www.thesaurus.com/browse/synonym[synonyms dictionary]v, to find the best word for the usage. Single-letter or abbreviated words (unless the abbreviated word is in common usage) should be avoided as much as possible.
+*Variable names* should be single-word *nouns*. Choose words which are short and capturing the meaning as best as possible. Common words should be used first (_especially if they are already used in existing Red source code in the same context_). If needed, use a http://www.thesaurus.com/browse/synonym[synonyms dictionary] to find the best word for the usage. Single-letter or abbreviated words (unless the abbreviated word is in common usage) should be avoided as much as possible.
 
 Names made of multiple words are separated with a dash `-` character. Use a two-words name only when a fitting single-word cannot be found or would be too confusing with already used ones. Variable names made of more than two words should only be used in rare cases. Using single-words as much as possible makes the code horizontally much more compact, improving readability greatly. Avoid useless verbosity.
 
@@ -238,7 +238,7 @@ Incorrect
  ][n + 1]
 ----
 
-When the spec block is too long, it should be wrapped over several lines. When wrapping the spec block, each type definition must be on the same line as its argument. The optional attributes block should be on its own line. Each refinement starts on a new line. If followed by a single argument, the argument can be on the same line or a new line with an indentation (just be consistent with other refinements in the same spec block). For /local refinement, if the local words are not followed by type annotation, they can be put on the same line.
+When the spec block is too long, it should be wrapped over several lines. When wrapping the spec block, each type definition must be on the same line as its argument. The optional attributes block should be on its own line. Each refinement starts on a new line. If followed by a single argument, the argument can be on the same line or a new line with an indentation (just be consistent with other refinements in the same spec block). For `/local` refinement, if the local words are not followed by type annotation, they can be put on the same line.
 
 When wrapping the spec block over several lines, it is recommended to align the datatype definitions for consecutive arguments, on the same column for easier reading. Such alignment is preferably done using tabs (if you strictly follow these coding style rules) or else, using spaces.
 
@@ -279,7 +279,7 @@ Incorrect
 ]
 ----
 
-For docstrings, the main one (describing the function) should be on its own line if the spec block is wrapped. The argument and refinement docstrings should be on the same line as the item they are describing. Docstrings start with a capital letter and do not require a ending dot (it's added automatically when printed on screen by `help` function).
+For docstrings, the main one (describing the function) should be on its own line if the spec block is wrapped. The argument and refinement docstrings should be on the same line as the item they are describing. Docstrings start with a capital letter and do not require an ending dot (it's added automatically when printed on screen by `help` function).
 
 *Correct*
 ----
