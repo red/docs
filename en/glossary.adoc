@@ -36,6 +36,10 @@ Datatype::
   Datatypes are the foundation of Red...
 default!::
   
+Dialect::
+    
+Domain Specific Language (DSL)::
+    
 Draw::
     
 Event::
