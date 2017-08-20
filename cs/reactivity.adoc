@@ -36,7 +36,7 @@ Poznámky:
 |*reakce* | Blok kódu, který obsahuje jeden nebo víc reaktivních výrazů.
 |*reaktivní výraz* | Výraz, který odkazuje alespoň na jeden reaktivní zdroj.
 |*reaktivní vztah* | Vztah mezi dvěma či více objekty, zavedený s použitím reaktivních vztahů.
-|*reaktivní zdroj* | Hodnota path!, odkazující na pole reaktivního objektu.
+|*reaktivní zdroj* | Hodnota `path!`, odkazující na pole reaktivního objektu.
 |*reaktivní formule* | Reakce, která vrací poslední výsledek vyhodnoceného vyrazu.
 |*reaktivní objekt* | Objekt, jehož pole mohou byt použita jako raktivní zdroje.
 |*reaktor*	| Alias pro "reaktivní objekt".
@@ -133,7 +133,7 @@ Returns   : <code> nebo <func> pro další odkazy na reakci
    
 *Popis*
 
-Funkce `react` zavádí nový reaktivní vztah, který obsahuje alespoň jeden reaktivní zdroj, jímž může být blok kódu (zavádí "statický vztah") nebo funkce (zavádí "dynamický vztah" a vyžaduje upřesnění `/link`). V obou případech je kód staticky analyzován za účelem určení reaktivních zdrojů (s hodnotami typu path!), které odkazují na pole reaktoru.
+Funkce `react` zavádí nový reaktivní vztah, který obsahuje alespoň jeden reaktivní zdroj, jímž může být blok kódu (zavádí "statický vztah") nebo funkce (zavádí "dynamický vztah" a vyžaduje upřesnění `/link`). V obou případech je kód staticky analyzován za účelem určení reaktivních zdrojů (s hodnotami typu `path!`), které odkazují na pole reaktoru.
 
 Implicitně je nově vytvářená reakce volána ihned po vytvoření před odezvou funkce `react`. To může být v některých případech nežádoucí a lze se tomu vyhnout volbou `/later`.
 
@@ -255,7 +255,7 @@ NOTE: Tělo může obsahovat výrazy s `is`.
 
 *Příklad*
 
-Ukazuje, jak změna serie - dokonce i vnořené, spustí reakci.
+Ukazuje, jak změna řady, dokonce i vnořené, spustí reakci.
 
 NOTE: Je na uživateli aby v tomto případě zabránil cyklování. Když například `deep-reactor!` mění ve formuli reaktoru (e.g. `is` hodnoty řad, může vytvořit nekonečné reaktivní cyckly.
 ----

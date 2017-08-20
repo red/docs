@@ -959,7 +959,7 @@ Příkazy uvnitř kódu Draw mohou být libovolně seskupovány do bloků. Séma
 Slova typu `set-words` mohou být použita *mezi* příkazy kódu Draw k zaznamenání aktuální pozice do bloku Draw, snadno přístupného při eventuelní pozdější potřebě.
 
 
-NOTE: změní-li se délka bloku Draw před slovem `set-word`, zaznamenaná pozice se neaktualizuje.
+NOTE: změní-li se délka bloku Draw před slovem `set-word`, upraví se původní pozice tak aby `set-word` dále neukazoval na tentýž odkaz.
 
 
 == Funkce draw 

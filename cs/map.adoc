@@ -11,7 +11,7 @@ Struktura typu `map!` reprezentuje asociativní řadu (array) dvojic key/value. 
 ----
 #(<key> <value>...)
 
-<key>  : hashovaný klíč typu any-word!, any-string!, number! (integer!, float!, percent!), char!, pair!, tuple!
+<key>  : hashovaný klíč typu scalar!, all-word!, any-string!
 <value> : hodnota typu any-type!
 ----
 
@@ -45,7 +45,7 @@ make map! [a 1 'b 2 "c" 3]
 )
 ----
 
-Je-li _spec_ celé číslo, vytvoří se prázdný objekt typu map! s předurčeným počtem slotů (obvykle za účelem pozdějšího dynamického zaplnění mapy).
+Je-li _spec_ celé číslo, vytvoří se prázdný objekt typu `map!` s předurčeným počtem slotů (obvykle za účelem pozdějšího dynamického zaplnění mapy).
 
 Příklad:
 ----
@@ -58,11 +58,11 @@ type? lp/a             ; == logic!
 
 Poznámky:
  
-* Tělo mapy (blok specifikací) musí obsahovat **sudý** počet prvků, nemá-li být generována chyba. 
+* Tělo mapy (blok specifikací) musí obsahovat *sudý* počet prvků, nemá-li být generována chyba. 
 * Pro přístup ke klíči je možné použít prosté slovo (word) i jeho formu "set-word".
 * Je-li jako hodnota zadáno `none` (typu none!), klíč se nevytvoří, případně existující klíč stejného jména se smaže. 
 * Při vytváření mapy jsou všechny klíče hluboce kopírovány.
-* Hodnoty typu series! se při vytváření mapy implicitně nekopírují (což optimalizuje zdroje v běžných způsobech použití).
+* Hodnoty typu series! se při vytváření mapy implicitně nekopírují; volba je ponechána na uživateli (což optimalizuje zdroje v běžných způsobech použití).
 * hodnoty nejsou *redukovány*, tudíž pro některé speciální hodnoty (např. logic!) je vyžadována _konstrukční_ skladba.
 
 Další způsob vytvoření nové mapy je kopírování existující:
@@ -106,18 +106,36 @@ Pokus o vyhledání v mapě nedefinovaného klíče vrací hodnotu `none`.
 
 == Změna klíčů a hodnot
 
+S použitím cest:
 ----
 <map>/<key>: <value>                ; změna pouze hodnoty
 set '<map>/<key> <value>            ; dtto
 
-put <map> <key> <value>             ; vložení dvojice
+<map>      : slovo, odkazující na hodnotu `map!`
+<key>      : slovo pro výběr hodnoty v mapě
+<value>    : jakákoli hodnota
+----
 
-extend <map> <spec>                 ; dtto                 
-zde je
+S použitím modifikačních akcí:
+----   
+put <map> <key> <value>             ; vložení dvojice
+----
+
+Provedením hromadných změn:
+----
+extend <map> <spec>                 ; rozšíření o dvojici                 
+
 <spec> : blok s dvojicemi name/value (jednou či vícero)
 ----
 
 Nativní funkce `extend` může přijmout více klíčů najednou, takže je vhodná pro hromadné změny.
+
+Všechny tyto textové úpravy jsou 'case-insensitive'. Case-sensitive variantu způsobí upřesnění `/case`:
+----
+set/case '<map>/<key> <value>
+put/case <map> <key> <value>
+extend/case <map> <spec>
+----
 
 Poznámky: 
 

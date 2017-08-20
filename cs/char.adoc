@@ -1,0 +1,167 @@
+= Char! datatype
+Version: Draft 3
+:toc:
+:numbered:
+
+== Úvodem
+
+Hodnoty `char!` reprezentují kódový bod Unicode. Jsou to celá čísla v rozsahu od hexadecimální nuly do hexadecimální hodnoty 10FFFF (od nuly do 1,114,111 v dekadickém systému). 
+
+== Charakteristika
+Hodnoty 'char!' jsou 'přímé', 'atomické' a 'pasivní'.
+
+Note: Předpokládá se, že charakteristiky typu byly již dříve v dokumentu definovány. (byly?)
+
+== Vytvoření
+
+Hodnoty `char!` mohou být vytvořeny s použitím literálové syntaxe nebo při běhu programu s použitím konstruktoru 'make' nebo konverzí `to` jednou z mnoha funkcí, které z hodnoty `string!` extrahují hodnotu `char!`.
+
+=== Literálová syntaxe
+
+Základní literálový formát pro hodnoty `char!`jest:
+----
+#"<character>"
+<character> : jeden kódový bod Unicode (obvykle zadaný z klávesnice)
+----
+
+Literálová syntaxe rovněž podporuje řídící znaky (escaped characters) pro ovládací znaky a pro znaky, které se obtížně píší na standardní klávesnici.
+
+Řídícím znakem v Redu je '^' - codepoint U+005E. V důsledku toho musí být samotný znak ^ rovněž uveden řídícím znakem. Stringový literál pro kódový bod je #"^^" nikoliv #"^". Označení #"^" je vlastně neplatné.
+V Redu existují tři formy řídících literálů, jeden pro číselné kódové body, další pro pojmenované znaky a poslední pro ovládací znaky.
+
+Formát kódového bodu je:
+----
+#"^(<codepoint>)"
+<codepoint> : a valid hexadecimal e.g. 00, ABCD, 10FFFFF
+----
+
+Formát ovládacích znaků je:
+----
+#"^<cc>"
+<cc> : A single character from the set - A-Z, [, \, ], _
+----
+
+.Escaped Control Characters
+[cols="2*"]
+|===
+
+|Escaped Character
+|Codepoint
+
+|#"^A" - #"^Z"
+|U+0001 - U+001A.
+
+|#"^["
+|U+001B
+
+|#"^\"
+|U+001C
+
+|#"^]"
+|U+001D
+
+|#"^_"
+|U+001F
+
+|===
+
+Formát "pojmenovaných" znaků je:
+----
+#"^(<name>)" nebo #"^<symbol>" 
+<name> : název z tabulky Named Escaped Characters
+<symbol> : symbol z tabulky Named Escaped Characters
+----
+
+.Named Escaped Characters
+[cols="4*"]
+|===
+
+|name
+|symbol
+|character
+|codepoint
+
+|#"^(null)    
+|#"^@"    
+|null                
+|U+0000
+
+|#"^(back)"   
+|
+|backspace           
+|U+0008
+
+|#"^(tab)"    
+|#"^-" 
+|horizontal tab      
+|U+0009
+
+|#"^(line)"    
+|#"^/"   
+|line feed           
+|U+000A 
+
+|#"^(page)"   
+|
+|form feed           
+|U+000C
+
+|#"^(esc)"    
+|
+|escape              
+|U+001B
+
+|#"^(del)"    
+|#"^~"   
+|delete              
+|U+007F
+
+|
+|#"^""                      
+|" - double quote    
+|U+0022
+
+|
+|#"^^"
+|^ - caret           
+|U+005E
+
+|===
+
+== Komparace
+
+Pro hodnoty typu 'char!' mohou být použity všechny komparátory : `=, ==, <>, >, <, >=, &lt;=, same?`. Navíc jsou podporovány `min`, `max` a `sort`. Porovnávání hodnot `char!` values je 'case sensitive'.
+
+*Examples*
+----
+#"a" = #"A"
+== false
+same? #"a" #"a"
+== true
+max #"a" #"A"
+== #"a"
+sort [#"c" #"b" #"d" #"a"]
+== [#"a" #"b" #"c" #"d"]
+----
+
+== Aritmetika
+Pro hodnoty `char!` lze použít celý rozsah matematických funkcí. Pokud se výsledek aritmetického výrazu dostane mimo rozsah  00 - 10FFFF (hexadecimal), je vyvolána chyba `Math Error`.
+
+*Examples*
+----
+#"a" + 1
+== #"b"
+#"a" - 32
+== #"A"
+#"a" * 256
+== #"愀"
+#"a" - 98
+*** Math Error: math or number overflow
+*** Where: -
+*** Stack:  
+
+----
+== Další souvisící funkce
+
+Lowercase, Uppercase
+

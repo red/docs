@@ -20,7 +20,7 @@ Kód grafického prostředí (GUI engine) se skládá z několika částí:
 
 === React
 
-Reaktivní akce mohou být definovány přímo z dialektu VID nebo mohou být určeny použitím funkce REACT.
+Reaktivní akce mohou být definovány z dialektu VID nebo mohou být určeny použitím funkce REACT.
 
 === Draw
 
