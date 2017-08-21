@@ -18,7 +18,7 @@ Hodnoty `char!` mohou být vytvořeny s použitím literálové syntaxe nebo př
 
 === Literálová syntaxe
 
-Základní literálový formát pro hodnoty `char!`jest:
+Základní literálový formát pro hodnoty `char!` jest:
 ----
 #"<character>"
 <character> : jeden kódový bod Unicode (obvykle zadaný z klávesnice)
