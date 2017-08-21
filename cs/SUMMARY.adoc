@@ -1,7 +1,7 @@
 = Seznam
 
 * link:README.adoc[Readme-cs]
-** lind:char.adoc[Datový typ Char!]
+** link:char.adoc[Datový typ Char!]
 ** link:map.adoc[Datový typ Map!]
 ** link:date.adoc[Datový typ Date!]
 
