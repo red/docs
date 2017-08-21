@@ -20,7 +20,7 @@ Kategorie direktiv:
 * řídící direktiva: řídí chování preprocesoru.
 * makra: transformují kód s použitím funkcí; umožňují složitější transformace.
 
-Direktiva jsou označena specifickými hodotami typu issue! (počínaje symbolem `#`).
+Direktiva jsou označena specifickými hodotami typu `issue!` (počínaje symbolem `#`).
 
 Je-li direktivum prováděno, je nahrazeno jeho výslednou vratnou hodnotou (některá direktiva nevrací nic, jsou tedy pouze odstraněna). Takto je postupně transformován celý zdrojový soubor.
 
@@ -38,7 +38,7 @@ Poznámka: when using the preprocessor at runtime (from Red's interpreter), the 
 
 === Prováděcí kontext
 
-Všechny výrazy, použité v direktivách, jsou vázány na dedikovaný kontext aby se předešlo upouštění (leaking) slov v globálním kontextu, jež může mít nechtěné vedlejší účinky. Tento kontext je rozšířen o každé zadané slovo (set-word), použité v podmínkových výrazech, makrech a direktivách `#do`.
+Všechny výrazy, použité v direktivách, jsou vázány na dedikovaný kontext aby se předešlo upouštění (leaking) slov v globálním kontextu, jež může mít nechtěné vedlejší účinky. Tento kontext je rozšířen o každé zadané slovo (set-word), použité v podmínkových výrazech, makrech a v direktivě `#do`.
 
 Tipy:
 
@@ -58,9 +58,9 @@ In the meantime, ensure that  your expressions and macros code can be run with R
 
 == Makra
 
-Preprocesor Redu podporuje definování maker pro realizaci složitějších transformací. Makra umožňují účinnější formu metaprogramování, kdy se náklady na provedení uplatňují spíše při kompilaci než při běhu programu. Red již vykazuje silné metaprogramovací schopnosti při běhu programu. Aby však bylo možné zpracovávat zdrojový kód stejně dobře kompilátorem i interpretem, mohou být makra řešena také při běhu programu.
+Preprocesor Redu podporuje definování maker pro realizaci složitějších transformací. Makra umožňují účinou formu metaprogramování, kdy se náklady na provedení uplatňují spíše při kompilaci než při běhu programu. Red již vykazuje silné metaprogramovací schopnosti při běhu programu. Aby však bylo možné zpracovávat zdrojový kód stejně dobře kompilátorem i interpretem, mohou být makra řešena také při běhu programu.
 
-NOTE: Neexistují žádná "read-time (reader)" makra. Vzhledem k tomu, jak jednoduché je předzpracovávat zdroje v textové formě s použitím dialektu Parse, byla by taková podpora (aktuálně) maker nadbytečná.
+NOTE: Neexistují žádná "read-time (reader)" makra. Vzhledem k tomu, jak jednoduché již je předzpracovávat zdroje v textové formě s použitím dialektu Parse, byla by taková podpora (aktuálně) maker nadbytečná.
 
 Preprocesor podporuje dva typy maker:
 
@@ -106,15 +106,20 @@ print 1048576
 
 === Makra s porovnávacími vzory
 
-Toto je typ nižší úrovně maker (pattern-matching), kde nejsou implicitní akce a řízení je plně předáno uživateli. Místo porovnávání slova s přijímaným argumentem, porovnává se vzor poskytnutý jako pravidlo nebo klíčové slovo dialektu Parse. Žádná automatická náhrada se nekoná a provedení požadovaných transformací, včetně nastavení pokračovacího bodu závisí na funkci makra. Typická forma je tato:
+Místo porovnávání slova s přijímaným argumentem, tento typ makra
+porovnává vzor poskytnutý jako pravidlo nebo klíčové slovo dialektu Parse. Stejně jako u pojmenovaných maker se vracená hodnota používá jako náhrada za shodující se vzor.
 
-    #macro <rule> func [start end /local word1 word2...][...code...]
+K tomuto typu makra existuje také verze na nižší úrovni, která je spouštěna použitím atributu `[manual]`. V takovém případě nexistuje žádná implicitní akce; plná kontrola je přenechána uživateli. Nekoná se žádná automatická náhrada a provedení požadovaných transformací, včetně nastavení pokračovacího bodu závisí na funkci makra.
 
+Typická forma je tato:
+----
+ #macro <rule> func [start end /local word1 word2...][...code...]
+----
 Částí `<rule>` může být:
 
-* hodnota typu lit-word!: pro vyhledání určitého slova.
-* hodnota typu a word!: klíčové slovo dialektu Parse, jako je název datového typu nebo `skip` pro *všechny* hodnoty.
-* hodnota typu a block!: pravidlo dialektu Parse.
+* hodnota typu `lit-word!`: pro vyhledání určitého slova.
+* hodnota typu `word!`: klíčové slovo dialektu Parse, jako je název datového typu nebo `skip` pro *všechny* hodnoty.
+* hodnota typu `block!`: pravidlo dialektu Parse.
 
 Argumenty `start` a `end` jsou reference, vymezující porovnávané hodnoty ve zdrojovém kódu. Vratná hodnota musí být referencí na počáteční pozici.
 
@@ -356,7 +361,9 @@ Vytvoření funkce makra.
 
 U pojmenovaného makra může blok specifikací deklarovat libovolný počet argumentů. Tělo musí vrátit hodnotu, která se použije jako náhrada za volání makra s jeho argumenty. Vracený prázdný blok pouze odstraní makro a jeho argumenty.
 
-U makra s porovnávacími vzory smí blok specifikací deklarovat pouze dva argumenty - počáteční a koncový odkaz porovnávacího vzoru. Podle zavedených zvyklostí těmito argumenty jsou: `func [start end]` nebo ve zkrácené formě `func [s e]`. Tento druh makra potřebuje vrátit pokračovací pozici. Potřebuje-li _přepracovat_ nahrazený vzor, vrací se k hodnotě `start`. Potřebuje-li _přeskočit_  shodující se vzor, potom se vrací k hodnotě `end`. Jiné pozice mohou být rovněž vráceny, v závislosti na transformaci, dosažené makrem a na snaze, částečně či plně přepracovat (reprocess) nahrazovanou (né) hodnotu (ty).
+U makra s porovnávacími vzory smí blok specifikací deklarovat pouze dva argumenty - počáteční a koncový odkaz porovnávacího vzoru. Podle zavedených zvyklostí těmito argumenty jsou: `func [start end]` nebo ve zkrácené formě `func [s e]`. Implicitně potřebuje tělo vrátit hodnotu, kterou se nahradí porovnávaný vzor. Vracení prázdného bloku pouze odebere porovnávaný vzor.
+
+*Manuální* mód je rovněž k disposici pro p-m (pattern-matching) makra. Lze jej nastavit zadáním atributu `[manual]` ve specifikačním bloku funkce: `func [[manual] start end]`. Takovýto ruční mód vyžaduje aby makro vrátilo počáteční pozici (místo hodnoty pro přemístění). Je-li zapotřebí *přepracovat* přemístěný vzor, potom se vrací hodnota veličiny `start`. Potřebuje-li přeskočit (skip) porovnávaný vzor, potom se vrací hodnota `end`. Jiné pozice mohou být rovněž vráceny, v závislosti na makrem dosažených transformacích a potřebě částečně či zcela přepracovat přemístěné hodnoty.
 
 Makro s porovnávacími vzory přijímá:
 

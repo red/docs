@@ -588,6 +588,7 @@ NOTE:
 
 * U aplikací, hladových na zdroje, lze použít funkci `free` pro manuální uvolnění systémových zdrojů.
 
+
 == Facety 
 
 Pole piškotu zvané *facet* určuje jeho různé vlastnosti.
@@ -747,10 +748,10 @@ _Následující informace je uváděna jen pro úplnost, při normálním použ�
 [cols="1,4", options="header"]
 |===
 |Position/Field | Popis
-|*1 (handle)*	|  OS-specific handle for the graphic object (integer!).
-|*2 (changes)* | Bit flags array marking which facet has been changed since last call to `show` (integer!).
-|*3 (deferred)* | List of deferred changes since last call to `show`, when realtime updates are turned off (block! none!).
-|*4 (drag-offset)* | Stores the starting mouse cursor offset position when entering face dragging mode (pair! none!).
+|*1 (handle)*	|  Na operačním systému závislý ovladač pro grafický objekt (`integer!`).
+|*2 (changes)* | 'Bit flags array' označení, který facet byl změněn od posledního volání fce `show` (`integer!`).
+|*3 (deferred)* | Seznam odložených změn od posledního volání funkce `show`, kdy aktualizace v reálném čase jsou vypnuty (`block!`, `none!`).
+|*4 (drag-offset)* | Uchovává výchozí pozici kurzoru myši při vstupu do režimu vlečení piškotu (`pair!`, `none!`).
 |===
 
 Poznámky:
@@ -826,7 +827,7 @@ view [
 |*wheel*| mouse| The mouse wheel is being moved.
 |*zoom*		| touch | A zooming gesture (pinching) has been recognized.
 |*pan*			| touch | A panning gesture (sweeping) has been recognized.
-|*rotate*		| touch | A panning gesture (sweeping) has been recognized.
+|*rotate*		| touch | A rotating gesture (sweeping) has been recognized.
 |*two&#8209;tap*	| touch | A double tapping gesture has been recognized.
 |*press&#8209;tap*	| touch | A press-and-tap gesture has been recognized.
 |*key&#8209;down*	| keyboard | A key is pressed down.
@@ -855,19 +856,19 @@ Hodnota události je opaktní objekt, obsahující všechny informace o dané ud
 [cols="1,4", options="header"]
 |===
 |Field | Returned value
-|*type*		| Typ události (word!).
-|*face*		| Piškot, ve kterém došlo k události (object!).
-|*window*	| Piškot okna, ve kterém došlo k události (object!).
-|*offset*	| Odsazení kurzoru myši od piškotu při vzniku události (pair!). Pro události gest se vracejí souřadnice středu.
-|*key*		| Stisknutá klávesa (char! word!).
-|*picked*	| Nová položka, vybraná v piškotu (integer! percent!). Pro událost `wheel` vrací počet kroků rotace. Pozitivní hodnota indikuje pootočení kolečka vpřed, od uživatele; negativní hodnota indikuje pootočení kolečka zpět, směrem k uživateli. Pro událost `menu` se vrací odpovídající ID nabídky. (word!) U zoomovacího gesta se vrací procentní hodnota představující relativní zvětšení/zmenšení. U jiných gest je tato hodnota prozatím závislá na systému (Windows: `allArguments`, pole z GESTUREINFO)
-|*flags*		| Vrací seznam s jedním či více flagy (viz list níže) (block!).
-|*away?*		| Vrací `true`, opouští-li kurzor hranice piškotu (logic!). Platí pouze při aktivní události `over`. 
-|*down?*		| Vrací true při stisknutí levého tlačítka myši (logic!).
-|*mid-down?*	| Vrací true při stisknutí prostředního tlačítka myši (logic!).
-|*alt-down?*	| Vrací true při stisknutí pravého tlačítka myši (logic!).
-|*ctrl?*		| Vrací true při stisku klávesy CTRL (logic!).
-|*shift?*	| Vrací true při stisku klávesy SHIFT (logic!).
+|*type*		| Typ události (`word!`).
+|*face*		| Piškot, ve kterém došlo k události (`object!`).
+|*window*	| Piškot okna, ve kterém došlo k události (`object!`).
+|*offset*	| Odsazení kurzoru myši od piškotu při vzniku události (`pair!`). Pro události gest se vracejí souřadnice středu.
+|*key*		| Stisknutá klávesa (`char!`, `word!`).
+|*picked*	| Nová položka, vybraná v piškotu (`integer!`, `percent!`). Pro událost `wheel` vrací počet kroků rotace. Pozitivní hodnota indikuje pootočení kolečka vpřed, od uživatele; negativní hodnota indikuje pootočení kolečka zpět, směrem k uživateli. Pro událost `menu` se vrací odpovídající ID nabídky. (`word!`) U zoomovacího gesta se vrací procentní hodnota představující relativní zvětšení/zmenšení. U jiných gest je tato hodnota prozatím závislá na systému (Windows: `allArguments`, pole z GESTUREINFO)
+|*flags*		| Vrací seznam s jedním či více flagy (viz list níže) (`block!`).
+|*away?*		| Vrací `true`, opouští-li kurzor hranice piškotu (`logic!`). Platí pouze při aktivní události `over`. 
+|*down?*		| Vrací true při stisknutí levého tlačítka myši (`logic!`).
+|*mid-down?*	| Vrací true při stisknutí prostředního tlačítka myši (`logic!`).
+|*alt-down?*	| Vrací true při stisknutí pravého tlačítka myši (`logic!`).
+|*ctrl?*		| Vrací true při stisku klávesy CTRL (`logic!`).
+|*shift?*	| Vrací true při stisku klávesy SHIFT (`logic!`).
 |===
 
 Seznam možných flagů z `event/flags`:
@@ -933,7 +934,7 @@ Kromě událostí GUI je také možné definovat aktéra `on-create`, který je 
 
 *Vratná hodnota*
 ----
-'stop : opustit smyčku událostí.
+'stop : opustí smyčku událostí.
 'done : zabrání události přetéci do jiného piškotu.
 ----
 Ostatní vratné hodnoty nemají žádný účinek.
@@ -944,7 +945,7 @@ Události jsou obvykle generovány pro určitou pozici na obrazovce a jsou při�
 
 * *odchycení (capturing) události*: událost postupuje od piškotu `window` k čelnímu (front) piškotu, kde vznikla. Pro každý piškot je generována událost `detect` a volán odpovídající ovladač (handler), pokud existuje.
 
-* *probublávání (bubbling) události*: událost postupuje od čelního piškotu k rodičovskému piškotu window. Pro každý piškot je volán lokální ovladač události.
+* *probublávání (bubbling) události*: událost postupuje od piškotu k rodičovskému oknu. Pro každý piškot je volán lokální ovladač události.
 
 
 image::event-flow.png[Event flow,align="center"]
@@ -986,13 +987,13 @@ Nově přidaná funkce ovladače (function!).
 ----    
 *Popis*
 
-Instaluje funkci globálního ovladače, která umí předzpracovat události před tím, než se dostanou k ovladačům piškotu. Pro každou událost jsou volány všechny globální ovladače, takže kód těla ovladače potřebuje optimalizovat rychlost a využití paměti. Je-li jako argument poskytnut blok, je konvertován na funkci s použitím konstruktoru `function`.
+Instaluje funkci globálního ovladače, která umí předzpracovat události před tím, než se dostanou k ovladačům piškotu. Pro každou událost jsou volány všechny globální ovladače, takže kód těla ovladače potřebuje být optimalizován na rychlost a využití paměti. Je-li jako argument poskytnut blok, je konvertován na funkci s použitím konstruktoru `function`.
 
 Vratná hodnota funkce ovladače:
 
-* `none`  : událost může být zpracována jinými ovládači (none!).
-* `'done` :  jiné globální ovladače jsou přeskočeny ale událost je šířena k dětským piškotům (word!).
-* `'stop` : opustit smyčku událostí (word!).
+* `none`  : událost může být zpracována jinými ovládači (`none!`).
+* `'done` :  jiné globální ovladače jsou přeskočeny ale událost je šířena k dětským piškotům (`word!`).
+* `'stop` : opustit smyčku událostí (`word!`).
 
 Vrací se odkaz na funkci ovladače a ten by měl být uložen, má-li být ovladač později odebrán.
 
@@ -1031,7 +1032,7 @@ Zneplatní předchozí instalovaný globální ovladač události jeho odebrán�
 |===
 
 
-== Připojení View 
+== Připojení komponenty View 
 
 Komponenta View není implicitně připojena při kompilaci. Za účelem jejího připojení musí hlavní skript Redu deklarovat svou závislost v záhlaví použitím pole `Needs` :
 ----

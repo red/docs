@@ -253,7 +253,7 @@ Styl `image` je typu `base` s implicitní velikostí 100x100.
 
 == Definice piškotů 
 
-Piškot lze vložit do aktuální pozice rozvržení (layout) pouhým uvedením jména existujícího typu piškotu nebo dostupného stylu.
+Piškot lze vložit do aktuální pozice rozvržení (layout) jednoduše uvedením jména existujícího typu piškotu nebo dostupného stylu.
 
 *Syntaxe*
 ----
@@ -403,7 +403,8 @@ draw <commands>
 ----    
 *Popis*
 
-Nastaví aspekt `draw` piškotu na seznam příkazů dialektu Draw. Viz dokumentaci [Draw dialect](draw.html).
+Nastaví aspekt `draw` piškotu na seznam příkazů dialektu Draw.
+Viz link:draw.html [Draw dialect].
 
 ==== font
 
@@ -653,7 +654,7 @@ func [face [object!] event [event! none!]][...body...]
 ----
 Platný seznam názvů událostí lze nalézt link:view.html#_actors[zde].
 
-Je-li zadán blok nebo get-word bez předložky s názvem aktéra, je implicitní aktér pro typ piškotu vytvořen podle definicí  https://github.com/red/red/blob/master/modules/view/styles.red[zde].
+Je-li zadán blok nebo get-word bez předložky s názvem aktéra, je implicitní aktér pro typ piškotu vytvořen podle definicí  https://github.com/red/red/blob/master/modules/view/styles.red[zde]
 
 Aktér může být rovněž definován mimo VID a odkaz na něj zadán jako get-word argument za tečkou (dot).
 
@@ -677,8 +678,8 @@ panel <options> [<content>]
 
 Vytvoří dětský panel uvnitř aktuálního kontejneru, jehož obsah je další blok VID. Kromě dalších opcí piškotu lze zadat celočíselný dělitel, ustavujíc tak uspořádání do mřížky (grid-mode layout):
 
-* je-li zvolený směr across, představuje dělitel počet sloupců.
-* je-li zvolený směr below, představuje dělitel počet řad.
+* je-li zvolený směr `across`, představuje dělitel počet sloupců.
+* je-li zvolený směr `below`, představuje dělitel počet řad.
 
 
 
@@ -699,7 +700,7 @@ Vytvoří panel typu group-box uvnitř aktuálního kontejneru, kde obsahem je d
 * je-li zvolený směr `across`, představuje dělitel počet sloupců.
 * je-li zvolený směr `below`, představuje dělitel počet řad.
 
-NOTE: Zadaná hodnota typu string! jako opce představuje titulek panelu group-box.
+NOTE: Zadaná hodnota typu `string!` jako opce představuje titulek panelu group-box.
 
 
 === tab-panel 
@@ -714,7 +715,7 @@ tab-panel <options> [<name> <body>...]
 ----	
 *Popis*
 
-Vytvoří panel Vytvoří panel typu tab-panel uvnitř aktuálního kontejneru. Specifikační blok musí obsahovat jméno a popis obsahu pro každou kartu (tab). Každé tělo obsahu je nový dětský piškot typu panel, působící jako jakékoliv jiné panely.
+Vytvoří `tab-panel` uvnitř aktuálního kontejneru. Specifikační blok musí obsahovat jméno a popis obsahu pro každou kartu (tab). Každé tělo obsahu je nový dětský piškot typu panel, působící jako jakékoliv jiné panely.
 
 
 == Určování stylu  
