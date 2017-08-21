@@ -14,7 +14,7 @@ Note: Předpokládá se, že charakteristiky typu byly již dříve v dokumentu 
 
 == Vytvoření
 
-Hodnoty `char!` mohou být vytvořeny s použitím literálové syntaxe nebo při běhu programu s použitím konstruktoru 'make' nebo konverzí `to` jednou z mnoha funkcí, které z hodnoty `string!` extrahují hodnotu `char!`.
+Hodnoty `char!` mohou být vytvořeny s použitím literálové syntaxe nebo při běhu programu s použitím konstruktoru 'make' nebo konverzí &nbsp; 'to' &nbsp; jednou z mnoha funkcí, které z hodnoty `string!` extrahují hodnotu `char!`.
 
 === Literálová syntaxe
 
