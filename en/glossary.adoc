@@ -65,7 +65,8 @@ libRed::
 List::
   
 Mezzanine::
-  Another name for a Red function.
+  This is a Rebol term. It is used to mean a function written in Rebol (as opposed to being written in C) that is included in the standard distribution. A mezzanine in Red is a function written wholly in Red that is included in the standard distribution. Mezzanine functions do not require compilation.
+ 
 Module::
     
 Native:: 
