@@ -159,7 +159,7 @@ print 8
 
 === #if 
 
-*構文*
+.*構文*
 ----
 #if <expr> [<body>]
 
@@ -202,7 +202,7 @@ print "running in debug mode"
 ----
 === #either 
 
-*構文*
+.*構文*
 ----
 #either <expr> [<true>][<false>]
 
@@ -234,7 +234,7 @@ print "Unix"
 ----
 === #switch 
 
-*構文*
+.*構文*
 ----
 #switch <expr> [<value1> [<case1>] <value2> [<case2>] ...]
 #switch <expr> [<value1> [<case1>] <value2> [<case2>] ... #default [<default>]]
@@ -265,7 +265,7 @@ print "Windows"
 ----
 === #case 
 
-*構文*
+.*構文*
 ----
 #case [<expr1> [<case1>] <expr2> [<case2>] ...]
 
@@ -296,7 +296,7 @@ print "Medium"
 ----
 === #include 
 
-*構文*
+.*構文*
 ----
 #include <file>
 
@@ -308,7 +308,7 @@ print "Medium"
 
 === #do 
 
-*構文*
+.*構文*
 ----
 #do [<body>]
 #do keep [<body>]
@@ -338,7 +338,7 @@ print ["2 + 3 =" 5]
 
 === #macro
 
-*構文*
+.*構文*
 ----
 #macro <name> func <spec> <body>
 #macro <pattern> func <spec> <body>
@@ -418,7 +418,7 @@ print sqrt -4
 
 === #local 
 
-*構文*
+.*構文*
 ----
 #local [<body>]
 
@@ -447,7 +447,7 @@ print 2.0
 ----
 === #reset 
 
-*構文*
+.*構文*
 ----
 #reset
 ---- 
@@ -457,7 +457,7 @@ print 2.0
 
 === #process
 
-*構文*
+.*構文*
 ----
 #process [on | off]
 ---- 
@@ -485,7 +485,7 @@ foreach d [#if #either #switch #case][probe d]
 ----
 === #trace 
 
-*構文*
+.*構文*
 ----
 #trace [on | off]
 ----  
@@ -499,7 +499,7 @@ Redのプリプロセッサは実行中も動作するようになっており�
 
 === expand-directives 
 
-*構文*
+.*構文*
 ----
 expand-directives [<body>]
 expand-directives/clean [<body>]

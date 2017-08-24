@@ -197,7 +197,7 @@ make date! [99 12 31]
 
 === /date
 
-*構文*
+.*構文*
 ----
 <date>/date
 <date>/date: <date2>
@@ -222,7 +222,7 @@ d/date: 15/09/2017
 
 === /year
 
-*構文*
+.*構文*
 ----
 <date>/year
 <date>/year: <year>
@@ -258,7 +258,7 @@ d
 
 === /month
 
-*構文*
+.*構文*
 ----
 <date>/month
 <date>/month: <month>
@@ -288,7 +288,7 @@ d/month
 
 === /day
 
-*構文*
+.*構文*
 ----
 <date>/day
 <date>/day: <day>
@@ -316,7 +316,7 @@ d
 
 === /time
 
-*構文*
+.*構文*
 ----
 <date>/time
 <date>/time: <time>
@@ -344,7 +344,7 @@ d/time: none
 
 === /hour
 
-*構文*
+.*構文*
 ----
 <date>/hour
 <date>/hour: <hour>
@@ -372,7 +372,7 @@ d
 
 === /minute
 
-*構文*
+.*構文*
 ----
 <date>/minute
 <date>/minute: <minute>
@@ -400,7 +400,7 @@ d
 
 === /second
 
-*構文*
+.*構文*
 ----
 <date>/second
 <date>/second: <second>
@@ -432,7 +432,7 @@ d
 
 === /zone
 
-*構文*
+.*構文*
 ----
 <date>/zone
 <date>/zone: <zone>
@@ -460,7 +460,7 @@ d/zone: -4:00
 
 === /timezone
 
-*構文*
+.*構文*
 ----
 <date>/timezone
 <date>/timezone: <zone>
@@ -492,7 +492,7 @@ Note:
 
 === /yearday
 
-*構文*
+.*構文*
 ----
 <date>/yearday
 <date>/yearday: <day>
@@ -533,7 +533,7 @@ d
 
 === /weekday
 
-*構文*
+.*構文*
 ----
 <date>/weekday
 <date>/weekday: <day>
@@ -568,7 +568,7 @@ d
 
 === /week
 
-*構文*
+.*構文*
 ----
 <date>/week
 <date>/week: <day>
@@ -610,7 +610,7 @@ d
 
 === /isoweek
 
-*構文*
+.*構文*
 ----
 <date>/isoweek
 <date>/isoweek: <day>
@@ -678,7 +678,7 @@ d
 
 パスを使わずに日時フィールドへアクセスすることも可能であり、これは特定のケースでは有用です。これには `pick` を使用します。
 
-*構文*
+.*構文*
 ----
 pick <date> <field>
 
@@ -716,7 +716,7 @@ repeat i 14 [print [pad i 4 pad names/:i 10 pick d i]]
 
 日時は https://ja.wikipedia.org/wiki/UNIX時間[UNIX時間] との間で `to` アクションを使って相互変換できます。
 
-*構文*
+.*構文*
 ----
 to-integer <date>
 to-date <epoch>
@@ -742,7 +742,7 @@ UNIX時間は2038年を超える年は未定義であることに注意してく
 
 === ブロックから日時への変換
 
-*構文*
+.*構文*
 ----
 to date! <spec>
 
@@ -860,7 +860,7 @@ now/utc
 
 === Random
 
-*構文*
+.*構文*
 ----
 random <date>
 
