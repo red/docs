@@ -1,6 +1,7 @@
 = Draw ダイアレクト
 :toc:
 :toc-title: 目次
+:toclevels: 3
 :numbered:
 
 
@@ -38,7 +39,7 @@ line <point> <point> ...
 
 === Triangle 
 
-*構文*
+.*構文*
 ----
 triangle <point> <point> <point>
 
@@ -52,7 +53,7 @@ NOTE:頂点は２つの線が交わる点です。
 
 === Box 
 
-*構文*
+.*構文*
 ----
 box <top-left> <bottom-right>
 box <top-left> <bottom-right> <corner>
@@ -68,7 +69,7 @@ box <top-left> <bottom-right> <corner>
 
 === Polygon 
 
-*構文*
+.*構文*
 ----
 polygon <point> <point> ...
 
@@ -82,7 +83,7 @@ polygon <point> <point> ...
 
 === Circle
  
-*構文*
+.*構文*
 ----
 circle <center> <radius>
 circle <center> <radius-x> <radius-y>
@@ -99,7 +100,7 @@ circle <center> <radius-x> <radius-y>
 
 === Ellipse 
 
-*構文*
+.*構文*
 ----
 ellipse <top-left> <size>
 
@@ -113,7 +114,7 @@ NOTE: `ellipse` は `circle` の楕円モードに比べ、矩形を基準とし
 
 === Arc 
 
-*構文*
+.*構文*
 ----
 arc <center> <radius> <begin> <sweep>
 arc <center> <radius> <begin> <sweep> closed
@@ -129,7 +130,7 @@ arc <center> <radius> <begin> <sweep> closed
 
 === Curve 
 
-*構文*
+.*構文*
 ----
 curve <end-A> <control-A> <end-B>
 curve <end-A> <control-A> <control-B> <end-B>
@@ -150,7 +151,7 @@ curve <end-A> <control-A> <control-B> <end-B>
 
 === Spline 
 
-*構文*
+.*構文*
 ----
 spline <point> <point> ...
 spline <point> <point> ... closed
@@ -164,7 +165,7 @@ NOTE: 点を2つにすることは許容されますが、その場合描画結�
 
 === Image 
 
-*構文*
+.*構文*
 ----
 image <image>
 image <image> <top-left>
@@ -195,7 +196,7 @@ NOTE:
 
 === Text 
 
-*構文*
+.*構文*
 ----
 text <position> <string>
 
@@ -209,7 +210,7 @@ NOTE: フォントが未選択または `none` が指定されている場合、
 
 === Font 
 
-*構文*
+.*構文*
 ----
 font <font>
 
@@ -225,7 +226,7 @@ font <font>
 
 ==== Color pen
 
-*構文*
+.*構文*
 ----
 pen <color>
 
@@ -237,7 +238,7 @@ pen <color>
 
 ==== Linear gradient pen
 
-*構文*
+.*構文*
 ----
 pen linear <color1> <offset> ... <colorN> <offset> <start> <end> <spread>
 
@@ -255,7 +256,7 @@ startとendが指定された場合、グラデーションのペイントされ
 
 ==== Radial gradient pen
 
-*構文*
+.*構文*
 ----
 pen radial <color1> <offset> ... <colorN> <offset> <center> <radius> <focal> <spread>
 
@@ -274,7 +275,7 @@ pen radial <color1> <offset> ... <colorN> <offset> <center> <radius> <focal> <sp
 
 ==== Diamond gradient pen
 
-*構文*
+.*構文*
 ----
 pen diamond <color1> <offset> ... <colorN> <offset> <upper> <lower> <focal> <spread>
 
@@ -293,7 +294,7 @@ pen diamond <color1> <offset> ... <colorN> <offset> <upper> <lower> <focal> <spr
 
 ==== Pattern pen
 
-*構文*
+.*構文*
 ----
 pen pattern <size> <start> <end> <mode> [<commands>]
 
@@ -311,7 +312,7 @@ startのデフォルト値は 0x0 、endのデフォルト値は <size> の値�
 
 ==== Bitmap pen
 
-*構文*
+.*構文*
 ----
 pen bitmap  <image> <start> <end> <mode>
 
@@ -328,7 +329,7 @@ startのデフォルト値は 0x0 、endのデフォルト値はイメージの�
 
 ==== Turning off the pen
 
-*構文*
+.*構文*
 ----
 pen off
 ----
@@ -343,7 +344,7 @@ pen off
 
 ==== Color fill 
 
-*構文*
+.*構文*
 ----
 fill-pen <color>
 
@@ -355,7 +356,7 @@ fill-pen <color>
 
 ==== Linear gradient fill
 
-*構文*
+.*構文*
 ----
 fill-pen linear <color1> <offset> ... <colorN> <offset> <start> <end> <spread>
 
@@ -373,7 +374,7 @@ startとendが指定された場合、グラデーションのペイントされ
 
 ==== Radial gradient fill
 
-*構文*
+.*構文*
 ----
 fill-pen radial <color1> <offset> ... <colorN> <offset> <center> <radius> <focal> <spread>
 
@@ -392,7 +393,7 @@ fill-pen radial <color1> <offset> ... <colorN> <offset> <center> <radius> <focal
 
 ==== Diamond gradient fill
 
-*構文*
+.*構文*
 ----
 fill-pen diamond <color1> <offset> ... <colorN> <offset> <upper> <lower> <focal> <spread>
 
@@ -411,7 +412,7 @@ fill-pen diamond <color1> <offset> ... <colorN> <offset> <upper> <lower> <focal>
 
 ==== Pattern fill
 
-*構文*
+.*構文*
 ----
 fill-pen pattern <size> <start> <end> <mode> [<commands>]
 
@@ -429,7 +430,7 @@ startのデフォルト値は 0x0 、endのデフォルト値は <size> です�
 
 ==== Bitmap fill
 
-*構文*
+.*構文*
 ----
 fill-pen bitmap  <image> <start> <end> <mode>
 
@@ -446,7 +447,7 @@ startのデフォルト値は 0x0 、endのデフォルト値はイメージの�
 
 ==== Turning off the filling
 
-*構文*
+.*構文*
 ----
 fill-pen off
 ----
@@ -456,7 +457,7 @@ fill-pen off
 
 === Line-width 
 
-*構文*
+.*構文*
 ----
 line-width <value>
 
@@ -468,7 +469,7 @@ line-width <value>
 
 === Line-join 
 
-*構文*
+.*構文*
 ----
 line-join <mode>
 
@@ -489,7 +490,7 @@ NOTE: `miter-bevel` モードの場合、マイター長（詳細は https://msd
 
 === Line-cap 
 
-*構文*
+.*構文*
 ----
 line-cap <mode>
 
@@ -507,7 +508,7 @@ image::../images/line-cap.png[Line-cap,align="center"]
 
 === Anti-alias 
 
-*構文*
+.*構文*
 ----
 anti-alias <mode>
 
@@ -521,7 +522,7 @@ NOTE: アンチエイリアスを使用するとより綺麗に描画が行え�
 
 === Matrix 
 
-*構文*
+.*構文*
 ----
 matrix <matrix-setup>
 matrix 'pen <matrix-setup>
@@ -547,7 +548,7 @@ matrix [a b c d e f]
 
 === Matrix-order
 
-*構文*
+.*構文*
 ----
 matrix-order <mode>
 
@@ -589,7 +590,7 @@ invert-matrix
 
 === Push 
 
-*構文*
+.*構文*
 ----
 push <draw-block>
 
@@ -601,7 +602,7 @@ push <draw-block>
 
 === Rotate 
 
-*構文*
+.*構文*
 ----
 rotate <angle> <center> [<commands>]
 rotate pen <angle>
@@ -619,7 +620,7 @@ rotate fill-pen <angle>
 
 === Scale 
 
-*構文*
+.*構文*
 ----
 scale <scale-x> <scale-y> [<commands>]
 scale pen <scale-x> <scale-y>
@@ -637,7 +638,7 @@ scale fill-pen <scale-x> <scale-y>
 
 === Translate 
 
-*構文*
+.*構文*
 ----
 translate <offset> [<commands>]
 translate pen <offset>
@@ -654,7 +655,7 @@ translate fill-pen <offset>
 
 === Skew 
 
-*構文*
+.*構文*
 ----
 skew <skew-x> <skew-y> [<commands>]
 skew pen <skew-x> <skew-y>
@@ -672,7 +673,7 @@ skew fill-pen <skew-x> <skew-y>
 
 === Transform 
 
-*構文*
+.*構文*
 ----
 transform <angle> <center> <scale-x> <scale-y> <translation> [<commands>]
 
@@ -689,7 +690,7 @@ transform <angle> <center> <scale-x> <scale-y> <translation> [<commands>]
 
 === Clip
 
-*構文*
+.*構文*
 ----
 clip <start> <end> <mode> [<commands>]
 clip [<shape>] <mode> [<commands>]
@@ -714,7 +715,7 @@ clip [<shape>] <mode> [<commands>]
 
 == Shapeコマンド
 
-*構文*
+.*構文*
 ----
 shape [<commands>]
 
@@ -734,7 +735,7 @@ NOTE: 全ての描画コマンドはデフォルトでは絶対座標を使い�
 
 === Move
 
-*構文*
+.*構文*
 ----
  move <position>            （絶対座標）
 'move <position>            （相対座標）
@@ -747,7 +748,7 @@ NOTE: 全ての描画コマンドはデフォルトでは絶対座標を使い�
 
 === Line
 
-*構文*
+.*構文*
 ----
  line <point> <point> ...   （絶対座標）
 'line <point> <point> ...   （相対座標）
@@ -760,7 +761,7 @@ NOTE: 全ての描画コマンドはデフォルトでは絶対座標を使い�
 
 === Arc
 
-*構文*
+.*構文*
 ----
  arc <end> <radius-x> <radius-y> <angle> sweep closed      （絶対座標）
 'arc <end> <radius-x> <radius-y> <angle> sweep closed      （相対座標）
@@ -779,7 +780,7 @@ large      : （省略可能）膨張させた弧を描画します。（'sweep�
 
 === Curve
 
-*構文*
+.*構文*
 ----
  curve <point> <point> <point> ...   （絶対座標）
 'curve <point> <point> <point> ...   （相対座標）
@@ -792,7 +793,7 @@ large      : （省略可能）膨張させた弧を描画します。（'sweep�
 
 === Curv
 
-*構文*
+.*構文*
 ----
  curv <point> <point> ...   （絶対座標）
 'curv <point> <point> ...   （相対座標）
@@ -809,7 +810,7 @@ NOTE: http://www.w3.org/TR/SVG11/paths.html より
 
 === Qcurve
 
-*構文*
+.*構文*
 ----
  qcurve <point> <point> ...   （絶対座標）
 'qcurve <point> <point> ...   （相対座標）
@@ -822,7 +823,7 @@ NOTE: http://www.w3.org/TR/SVG11/paths.html より
 
 === Qcurv
 
-*構文*
+.*構文*
 ----
  qcurv <point>   （絶対座標）
 'qcurv <point>   （相対座標）
@@ -837,7 +838,7 @@ NOTE: 右記のリンクを参照してください： http://www.w3.org/TR/SVG1
 
 === Hline
 
-*構文*
+.*構文*
 ----
  hline <end-x>   （絶対座標）
 'hline <length>  （相対座標）
@@ -851,7 +852,7 @@ NOTE: 右記のリンクを参照してください： http://www.w3.org/TR/SVG1
 
 === Vline
 
-*構文*
+.*構文*
 ----
  vline <end-y>   （絶対座標）
 'vline <length>  （相対座標）
@@ -905,7 +906,7 @@ Drawダイアレクトと同じです。
 
 Drawコードの中で、ブロックを使用することでコマンドを任意にグルーピングすることができます。サブブロック内でもセマンティクスに違いはありません。これは現在のところコマンド（特に抽出、挿入、削除操作）のグルーピングを用意にするためのシンタックスシュガーでしかありません。空のブロックは許容されます。
 
-== Source position 
+== ソース位置 
 
 Set-wordは *各コマンドの間のDrawコードの中で* 行うことができ、Drawブロックの現在の位置を記録し、後でアクセスすることを可能にします。
 
@@ -915,7 +916,7 @@ NOTE: set-wordに先行するDrawブロックの長さが変わった場合、�
 
 `draw` 関数によってDrawブロックを直接イメージとして描画することも可能です。
 
-*構文*
+.*構文*
 ----
 draw <size> <spec>
 draw <image> <spec>
@@ -932,7 +933,7 @@ draw <image> <spec>
 
 Fill-penはRebol/Drawとの互換性のためだけに存在する非推奨APIもサポートしています。このAPIは新しいRedのスクリプトでは使用しないでください。
 
-*構文*
+.*構文*
 ----
 fill-pen linear <grad-offset> <grad-start-rng> <grad-stop-rng>
          <grad-angle> <grad-scale-x> <grad-scale-y> <grad-color> <offset>

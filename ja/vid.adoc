@@ -43,7 +43,7 @@ NOTE: `react` キーワードはコンテナ設定レベルでもフェイスオ
 
 === title
 
-*構文*
+.*構文*
 ----
 title <text>
 
@@ -56,7 +56,7 @@ title <text>
 
 === size
 
-*構文*
+.*構文*
 ----
 size <value>
 
@@ -68,7 +68,7 @@ size <value>
 
 === backdrop 
 
-*構文*
+.*構文*
 ----
 backdrop <color>
 
@@ -78,7 +78,7 @@ backdrop <color>
 
 コンテナフェイスのバックグラウンドカラーをセットします。
 
-== Layout 
+== レイアウト 
 
 デフォルトでは、VIDはコンテナ内のフェイスを以下のシンプルなルールに従って配置します。
 
@@ -103,7 +103,7 @@ image::below.png[below,align="center"]
 
 === across 
 
-*構文*
+.*構文*
 ----
 across <alignment>
 
@@ -116,7 +116,7 @@ across <alignment>
 
 === below 
 
-*構文*
+.*構文*
 ----
 below <alignment>
 
@@ -129,7 +129,7 @@ below <alignment>
 
 === return 
 
-*構文*
+.*構文*
 ----
 return <alignment>
 
@@ -142,7 +142,7 @@ return <alignment>
 
 === space 
 
-*構文*
+.*構文*
 ----
 space <offset>
 
@@ -155,7 +155,7 @@ space <offset>
 
 === origin 
 
-*構文*
+.*構文*
 ----
 origin <offset>
 
@@ -168,7 +168,7 @@ origin <offset>
 
 === at
 
-*構文*
+.*構文*
 ----
 at <offset>
 
@@ -181,7 +181,7 @@ at <offset>
 
 === pad 
 
-*構文*
+.*構文*
 ----
 pad <offset>
 
@@ -194,7 +194,7 @@ pad <offset>
 
 === do 
 
-*構文*
+.*構文*
 ----
 do <body>
 
@@ -240,7 +240,7 @@ do <body>
 
 フェイスは存在しているフェイスタイプの名前または使用可能なスタイル名を使用して、レイアウト中の現在位置に挿入することができます。
 
-*構文*
+.*構文*
 ----
 <name>: <type> <options>
 
@@ -264,7 +264,7 @@ NOTE: `window` はフェイスタイプとして使うことはできません�
 
 ==== left
 
-*構文*
+.*構文*
 ----
 left
 ---- 
@@ -275,7 +275,7 @@ left
 
 ==== center
 
-*構文*
+.*構文*
 ----
 center
 ----
@@ -286,7 +286,7 @@ center
 
 ==== right
 
-*構文*
+.*構文*
 ----
 right
 ----
@@ -297,7 +297,7 @@ right
 
 ==== top
 
-*構文*
+.*構文*
 ----
 top
 ----
@@ -308,7 +308,7 @@ top
 
 ==== middle
 
-*構文*
+.*構文*
 ----
 middle
 ----
@@ -319,7 +319,7 @@ middle
 
 ==== bottom
 
-*構文*
+.*構文*
 ----
 bottom
 ----
@@ -330,7 +330,7 @@ bottom
 
 ==== bold
 
-*構文*
+.*構文*
 ----
 bold
 ----
@@ -341,7 +341,7 @@ bold
 
 ==== italic
 
-*構文*
+.*構文*
 ----
 italic
 ----
@@ -352,7 +352,7 @@ italic
 
 ==== underline
 
-*構文*
+.*構文*
 ----
 underline
 ----
@@ -363,7 +363,7 @@ underline
 
 ==== extra
 
-*構文*
+.*構文*
 ----
 extra <value>
 
@@ -376,7 +376,7 @@ extra <value>
 
 ==== data
 
-*構文*
+.*構文*
 ----
 data <list>
 
@@ -389,7 +389,7 @@ data <list>
 
 ==== draw
 
-*構文*
+.*構文*
 ----
 draw <commands>
 
@@ -402,7 +402,7 @@ draw <commands>
 
 ==== font
 
-*構文*
+.*構文*
 ----
 font <spec>
 
@@ -417,7 +417,7 @@ NOTE: 他のフォントに関する設定に対して `font` を使用するこ
 
 ==== para
 
-*構文*
+.*構文*
 ----
 para <spec>
 
@@ -432,7 +432,7 @@ NOTE: 他のparaに関する設定に対して `para` を使用することが�
 
 ==== wrap
 
-*構文*
+.*構文*
 ----
 wrap
 ----
@@ -444,7 +444,7 @@ wrap
 
 ==== no-wrap
 
-*構文*
+.*構文*
 ----
 no-wrap
 ----
@@ -455,7 +455,7 @@ no-wrap
 
 ==== font-size
 
-*構文*
+.*構文*
 ----
 font-size <pt>
 
@@ -468,7 +468,7 @@ font-size <pt>
 
 ==== font-color
 
-*構文*
+.*構文*
 ----
 font-color <value>
 
@@ -481,7 +481,7 @@ font-color <value>
 
 ==== font-name
 
-*構文*
+.*構文*
 ----
 font-name <name>
 
@@ -496,7 +496,7 @@ font-name <name>
 
 このキーワードはフェイスのオプションとしてもグローバルコンテキストのキーワードとしても使用できます。任意の数の `react` インスタンスを使用できます。
 
-*構文*
+.*構文*
 ----
 react [<body>]
 react later [<body>]
@@ -514,7 +514,7 @@ NOTE:
 
 ==== loose
 
-*構文*
+.*構文*
 ----
 loose
 ----
@@ -525,7 +525,7 @@ loose
 
 ==== all-over
 
-*構文*
+.*構文*
 ----
 all-over
 ----
@@ -536,7 +536,7 @@ all-over
 
 ==== hidden
 
-*構文*
+.*構文*
 ----
 hidden
 ----
@@ -547,7 +547,7 @@ hidden
 
 ==== disabled
 
-*構文*
+.*構文*
 ----
 disabled
 ----
@@ -558,7 +558,7 @@ disabled
 
 ==== select
 
-*構文*
+.*構文*
 ----
 select <index>
 
@@ -571,7 +571,7 @@ select <index>
 
 ==== focus
 
-*構文*
+.*構文*
 ----
 focus
 ---- 
@@ -581,7 +581,7 @@ focus
 
 ==== hint
 
-*構文*
+.*構文*
 ----
 hint <message>
 
@@ -594,7 +594,7 @@ hint <message>
 
 ==== rate
 
-*構文*
+.*構文*
 ----
 rate <value>
 rate <value> now
@@ -608,7 +608,7 @@ rate <value> now
 
 ==== default
 
-*構文*
+.*構文*
 ----
 default <value>
 
@@ -622,7 +622,7 @@ NOTE: 現在のところ `text` と `field` フェイスでのみ使用されて
 
 
 
-=== Datatypes 
+=== データ型 
 
 キーワードに加え、以下のデータ型のリテラル値をフェイスの設定値として渡すことができます。
 
@@ -643,11 +643,11 @@ NOTE: 現在のところ `text` と `field` フェイスでのみ使用されて
 |char!| _（将来のために予約されています）_
 |===
 
-=== Actors 
+=== アクター 
 
 アクターはリテラルブロック値かブロック値によって結び付けられるアクターの名前を元にフェイスの変更をフックすることができます。
 
-*構文*
+.*構文*
 ----
 <actor>
 on-<event> <actor>
@@ -668,7 +668,7 @@ func [face [object!] event [event! none!]][...body...]
 アクター名の指定がなくブロックやget-wordが渡された場合、そのフェイスタイプのデフォルトのアクターが https://github.com/red/red/blob/master/modules/view/styles.red[こちら] の定義に従って生成されます。
 
 
-== Panels 
+== パネル 
 
 フェイスをグルーピングしてスタイルをまとめて適用するために、子パネルを定義することが可能です。新しいパネルのサイズは、明示的に指定されていない場合、中身に合うように自動計算されます。
 
@@ -676,7 +676,7 @@ Viewのパネルクラスフェイス型は以下に記載のシンタックス�
 
 === panel 
 
-*構文*
+.*構文*
 ----
 panel <options> [<content>]
 
@@ -693,7 +693,7 @@ panel <options> [<content>]
 
 === group-box 
 
-*構文*
+.*構文*
 ----
 group-box <divider> <options> [<body>]
 
@@ -713,7 +713,7 @@ NOTE: オプションとしてstring!値を渡すと、グループボックス�
 
 === tab-panel 
 
-*構文*
+.*構文*
 ----
 tab-panel <options> [<name> <body>...]
 
@@ -726,11 +726,11 @@ tab-panel <options> [<name> <body>...]
 現在のコンテナ内にタブパネルを構築します。スペックブロックは各タブの名前とコンテンツの記載のペアを含まなければなりません。各タブのボディは新しい子パネルフェイスになり、他のパネルと同様に振る舞います。
 
 
-== Styling 
+== スタイリング 
 
 === style 
 
-*構文*
+.*構文*
 ----
 style <new> <old> <options>
 

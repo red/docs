@@ -91,7 +91,7 @@ red_value redDo(const char* source)
 ----
 文字列として渡されたRedの式を評価し、最後のRedの値を戻り値として返します。
 
-*例*
+.*例*
 ----
 redDo("a: 123");
 
@@ -108,7 +108,7 @@ red_value redDoFile(const char* filename)
 ----
 _filename_ で指定されたRedのスクリプトをロード、評価し、最後の値を返します。 _filename_ はRedのOS非依存の規約（基本的にはUnixスタイルです）を使用してフォーマットされます。
 
-*例*
+.*例*
 ----
 redDoFile("hello.red");
 redDoFile("/c/dev/red/demo.red");
@@ -120,7 +120,7 @@ red_value redDoBlock(red_block code)
 ----
 引数のブロックを評価し、最後の値を返します。
 
-*例*
+.*例*
 ----
 redDoBlock(redBlock(redWord("print"), redInteger(42)));
 ----
@@ -131,7 +131,7 @@ red_value redCall(red_word name, ..., red_integer 0)
 ----
 _name_ wordで指定されたRedの関数（any-function!型）を実行します。任意の数の（Redの値の）引数を渡すことができ、関数の最後の値を返します。引数の終わりを示すため、「null」か「0」で *終わらなければなりません。* 
 
-*例*
+.*例*
 ----
 redCall(redWord("random"), redInteger(6));     // 1から6の間のランダムなinteger!の値を返します。
 ----
@@ -146,7 +146,7 @@ red_value redRoutine(red_word name, const char* spec, void* func_ptr)
 ----
 _name_ で指定された名前と、 _spec_ をスペックブロック、 _func-ptr_ で指定されたCの関数ポインタをボディとして、新しいRedのroutineを定義します。指定するCの関数は *Redの値を返さなければなりません*（戻り値が使われないことを示すために「redUnset()」を使うこともできます）。
 
-*例*
+.*例*
 ----
 #include "red.h"
 #include <stdio.h>
@@ -172,7 +172,7 @@ long redSymbol(const char* word)
 ----
 （Cのstringとして与えられた）ロードされた _word_ に関連づけられたシンボルIDを返します。このIDはwordの値のの代わりにシンボルIDを必要とする他のlibRed API関数に渡すことができます。
 
-*例*
+.*例*
 ----
 long a = redSymbol("a");
 redSet(a, redInteger(42));
@@ -267,7 +267,7 @@ red_block redBlock(red_value v,...)
 
 引数のリストから新しいblock!のseriesを返します。リストは終わりを示すため、「null」か「0」で *終わらなければなりません。*
 
-*例*
+.*例*
 ----
 redBlock(0);                                  // 空のblockを生成
 redBlock(redInteger(42), redWord("hi"), 0);   // [42 hi] というblockを生成
@@ -280,7 +280,7 @@ red_path redPath(red_value v, ...)
 
 引数のリストから新しいpath!のseriesを返します。リストは終わりを示すため、「null」か「0」で *終わらなければなりません。*
 
-*例*
+.*例*
 ----
 redDo("a: [b 123]");
 long res = redDo(redPath(redWord("a"), redWord("b"), 0);
@@ -294,7 +294,7 @@ red_path redLoadPath(const char* path)
 
 Cの文字列として表現されたパスからpath!のseriesを返します。これにより、ここの要素を個別に生成することなく、簡単にパスを生成できます。
 
-*例*
+.*例*
 ----
 redDo(redLoadPath("a/b"));    // a/bというpath!の値を生成して評価します。
 ----
@@ -306,7 +306,7 @@ red_value redMakeSeries(unsigned long type, unsigned long slots)
 
 _type_ で指定した型の新しいseries!を、 _slots_ で指定した数の要素が入るサイズで生成します。これはseriesを生成する包括的な関数です。typeは `RedType` 列挙体の値のいずれかである必要があります。
 
-*例*
+.*例*
 ----
 redMakeSeries(RED_TYPE_PAREN, 2);  // paren! seriesを生成します。
 
@@ -633,7 +633,7 @@ Function redBlockVB(ParamArray args() As Variant) As Long
 ----
 引数のリストから新しいblock!を生成して返します。引数の数は可変であり、VisualBasicの値だけで構成されている必要があります。
 
-*例*
+.*例*
 ----
 redProbe redBlockVB()              ' 空のブロックを生成します。
 redProbe redBlockVB(42, "hello")   ' [42 "hello"] というブロックを生成します。
@@ -646,7 +646,7 @@ Function redPathVB(ParamArray args() As Variant) As Long
 
 引数のリストから新しいpath!のseriesを返します。引数の数は可変であり、VisualBasicの値だけで構成されている必要があります。
 
-*例*
+.*例*
 ----
 redDo("a: [b 123]")
 res = redDo(redPathVB("a", "b"))
@@ -659,7 +659,7 @@ Function redCallVB(ParamArray args() As Variant) As Long
 ----
 第一引数として渡された文字列で参照される `any-function!` 型のRedの関数に、任意の数の引数を渡して実行します。引数の数は可変であり、VisualBasicの値である必要があります。
 
-*例*
+.*例*
 ----
 redCallVB("random", 6);            ' 1から6までのランダムなinteger!の値を返します。
 ----
