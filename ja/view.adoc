@@ -610,7 +610,7 @@ Notes:
 
 == SHOW関数
 
-*構文*
+.*構文*
 ----
 show <face>
 
@@ -806,7 +806,7 @@ Notes:
 アクターはビューのイベントのためのハンドラ関数です。`actors` ファセットによって参照されるフリーフォームオブジェクト（プロトタイプのないオブジェクト）によって定義されます。全てのアクターのは同じスペックブロックを持ちます。
 
 
-*構文*
+.*構文*
 ----
 on-<event>: func [face [object!] event [event!]]
 
@@ -816,7 +816,7 @@ event   : イベントの値
 ----
 GUIイベントに加え、フェイスが初めて表示される時に、システムリソースが確保される直前に呼ばれる、 `on-create` アクターを定義することも可能です。他のアクターと異なり、 `on-create` アクターの引数は１つだけで `face` を受け取ります。
 
-*返り値*
+.*返り値*
 ----
 'stop : イベントループを終了します。
 'done : 次のフェイスにイベントが流れることを停止させます。
@@ -856,7 +856,7 @@ Notes:
 
 ==== insert-event-func
 
-*構文*
+.*構文*
 ----
 insert-event-func <handler>
 
@@ -864,7 +864,7 @@ insert-event-func <handler>
 
 ハンドラ関数のスペックは次のようになります： func [face [object!] event [event!]]
 ----    
-*返り値*
+.*返り値*
 ----
 新しく追加されたハンドラ関数（function!）
 ----    
@@ -882,7 +882,7 @@ insert-event-func <handler>
 
 ==== remove-event-func
 
-*構文*
+.*構文*
 ----
 remove-event-func <handler>
 
