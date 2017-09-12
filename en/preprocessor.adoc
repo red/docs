@@ -253,7 +253,7 @@ Red []
 print #switch config/OS [
     Windows ["Windows"]
     Linux   ["Unix"]
-    MacOSX  ["macOS"]
+    macOS   ["macOS"]
 ]
 ----   
 will result in the following code if run on Windows:
