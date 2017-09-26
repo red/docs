@@ -203,7 +203,7 @@ do <body>
 ----
 *Description*
 
-Evaluates a block of regular Red code, for last-minute initialization needs. `self` keyword can be used to refer to the container face (window or panel).
+Evaluates a block of regular Red code, for last-minute initialization needs. The body block is bound to the container face (window or panel), so direct access to container's facet is possible. The container itself can be referred to using the `self` keyword.
 
 == Additional styles
 
@@ -366,13 +366,13 @@ Sets the face's text style to `underline`.
 
 *Syntax*
 ----
-extra <value>
+extra <expr>
 
-<value> : any value (any-type!).
+<expr> : any value (any-type!).
 ----
 *Description*
 
-Sets the face's `extra` facet to a new value.
+Sets the face's `extra` facet to a value (can be the result of a Red expression).
 
 
 ==== data
@@ -381,7 +381,7 @@ Sets the face's `extra` facet to a new value.
 ----
 data <list>
 
-<list> : list of items (block!).
+<list> : literal list of items or a Red expression (block!).
 ----
 *Description*
 
@@ -394,7 +394,7 @@ Sets the face's `data` facet to a list of values. Format of the list depends on 
 ----
 draw <commands>
 
-<commands> : list commands (block!).
+<commands> : literal list commands or Red expression (block!).
 ---- 
 *Description*
 
@@ -621,7 +621,17 @@ Defines a default value for `data` facet when the conversion of `text` facet ret
 
 NOTE: currently used only by `text` and `field` face types.
 
+==== with
 
+*Syntax*
+----
+with <body>
+
+<body>: a Red block of code bound to the current face (block!).
+----
+*Description*
+
+Evaluates a block of Red code bound to the currently defined face. Allows directly setting the face fields, overriding other VID options.
 
 === Datatypes 
 
