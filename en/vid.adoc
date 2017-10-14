@@ -79,7 +79,7 @@ backdrop <color>
 
 Sets the background color of the container face.
 
-=== actors
+=== Actors definition
 
 Container's actors can be also be defined in this code area. See <<Actors>> section for defining actors.
 
