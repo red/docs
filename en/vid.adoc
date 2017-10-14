@@ -79,6 +79,10 @@ backdrop <color>
 
 Sets the background color of the container face.
 
+=== actors
+
+Container's actors can be also be defined in this code area. See <<Actors>> section for defining actors.
+
 == Layout 
 
 By default, VID places the faces in the container face according to simple rules:
