@@ -70,7 +70,7 @@ void redOpen(void)
 ----
 Initializes a new Red runtime library session. This function _must_ be called before calling any other API function. It is safe to call it several times in the same process, only one session will be opened anyway.
 
-Note: If another function is called before `redOpen`, the return value of that function will be `-2`, indicating an illegal access attempt.
+NOTE: If another function is called before `redOpen`, the return value of that function will be `-2`, indicating an illegal access attempt.
 
 ==== redClose()
 ----
@@ -500,7 +500,7 @@ Returns the _value_ referenced by the _path_.
 
 When multiple setting/getting accesses are needed on an object's fields, using the object value directly instead of building paths is simpler and preferable. The following two functions are tailored for such access.
 
-Note: these accessors can work with any other associated array types, not just `object!`. So passing a `map!` is allowed too.
+NOTE: These accessors can work with any other associated array types, not just `object!`. So passing a `map!` is allowed too.
 
 ==== redSetField()
 ----
