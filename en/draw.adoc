@@ -290,7 +290,7 @@ pen diamond <color1> <offset> ... <colorN> <offset> <upper> <lower> <focal> <spr
 
 Sets a diamond-shaped gradient to be used for drawing operations. The following values are accepted for the spread method: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
 
-The diamond gradient will be painted from focal point to the edge of a rectangle defined by upper and lower. The start color will be painted in focal point and the end color will be painted in the edge of the circle.
+The diamond gradient will be painted from focal point to the edge of a rectangle defined by upper and lower. The start color will be painted in focal point and the end color will be painted in the edge of the diamond.
 
 ==== Pattern pen
 
@@ -408,7 +408,7 @@ fill-pen diamond <color1> <offset> ... <colorN> <offset> <upper> <lower> <focal>
 
 Sets a diamond-shaped gradient to be used for filling operations. The following values are accepted for the spread method: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
 
-The diamond gradient will be painted from focal point to the edge of a rectangle defined by upper and lower. The start color will be painted in focal point and the end color will be painted in the edge of the circle.
+The diamond gradient will be painted from focal point to the edge of a rectangle defined by upper and lower. The start color will be painted in focal point and the end color will be painted in the edge of the diamond.
 
 ==== Pattern fill
 
@@ -778,7 +778,7 @@ Draws a line between two points. If more points are specified, additional lines 
 
 <end>      : arc's end point (pair!).
 <radius-x> : radius of the circle along x axis (integer! float!).
-<radius-y> : x coordinate of radius of the circle (integer! float!).
+<radius-y> : radius of the circle along y axis (integer! float!).
 <angle>    : angle between the starting and ending points of the arc in degrees (integer! float!).
 sweep      : (optional) draw the arc in the positive angle direction.
 large      : (optional) produces an inflated arc (goes with 'sweep option).
@@ -844,7 +844,7 @@ Draws a quadratic Bezier curve from a sequence of points, starting from the curr
 
 Draws a smooth quadratic Bezier curve from the current pen position to the specified point.
 
-NOTE: See See: http://www.w3.org/TR/SVG11/paths.html
+NOTE: See: http://www.w3.org/TR/SVG11/paths.html
 
 === Hline
 
