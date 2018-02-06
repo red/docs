@@ -1,0 +1,444 @@
+= 编码风格指南
+:toc:
+:toc-title: 目录
+:numbered:
+
+== 引言
+
+Red 是一种同像性语言，代码被表示为数据。这个特性导致了这个语言几乎完全是自由格式的，这是为了应对所有可能用于格式化数据的方式，同时有足够的灵活性来满足 DSL 特定的格式化需求。以下内容只是格式化 Red 代码的__许许多多的方法中的一种而已__。
+
+本文档描述了__Red 源代码中使用的官方编码风格__，因此，尊重此编码风格是每个提交到 `red/red` Github 仓库的拉取请求的前提。
+
+由于 Red/System 是 Red 的一种方言，它们共享相同的语法和编码风格规定，特定的 Red/System 规定也会被同样地记录。
+
+以下规定的目标是把可读性最大化，这包括在屏幕上保持最佳数量的可见代码行，同时把对注释的需求最小化。
+
+== 代码行长度
+
+对于单行代码，没有严格定义的最大列数，因为它会根据使用的字体类型（大小、比例或等宽）或高亮效果而有所不同。长度要应能在最多占 1080p 显示屏一半宽度的编辑器中阅读全部代码（不包括注释）。在我们用于为 Red 代码库编码的显示器上，它大约是 100 列。在下面的描述中，__过多的长度__或__太长__的表达将指的是不符合上述准则的代码行大小。
+
+== 缩进
+
+Red 代码库使用大小为 **4** 列的制表符来缩进源码，这是太小的值（如 2 列）和太大的值（如 8 列）之间的良好折衷。使用制表符也意味着你可以在你的编辑器中根据个人偏好来调整它，同时能遵守规定（这样做只需注意用制表符正确地对齐它）。
+
+所有贡献到 `red/red` 仓库的 Red 文件应该要在其首部中包含以下字段：
+
+[source, red]
+----
+Tabs: 4
+----
+
+每次输入一个区块或圆块的左括号并切换到新行后，你应该要用一个制表符进行缩进。
+
+*正确*
+
+[source, red]
+----
+func [
+    arg1
+    arg2
+    ...
+][
+    print arg1
+    ...
+]
+----
+
+不正确
+
+[source, red]
+---- 
+func [
+arg1					;-- 缺了缩进！
+arg2
+...
+][
+		print arg1		;-- 过多的缩进！
+		...
+]
+----
+
+== 区块布局
+
+所有以下规定适用于区块 `[]` 以及圆块 `()`。
+
+空块不包含任何空格：
+
+[source, red]
+----
+a: []
+----
+
+相邻的区块不需要在一个区块的结束和另一个区块的开始之间加空格：
+
+[source, red]
+----
+[][]
+[]()
+
+[
+    hello
+][						;-- 不需要空格
+    world
+]
+----
+
+不过，在嵌套于区块中的区块之间使用空格是可以接受的：
+
+[source, red]
+----
+array: [[] [] [] []]
+list:  [ [] [] [] [] ]
+
+either a = 1 [["hello"]][["world"]]
+either a = 1 [ ["hello"] ][ ["world"] ]
+----
+
+对于包含小区块的表达式，它们通常起始并结束在同一行上。
+
+[source, red]
+----
+b: either a = 1 [a + 1][3]
+----
+
+如果行太长，则该区块应该要包裹好几行，并使用一个层次的缩进：
+
+*正确*
+
+[source, red]
+----
+b: either a = 1 [
+    a + 1
+][
+    123 + length? mold a
+]
+----
+
+不正确
+
+[source, red]
+----
+b: either a = 1 
+    [a + 1][123 + length? mold a]
+----
+
+__这种风格是错误的，因为它破坏了能将代码复制/粘贴到 Red 控制台的能力（`either` 会在检测到区块参数之前被求值）。__
+
+如果第一个区块足够小，恰好能放在同一行，则只有后续的区块要包裹好几行：
+
+[source, red]
+----
+print either a = 1 ["hello"][
+    append mold a "this is a very long expression"
+]
+
+while [not tail? series][
+    print series/1
+    series: next series
+]
+----
+
+== 命名惯例
+
+**变量名**应为单个单词的**名词**。要选择又简短又尽可能地符合用意的单词。应该要优先使用常用的单词（__尤其是如果它们已经在现有的 Red 源代码的同一语境中使用过的话__）。如果有需要的话，使用link:http://www.thesaurus.com/browse/synonym[近义词词典]去找符合其用途的最好的单词。应尽可能避免单字母或缩写词（除非这个缩写词很常用）。
+
+由多个单词组成的名称用小横杠 `-` 字符分隔。只有在找不到合适的单个单词时，或者会跟已经用过单词混淆时，才会使用两个单词的名称。应只在极少数情况下使用由两个以上的单词组成的变量名称。尽可能多地使用单个单词会使得代码在水平方向上更加紧凑，大大提高可读性。避免无用的冗长名称。
+
+*正确*
+
+[source, red]
+----
+code: 123456
+name: "John"
+table: [2 6 8 4 3]
+lost-items: []
+
+unless tail? list [author: select list index]
+----
+
+不正确
+
+[source, red]
+----
+code_for_article: 123456
+Mytable: [2 6 8 4 3]
+lostItems: []
+
+unless tail? list-of-books [author-property: select list-of-books selected-index]
+----
+
+**函数名称**应该力求取为单个单词的__动词__，以表达一个动作，虽然通常需要两个或三个单词的名字。应尽可能避免超过三个单词。变量命名惯例也适用于函数名称。一个名词或形容词，后跟一个问号也可以接受。它常表示返回值是 `logic!` 类型，但这并不是严格的规定，因为它可以便利地构成用于检索属性的单个单词的动作名称（例如 `length?`、`index?`）。当用两个或多个单词构成函数名称时，要始终将动词放在第一个位置。如果为变量和函数仔细挑选了名称，则代码会变得几乎自己就像是文档，这常常会减少对注释的需要。
+
+*正确*
+
+[source, red]
+----
+make:   func [...
+reduce: func [...
+allow:  func [...
+crunch: func [...
+----
+
+不正确
+
+[source, red]
+----
+length:    func [...
+future:    func [...
+position:  func [...
+blue-fill: func [...		;-- 应为 fill-blue
+----
+
+对于那些适用于操作系统或非 Red 第三方 API 名称的命名规则是例外。为了使 API 特定的函数和结构体字段名称易于识别，应使用其原始名称。这有助于从视觉上把这种被导入的名称跟常规 Red 或 Red/System 代码区分开来。例如：
+
+[source,Red]
+----
+tagMSG: alias struct! [
+    hWnd   [handle!]
+    msg    [integer!]
+    wParam [integer!]
+    lParam [integer!]
+    time   [integer!]
+    x      [integer!]
+    y      [integer!]	
+ ]
+
+#import [
+    "User32.dll" stdcall [
+        CreateWindowEx: "CreateWindowExW" [
+            dwExStyle    [integer!]
+            lpClassName  [c-string!]
+            lpWindowName [c-string!]
+            dwStyle      [integer!]
+            x            [integer!]
+            y            [integer!]
+            nWidth       [integer!]
+            nHeight      [integer!]
+            hWndParent   [handle!]
+            hMenu        [handle!]
+            hInstance    [handle!]
+            lpParam      [int-ptr!]
+            return:      [handle!]
+        ]
+    ]
+]
+----
+
+== 大小写
+
+默认情况下，所有变量和函数名称都应为小写，除非有很好的理由使用大写字母，例如：
+
+* 名字是缩写，例如 GMT（格林威治标准时间）
+* 名称是跟操作系统或（非 Red 的）第三方 API 相关的
+
+== 宏（Red/System） anchor:macros-redsystem[]
+
+用相同的命名惯例来取 Red/System 的宏名称。一般来说宏使用大写字母作为名称，这是能从视觉上轻松地把它们跟其余代码区分开来的一种方法（除非明确的目的是使其看起来像常规代码，如伪自定义数据类型定义）。当使用多个单词时，它们由下划线 `_` 字符分隔，以增加甚至与常规代码更大的差异。
+
+__（待办：提取 Red 代码库中使用的所有单个单词的名称作为示例）__
+
+== 函数定义
+
+一般的规定是将规格区块保持在一行之内，主体区块可以在同一行或跨越多行。在 Red/System 的情况下，由于定义块往往更长，大多数函数定义块都会包裹好几行，所以为了视觉上的一致性，通常甚至很小的规格区块都是多行的。
+
+*正确*
+
+[source,Red]
+----
+do-nothing: func [][]
+increment: func [n [integer!]][n + 1]
+
+increment: func [n [integer!]][
+   n + 1
+]
+
+increment: func [
+    n [integer!]
+][
+    n + 1
+]
+----
+
+*不正确*
+
+[source,Red]
+----
+do-nothing: func [
+][
+]
+
+do-nothing: func [
+
+][
+
+]
+
+increment: func [
+    n [integer!]
+][n + 1]
+----
+
+当规格区块太长时，它应该要包裹好几行。当写规格区块时，每个类型定义必须与其参数放在同一行上。可选特性区块应该放在它自己的行上。每个修饰词新起一行。如果后跟一个参数，则该参数可以放在同一行或具有缩进的新行上（只要跟同一规格区块中的其他修饰词一致就行）。对于 `/local` 修饰词，如果局部单词后面没有跟着类型标注，则可以将它们放在同一行上。
+
+当把规格区块包裹了好几行时，建议将连续的参数的数据类型定义对齐在同一列上，以便于阅读。这种对齐最好使用制表符（如果你严格遵循这些编码风格规则）或其他的，如空格。
+
+*正确*
+
+[source, red]
+----
+make-world: func [
+    earth	 [word!]
+    wind 	 [bitset!]
+    fire	 [binary!]
+    water	 [string!]
+    /with
+        thunder [url!]
+    /only
+    /into
+        space   [block! none!]
+    /local
+ plants animals men women computers robots
+][
+    ...
+]
+----
+
+*不正确*
+
+[source, red]
+----
+ make-world: func [
+  	[throw] earth [word!]		;-- 特性区块没有放在它自己的行上
+    	wind	[bitset!]
+    	fire [binary!]			;-- 没有对齐的类型定义
+    	water	[string!]
+    	/with
+            thunder [url!]
+    	/only
+    	/into space [block! none!]	;-- 与 /with 的格式不一致
+    	/local
+    	    plants animals		;-- 太早换行
+    	    men women computers robots
+][
+	...
+]
+----
+
+对于文档字符串，如果规格区块是多行的，主要的文档字符串（描述该函数的）应该放在它自己所在的行上。参数和修饰词的文档字符串应与其描述的项目放在同一行上。文档字符串以大写字母起始，不需要写结束的句号（当通过 `help` 函数打印在屏幕上时它会自动被添加）。
+
+*正确*
+
+[source, red]
+----
+ increment: func ["向参数值加 1" n][n + 1]
+
+ make-world: func [
+     earth    [word!]      "第一个元素"
+     wind     [bitset!]    "第二个元素"
+     fire     [binary!]    "第三个元素"
+     water    [string!]
+     /with 		   "附加的元素"
+         thunder [url!]
+     /only		   "还没实现"
+     /into		   "提供了一个容器"
+         space [unset!]    "容器"
+     /local
+         plants animals men women computers robots
+ ][
+	...
+ ]
+----
+
+*不正确*
+
+[source, red]
+----
+ make-world: func ["构建一个新世界"  ;-- 应要放在新行上
+     earth  [word!]     "第一个元素"
+     wind   [bitset!]     "第二个元素" ;-- 过多的缩进
+     fire   [binary!]
+     "第三个元素"          ;-- 应跟 `fire` 放在同一行上
+     water  [string!]
+     /with          "附加的元素"
+            thunder [url!]
+     /only "还没实现"    ;-- 应跟其他文档字符串对齐
+     /into
+           "提供了一个容器"      ;-- 应跟在该修饰词之后
+            space [unset!]  "容器"
+     /local
+         plants animals men women computers robots
+ ][
+    	...
+ ]
+----
+
+== 函数调用
+
+参数跟在函数调用的后面，并在同一行上。如果行变得太长，则可以使用一个缩进将参数包裹在好几行（每行一个参数）中。
+
+*正确*
+
+[source, red]
+----
+foo arg1 arg2 arg3 arg4 arg5
+
+process-many
+    argument1
+    argument2
+    argument3
+    argument4
+    argument5
+----
+
+*不正确*
+
+[source, red]
+----
+foo arg1 arg2 arg3
+    arg4 arg5
+
+foo
+    arg1 arg2 arg3
+    arg4 arg5
+
+process-many
+    argument1
+        argument2
+            argument3
+                argument4
+                    argument5
+----
+
+对于具有许多嵌套部分的很长的表达式，认出每个表达式的边界有时会很困难。使用圆块将嵌套的调用与其参数进行组合在一起是可以接受的（但不是强制性的）。
+
+[source, red]
+----
+head insert (copy/part [1 2 3 4] 2) (length? mold (2 + index? find "Hello" #"o"))
+
+head insert 
+    copy/part [1 2 3 4] 2
+    length? mold (2 + index? find "Hello" #"o")
+----
+
+== 注释
+
+在 Red 代码库中：
+
+* 注释使用 `;--` 前缀（更强的视觉提示）
+* 单行注释从第 57 列开始（平均来说是最好的，或者 53 列也可以）
+* 多行注释使用多个单行前缀而不用 `comment {...}` 构造。
+
+一般的规定是将注释放在跟相应代码开头相同的行上而不放在新行上，以显著节省垂直上的空间。不过，如果这个注释是用来把代码分割为一块一块的，那么把它放在新行上也可以。
+
+== 字符串语法
+
+对于单行字符串使用 `""`，把 `{}` 格式保留用于多行字符串。尊重这个规定可以确保：
+
+* 代码 `load` 前后的源码表示更为一致
+* 更好地传达意图
+
+规定的一个例外是当单行字符串包含 " 字符本身的时候。在这种情况下，最好使用 `{}` 形式，而不用转义引号 `^"`，因为它可读性更高。
+
+== 新行用法
+
+待办
