@@ -75,7 +75,7 @@ Red/View (或称 View) 组件是 Red 编程语言的图形系统，其设计目�
 创建新的元件要通过拷贝 `face!` 对象，并**至少**提供一个有效的 `type` 名称来达成。
 
 [source, red]
-    button: make face! [type: 'button]
+button: make face! [type: 'button]
 
 一旦元件被创建，其 `type` 字段就不允许再被更改。
 
@@ -261,7 +261,7 @@ __该元件类型应该被用于所有的自定义图形组件的实现。__
 |特征  | 描述
 |`type`| `'radio`
 |`text`| 标签文本。
-|`para`| `align` 字段控制该文本是靠 `left` 边显示还是靠 `right` 边显示。
+|`para`| `align` 字段控制该文本是靠左边（`left`）显示还是靠右边（`right`）显示。
 |`data`| `true`：被选中的；`false`；未被选中的（默认）。
 |===
 
@@ -282,7 +282,7 @@ __该元件类型应该被用于所有的自定义图形组件的实现。__
 |`text`   | 输入文本；为可读/写值。
 |`data`   | 以文本显示的值。
 |`options`| 支持的字段：`default`。
-|`flags`  | 开启/关闭某些特殊的文本域特性（block!）。
+|`flags`  | 开启/关闭某些特殊的文本域特性（`block!`）。
 |===
 
 **支持的 `flags`：**
@@ -321,7 +321,7 @@ __该元件类型应该被用于所有的自定义图形组件的实现。__
 |特征   | 描述
 |`type` | `'area`
 |`text` | 输入文本；为可读/写值。
-|`flags`| 开启/关闭某些特殊的文本区域特性（block!）。
+|`flags`| 开启/关闭某些特殊的文本区域特性（`block!`）。
 |===
 
 **支持的 `flags`：**
@@ -349,7 +349,7 @@ __该元件类型应该被用于所有的自定义图形组件的实现。__
 |===
 |特征      | 描述
 |`type`    | `'text-list`
-|`data`    | 要显示的字符串列表（block! hash!）。
+|`data`    | 要显示的字符串列表（`block!` `hash!`）。
 |`selected`| 选定的字符串的索引，或若未选择，则为无值。（可读/写）
 |===
 
@@ -737,7 +737,7 @@ view [
 |`window`   | 发生该事件的窗口元件（`object!`）。
 |`offset`   | 当该事件发生时鼠标指针相对于该元件对象的偏移量（`pair!`）。对于手势事件，返回中点的坐标。
 |`key`      | 按的键（`char!` `word!`）。
-|`picked`   | 在元件中选择的新项目（`integer!` `percent!`）。对于 `wheel` 事件，它返回滚动的步数。整数表示滚轮向前滚，朝远离用户的方向；负数表示滚轮向后滚，朝着用户的方向。对于 `menu` 事件，它返回对应的菜单 ID（`word!`）。对于缩放手势，它返回百分数值，表示相对增加量/减少量。对于其他手势，它的值当前是依赖于系统的（Windows：`ullArguments`，来自link:https://msdn.microsoft.com/en-us/library/windows/desktop/dd353232(v=vs.85).aspx[GESTUREINFO]的字段).
+|`picked`   | 在元件中选择的新项目（`integer!` `percent!`）。对于 `wheel` 事件，它返回滚动的步数。整数表示滚轮向前滚，朝远离用户的方向；负数表示滚轮向后滚，朝着用户的方向。对于 `menu` 事件，它返回对应的菜单 ID（`word!`）。对于缩放手势，它返回百分数值，表示相对增加量/减少量。对于其他手势，它的值当前是依赖于系统的（Windows：`ullArguments`，来自 link:https://msdn.microsoft.com/en-us/library/windows/desktop/dd353232(v=vs.85).aspx[GESTUREINFO] 的字段).
 |`flags`    | 返回内含一个或多个标记的列表（参照下面的清单）（`block!`）。
 |`away?`    | 如果鼠标指针移出该元件的边界，则返回 `true`（`logic!`）。只当 `over` 事件激活的时候生效。
 |`down?`    | 如果鼠标左键是按下的，则返回 `true`（`logic!`）。
