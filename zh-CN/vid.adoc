@@ -479,7 +479,7 @@ font <spec>
 
 *描述*
 
-将该元件的 `font` 特征设置为新的 `font!` 对象。关于 `font!` 对象的描述在link:view.adoc#_font_object[这里]。
+将该元件的 `font` 特征设置为新的 `font!` 对象。关于 `font!` 对象的描述在link:view.adoc#font-object[这里]。
 
 [NOTE, caption=注意]
 ====
@@ -499,7 +499,7 @@ para <spec>
 
 *描述*
 
-将该元件的 `para` 特征设置为新的 `para!` 对象。关于 `para!` 对象的描述在link:view.adoc#_para_object[这里]。
+将该元件的 `para` 特征设置为新的 `para!` 对象。关于 `para!` 对象的描述在link:view.adoc#para-object[这里]。
 
 [NOTE, caption=注意]
 ====

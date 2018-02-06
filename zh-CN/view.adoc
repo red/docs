@@ -89,6 +89,7 @@ button: make face! [type: 'button]
 |`drag&#8209;on`| 可以是其中之一：`'down`、`'mid-down`、`'alt-down`、`'aux-down`。用于启用拖拽操作。
 |===
 
+[#font-object]
 == `font` 对象
 
 `font` 对象是 `font!` 模板对象的拷贝。一个 `font` 对象可以被一个或多个 `face` 引用，这使从单个地方控制一组 `face` 的 `font` 属性成为可能。
@@ -126,6 +127,7 @@ button: make face! [type: 'button]
 * 激活/非激活（`anti-alias?: yes/no`）
 * ClearType 模式（`anti-alias?: 'ClearType`）
 
+[#para-object]
 == `para` 对象
 
 `para` 对象是 `para!` 模板对象的拷贝。一个 `para` 对象可以被一个或多个 `face` 引用，这使从单个地方控制一组 `face` 的 `para` 属性成为可能。
