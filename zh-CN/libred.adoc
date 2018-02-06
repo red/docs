@@ -65,7 +65,7 @@ for(i = 0; i < 100, i++) {
 
 == C API
 
-C API 可以用在 C/C++ 应用程序中，也可以集成 Red 到任何其它有与 C 兼容的link:https://en.wikipedia.org/wiki/Foreign_function_interface[外部函数接口（FFI）]的编程语言中。
+C API 可以用在 C/C++ 应用程序中，也可以集成 Red 到任何其它有与 C 兼容的link:https://en.wikipedia.org/wiki/Foreign_function_interface[外部函数接口]的编程语言中。
 
 === 管理库
 
