@@ -6,7 +6,7 @@
 
 == 概念
 
-Red 在 0.6.0 版本引入"`响应式编程`"，以帮助减少 Red 程序的大小和复杂度。Red 响应模型依赖于数据流和对象事件，以构造一个有向图并在传播对象的变化。它使用一种"`推送`"模型，更准确地说，Red 实现了link:https://en.wikipedia.org/wiki/Reactive_programming#Object-oriented[对象响应式编程]模型，仅对象的字段是变化的来源。
+Red 在 0.6.0 版本引入 "`响应式编程`"，以帮助减少 Red 程序的大小和复杂度。Red 响应模型依赖于数据流和对象事件，以构造一个有向图并在传播对象的变化。它使用一种"`推送`"模型，更准确地说，Red 实现了link:https://en.wikipedia.org/wiki/Reactive_programming#Object-oriented[对象响应式编程]模型，仅对象的字段是变化的来源。
 
 尽管描述很抽象，但响应式 API 及其用途是简单而实用的。下面是一些能帮助你具象化响应关系的图表。
 
