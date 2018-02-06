@@ -1,0 +1,27 @@
+/* CSS for website */
+
+.ulist ul {
+	line-height: 1.3em;
+}
+
+.ulist p.comments-section {
+	margin-bottom: .7em;
+	line-height: 1.3em;
+}
+
+table.tableblock > tbody > tr > td:first-child {
+	font-weight: bold;
+}
+
+p.tableblock {
+	margin-bottom: 0px;
+}
+
+p.tableblock code {
+	font-size: 1em;
+	background-color: transparent;
+}
+
+div.content pre {
+	padding-left: 2em;
+}
