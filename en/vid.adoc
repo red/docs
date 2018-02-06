@@ -44,11 +44,13 @@ NOTE: `react` keyword can also be used at the container settings level in additi
 === title
 
 *Syntax*
+
 ----
 title <text>
 
 <text> : title text (string!).
 ----
+
 *Description*
 
 Sets the title text of the container face.
@@ -57,11 +59,13 @@ Sets the title text of the container face.
 === size 
 
 *Syntax*
+
 ----
 size <value>
 
 <value> : width and height in pixels (pair!).
 ----
+
 *Description*
 
 Sets the size of the container face. If the size is not explicitly provided, the container's size is automatically calculated to fit its content.
@@ -70,11 +74,13 @@ Sets the size of the container face. If the size is not explicitly provided, the
 === backdrop 
 
 *Syntax*
+
 ----
 backdrop <color>
 
 <color> : name or value of a color (word! tuple! issue!).
 ----
+
 *Description*
 
 Sets the background color of the container face.
@@ -109,11 +115,13 @@ image::below.png[below,align="center"]
 === across 
 
 *Syntax*
+
 ----
 across <alignment>
 
 <alignment> : (optional) possible values: top | middle | bottom.
 ----
+
 *Description*
 
 Sets the layout direction to horizontal, from left to right. An alignment modifier can be optionally provided to change the default (`top`) alignment of faces in the row.
@@ -122,11 +130,13 @@ Sets the layout direction to horizontal, from left to right. An alignment modifi
 === below 
 
 *Syntax*
+
 ----
 below <alignment>
 
 <alignment> : (optional) possible values: left | center | right.
 ----
+
 *Description*
 
 Sets the layout direction to vertical, from top to bottom. An alignment modifier can be optionally provided to change the default (`left`) alignment of faces in the column.
@@ -135,11 +145,13 @@ Sets the layout direction to vertical, from top to bottom. An alignment modifier
 === return 
 
 *Syntax*
+
 ----
 return <alignment>
 
 <alignment> : (optional) possible values: left | center | right | top | middle | bottom.
 ---- 
+
 *Description*
 
 Moves the position to the next row or column of faces, depending on the current layout direction. An alignment modifier can be optionally provided to change the current alignment of faces in the row or column.
@@ -148,11 +160,13 @@ Moves the position to the next row or column of faces, depending on the current 
 === space 
 
 *Syntax*
+
 ----
 space <offset>
 
 <offset> : new spacing value (pair!).
 ----
+
 *Description*
 
 Sets the new spacing offset which will be used for placement of following faces.
@@ -161,11 +175,13 @@ Sets the new spacing offset which will be used for placement of following faces.
 === origin 
 
 *Syntax*
+
 ----
 origin <offset>
 
 <offset> : new origin value (pair!).
 ----
+
 *Description*
 
 Sets the new origin position, relative to container face.
@@ -174,11 +190,13 @@ Sets the new origin position, relative to container face.
 === at
 
 *Syntax*
+
 ----
 at <offset>
 
 <offset> : position of next face (pair!).
 ----
+
 *Description*
 
 Places the next face at an absolute position. This positioning mode only affects the next following face, and does not change the layout flow position. So, the following faces, after the next one, will be placed again in the continuity of the previous ones in the layout flow.
@@ -187,11 +205,13 @@ Places the next face at an absolute position. This positioning mode only affects
 === pad 
 
 *Syntax*
+
 ----
 pad <offset>
 
 <offset> : relative offset (pair!).
 ----
+
 *Description*
 
 Modifies the layout current position by a relative offset. All the following faces on the same row (or column) are affected.
@@ -200,11 +220,13 @@ Modifies the layout current position by a relative offset. All the following fac
 === do 
 
 *Syntax*
+
 ----
 do <body>
 
 <body> : code to evaluate (block!).
 ----
+
 *Description*
 
 Evaluates a block of regular Red code, for last-minute initialization needs. The body block is bound to the container face (window or panel), so direct access to container's facet is possible. The container itself can be referred to using the `self` keyword.
@@ -246,6 +268,7 @@ The `image` style is a `base` type of default size 100x100. It expects an `image
 A face can be inserted in the layout, at the current position, simply by using the name of an existing face type or one of the available styles.
 
 *Syntax*
+
 ----
 <name>: <type> <options>
 
@@ -253,6 +276,7 @@ A face can be inserted in the layout, at the current position, simply by using t
 <type>    : a valid face type or style name (word!).
 <options> : optional list of options.
 ----
+
 If a name is provided, the word will reference the `face!` object created by VID from the face description.
 
 Default values are provided for each face type or style, so a new face can be used without having to specify any option. When options are required, the following sections are describing the different types of accepted options:
@@ -270,9 +294,11 @@ NOTE: `window` cannot be used as a face type.
 ==== left
 
 *Syntax*
+
 ----
 left
 ---- 
+
 *Description*
 
 Aligns the face's text to left side.
@@ -281,9 +307,11 @@ Aligns the face's text to left side.
 ==== center
 
 *Syntax*
+
 ----
 center
 ----
+
 *Description*
 
 Centers the face's text.
@@ -292,9 +320,11 @@ Centers the face's text.
 ==== right
 
 *Syntax*
+
 ----
 right
 ----
+
 *Description*
 
 Aligns the face's text to right side.
@@ -303,9 +333,11 @@ Aligns the face's text to right side.
 ==== top
 
 *Syntax*
+
 ----
 top
 ----
+
 *Description*
 
 Vertically align the face's text to `top`.
@@ -314,9 +346,11 @@ Vertically align the face's text to `top`.
 ==== middle
 
 *Syntax*
+
 ----
 middle
 ----
+
 *Description*
 
 Vertically align the face's text to `middle`.
@@ -325,9 +359,11 @@ Vertically align the face's text to `middle`.
 ==== bottom
 
 *Syntax*
+
 ----
 bottom
 ----
+
 *Description*
 
 Vertically align the face's text to `bottom`.
@@ -336,9 +372,11 @@ Vertically align the face's text to `bottom`.
 ==== bold
 
 *Syntax*
+
 ----
 bold
 ----
+
 *Description*
 
 Sets the face's text style to `bold`.
@@ -347,9 +385,11 @@ Sets the face's text style to `bold`.
 ==== italic
 
 *Syntax*
+
 ----
 italic
 ----
+
 *Description*
 
 Sets the face's text style to `italic`.
@@ -358,9 +398,11 @@ Sets the face's text style to `italic`.
 ==== underline
 
 *Syntax*
+
 ----
 underline
 ----
+
 *Description*
 
 Sets the face's text style to `underline`.
@@ -382,11 +424,13 @@ Sets the face's `extra` facet to a value (can be the result of a Red expression)
 ==== data
 
 *Syntax*
+
 ----
 data <list>
 
 <list> : literal list of items or a Red expression (block!).
 ----
+
 *Description*
 
 Sets the face's `data` facet to a list of values. Format of the list depends on the face type requirements.
@@ -395,27 +439,31 @@ Sets the face's `data` facet to a list of values. Format of the list depends on 
 ==== draw
 
 *Syntax*
+
 ----
 draw <commands>
 
 <commands> : literal list commands or Red expression (block!).
 ---- 
+
 *Description*
 
-Sets the face's `draw` facet to a list of Draw dialect commands. See link:draw.html[Draw dialect documentation] for valid commands.
+Sets the face's `draw` facet to a list of Draw dialect commands. See link:draw.adoc[Draw dialect documentation] for valid commands.
 
 
 ==== font
 
 *Syntax*
+
 ----
 font <spec>
 
 <spec> : a valid font specification (block! object! word!).
 ----
+
 *Description*
 
-Sets the face's `font` facet to a new `font!` object. Font! object is described link:view.html#_font_object[here].
+Sets the face's `font` facet to a new `font!` object. Font! object is described link:view.adoc#_font_object[here].
 
 NOTE: It's possible to use `font` along with other font-related settings, VID will merge them together, giving priority to the last one specified.
 
@@ -423,14 +471,16 @@ NOTE: It's possible to use `font` along with other font-related settings, VID wi
 ==== para
 
 *Syntax*
+
 ----
 para <spec>
 
 <spec> : a valid para specification (block! object! word!).
 ----
+
 *Description*
 
-Sets the face's `para` facet to a new `para!` object. Para! object is described link:view.html#_para_object[here].
+Sets the face's `para` facet to a new `para!` object. Para! object is described link:view.adoc#_para_object[here].
 
 NOTE: It possible to use `para` along with other para-related settings, VID will merge them together, giving priority to the last one specified.
 
@@ -438,6 +488,7 @@ NOTE: It possible to use `para` along with other para-related settings, VID will
 ==== wrap
 
 *Syntax*
+
 ----
 wrap
 ----
@@ -450,9 +501,11 @@ Wrap the face's text when displaying.
 ==== no-wrap
 
 *Syntax*
+
 ----
 no-wrap
 ----
+
 *Description*
 
 Avoid wrapping the face's text when displaying.
@@ -461,11 +514,13 @@ Avoid wrapping the face's text when displaying.
 ==== font-size
 
 *Syntax*
+
 ----
 font-size <pt>
 
 <pt> : font size in points (integer! word!).
 ----
+
 *Description*
 
 Sets the current font size for the face's text.
@@ -474,11 +529,13 @@ Sets the current font size for the face's text.
 ==== font-color
 
 *Syntax*
+
 ----
 font-color <value>
 
 <value> : color of the font (tuple! word! issue!).
 ----
+
 *Description*
 
 Sets the current font color for the face's text.
@@ -487,11 +544,13 @@ Sets the current font color for the face's text.
 ==== font-name
 
 *Syntax*
+
 ----
 font-name <name>
 
 <name> : valid name of an available font (string! word!).
 ----
+
 *Description*
 
 Sets the current font name for the face's text.
@@ -502,27 +561,29 @@ Sets the current font name for the face's text.
 This keyword can be used both as a face option or as a global keyword. Arbitrary number of `react` instances can be used.
 
 *Syntax*
+
 ----
 react [<body>]
 react later [<body>]
 
 <body> : regular Red code (block!).
 ----
+
 *Description*
 
 Creates a new reactor from the body block. When `react` is used as a face option, the body can refer to the current face using `face` word. When `react` is used globally, target faces need to be accessed using a name. The optional `later` keyword skips the first reaction happening immediately after the `body` block is processed.
 
-NOTE:
-
-Reactors are part of the reactive programming support in View, which documentation is pending. In a nutshell, the body block can describe one or more relations between faces properties using paths. Set-path setting a face property are processed as *target* of the reactor (the face to update), while path accessing a face property are processed as *source* of the reactor (a change on a source triggers a refresh of the reactor's code).
+NOTE: Reactors are part of the reactive programming support in View, which documentation is pending. In a nutshell, the body block can describe one or more relations between faces properties using paths. Set-path setting a face property are processed as *target* of the reactor (the face to update), while path accessing a face property are processed as *source* of the reactor (a change on a source triggers a refresh of the reactor's code).
 
 
 ==== loose
 
 *Syntax*
+
 ----
 loose
 ----
+
 *Description*
 
 Enables dragging of the face using the left mouse button.
@@ -531,9 +592,11 @@ Enables dragging of the face using the left mouse button.
 ==== all-over
 
 *Syntax*
+
 ----
 all-over
 ----
+
 *Description*
 
 Sets the face `all-over` flag, allowing all mouse `over` events to be received.
@@ -542,9 +605,11 @@ Sets the face `all-over` flag, allowing all mouse `over` events to be received.
 ==== hidden
 
 *Syntax*
+
 ----
 hidden
 ----
+
 *Description*
 
 Makes the face invisible by default.
@@ -553,9 +618,11 @@ Makes the face invisible by default.
 ==== disabled
 
 *Syntax*
+
 ----
 disabled
 ----
+
 *Description*
 
 Disables the face by default (the face will not process any event until it is enabled).
@@ -564,11 +631,13 @@ Disables the face by default (the face will not process any event until it is en
 ==== select
 
 *Syntax*
+
 ----
 select <index>
 
 <index> : index of selected item (integer!).
 ----
+
 *Description*
 
 Sets the `selected` facet of the current face. Used mostly for lists to indicate which item is pre-selected.
@@ -577,9 +646,11 @@ Sets the `selected` facet of the current face. Used mostly for lists to indicate
 ==== focus
 
 *Syntax*
+
 ----
 focus
 ---- 
+
 *Description*
 
 Gives the focus to the current face when the window is displayed for the first time. Only one face can have the focus. If several `focus` options are used on different faces, only the last one will get the focus.
@@ -587,11 +658,13 @@ Gives the focus to the current face when the window is displayed for the first t
 ==== hint
 
 *Syntax*
+
 ----
 hint <message>
 
 <message> : hint text (string!).
 ---- 
+
 *Description*
 
 Provides a hint message inside `field` faces, when the field's content is empty. That text disappears when any new content is provided (user action or setting the `face/text` facet).
@@ -600,12 +673,14 @@ Provides a hint message inside `field` faces, when the field's content is empty.
 ==== rate
 
 *Syntax*
+
 ----
 rate <value>
 rate <value> now
 
 <value>: duration or frequency (integer! time!).
 ----
+
 *Description*
 
 Sets a timer for the face from a duration (time!) or a frequency (integer!). At each timer's tick, a `time` event will be generated for that face. If `now` option is used, a first time event is generated immediately.
@@ -614,11 +689,13 @@ Sets a timer for the face from a duration (time!) or a frequency (integer!). At 
 ==== default
 
 *Syntax*
+
 ----
 default <value>
 
 <value>: a default value for `data` facet (any-type!).
 ----
+
 *Description*
 
 Defines a default value for `data` facet when the conversion of `text` facet returns `none`. That default value is stored in `options` facet, as a key/value pair.
@@ -628,11 +705,13 @@ NOTE: currently used only by `text` and `field` face types.
 ==== with
 
 *Syntax*
+
 ----
 with <body>
 
-<body>: a Red block of code bound to the current face (block!).
+<body>: a block of Red code bound to the current face (block!).
 ----
+
 *Description*
 
 Evaluates a block of Red code bound to the currently defined face. Allows directly setting the face fields, overriding other VID options.
@@ -663,6 +742,7 @@ In addition to keywords, it is allowed to pass settings to faces using literal v
 An actor can be hooked to a face by specifying a literal block value or an actor name followed by a block value.
 
 *Syntax*
+
 ----
 <actor>
 on-<event> <actor>
@@ -670,15 +750,18 @@ on-<event> <actor>
 <actor> : actor's body block or actor reference (block! get-word!).
 <event> : valid event name (word!). 
 ----
+
 *Description*
 
 It is possible to specify actors in a simplified way by providing just the body block of the actor, the spec block being implicit. The actor function gets constructed then and added to the face's `actor` facet. Several actors can be specified that way.
 
 The created actor function full specification is:
+
 ----
 func [face [object!] event [event! none!]][...body...]
 ----
-The valid list of event names can be found link:view.html#_actors[here].
+
+The valid list of event names can be found link:view.adoc#_actors[here].
 
 When a block or a get-word is passed without any actor name prefix, the default actor for the face type is created according to the definitions https://github.com/red/red/blob/master/modules/view/styles.red[here].
 
@@ -692,12 +775,14 @@ The panel-class face types from View are supported in VID with a specific syntax
 === panel 
 
 *Syntax*
+
 ----
 panel <options> [<content>]
 
 <options> : optional list of settings for the panel.
 <content> : panel's VID content description (block!).
 ----
+
 *Description*
 
 Constructs a child panel inside the current container, where the content is another VID block. In addition to other face options, an integer divider option can be provided, setting a grid-mode layout:
@@ -710,6 +795,7 @@ Constructs a child panel inside the current container, where the content is anot
 === group-box 
 
 *Syntax*
+
 ----
 group-box <divider> <options> [<body>]
 
@@ -717,6 +803,7 @@ group-box <divider> <options> [<body>]
 <options> : optional list of settings for the panel.
 <body>    : panel's VID content description (block!).
 ----
+
 *Description*
 
 Constructs a child group-box panel inside the current container, where the content is another VID block. A divider argument can be provided, setting a grid-mode layout:
@@ -730,6 +817,7 @@ NOTE: Providing a `string!` value as option will set the group-box title text.
 === tab-panel 
 
 *Syntax*
+
 ----
 tab-panel <options> [<name> <body>...]
 
@@ -737,6 +825,7 @@ tab-panel <options> [<name> <body>...]
 <name>    : a tab's title (string!).
 <body>    : a tab's content as VID description (block!).
 ----
+
 *Description*
 
 Constructs a tab-panel inside the current container. The spec block must contain a pair of name and content description for each tab. Each tab's content body is a new child panel face, acting as any other panels.
@@ -747,6 +836,7 @@ Constructs a tab-panel inside the current container. The spec block must contain
 === style 
 
 *Syntax*
+
 ----
 style <new> <old> <options>
 
@@ -754,6 +844,7 @@ style <new> <old> <options>
 <old>     : name of old style (word!).
 <options> : optional list of settings for the new style.
 ----
+
 *Description*
 
 Sets a new style in the current panel. The new style can be created from existing face types or from other styles. The new style is valid only in the current panel and child panels.

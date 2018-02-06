@@ -27,6 +27,7 @@ All the contributed Red files to `red/red` repo should contain the following fie
 Each time you go to a new line after opening a block or a parenthesis, you should indent by one tab.
 
 *Correct*
+
 ----
  func [
      arg1
@@ -37,7 +38,9 @@ Each time you go to a new line after opening a block or a parenthesis, you shoul
      ...
  ]
 ----
+
 Incorrect
+
 ---- 
  func [
  arg1				;-- missing indentation!
@@ -69,6 +72,7 @@ Contiguous blocks do not require a whitespace between the end of one and start o
  ]
  
 However, it is acceptable to use whitespaces in-between nested blocks:
+
 ----
  array: [[] [] [] []]
  list:  [ [] [] [] [] ]
@@ -85,6 +89,7 @@ For expressions containing small blocks, they are usually opened and closed on t
 If the line is too long, the block should be wrapped over several lines with one level of indentation:
 
 *Correct*
+
 ----
  b: either a = 1 [
      a + 1
@@ -94,13 +99,16 @@ If the line is too long, the block should be wrapped over several lines with one
 ----
 
 Incorrect
+
 ----
  b: either a = 1 
      [a + 1][123 + length? mold a]
 ----
-_That style is wrong because it breaks the ability to copy/paste code to the Red console (`either ` will be evaluated before the block arguments are detected)._
+
+_That style is wrong because it breaks the ability to copy/paste code to the Red console (`either` will be evaluated before the block arguments are detected)._
 
 If the first block is small enough and can fit on the same line, then only the subsequent blocks are wrapped over several lines:
+
 ----
  print either a = 1 ["hello"][
      append mold a "this is a very long expression"
@@ -119,6 +127,7 @@ If the first block is small enough and can fit on the same line, then only the s
 Names made of multiple words are separated with a dash `-` character. Use a two-words name only when a fitting single-word cannot be found or would be too confusing with already used ones. Variable names made of more than two words should only be used in rare cases. Using single-words as much as possible makes the code horizontally much more compact, improving readability greatly. Avoid useless verbosity.
 
 *Correct*
+
 ----
  code: 123456
  name: "John"
@@ -129,6 +138,7 @@ Names made of multiple words are separated with a dash `-` character. Use a two-
 ----
 
 Incorrect
+
 ----
  code_for_article: 123456
  Mytable: [2 6 8 4 3]
@@ -140,6 +150,7 @@ Incorrect
 *Function names* should strive to be single-word _verbs_, in order to express an action, though two or three words names are often necessary. More than three words should be avoided as much as possible. Variable naming conventions also apply to function names. A noun or an adjective followed by a question mark is also accepted. Often, it denotes that the return value is of `logic!` type, but this is not a strict rule, as it is handy to form single-word action names for retrieving a property (e.g. `length?`, `index?`). When forming function names with two or more words, always put the verb in the first position. If names are picked carefully for variables and function names, the code becomes almost self-documented, often reducing the need for comments.
 
 *Correct*
+
 ----
  make:   func [...
  reduce: func [...
@@ -148,6 +159,7 @@ Incorrect
 ----
 
 Incorrect
+
 ----
  length:    func [...
  future:    func [...
@@ -198,7 +210,7 @@ All variable and function names should be lowercase by default, unless there is 
 
 == Macros (Red/System) anchor:macros-redsystem[]
 
-Apply the same naming conventions for picking up Red/System macros names. Macros generally use uppercase for names, as a way to visually distinguish them easily from the rest of the code (unless the intention is explicitely to make it look like regular code, like pseudo-custom datatype definitions). When multiple words are used, they are separated by an underscore `_` character to increase even more the difference with regular code.
+Apply the same naming conventions for picking up Red/System macros names. Macros generally use uppercase for names, as a way to visually distinguish them easily from the rest of the code (unless the intention is explicit to make it look like regular code, like pseudo-custom datatype definitions). When multiple words are used, they are separated by an underscore `_` character to increase even more the difference with regular code.
 
 _(TBD: extract all single-word names used in the Red codebase as examples)_
 
@@ -207,6 +219,7 @@ _(TBD: extract all single-word names used in the Red codebase as examples)_
 The general rule is to keep the spec block on a single line. The body block can be on the same line or over several lines. In case of Red/System, as the spec blocks tend to be longer, most functions spec blocks are wrapped over several lines, so, for sake of visual consistency, often even small spec block are wrapped.
 
 *Correct*
+
 ----
  do-nothing: func [][]
  increment: func [n [integer!]][n + 1]
@@ -221,7 +234,9 @@ The general rule is to keep the spec block on a single line. The body block can 
      n + 1
  ]
 ----
+
 Incorrect
+
 ----
  do-nothing: func [
  ][
@@ -243,6 +258,7 @@ When the spec block is too long, it should be wrapped over several lines. When w
 When wrapping the spec block over several lines, it is recommended to align the datatype definitions for consecutive arguments, on the same column for easier reading. Such alignment is preferably done using tabs (if you strictly follow these coding style rules) or else, using spaces.
 
 *Correct*
+
 ----
  make-world: func [
      earth	 [word!]
@@ -260,7 +276,9 @@ When wrapping the spec block over several lines, it is recommended to align the 
      ...
  ]
 ----
+
 Incorrect
+
 ----
  make-world: func [
   	[throw] earth [word!]		;-- attributes block not on its own line
@@ -282,6 +300,7 @@ Incorrect
 For docstrings, the main one (describing the function) should be on its own line if the spec block is wrapped. The argument and refinement docstrings should be on the same line as the item they are describing. Docstrings start with a capital letter and do not require an ending dot (it's added automatically when printed on screen by `help` function).
 
 *Correct*
+
 ----
  increment: func ["Add 1 to the argument value" n][n + 1]
 
@@ -302,7 +321,9 @@ For docstrings, the main one (describing the function) should be on its own line
 	...
  ]
 ----
+
 Incorrect
+
 ----
  make-world: func ["Build a new World"	;-- should be on a newline
      earth	[word!]		"1st element"
@@ -328,6 +349,7 @@ Incorrect
 Arguments are following the function call on the same line. If the line becomes too long, arguments can be wrapped over several lines (one argument per line) with an indentation.
 
 *Correct*
+
 ----
  foo arg1 arg2 arg3 arg4 arg5
 
@@ -338,7 +360,9 @@ Arguments are following the function call on the same line. If the line becomes 
      argument4
      argument5
 ----
+
 Incorrect
+
 ----
  foo arg1 arg2 arg3
      arg4 arg5
@@ -356,6 +380,7 @@ Incorrect
 ----
 
 For long expressions with many nested parts, spotting the bounds of each expression can be sometimes difficult. Using parenthesis for grouping a nested call with its arguments is acceptable (but not mandatory).
+
 ----
  head insert (copy/part [1 2 3 4] 2) (length? mold (2 + index? find "Hello" #"o"))
 

@@ -64,12 +64,13 @@ List of globally-usable flags for `flags` facet:
 
 Other face types specific flags are documented in their respective sections.
 
-Notes:
-
+[NOTE]
+====
 * Non-mandatory facets can be set to `none`.
 * `offset` and `size` are specified in screen pixels.
 * `offset` and `size` can sometime be set to `none` before displaying them. The View engine will take care of setting the values (like for panels in tab-panel type).
 * Display order (from back to front): color, image, text, draw.
+====
 
 Creating a new face is achieved by cloning the `face!` object and providing *at least* a valid `type` name.
 
@@ -106,11 +107,12 @@ Font objects are clones of `font!` template object. One font object can be refer
 |parent| block!| no| Internal back reference to parent face(s) _(used by View engine only)_.
 |===
 
-Notes:
-
+[NOTE]
+====
 * Non-mandatory facets can be set to `none`.
 * `angle` field is not yet working properly.
 * All fields values should become optional in the future.
+====
 
 Available font styles:
 
@@ -142,9 +144,10 @@ Para objects are clones of `para!` template object. One para object can be refer
 |parent| block!| Internal back reference to parent face(s) _(used by View engine only)_.
 |===
 
-Notes:
-
+[NOTE]
+====
 * Any para fields can be set to `none`.
+====
 
 == The Face tree 
 
@@ -178,10 +181,11 @@ The `base` type is the most basic face type, but also the most versatile one. By
 |`draw`| Transparency is fully supported for Draw primitives.
 |===
 
-Notes:
-
+[NOTE]
+====
 * Full composition of following facets is supported and rendered in following order: `color`, `image`, `text`, `draw`.
 * Transparency can be achieved in `color`, `image`, `text` and `draw` by specifying an alpha channel component in color tuple values: `R.G.B.A` where `A = 0` indicates full opacity and `A = 255` full transparency.
+====
 
 _This face type should be used for any custom graphic component implementation._
 
@@ -302,9 +306,10 @@ This type represents a single-line input field.
 
 * `default`: can be set to any value, it will be used by the `data` facet if converting `text` returns `none`, like for non-loadable strings.
 
-NOTE:
-
+[NOTE]
+====
 * `selected` will be used in future to control highlighted part of the input text.
+====
 
 [cols="1, 1, 3", options="header"]
 |===
@@ -333,16 +338,17 @@ This type represents a multi-line input field.
 
 * `no-border`: removes edge decoration made by the underlying GUI framework.
 
-Notes:
-
+[NOTE]
+====
 * `selected` will be used in future to control highlighted part of the input text.
 * A vertical scroll-bar can appear if all lines of text cannot be visible in the area (might be controlled by a `flags` option in the future).
+====
 
 [cols="1, 1, 2", options="header"]
 |===
 |Event type| Handler| Description
 |`change`| `on-change`| Occurs each time an input is made in the area.
-|`key`| `on-key`\ Occurs each time a key is pressed down in the field.
+|`key`| `on-key`| Occurs each time a key is pressed down in the area.
 |===
 
 '''
@@ -367,9 +373,10 @@ This type represents a vertical list of text strings, displayed in a fixed frame
 |`change`| `on-change`| Occurs after a `select` event. `selected` facet refers to the *new* selected entry index.
 |===
 
-Notes:
-
+[NOTE]
+====
 * number of visible items cannot yet be defined by user.
+====
 
 
 === Drop-list 
@@ -396,9 +403,10 @@ The `data` facet accepts arbitrary values, but only string values will be added 
 |`change`| `on-change`| Occurs after a `select` event. `selected` facet refers to the *new* selected entry index.
 |===
 
-Notes:
-
+[NOTE]
+====
 * number of visible items cannot yet be defined by user.
+====
 
 
 === Drop-down 
@@ -423,9 +431,10 @@ The `data` facet accepts arbitrary values, but only string values will be added 
 |`change`| `on-change`| Occurs after a `select` event. `selected` facet refers to the *new* selected entry index.
 |===
 
-Notes:
-
+[NOTE]
+====
 * number of visible items cannot yet be defined by user.
+====
 
 
 === Progress 
@@ -440,9 +449,10 @@ This type represents a horizontal or vertical progress bar.
 |`data`| Value representing the progression (`percent!` or `float!` value).
 |===
 
-Notes:
-
+[NOTE]
+====
 * if a float value is used for `data`, it needs to be between 0.0 and 1.0.
+====
 
 
 === Slider 
@@ -456,9 +466,10 @@ This type represents a cursor which can be moved along a horizontal or vertical 
 |`data`| Value representing the cursor position (`percent!` or `float!` value).
 |===
 
-Notes:
-
+[NOTE]
+====
 * if a float value is used for `data`, it needs to be between 0.0 and 1.0.
+====
 
 
 === Camera 
@@ -473,10 +484,11 @@ This type is used to display a video camera feed.
 |`selected`| Select the camera to display from `data` list, using an integer index. If set to `none`, the camera feed is disabled.
 |===
 
-Notes:
-
+[NOTE]
+====
 * The `data` facet is initially set to `none`. The list of cameras is fetched during the first call to `show` on the camera face.
 * It is possible to capture the content of a camera face using `to-image` on the face.
+====
 
 
 
@@ -492,10 +504,11 @@ A panel is a container for other faces.
 |`pane`| Block of children faces. Order in block defines z-order on display.
 |===
 
-Notes:
-
+[NOTE]
+====
 * Children `offset` coordinates are relative to parent's panel top-left corner.
 * Children faces are clipped into the panel frame.
+====
 
 '''
 
@@ -518,11 +531,12 @@ A tab-panel is a list of panels where only one can be visible at a given time. A
 |`change`| on-change| Occurs when user selects a new tab. `event/picked` holds the index of the newly selected tab. `selected` property is updated just after this event.
 |===
 
-Notes:
-
+[NOTE]
+====
 * Both `data` and `pane` facets need to be filled in order for the tab-panel to be displayed properly.
 * If `pane` contains more panels than specified tabs, they will be ignored.
 * When adding/removing a tab, the corresponding panel needs to be added/removed too to/from `pane` list.
+====
 
 
 
@@ -555,9 +569,10 @@ Represents a window displayed on the OS desktop.
 * `no-buttons`: remove all buttons from window's drag bar.
 * `popup`: alternative smaller frame decoration (Windows only).
 
-Notes:
-
+[NOTE]
+====
 * Using the `popup` keyword at the beginning of the menu specification block will force a contextual menu in the window, instead of a menu bar by default.
+====
 
 
 === Screen 
@@ -586,10 +601,11 @@ A group-box is a container for other faces, with a visible frame around it. _Thi
 |`pane`| Block of children faces. Order in block defines z-order on display.
 |===
 
-Notes:
-
+[NOTE]
+====
 * Children `offset` coordinates are relative to group-box's top-left corner.
 * Children faces are clipped into the group-box frame.
+====
 
 
 == Face life cycle 
@@ -602,9 +618,10 @@ Notes:
 . Remove the face from the pane to remove it from the display.
 . The garbage collector will take care of releasing the system resources associated when the face is not referenced anymore.
 
-Notes:
-
+[NOTE]
+====
 * A `free` function might be provided for manual control of system resources freeing for resources hungry applications.
+====
 
 == SHOW function 
 
@@ -633,10 +650,11 @@ _The following information is provided only for reference, in normal operation, 
 |4 (drag-offset)| Stores the starting mouse cursor offset position when entering face dragging mode (`pair!` `none!`).
 |===
 
-Notes:
-
+[NOTE]
+====
 * After a call to `show`, `changes` field is reset to 0 and `deferred` field block is cleared.
 * A `handle!` datatype will be used in the future for opaque OS handles.
+====
 
 == Realtime vs deferred updating anchor:realtime-vs-deferred-updating[]
 
@@ -657,9 +675,10 @@ The motivations for realtime updating by default are:
 
 Deferred mode updates many changes at the same time on screen in order to avoid glitches or when best performance is the goal.
 
-Notes:
-
+[NOTE]
+====
 * This is a big difference with the Rebol/View engine which only has deferred mode support.
+====
 
 == Two-way binding 
 
@@ -670,6 +689,7 @@ On the other side, changes made to the rendered graphic objects are reflected in
 This two-way binding simplifies the interaction with the graphic objects for the programmer, without the need of any specific API. Modifying the facets using the series actions is enough.
 
 Example:
+
 ----
 view [
     list: text-list data ["John" "Bob" "Alice"]
@@ -677,6 +697,7 @@ view [
     button "Change" [lowercase pick list/data list/selected]
 ]
 ----
+
 == Events 
 
 === Event names 
@@ -722,11 +743,12 @@ view [
 |*time*| timer| The delay set by face's `rate` facet expired.
 |===
 
-Notes:
-
+[NOTE]
+====
 * touch events are not available for Windows XP.
 * One or more `moving` events always precedes a `move` one.
 * One or more `resizing` events always precedes a `resize` one.
+====
 
 === Event! datatype 
 
@@ -760,9 +782,10 @@ List of possible flags from `event/flags`:
 * `control`
 * `shift`
 
-Notes:
-
+[NOTE]
+====
 * All fields (except `type`) are read-only. Setting `type` is only used internally by the View engine.
+====
 
 Here is the list of special keys returned as words by `event/key`:
 
@@ -804,6 +827,7 @@ The following extra key names can be returned by `event/key` only for `key-down`
 Actors are handler functions for View events. They are defined in an free-form object (no prototype provided) referred by `actors` facet. All actors have the same specification block.
 
 *Syntax*
+
 ----
 on-<event>: func [face [object!] event [event!]]
 
@@ -811,13 +835,16 @@ on-<event>: func [face [object!] event [event!]]
 face    : face object which receives the event
 event   : event value.
 ----
+
 In addition to the GUI events, it is possible to define an `on-create` actor which will be called when the face is shown for the first time, just before system resources are allocated for it. Unlike other actors, `on-create` has only one argument, `face`.
 
 *Return value*
+
 ----
 'stop : exits the event loop.
 'done : stops the event from flowing to the next face.
 ----
+
 Other returned values have no effect.
 
 === Event flow 
@@ -842,10 +869,11 @@ Typical event flow path:
 .. The panel gets the event next. Panel's `on-click` handler gets called.
 .. The window gets the event last, its `on-click` handler gets called.
 
-Notes:
-
+[NOTE]
+====
 * Event cancellation is achieved by returning `'done` word from any event handler.
 * Event capturing is not enabled by default for performance reasons. Set `system/view/capturing?: yes` to enable it.
+====
 
 === Global event handlers 
 
@@ -854,6 +882,7 @@ Before entering the event flow path, specific pre-processing can be achieved usi
 ==== insert-event-func
 
 *Syntax*
+
 ----
 insert-event-func <handler>
 
@@ -861,10 +890,13 @@ insert-event-func <handler>
 
 Handler's function specification: func [face [object!] event [event!]]
 ----    
+
 *Return value*
+
 ----
-The newly added handler function (function!).
+The newly added handler function (`function!`).
 ----    
+
 *Description*
 
 Installs a global handler function, which can pre-process events before they reach the face handlers. All global handlers are called on each event, so the handler's body code needs to be optimized for speed and memory usage. If a block is provided as argument, it will be converted to a function using the `function` constructor.
@@ -880,11 +912,13 @@ A reference to the handler function is returned and should be saved if it needs 
 ==== remove-event-func
 
 *Syntax*
+
 ----
 remove-event-func <handler>
 
 <handler> : a previously installed event handler function.
 ----
+
 *Description*
 
 Disables a previously installed global event handler by removing it from the internal list.
@@ -914,13 +948,14 @@ Disables a previously installed global event handler by removing it from the int
 == Including View component 
 
 View component is not included by default on *compiling*. To include it, the main Red script have to declare the dependency in the header using the `Needs` field:
+
 ----
 Red [
     Needs: 'View
 ]
 ----
-NOTE:
-Using consoles auto-generated by `red` binary will include the View component on platforms where it is available, `Needs` header field is therefore not required in user scripts run from those consoles.
+
+NOTE: Using consoles auto-generated by `red` binary will include the View component on platforms where it is available, `Needs` header field is therefore not required in user scripts run from those consoles.
 
 == Extra functions 
 
