@@ -760,7 +760,7 @@ d
 |14   | `isoweek`
 |===
 
-=== 使用 `Pick` 访问日期字段
+=== 使用 `pick` 访问日期字段
 
 可以不使用路径来访问日期字段，这在某些情况下更为便捷，可以对日期使用 `pick`。
 
@@ -804,7 +804,7 @@ repeat i 14 [print [pad i 4 pad names/:i 10 pick d i]]
 
 === 新纪元时间
 
-日期可以用 `to` 动作与link:https://en.wikipedia.org/wiki/Unix_time[Unix 新纪元时间]互相转换。
+日期可以用 `to` 动作与 link:https://en.wikipedia.org/wiki/Unix_time[Unix 新纪元时间]互相转换。
 
 *语法*
 
