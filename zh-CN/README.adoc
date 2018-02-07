@@ -1,0 +1,9 @@
+= Red 编程语言文档
+
+== 简体中文版本
+
+__这是一个半成品，只有一部分可用的参考文档。__
+
+关于 Red 语言的更多信息，请访问 http://red-lang.org
+
+加入聊天室 https://gitter.im/red/docs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge[image:https://badges.gitter.im/red/docs.svg[https://gitter.im/red/docs]]
