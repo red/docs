@@ -345,7 +345,7 @@ Redのstring!の値からUTF-8の文字列バッファポインタを返しま�
 long redTypeOf(red_value value)
 ----
 
-Redの値の型IDを返します。型IDは `RedType` 列挙体で定義されています。link:libred.adoc#_datatypes_definition[データ型] セクションを参照してください。
+Redの値の型IDを返します。型IDは `RedType` 列挙体で定義されています。link:libred.adoc#datatypes-definition[データ型] セクションを参照してください。
 
 === Redのactionの呼び出し
 
@@ -585,6 +585,7 @@ void redCloseLogFile(void)
 
 NOTE: 現在のところ、ログファイルは終了時には必ず閉じておく必要があります。ログファイルを閉じずに終了した場合、ロックが残ってしまい、MS Officeアプリケーションなどの一部のホストではフリーズやクラッシュが起きる可能性があります。
 
+[#datatypes-definition]
 === データ型の定義
 
 libRed APIのいくつかの関数はRedのデータ型を参照します。具体的には `redTypeOf`、`redMakeSeries()`、`redDataType()`です。Redのデータ型はホストの側で`RedType`列挙体として表現され、次の命名規則で型を示します。

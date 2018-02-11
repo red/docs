@@ -346,7 +346,7 @@ Vrací 'UTF-8_string_buffer_pointer' z hodnoty `string!` v Redu. Jiná kódován
 long redTypeOf(red_value value)
 ----
 
-Vrací ID typu z hodnoty v Red. Hodnoty ID typů jsou definovány ve výčtu `RedType`. Viz link:libred.adoc#_datatypes_definition[Datatypes] section.
+Vrací ID typu z hodnoty v Red. Hodnoty ID typů jsou definovány ve výčtu `RedType`. Viz link:libred.adoc#datatypes-definition[Datatypes] section.
 
 === Volání akce v Redu
 
@@ -588,6 +588,7 @@ Closes the log file opened with `redOpenLogFile()`.
 
 NOTE: V současné době *musí* být logovací soubor při exitu zavřen, jinak je nad ním držen zámek (lock) a to může způsobit zamrznutí nebo kolaps v některých hostitelských (např. MS Office) aplikacích.
 
+[#datatypes-definition]
 === Definice datových typů
 
 Některé funkce z libRed API se mohou odkazovat na datové typy Redu: `redTypeOf()`, `redMakeSeries()` a `redDatatype()`. Tyto typy jsou na hostitelské straně prezentovány jako výčet (`RedType`), kde typy jsou zastoupeny jmény podle následujícího schematu:

@@ -6,11 +6,12 @@
 
 `Date!` values represent calendar dates, relying on the Gregorian calendar. A date value can also contain optional time and timezone information. Time in dates is expressed in 24-hour format (including optional time zone information). Red's dates also have an extensive support for https://en.wikipedia.org/wiki/ISO_8601[ISO 8601] input formats.
 
-Note:
-
+[NOTE]
+====
 * `date!` uses a https://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar[proleptic Gregorian calendar], extending its usage backward, beyond the year 1582. Care should be taken when trying to represent historical, pre-Gregorian dates using `date!` values.
 
 * Supported dates range from `1/Jan/-16384` to `31/Dec/16383`, wrapping around on overflowing math operations. On input, that range is reduced from `1/Jan/-9999` to `31/Dec/9999` for practical reasons.
+====
 
 == Creation
 
@@ -19,6 +20,7 @@ Note:
 === Literal syntax
 
 Many different literal formats are supported, including all Rebol date formats and most of the ISO date standard.
+
 ----
 <date>/<time>
 <date>/<time><zone>
@@ -90,14 +92,17 @@ Many different input formats for literal dates are accepted. Out of range values
 <dd>-<mon>-<yyyy>/<hour>:<min>:<sec>
 <dd>-<mon>-<yyyy>/<hour>:<min>:<sec><sign><hour>:<min15>
 ----
+
 When the time and/or zone fields are unset, they are omitted. For negative dates, the `/` separator is used instead of `-` for better readability.
 
-Notes:
-
+[NOTE]
+====
 * When a month is specified using letters, the month is expressed using its English name, and is case-insensitive.
 * When a year is specified using only 2 digits (`yy`): if it is < 50, it's interpreted as `20yy`, otherwise, it's interpreted as `19yy`.
+====
 
 Examples of valid input dates:
+
 ----
 1999-10-5
 1999/10/5
@@ -134,6 +139,7 @@ Examples of valid input dates:
 ----
 
 === Runtime creation
+
 ----
 make date! [<day> <month> <year>]
 make date! [<year> <month> <day>]
@@ -152,13 +158,15 @@ make date! [<day> <month> <year> <hour> <minute> <second> <zone>]
 <second> : integer! value
 ----
 
-Notes:
-
+[NOTE]
+====
 * Out of range argument values will result in an error. For a normalized result, use the `to` action instead of `make`.
 
 * `year` and `day` fields are interchangeable, but only for low year values. The year can be used in first position *only* if its value is >= 100 and less than the value of the third field. When that rule is not satisfied, the third field is considered the year. Negative years should always be specified in the third position.
+====
 
 *Examples*
+
 ----
 make date! [1978 2 3]
 == 3-Feb-1978
@@ -197,6 +205,7 @@ Path accessors provide a convenient way for getting and setting all `date!` valu
 === /date
 
 *Syntax*
+
 ----
 <date>/date
 <date>/date: <date2>
@@ -204,11 +213,13 @@ Path accessors provide a convenient way for getting and setting all `date!` valu
 <date>  : a word or path expression referring to a date! value
 <date2> : a date! value
 ----
+
 *Description*
 
 Gets or sets the date field of a date (excluding time and zone). Dates are returned as `date!` values.
 
 *Examples*
+
 ----
 d:  now
 == 10-Jul-2017/22:46:22-06:00
@@ -222,6 +233,7 @@ d/date: 15/09/2017
 === /year
 
 *Syntax*
+
 ----
 <date>/year
 <date>/year: <year>
@@ -229,11 +241,13 @@ d/date: 15/09/2017
 <date> : a word or path expression referring to a date! value
 <year> : an integer! value
 ----
+
 *Description*
 
 Gets or sets the year field of a date. Years are returned as integers. Out of range argument values will result in a normalized date.
 
 *Examples*
+
 ----
 d:  now
 == 10-Jul-2017/22:46:22-06:00
@@ -258,6 +272,7 @@ d
 === /month
 
 *Syntax*
+
 ----
 <date>/month
 <date>/month: <month>
@@ -265,11 +280,13 @@ d
 <date>  : a word or path expression referring to a date! value
 <month> : an integer! value
 ----
+
 *Description*
 
 Gets or sets the month field of a date. Months are returned as integers. Out of range argument values will result in a normalized date.
 
 *Examples*
+
 ----
 d: now
 == 10-Jul-2017/22:48:31-06:00
@@ -288,6 +305,7 @@ d/month
 === /day
 
 *Syntax*
+
 ----
 <date>/day
 <date>/day: <day>
@@ -295,11 +313,13 @@ d/month
 <date> : a word or path expression referring to a date! value
 <day>  : an integer! value
 ----
+
 *Description*
 
 Gets or sets the day field of a date. Days are returned as integers. Out of range argument values will result in a normalized date.
 
 *Examples*
+
 ----
  d: 1-jan-2017
 == 1-Jan-2017
@@ -316,6 +336,7 @@ d
 === /time
 
 *Syntax*
+
 ----
 <date>/time
 <date>/time: <time>
@@ -323,6 +344,7 @@ d
 <date> : a word or path expression referring to a date! value
 <time> : a time! or none! value
 ----
+
 *Description*
 
 Gets or sets the time field of a date. Times are returned as `time!` values, or `none!` value if time is not set, or has been reset (see below). Out of range argument values will result in a normalized date.
@@ -330,6 +352,7 @@ Gets or sets the time field of a date. Times are returned as `time!` values, or 
 If the time is set to a `none!` value, the time and zone fields are set to zero and will not be shown further.
 
 *Examples*
+
 ----
 d: now
 == 10-Jul-2017/23:18:54-06:00
@@ -344,6 +367,7 @@ d/time: none
 === /hour
 
 *Syntax*
+
 ----
 <date>/hour
 <date>/hour: <hour>
@@ -351,11 +375,13 @@ d/time: none
 <date> : a word or path expression referring to a date! value
 <hour> : an integer! value
 ----
+
 *Description*
 
-Gets or sets the time field of a date. Hours are returned as integer values between 0 and 23. Out of range argument values will result in a normalized date.
+Gets or sets the hour field of a date. Hours are returned as integer values between 0 and 23. Out of range argument values will result in a normalized date.
 
 *Examples*
+
 ----
 d: now
 == 10-Jul-2017/23:19:40-06:00
@@ -372,6 +398,7 @@ d
 === /minute
 
 *Syntax*
+
 ----
 <date>/minute
 <date>/minute: <minute>
@@ -379,13 +406,14 @@ d
 <date>   : a word or path expression referring to a date! value
 <minute> : an integer! value
 ----
+
 *Description*
 
 Gets or sets the minute field of a date. Minutes are returned as integer values between 0 and 59. Out of range argument values will result in a normalized date.
 
 *Examples*
-----
 
+----
 == 10-Jul-2017/23:20:25-06:00
 d/minute: 0
 == 0
@@ -400,6 +428,7 @@ d
 === /second
 
 *Syntax*
+
 ----
 <date>/second
 <date>/second: <second>
@@ -407,11 +436,13 @@ d
 <date>   : a word or path expression referring to a date! value
 <second> : an integer! or float! value
 ----
+
 *Description*
 
 Gets or sets the second field of a date. Seconds are returned as `integer!` or `float!` values between 0 and 59. Out of range argument values will result in a normalized date.
 
 *Examples*
+
 ----
 d: now
 == 10-Jul-2017/23:21:15-06:00
@@ -432,6 +463,7 @@ d
 === /zone
 
 *Syntax*
+
 ----
 <date>/zone
 <date>/zone: <zone>
@@ -439,6 +471,7 @@ d
 <date> : a word or path expression referring to a date! value
 <zone> : a time! or integer! value
 ----
+
 *Description*
 
 Gets or sets the timezone field of a date. Timezones are returned as `time!` values between -16:00 and +15:00. Setting the timezone with `/zone` will only modify that field, time is kept the same. Out of range argument values will result in a normalized date.
@@ -448,6 +481,7 @@ When the timezone is set to an `integer!` argument, the argument represents hour
 The granularity for timezone's minutes is 15, non-conforming values will be rounded to closest 15 minutes inferior multiple.
 
 *Examples*
+
 ----
 d: 1/3/2017/5:30:0
 d/zone: 8
@@ -460,13 +494,15 @@ d/zone: -4:00
 === /timezone
 
 *Syntax*
+
 ----
 <date>/timezone
-<date>/timezone: <zone>
+<date>/timezone: <timezone>
 
 <date>     : a word or path expression referring to a date! value
 <timezone> : an integer!, time! or pair! value
 ----
+
 *Description*
 
 Gets or sets the timezone field of a date. Timezones are returned as `time!` values between -16:00 and +15:00. Setting the timezone with `/timezone` will modify both the time and the zone, keeping the new time equivalent to the old one in the new zone. Out of range argument values will result in a normalized date.
@@ -476,6 +512,7 @@ When the timezone is set to an `integer!` argument, the argument represents hour
 The granularity for timezone's minutes is 15, non-conforming values will be rounded to closest 15 minutes inferior multiple.
 
 *Examples*
+
 ----
 d: 1/3/2017/5:30:0
 d/timezone: 8
@@ -485,13 +522,15 @@ d/timezone: -4:00
 == 1-Mar-2017/1:30:00-04:00
 ----
 
-Note:
-
+[NOTE]
+====
 * Setting the `/timezone` to 0 will set the time to UTC.
+====
 
 === /yearday
 
 *Syntax*
+
 ----
 <date>/yearday
 <date>/yearday: <day>
@@ -499,6 +538,7 @@ Note:
 <date>    : a word or path expression referring to a date! value
 <yearday> : an integer! value
 ----
+
 *Description*
 
 Gets the day of the year of a date, starting at 1 for January 1st. Days are returned as integers. When used for setting the day of the year, the date is recalculated to match that day. Out of range argument values will result in a normalized date.
@@ -508,6 +548,7 @@ Note:
 * a `/julian` alias for `/yearday` is also available, for compatibility with Rebol.
 
 *Examples*
+
 ----
 d: 1-jan-2017
 == 1-Jan-2017
@@ -533,6 +574,7 @@ d
 === /weekday
 
 *Syntax*
+
 ----
 <date>/weekday
 <date>/weekday: <day>
@@ -540,11 +582,13 @@ d
 <date>    : a word or path expression referring to a date! value
 <weekday> : an integer! value
 ----
+
 *Description*
 
 Gets the week day number, ranging from 1 for Monday, to 7 for Sunday. When used for setting the day of the week, the date is recalculated to match that day in the current week. Out of range argument values will result in a normalized date.
 
 *Examples*
+
 ----
 d: now
 == 10-Jul-2017/23:25:35-06:00
@@ -568,6 +612,7 @@ d
 === /week
 
 *Syntax*
+
 ----
 <date>/week
 <date>/week: <day>
@@ -575,15 +620,18 @@ d
 <date> : a word or path expression referring to a date! value
 <week> : an integer! value
 ----
+
 *Description*
 
 Gets the week number using a casual week definition (week starts on Sunday, first week starts on January 1st), ranging from 1 for first week of the year, to 53. When used for setting the week number, the date is recalculated to match the first day of that week (a Sunday). Out of range argument values will result in a normalized date.
 
-Note:
-
+[NOTE]
+====
 * The casual week definition allows first and last weeks of the year to be partial weeks, ranging from 1 day to 7 days. For accurate week calculations across years, use the `/isoweek` accessor.
+====
 
 *Examples*
+
 ----
 d: now
 == 10-Jul-2017/23:28:07-06:00
@@ -610,6 +658,7 @@ d
 === /isoweek
 
 *Syntax*
+
 ----
 <date>/isoweek
 <date>/isoweek: <day>
@@ -617,6 +666,7 @@ d
 <date>    : a word or path expression referring to a date! value
 <isoweek> : an integer! value
 ----
+
 *Description*
 
 Gets the week number using the https://en.wikipedia.org/wiki/ISO_week_date[ISO 8601] week definition, ranging from 1 for first week of the year, to 52 (or 53 for some years). When used for setting the week number, the date is recalculated to match the first day of that week (a Monday). Out of range argument values will result in a normalized date.
@@ -678,6 +728,7 @@ Such ordinal accessor can be used both for getting or setting fields. The follow
 It is possible to access date fields without using a path, which can be more convenient in some cases. `pick` can be used for that on dates.
 
 *Syntax*
+
 ----
 pick <date> <field>
 
@@ -688,6 +739,7 @@ pick <date> <field>
 An integer argument represents the ordinal accessor for dates. See "Ordinal accessors" table above.
 
 *Examples*
+
 ----
 d: now
 == 10-Jul-2017/23:35:01-06:00
@@ -716,6 +768,7 @@ repeat i 14 [print [pad i 4 pad names/:i 10 pick d i]]
 Dates can be converted from/to https://en.wikipedia.org/wiki/Unix_time[Unix epoch time] using `to` action.
 
 *Syntax*
+
 ----
 to-integer <date>
 to-date <epoch>
@@ -725,6 +778,7 @@ to-date <epoch>
 ----
 
 Epoch time are expressed in UTC. If the argument date is not in UTC, it will be converted internally before converting to epoch time.
+
 ----
 d: 8-Jul-2017/17:49:27+08:00
 to-integer d
@@ -742,11 +796,13 @@ Note that epoch time is not defined beyond the year 2038.
 === Block to date
 
 *Syntax*
+
 ----
 to date! <spec>
 
 <spec> : a block of values for date fields
 ----
+
 The argument block will be converted to a `date!` value according to the same syntax as for `make` (see 2.2 <<runtime-creation>>). Out of range argument values will result in a normalized date. For a strict conversion from a block, that will error out instead of normalizing, use `make`.
 
 == Comparisons
@@ -754,6 +810,7 @@ The argument block will be converted to a `date!` value according to the same sy
 All comparators can be applied on dates: `=, ==, <>, >, <, >=, &lt;=, same?`. In addition, `min`, `max` and `sort` are also supported.
 
 *Examples*
+
 ----
 3-Jul-2017/9:41:40+2:00 = 3-Jul-2017/5:41:40-2:00
 == true
@@ -782,6 +839,7 @@ Supported math operations on dates include:
 * using the `difference` function on two date values: result is the signed difference, as a `time!` value, between those two dates.
 
 *Examples*
+
 ----
 20-Feb-1980 + 50
 == 10-Apr-1980
@@ -829,6 +887,7 @@ The `now` function returns the operating system's current date and time (includi
 * `/precise`: get the time with higher precision (1/60th of a second on Windows, micro-seconds on Unix)
 
 *Examples*
+
 ----
 now
 == 8-Jul-2017/18:32:25+08:00
@@ -860,16 +919,19 @@ now/utc
 === Random
 
 *Syntax*
+
 ----
 random <date>
 
 <date> : a date! value
 ----
+
 *Description*
 
 Returns a randomized date using the argument date as upper limit. If the argument date has no time/timezone component, the resulting date won't have it either.
 
 *Examples*
+
 ----
 random 09/07/2017
 == 18-May-1972

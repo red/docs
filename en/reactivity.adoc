@@ -22,11 +22,12 @@ Reactions are run asynchronously, when a source field's value is changed. The re
 
 Only the source objects in a reactive expression need to be a reactor. The target can be a simple object. If the target is also a reactor, reactions are chained and a graph of relations is constructed implicitly.
 
-Notes:
-
+[NOTE]
+====
 * Red's reactive support could be extended in the future to support a "pull" model.
 * This is not a https://en.wikipedia.org/wiki/Functional_reactive_programming[FRP] framework, though event streams could be supported in the future.
 * The Red/View GUI engine relies on _face!_ objects in order to operate on graphic objects. Faces are reactors, and they can be used for setting reactive relations between faces or with non-reactor objects.
+====
 
 === Glossary 
 

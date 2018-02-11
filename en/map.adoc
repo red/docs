@@ -7,26 +7,32 @@
 A map represents an associative array of key/value pairs. It provides a fast read access (using a hashtable internally) and a convenient, dedicated syntax. Unlike the `hash!` datatype, a map is not a series, so does not have a concept of offset or positions. Conceptually, the `map!` datatype lies between the `hash!` and `object!` datatypes.
 
 == Literal syntax
+
 ----
 #(<key> <value>...)
 
 <key>   : hashed key, accepted types are: scalar!, all-word!, any-string!
 <value> : any-type! value
 ----
+
 == Creation syntax
+
 ----
 make map! <spec>
 
 <spec> : block of key/value pairs or an integer value
 ----
+
 If the _spec_ argument is an integer, an empty `map!` is created with a pre-allocated number of slots (usually in order to populate the map dynamically).
 
-Notes:
-
+[NOTE]
+====
 * the map body or the spec block have to contain an *even* number of elements, otherwise an error will be generated. 
 * values are not *reduced*, so construction syntax is required for some special values, like `logic!`.
+====
 
 Examples:
+
 ----
 #(a: 1 b: 2)
 == #(
@@ -41,20 +47,23 @@ make map! [a 1 'b 2 "c" 3]
     "c" 3
 )
 ----
+
 If the key is of *any-word!* type, the key type is converted to *set-word!* in the map, in order to make the map content look more like pairs of keys with value assigned. Though, in order to access word keys, there is no requirement to provide a set-word, for practical reasons (easier construction, especially in paths), simple words can be used. Similarly, `keys-of` reflector (described in Reflection section below), will return words instead of set-words, as it simplifies further processing (especially matching operations are easier with words rather than set-words).
 
-Notes:
-
+[NOTE]
+====
 * Like `hash!` and `block!`, `map!` is **case-preserving**, and **case-insensitive for lookup** by default.
 * If a `none` value is specified as value, the key will not be created (see "Deleting keys" section).
 * All the keys are deep copied on creation of the map.
 * Series! values are not copied on creation of the map, the choice is left to the user (this optimizes resources for the common use-case).
+====
 
 Another way to create a new map is to use the `copy` action on an existing one.
 
 == Retrieving values
 
 Using paths:
+
 ----
 <map>/<key>
 get '<map>/<key>
@@ -64,17 +73,21 @@ get '<map>/<key>
 ----
 
 Using selecting action:
+
 ---- 
 select <map> <key>
 
 <map> : map value
 <key> : any valid key type
 ----
+
 All these read accesses are case-insensitive. In order to have a case-sensitive lookup, the `/case` refinement needs to be used where available:
+
 ----
 get/case '<map>/<key>
 select/case <map> <key>
 ----
+
 Trying to access a key not defined in a map will return a `none` value.
 
 Examples:
@@ -94,6 +107,7 @@ select/case m 'ab
 == Changing keys and values
 
 Using paths:
+
 ----
 <map>/<key>: <value>
 set '<map>/<key> <value>
@@ -104,13 +118,16 @@ set '<map>/<key> <value>
 ----
 
 Using modifying action:
+
 ---- 
 put <map> <key> <value>
 
 <map> : map value
 <key> : any valid key value to select a value in the map
 ----
+
 Making bulk changes:
+
 ----
 extend <map> <spec>
 
@@ -119,6 +136,7 @@ extend <map> <spec>
 ----
 
 All these write accesses are case-insensitive. In order to have a case-sensitive lookup, the `/case` refinement needs to be used where available:
+
 ----
 set/case '<map>/<key> <value>
 put/case <map> <key> <value>
@@ -127,12 +145,14 @@ extend/case <map> <spec>
 
 `extend` native can accept many keys at the same time, so it is convenient for bulk changes.
 
-Notes:
-
+[NOTE]
+====
 * setting a key that did not exist previously in the map, **will simply create it**.
 * adding an existing key will change the key value and not add a new one (case-insensitive matching by default).
+====
 
 Examples:
+
 ----
 m: #(Ab: 2 aB: 5 ab: 10)
 m/ab: 3
@@ -180,6 +200,7 @@ m
 In order to delete a key/value pair from a map, you simply set the key to `none` value using one of the available ways.
 
 Example:
+
 ----
 m: #(a: 1 b 2 "c" 3 d: 99)
 m
@@ -201,6 +222,7 @@ m
 NOTE: Construction syntax is required in the above example in order to pass a `none!` value and not a `word!` value (just one way to construct the spec block needed there).
 
 It is also possible to delete all keys at same time using `clear` action:
+
 ----
 clear #(a 1 b 2 c 3)
 == #()
