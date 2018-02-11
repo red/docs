@@ -500,7 +500,7 @@ d/zone: -4:00
 <date>/timezone: <timezone>
 
 <date>     : a word or path expression referring to a date! value
-<timezone> : an integer!, time! or pair! value
+<timezone> : an integer! or time! value
 ----
 
 *Description*
