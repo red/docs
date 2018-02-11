@@ -680,12 +680,12 @@ When the `'pen` or `'fill-pen` lit-words are used, the skewing is applied respec
 
 *Syntax*
 ----
-transform <angle> <center> <scale-x> <scale-y> <translation> [<commands>]
-transform 'pen <angle> <center> <scale-x> <scale-y> <translation>
-transform 'fill-pen <angle> <center> <scale-x> <scale-y> <translation>
+transform <center> <angle> <scale-x> <scale-y> <translation> [<commands>]
+transform 'pen <center> <angle> <scale-x> <scale-y> <translation>
+transform 'fill-pen <center> <angle> <scale-x> <scale-y> <translation>
 
-<angle>       : the rotation angle in degrees (integer! float!).
 <center>      : (optional) center of rotation (pair!).
+<angle>       : the rotation angle in degrees (integer! float!).
 <scale-x>     : the scale amount in X (number!).
 <scale-y>     : the scale amount in Y (number!).
 <translation> : the translation amounts (pair!).
