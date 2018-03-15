@@ -865,8 +865,8 @@ Draws a line between two points. If more points are specified, additional lines 
 *Syntax*
 
 ----
- arc <end> <radius-x> <radius-y> <angle> sweep closed       (absolute)
-'arc <end> <radius-x> <radius-y> <angle> sweep closed       (relative)
+ arc <end> <radius-x> <radius-y> <angle> sweep large        (absolute)
+'arc <end> <radius-x> <radius-y> <angle> sweep large        (relative)
 
 <end>      : arc's end point (pair!).
 <radius-x> : radius of the circle along x axis (integer! float!).
