@@ -38,7 +38,7 @@ List of available facets:
 |data| any-type!| no| all| Content data of the face.
 |enabled?| logic!| yes| all| Enable or disable input events on the face.
 |visible?| logic!|	yes| all| Display or hide the face.
-|selected| integer!| no| some| For lists types,  index of currently selected element.
+|selected| integer!| no| some| For lists types,  index of currently selected element. For text inputs, selected text. For windows, focused face.
 |flags| block!, word!| no|	some| List of special keywords altering the display or behavior of the face.
 |options| block!| no| some| Extra face properties in a [name: value] format.
 |parent| object!| no| all|	Back-reference to parent face (if any).
@@ -289,6 +289,7 @@ This type represents a single-line input field.
 |`type`|	`'field`
 |`text`|	Input text; read/write value.
 |`data`|	Value to display as text.
+|`selected`|	Selected text (pair! none!).
 |`options`| Supported fields: `default`.
 |`flags`| Turn on/off some special field features (block!).
 |===
@@ -306,10 +307,7 @@ This type represents a single-line input field.
 
 * `default`: can be set to any value, it will be used by the `data` facet if converting `text` returns `none`, like for non-loadable strings.
 
-[NOTE]
-====
-* `selected` will be used in future to control highlighted part of the input text.
-====
+`selected` facet controls the text highlighting (read/write). A pair value indicates the index of first and last selected characters. A `none` value indicates that no text is selected in the field.
 
 [cols="1, 1, 3", options="header"]
 |===
@@ -317,6 +315,7 @@ This type represents a single-line input field.
 |Event type| Handler| Description
 |`enter`| `on-enter`| Occurs each time the Enter key is pressed down in the field.
 |`change`| `on-change`| Occurs each time an input is made in the field.
+|`select`| `on-select`| Occurs each time after a text is selected using mouse or keyboard.
 |`key`| `on-key`| Occurs each time a key is pressed down in the field.
 |===
 
@@ -331,6 +330,7 @@ This type represents a multi-line input field.
 |Facet| Description
 |`type`| `'area`
 |`text`| Input text; read/write value.
+|`selected`| Selected text (pair! none!).
 |`flags`| Turn on/off some special area features (block!).
 |===
 
@@ -338,9 +338,10 @@ This type represents a multi-line input field.
 
 * `no-border`: removes edge decoration made by the underlying GUI framework.
 
+`selected` facet controls the text highlighting (read/write). A pair value indicates the index of first and last selected characters. A `none` value indicates that no text is selected in the field.
+
 [NOTE]
 ====
-* `selected` will be used in future to control highlighted part of the input text.
 * A vertical scroll-bar can appear if all lines of text cannot be visible in the area (might be controlled by a `flags` option in the future).
 ====
 
@@ -348,6 +349,7 @@ This type represents a multi-line input field.
 |===
 |Event type| Handler| Description
 |`change`| `on-change`| Occurs each time an input is made in the area.
+|`select`| `on-select`| Occurs each time after a text is selected using mouse or keyboard.
 |`key`| `on-key`| Occurs each time a key is pressed down in the area.
 |===
 
