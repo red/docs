@@ -334,7 +334,7 @@ This type represents a multi-line input field.
 |`flags`| Turn on/off some special area features (block!).
 |===
 
-The `selected` facet controls the text highlighting (read/write). A pair value indicates the index of first and last selected characters. A `none` value indicates that no text is selected in the field.
+The `selected` facet controls the text highlighting (read/write). A pair value indicates the index of first and last selected characters. A `none` value indicates that no text is selected in the area.
 
 *Supported flags:*
 
