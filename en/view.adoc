@@ -294,6 +294,8 @@ This type represents a single-line input field.
 |`flags`| Turn on/off some special field features (block!).
 |===
 
+The `selected` facet controls the text highlighting (read/write). A pair value indicates the index of first and last selected characters. A `none` value indicates that no text is selected in the field.
+
 *Supported flags:*
 
 * `no-border`: removes edge decorations made by the underlying GUI framework.
@@ -306,8 +308,6 @@ This type represents a single-line input field.
 `options` facet accepts following properties:
 
 * `default`: can be set to any value, it will be used by the `data` facet if converting `text` returns `none`, like for non-loadable strings.
-
-`selected` facet controls the text highlighting (read/write). A pair value indicates the index of first and last selected characters. A `none` value indicates that no text is selected in the field.
 
 [cols="1, 1, 3", options="header"]
 |===
@@ -334,11 +334,11 @@ This type represents a multi-line input field.
 |`flags`| Turn on/off some special area features (block!).
 |===
 
+The `selected` facet controls the text highlighting (read/write). A pair value indicates the index of first and last selected characters. A `none` value indicates that no text is selected in the field.
+
 *Supported flags:*
 
 * `no-border`: removes edge decoration made by the underlying GUI framework.
-
-`selected` facet controls the text highlighting (read/write). A pair value indicates the index of first and last selected characters. A `none` value indicates that no text is selected in the field.
 
 [NOTE]
 ====
