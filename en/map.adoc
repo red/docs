@@ -1,3 +1,5 @@
+[[anchor-1]]
+
 = Map! datatype
 :toc:
 :numbered:
@@ -5,6 +7,8 @@
 == Abstract
 
 A map represents an associative array of key/value pairs. It provides a fast read access (using a hashtable internally) and a convenient, dedicated syntax. Unlike the `hash!` datatype, a map is not a series, so does not have a concept of offset or positions. Conceptually, the `map!` datatype lies between the `hash!` and `object!` datatypes.
+
+<<anchor-1,toc>>
 
 == Literal syntax
 
@@ -14,6 +18,8 @@ A map represents an associative array of key/value pairs. It provides a fast rea
 <key>   : hashed key, accepted types are: scalar!, all-word!, any-string!
 <value> : any-type! value
 ----
+
+<<anchor-1,toc>>
 
 == Creation syntax
 
@@ -60,6 +66,8 @@ If the key is of *any-word!* type, the key type is converted to *set-word!* in t
 
 Another way to create a new map is to use the `copy` action on an existing one.
 
+<<anchor-1,toc>>
+
 == Retrieving values
 
 Using paths:
@@ -103,6 +111,8 @@ get/case 'm/aB
 select/case m 'ab
 == 10
 ----
+
+<<anchor-1,toc>>
 
 == Changing keys and values
 
@@ -195,6 +205,8 @@ m
 )
 ----
 
+<<anchor-1,toc>>
+
 == Deleting keys
 
 In order to delete a key/value pair from a map, you simply set the key to `none` value using one of the available ways.
@@ -228,6 +240,8 @@ clear #(a 1 b 2 c 3)
 == #()
 ----
 
+<<anchor-1,toc>>
+
 == Reflection
 
 * `find` checks if a key is defined in a map and returns `true` if    found, or else `none`.
@@ -254,3 +268,5 @@ clear #(a 1 b 2 c 3)
 
  body-of #(a: 123 b: 456)
  == [a: 123 b: 456]
+
+<<anchor-1,toc>>
