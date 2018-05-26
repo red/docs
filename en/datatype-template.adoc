@@ -1,0 +1,37 @@
+[[anchor-1]]
+
+= X datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+== Creation
+
+X values can be created using literal syntax, or at runtime using a `make` constructor, `to` conversion.
+
+
+== Literal syntax
+
+
+== Comparisons
+
+All comparators can be applied on X: `=, ==, <>, >, <, >=, &lt;=, same?`. In addition, `min`, and `max` are also supported.
+
+
+== Conversion
+
+
+== Testing values
+
+
+== Pre-defined words
+
+=== Actions
+
+=== Functions
+
+=== Natives
+
+=== Operators

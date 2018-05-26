@@ -358,20 +358,6 @@ print "Medium"
 
 When evaluated at compile-time, read and include the argument file contents at the current position. The file can contain a path, absolute or relative to the current script. When run by the Red interpreter, this directive is just replaced by a `do`, and no file inclusion occurs.
 
-=== #include-binary 
-
-*Syntax*
-
-----
-#include-binary <file>
-
-<file> : Red file to be included as binary value (file!).
-----  
-
-*Description*
-
-When evaluated at compile-time, read and include the argument file contents in raw binary form (no conversion occurs) at the current position. The file can contain a path, absolute or relative to the current script. When run by the Red interpreter, this directive is just replaced by a `read/binary`, and no file inclusion occurs.
-
 === #do 
 
 *Syntax*
