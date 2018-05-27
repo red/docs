@@ -8,6 +8,8 @@
 
 `Issue!` values are used to represent hashtags, keywords, and identifiers (like serial numbers) that don't contain spaces.
 
+Issues are part of the `all-word!` typeset.
+
 == Creation
 
 `Issue!` values can be created using literal syntax, or at runtime by using a `to` conversion.
@@ -19,8 +21,6 @@
 >> to issue! #"R"
 == #R
 ----
-
-Issues are part of the `all-word!` typeset.
 
 
 == Literal syntax
