@@ -6,24 +6,24 @@
 
 == Abstract
 
-An `issue!` value is a series of characters used to represent data such as phone numbers, credit card numbers, ISBN codes, and serial numbers.
+`Issue!` values are used to represent hashtags, keywords, and identifiers (like serial numbers) that don't contain spaces.
 
 == Creation
 
-`issue!` values can be created using literal syntax, or at runtime by using a `to` conversion.
+`Issue!` values can be created using literal syntax, or at runtime by using a `to` conversion.
 
 ----
->> to-issue "123.42-xxx"
+>> to issue! "123.42-xxx"
 == #123.42-xxx
 
->> to-issue #"R"
+>> to issue! #"R"
 == #R
 ----
 
 
 == Literal syntax
 
-A pound sign `#` followed by a sequence of characters. `issue!` values are terminated by a space, tab, newline, or semicolon.
+A pound sign `#` followed by a sequence of characters. `Issue!` values are terminated by whitespace, semicolon, or delimiter marking the start of a new value (e.g. `[` starting a block).
 
 `#555-555-5555`
 
