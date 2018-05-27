@@ -3,7 +3,12 @@
 . link:README.adoc[Red/Core Language]
 .. link:char.adoc[Char! datatype]
 .. link:date.adoc[Date! datatype]
+.. link:integer.adoc[Integer! datatype]  
+.. link:float.adoc[Float! datatype]
 .. link:map.adoc[Map! datatype]
+.. link:pair.adoc[Pair! datatype]
+.. link:tuple.adoc[Tuple! datatype]
+
 
 . link:gui.adoc[GUI System]
 .. link:view.adoc[View Engine]
