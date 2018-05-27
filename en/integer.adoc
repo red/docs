@@ -1,4 +1,4 @@
-= integer! datatype
+= Integer! datatype
 :toc:
 :numbered:
 
@@ -38,7 +38,7 @@ Single quote `'` is used as a place value seperator for long integers and can ap
 
 == Comparisons
 
-All comparators can be applied on integers: `=, ==, <>, >, <, >=, &lt;=, same?`. In addition, `min`, and `max` are also supported.
+All comparators can be applied on integers: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
 
 
 == Conversion

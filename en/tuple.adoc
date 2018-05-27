@@ -1,4 +1,4 @@
-= tuple! datatype
+= Tuple! datatype
 :toc:
 :numbered:
 
@@ -27,7 +27,7 @@ A sequence of three to twelve positive integers separated by decimal points.
 == Creation
 
 
-`tuple!` values can be created using literal syntax, or at runtime using a `make` constructor or a `to` conversion.
+Tuple! values can be created using literal syntax, or at runtime using a `make` constructor or a `to` conversion.
 
 ----
 >> make tuple! [1 2 3]
@@ -48,7 +48,7 @@ A sequence of three to twelve positive integers separated by decimal points.
 == Comparisons
 
 
-All comparators can be applied on tuples: `=, ==, <>, >, <, >=, &lt;=, same?`. In addition, `min`, and `max` are also supported.
+All comparators can be applied on tuples: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
 
 `min` and `max` when applied to two `tuple!` arguments require tuples of the same size.
 

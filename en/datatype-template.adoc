@@ -17,7 +17,7 @@ X values can be created using literal syntax, or at runtime using a `make` const
 
 == Comparisons
 
-All comparators can be applied on X: `=, ==, <>, >, <, >=, &lt;=, same?`. In addition, `min`, and `max` are also supported.
+All comparators can be applied on X: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
 
 
 == Conversion

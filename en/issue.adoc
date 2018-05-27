@@ -1,16 +1,18 @@
 [[anchor-1]]
 
-= issue! datatype
+= Issue! datatype
 :toc:
 :numbered:
 
 == Abstract
 
-An `issue!` value is a series of characters used to represent data such as phone numbers, credit card numbers, ISBN codes, and serial numbers.
+`Issue!` values are used to represent hashtags, keywords, and identifiers (like serial numbers) that don’t contain spaces.
+
+Issues are part of the `all-word!`` typeset.
 
 == Creation
 
-`issue!` values can be created using literal syntax, or at runtime by using a `to` conversion.
+`Issue!` values can be created using literal syntax, or at runtime by using a `to` conversion.
 
 ----
 >> to-issue "123.42-xxx"
@@ -34,7 +36,7 @@ A pound sign `#` followed by a sequence of characters. `issue!` values are termi
 
 == Comparisons
 
-All comparators can be applied on issues: `=, ==, <>, >, <, >=, &lt;=, same?`. 
+All comparators can be applied on issues: `=, ==, <>, >, <, >=, &lt;=, =?`. 
 
 
 == Testing values

@@ -1,15 +1,15 @@
-= float! datatype
+= Float! datatype
 :toc:
 :numbered:
 
 
 == Abstract
 
-`float!` values are 64-bit positive and negative numbers that contain a decimal point.
+`Float!` values are 64-bit positive and negative numbers that contain a decimal point.
 
-`float!` spans a range from `-1.7E+308` to `+1.7E+308`.
+Floats span a range from `-1.7E+308` to `+1.7E+308`.
 
-`float!` returns #INF on overflow by design.
+Floats returns #INF on overflow by design.
 
 ----
 >> 1.8E+308
@@ -52,7 +52,7 @@ Single quote `'` is used as a place value seperator for long integers, and can a
 
 == Comparisons
 
-All comparators can be applied on floats: `=, ==, <>, >, <, >=, &lt;=, same?`. In addition, `min`, and `max` are also supported.
+All comparators can be applied on floats: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
 
 
 == Conversion

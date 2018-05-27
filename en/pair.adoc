@@ -1,4 +1,4 @@
-= pair! datatype
+= Pair! datatype
 :toc:
 :numbered:
 
@@ -20,7 +20,7 @@ A pair is written as two integers separated by an `x`.
 
 == Creation
 
-`pair!` values can be created using literal syntax, or at runtime using a `make` constructor, `to` conversion, or via the as-pair `native!`.
+`Pair!` values can be created using literal syntax, or at runtime using a `make` constructor, `to` conversion, or via the as-pair `native!`.
 
 ----
 >> make pair! [20 30]
@@ -54,7 +54,7 @@ A pair is written as two integers separated by an `x`.
 
 == Comparisons
 
-All comparators can be applied on pairs: `=, ==, <>, >, <, >=, &lt;=, same?`. In addition, `min`, and `max` are also supported.
+All comparators can be applied on pairs: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
 
 
 
