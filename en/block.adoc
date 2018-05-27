@@ -1,0 +1,144 @@
+= block! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+A block is a collection of values delimited by opening and closing square brackets. 
+
+Values in a block are literal data until evaluated. 
+
+* Unevaluted:
+----
+>> my-block: [print "Hi there" 2 * 2]
+== [print "Hi there" 2 * 2]
+
+>> my-block
+== [print "Hi there" 2 * 2]
+
+>> type? my-block/1
+== word!
+
+>> type? my-block/2
+== string!
+
+>> type? my-block/3
+== integer!
+
+>> type? my-block/4
+== word!
+
+>> type? my-block/5
+== integer!
+----
+
+* Evaluated:
+----
+>> do my-block
+Hi there
+== 4
+----
+
+When a block is evaluated, the return value is the value of the last expression or value in the block.
+
+Blocks are part of the `series!` typeset.
+
+
+== Creation
+
+Block values can be created using literal syntax, or at runtime using a `make` constructor or a `to` conversion.
+
+To create an empty block pre-allocated for 10 elements:
+----
+>> make block! 10
+== []
+----
+
+To create a block of 10 elements with initial values set to none:
+
+----
+>> append/dup make block! 10 none 10
+== [none none none none none none none none none none]
+----
+
+Using a `to` conversion:
+
+----
+>> to block! {one 2 "three" 4:00}
+== [one 2 "three" 4:00:00]
+
+>> to block! "foo 1.23 me@me.com"
+== [foo 1.23 me@me.com]
+
+>> to block! 42
+== [42]
+----
+
+
+== Literal syntax
+
+A collection of values delimited by opening and closing square brackets, separated by spaces.
+
+`[]`
+
+`[one 2 "three"]`
+
+`[print 1.23]`
+
+
+Blocks can extend over multiple lines, and can contain other blocks.
+
+----
+[one
+2
+"three"
+]
+
+[one 2 "three" [x foo 1.23]]
+----
+
+
+Extra lines, spaces, and tabs are allowed as long as they do not break up values.
+
+Ok: `[42 print "foo"]`
+
+Not ok: `[42 pr   int "foo"]`
+
+
+== Comparisons
+
+All comparators can be applied on `block!`: `=, ==, <>, >, <, >=, &lt;=, same?`. In addition, `min`, and `max` are also supported.
+
+
+== Conversion
+
+A value or a series of values can be converted at runtime to `block!` by using the `to` action.
+
+----
+>> to block! {one 2 "three" 4:00}
+== [one 2 "three" 4:00:00]
+
+>> to block! "foo 1.23 me@me.com"
+== [foo 1.23 me@me.com]
+
+>> to block! 42
+== [42]
+----
+
+
+== Testing values
+
+Use `block?` to check if a value is a `block!` datatype.
+
+----
+>> block? [42]
+== true
+----
+
+Use `type?` to return the datatype of a given value.
+
+----
+>> type? [42]
+== block!
+----

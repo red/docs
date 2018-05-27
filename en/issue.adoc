@@ -1,0 +1,74 @@
+[[anchor-1]]
+
+= issue! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+An `issue!` value is a series of characters used to represent data such as phone numbers, credit card numbers, ISBN codes, and serial numbers.
+
+== Creation
+
+`issue!` values can be created using literal syntax, or at runtime by using a `to` conversion.
+
+----
+>> to-issue "123.42-xxx"
+== #123.42-xxx
+
+>> to-issue #"R"
+== #R
+----
+
+
+== Literal syntax
+
+A pound sign `#` followed by a sequence of characters. `issue!` values are terminated by a space, tab, newline, or semicolon.
+
+`#555-555-5555`
+
+`#CODE`1.2.3--42-8`
+
+`#ABC-123-xyx`
+
+
+== Comparisons
+
+All comparators can be applied on issues: `=, ==, <>, >, <, >=, &lt;=, same?`. 
+
+
+== Testing values
+
+Use `issue?` to check if a value is an `issue!` datatype.
+
+----
+>> issue? #ABC-123-xyx
+== true
+
+>> my-word: #X11'xyz
+== #X11'xyz
+
+>> issue? my-word
+== true
+----
+
+Use `type?` to return the datatype of a given value.
+
+----
+>> type? #ABC-123-xyx
+== issue!
+
+>> type? my-word
+== issue!
+----
+
+
+== Pre-defined words
+
+=== Functions
+
+`hex-to-rgb`, `issue?`, `to-issue`
+
+=== Natives
+
+`to-hex`
