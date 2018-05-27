@@ -20,6 +20,8 @@
 == #R
 ----
 
+Issues are part of the `all-word!` typeset.
+
 
 == Literal syntax
 
