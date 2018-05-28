@@ -1,14 +1,15 @@
 [[anchor-1]]
 
-= issue! datatype
+= Issue! datatype
 :toc:
 :numbered:
 
 == Abstract
 
-`Issue!` values are used to represent hashtags, keywords, and identifiers (like serial numbers) that don't contain spaces.
+`Issue!` values are used to represent hashtags, keywords, and identifiers (like serial numbers) that don’t contain spaces.
 
-Issues are part of the `all-word!` typeset.
+Issues are part of the `all-word!`` typeset.
+
 
 == Creation
 
@@ -36,7 +37,7 @@ A pound sign `#` followed by a sequence of characters. `Issue!` values are termi
 
 == Comparisons
 
-All comparators can be applied on issues: `=, ==, <>, >, <, >=, &lt;=, same?`. 
+All comparators can be applied on issues: `=, ==, <>, >, <, >=, &lt;=, =?`. 
 
 
 == Testing values
