@@ -41,7 +41,7 @@ All comparators can be applied on issues: `=, ==, <>, >, <, >=, &lt;=, =?`.
 
 == Testing values
 
-Use `issue?` to check if a value is an `issue!` datatype.
+Use `issue?` to check if a value is of the `issue!` datatype.
 
 ----
 >> issue? #ABC-123-xyx

@@ -1,0 +1,46 @@
+= Unset! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+`Unset!` is a single value that represents no usable value.
+
+
+== Literal syntax
+
+There is no literal syntax for `unset!`.
+
+
+== Testing values
+
+Use `unset?` to check if a value is of the `unset!` datatype.
+
+----
+>> unset? 1
+== false
+
+>> unset? ()
+== true
+
+>> unset? unset 'x
+== true
+----
+
+Use `type?` to return the datatype of a given value.
+
+----
+>> type? unset 'x
+== unset!
+----
+
+== Pre-defined words
+
+=== Functions
+
+`to-unset`
+
+=== Natives
+
+`unset`

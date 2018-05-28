@@ -79,7 +79,7 @@ All comparators can be applied on tuples: `=, ==, <>, >, <, >=, &lt;=, =?`. In a
 == Testing values
 
 
-Use `tuple?` to check if a value is a `tuple!` datatype.
+Use `tuple?` to check if a value is of the `tuple!` datatype.
 
 ----
 >> tuple? 42

@@ -129,7 +129,7 @@ A value or a series of values can be converted at runtime to `block!` by using t
 
 == Testing values
 
-Use `block?` to check if a value is a `block!` datatype.
+Use `block?` to check if a value is of the `block!` datatype.
 
 ----
 >> block? [42]
