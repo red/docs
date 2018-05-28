@@ -6,9 +6,12 @@
 .. link:float.adoc[Float! datatype]
 .. link:integer.adoc[Integer! datatype]  
 .. link:issue.adoc[Issue! datatype]
+.. link:logic.adoc[Logic! datatype]
 .. link:map.adoc[Map! datatype]
+.. link:none.adoc[None! datatype]
 .. link:pair.adoc[Pair! datatype]
 .. link:tuple.adoc[Tuple! datatype]
+.. link:unset.adoc[Unset! datatype]
 
 
 . link:gui.adoc[GUI System]
