@@ -88,7 +88,7 @@ Pairs support the refinements `/x` and `/y` for viewing and modifying coordinate
 
 == Testing values
 
-Use `pair?` to check if a value is a `pair!` datatype.
+Use `pair?` to check if a value is of the `pair!` datatype.
 
 ----
 >> pair? 42x42

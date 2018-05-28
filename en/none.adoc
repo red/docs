@@ -1,0 +1,58 @@
+= None! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+`None!` represents a value that does not belong to any other datatype. It is analogous to nil or nothing in other programming languages.
+
+== Creation
+
+`None!` values can be created using literal syntax, or at runtime using a `make` constructor, or a `to` conversion.
+
+----
+>> make none! 'x
+== none
+
+>> to none! 42
+== none
+----
+
+== Literal syntax
+
+The predefined word `none` or the serialized syntax:
+----
+#[none]
+----
+
+== Testing values
+
+Use `none?` to check if a value is of the `none!` datatype.
+
+----
+>> none? 1
+== false
+
+>> none? true
+== false
+
+>> none? none
+== true
+----
+
+Use `type?` to return the datatype of a given value.
+
+----
+>> type? none
+== none!
+----
+
+== Pre-defined words
+
+=== Functions
+
+`to-none`
+
+
+

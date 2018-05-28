@@ -63,7 +63,7 @@ If `integer!` and `float!` are combined in an expression, the result will be `fl
 
 == Testing values
 
-Use `integer?` to check if a value is an `integer!` datatype.
+Use `integer?` to check if a value is of the `integer!` datatype.
 
 ----
 >> integer? 42

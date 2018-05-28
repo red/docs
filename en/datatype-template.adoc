@@ -25,6 +25,18 @@ All comparators can be applied on X: `=, ==, <>, >, <, >=, &lt;=, =?`. In additi
 
 == Testing values
 
+Use X to check if a value is of the X datatype.
+
+----
+
+----
+
+Use `type?` to return the datatype of a given value.
+
+----
+
+----
+
 
 == Pre-defined words
 
