@@ -1,6 +1,7 @@
 = Summary
 
 . link:README.adoc[Red/Core Language]
+.. link:block.adoc[Block! datatype]
 .. link:char.adoc[Char! datatype]
 .. link:date.adoc[Date! datatype]
 .. link:float.adoc[Float! datatype]
