@@ -8,9 +8,18 @@
 `Unset!` is a single value that represents no usable value.
 
 
+== Creation
+
+`Unset!` values can be created at runtime using a `make` constructor or a `to` conversion.
+
+`make unset! <any-thing>`
+
+`to unset! <any-thing>`
+
+
 == Literal syntax
 
-There is no literal syntax for `unset!`.
+There is no literal syntax for `unset!`. It is the result of evaluating `()`, `do []`, `print`, or `get/any <word>` when `<word>` has not been set.
 
 
 == Testing values

@@ -1,55 +1,49 @@
-= block! datatype
+= Block! datatype
 :toc:
 :numbered:
 
-
 == Abstract
 
-A block is a collection of values delimited by opening and closing square brackets. 
+Blocks are the aggregate structures for values of all possible types. They are used to represent data or code that can be evaluated at any point in runtime.
 
-Values in a block are literal data until evaluated. 
+Blocks are delimited by opening and closing square brackets, separated by spaces.
 
-* Unevaluted:
+Values and expressions in a block are not evaluated by default:
+
 ----
->> my-block: [print "Hi there" 2 * 2]
-== [print "Hi there" 2 * 2]
+>> my-block: [print reverse "Hello" 2 * 2 42]
+== [print reverse "Hello" 2 * 2 42]
 
 >> my-block
-== [print "Hi there" 2 * 2]
-
->> type? my-block/1
-== word!
-
->> type? my-block/2
-== string!
-
->> type? my-block/3
-== integer!
-
->> type? my-block/4
-== word!
-
->> type? my-block/5
-== integer!
+== [print reverse "Hello" 2 * 2 42]
 ----
 
-* Evaluated:
+The `native!` values `do` and `reduce` are used to trigger the evaluation of expressions in a block.
+
+* `do` evaluates a block and returns the result of the last expression:
+
 ----
 >> do my-block
-Hi there
-== 4
+olleH
+== 42
 ----
 
-When a block is evaluated, the return value is the value of the last expression or value in the block.
+* `reduce` returns a copy of a block, evaluating all expressions:
 
-Blocks are part of the `series!` typeset.
+----
+>> reduce my-block
+olleH
+== [unset 4 42]
+----
 
+`Block!` is part of the `series!` and `any-block!` typesets.
 
 == Creation
 
 Block values can be created using literal syntax, or at runtime using a `make` constructor or a `to` conversion.
 
 To create an empty block pre-allocated for 10 elements:
+
 ----
 >> make block! 10
 == []
@@ -108,24 +102,7 @@ Not ok: `[42 pr   int "foo"]`
 
 == Comparisons
 
-All comparators can be applied on `block!`: `=, ==, <>, >, <, >=, &lt;=, same?`. In addition, `min`, and `max` are also supported.
-
-
-== Conversion
-
-A value or a series of values can be converted at runtime to `block!` by using the `to` action.
-
-----
->> to block! {one 2 "three" 4:00}
-== [one 2 "three" 4:00:00]
-
->> to block! "foo 1.23 me@me.com"
-== [foo 1.23 me@me.com]
-
->> to block! 42
-== [42]
-----
-
+All comparators can be applied on `block!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
 
 == Testing values
 
