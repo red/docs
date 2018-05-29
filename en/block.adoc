@@ -36,8 +36,6 @@ olleH
 == [unset 4 42]
 ----
 
-`Block!` is part of the `series!` and `any-block!` typesets.
-
 == Creation
 
 Block values can be created using literal syntax, or at runtime using a `make` constructor or a `to` conversion.
