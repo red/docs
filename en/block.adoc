@@ -4,7 +4,7 @@
 
 == Abstract
 
-Blocks are the aggregate structures for values of all possible types. They are used to represent data or code that can be evaluated at any point in runtime.
+Blocks are used to represent data or code that can be evaluated at any point in time. They are a type of `series!` with no restriction on the type of values that can be referenced.
 
 Blocks are delimited by opening and closing square brackets, separated by spaces.
 
