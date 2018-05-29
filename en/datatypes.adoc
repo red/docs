@@ -1,0 +1,26 @@
+= Datatype Documentation
+
+=== English version
+
+
+NOTE: _This is a work in progress. Information will be added and edited when possible._
+
+For more information about Red language, please visit http://red-lang.org
+
+
+Join the chat at  https://gitter.im/red/docs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge[image:https://badges.gitter.im/red/docs.svg[https://gitter.im/red/docs]]
+
+---
+
+.. link:block.adoc[Block! datatype]
+.. link:char.adoc[Char! datatype]
+.. link:date.adoc[Date! datatype]
+.. link:float.adoc[Float! datatype]
+.. link:integer.adoc[Integer! datatype]  
+.. link:issue.adoc[Issue! datatype]
+.. link:logic.adoc[Logic! datatype]
+.. link:map.adoc[Map! datatype]
+.. link:none.adoc[None! datatype]
+.. link:pair.adoc[Pair! datatype]
+.. link:tuple.adoc[Tuple! datatype]
+.. link:unset.adoc[Unset! datatype]
