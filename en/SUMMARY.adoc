@@ -14,7 +14,8 @@
 *** link:pair.adoc[Pair! datatype]
 *** link:tuple.adoc[Tuple! datatype]
 *** link:unset.adoc[Unset! datatype]
-.. link:gui.adoc[GUI System]
+
+. link:gui.adoc[GUI System]
 .. link:view.adoc[View Engine]
 .. link:vid.adoc[VID Dialect]
 .. link:draw.adoc[Draw Dialect]
