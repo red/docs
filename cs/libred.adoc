@@ -72,7 +72,10 @@ void redOpen(void)
 ----
 Inicializuje novou seanci knihovny Red runtime. Tato funkce musí být volána před voláním jakékoliv jiné funkce API. Je bezpečné, volat ji v témže procesu několikrát; tak jako tak se otevře pouze jedna seance.
 
-NOTE: Je-li před `redOpen` volána jiná funkce, je vratnou hodnotou `-2` indikován ilegální pokus o přístup.
+[NOTE] 
+====
+Je-li před `redOpen` volána jiná funkce, je vratnou hodnotou `-2` indikován ilegální pokus o přístup.
+====
 
 ==== redClose()
 ----
@@ -561,7 +564,10 @@ int redOpenLogWindow(void)
 
 Otevře logovací okno a přesměruje do něho všechen tiskový výstup Redu. Tento nástroj je užitečný, není-li hostitelská aplikace spouštěna ze systémové konzoly, která se implicitně používá pro tiskový výstup. Opakované volání této funkce je bez účinku, je-li již logovací okno otevřeno. Vrací `1` při úspěchu, `0` při selhání.
 
-NOTE: Pouze pro platformy Windows.
+[NOTE] 
+====
+Pouze pro platformy Windows.
+====
 
 ==== redCloseLogWindow()
 ----

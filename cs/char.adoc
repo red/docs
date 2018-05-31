@@ -5,16 +5,22 @@ Version: Draft 3
 
 == Úvodem
 
-Hodnoty `char!` reprezentují kódový bod Unicode. Jsou to celá čísla v rozsahu od hexadecimální nuly do hexadecimální hodnoty 10FFFF (od nuly do 1,114,111 v dekadickém systému). 
+Hodnoty `char!` reprezentují kódový bod Unicode. Jsou to celá čísla v rozsahu od hexadecimální nuly do hexadecimální hodnoty 10FFFF (od nuly do 1,114,111 v dekadickém systému).
+
+<<anchor-1,toc>> 
 
 == Charakteristika
 Hodnoty 'char!' jsou 'přímé', 'atomické' a 'pasivní'.
 
-Note: Předpokládá se, že charakteristiky typu byly již dříve v dokumentu definovány. (byly?)
+[NOTE] Předpokládá se, že charakteristiky typu byly již dříve v dokumentu definovány.
+
+<<anchor-1,toc>> 
 
 == Vytvoření
 
 Hodnoty `char!` mohou být vytvořeny s použitím literálové syntaxe nebo při běhu programu s použitím konstruktoru 'make' nebo konverzí &nbsp; 'to' &nbsp; jednou z mnoha funkcí, které z hodnoty `string!` extrahují hodnotu `char!`.
+
+<<anchor-1,toc>>
 
 === Literálová syntaxe
 
@@ -128,11 +134,13 @@ Formát "pojmenovaných" znaků je:
 
 |===
 
+<<anchor-1,toc>>
+
 == Komparace
 
 Pro hodnoty typu 'char!' mohou být použity všechny komparátory : `=, ==, <>, >, <, >=, &lt;=, same?`. Navíc jsou podporovány `min`, `max` a `sort`. Porovnávání hodnot `char!` values je 'case sensitive'.
 
-*Examples*
+*Příklady*
 ----
 #"a" = #"A"
 == false
@@ -144,10 +152,12 @@ sort [#"c" #"b" #"d" #"a"]
 == [#"a" #"b" #"c" #"d"]
 ----
 
+<<anchor-1,toc>>
+
 == Aritmetika
 Pro hodnoty `char!` lze použít celý rozsah matematických funkcí. Pokud se výsledek aritmetického výrazu dostane mimo rozsah  00 - 10FFFF (hexadecimal), je vyvolána chyba `Math Error`.
 
-*Examples*
+*Příklady*
 ----
 #"a" + 1
 == #"b"
@@ -161,7 +171,11 @@ Pro hodnoty `char!` lze použít celý rozsah matematických funkcí. Pokud se v
 *** Stack:  
 
 ----
+
+<<anchor-1,toc>>
+
 == Další souvisící funkce
 
 Lowercase, Uppercase
 
+<<anchor-1,toc>>

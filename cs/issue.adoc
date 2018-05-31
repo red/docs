@@ -1,0 +1,74 @@
+[[anchor-1]]
+
+= Datový typ issue!
+:toc:
+:numbered:
+
+== Úvodem
+
+Hodnoty typu `issue!` (*emise*) se používají k prezentování hashtagů, klíčových slov a identifikátorů (např. indexů u řad), to jest entit, které neobsahují mezery.
+
+Emise (issues) jsou součástí typové sady `all-word!`.
+
+
+== Vytvoření
+
+Hodnoty typu `issue!` lze vytvořit s použitím literálové syntaxe nebo za běhu programu použitím konverze `to`.
+
+----
+>> to issue! "123.42-xxx"
+== #123.42-xxx
+
+>> to issue! #"R"
+== #R
+----
+
+
+== Literálová skladba
+
+Znak `#`, následovný sekvencí alfanumerických znaků. Hodnoty typu `issue!` končí mezerou, středníkem nebo deliminátorem, označujícím začátek nové hodnoty (např. `[` začátek bloku).
+
+`#555-555-5555`
+
+`#CODE`1.2.3--42-8`
+
+`#ABC-123-xyx`
+
+
+== Komparace
+
+Pro hodnotu typu `issue!` lze být použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. `=, ==, <>, >, <, >=, &lt;=, =?`. 
+
+
+== Testování hodnot
+
+K ověření, zda hodnota je typu `issue!` použijeme funkci `issue?`.
+
+----
+>> issue? #ABC-123-xyx
+== true
+
+>> my-word: #X11'xyz
+== #X11'xyz
+
+>> issue? my-word
+== true
+----
+
+Funkce `type?` vrací datový typ zadané hodnoty.
+
+
+----
+>> type? #ABC-123-xyx
+== issue!
+
+>> type? my-word
+== issue!
+----
+
+
+=== Funkce
+
+`hex-to-rgb`, `issue?`, `to-issue`
+
+`to-hex`

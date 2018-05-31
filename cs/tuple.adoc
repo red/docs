@@ -1,0 +1,118 @@
+= Datový typ tuple!
+:toc:
+:numbered:
+
+
+== Úvodem
+
+
+Datový typ `tuple!` (*entice*) se používá k prezentaci rgb a rgba hodnot pro barvy, ip adresy a čísla verzí.
+
+Entice (tuple) musí mít alespoň dvě desetinné tečky a obsahovat pozitivní hodnoty  v rozsahu `0 - 255`.
+
+
+
+== Literálová skladba
+
+
+Sekvence tří až dvanácti pozitivních celých čísel, oddělených desetinnými tečkami.
+
+`1.2.3`
+
+`255.255.255.0`
+
+`1.2.3.4.5.6.7.8.9.10.11.12`
+
+
+== Vytvoření
+
+
+Hodnoty typu tuple! lze vytvořit s použitím literálové skladby nebo za běhu programu konstruktorem `make` či konverzí `to`.
+
+----
+>> make tuple! [1 2 3]
+== 1.2.3
+----
+
+----
+>> to tuple! [42]
+== 42.0.0
+----
+
+----
+>> to-tuple "1.2.3.4"
+== 1.2.3.4
+----
+
+
+== Komparace
+
+
+Pro hodnotu typu `pair!` lze být použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
+
+
+Pro funkce `min` a `max` musejí mít entice stejný počet členů.
+
+----
+>> min 1.2.3 4.5.6
+== 1.2.3
+
+>> max 1.2.3 4.5.6
+== 4.5.6
+----
+
+
+
+== Aritmetika
+
+
+Entice lze použít v operátorech, funkcích a akcích `+`, `add`, `-`, `subtract`, `*`, `multiply`, `/`, `divide`, `%` a `remainder`. Pokud výsledek aritmetické operace padne mimo rozsah `0 - 255`, je okleštěn na mezích `0` či `255`.
+
+----
+>> gray
+== 128.128.128
+
+>> gray * 2
+== 255.255.255
+----
+
+
+== Testování hodnot
+
+
+K ověření, zda hodnota je typu `tuple!` použijeme funkci `tuple?`.
+
+----
+>> tuple? 42
+== false
+
+>> tuple? 1.2.3
+== true
+----
+
+Funkce `type?` vrací datový typ zadané hodnoty.
+
+----
+>> type? 1.2.3
+== tuple!
+----
+
+
+== Definovaná slova
+
+=== Akce (action!)
+
+`add`, `subtract`, `multiply`, `divide`, `remainder`, `and~`, `or~`, `xor~`, `length?`, `pick`, `reverse`
+
+=== Funkce (funkction!)
+
+`first`, `second`, `third`, `fourth`, `fifth`, `to-tuple`, `tuple?`, `mod`, `modulo`
+
+
+=== Nativní funkce (native!)
+
+`zero?`
+
+=== Operátory
+
+`+`, `-`, `*`, `/`, `%`, `and`, `or`, `xor`

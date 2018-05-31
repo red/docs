@@ -20,9 +20,11 @@ VID automaticky vytvoří kontejnerový piškot pro popis zadaných piškotů. I
 
 Kód VIDu je vyhodnocen funkcí `layout` (jež je interně volána funkcí `view`). Kód je poté kompilován do stromu piškotů, vhodného pro přímé zobrazení.
 
-NOTE: 
+[NOTE]
+==== 
 * Použijte `help view` a `help layout` v konzole Redu k získání přehledné informace.
 * Typy piškotů nepatří mezi datové typy!
+====
 
 == Struktura kódu 
 
@@ -37,11 +39,17 @@ Typický blok kódu VID má následující strukturu:
 
 * *popis rozvržení*: poziční příkazy, definice stylů a popisy piškotů.
 
-NOTE: Všechny sekce jsou nepovinné; blok VIDu nemá předepsaný obsah.
+[NOTE] 
+====
+Všechny sekce jsou nepovinné; blok VIDu nemá předepsaný obsah.
+====
 
 == Nastavení kontejnerů
 
-NOTE: Klíčové slovo `react` keyword může být použito při nastavení kontejneru i při výběru možností pro `face` - viz podrobný popis v odstavci <<anchor:_react, zde>>.
+[NOTE] 
+====
+Klíčové slovo `react` keyword může být použito při nastavení kontejneru i při výběru možností pro `face` - viz podrobný popis v odstavci <<anchor:_react, zde>>.
+====
 
 === title 
 
@@ -90,6 +98,10 @@ view layout [
 	button "Nazdar"
 ]
 ----
+
+=== Definice aktérů
+
+V této oblasti kódu je také možné definovat aktéry kontejneru - viz sekci <<Actors>>.
 
 == Rozvržení (layout) 
 
@@ -216,7 +228,7 @@ do <body>
 ----    
 *Popis*
 
-Vyhodnotí blok regulérního kódu Redu pro následné "last-minute" inicializační použití. Lze použít klíčové slovo `self` jako odkaz na piškot kontejneru (okno či panel).
+Vyhodnotí blok regulérního kódu Redu pro následné "last-minute" inicializační použití. Blok těla je vázán na piškot kontejneru (okno nebo panel), takže je možný přímý přístup k pišotu kontejneru. Na kontejner samotný lze odkazovat klíčovým slovem `self`.
 
 == Dodatečné styly
 
@@ -373,13 +385,13 @@ Nastaví styl textu na `underline`.
 
 *Syntaxe*
 ----
-extra <value>
+extra <expr>
     
-<value> : jakákoli hodnota (any-type!).
+<expr> : jakákoli hodnota (any-type!).
 ----    
 *Popis*
 
-Nastaví aspekt `extra` piškotu na novou hodnotu.
+Nastaví aspekt `extra` piškotu na novou hodnotu (jež může být výsledkem výrazu).
 
 ==== data
 
@@ -387,7 +399,7 @@ Nastaví aspekt `extra` piškotu na novou hodnotu.
 ----
 data <list>
     
-<list> : seznam položek (block!).
+<list> : literálový seznam položek nebo výraz Redu (block!).
 ----    
 *Popis*
 
@@ -399,12 +411,12 @@ Nastaví aspekt `data` piškotu na seznam hodnot. Formát seznamu závisí na po
 ----
 draw <commands>
     
-<commands> : seznam příkazů (block!).
+<commands> : literálový seznam příkazů nebo výraz Redu(block!).
 ----    
 *Popis*
 
 Nastaví aspekt `draw` piškotu na seznam příkazů dialektu Draw.
-Viz link:draw.html [Draw dialect].
+Viz link:draw.adoc [Draw dialect].
 
 ==== font
 
@@ -416,9 +428,12 @@ font <spec>
 ----    
 *Popis*
 
-Nastaví aspekt `font` piškotu na nový objekt typu `font!`. Objekt font! je popsán link:view.html#_font_object[zde].
+Nastaví aspekt `font` piškotu na nový objekt `font!`. Objekt font! je popsán link:view.adoc#_font_object[zde].
 
-NOTE: Je možné použít `font` spolu s jinými souvisejícími parametry. VID je sloučí dohromady s prioritou posledně zadaného parametru.
+[NOTE] 
+====
+Je možné použít `font` spolu s jinými souvisejícími parametry. VID je sloučí dohromady s prioritou posledně zadaného parametru.
+====
 
 ==== para
 
@@ -430,9 +445,12 @@ para <spec>
 ----    
 *Popis*
 
-Nastaví aspekt `para` novému objektu `para!`. Objekt para! je popsán link:view.html#_para_object[zde].
+Nastaví aspekt `para` novému objektu `para!`. Objekt para! je popsán link:view.adoc#_para_object[zde].
 
-NOTE: Je možné použít `para` spolu s jinými souvisejícími parametry. VID je sloučí dohromady s prioritou posledně zadaného parametru.
+[NOTE] 
+====
+Je možné použít `para` spolu s jinými souvisejícími parametry. VID je sloučí dohromady s prioritou posledně zadaného parametru.
+====
 
 ==== wrap
 
@@ -507,7 +525,10 @@ Vytvoří nový reaktor z těla bloku. Je-li `react` použito jako možnost (opt
 
 Nepovinné klíčové slovo `later` přeskočí první událost reakce bezprostředně po provedení `těla` bloku.
 
-NOTE: Reaktory jsou součástí reaktivního programování ve strojku View, jehož dokumentace se připravuje. Stručně řečeno, tělo bloku může popisovat jeden či více vztahů mezi vlastnostmi piškotů a to s použitím cest. Nastavení vlastnosti piškotu je zpracováno jako cíl (target) reaktoru (aktualizovaný piškot), zatímco cesta, vedoucí k vlastnosti piškotu je zpracována jako zdroj (source) reaktoru (změna zdroje spustí aktualizaci kódu reaktoru).
+[NOTE] 
+====
+Reaktory jsou součástí reaktivního programování ve View, jehož dokumentace se připravuje. Stručně řečeno, tělo bloku může popisovat jeden či více vztahů mezi vlastnostmi piškotů a to s použitím cest. Nastavení vlastnosti piškotu je zpracováno jako cíl (target) reaktoru (aktualizovaný piškot), zatímco cesta, vedoucí k vlastnosti piškotu je zpracována jako zdroj (source) reaktoru (změna zdroje spustí aktualizaci kódu reaktoru).
+====
 
 ==== loose
 
@@ -609,8 +630,23 @@ default <value>
 
 Definuje implicitní hodnotu aspektu `data`, když konverze aspektu `text` vrací `none`. Tato implicitní hodnota je uložena v aspektu `options` jako pár key/value.
 
-NOTE: aktuálně používáno pouze u piškotů `text` a `field`.
+[NOTE] 
+====
+aktuálně používáno pouze u piškotů `text` a `field`.
+====
 
+==== with
+
+*Syntaxe*
+
+----
+with <body>
+
+<body>: blok kódu vázaný na aktuální piškot (block!)
+
+*Popis*
+
+Vyhodnocuje blok kódu, vázaný na aktuálně definovaný piškot. Umožňuje přímé nastavení polí piškotu, potlačujíc jiná nastavení VID.
 
 === Datové typy 
 
@@ -652,7 +688,8 @@ Je možné určit aktéra zjednodušeným způsobem poskytnutím pouze bloku jeh
 ----
 func [face [object!] event [event! none!]][...body...]
 ----
-Platný seznam názvů událostí lze nalézt link:view.html#_actors[zde].
+
+Platný seznam názvů událostí lze nalézt link:view.adoc#_actors[zde].
 
 Je-li zadán blok nebo get-word bez předložky s názvem aktéra, je implicitní aktér pro typ piškotu vytvořen podle definicí  https://github.com/red/red/blob/master/modules/view/styles.red[zde]
 

@@ -198,7 +198,7 @@ Všechny názvy proměnných a funkcí se píší malými písmeny, pokud není 
 * jméno je OS nebo (non-Red) API třetí strany
 
 
-== Makra (Red/System) 
+== Makra (Red/System) anchor:macros-redsystem[] 
 
 Pro názvy maker se obvykle používají velká písmena kvůli odlišení od zbytku kódu (pokud není přímo záměrem aby se nelišily od normálního kódu, 'like pseudo-custom datatype definitions'). Slova víceslovných názvů se oddělují podtržítkem `_`.
 
@@ -373,7 +373,7 @@ head insert
 
 Zpravidla se má kvůli úspoře významného vertikálního místa vkládat komentář do stejného řádku jako počátek odpovídajícího kódu, místo na nový řádek. Pokud je však komentář použit také jako oddělovač odlišných porcí kódu, je jeho umístění na nový řádek vhodné.
 
-== Skladba řetězce anchor:string-syntax[] 
+== Skladba řetězce 
 
 
 Pro jednořádkové řetězce se používají dvojité uvozovky `""`. Forma `{}`

@@ -1,20 +1,29 @@
 = Seznam
 
-* link:README.adoc[Readme-cs]
-** link:char.adoc[Datový typ Char!]
-** link:map.adoc[Datový typ Map!]
-** link:date.adoc[Datový typ Date!]
-
-* link:gui.adoc[Red-GUI]
-** link:view.adoc[Prostředí View]
-** link:vid.adoc[Dialekt VID]
-** link:draw.adoc[Dialekt Draw]
+. link:README.adoc[Readme-cs]
+** link:datatypes.adoc[Datové typy]
+*** link:block.adoc[Datový typ block!]
+*** link:char.adoc[Datový typ char!]
+*** link:date.adoc[Datový typ date!]
+*** link:float.adoc[Datový typ float!]
+*** link:integer.adoc[Datový typ integer!]
+*** link:issue.adoc[Datový typ issue!]
+*** link:logic.adoc[Datový typ logic!]
+*** link:map.adoc[Datový typ map!]
+*** link:none.adoc[Datový typ none!]
+*** link:pair.adoc[Datový typ pair!]
+*** link:tuple.adoc[Datový typ tuple!]
+*** link:unset.adoc[Datový typ unset!]
+.. link:gui.adoc[Systém GUI]
+.. link:view.adoc[Prostředí View]
+.. link:vid.adoc[Dialekt VID]
+.. link:draw.adoc[Dialekt Draw]
 
 ### Další dokumentace  
 
-* link:reactivity.adoc[Reaktivní programování]
-* link:libred.adoc[Libred API]
-* link:preprocessor.adoc[Preprocesor]
-* link:redbin.adoc[Specificace formátu Redbin]
-* link:style-guide.adoc[Kódovací styl]
+. link:reactivity.adoc[Reaktivní programování]
+. link:libred.adoc[Libred API]
+. link:preprocessor.adoc[Preprocesor]
+. link:redbin.adoc[Specificace formátu Redbin]
+. link:style-guide.adoc[Kódovací styl]
 

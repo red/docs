@@ -21,11 +21,12 @@ Reakce probíhají asynchronně při změně hodnoty zdrojového pole. Reakční
 
 V reaktivním výrazu musí být pouze zdrojový objekt reaktorem. Cílem může být jednoduchý objekt. Je-li cíl rovněž reaktorem, dochází ke zřetězení reakcí, což se projeví automatickým vytvořením vztahového grafu.
 
-Poznámky:
- 
+[NOTE]
+==== 
 * Reaktivní podpora Redu může být v budocnu rozšířena o model "pull".
 * Toto není framework FRP https://en.wikipedia.org/wiki/Functional_reactive_programming[(Funkctional reactive programming)], i když proudy událostí mohou být v budoucnu podporovány.
 * Strojek Red/View GUI se při operacích s grafickými objekty opírá o objekty (piškoty) typu *face!* Piškoty jsou reaktory a mohou být použity pro ustavení reaktivních vztahů mezi piškoty nebo s nereaktorovými objekty.
+====
 
 === Glosář 
 

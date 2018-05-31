@@ -65,7 +65,8 @@ libRed::
 List::
   
 Mezzanine::
-  Another name for a Red function.
+  Termín Rebolu - funkce psaná v Rebolu (nikoliv v C), zařazená do standardní distribuce. Naproti tomu mezzaninová funkce v Redu je celá psaná v Redu, jenž tvoří standardní distribuci. Mezzaninové funkce nevyžadují kompilaci.
+  
 Module::
     
 Native:: 
