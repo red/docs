@@ -24,7 +24,10 @@ Direktiva jsou označena specifickými hodotami typu `issue!` (počínaje symbol
 
 Je-li direktivum prováděno, je nahrazeno jeho výslednou vratnou hodnotou (některá direktiva nevrací nic, jsou tedy pouze odstraněna). Takto je postupně transformován celý zdrojový soubor.
 
-NOTE: Red/System má svůj vlastní http://static.red-lang.org/red-system-specs-light.html#section-16[preprocesor], jenž je podobný ale `low-level` a je aplikován na zdrojový kód v textové formě.
+[NOTE] 
+====
+Red/System má svůj vlastní http://static.red-lang.org/red-system-specs-light.html#section-16[preprocesor], jenž je podobný ale `low-level` a je aplikován na zdrojový kód v textové formě.
+====
 
 === Konfigurační objekt
 
@@ -34,14 +37,17 @@ Example:
     
     #if config/OS = 'Windows [#include %windows.red]
 
-Poznámka: when using the preprocessor at runtime (from Red's interpreter), the `config` object is also available, and will reflect the options used for compiling the Red executable currently used to run the code.
+[NOTE] 
+====
+Při použití preprocesoru za běhu programu (at runtime - z interpreta Redu) je rovněž dostupný objekt `config`, jenž reflektuje volby, použité pro kompilaci prováděčky Redu, aktuálně použité pro běh kódu.
+====
 
 === Prováděcí kontext
 
 Všechny výrazy, použité v direktivách, jsou vázány na dedikovaný kontext aby se předešlo upouštění (leaking) slov v globálním kontextu, jež může mít nechtěné vedlejší účinky. Tento kontext je rozšířen o každé zadané slovo (set-word), použité v podmínkových výrazech, makrech a v direktivě `#do`.
 
-Tipy:
-
+[TIP]
+====
 * Obsah takového skrytého kontextu je možné vytisknout tímto výrazem:
         
     #do [probe self]
@@ -49,8 +55,9 @@ Tipy:
 * Při použití při běhu programu (runtime) lze ke skrytému kontextu přistoupit přímo použitím výrazu:
         
     probe preprocessor/exec
+====
 
-=== Aplikační poznámka
+=== Implementační poznámka
 
 V současné době jsou výrazy v direktivách, použitých při kompilaci, vyhodnocovány interpretem Rebol2, neboť ten spouští "toolchain code". Toto je dočasné a mělo by být co nejdříve převedeno na vyhodnocování přímo Redem. 
 
@@ -72,12 +79,15 @@ Tento typ maker je vyšší úrovně, neboť preprocesor zajišťuje příjem ar
     
 Poté, co je takové makro definováno, je spuštěno při každém výskytu slova `name` s postupnou realizací těchto kroků:
 
-1. Přijmutí argumentů.
-2. Invokace funkce makra pro přijaté argumenty.
-3. Náhrada invokace poslední hodnotou funkce.
-4. Pokračování v předzpracování (preprocessing) od nahrazené hodnoty (umožňující rekurzivní vyhodnocení makra).
+. Přijmutí argumentů.
+. Invokace funkce makra pro přijaté argumenty.
+. Náhrada invokace poslední hodnotou funkce.
+. Pokračování v předzpracování (preprocessing) od nahrazené hodnoty (umožňující rekurzivní vyhodnocení makra).
 
-Poznámka: určení typů argumentů není aktuálně podporováno.
+[NOTE] 
+====
+Určení typů argumentů není aktuálně podporováno.
+====
 
 *Příklady*
 ----
@@ -85,12 +95,12 @@ Red []
 #macro make-KB: func [n][n * 1024]
 print make-KB 64
 ----	
-will result in:    
+má za výsledek:    
 ----    
 Red []
 print 65536
 ----    
-Calling other macros, from within a macro:
+Volání jiných maker z makra:
 ----	
 Red []
 #macro make-KB: func [n][n * 1024]
@@ -98,20 +108,20 @@ Red []
     
 print make-MB 1
 ----	
-will result in:    
+má za výsledek:    
 ----    
 Red []
 print 1048576
 ----
 
-=== Makra s porovnávacími vzory
+=== Makra s porovnávanými vzory
 
 Místo porovnávání slova s přijímaným argumentem, tento typ makra
 porovnává vzor poskytnutý jako pravidlo nebo klíčové slovo dialektu Parse. Stejně jako u pojmenovaných maker se vracená hodnota používá jako náhrada za shodující se vzor.
 
 K tomuto typu makra existuje také verze na nižší úrovni, která je spouštěna použitím atributu `[manual]`. V takovém případě nexistuje žádná implicitní akce; plná kontrola je přenechána uživateli. Nekoná se žádná automatická náhrada a provedení požadovaných transformací, včetně nastavení pokračovacího bodu závisí na funkci makra.
 
-Typická forma je tato:
+Typická forma maker typu *pattern matching* je tato:
 ----
  #macro <rule> func [start end /local word1 word2...][...code...]
 ----
@@ -255,7 +265,7 @@ Red []
 print #switch config/OS [
     Windows ["Windows"]
     Linux   ["Unix"]
-    MacOSX  ["macOS"]
+    MacOS  ["macOS"]
 ]
 ----    
 bude mít za následek následující kód při běhu na Windows:
@@ -310,6 +320,20 @@ print "Medium"
 *Popis*
 
 Při vyhodnocení při kompilaci přečte a vloží obsah souboru v aktuální pozici. Soubor může obsahovat absolutní nebo relativní cestu vzhledem k aktuálnímu skriptu. Při vyhodnocení interpretem je tato direktiva pouze nahrazena slovem `do` a k žádné iknluzi nedojde.
+
+=== #include-binary
+
+*Syntaxe*
+
+----
+#include-binary <file>
+
+<file> : Soubor Redu, připojovaný jako binární hodnota (file!).
+----
+
+*Popis*
+
+Probíhá-li vyhodnocení při kompilaci, načítá a připojuje se obsah souboru v hrubé binární formě (bez konverzí) v aktuální pozici.  Soubor může obsahovat cestu, absolutní nebo relativní k aktuálnímu skriptu. Při spuštění interpretem Redu je tato direktiva nahrazena direktivou `read/binary` a k žádné inkluzi souboru nedojde.
 
 === #do
 

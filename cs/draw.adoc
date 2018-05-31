@@ -48,7 +48,10 @@ triangle <point> <point> <point>
 <point> : souřadnice vrcholu trojúhelníku (pair!).
 ----
 
-NOTE: Vrchol (vertex) je bod, kde se setkávají dvě přímky trojúhelníka.
+[NOTE]
+====
+ Vrchol (vertex) je bod, kde se setkávají dvě přímky trojúhelníka.
+====
     
 *Popis*
 
@@ -168,7 +171,10 @@ spline <point> <point> ... closed
 
 Nakreslí polynomickou bázovou křivku (b-spline) pro zadané alespoň tři body. Nepovinné klíčové slovo `closed` uzavře křivku spojnicí mezi koncem a počátkem.
 
-Poznámka: Dva body jsou akceptovány, vrací se ale přímka.
+[NOTE]
+====
+Dva body jsou akceptovány, vrací se ale přímka.
+====
 
 === Image
 
@@ -196,11 +202,12 @@ image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color> crop <
 
 Nakreslí obrázek s použitím poskytnuté inforace o pozici a šířce. Nemá-li obrázek zadané poziční informace, potom je nakreslen v souřadnici 0x0. Případně poskytnutá hodnota barvy bude použita pro transparentnost.
 
-NOTE:
- 
+[NOTE]
+==== 
 * Čtyři body nejsou dosud zavedeny. Budou umožňovat roztažení (stretch) obrázku s použitím čtyř libovolně umístěných hran. 
 Four points mode is not yet implemented. It will allow to stretch the image using 4 arbitrary-positioned edges.
 * `border` Tento nepovinný režim není dosud zaveden.
+====
 
 === Text
 
@@ -216,7 +223,10 @@ text <position> <string>
 
 Tiskne textový řetězec v určeném místě s aktuálním fontem.
 
-NOTE: Není-li žádný font vybrán nebo jeho barva je nastavena na `none`, použije se místo toho barva pera.
+[NOTE] 
+====
+Není-li žádný font vybrán nebo jeho barva je nastavena na `none`, použije se místo toho barva pera.
+====
 
 === Font 
 
@@ -304,11 +314,11 @@ pen diamond <color1> <offset> ... <colorN> <offset> <upper> <lower> <focal> <spr
 
 Nastaví gradient ve tvaru kosočterce. Pro metodu "spread" jsou akceptovány následující hodnoty: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
 
-Kosočtvercový gradient se vykreslí ve směru od ohniska k okraji kosočtverce, definovaného horním a dolním rohem. Počáteční barva se vykreslí v ohnisku, koncová barva na okraji čtyřúhelníka.
+Kosočtvercový gradient se vykreslí ve směru od ohniska k okraji kosočtverce, definovaného horním a dolním rohem. Počáteční barva se vykreslí v ohnisku, koncová barva na okraji kosočtverce.
 
 ==== Pattern pen
 
-*Syntax*
+*Syntaxe*
 ----
 pen pattern <size> <start> <end> <mode> [<commands>]
 
@@ -502,7 +512,10 @@ Nastaví způsob spojování čar při kreslení. Přípustné jsou tyto hodnoty
 
 image::../images/line-join.png[Line-join,align="center"]
 
-NOTE: miter-bevel usekne špičku tvaru miter na tvar bevel, přesáhne-li její délka stanovenou mez  (Viz https://msdn.microsoft.com/en-us/library/windows/desktop/ms534148%28v=vs.85%29.aspx[zde]).
+[NOTE] 
+====
+miter-bevel usekne špičku tvaru miter na tvar bevel, přesáhne-li její délka stanovenou mez  (Viz https://msdn.microsoft.com/en-us/library/windows/desktop/ms534148%28v=vs.85%29.aspx[zde]).
+====
 
 === Line-cap  
 
@@ -535,8 +548,10 @@ anti-alias <mode>
 
 Přepíná (on/off) režim vyhlazování (anti-aliasing) pro následné příkazy Draw.
 
-NOTE: Vyhlazení zubatých obrysů poskytuje hezčí vzhled ale degraduje výkon.
-
+[NOTE]
+====
+Vyhlazení zubatých obrysů poskytuje hezčí vzhled ale degraduje výkon.
+====
 
 === Matrix
 
@@ -711,13 +726,14 @@ Při použití literálových slov (lit-words) `'pen` nebo `'fill-pen` se zkosen
 === Transform   
 
 *Syntaxe*
-----
-transform <angle> <center> <scale-x> <scale-y> <translation> [<commands>]
-transform 'pen <angle> <center> <scale-x> <scale-y> <translation>
-transform 'fill-pen <angle> <center> <scale-x> <scale-y> <translation>
 
-<angle>       : úhel rotace ve stupních (integer! float!).
+----
+transform <center> <angle> <scale-x> <scale-y> <translation> [<commands>]
+transform 'pen <center> <angle> <scale-x> <scale-y> <translation>
+transform 'fill-pen <center> <angle> <scale-x> <scale-y> <translation>
+
 <center>      : (nepovinné) střed rotace (pair!).
+<angle>       : úhel rotace ve stupních (integer! float!).
 <scale-x>     : měřítko pro osu X (number!).
 <scale-y>     : měřítko pro osu Y (number!).
 <translation> : velikost posunu (pair!).
@@ -774,7 +790,10 @@ Klíčová slova `shape` umožňují přístup k příkazům sub-dialektu Shape.
 * generované tvary lze zadat do `fill-pen` pro vytváření jednoduchých i sofistikovaných výplní.
 * souřadnice mohou být absolutní (jako ve Draw) nebo relativní vzhledem k poslední pozici.
 
-NOTE: Všechny kreslící příkazy používají implicitně absolutní souřadnice. Použití 'lit-word' verze příkazu přepne na relativní souřadnice.
+[NOTE]
+====
+Všechny kreslící příkazy používají implicitně absolutní souřadnice. Použití 'lit-word' verze příkazu přepne na relativní souřadnice.
+====
 
 === Move
 
@@ -791,7 +810,7 @@ Přemístí pero na novou pozici. Nic se nekreslí.
 
 === Line
 
-*Syntax*
+*Syntaxe*
 ----
  line <point> <point> ...   (absolute)
 'line <point> <point> ...   (relative)
@@ -804,14 +823,15 @@ Nakreslí úsečku mezi dvěma body. Je-li zadáno více bodů, kreslí se dalš
 
 === Arc
 
-*Syntax*
+*Syntaxe*
+
 ----
- arc <end> <radius-x> <radius-y> <angle> sweep closed       (absolute)
-'arc <end> <radius-x> <radius-y> <angle> sweep closed       (relative)
+ arc <end> <radius-x> <radius-y> <angle> sweep large       (absolute)
+'arc <end> <radius-x> <radius-y> <angle> sweep large       (relative)
 
 <end>      : koncový bod oblouku (pair!).
-<radius-x> : radius of the circle along x axis (integer! float!).
-<radius-y> : x coordinate of radius of the circle (integer! float!).
+<radius-x> : poloměr kružnice ve směru osy x (integer! float!).
+<radius-y> : poloměr kružnice ve směru osy y (integer! float!).
 <angle>    : úhel mezi počátečním a koncovým bodem oblouku ve stupních (integer! float!).
 sweep      : (optional) oblouk je kreslen ve směru pozitivního úhlu.
 large      : (optional) vytvoří konvexní oblouk (souvisí s volbou 'sweep).
@@ -847,7 +867,10 @@ Kreslí kubickou Bezierovu křivku, danou třemi body. Počátečním bodem je a
 
 Kreslí hladkou kubickou Bezierovu křivku, danou pořadím alespoň dvou bodů. Implicitně prvním bodem je aktuální pozice pera.
 
-NOTE: From http://www.w3.org/TR/SVG11/paths.html
+[NOTE]
+====
+From http://www.w3.org/TR/SVG11/paths.html
+====
 
 "The first control point is assumed to be the reflection of the second control point on the previous command relative to the current point. (If there is no previous curve command, the first control point is the current point.)"
 
@@ -877,11 +900,14 @@ Kreslí kvadratickou Bezierovu křivku, danou pořadím alespoň dvou bodů. Imp
 
 Kreslí hladkou kvadratickou Bezierovu křivku z aktuální pozice pera k určenému bodu.
 
-NOTE: See See: http://www.w3.org/TR/SVG11/paths.html
+[NOTE] 
+====
+See: http://www.w3.org/TR/SVG11/paths.html
+====
 
 === Hline
 
-*Syntax*
+*Syntaxe*
 ----
  hline <end-x>   (absolute)
 'hline <length>  (relative)
@@ -959,8 +985,10 @@ Příkazy uvnitř kódu Draw mohou být libovolně seskupovány do bloků. Séma
 Slova typu `set-words` mohou být použita *mezi* příkazy kódu Draw k zaznamenání aktuální pozice do bloku Draw, snadno přístupného při eventuelní pozdější potřebě.
 
 
-NOTE: změní-li se délka bloku Draw před slovem `set-word`, upraví se původní pozice tak aby `set-word` dále neukazoval na tentýž odkaz.
-
+[NOTE] 
+====
+Změní-li se délka bloku Draw před slovem `set-word`, upraví se původní pozice tak aby `set-word` dále neukazoval na tentýž odkaz.
+====
 
 == Funkce draw 
 
@@ -1019,7 +1047,10 @@ For example:
 
 image::../images/grad-pen.png[Grad-pen,align="center"]
 
-NOTE: gradient lze zadat až 256 ti barvami.
+[NOTE] 
+====
+gradient lze zadat až 256 ti barvami
+====
 
 == Zdrojový kód grafiky
 

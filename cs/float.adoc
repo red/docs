@@ -1,0 +1,95 @@
+= Datový typ float!
+:toc:
+:numbered:
+
+
+== Úvodem
+
+Hodnoty typu`float!` jsou 64-bitové pozitivní a negativní čísla, která obsahují desetinnou čárku.
+
+Mají rozsah od `-1.7E+308` do `+1.7E+308`.
+
+Při přetečení vracejí #INF.
+
+----
+>> 1.8E+308
+== 1.#INF
+
+>> -1.8E+308
+== -1.#INF
+----
+
+Dělení `0.0` číslem `0.0` rezultuje v `1.#NaN`
+
+
+== Literálová skladba
+
+Pořadí číslic s desetinnou tečkou nebo čárkou.
+
+`123.4`
+
+`123,4`
+
+Znak `+` nebo `-` bezprostředně před první číslicí označuje pozitivní nebo negativní hodnotu typu `float!`.
+
+`+123.4`
+
+`-123.4`
+
+Předcházející nuly jsou ignorovány.
+----
+>> +00123.4
+== 123.4
+----
+
+Jednoduchý apostrof `'` se používá jako místní oddělovač hodnot u dlouhých celých čísel a může být použit kdekoliv po první číslici.
+----
+>> 60'000'123.4
+== 60000123.4
+----
+
+
+== Komparace
+
+Pro hodnotu typu `float!` lze být použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
+
+
+
+== Konverze
+
+Hodnotu `float` lze za běhu programu konvertovat na `integer!` nebo `string!` s použitím akce `to`. 
+
+[NOTE]
+Při konverzi float na integer jsou odvrženy všechny číslice za desetinnou čárkou. Žádné zaokrouhlení se neprovádí.
+
+----
+>> to integer! 123.4
+== 123
+
+>> to string! 123.4
+== "123.4"
+----
+
+If `float!` and `integer!` are combined in an expression, the result will be `float!`.
+
+----
+>> 123.4 * 42
+== 5182.8
+----
+
+
+== Testování hodnot
+
+K ověření, zda hodnota je typu `float!` použijeme funkci `float?`.
+
+----
+>> float? 123.4
+== true
+----
+
+Funkce `type?` vrací datový typ zadané hodnoty.
+
+----
+>> type? 123.4
+== float!
+----
