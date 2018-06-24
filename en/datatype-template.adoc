@@ -9,7 +9,7 @@
 
 == Creation
 
-X values can be created using literal syntax, or at runtime using a `make` constructor, `to` conversion.
+X values can be created using literal syntax, or at runtime using a `make` constructor or `to` conversion.
 
 
 == Literal syntax
