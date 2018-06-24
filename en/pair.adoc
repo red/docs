@@ -22,16 +22,16 @@ A pair is written as two integers separated by an `x`.
 
 `Pair!` values can be created using literal syntax, or at runtime using a `make` constructor, `to` conversion, or via the as-pair `native!`.
 
-----
+```red
 >> make pair! [20 30]
 == 20x30
 
 >> make pair! 42
 == 42x42
-----
+```
 
 
-----
+```red
 >> to pair! [20 30]
 == 20x30
 
@@ -40,22 +40,21 @@ A pair is written as two integers separated by an `x`.
 
 >> to pair! "42x42"
 == 42x42
-----
+```
 
 `as-pair` takes an `x` and `y` argument of type `integer!` or `float!`. Float values will be truncated.
 
-----
+```red
 >> as-pair 20 30
 == 20x30
 
 >> as-pair 1.23 42
 == 1x42
-----
+```
 
 == Comparisons
 
 All comparators can be applied on pairs: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
-
 
 
 == Arithmetic
@@ -67,7 +66,7 @@ All comparators can be applied on pairs: `=, ==, <>, >, <, >=, &lt;=, =?`. In ad
 
 Pairs support the refinements `/x` and `/y` for viewing and modifying coordinates.
 
-----
+```red
 >> my-pair: 1024x768
 == 1024x768
 
@@ -82,7 +81,7 @@ Pairs support the refinements `/x` and `/y` for viewing and modifying coordinate
 
 >> my-pair
 == 1024x42
-----
+```
 
 
 
@@ -90,21 +89,20 @@ Pairs support the refinements `/x` and `/y` for viewing and modifying coordinate
 
 Use `pair?` to check if a value is of the `pair!` datatype.
 
-----
+```red
 >> pair? 42x42
 == true
 
 >> pair? 42
 == false
-----
+```
 
 Use `type?` to return the datatype of a given value.
 
-----
+```red
 >> type? 42x42
 == pair!
-----
-
+```
 
 == Pre-defined words
 
