@@ -1,0 +1,79 @@
+= Lit-word! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+A `lit-word!` value is an unevaluated `word!`. It has the literal value of itself.
+
+A `lit-word!` value will decay into a `word!` when evaluated, such as when entered into the Red REPL.
+
+```red
+>> 'test
+== test
+
+>> type? 'test
+== word!
+```
+
+`Lit-word!` is a member of the following typsets: `any-word!`, `all-word!`
+
+== Creation
+
+Lit-word values can be created using literal syntax, or at runtime using a `to` conversion from the datatypes: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, and `refinement!`.
+
+```red
+>> to lit-word! #"X"
+== 'X
+
+>> to lit-word! true  
+== 'true
+
+>> to lit-word! "Hello"
+== 'Hello
+
+>> to lit-word! float!  
+== 'float!
+
+>> to lit-word! #A42
+== 'A42
+
+>> to lit-word! /only
+== 'only
+```
+
+== Literal syntax
+
+An apostrophe `'` followed by one or more Unicode characters, or ASCII characters from the set:  `! & ' * + - . < = > ? _ ` | ~` 
+
+Illegal characters are control characters, whitespace characters, and characters from the set `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+
+A `lit-word!` value cannot start with a number.
+
+
+== Comparisons
+
+All comparators can be applied on X: `=, ==, <>, >, <, >=, &lt;=, =?`. 
+
+
+== Testing values
+
+Use `lit-word?` to check if a value is of the `lit-word!` datatype.
+
+```red
+>> lit-word? first ['foo bar baz]
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? first ['foo bar baz]
+== lit-word!
+```
+
+== Pre-defined words
+
+=== Functions
+
+`to-lit-word`

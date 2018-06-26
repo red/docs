@@ -48,12 +48,6 @@ Word values can be created using literal syntax, or at runtime using a `to` conv
 
 Attempting to convert `none` raises an error.
 
-```red
->> to word! none
-*** Script Error: cannot MAKE/TO word! from: none
-*** Where: to
-*** Stack:  
-```
 
 == Literal syntax
 
@@ -61,7 +55,7 @@ One or more Unicode characters, or ASCII characters from the set:  `! & ' * + - 
 
 Illegal characters are control characters, whitespace characters, and characters from the set `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
 
-Words cannot start with a number.
+A `word!` value cannot start with a number.
 
 
 == Evaluation Steps
