@@ -1,5 +1,3 @@
-[[anchor-1]]
-
 = X datatype
 :toc:
 :numbered:
@@ -18,9 +16,6 @@ X values can be created using literal syntax, or at runtime using a `make` const
 == Comparisons
 
 All comparators can be applied on X: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
-
-
-== Conversion
 
 
 == Testing values
