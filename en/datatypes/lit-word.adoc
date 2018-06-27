@@ -44,12 +44,13 @@ Lit-word values can be created using literal syntax, or at runtime using a `to` 
 
 == Literal syntax
 
-An apostrophe `'` followed by one or more Unicode characters, or ASCII characters from the set:  `! & ' * + - . < = > ? _ ` | ~` 
+An apostrophe `'` followed by one or more characters from the entire Unicode range, including punctuation characters from the ASCII subset: `! & ' * + - . < = > ? _ | ~``
 
-Illegal characters are control characters, whitespace characters, and characters from the set `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+NOTE: Lit-words are case-insensitive. Changing any letter in the word into the corresponding upper-case or lower-case variant does not create a different word.
 
-A `lit-word!` value cannot start with a number.
+Illegal characters are control characters, whitespace characters, and punctuation characters from the ASCII subset: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
 
+A `lit-word!` value cannot begin with a number.
 
 == Comparisons
 
