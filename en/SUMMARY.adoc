@@ -15,8 +15,9 @@
 ... link:datatypes/tuple.adoc[Tuple!]
 ... link:datatypes/unset.adoc[Unset!]
 ... link:datatypes/word.adoc[Word!]
-.... link:datatypes/lit-word.adoc[Lit-word!]
 .... link:datatypes/get-word.adoc[Get-word!]
+.... link:datatypes/lit-word.adoc[Lit-word!]
+.... link:datatypes/set-word.adoc[Set-word!]
 
 .  link:gui.adoc[GUI System]
 .. link:view.adoc[View Engine]
