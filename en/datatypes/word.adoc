@@ -6,7 +6,7 @@
 
 A `word!` is a symbolic value that can be used like a variable, an identifier that refers to a value in a given context.
 
-Words do not store values, they point to values in a given context and will default to the global context when no context is provided.
+Words do not store values, they point to values in a given context, and will default to the global context when no context is provided. 
 
 `Word!` is a member of the following typsets: `any-word!`, `all-word!`
 
@@ -48,15 +48,15 @@ Word values can be created using literal syntax, or at runtime using a `to` conv
 
 Attempting to convert `none` raises an error.
 
-
 == Literal syntax
 
-One or more Unicode characters, or ASCII characters from the set:  `! & ' * + - . < = > ? _ ` | ~` 
+One or more characters from the entire Unicode range, including punctuation characters from the ASCII subset: `! & ' * + - . < = > ? _ | ~``
 
-Illegal characters are control characters, whitespace characters, and characters from the set `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+NOTE: Words are case-insensitive. Changing any letter in the word into the corresponding upper-case or lower-case variant does not create a different word.
 
-A `word!` value cannot start with a number.
+Illegal characters are control characters, whitespace characters, and punctuation characters from the ASCII subset: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
 
+A `word!` value cannot begin with a number.
 
 == Evaluation Steps
 
