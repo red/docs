@@ -12,6 +12,16 @@
 
 `Tag!` values can be created using literal syntax, or at runtime using a `make` constructor or a `to` conversion.
 
+```red
+>> make tag! "foo"
+== <foo>
+```
+
+```red
+>> to tag! 'bar
+== <bar>
+```
+
 == Literal syntax
 
 One or more characters enclosed by a open angle bracket `<` and a closing angle bracket `>`.
