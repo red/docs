@@ -1,0 +1,45 @@
+= Tag! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+`Tag!` values represent markup language tags and elements.
+
+`Tag!` is a member of the following typsets: `any-string!`, `series!`
+
+== Creation
+
+`Tag!` values can be created using literal syntax, or at runtime using a `make` constructor or a `to` conversion.
+
+== Literal syntax
+
+One or more characters enclosed by a open angle bracket `<` and a closing angle bracket `>`.
+
+The first character after the opening angle bracket cannot be `<`, `>`, or `=`.
+
+== Comparisons
+
+All comparators can be applied on `tag!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+
+== Testing values
+
+Use `tag?` to check if a value is of the `tag!` datatype.
+
+```red
+>> tag? <foo>
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? <foo>
+== tag!
+```
+
+== Pre-defined words
+
+=== Functions
+
+`tag?`, `to-tag`
