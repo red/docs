@@ -18,7 +18,7 @@ Words do not store values, they point to values in a given context, and will def
 |word:|link:set-word.adoc[set-word!]|Sets a reference to a value.
 |:word|link:get-word.adoc[get-word!]|Gets a value without performing evalutaion.
 |'word|link:lit-word.adoc[lit-word!]|Suppresses evaluation. The literal value "word".
-|/word|`refinement!`|Evaluates the word as a refinement.
+|/word|link:refinement.adoc[refinement!]|Evaluates the word as a refinement.
 |========================================================================
 
 == Creation
