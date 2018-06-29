@@ -1,0 +1,62 @@
+= Email! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+`Email!` values allow for directly expressing email addresses. `foo@bar.net`
+
+`Email!` is a member of the following typsets: `any-string!`, `series!`
+
+== Creation
+
+`Email!` values can be created using literal syntax, or at runtime using a `make` constructor or a `to` conversion.
+
+```red
+>> f: make email! "foo"
+== foo
+
+>> type? f
+== email!
+```
+
+```red
+>> b: to email! 'bar
+== bar
+
+>> type? b
+== email!
+```
+
+== Literal syntax
+
+The `@` symbol, and zero or more additional characters.
+
+Invalid characters: `%` `(` `)` `:` `"`
+
+
+== Comparisons
+
+All comparators can be applied on `email!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+
+== Testing values
+
+Use `email?` to check if a value is of the `email!` datatype.
+
+```red
+>> email? foo@bar.net
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? foo@bar.net
+== email!
+```
+
+== Pre-defined words
+
+=== Functions
+
+`email?`, `suffix?`, `to-email`
