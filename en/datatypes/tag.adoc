@@ -26,7 +26,7 @@
 
 One or more characters enclosed by a open angle bracket `<` and a closing angle bracket `>`.
 
-The first character after the opening angle bracket cannot be `<`, `>`, or `=`.
+The first character after the opening angle bracket cannot be `<`, `>`, or `=`. There cannot be literal whitespace between the opening angle bracket and the first character.
 
 == Comparisons
 
