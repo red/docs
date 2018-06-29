@@ -1,5 +1,3 @@
-[[anchor-1]]
-
 = Char! datatype
 Version: Draft 3
 :toc:
@@ -9,21 +7,15 @@ Version: Draft 3
 
 `Char!` values represent a Unicode code point. They are integer numbers in the range hexadecimal 00 to hexadecimal 10FFFF. (0 to 1,114,111 in decimal.) 
 
-<<anchor-1,toc>>
-
 == Characteristics
 
 'Char!' values are 'direct', 'atomic' and 'passive'.
 
 NOTE: This assumes that Type Characteristics have been defined earlier in the document.
 
-<<anchor-1,toc>>
-
 == Creation
 
 `Char!` values can be created using literal syntax or at runtime by using a 'make' constructor, a `to` conversion or using one of the many functions that act on `string!` values to extract a `char!` value.
-
-<<anchor-1,toc>>
 
 === Literal syntax
 
@@ -142,7 +134,6 @@ The "named" characters form is:
 
 |===
 
-<<anchor-1,toc>>
 
 == Comparisons
 
@@ -161,7 +152,6 @@ sort [#"c" #"b" #"d" #"a"]
 == [#"a" #"b" #"c" #"d"]
 ----
 
-<<anchor-1,toc>>
 
 == Arithmetic
 The full range of mathematical functions can be used with `char!` values. A `Math Error` is raised if the result of the arithmetic falls outside of the range 00 - 10FFFF (hexadecimal).
@@ -182,11 +172,9 @@ The full range of mathematical functions can be used with `char!` values. A `Mat
 
 ----
 
-<<anchor-1,toc>>
 
 == Other char-related functions
 
 Lowercase, Uppercase
 
-<<anchor-1,toc>>
 
