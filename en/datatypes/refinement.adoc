@@ -1,0 +1,65 @@
+= Refinement! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+A `refinement!` value represents an optional argument in a function.
+
+`Refinement!` is a member of the following typsets: `all-word!`
+
+== Creation
+
+`Refinement!` values can be created using literal syntax, or at runtime using a `make` constructor or `to` conversion.
+
+```red
+>> make refinement! "foo"
+== /foo
+```
+```red
+>> to refinement! 'bar
+== /bar
+```
+
+== Literal syntax
+
+A forward slash `/` followed by one or more characters from the entire Unicode range, including punctuation characters from the ASCII subset: `! & ' * + - . < = > ? _ | ~``
+
+Illegal characters are control characters, whitespace characters, and punctuation characters from the ASCII subset: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+
+[NOTE, caption=Note]
+
+Using `@` will not raise an error, but will cause the `refinement!` value to be returned as `email!`.
+
+== Comparisons
+
+All comparators can be applied on `refinement!`: `=, ==, <>, >, <, >=, &lt;=, =?`. 
+
+== Testing values
+
+Use `refinement?` to check if a value is of the `refinement!` datatype.
+
+```red
+>> refinement? /foo
+== true
+
+>> refinement? third [42 "Foo" /bar]
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? /foo
+== refinement!
+
+>> type? third [42 "Foo" /bar]
+== refinement!
+```
+
+== Pre-defined words
+
+=== Functions
+
+`refinement?`, `to-refinement`
