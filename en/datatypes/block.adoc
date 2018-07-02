@@ -36,7 +36,7 @@ olleH
 == [unset 4 42]
 ----
 
-`Block!` is a member of the following typsets: `any-block!`, `series!`
+`Block!` is a member of the following typesets: `any-block!`, `any-list!`, `series!`
 
 == Creation
 

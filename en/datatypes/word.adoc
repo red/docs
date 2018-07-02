@@ -8,7 +8,7 @@ A `word!` is a symbolic value that can be used like a variable, an identifier th
 
 Words do not store values, they point to values in a given context, and will default to the global context when no context is provided. 
 
-`Word!` is a member of the following typsets: `any-word!`, `all-word!`
+`Word!` is a member of the following typesets: `any-word!`, `all-word!`
 
 === Word Variations
 
@@ -18,12 +18,12 @@ Words do not store values, they point to values in a given context, and will def
 |word:|link:set-word.adoc[set-word!]|Sets a reference to a value.
 |:word|link:get-word.adoc[get-word!]|Gets a value without performing evalutaion.
 |'word|link:lit-word.adoc[lit-word!]|Suppresses evaluation. The literal value "word".
-|/word|`refinement!`|Evaluates the word as a refinement.
+|/word|link:refinement.adoc[refinement!]|Evaluates the word as a refinement.
 |========================================================================
 
 == Creation
 
-Word values can be created using literal syntax, or at runtime using a `to` conversion from the datatypes: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, and `refinement!`.
+Word! values can be created using literal syntax, or at runtime using a `to` conversion from the datatypes: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, and `refinement!`.
 
 
 ```red

@@ -16,11 +16,11 @@ A `lit-word!` value will decay into a `word!` when evaluated, such as when enter
 == word!
 ```
 
-`Lit-word!` is a member of the following typsets: `any-word!`, `all-word!`
+`Lit-word!` is a member of the following typesets: `any-word!`, `all-word!`
 
 == Creation
 
-Lit-word values can be created using literal syntax, or at runtime using a `to` conversion from the datatypes: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, and `refinement!`.
+Lit-word! values can be created using literal syntax, or at runtime using a `to` conversion from the datatypes: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, and `refinement!`.
 
 ```red
 >> to lit-word! #"X"
@@ -46,8 +46,6 @@ Lit-word values can be created using literal syntax, or at runtime using a `to` 
 
 An apostrophe `'` followed by one or more characters from the entire Unicode range, including punctuation characters from the ASCII subset: `! & ' * + - . < = > ? _ | ~``
 
-NOTE: Lit-words are case-insensitive. Changing any letter in the word into the corresponding upper-case or lower-case variant does not create a different word.
-
 Illegal characters are control characters, whitespace characters, and punctuation characters from the ASCII subset: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
 
 A `lit-word!` value cannot begin with a number.
@@ -55,7 +53,6 @@ A `lit-word!` value cannot begin with a number.
 == Comparisons
 
 All comparators can be applied on `lit-word!`: `=, ==, <>, >, <, >=, &lt;=, =?`. 
-
 
 == Testing values
 

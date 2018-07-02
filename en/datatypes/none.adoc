@@ -5,11 +5,13 @@
 
 == Abstract
 
-`None!` represents a value that does not belong to any other datatype. It is analogous to nil or nothing in other programming languages.
+None! represents a value that does not belong to any other datatype. It is analogous to nil or nothing in other programming languages.
+
+`None!` is a member of the following typesets: `immediate!`
 
 == Creation
 
-`None!` values can be created using literal syntax, or at runtime using a `make` constructor, or a `to` conversion.
+None! values can be created using literal syntax, or at runtime using a `make` constructor, or a `to` conversion.
 
 ----
 >> make none! 'x

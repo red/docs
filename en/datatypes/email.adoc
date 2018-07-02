@@ -4,9 +4,9 @@
 
 == Abstract
 
-`Email!` values allow for directly expressing email addresses. `foo@bar.net`
+`Email!` values allow for directly expressing email addresses, e.g. `foo@bar.net`
 
-`Email!` is a member of the following typsets: `any-string!`, `series!`
+`Email!` is a member of the following typesets: `any-string!`, `series!`
 
 == Creation
 
@@ -30,7 +30,7 @@
 
 == Literal syntax
 
-The `@` symbol, and zero or more additional characters.
+One or more characters, followed by the `@` symbol, followed by zero or more additional characters.
 
 Invalid characters: `%` `(` `)` `:` `"`
 

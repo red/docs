@@ -7,6 +7,7 @@
 
 The `pair!` datatype is used to represent two-dimensional coordinates.
 
+`Pair!` is a member of the following typesets: `scalar!`
 
 == Literal syntax
 
@@ -20,7 +21,7 @@ A pair is written as two integers separated by an `x`.
 
 == Creation
 
-`Pair!` values can be created using literal syntax, or at runtime using a `make` constructor, `to` conversion, or via the as-pair `native!`.
+Pair! values can be created using literal syntax, or at runtime using a `make` constructor, `to` conversion, or via the as-pair `native!`.
 
 ```red
 >> make pair! [20 30]

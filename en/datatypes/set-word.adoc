@@ -6,13 +6,17 @@
 
 A `set-word!` sets a reference to a value.
 
-If used outside of an `object!` or `map!` value, a `set-word!` will set a reference in the current context to the value of the next expression. 
+If used outside of an `object!` or `map!` value, a set-word! will set a reference in the current context to the value of the following expression.
 
-`Set-word!` is a member of the following typsets: `any-word!`, `all-word!`
+```red
+foo: 2 * 21
+```
+
+`Set-word!` is a member of the following typesets: `any-word!`, `all-word!`
 
 == Creation
 
-`Set-word!` values can be created using literal syntax, or at runtime using a `to` conversion from the datatypes: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, `refinement!`, and `lit-word!`.
+Set-word! values can be created using literal syntax, or at runtime using a `to` conversion from the datatypes: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, `refinement!`, and `lit-word!`.
 
 ```red
 >> to set-word! #"X"
@@ -41,8 +45,6 @@ If used outside of an `object!` or `map!` value, a `set-word!` will set a refere
 == Literal syntax
 
 One or more characters from the entire Unicode range, including punctuation characters from the ASCII subset: `! & ' * + - . < = > ? _ | ~``, followed by a colon `:`. 
-
-NOTE: Set-words are case-insensitive. Changing any letter in the word into the corresponding upper-case or lower-case variant does not create a different word.
 
 Illegal characters are control characters, whitespace characters, and punctuation characters from the ASCII subset: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
 

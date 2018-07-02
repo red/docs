@@ -10,7 +10,7 @@ The `tuple!` datatype is used to represent rgb and rgba color values, ip address
 
 A `tuple!` must have at least two decimal points and the digits must be positive integers in the range `0 - 255`.
 
-
+`Tuple!` is a member of the following typesets: `scalar!`
 
 == Literal syntax
 
@@ -48,7 +48,7 @@ Tuple! values can be created using literal syntax, or at runtime using a `make` 
 == Comparisons
 
 
-All comparators can be applied on tuples: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+All comparators can be applied on `tuple!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
 
 `min` and `max` when applied to two `tuple!` arguments require tuples of the same size.
 
