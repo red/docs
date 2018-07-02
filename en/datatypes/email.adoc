@@ -6,7 +6,7 @@
 
 `Email!` values allow for directly expressing email addresses. `foo@bar.net`
 
-`Email!` is a member of the following typsets: `any-string!`, `series!`
+`Email!` is a member of the following typesets: `any-string!`, `series!`
 
 == Creation
 
