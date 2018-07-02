@@ -15,9 +15,9 @@ Words do not store values, they point to values in a given context, and will def
 |========================================================================
 |*Syntax*|*Type*|*Description*
 |word|`word!`|Refers to a value in a given context.
-|word:|`set-word!`|Sets a reference to a value.
-|:word|`get-word!`|Gets a value without performing evalutaion.
-|'word|`lit-word!`|Suppresses evaluation. The literal value "word".
+|word:|link:set-word.adoc[set-word!]|Sets a reference to a value.
+|:word|link:get-word.adoc[get-word!]|Gets a value without performing evalutaion.
+|'word|link:lit-word.adoc[lit-word!]|Suppresses evaluation. The literal value "word".
 |/word|`refinement!`|Evaluates the word as a refinement.
 |========================================================================
 
@@ -52,7 +52,9 @@ Attempting to convert `none` raises an error.
 
 One or more characters from the entire Unicode range, including punctuation characters from the ASCII subset: `! & ' * + - . < = > ? _ | ~``
 
-NOTE: Words are case-insensitive. Changing any letter in the word into the corresponding upper-case or lower-case variant does not create a different word.
+[NOTE, caption=Note]
+
+Words are case-insensitive. Changing any letter in the word into the corresponding upper-case or lower-case variant does not create a different word.
 
 Illegal characters are control characters, whitespace characters, and punctuation characters from the ASCII subset: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
 

@@ -54,7 +54,7 @@ A `lit-word!` value cannot begin with a number.
 
 == Comparisons
 
-All comparators can be applied on X: `=, ==, <>, >, <, >=, &lt;=, =?`. 
+All comparators can be applied on `lit-word!`: `=, ==, <>, >, <, >=, &lt;=, =?`. 
 
 
 == Testing values

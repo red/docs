@@ -37,9 +37,9 @@ A `get-word!` value retieves an unevaluated word value from the context to which
 
 == Literal syntax
 
-A colon `:` followed by one or more Unicode characters, or ASCII characters from the set:  `! & ' * + - . < = > ? _ ` | ~` 
+A colon `:` followed by One or more characters from the entire Unicode range, including punctuation characters from the ASCII subset: `! & ' * + - . < = > ? _ | ~``
 
-Illegal characters are control characters, whitespace characters, and characters from the set `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+Illegal characters are control characters, whitespace characters, and punctuation characters from the ASCII subset: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
 
 A `get-word!` value cannot start with a number.
 
