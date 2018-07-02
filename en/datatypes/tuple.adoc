@@ -10,7 +10,7 @@ The `tuple!` datatype is used to represent rgb and rgba color values, ip address
 
 A `tuple!` must have at least two decimal points and the digits must be positive integers in the range `0 - 255`.
 
-`Tuple!` is a member of the following typesets: `scalar!`
+`Tuple!` is a member of the following typesets: `immediate!`, `scalar!`
 
 == Literal syntax
 

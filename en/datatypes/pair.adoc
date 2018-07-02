@@ -7,7 +7,7 @@
 
 The `pair!` datatype is used to represent two-dimensional coordinates.
 
-`Pair!` is a member of the following typesets: `scalar!`
+`Pair!` is a member of the following typesets: `immediate!`, `scalar!`
 
 == Literal syntax
 

@@ -21,7 +21,7 @@ Floats return #INF on overflow by design.
 
 Dividing 0.0 by 0.0 results in `1.#NaN`
 
-`Float!` is a member of the following typesets: `number!`, `scalar!`
+`Float!` is a member of the following typesets: `immediate!`, `number!`, `scalar!`
 
 == Literal syntax
 
