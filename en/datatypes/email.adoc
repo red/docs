@@ -4,7 +4,7 @@
 
 == Abstract
 
-`Email!` values allow for directly expressing email addresses. `foo@bar.net`
+`Email!` values allow for directly expressing email addresses, e.g. `foo@bar.net`
 
 `Email!` is a member of the following typesets: `any-string!`, `series!`
 
