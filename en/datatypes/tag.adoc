@@ -6,11 +6,11 @@
 
 `Tag!` values represent markup language tags and elements.
 
-`Tag!` is a member of the following typsets: `any-string!`, `series!`
+`Tag!` is a member of the following typesets: `any-string!`, `series!`
 
 == Creation
 
-`Tag!` values can be created using literal syntax, or at runtime using a `make` constructor or a `to` conversion.
+Tag! values can be created using literal syntax, or at runtime using a `make` constructor or a `to` conversion.
 
 ```red
 >> make tag! "foo"

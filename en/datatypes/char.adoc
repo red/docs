@@ -7,6 +7,8 @@ Version: Draft 3
 
 `Char!` values represent a Unicode code point. They are integer numbers in the range hexadecimal 00 to hexadecimal 10FFFF. (0 to 1,114,111 in decimal.) 
 
+`Char!` is a member of the following typesets: `immediate!`, `scalar!`
+
 == Characteristics
 
 'Char!' values are 'direct', 'atomic' and 'passive'.

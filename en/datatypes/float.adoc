@@ -9,18 +9,19 @@
 
 Floats span a range from `-1.7E+308` to `+1.7E+308`.
 
-Floats returns #INF on overflow by design.
+Floats return #INF on overflow by design.
 
-----
+```red
 >> 1.8E+308
 == 1.#INF
 
 >> -1.8E+308
 == -1.#INF
-----
+```
 
-Dividing `0.0` by `0.0` results in `1.#NaN`
+Dividing 0.0 by 0.0 results in `1.#NaN`
 
+`Float!` is a member of the following typesets: `number!`, `scalar!`
 
 == Literal syntax
 
@@ -37,17 +38,18 @@ A sequence of digits with a decimal point or comma.
 `-123.4`
 
 Leading zeros are ignored.
-----
+
+```red
 >> +00123.4
 == 123.4
-----
+```
 
 Single quote `'` is used as a place value seperator for long integers, and can appear anywhere after the first digit.
 
-----
+```red
 >> 60'000'123.4
 == 60000123.4
-----
+```
 
 
 == Comparisons
@@ -59,37 +61,37 @@ All comparators can be applied on floats: `=, ==, <>, >, <, >=, &lt;=, =?`. In a
 
 A float value can be converted at runtime to `integer!` or `string!` by using the `to` action. 
 
-[NOTE]
+[NOTE, caption=Note]
+
 The digits after the decimal point will be discarded when converting a float to an integer. No rounding will take place.
 
-----
+```red
 >> to integer! 123.4
 == 123
 
 >> to string! 123.4
 == "123.4"
-----
+```
 
 If `float!` and `integer!` are combined in an expression, the result will be `float!`.
 
-----
+```red
 >> 123.4 * 42
 == 5182.8
-----
-
+```
 
 == Testing values
 
 Use `float?` to check if a value is of the `float!` datatype.
 
-----
+```red
 >> float? 123.4
 == true
-----
+```
 
 Use `type?` to return the datatype of a given value.
 
-----
+```red
 >> type? 123.4
 == float!
-----
+```

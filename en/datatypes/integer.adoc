@@ -10,6 +10,7 @@ Integer spans a range from `-2147483648` to `2147483647`.
 
 By design `integer!` does not auto convert to `float!` on overflow.
 
+`Integer!` is a member of the following typesets: `number!`, `scalar!`
 
 == Literal syntax
 

@@ -30,7 +30,7 @@
 
 == Literal syntax
 
-The `@` symbol, and zero or more additional characters.
+One or more characters, followed by the `@` symbol, followed by zero or more additional characters.
 
 Invalid characters: `%` `(` `)` `:` `"`
 

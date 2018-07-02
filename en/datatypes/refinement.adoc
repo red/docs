@@ -7,11 +7,11 @@
 
 A `refinement!` value represents an optional argument in a function.
 
-`Refinement!` is a member of the following typsets: `all-word!`
+`Refinement!` is a member of the following typesets: `all-word!`
 
 == Creation
 
-`Refinement!` values can be created using literal syntax, or at runtime using a `make` constructor or `to` conversion.
+Refinement! values can be created using literal syntax, or at runtime using a `make` constructor or `to` conversion.
 
 ```red
 >> make refinement! "foo"
