@@ -6,7 +6,7 @@
 == Abstract
 
 
-X is a member of the following typsets: 
+X is a member of the following typesets: 
 
 == Creation
 
