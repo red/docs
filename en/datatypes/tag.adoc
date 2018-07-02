@@ -26,7 +26,16 @@ Tag! values can be created using literal syntax, or at runtime using a `make` co
 
 One or more characters enclosed by a open angle bracket `<` and a closing angle bracket `>`.
 
-The first character after the opening angle bracket cannot be `<`, `>`, or `=`. There cannot be literal whitespace between the opening angle bracket and the first character.
+The first character after the opening angle bracket cannot be `<`, `>`, or `=`. 
+
+Literal whitespace is not allowed between the opening angle bracket and the first character, as the lexer will interpret it as an invalid comparison operator.
+
+```red
+>> < foo>
+*** Script Error: < operator is missing an argument
+*** Where: catch
+*** Stack:  
+```
 
 == Comparisons
 
