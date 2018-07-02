@@ -13,7 +13,6 @@
 ... link:datatypes/map.adoc[Map!]
 ... link:datatypes/none.adoc[None!]
 ... link:datatypes/pair.adoc[Pair!]
-... link:datatypes/refinement.adoc[Refinement!]
 ... link:datatypes/tag.adoc[Tag!]
 ... link:datatypes/tuple.adoc[Tuple!]
 ... link:datatypes/unset.adoc[Unset!]
