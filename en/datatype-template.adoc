@@ -25,15 +25,15 @@ All comparators can be applied on X: `=, ==, <>, >, <, >=, &lt;=, =?`. In additi
 
 Use X to check if a value is of the X datatype.
 
-----
+```red
 
-----
+```
 
 Use `type?` to return the datatype of a given value.
 
-----
+```red
 
-----
+```
 
 
 == Pre-defined words
