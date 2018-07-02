@@ -10,7 +10,7 @@ Paren values are delimited by opening `(` and closing `)` parenthesis.
 
 Evaluation can be suppressed by using `quote` before a paren value. `quote (print 42)`
 
-`Paren!` is a member of the following typesets: `series!`, `any-block!`, `any-list!`
+`Paren!` is a member of the following typesets: `any-block!`, `any-list!`, `series!`
 
 == Creation
 
