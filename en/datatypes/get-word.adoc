@@ -6,7 +6,7 @@
 
 A `get-word!` value retieves an unevaluated word value from the context to which it is bound.
 
-`Gett-word!` is a member of the following typesets: `any-word!`, `all-word!`
+`Get-word!` is a member of the following typesets: `any-word!`, `all-word!`, `immediate!`
 
 == Creation
 

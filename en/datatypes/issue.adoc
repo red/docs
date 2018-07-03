@@ -6,7 +6,7 @@
 
 `Issue!` values are used to represent hashtags, keywords, and identifiers (like serial numbers) that don’t contain spaces.
 
-`Issue!` is a member of the following typesets: `all-word!`
+`Issue!` is a member of the following typesets: `all-word!`, `immediate!`
 
 
 == Creation

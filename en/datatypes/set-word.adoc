@@ -12,7 +12,7 @@ If used outside of an `object!` or `map!` value, a set-word! will set a referenc
 foo: 2 * 21
 ```
 
-`Set-word!` is a member of the following typesets: `any-word!`, `all-word!`
+`Set-word!` is a member of the following typesets: `any-word!`, `all-word!`, `immediate!`
 
 == Creation
 

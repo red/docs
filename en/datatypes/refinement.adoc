@@ -7,7 +7,7 @@
 
 A `refinement!` value represents an optional argument in a function.
 
-`Refinement!` is a member of the following typesets: `all-word!`
+`Refinement!` is a member of the following typesets: `all-word!`, `immediate!`
 
 == Creation
 

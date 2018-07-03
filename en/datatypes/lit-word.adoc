@@ -16,7 +16,7 @@ A `lit-word!` value will decay into a `word!` when evaluated, such as when enter
 == word!
 ```
 
-`Lit-word!` is a member of the following typesets: `any-word!`, `all-word!`
+`Lit-word!` is a member of the following typesets: `any-word!`, `all-word!`, `immediate!`
 
 == Creation
 
