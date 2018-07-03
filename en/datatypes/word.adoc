@@ -46,6 +46,8 @@ Word! values can be created using literal syntax, or at runtime using a `to` con
 == deep
 ```
 
+[NOTE, caption=Note]
+
 Attempting to convert `none` raises an error.
 
 == Literal syntax
