@@ -14,6 +14,11 @@ A `string!` value is a sequence of Unicode code points, or link:char.adoc[char!]
 String! values can be created using literal syntax, or at runtime using a `make` constructor or `to` conversion.
 
 ```red
+>> s: make string! 100
+== ""
+```
+
+```red
 >> to string! 'foo
 == "foo"
 
@@ -24,19 +29,37 @@ String! values can be created using literal syntax, or at runtime using a `make`
 == "42"
 ```
 
+The `native!` values `form` and `mold` can also be used to convert a value to a user-friendly string or a source format string, respectively.
+
+```red
+>> form 'foo
+== "foo"
+```
+
+```red
+>> mold 'bar
+== "bar"
+```
+
 [NOTE, caption=Note]
 
-Attempting to convert `none` to a sting raises an error.
+Attempting to convert `none` by `to` conversion raises an error.
 
 == Literal syntax
 
-Zero or more characters enclosed in quotation marks or opening and closing braces.
+Single-line string:
+
+Zero or more characters enclosed in quotation marks.
 
 `"foo"`
 
+Multi-line string:
+
+Zero or more characters enclosed in opening and closing braces.
+
 `{foo}` 
 
-When enclosed in quotes a string cannot contain unescaped new-line characters.
+A single-line string cannot contain unescaped new-line characters.
 
 ```red
 >> cr
@@ -49,7 +72,7 @@ When enclosed in quotes a string cannot contain unescaped new-line characters.
 == "^M^/"
 ```
 
-When enclosed in braces, new-line characters, quotation marks, and paired braces are allowed. Unpaired braces must be escaped by preceding the character with `^`, e.g. `{foo^{}`.
+A multi-line string can contain new-line characters, quotation marks, and paired braces. Unpaired braces must be escaped by preceding the character with `^`, e.g. `{foo^{}`.
 
 == Comparisons
 
