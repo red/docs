@@ -1,0 +1,91 @@
+= String! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+A `string!` value is a sequence of Unicode code points, or link:char.adoc[char!] values.
+
+`String!` is a member of the following typesets: `any-string!`, `default!`, `series!`
+
+== Creation
+
+String! values can be created using literal syntax, or at runtime using a `make` constructor or `to` conversion.
+
+```red
+>> to string! 'foo
+== "foo"
+
+>> to string! [bar]
+== "bar"
+
+>> to string! 42
+== "42"
+```
+
+[NOTE, caption=Note]
+
+Attempting to convert `none` to a sting raises an error.
+
+== Literal syntax
+
+Zero or more characters enclosed in quotation marks or opening and closing braces.
+
+`"foo"`
+
+`{foo}` 
+
+When enclosed in quotes a string cannot contain unescaped new-line characters.
+
+```red
+>> cr
+== #"^M"
+
+>> lf
+== #"^/"
+
+>> crlf
+== "^M^/"
+```
+
+When enclosed in braces, new-line characters, quotation marks, and paired braces are allowed. Unpaired braces must be escaped by preceding the character with `^`, e.g. `{foo^{}`.
+
+== Comparisons
+
+All comparators can be applied on `string!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+
+
+== Testing values
+
+Use `string?` to check if a value is of the `string!` datatype.
+
+```red
+>> string? "foo"
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? "foo"
+== string!
+```
+
+== Pre-defined words
+
+=== Actions
+
+`find`, `form`, `mold`, `pick`, `poke`, `put`, `read`, `select`, `trim`
+
+=== Functions
+
+`a-an`, `any-string?`, `ask`, `charset`, `clean-path`, `dirize`, `ellipsize-at`, `help-string`, `input`, `load`, `pad`, `string?`, `to-string`
+
+=== Natives
+
+`as`, `call`, `checksum`, `debase`, `dehex`, `difference`, `do`, `enbase`, `exclude`, `get-env`, `intersect`, `lowercase`, `parse`, `set-env`, `to-local-file`, `union`, `unique`, `uppercase`
+
+=== Routines
+
+`set-current-dir`, `write-clipboard`, `write-stdout`
