@@ -5,7 +5,20 @@
 
 == Abstract
 
-A `refinement!` value represents an optional argument in a function.
+A `refinement!` value represents an optional argument to a function. Refinements provide a mechanism that allow functions to have alternate behaviors.
+
+The `repend` function with no refinement:
+```red
+>> repend ["foo"] [21 * 2]
+== ["foo" 42]
+```
+
+With the `/only` refinement:
+
+```red
+>> repend/only ["foo"] [21 * 2]
+== ["foo" [42]]
+```
 
 `Refinement!` is a member of the following typesets: `all-word!`, `immediate!`
 
@@ -62,4 +75,8 @@ Use `type?` to return the datatype of a given value.
 
 === Functions
 
-`refinement?`, `to-refinement`
+`parse-func-spec`, `refinement?`, `to-refinement`
+
+=== Natives
+
+`function`
