@@ -5,7 +5,7 @@
 
 == Abstract
 
-A `refinement!` value represents an optional argument to a function. Refinements provide a mechanism that allow functions to have alternate behaviors.
+A `refinement!` is a symbolic value, like a word!, that is most often used for fine tuning in function specifications. Conceptually, a path is a series of successive refinements, whether for a path! value, or in files and URLs. They are also used to access specific values in objects, and to add flexibility and control when calling functions.
 
 The `repend` function with no refinement:
 ```red
