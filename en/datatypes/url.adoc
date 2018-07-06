@@ -32,7 +32,7 @@ Url Encoding converts such as %20 and %30 are allowed.
 
 == Comparisons
 
-All comparators can be applied on X: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+All comparators can be applied on `url!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
 
 
 == Testing values
