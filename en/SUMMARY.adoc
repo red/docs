@@ -18,6 +18,7 @@
 ... link:datatypes/tag.adoc[Tag!]
 ... link:datatypes/tuple.adoc[Tuple!]
 ... link:datatypes/unset.adoc[Unset!]
+... link:datatypes/url.adoc[Url!]
 ... link:datatypes/word.adoc[Word!]
 .... link:datatypes/get-word.adoc[Get-word!]
 .... link:datatypes/lit-word.adoc[Lit-word!]
