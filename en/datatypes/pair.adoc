@@ -21,7 +21,7 @@ A pair is written as two integers separated by an `x`.
 
 == Creation
 
-Pair! values can be created using literal syntax, or at runtime using a `make` constructor, `to` conversion, or via the as-pair `native!`.
+Pair! values can be created using literal syntax, or at runtime by using a `make` constructor, `to` conversion, or `as-pair` native.
 
 ```red
 >> make pair! [20 30]
@@ -55,12 +55,12 @@ Pair! values can be created using literal syntax, or at runtime using a `make` c
 
 == Comparisons
 
-All comparators can be applied on pairs: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+All comparators can be applied on `pair!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
 
 
 == Arithmetic
 
-`+`, `add`, `-`, `subtract`, `*`, `multiply`, `/`, `divide`, `%`, and `remainder` can be used with `pair!` values.
+`+`, `-`, `*`, `/`, `%`, `//`, `add`, `subtract`,  `multiply`, `divide`, `remainder`, and `mod` can be used with `pair!` values.
 
 
 == Refinements
@@ -84,8 +84,6 @@ Pairs support the refinements `/x` and `/y` for viewing and modifying coordinate
 == 1024x42
 ```
 
-
-
 == Testing values
 
 Use `pair?` to check if a value is of the `pair!` datatype.
@@ -107,7 +105,6 @@ Use `type?` to return the datatype of a given value.
 
 == Pre-defined words
 
-
 === Actions
 
 `absolute`, `add`, `and~`, `at`, `copy`, `divide`, `multiply`, `negate`, `or~`, `pick`, `remainder`, `reverse`, `round`, `skip`, `subtract`, `xor~`
@@ -124,4 +121,3 @@ Use `type?` to return the datatype of a given value.
 === Operators
 
 `%`, `*`, `+`, `-`, `/`, `//`, `and`, `or`, `xor`
-

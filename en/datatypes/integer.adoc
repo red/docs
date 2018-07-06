@@ -30,7 +30,7 @@ Leading zeros are ignored.
 == 1234
 ----
 
-Single quote `'` is used as a place value seperator for long integers and can appear anywhere after the first digit.
+Single quote `'` is used as a place value separator for large integer values and can appear anywhere after the first digit.
 
 ----
 60'000'000
@@ -39,12 +39,12 @@ Single quote `'` is used as a place value seperator for long integers and can ap
 
 == Comparisons
 
-All comparators can be applied on integers: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+All comparators can be applied on `integer!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
 
 
 == Conversion
 
-An integer value can be converted at runtime to `float!` or `string!` by using the `to` action.
+An integer value can be converted at runtime to a `float!` or `string!` by using a `to` conversion.
 
 ----
 >> to float! 42
@@ -54,7 +54,7 @@ An integer value can be converted at runtime to `float!` or `string!` by using t
 == "42"
 ----
 
-If `integer!` and `float!` are combined in an expression, the result will be `float!`.
+If `integer!` and `float!` are combined in an expression, the result will be a `float!` value.
 
 ----
 >> 42 * 42.0

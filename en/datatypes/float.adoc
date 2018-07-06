@@ -25,9 +25,13 @@ Dividing 0.0 by 0.0 results in `1.#NaN`
 
 == Literal syntax
 
-A sequence of digits with a decimal point or comma.
+Zero or more digits, followed by a period `.`, followed by one or more digits.
+
+`0.42`
 
 `123.4`
+
+A comma can be used in place of the period for the decimal point.
 
 `123,4`
 
@@ -44,7 +48,7 @@ Leading zeros are ignored.
 == 123.4
 ```
 
-Single quote `'` is used as a place value seperator for long integers, and can appear anywhere after the first digit.
+Single quote `'` is used as a place value separator for large float values, and can appear anywhere after the first digit.
 
 ```red
 >> 60'000'123.4
@@ -54,12 +58,12 @@ Single quote `'` is used as a place value seperator for long integers, and can a
 
 == Comparisons
 
-All comparators can be applied on floats: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+All comparators can be applied on `float!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
 
 
 == Conversion
 
-A float value can be converted at runtime to `integer!` or `string!` by using the `to` action. 
+A float value can be converted at runtime to `integer!` or `string!` by using a `to` conversion. 
 
 [NOTE, caption=Note]
 
@@ -73,7 +77,7 @@ The digits after the decimal point will be discarded when converting a float to 
 == "123.4"
 ```
 
-If `float!` and `integer!` are combined in an expression, the result will be `float!`.
+If `float!` and `integer!` are combined in an expression, the result will be a `float!` value.
 
 ```red
 >> 123.4 * 42
