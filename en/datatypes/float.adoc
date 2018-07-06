@@ -48,7 +48,7 @@ Leading zeros are ignored.
 == 123.4
 ```
 
-Single quote `'` is used as a place value seperator for large float values, and can appear anywhere after the first digit.
+Single quote `'` is used as a place value separator for large float values, and can appear anywhere after the first digit.
 
 ```red
 >> 60'000'123.4

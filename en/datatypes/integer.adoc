@@ -30,7 +30,7 @@ Leading zeros are ignored.
 == 1234
 ----
 
-Single quote `'` is used as a place value seperator for large integer values and can appear anywhere after the first digit.
+Single quote `'` is used as a place value separator for large integer values and can appear anywhere after the first digit.
 
 ----
 60'000'000
