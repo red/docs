@@ -77,7 +77,7 @@ The digits after the decimal point will be discarded when converting a float to 
 == "123.4"
 ```
 
-If `float!` and `integer!` are combined in an expression, the result will bea `float!` value.
+If `float!` and `integer!` are combined in an expression, the result will be a `float!` value.
 
 ```red
 >> 123.4 * 42
