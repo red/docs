@@ -11,7 +11,7 @@ A `string!` value is a sequence of Unicode code points, or link:char.adoc[char!]
 
 == Creation
 
-String! values can be created using literal syntax, or at runtime using a `make` constructor or `to` conversion.
+String! values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
 
 ```red
 >> s: make string! 100

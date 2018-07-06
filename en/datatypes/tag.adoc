@@ -10,7 +10,7 @@
 
 == Creation
 
-Tag! values can be created using literal syntax, or at runtime using a `make` constructor or a `to` conversion.
+Tag! values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
 
 ```red
 >> make tag! "foo"
@@ -24,7 +24,7 @@ Tag! values can be created using literal syntax, or at runtime using a `make` co
 
 == Literal syntax
 
-One or more characters enclosed by a open angle bracket `<` and a closing angle bracket `>`.
+One or more characters enclosed by a open angle bracket `<` and closing angle bracket `>`.
 
 The first character after the opening angle bracket cannot be `<`, `>`, or `=`. 
 
