@@ -36,7 +36,7 @@ Single quote `'` is used as a place value separator for large values and can app
 60'000'000
 ```
 
-A trailing `'` will raise an error:
+A trailing `'` after the last digit will raise an error:
 
 ```red
 >> 60'000'000'
@@ -73,15 +73,15 @@ If `integer!` and `float!` are combined in an expression, the result will be a `
 
 Use `integer?` to check if a value is of the `integer!` datatype.
 
-----
+```red
 >> integer? 42
 == true
-----
+```
 
 Use `type?` to return the datatype of a given value.
 
-----
+```red
 >> type? 42
 == integer!
-----
+```
 

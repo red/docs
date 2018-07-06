@@ -53,13 +53,28 @@ Leading zeros are ignored.
 == 123.4
 ```
 
-Single quote `'` is used as a place value separator for large values, and can appear anywhere after the first digit up to the decimal point.
+Single quote `'` is used as a place value separator for large values, and can appear anywhere after the first digit.
 
 ```red
->> 60'000'123.4
+>> 60'000'12'3.4
 == 60000123.4
 ```
 
+A single quote `'` immediately before or after the decimal point will raise an error.
+
+```red
+>> 60'000'123'.4
+*** Syntax Error: invalid integer! at "60'000'123'.4"
+*** Where: do
+*** Stack: load 
+```
+
+```red
+>> 60'000'123.'4
+*** Syntax Error: invalid integer! at "60'000'123.'4"
+*** Where: do
+*** Stack: load 
+```
 
 == Comparisons
 
