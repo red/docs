@@ -25,15 +25,20 @@ Dividing 0.0 by 0.0 results in `1.#NaN`
 
 == Literal syntax
 
-Zero or more digits, followed by a period `.`, followed by one or more digits.
+Zero or more digits, followed by a dot `.`, followed by one or more digits.
 
 `0.42`
 
 `123.4`
 
-A comma can be used in place of the period for the decimal point.
+A comma can be used in place of the dot for the decimal point.
 
 `123,4`
+
+[NOTE, caption=Note]
+
+A formed value will normalize a decimal comma to a decimal point as the decimal mark.
+
 
 `+` or `-` immediately before the first digit indicates the positive or negative sign of the `float!`.
 
@@ -48,13 +53,28 @@ Leading zeros are ignored.
 == 123.4
 ```
 
-Single quote `'` is used as a place value separator for large float values, and can appear anywhere after the first digit.
+Single quote `'` is used as a place value separator for large values, and can appear anywhere after the first digit.
 
 ```red
->> 60'000'123.4
+>> 60'000'12'3.4
 == 60000123.4
 ```
 
+A single quote `'` immediately before or after the decimal point will raise an error.
+
+```red
+>> 60'000'123'.4
+*** Syntax Error: invalid integer! at "60'000'123'.4"
+*** Where: do
+*** Stack: load 
+```
+
+```red
+>> 60'000'123.'4
+*** Syntax Error: invalid integer! at "60'000'123.'4"
+*** Where: do
+*** Stack: load 
+```
 
 == Comparisons
 
