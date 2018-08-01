@@ -150,10 +150,6 @@ If the integer falls outside the bounds of the path-head value, `pick` returns `
 == none
 ```
 
-== Comparisons
-
-All comparators can be applied on `path!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
-
 == Testing values
 
 Use `path?` to check if a value is of the `path!` datatype.
