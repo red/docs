@@ -4,8 +4,7 @@
 
 == Abstract
 
-Paths are a series of values delimited by slashes (`/`). They are a type of `block!` that are limited in the types of values that they can contain. `Word!`, `integer!`, and `get-word!` values are supported. 
-`Paren!` values are also experimentally supported, but that feature may be removed. 
+Paths are a series of values delimited by slashes (`/`). They are a type of `block!` that are limited in the types of values that they can contain. `Word!`, `integer!`, `get-word!`, and `paren!` values are supported. 
 
 `Path!` is a member of the following typesets: `any-block!`, `any-path!`, `series!`
 
@@ -60,10 +59,18 @@ It is possible to create `path!` values programmatically that do not conform to 
 
 == Literal syntax
 
+BNF syntax:
 ----
 <path-literal> ::= <path-head>/<selector>
 <path-head>    ::= <word-literal> | <path-literal>
 <selector>     ::= <integer> | <word-literal> | :<word-literal> | <paren>
+----
+
+Parse rule syntax:
+----
+path-literal: [path-head '/ selector]
+path-head:    [word! | path!]
+selector:     [integer! | word! | get-word! | paren!]
 ----
 
 Path-head datatypes: link:word.adoc[word!], `path!`
