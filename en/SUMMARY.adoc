@@ -15,6 +15,7 @@
 .. link:datatypes/map.adoc[Map!]
 .. link:datatypes/none.adoc[None!]
 .. link:datatypes/pair.adoc[Pair!]
+.. link:datatypes/path.adoc[Path!]
 .. link:datatypes/refinement.adoc[Refinement!]
 .. link:datatypes/set-word.adoc[Set-word!]
 .. link:datatypes/string.adoc[String!]
