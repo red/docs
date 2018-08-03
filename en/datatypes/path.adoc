@@ -14,7 +14,7 @@ Paths are a series of values delimited by slashes (`/`). They are a type of `blo
 |*Syntax*|*Datatype*|*Testing Values*|*Conversion*
 |foo/bar|`path!`|`path?`|`to path!`
 |foo/bar:|`set-path!`|`set-path?`|`to set-path!`
-|:foo/bar|`get-path!`|`get-path?`|`to get-path!`
+|:foo/bar|link:get-path.adoc[get-path!]|`get-path?`|`to get-path!`
 |'foo/bar|`lit-path!`|`lit-path?`|`to lit-path!`
 |========================================================================
 
@@ -59,19 +59,11 @@ It is possible to create `path!` values programmatically that do not conform to 
 
 == Literal syntax
 
-BNF syntax:
-----
+```
 <path-literal> ::= <path-head>/<selector>
 <path-head>    ::= <word-literal> | <path-literal>
 <selector>     ::= <integer> | <word-literal> | :<word-literal> | <paren>
-----
-
-Parse rule syntax:
-----
-path-literal: [path-head '/ selector]
-path-head:    [word! | path!]
-selector:     [integer! | word! | get-word! | paren!]
-----
+```
 
 Path-head datatypes: link:word.adoc[word!], `path!`
 
