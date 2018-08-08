@@ -7,6 +7,7 @@
 .. link:datatypes/date.adoc[Date!]
 .. link:datatypes/email.adoc[Email!]
 .. link:datatypes/float.adoc[Float!]
+.. link:datatypes/get-path.adoc[Get-path!]
 .. link:datatypes/get-word.adoc[Get-word!]
 .. link:datatypes/integer.adoc[Integer!]  
 .. link:datatypes/issue.adoc[Issue!]
