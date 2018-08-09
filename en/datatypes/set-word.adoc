@@ -6,7 +6,7 @@
 
 A `set-word!` sets a reference to a value.
 
-If used outside of an `object!` or `map!` value, a set-word! will set a reference in the current context to the value of the following expression.
+If used outside of an `object!` or `map!` value, a set-word will set a reference in the current context to the value of the expression that follows the set-word.
 
 ```red
 foo: 2 * 21
