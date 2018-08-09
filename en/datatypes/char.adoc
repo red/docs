@@ -139,14 +139,14 @@ The "named" characters form is:
 
 == Comparisons
 
-All comparators can be applied on 'char!' values: `=, ==, <>, >, <, >=, &lt;=, same?`. In addition, `min`, `max` and `sort` are supported. Comparison of `char!` values is case sensitive.
+All comparators can be applied on 'char!' values: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, `max` and `sort` are supported. Comparison of `char!` values is case sensitive.
 
 *Examples*
 
 ----
 #"a" = #"A"
 == false
-same? #"a" #"a"
+#"a" =? #"a"
 == true
 max #"a" #"A"
 == #"a"
