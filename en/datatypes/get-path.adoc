@@ -14,15 +14,18 @@ Get-path! is a member of the following typesets: `any-block!`, `any-path!`, `ser
 `Get-path!` values can be created at runtime by using a `make` constructor or `to` conversion.
 
 ```red
->> my-path: make get-path! 10
-== :
-
->> insert my-path 'path-head
-== :
-
->> append my-path 'selector
-== :path-head/selector
+>> make get-path! [foo bar baz]
+== :foo/bar/baz
 ```
+
+You can create an empty get-path of a given size by supplying an integer value as an argument to `make`:
+
+```red
+>> make get-path! 10
+== :
+```
+
+`To` conversion:
 
 ```red
 >> to get-path! "foo bar baz"

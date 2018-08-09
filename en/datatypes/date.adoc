@@ -828,7 +828,7 @@ The argument block will be converted to a `date!` value according to the same sy
 
 == Comparisons
 
-All comparators can be applied on dates: `=, ==, <>, >, <, >=, &lt;=, same?`. In addition, `min`, `max` and `sort` are also supported.
+All comparators can be applied on dates: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, `max` and `sort` are also supported.
 
 *Examples*
 
@@ -842,7 +842,7 @@ All comparators can be applied on dates: `=, ==, <>, >, <, >=, &lt;=, same?`. In
 max 10/10/2017 1/1/2017
 == 10-Oct-2017
 
-same? 1/1/1980 1-JAN-1980
+1/1/1980 =? 1-JAN-1980
 == true
 
 sort [1/1/2017 5/10/1999 3-Jul-2017/5:41:40-2:00 1/1/1950 1/1/1980/2:2:2]

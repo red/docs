@@ -13,9 +13,9 @@ Paths are a series of values delimited by slashes (`/`). They are a type of `blo
 |========================================================================
 |*Syntax*|*Datatype*|*Testing Values*|*Conversion*
 |foo/bar|`path!`|`path?`|`to path!`
-|foo/bar:|`set-path!`|`set-path?`|`to set-path!`
+|foo/bar:|link:set-path.adoc[set-path!]|`set-path?`|`to set-path!`
 |:foo/bar|link:get-path.adoc[get-path!]|`get-path?`|`to get-path!`
-|'foo/bar|`lit-path!`|`lit-path?`|`to lit-path!`
+|'foo/bar|link:lit-path.adoc[lit-path!]|`lit-path?`|`to lit-path!`
 |========================================================================
 
 == Creation
@@ -23,20 +23,23 @@ Paths are a series of values delimited by slashes (`/`). They are a type of `blo
 Path! values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
 
 ```red
->> 'foo/bar/baz
+>> 'foo/bar/baz 
 == foo/bar/baz
 ```
 
 ```red
->> my-path: make path! 10
-==
-
->> insert my-path 'path-head
-==
-
->> append my-path 'selector
-== path-head/selector
+>> make path! [foo bar baz]
+== foo/bar/baz
 ```
+
+You can create an empty path of a given size by supplying an integer value as an argument to `make`:
+
+```red
+>> make path! 10
+== 
+```
+
+`To conversion:
 
 ```red
 >> to path! "foo bar baz"
