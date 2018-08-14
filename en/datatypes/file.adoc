@@ -40,16 +40,11 @@ File! values can be created using literal syntax, or at runtime by using a `make
 A percent sign `%` followed by one or more non whitespace characters, or by zero or more characters enclosed in `" "`.
 Whitespace characters must be escaped with `%<hex>` values unless enclosed in `" "`.
 
-```red
->> %foo
-== %foo
+`%foo`
 
->> %foo%20bar
-== %foo%20bar
+`%foo%20bar`
 
->> %"foo bar baz"
-== %foo%20bar%20baz
-```
+`%"foo bar baz"`
 
 == Comparisons
 
