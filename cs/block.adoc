@@ -4,7 +4,7 @@
 
 == Úvodem
 
-Bloky se používají k prezentaci dat nebo kódu, jež může být kdykoli vyhodnocen. Jsou typu `series!` bez omezení typu odkazovaných hodnot.
+Bloky se používají k prezentaci dat nebo kódu, jež může být kdykoli vyhodnocen. Datový typ `block!` je subtypem typu `series!` bez omezení typu odkazovaných hodnot.
 
 Bloky jsou vymezeny hranatými závorkami.
 
@@ -70,7 +70,7 @@ Použití konverze `to`:
 
 == Literálová skladba
 
-Kolekce hodnot, vymezených hranatými závorkami a odděených mezerami.
+Kolekce hodnot, vymezených hranatými závorkami a oddělených mezerami.
 
 `[]`
 

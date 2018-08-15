@@ -16,7 +16,7 @@ VID umožňuje určení polohy každého grafického elementu a to třemi způso
 * umístění elementu do mřížky
 * absolutní zadání pozice
 
-VID automaticky vytvoří kontejnerový piškot pro popis zadaných piškotů. Implicitně je kontejnerový piškot typu `window`.
+VID automaticky vytvoří kontejnerový piškot pro umístění zadaných piškotů. Implicitně je kontejnerový piškot typu `window`.
 
 Kód VIDu je vyhodnocen funkcí `layout` (jež je interně volána funkcí `view`). Kód je poté kompilován do stromu piškotů, vhodného pro přímé zobrazení.
 
@@ -105,9 +105,9 @@ V této oblasti kódu je také možné definovat aktéry kontejneru - viz sekci 
 
 == Rozvržení (layout) 
 
-VID umisťuje piškoty do kontejnerového piškotu podle jednoduchých pravidel:
+VID umisťuje piškoty do piškotu window podle jednoduchých pravidel:
 
-* směr může být horizontální nebo vertikální
+* směr řazení piškotů může být horizontální nebo vertikální
 * piškoty jsou v daném směru umisťovány jeden za druhým se zadaným odstupem
 
 Implicitní hodnoty:
@@ -643,6 +643,7 @@ aktuálně používáno pouze u piškotů `text` a `field`.
 with <body>
 
 <body>: blok kódu vázaný na aktuální piškot (block!)
+----
 
 *Popis*
 
@@ -700,7 +701,7 @@ Aktér může být rovněž definován mimo VID a odkaz na něj zadán jako get-
 
 Je možné definovat dětské panely pro seskupování piškotů a případně na ně aplikovat specifické styly. Není-li specificky určena, je velikost nového panelu automaticky spočítána podle velikosti jeho obsahu.
 
-Piškoty typu panel ze strojku View jsou ve VID podporovány se specifickou syntaxí: 
+Piškoty typu panel ze systému View jsou ve VID podporovány se specifickou syntaxí: 
 
 === panel 
 

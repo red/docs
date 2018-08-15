@@ -78,17 +78,19 @@ Nový piškot (face) se vytvoří klonováním objektu face! object a zadáním 
 
 Měnit pole `type` není u deklarovaného piškotu dovoleno.
 
-=== Options facet
+=== Aspekt options
 
-Facet možností (options) obsahuje volitelné facety, kterými se zadává specifické chování:
+Aspekt options obsahuje volitelné parametry, kterými se zadává specifické chování:
 
 [cols="1,4" options="header"]
 |===
 |Option| Description
 |*drag&#8209;on*| Can be one of: `'down`, `'mid-down`, `'alt-down`, `'aux-down`. Used for enabling a drag'n drop operation.
+|*offset*| Odsazení okna od levého horního rohu obrazovky v px ve formátu `pair!`.
+|*size*| Velikos okna v pixelech ve formátu `pair!`.
 |===
 
-== Font object
+== Objekt Font
 
 Objekty fontů jsou klony šablony `font!`. Na jeden font se může odkazovat více piškotů, čímž je umožněno centrální řízení skupiny piškotů.
 
@@ -125,7 +127,7 @@ Dostupné režimy vyhlazení:
 * active/inactive (`anti-alias?: yes/no`)
 * ClearType mode (`anti-alias?: 'ClearType`)
 
-== Para object 
+== Objekt Para
 
 Objekty para jsou klony šablony `para!`. Na jeden objekt para se může odkazovat více piškotů, což umožňuje ovládat vlastnosti para z jednoho místa pro celou skupinu piškotů.
 
