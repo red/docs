@@ -1,0 +1,83 @@
+= Refinement! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+A `refinement!` is a symbolic value, like a word!, that is most often used for fine tuning in function specifications. Conceptually, a path is a series of successive refinements, whether for a path! value, or in files and URLs. They are also used to access specific values in objects, and to add flexibility and control when calling functions.
+
+
+The `repend` function with no refinement:
+```red
+>> repend ["foo"] [21 * 2]
+== ["foo" 42]
+```
+
+With the `/only` refinement:
+
+```red
+>> repend/only ["foo"] [21 * 2]
+== ["foo" [42]]
+```
+
+`Refinement!` is a member of the following typesets: `all-word!`, `immediate!`
+
+== Creation
+
+Refinement! values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+
+```red
+>> make refinement! "foo"
+== /foo
+```
+```red
+>> to refinement! 'bar
+== /bar
+```
+
+== Literal syntax
+
+A forward slash `/` followed by one or more characters from the entire Unicode range, including punctuation characters from the ASCII subset: `! & ' * + - . < = > ? _ | ~``
+
+Illegal characters are control characters, whitespace characters, and punctuation characters from the ASCII subset: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+
+[NOTE, caption=Note]
+
+Using `@` will not raise an error, but will cause the `refinement!` value to be returned as `email!`.
+
+== Comparisons
+
+All comparators can be applied on `refinement!`: `=, ==, <>, >, <, >=, &lt;=, =?`. 
+
+== Testing values
+
+Use `refinement?` to check if a value is of the `refinement!` datatype.
+
+```red
+>> refinement? /foo
+== true
+
+>> refinement? third [42 "Foo" /bar]
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? /foo
+== refinement!
+
+>> type? third [42 "Foo" /bar]
+== refinement!
+```
+
+== Pre-defined words
+
+=== Functions
+
+`parse-func-spec`, `refinement?`, `to-refinement`
+
+=== Natives
+
+`function`

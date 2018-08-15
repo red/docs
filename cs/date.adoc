@@ -818,7 +818,7 @@ For a strict conversion from a block, that will error out instead of normalizing
  
 == Komparace
 
-Na datumy lze aplikovat všechny relační operátory: `=, ==, <>, >, <, >=, &lt;=, same?`. Podporovány jsou také akce `min`, `max` a `sort`.
+Na datumy lze aplikovat všechny relační operátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Podporovány jsou také akce `min`, `max` a `sort`.
 
 *Příklady*
 ----
@@ -831,7 +831,7 @@ Na datumy lze aplikovat všechny relační operátory: `=, ==, <>, >, <, >=, &lt
 max 10/10/2017 1/1/2017
 == 10-Oct-2017
 
-same? 1/1/1980 1-JAN-1980
+1/1/1980 =? 1-JAN-1980
 == true
 
 sort [1/1/2017 5/10/1999 3-Jul-2017/5:41:40-2:00 1/1/1950 1/1/1980/2:2:2]

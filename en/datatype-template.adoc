@@ -1,5 +1,3 @@
-[[anchor-1]]
-
 = X datatype
 :toc:
 :numbered:
@@ -7,9 +5,12 @@
 
 == Abstract
 
+
+X is a member of the following typesets: 
+
 == Creation
 
-X values can be created using literal syntax, or at runtime using a `make` constructor, `to` conversion.
+X values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
 
 
 == Literal syntax
@@ -20,22 +21,19 @@ X values can be created using literal syntax, or at runtime using a `make` const
 All comparators can be applied on X: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
 
 
-== Conversion
-
-
 == Testing values
 
 Use X to check if a value is of the X datatype.
 
-----
+```red
 
-----
+```
 
 Use `type?` to return the datatype of a given value.
 
-----
+```red
 
-----
+```
 
 
 == Pre-defined words

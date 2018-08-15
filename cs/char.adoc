@@ -138,13 +138,13 @@ Formát "pojmenovaných" znaků je:
 
 == Komparace
 
-Pro hodnoty typu 'char!' mohou být použity všechny komparátory : `=, ==, <>, >, <, >=, &lt;=, same?`. Navíc jsou podporovány `min`, `max` a `sort`. Porovnávání hodnot `char!` values je 'case sensitive'.
+Pro hodnoty typu 'char!' mohou být použity všechny komparátory : `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány `min`, `max` a `sort`. Porovnávání hodnot `char!` values je 'case sensitive'.
 
 *Příklady*
 ----
 #"a" = #"A"
 == false
-same? #"a" #"a"
+#"a" =? #"a"
 == true
 max #"a" #"A"
 == #"a"

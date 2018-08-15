@@ -1,0 +1,54 @@
+= Datatypes
+
+== English version
+
+_This is a work in progress, only some of the datatypes are currently documented._
+
+'''
+
+* Available datatypes in Red:
+
+```red
+    action! 
+    bitset! 
+    block! 
+    char! 
+    datatype! 
+    date!
+    email!
+    error! 
+    event!
+    file! 
+    float! 
+    function! 
+    get-path! 
+    get-word! 
+    handle!
+    hash! 
+    image!
+    integer! 
+    issue! 
+    lit-path! 
+    lit-word! 
+    logic! 
+    native! 
+    none! 
+    object! 
+    op! 
+    paren! 
+    pair!
+    path! 
+    point! 
+    refinement! 
+    routine! 
+    set-path! 
+    set-word! 
+    string! 
+    tag!
+    time!
+    typeset! 
+    unset! 
+    url! 
+    vector! 
+    word!
+```
