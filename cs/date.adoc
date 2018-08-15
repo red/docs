@@ -6,11 +6,12 @@
 
 Hodnota `date!` představuje datum, vycházející z Gregoriánského kalendáře. Datum může také uvádět čas a časové pásmo. Čas v datumu je vyjádřen ve 24 hodinovém formátu (včetně volitelné informace o časovém pásmu). Datumy Redu mají také extenzivní podporu pro vstupní formáty  https://en.wikipedia.org/wiki/ISO_8601[ISO 8601].
 
-Poznámka:
-
+[NOTE]
+====
 * `date!` používá https://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar[proleptický Gregoriánský kalendář], s rozšířenou platností před rok svého vzniku, t.j. rok 1582. Je třeba se mít na pozoru při používání tohoto datového typu pro vyjadřování před gregoriánských datumů.
 
 * Podporované jsou datumy od `1/Jan/-16384` do `31/Dec/16383`, zahrnujíce rozšiřující matematické operace (s přechody u matematických operací, způsobujících překročení mezí). Pro vstup je tento rozsah z praktických důvodů omezen na úsek od `1/Jan/-9999` do `31/Dec/9999`.
+====
 
 == Vytvoření  
 
