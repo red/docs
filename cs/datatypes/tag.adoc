@@ -1,0 +1,63 @@
+= Datový typ tag!
+:toc:
+:numbered:
+
+== Úvodem
+
+Hodnoty `tag!` reprezentují tagy a elementy zna?kovacího (markup) jazyka.
+
+Typ `tag!` je subtyp typeset? `any-string!` a `series!`
+
+== Vytvo?ení
+
+Hodnoty typu tag! lze vytvo?it literálovou syntaxí nebo p?i runtime pou?itím konstruktoru `make` a konverzí `to`.
+```red
+>> make tag! "foo"
+== <foo>
+```
+
+```red
+>> to tag! 'bar
+== <bar>
+```
+
+== Literálová skladba
+
+Jeden či více znaků uvnitř  `<` lomených závorek `>`.
+
+Prvním znakem za první závorkou nemohou být znaky  `<`,  `>` nebo `=`. 
+
+Mezi první závorkou a prvním znakem nesmí být mezera, neboť by ji lexer interpretoval jako neplatný komparační operátor.
+
+```red
+>> < foo>
+*** Script Error: < operator is missing an argument
+*** Where: catch
+*** Stack:  
+```
+
+== Komparace
+
+Na typ `tag!` lze aplikovat v?echny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min`a `max`.
+
+== Testování hodnot
+
+Funkcí `tag?` lze ověřit, zda je daná hodnota typu `tag!`.
+
+```red
+>> tag? <foo>
+== true
+```
+
+Funkce `type?` vrací datový typ dané hodnoty.
+
+```red
+>> type? <foo>
+== tag!
+```
+
+== P?eddefinovaná slova
+
+=== Funkce
+
+`tag?`, `to-tag`

@@ -1,0 +1,120 @@
+= Datový typ block!
+:toc:
+:numbered:
+
+== Úvodem
+
+Bloky se používají k prezentaci dat nebo kódu, jež může být kdykoli vyhodnocen. Datový typ `block!` je subtypem typu `series!` bez omezení typu odkazovaných hodnot.
+
+Bloky jsou vymezeny hranatými závorkami.
+
+Hodnoty a výrazy v bloku se implicitně nevyhodnocují:
+
+----
+>> my-block: [print reverse "Hello" 2 * 2 42]
+== [print reverse "Hello" 2 * 2 42]
+
+>> my-block
+== [print reverse "Hello" 2 * 2 42]
+----
+
+`Nativní` hodnoty `do` a `reduce` spouští vyhodnocení výrazu v bloku.
+
+* `do` vyhodnotí blok a vrátí výsledek posledního výrazu:
+
+----
+>> do my-block
+olleH
+== 42
+----
+
+* `reduce` vrací kopii bloku, s vyhodnocením všech výrazů:
+
+----
+>> reduce my-block
+olleH
+== [unset 4 42]
+----
+
+Typ `block!` je člen následujících typesetů: `any-block!`, `any-list!` a  `series!`.
+
+== Vytvoření
+
+Blok lze vytvořit s použitím literálové syntaxe nebo při běhu programu s použitím konstruktoru `make` nebo konverzí `to`.
+
+Vytvoření prázdného bloku s alokovaným prostorem pro 10 elementů:
+
+----
+>> make block! 10
+== []
+----
+
+Vytvoření bloku s deseti elementy s hodnotami, nastavenými na none:
+
+----
+>> append/dup make block! 10 none 10
+== [none none none none none none none none none none]
+----
+
+Použití konverze `to`:
+
+----
+>> to block! {one 2 "three" 4:00}
+== [one 2 "three" 4:00:00]
+
+>> to block! "foo 1.23 me@me.com"
+== [foo 1.23 me@me.com]
+
+>> to block! 42
+== [42]
+----
+
+
+== Literálová skladba
+
+Kolekce hodnot, vymezených hranatými závorkami a oddělených mezerami.
+
+`[]`
+
+`[one 2 "three"]`
+
+`[print 1.23]`
+
+
+Bloky mohou zabírat více řádků a mohou obsahovat jiné bloky.
+
+----
+[one
+2
+"three"
+]
+
+[one 2 "three" [x foo 1.23]]
+----
+
+
+Více řádků, mezer a tabulátorů je povoleno, pokud netrhají hodnoty.
+
+Ok: `[42 print "foo"]`
+
+Not ok: `[42 pr   int "foo"]`
+
+
+== Komparace
+
+Pro hodnotu typu `block!` lze být použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
+
+== Testování hodnot
+
+K ověření, zda hodnota je typu `block!` používáme funkci `block?`.
+
+----
+>> block? [42]
+== true
+----
+
+Funkce `type?` vrací datový typ zadané hodnoty.
+----
+>> type? [42]
+== block!
+----

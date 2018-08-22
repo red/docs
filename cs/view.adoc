@@ -70,6 +70,7 @@ Ostatní specifické flagy piškotů jsou dokumentovány v příslušných sekc�
 * Velikosti `offset` a `size` se určují v pixelech;
 * `offset` a `size` lze někdy před zobrazením nastavit na `none`. Systém View se postará o jejich nastavení (jako u panelů v typu tab-panel).
 * Pořadí zobrazení (odzadu dopředu): color, image, text, draw.
+
 ====
 
 Nový piškot (face) se vytvoří klonováním objektu face! object a zadáním  *alespoň* platného názvu `typu`.
@@ -113,6 +114,7 @@ Objekty fontů jsou klony šablony `font!`. Na jeden font se může odkazovat v�
 * Nepovinné facety mohou byt nastaveny na hodnotu `none`.
 * Pole `angle` zatím nepracuje jak má.
 * V budoucnu se hodnoty všech polí mají stát nepovinné.
+
 ====
 
 Dostupné styly fontů:
@@ -147,6 +149,7 @@ Objekty para jsou klony šablony `para!`. Na jeden objekt para se může odkazov
 [NOTE]
 ====
 * Všechna pole objektu para mohou být nastavena na hodnotu `none`.
+
 ====
 
 == Strom piškotů 
@@ -178,7 +181,7 @@ Piškot typu `base` je nejzákladnějším a nejvšestrannějším typem piškot
 
 |Facet | Popis
 
-|*type*	| `'base`
+|*type*	| `base`
 |*image*	| Lze určit hodnotu typu `image!`, kanál alfa je podporován.
 |*color*	| Lze určit barvu pozadí, kanál alfa je podporován.
 |*text*     | Uvnitř piškotu lze zobrazit libovolný text.
@@ -189,13 +192,12 @@ Piškot typu `base` je nejzákladnějším a nejvšestrannějším typem piškot
 ====
 * Úplná skladba následujících facetů je podporována a zobrazována v uvedeném pořadí: `color`, `image`, `text`, `draw`.
 * Průhlednost lze zařídit u facetů `color`, `image`, `text` a `draw` určením hodnoty kanálu alfa v entici `R.G.B.A`, kde `A = 0` indikuje úplnou neprůhlednost a `A = 255` indikuje úplnou průhlednost.
+
 ====
 
 _Tento typ piškotu může být použit pro zavedení libovolné grafické komponenty._
 
 '''
-
-
 
 === Text 
 
@@ -346,6 +348,7 @@ Aspekt `selected` řídí zvýraznění textu (read/write). Hodnota typu `pair!`
 [NOTE]
 ====
 * Může se objevit svislá posuvná lišta, jestliže oblast (area) nepojme všechny řádky textu (v budoucnu bude možné kontrolovat volbou `flags`).
+
 ====
 
 [cols="1,1,2", options="header"]
@@ -381,6 +384,7 @@ Tento typ představuje svislý seznam textových řetězců, zobrazený v pevné
 [NOTE]
 ====
 * počet viditelných položek zatím nemůže být určen uživatelem.
+
 ====
 
 
@@ -408,6 +412,7 @@ Facet `data` přijímá libovolné hodnoty, avšak pouze hodnoty typu string jso
 [NOTE]
 ====
 * počet viditelných položek zatím nemůže být určen uživatelem.
+
 ====
 
 === Drop-down 
@@ -434,6 +439,7 @@ Facet `data` přijímá libovolné hodnoty avšak pouze hodnoty typu string jsou
 [NOTE]
 ====
 * počet viditelných položek zatím nemůže být určen uživatelem
+
 ====
 
 === Progress 
@@ -450,6 +456,7 @@ Tento typ představuje horizontální nebo vertikální průběhovou lištu.
 [NOTE]
 ====
 * Je-li pro zobrazení průběhu ve facetu `data` použita hodnota typu float, musí být v rozsahu od 0.0 do 1.0.
+
 ====
 
 
@@ -467,6 +474,7 @@ Tento typ představuje kurzor, posuvný podél horizontální nebo vertikální 
 [NOTE]
 ====
 * Je-li pro zobrazení průběhu ve facetu `data` použita hodnota typu float, musí být v rozsahu od 0.0 do 1.0.
+
 ====
 
 
@@ -486,6 +494,7 @@ Tento typ se používá k zobrazení "video camera feed".
 ====
 * Facet `data` je implicitně nastaven na `none`. Během prvního volání je připraven seznam kamer k zobrazení v piškotu kamery.
 * Je možné zachytit obsah piškotu kamery s použitím `to-image` na piškotu.
+
 ====
 
 
@@ -504,6 +513,7 @@ Panel je kontejner pro další piškoty.
 ====
 * Souřadnice pro `offset` (odsazení) dětí jsou vztaženy k levému hornímu rohu rodiče.
 * Piškoty dětí jsou vloženy do rámečku (frame) panelu.
+
 ====
 
 '''
@@ -533,6 +543,7 @@ Tab-panel je seznam karet (panelů), z nichž pouze jedna může být v daném o
 * K řádnému zobrazení panelu s kartami je zapotřebí aby facety `data` i `pane` byly řádně vyplněny.
 * Obsahuje-li facet `pane` víc panelů než zadaných karet, budou ignorovány.
 * Při přidávání či odebírání karty musí být odpovídající panel rovněž přidán či odebrán v/ze seznamu `pane`.
+
 ====
 
 
@@ -567,6 +578,7 @@ Reprezentuje okno, zobrazené na monitoru počítače.
 [NOTE]
 ====
 * Použití klíčového slova `popup` na počátku bloku se specifikacemi menu vynutí implicitně kontextuální menu v okně namísto nabídkové lišty.
+
 ====
 
 
@@ -600,6 +612,7 @@ Group-box je kontejner pro jiné piškoty s viditelným rámečkem. _Tento doča
 ====
 * Souřadnice odsazení (offset) dětí jsou relativní k levému hornímu rohu group-boxu.
 * Dětské piškoty jsou připojeny do rámečku group-boxu.
+
 ====
 
 
@@ -616,8 +629,8 @@ Group-box je kontejner pro jiné piškoty s viditelným rámečkem. _Tento doča
 [NOTE]
 ====
 * U aplikací, hladových na zdroje, lze použít funkci `free` pro manuální uvolnění systémových zdrojů.
-====
 
+====
 
 == Aspekty 
 
@@ -717,6 +730,7 @@ Na jeden font může odkazovat jeden či více piškotů, umožňujíc tak kontr
 * Nepovinné facety mohou byt nastaveny na hodnotu `none`.
 * pole `angle` zatím nepracuje jak má.
 * V budoucnu se hodnoty všech polí mají stát nepovinné.
+
 ====
 
 Nabízené styly fontů:
@@ -757,6 +771,7 @@ Na jeden objekt para může odkazovat jeden či více piškotů, umožňujíc ta
 [NOTE]
 ====
 * Všechna pole objektu para mohou být nastavena na hodnotu `none`.
+
 ====
 
 
@@ -791,6 +806,7 @@ _Následující informace je uváděna jen pro úplnost, při normálním použ�
 ====
 * After a call to `show`, `changes` field is reset to 0 and `deferred` field block is cleared.
 * A `handle!` datatype will be used in the future for opaque OS handles.
+
 ====
 
 
@@ -816,6 +832,7 @@ Odložená aktualizace realizuje mnoho změn na monitoru zároveň, což vede ke
 [NOTE]
 ====
 * Prostředí Rebol/View podporuje pouze režim odložené aktualizace.
+
 ====
 
 == Dvojsměrné propojení 
@@ -884,6 +901,7 @@ view [
 * Dotekové (touch) události nejsou realizovatelné ve Windows XP.
 * Jedna či více _pohybových_ událostí vždy předchází událost `move`.
 * Jedna či více událostí _měnících rozměr_ vždy předchází událost `resize`.
+
 ====
 
 === Datový typ Event! 
@@ -1003,6 +1021,7 @@ Typická cesta toku událostí:
 ====
 * Zrušení události se docílí vrácením slova `'done` z jakéhokoli ovladače.
 * Odchycení události není implicitně povoleno z kapacitních důvodů. Odchycení povolíte nastavením `system/view/capturing?: yes`.
+
 ====
 
 === Globální ovladače událostí
