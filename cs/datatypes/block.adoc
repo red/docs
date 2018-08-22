@@ -4,7 +4,7 @@
 
 == Úvodem
 
-Bloky se používají k prezentaci dat nebo kódu, jež může být kdykoli vyhodnocen. Jsou typu `series!` bez omezení typu odkazovaných hodnot.
+Bloky se používají k prezentaci dat nebo kódu, jež může být kdykoli vyhodnocen. Datový typ `block!` je subtypem typu `series!` bez omezení typu odkazovaných hodnot.
 
 Bloky jsou vymezeny hranatými závorkami.
 
@@ -18,7 +18,7 @@ Hodnoty a výrazy v bloku se implicitně nevyhodnocují:
 == [print reverse "Hello" 2 * 2 42]
 ----
 
-`Nativní` funkce `do` a `reduce` spouští vyhodnocení výrazu v bloku.
+`Nativní` hodnoty `do` a `reduce` spouští vyhodnocení výrazu v bloku.
 
 * `do` vyhodnotí blok a vrátí výsledek posledního výrazu:
 
@@ -35,6 +35,8 @@ olleH
 olleH
 == [unset 4 42]
 ----
+
+Typ `block!` je člen následujících typesetů: `any-block!`, `any-list!` a  `series!`.
 
 == Vytvoření
 
@@ -70,7 +72,7 @@ Použití konverze `to`:
 
 == Literálová skladba
 
-Kolekce hodnot, vymezených hranatými závorkami a odděených mezerami.
+Kolekce hodnot, vymezených hranatými závorkami a oddělených mezerami.
 
 `[]`
 
@@ -91,7 +93,7 @@ Bloky mohou zabírat více řádků a mohou obsahovat jiné bloky.
 ----
 
 
-Nadpočetné řádky, mezery a tabulátory jsou povoleny, pokud netrhají hodnoty.
+Více řádků, mezer a tabulátorů je povoleno, pokud netrhají hodnoty.
 
 Ok: `[42 print "foo"]`
 

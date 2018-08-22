@@ -46,7 +46,7 @@ Funkce `type?` vrací datový typ zadané hodnoty.
 == unset!
 ----
 
-== Definovaná slova
+== Předdefinovaná slova
 
 === Funkce
 

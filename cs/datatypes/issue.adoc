@@ -1,5 +1,3 @@
-[[anchor-1]]
-
 = Datový typ issue!
 :toc:
 :numbered:
@@ -8,7 +6,7 @@
 
 Hodnoty typu `issue!` (*emise*) se používají k prezentování hashtagů, klíčových slov a identifikátorů (např. indexů u řad), to jest entit, které neobsahují mezery.
 
-Emise (issues) jsou součástí typové sady `all-word!`.
+Typ `issue!` je součástí typové sady `all-word!`.
 
 
 == Vytvoření
@@ -37,7 +35,7 @@ Znak `#`, následovný sekvencí alfanumerických znaků. Hodnoty typu `issue!` 
 
 == Komparace
 
-Pro hodnotu typu `issue!` lze být použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. `=, ==, <>, >, <, >=, &lt;=, =?`. 
+Pro hodnotu typu `issue!` lze použít všechny komparátory: `=, ==, <>, <, <=, >, >=, =?`. 
 
 
 == Testování hodnot
@@ -66,9 +64,12 @@ Funkce `type?` vrací datový typ zadané hodnoty.
 == issue!
 ----
 
+== Předdefinovaná slova
 
 === Funkce
 
 `hex-to-rgb`, `issue?`, `to-issue`
+
+=== Natives
 
 `to-hex`

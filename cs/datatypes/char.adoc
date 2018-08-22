@@ -7,20 +7,20 @@ Version: Draft 3
 
 Hodnoty `char!` reprezentují kódový bod Unicode. Jsou to celá čísla v rozsahu od hexadecimální nuly do hexadecimální hodnoty 10FFFF (od nuly do 1,114,111 v dekadickém systému).
 
-<<anchor-1,toc>> 
+Typ `char!` je členem následujících typesetů: `immediate!`, `scalar!`
 
 == Charakteristika
-Hodnoty 'char!' jsou 'přímé', 'atomické' a 'pasivní'.
 
-[NOTE] Předpokládá se, že charakteristiky typu byly již dříve v dokumentu definovány.
+Hodnoty typu 'char!' jsou 'přímé', 'atomické' a 'pasivní'.
 
-<<anchor-1,toc>> 
+[NOTE]
+Předpokládá se, že charakteristiky typu byly již dříve v dokumentu definovány.
+
 
 == Vytvoření
 
 Hodnoty `char!` mohou být vytvořeny s použitím literálové syntaxe nebo při běhu programu s použitím konstruktoru 'make' nebo konverzí &nbsp; 'to' &nbsp; jednou z mnoha funkcí, které z hodnoty `string!` extrahují hodnotu `char!`.
 
-<<anchor-1,toc>>
 
 === Literálová syntaxe
 
@@ -30,10 +30,11 @@ Základní literálový formát pro hodnoty `char!` jest:
 <character> : jeden kódový bod Unicode (obvykle zadaný z klávesnice)
 ----
 
-Literálová syntaxe rovněž podporuje řídící znaky (escaped characters) pro ovládací znaky a pro znaky, které se obtížně píší na standardní klávesnici.
+Literálová syntaxe rovněž podporuje únikové znaky (escaped characters) pro řídící znaky a pro znaky, které se obtížně píší na standardní klávesnici.
 
-Řídícím znakem v Redu je '^' - codepoint U+005E. V důsledku toho musí být samotný znak ^ rovněž uveden řídícím znakem. Stringový literál pro kódový bod je #"^^" nikoliv #"^". Označení #"^" je vlastně neplatné.
-V Redu existují tři formy řídících literálů, jeden pro číselné kódové body, další pro pojmenované znaky a poslední pro ovládací znaky.
+Únikovým znakem v Redu je '^' - codepoint U+005E. V důsledku toho musí být samotný znak ^ rovněž předsazen únikovým znakem. Stringový literál pro kódový bod je #"^^" nikoliv #"^"; označení #"^" je neplatné.
+
+V Redu existují tři formy únikových literálů, jeden pro číselné kódové body, další pro pojmenované znaky a poslední pro "řídící" znaky.
 
 Formát kódového bodu je:
 ----
@@ -41,17 +42,17 @@ Formát kódového bodu je:
 <codepoint> : a valid hexadecimal e.g. 00, ABCD, 10FFFFF
 ----
 
-Formát ovládacích znaků je:
+Formát "řídících" znaků je:
 ----
 #"^<cc>"
 <cc> : A single character from the set - A-Z, [, \, ], _
 ----
 
-.Escaped Control Characters
+.Únikové řídící znaky
 [cols="2*"]
 |===
 
-|Escaped Character
+|Únikový znak
 |Codepoint
 
 |#"^A" - #"^Z"
@@ -74,11 +75,11 @@ Formát ovládacích znaků je:
 Formát "pojmenovaných" znaků je:
 ----
 #"^(<name>)" nebo #"^<symbol>" 
-<name> : název z tabulky Named Escaped Characters
-<symbol> : symbol z tabulky Named Escaped Characters
+<name> : název z tabulky Únikové řídící znaky
+<symbol> : symbol z tabulky Únikové řídící znaky
 ----
 
-.Named Escaped Characters
+.Pojmenované únikové znaky
 [cols="4*"]
 |===
 
@@ -134,13 +135,13 @@ Formát "pojmenovaných" znaků je:
 
 |===
 
-<<anchor-1,toc>>
 
 == Komparace
 
-Pro hodnoty typu 'char!' mohou být použity všechny komparátory : `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány `min`, `max` a `sort`. Porovnávání hodnot `char!` values je 'case sensitive'.
+Pro hodnoty typu 'char!' mohou být použity všechny komparátory : `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány `min`, `max` a `sort`. Porovnávání hodnot typu `char!` values je 'case sensitive'.
 
 *Příklady*
+
 ----
 #"a" = #"A"
 == false
@@ -152,12 +153,12 @@ sort [#"c" #"b" #"d" #"a"]
 == [#"a" #"b" #"c" #"d"]
 ----
 
-<<anchor-1,toc>>
 
 == Aritmetika
 Pro hodnoty `char!` lze použít celý rozsah matematických funkcí. Pokud se výsledek aritmetického výrazu dostane mimo rozsah  00 - 10FFFF (hexadecimal), je vyvolána chyba `Math Error`.
 
 *Příklady*
+
 ----
 #"a" + 1
 == #"b"
@@ -172,10 +173,9 @@ Pro hodnoty `char!` lze použít celý rozsah matematických funkcí. Pokud se v
 
 ----
 
-<<anchor-1,toc>>
+
 
 == Další souvisící funkce
 
 Lowercase, Uppercase
 
-<<anchor-1,toc>>

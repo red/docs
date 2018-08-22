@@ -2,8 +2,6 @@
 :toc:
 :numbered:
 
-
-
 == Koncept
 
 Preprocesor je dialekt Redu, umožňující transformaci zdrojového kódu s použitím specielní vrstvy nad normálním jazykem. Transformací je dosahováno vkládáním klíčových slov preprocesoru (zvaných `directives`) do zdrojového kódu. Tato direktiva jsou zpracována když je:
@@ -84,7 +82,7 @@ Poté, co je takové makro definováno, je spuštěno při každém výskytu slo
 . Náhrada invokace poslední hodnotou funkce.
 . Pokračování v předzpracování (preprocessing) od nahrazené hodnoty (umožňující rekurzivní vyhodnocení makra).
 
-[NOTE] 
+[NOTE]
 ====
 Určení typů argumentů není aktuálně podporováno.
 ====
@@ -265,7 +263,7 @@ Red []
 print #switch config/OS [
     Windows ["Windows"]
     Linux   ["Unix"]
-    MacOS  ["macOS"]
+    macOS  ["macOS"]
 ]
 ----    
 bude mít za následek následující kód při běhu na Windows:

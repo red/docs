@@ -53,18 +53,18 @@ Funkce `as-pair` přijímá argumenty `x` a `y` typu `integer!` nebo `float!`. H
 
 == Komparace
 
-Pro hodnotu typu `pair!` lze být použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
+Pro hodnotu typu `pair!` lze použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
 
 
 
 == Aritmetika
 
-Funkce `+`, `add`, `-`, `subtract`, `*`, `multiply`, `/`, `divide`, `%`, a `remainder` lze všechny použít s hodnotami typu `pair!`.
+Funkce `+`, `-`, `*`, `/`, `%`, `//`, `add`, `subtract`, `multiply`, `divide`, `remainder` a `mod`, lze použít s hodnotami typu `pair!`.
 
 
 == Upřesnění
 
-Páry podporují upřesnění (refinements) `/x` a `/y` pro zobrazení nebo úpravu souřadnic.
+Typ `pairs!` podporuje upřesnění (refinements) `/x` a `/y` pro zobrazení nebo úpravu souřadnic.
 
 ----
 >> my-pair: 1024x768
@@ -88,6 +88,7 @@ Páry podporují upřesnění (refinements) `/x` a `/y` pro zobrazení nebo úpr
 == Testování hodnot
 
 K ověření, zda hodnota je typu `pair!` použijeme funkci `pair?`.
+
 ----
 >> pair? 42x42
 == true
@@ -104,14 +105,14 @@ Funkce `type?` vrací datový typ zadané hodnoty.
 ----
 
 
-== Definovaná slova
+== Předdefinovaná slova
 
 
-=== Akce (action!)
+=== Akce 
 
 `absolute`, `add`, `and~`, `at`, `copy`, `divide`, `multiply`, `negate`, `or~`, `pick`, `remainder`, `reverse`, `round`, `skip`, `subtract`, `xor~`
 
-=== Funkce (function!)
+=== Funkce
 
 `caret-to-offset`, `draw`, `first`, `make-face`, `metrics?`, `mod`, `modulo`, `offset-to-caret`, `offset-to-char`, `pair?`, `second`, `size-text`, `to-pair`, `within?`
 

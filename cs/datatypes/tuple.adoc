@@ -34,10 +34,12 @@ Hodnoty typu tuple! lze vytvořit s použitím literálové skladby nebo za běh
 == 1.2.3
 ----
 
+
 ----
 >> to tuple! [42]
 == 42.0.0
 ----
+
 
 ----
 >> to-tuple "1.2.3.4"
@@ -98,13 +100,13 @@ Funkce `type?` vrací datový typ zadané hodnoty.
 ----
 
 
-== Definovaná slova
+== Předefinovaná slova
 
-=== Akce (action!)
+=== Akce 
 
 `add`, `subtract`, `multiply`, `divide`, `remainder`, `and~`, `or~`, `xor~`, `length?`, `pick`, `reverse`
 
-=== Funkce (funkction!)
+=== Funkce
 
 `first`, `second`, `third`, `fourth`, `fifth`, `to-tuple`, `tuple?`, `mod`, `modulo`
 

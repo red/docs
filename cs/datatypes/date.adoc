@@ -1,10 +1,8 @@
-[[anchor-1]]
-
 = Datový typ date!
 :toc:
 :numbered:
 
-== Úvod
+== Úvodem
 
 Hodnota `date!` představuje datum, vycházející z Gregoriánského kalendáře. Datum může také uvádět čas a časové pásmo. Čas v datumu je vyjádřen ve 24 hodinovém formátu (včetně volitelné informace o časovém pásmu). Datumy Redu mají také extenzivní podporu pro vstupní formáty  https://en.wikipedia.org/wiki/ISO_8601[ISO 8601].
 
@@ -13,19 +11,17 @@ Hodnota `date!` představuje datum, vycházející z Gregoriánského kalendář
 * `date!` používá https://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar[proleptický Gregoriánský kalendář], s rozšířenou platností před rok svého vzniku, t.j. rok 1582. Je třeba se mít na pozoru při používání tohoto datového typu pro vyjadřování před gregoriánských datumů.
 
 * Podporované jsou datumy od `1/Jan/-16384` do `31/Dec/16383`, zahrnujíce rozšiřující matematické operace (s přechody u matematických operací, způsobujících překročení mezí). Pro vstup je tento rozsah z praktických důvodů omezen na úsek od `1/Jan/-9999` do `31/Dec/9999`.
-====
 
-<<anchor-1,toc>>
+====
 
 == Vytvoření  
 
 Hodnoty typu `date!` lze vytvořit s použitím literálové syntaxe nebo s použitím konstruktoru `make` nebo konverzí `to`.
 
-<<anchor-1,toc>>
-
 === Literálová skladba
 
-Jsou podporovány mnohé literálové formáty, včetně formátů Rebolu a většina datumových standardů ISO.
+Jsou podporovány mnohé literálové formáty, včetně formátů Rebolu a většiny datumových standardů ISO.
+
 ----
 <date>/<time>
 <date>/<time><zone>
@@ -96,18 +92,21 @@ Jsou akceptovány mnohé vstupní formáty pro literálové datumy. Hodnoty mimo
 <dd>-<mon>-<yyyy>
 <dd>-<mon>-<yyyy>/<hour>:<min>:<sec>
 <dd>-<mon>-<yyyy>/<hour>:<min>:<sec><sign><hour>:<min15>
+<sec><sign><hour>:<min15>
 ----
 
 
-Jsou-li pole time a/nebo zone vysazena (unset), jsou vynechána. U negativních datumových hodnot se pro lepší čitelnost používá separátor `/` místo `-`.
+Nejsou-li pole pro time a/nebo zónu zadána, jsou vynechána. U negativních datumových hodnot se pro lepší čitelnost používá separátor `/` místo `-`.
  
 [NOTE]
 ====
-* Názvy měsící jsou anglické a jsou 'case-insensitive'.
-* Je-li rok určen pouze dvouciferným číslem (`yy`): pak je-li < 50, je interpretován jako `20yy`, jinak je interpretován jako `19yy`.
+* Názvy měsíců jsou anglické a jsou 'case-insensitive'.
+* Je-li rok určen pouze dvouciferným číslem (`yy`): pak je-li yy < 50, je interpretován jako `20yy`, jinak je interpretován jako `19yy`.
+
 ====
 
 Příklady platných datumových vstupů:
+
 ----
 1999-10-5
 1999/10/5
@@ -143,11 +142,7 @@ Příklady platných datumových vstupů:
 2017-153T10:50:00-4:00
 ----
 
-<<anchor-1,toc>>
-
-=== Konstruktorová skladba
-
-Na rozdíl od literálové skladby se tímto způsobem (runtime creation) vytváří datumová hodnota při běhu programu.
+=== Vytvoření při runtime
 
 ----
 make date! [<day> <month> <year>]
@@ -172,6 +167,7 @@ make date! [<day> <month> <year> <hour> <minute> <second> <zone>]
 * Argumenty mimo stanovený rozsah vyvolají chybu. Pro normalizovaný výsledek se doporučuje použít akci `to` místo `make`.
 
 * Pole `year` a `day` jsou zaměnitelná, avšak jen pro nízké hodnoty roků. Rok může být použit na první pozici *pouze tehdy*, je-li jeho hodnota >= 100 a menší než hodnota třetího pole. Nejsou-li tyto podmínky splněny, je třetí pole vymezeno pro rok. Negativní roky mají být vždy určeny ve třetí pozici.
+
 ====
 
 *Příklady*
@@ -206,15 +202,14 @@ make date! [99 12 31]
 *** Where: make
 ----
 
-<<anchor-1,toc>>
+== Přístup ve formátu cesty
 
-== Přístup ve formátu PATH
-
-Přístup ve formátu `path` (path accessor) poskytuje vhodný způsob získání či zadání všech polí hodoty `date!`.
+Přístup ve formátu cesty (path accessor) poskytuje vhodný způsob získání či zadání všech polí hodoty `date!`.
 
 === /date
 
 *Syntaxe*
+
 ----
 <date>/date
 <date>/date: <date2>
@@ -222,11 +217,13 @@ Přístup ve formátu `path` (path accessor) poskytuje vhodný způsob získán�
 <date>  : slovo nebo cesta (path expression) odkazující na hodnotu date!
 <date2> : hodnota typu date!
 ----
+
 *Popis*
 
 Vrací nebo zadá datumové pole datumu (s vyloučením času a pásma). Datumy se vrací jako hodnoty typu `date!`.
 
 *Příklady*
+
 ----
 d:  now
 == 10-Jul-2017/22:46:22-06:00
@@ -237,11 +234,10 @@ d/date: 15/09/2017
 == 15-Sep-2017/22:46:22-06:00
 ----
 
-<<anchor-1,toc>>
-
 === /year
 
 *Syntaxe*
+
 ----
 <date>/year
 <date>/year: <year>
@@ -254,6 +250,7 @@ d/date: 15/09/2017
 Vrací nebo zadá pole s rokem datumu. Roky se vrací jako celá čísla. Argument mimo stanovený rozsah je vrácen jako normalizované datum - s přechodem na počátek rozsahu.
 
 *Příklady*
+
 ----
 d:  now
 == 10-Jul-2017/22:46:22-06:00
@@ -267,11 +264,10 @@ d
 == 10/Jul/-0000/22:46:22-06:00     ; hle přechod při přetečení
 ----
 
-<<anchor-1,toc>>
-
 === /month
 
 *Syntaxe*
+
 ----
 <date>/month
 <date>/month: <month>
@@ -279,12 +275,14 @@ d
 <date>  : slovo nebo cesta odkazující na hodnotu date!
 <month> : hodnota typu integer!
 ----
+
 *Popis*
 
 Vrací nebo zadá pole pro měsíc datumu. Měsíce se vrací jako celá čísla.
 Argument mimo stanovený rozsah je vrácen jako normalizované datum - s přechodem na počátek rozsahu příštího roku.
 
 *Příklady*
+
 ----
 d: now
 == 10-Jul-2017/22:48:31-06:00
@@ -297,10 +295,8 @@ d/month: 13
 d
 == 10-Jan-2018/22:48:31-06:00   ; hle přechod při přetečení
 d/month
-== 1                           
+== 1                            ; normalizované vyjádření měsíce                          
 ----
-
-<<anchor-1,toc>>
 
 === /day
 
@@ -318,6 +314,7 @@ Vrací nebo zadá pole pro den datumu. Dny se vrací jako celá čísla.
 Argument mimo stanovený rozsah je vrácen jako normalizované datum - s přechodem na počátek rozsahu příštího měsíce.
 
 *Příklady*
+
 ----
  d: 1-jan-2017
 == 1-Jan-2017
@@ -330,8 +327,6 @@ d/day: 0         ; nula vrací na konec předchozího měsíce
 d
 == 31-Jan-2017
 ----
-
-<<anchor-1,toc>>
 
 === /time
 
@@ -363,8 +358,6 @@ d/time: none
 == 10-Jul-2017
 ----
 
-<<anchor-1,toc>>
-
 === /hour
 
 *Syntaxe*
@@ -380,6 +373,7 @@ d/time: none
 Vrací nebo zadá hodinové pole datumu. Hodiny se vrací jako celá čísla mezi 0 a 23. Argumenty mimo rozsah způsobí vytvoření normalizovaného datumu.
 
 *Příklady*
+
 ----
 d: now
 == 10-Jul-2017/23:19:40-06:00
@@ -392,8 +386,6 @@ d/hour: 24                      ; způsobí posun o 24 hodin
 d
 == 11-Jul-2017/0:19:40-06:00
 ----
-
-<<anchor-1,toc>>
 
 === /minute
 
@@ -424,8 +416,6 @@ d
 == 11-Jul-2017/0:00:25-06:00
 ----
 
-<<anchor-1,toc>>
-
 === /second
 
 *Syntaxe*
@@ -441,6 +431,7 @@ d
 Vrací nebo zadá vteřinové pole datumu. Vteřiny se vrací jako čísla typu `ingeger!` nebo `float!` o velikosti mezi 0 a 59. Argumenty mimo rozsah způsobí vytvoření normalizovaného datumu.
 
 *Příklady*
+
 ----
 d: now
 == 10-Jul-2017/23:21:15-06:00
@@ -458,8 +449,6 @@ d
 == 10-Jul-2017/23:21:00-06:00
 ----
 
-<<anchor-1,toc>>
-
 === /zone
 
 *Syntaxe*
@@ -472,13 +461,14 @@ d
 ----
 *Popis*
 
-Vrací nebo zadá pole časového pásme datumu. Časové zóny se vrací jako hodnoty typu `time!` o velikosti mezi -16:00 a +16:00. Nastavení časového pásma upřesněním `/zone` modifikuje pouze toto pole, čas se nemění. Argumenty mimo rozsah způsobí vytvoření normalizovaného datumu.
+Vrací nebo zadá pole časového pásme datumu. Časové zóny se vrací jako hodnoty typu `time!` o velikosti mezi -16:00 a +15:00. Nastavení časového pásma upřesněním `/zone` modifikuje pouze toto pole, čas se nemění. Argumenty mimo rozsah způsobí vytvoření normalizovaného datumu.
 
 Je-li časové pásmo zadáno celým číslem, vztahuje se na hodiny, zatímco minuty jsou nastaveny na 0.
 
 Minuty časového pásma se uvádějí v násobcích čísla 15; jiné hodnoty se zaokrouhlují na nejbližší násobek patnácti dolů.
 
 *Příklady*
+
 ----
 d: 1/3/2017/5:30:0
 d/zone: 8
@@ -487,8 +477,6 @@ d/zone: 8
 d/zone: -4:00
 == 1-Mar-2017/5:30:00-04:00
 ----
-
-<<anchor-1,toc>>
 
 === /timezone
 
@@ -509,6 +497,7 @@ Je-li časové pásmo zadáno celým číslem, vztahuje se na hodiny, zatímco m
 Minuty časového pásma se uvádějí v násobcích čísla 15; jiné hodnoty se zaokrouhlují na nejbližší násobek patnácti dolů.
 
 *Příklady*
+
 ----
 d: 1/3/2017/5:30:0
 d/timezone: 8
@@ -520,14 +509,14 @@ d/timezone: -4:00
 
 [NOTE]
 ====
-* Upřesnění slovem `/timezone` na hodnotu 0 nastaví čas ve standardu UTC (Coordinated Universal Time). 
-====
+* Nastavení pole `/timezone` na hodnotu 0 nastaví čas ve standardu UTC (Coordinated Universal Time). 
 
-<<anchor-1,toc>>
+====
 
 === /yearday
 
 *Syntaxe*
+
 ----
 <date>/yearday
 <date>/yearday: <day>
@@ -544,9 +533,11 @@ Zadání pořadového čísla roku způsobí příslušné přepočítání datu
 [NOTE]
 ====
 * Kvůli kompatibilitě s Rebolem je možné místo `/yearday` použít upřesnění `/julian`.
+
 ====
 
 *Příkklady*
+
 ----
 d: 1-jan-2017
 == 1-Jan-2017
@@ -569,8 +560,6 @@ d
 == 24-Feb-2018
 ----
 
-<<anchor-1,toc>>
-
 === /weekday
 
 *Syntaxe*
@@ -586,6 +575,7 @@ d
 Vrací pořadové číslo dne v týdnu, počínaje pondělím, konče nedělí. Zadání pořadového čísla dne v týdnu způsobí příslušné přepočítání datumové hodnoty. Argumenty mimo rozsah způsobí vytvoření normalizovaného datumu.
 
 *Příklady*
+
 ----
 d: now
 == 10-Jul-2017/23:25:35-06:00
@@ -605,8 +595,6 @@ d
 == 17-Jul-2017/23:25:35-06:00
 ----
 
-<<anchor-1,toc>>
-
 === /week
 
 *Syntaxe*
@@ -620,14 +608,16 @@ d
 
 *Popis*
 
-Vrací číslo týdne 'nahodile' definovaného (týden začíná v neděli, první týden začíná prvního ledna) od 1 do 53. Zadání pořadového čísla týdne způsobí příslušné přepočítání datumové hodnoty. Argumenty mimo rozsah způsobí vytvoření normalizovaného datumu.
+Vrací číslo týdne nahodile (casual) definovaného (týden začíná v neděli, první týden začíná prvního ledna) od 1 do 53. Zadání pořadového čísla týdne způsobí příslušné přepočítání datumové hodnoty. Argumenty mimo rozsah způsobí vytvoření normalizovaného datumu.
 
 [NOTE]
 ====
 * Nahodilá (casual) definice týdne umožňuje započítání neúplných týdnů na počátku a na konci roku. Pro přesné počítání týdnů pro více roků používáme upřesnění `/isoweek`.
+
 ====
 
 *Příklady*
+
 ----
 d: now
 == 10-Jul-2017/23:28:07-06:00
@@ -651,8 +641,6 @@ d
 == 7-Jan-2018/23:28:07-06:00
 ----
 
-<<anchor-1,toc>>
-
 === /isoweek
 
 *Syntaxe*
@@ -668,6 +656,7 @@ d
 Vrací číslo týdne podle definice https://en.wikipedia.org/wiki/ISO_week_date[ISO 8601], od 1 do 52 (v některých letech 53). Zadání pořadového čísla týdne způsobí příslušné přepočítání datumové hodnoty. Argumenty mimo rozsah způsobí vytvoření normalizovaného datumu.
 
 *Příklady*
+
 ----
 d: now
 == 10-Jul-2017/23:29:13-06:00
@@ -687,11 +676,9 @@ d
 == 1-Jan-2018/23:29:13-06:00
 ----
 
-<<anchor-1,toc>>
+=== Číselné indikátory
 
-=== Řadové indikátory
-
-Pro přístup k polím datumu je rovněž možné použít číselný index místo slovního označení:
+Pro přístup k polím datumu je rovněž možné použít číselný index (ordinal accessor) místo slovního označení:
 
 ----
 <date>/<index>
@@ -721,13 +708,12 @@ Pro přístup k polím datumu je rovněž možné použít číselný index mís
 |14| isoweek
 |===
 
-<<anchor-1,toc>>
-
 === Přístup k polím akcí Pick
 
 K polím datumu lze přistoupit bez použití cesty a to s použitím funkce `pick`, což může být v některých případech výhodnější.
 
 *Syntaxe*
+
 ----
 pick <date> <field>
 
@@ -735,9 +721,10 @@ pick <date> <field>
 <field> : hodnota typu integer!
 ----
 
-Číselný argument představuje řadový indikátor pro datumy. Viz tabulka výše.
+Celočíselný argument představuje řadový indikátor pro datumy. Viz tabulka výše.
 
 *Příklady*
+
 ----
 d: now
 == 10-Jul-2017/23:35:01-06:00
@@ -763,15 +750,14 @@ repeat i 14 [print [pad i 4 pad names/:i 10 pick d i]]
 14   isoweek    28
 ----
 
-<<anchor-1,toc>>
-
 == Konverze
 
-=== Epochální čas
+=== Unixový čas epochy
 
 Datumy lze konvertovat z/do formátu https://en.wikipedia.org/wiki/Unix_time[Unix epoch time] s použitím akce `to`.
 
 *Syntaxe*
+
 ----
 to-integer <date>
 to-date <epoch>
@@ -780,7 +766,8 @@ to-date <epoch>
 <epoch> : celočíselná hodnota, představující "epochální" čas
 ----
 
-Epochální časy se vyjadřují ve formátu UTC. Nemá-li argument tento formát, je na něj před konverzí interně převeden.
+Unixové časy se vyjadřují ve formátu UTC. Nemá-li argument tento formát, je na něj před konverzí interně převeden.
+
 ----
 d: 8-Jul-2017/17:49:27+08:00
 to-integer d
@@ -795,11 +782,10 @@ to-date to-integer d
 
 Epochální čas není definován za rok 2038.
 
-<<anchor-1,toc>>
-
 === Konverze bloku
 
 *Syntaxe*
+
 ----
 to date! <spec>
 
@@ -812,15 +798,14 @@ to-date [1978 2 3]
 == 3-Feb-1978
 ----
 
-For a strict conversion from a block, that will error out instead of normalizing, use `make`.
+Argumentační blok bude konvertován na hodnotu typu `date!` podle stejné syntaxe jako pro `make` (viz 2.2 <<runtime-creation>>). Hodnoty argumentu, které jsou mimo požadovaný rozsah, vyústí v normalizovaná data. Pro striktní konverzi hodnot z bloku, která místo normalizovaná data vyústi v chybové hlášení, použijte `make`.
 
-<<anchor-1,toc>>
- 
 == Komparace
 
 Na datumy lze aplikovat všechny relační operátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Podporovány jsou také akce `min`, `max` a `sort`.
 
 *Příklady*
+
 ----
 3-Jul-2017/9:41:40+2:00 = 3-Jul-2017/5:41:40-2:00
 == true
@@ -838,8 +823,6 @@ sort [1/1/2017 5/10/1999 3-Jul-2017/5:41:40-2:00 1/1/1950 1/1/1980/2:2:2]
 == [1-Jan-1950 1-Jan-1980/2:02:02 5-Oct-1999 1-Jan-2017 3-Jul-2017/5:41:40-02:00]
 ----
 
-<<anchor-1,toc>>
-
 == Aritmetika
 
 Podporované matematické operace zahrnují:
@@ -851,6 +834,7 @@ Podporované matematické operace zahrnují:
 * použití funkce `difference` pro dva datumy: výsledkem je signovaný rozdíl v hodinách ve formátu `time!`
 
 *Examples*
+
 ----
 20-Feb-1980 + 50
 == 10-Apr-1980
@@ -889,8 +873,6 @@ difference 08/07/2017/10:45:00 20-Feb-1980/05:30:0
 327677:15:00
 ----
 
-<<anchor-1,toc>>
-
 == Získání aktuálního datumu
 
 Funkce `now` vrací aktuální datum a čas (včetně časového pásma) podle operačního systému počítače. Všechny přístupové indikátory (accessory) jsou funkci `now` přístupné jako upřesnění (refinements) s několika dodatky:
@@ -900,6 +882,7 @@ Funkce `now` vrací aktuální datum a čas (včetně časového pásma) podle o
 * `/precise`: vrátí čas s vyšší přesností (1/60 vteřiny ve Windows, mikrosekunda v Unix)
 
 *Příklady*
+
 ----
 now
 == 8-Jul-2017/18:32:25+08:00
@@ -926,13 +909,12 @@ now/utc
 == 8-Jul-2017/10:32:25
 ----
 
-<<anchor-1,toc>>
-
-== Jiné souvisící funkce
+== Jiné funkce, související s datumem
 
 === Random
 
 *Syntaxe*
+
 ----
 random <date>
 
@@ -943,6 +925,7 @@ random <date>
 Vrací náhodné datum pro zadaný argument jako horní limit. Nemá-li argument složku času či časového pásma, nemá ji ani vracený výsledek.
 
 *Příklady*
+
 ----
 random 09/07/2017
 == 18-May-1972
@@ -957,4 +940,3 @@ random 09/07/2017/12:00:00+8
 == 13-Dec-1062/5:09:12-00:30
 ----
 
-<<anchor-1,toc>>

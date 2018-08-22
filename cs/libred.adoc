@@ -132,7 +132,7 @@ redDoBlock(redBlock(redWord("print"), redInteger(42)));
 ----
 red_value redCall(red_word name, ..., red_integer 0)
 ----
-Invokuje funkci Redu (typu `any-function!`), uvedené názvem red_word, poskytujíc ji potřebné argumenty (jako hodnoty Redu). Vrací poslední hodnotu funkce. Seznam argumentů *musí* končit hodnotou `null` nebo `0` jako označením konce.
+Invokuje funkci Redu (typu `any-function!`), uvedené názvem red_word, poskytujíc ji potřebné argumenty (jako hodnoty Redu). Vrací poslední hodnotu funkce. Seznam argumentů *musí* končit hodnotou `null` nebo `0` jako označení konce.
 
 *Příklad*
 ----
@@ -147,7 +147,7 @@ Reagování na událost, která se vyskytla v Redu nebo přesměrování někter
 ----
 red_value redRoutine(red_word name, const char* spec, void* func_ptr)
 ----
-Definuje novou rutinu, zvanou _red_word_, s blokem specifikací a s tělem, jímž je pointer (ukazovátko) na funkci C. Funkce C *musí* vracet hodnotu Redu (lze použít `redUnset()` k indikaci toho, že návratová hodnota není použita).
+Definuje novou rutinu, zvanou _name_, s blokem specifikací _spec_ a s tělem, jímž je pointer (ukazovátko) na funkci C. Funkce C *musí* vracet hodnotu Redu (lze použít `redUnset()` k indikaci toho, že návratová hodnota není použita).
 
 *Příklad*
 ----
@@ -269,7 +269,7 @@ Vrací hodnotu `word!` z řetězce v C. Očekávané kódování řetězcového 
 red_block redBlock(red_value v,...)
 ----
 
-Vrací novou řadu (series) `block!`, vytvořenou ze seznamu argumentů. Seznam *musí* končit hodnotou `null` nebo `0`, jako označení konce.
+Vrací novou řadu `block!`, vytvořenou ze seznamu argumentů. Seznam *musí* končit hodnotou `null` nebo `0`, jako označení konce.
 
 *Examples*
 ----

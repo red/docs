@@ -581,8 +581,6 @@ Hodnoty bloku jsou interně použity pro vytvoření následující transformač
 
 Při použití literálových slov (lit-words) `'pen` nebo `'fill-pen` se násobení aplikuje na aktuální pen nebo fill-pen.
 
-=== Matrix-order
-
 
 === Matrix-order
 

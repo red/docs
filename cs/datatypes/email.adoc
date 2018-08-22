@@ -1,0 +1,61 @@
+= Datový typ mail!
+:toc:
+:numbered:
+
+== Úvodem
+
+Hodnoty typu `email!` umožňují přímé vyjádření emailových adres, např. `foo@bar.net`
+
+`Email!` je člen těchto typesetů: `any-string!`, `series!`
+
+== Vytvoření
+
+Hodnoty typu `email!` lze vytvo?it s použitím literálové syntaxe nebo při runtime použitím konstruktoru `make` nebo konverzí `to`.
+```red
+>> f: make email! "foo"
+== foo
+
+>> type? f
+== email!
+```
+
+```red
+>> b: to email! 'bar
+== bar
+
+>> type? b
+== email!
+```
+
+== Literáová skladba
+
+Je tvořena jedním nebo více znaky, následovanými symbolem `@`, doplněným žádným nebo více znaky.
+
+Neplatné znaky: `%` `(` `)` `:` `"`
+
+
+== Komparace
+
+Lze použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporováy také funkce `min` a  `max`.
+
+== Testování hodnot
+
+K ověření typu hodnoty slouží funkce `email?`.
+
+```red
+>> email? foo@bar.net
+== true
+```
+
+Datový typ dané hodnoty vrací funkce `type?`.
+
+```red
+>> type? foo@bar.net
+== email!
+```
+
+== Předdefinovaná slova
+
+=== Funkce
+
+`email?`, `suffix?`, `to-email`

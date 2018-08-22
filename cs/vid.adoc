@@ -16,7 +16,7 @@ VID umožňuje určení polohy každého grafického elementu a to třemi způso
 * umístění elementu do mřížky
 * absolutní zadání pozice
 
-VID automaticky vytvoří kontejnerový piškot pro popis zadaných piškotů. Implicitně je kontejnerový piškot typu `window`.
+VID automaticky vytvoří kontejnerový piškot pro umístění zadaných piškotů. Implicitně je kontejnerový piškot typu `window`.
 
 Kód VIDu je vyhodnocen funkcí `layout` (jež je interně volána funkcí `view`). Kód je poté kompilován do stromu piškotů, vhodného pro přímé zobrazení.
 
@@ -105,9 +105,9 @@ V této oblasti kódu je také možné definovat aktéry kontejneru - viz sekci 
 
 == Rozvržení (layout) 
 
-VID umisťuje piškoty do kontejnerového piškotu podle jednoduchých pravidel:
+VID umisťuje piškoty do piškotu window podle jednoduchých pravidel:
 
-* směr může být horizontální nebo vertikální
+* směr řazení piškotů může být horizontální nebo vertikální
 * piškoty jsou v daném směru umisťovány jeden za druhým se zadaným odstupem
 
 Implicitní hodnoty:
@@ -155,12 +155,13 @@ Rozmisťování probíhá ve vertikálním směru shora dolů. Implicitní při�
 === return 
 
 *Syntaxe*
+
 ----
 return <alignment>
 
 <alignment> : (optional) possible values: left | center | right | top | middle | bottom.
+---- 
 
-----    
 *Popis*
 
 Přesouvá pozici na další řádek nebo sloupec piškotů v závislosti na aktuálním směru rozmisťování. Implicitní přiřazení piškotů v řadě či sloupci lze změnit modifikátorem přiřazení.
@@ -303,6 +304,7 @@ Zarovná text piškotu k levému okraji.
 ==== center
 
 *Syntaxe*
+
 ----
 center
 ----    
@@ -313,6 +315,7 @@ Vystředí text piškotu
 ==== right
 
 *Syntaxe*
+
 ----
 right
 ----    
@@ -323,6 +326,7 @@ Zarovná text pišotu k pravému okraji.
 ==== top
 
 *Syntaxe*
+
 ----
 top
 ----    
@@ -333,6 +337,7 @@ Zarovná text pišotu k hornímu okraji.
 ==== middle
 
 *Syntaxe*
+
 ----
 middle
 ----    
@@ -374,6 +379,7 @@ Nastaví styl textu na `italic`.
 ==== underline
 
 *Syntaxe*
+
 ----
 underline
 ----    
@@ -384,6 +390,7 @@ Nastaví styl textu na `underline`.
 ==== extra
 
 *Syntaxe*
+
 ----
 extra <expr>
     
@@ -396,6 +403,7 @@ Nastaví aspekt `extra` piškotu na novou hodnotu (jež může být výsledkem v
 ==== data
 
 *Syntaxe*
+
 ----
 data <list>
     
@@ -608,6 +616,7 @@ Poskytuje text návodu uvnitř polí piškotů, které dosud nemají žádný ob
 ==== rate
 
 *Syntaxe*
+
 ----
 rate <value>
 rate <value> now
@@ -643,6 +652,7 @@ aktuálně používáno pouze u piškotů `text` a `field`.
 with <body>
 
 <body>: blok kódu vázaný na aktuální piškot (block!)
+----
 
 *Popis*
 
@@ -700,7 +710,7 @@ Aktér může být rovněž definován mimo VID a odkaz na něj zadán jako get-
 
 Je možné definovat dětské panely pro seskupování piškotů a případně na ně aplikovat specifické styly. Není-li specificky určena, je velikost nového panelu automaticky spočítána podle velikosti jeho obsahu.
 
-Piškoty typu panel ze strojku View jsou ve VID podporovány se specifickou syntaxí: 
+Piškoty typu panel ze systému View jsou ve VID podporovány se specifickou syntaxí: 
 
 === panel 
 
@@ -723,6 +733,7 @@ Vytvoří dětský panel uvnitř aktuálního kontejneru, jehož obsah je dalš�
 === group-box 
 
 *Syntaxe*
+
 ----
 group-box <divider> <options> [<body>]
 
@@ -743,6 +754,7 @@ NOTE: Zadaná hodnota typu `string!` jako opce představuje titulek panelu group
 === tab-panel 
 
 *Syntaxe*
+
 ----
 tab-panel <options> [<name> <body>...]
 
@@ -760,6 +772,7 @@ Vytvoří `tab-panel` uvnitř aktuálního kontejneru. Specifikační blok musí
 === style anchor:style[]
 
 *Syntaxe*
+
 ----
 style <new> <old> <options>
 

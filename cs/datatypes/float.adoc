@@ -24,11 +24,20 @@ Dělení `0.0` číslem `0.0` rezultuje v `1.#NaN`
 
 == Literálová skladba
 
+Žádná nebo více číslic, následovaných tečkou, následovanou žádnou nebo více číslicemi.
 Pořadí číslic s desetinnou tečkou nebo čárkou.
 
 `123.4`
 
 `123,4`
+
+Místo desetinné tečky lze použít desetinnou čárku.
+
+`123,4`
+[NOTE]
+====
+A formed value will normalize a decimal comma to a decimal point as the decimal mark. 
+====
 
 Znak `+` nebo `-` bezprostředně před první číslicí označuje pozitivní nebo negativní hodnotu typu `float!`.
 
@@ -37,27 +46,37 @@ Znak `+` nebo `-` bezprostředně před první číslicí označuje pozitivní n
 `-123.4`
 
 Předcházející nuly jsou ignorovány.
+
 ----
 >> +00123.4
 == 123.4
 ----
 
-Jednoduchý apostrof `'` se používá jako místní oddělovač hodnot u dlouhých celých čísel a může být použit kdekoliv po první číslici.
+Jednoduchý apostrof `'` se používá jako místní oddělovač hodnot u dlouhých čísel a může se použít kdekoli po první číslici.
+
 ----
 >> 60'000'123.4
 == 60000123.4
 ----
 
+Jednoduchý apostrof `'` bezprostředně před nabo za desetinnou tečkou vyvolá chybové hlášení.
+
+----
+>> 60'000'123'.4
+*** Syntax Error: invalid integer! at "60'000'123'.4"
+*** Where: do
+*** Stack: load
+----
 
 == Komparace
 
-Pro hodnotu typu `float!` lze být použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
+Pro hodnotu typu `float!` lze použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
 
 
 
 == Konverze
 
-Hodnotu `float` lze za běhu programu konvertovat na `integer!` nebo `string!` s použitím akce `to`. 
+Hodnotu `float` lze při runtime konvertovat na `integer!` nebo `string!` s použitím akce `to`. 
 
 [NOTE]
 Při konverzi float na integer jsou odvrženy všechny číslice za desetinnou čárkou. Žádné zaokrouhlení se neprovádí.
@@ -70,7 +89,7 @@ Při konverzi float na integer jsou odvrženy všechny číslice za desetinnou �
 == "123.4"
 ----
 
-If `float!` and `integer!` are combined in an expression, the result will be `float!`.
+Jsou-li ve výrazu kombinovány typy `float!` a `integer!`, je výsledek typu `float!`.
 
 ----
 >> 123.4 * 42
