@@ -1,6 +1,6 @@
 = Seznam
 
-.  link:README.adoc[Red/Core]
+. link:README.adoc[Red/Core]
 
 . link:datatypes.adoc[Datové typy]
 .. link:datatypes/block.adoc[Datový typ block!]
