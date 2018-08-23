@@ -1,7 +1,7 @@
 = Summary
 
 .  link:README.adoc[Red/Core Language]
-. link:datatypes.adoc[Datatypes]
+.  link:datatypes.adoc[Datatypes]
 .. link:datatypes/block.adoc[Block!]
 .. link:datatypes/char.adoc[Char!]
 .. link:datatypes/date.adoc[Date!]
@@ -18,6 +18,7 @@
 .. link:datatypes/logic.adoc[Logic!]
 .. link:datatypes/map.adoc[Map!]
 .. link:datatypes/none.adoc[None!]
+.. link:datatypes/object.adoc[Object!]
 .. link:datatypes/pair.adoc[Pair!]
 .. link:datatypes/path.adoc[Path!]
 .. link:datatypes/refinement.adoc[Refinement!]
