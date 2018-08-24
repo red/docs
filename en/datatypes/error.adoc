@@ -2,10 +2,22 @@
 :toc:
 :numbered:
 
-
 == Abstract
 
-`Error!` values represent specialized `object!` values used for error conditions.
+`Error!` values represent specialized `object!` values used for error conditions. Error values contain a fixed number of words (fields) that are defined in `system/standard/error`.
+
+```red
+SYSTEM/STANDARD/ERROR is an object! with the following words and values:
+     code   none!         none
+     type   none!         none
+     id     none!         none
+     arg1   none!         none
+     arg2   none!         none
+     arg3   none!         none
+     near   none!         none
+     where  none!         none
+     stack  none!         none
+```
 
 `Error!` is a member of the following typesets: `any-object!`, `default!`
 
@@ -171,4 +183,4 @@ Use `type?` to return the datatype of a given value.
 
 === Natives
 
-`try`
+`in`, `try`
