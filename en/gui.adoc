@@ -6,7 +6,7 @@ image::../images/view-overview.png[Overview,align="center"]
 
 VID stands for Visual Interface Dialect. It is a dialect of Red, providing the simplest possible way to specify graphic components with their properties, layouts and even event handlers. VID code is compiled at runtime to a tree of faces suitable for displaying.
 
-=== View 
+=== View
  
 The GUI code engine contains several parts:
 
@@ -17,7 +17,7 @@ The GUI code engine contains several parts:
 
 === React
 
-Reactive actions can be defined directly from VID dialect or can be specified directly using the REACT function.
+Reactive actions can be defined from VID dialect or specified directly using the REACT function.
 
 === Draw
 
@@ -33,4 +33,4 @@ An internal API allows multiple backends (OS/graphic system combinations) so tha
 
 .Disclaimer
 
-The initial design of VID, Draw and most of View (except for the reactive parts) were created by Carl Sassenrath and implemented in Rebol. Red View is a completely new, independent implementation providing similar features with some desirable improvements. Reactive actions being a prime example.
+The initial designs of VID, Draw and most of View (except for the reactive parts) were created by Carl Sassenrath and implemented in Rebol. Red View is a completely new, independent implementation providing similar features with some desirable improvements. Reactive actions being a prime example.

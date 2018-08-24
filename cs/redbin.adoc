@@ -4,7 +4,7 @@
 
 _Specifikace verze 1_
 
-Redbin je binární formát, který přesně reprezentuje hodnoty Redu, uložené v paměti, přičemž umožňuje rychlé načítání (vyhýbaje se parsovací a ověřovací fázi prezentace textového formátu). Formát Redbin je převážně inspirován formátem http://www.rebol.com/article/0044.html[REBin]. Redbin umí zakódovat závaznou informaci pro slova a řídit cykly hodnot v blocích typu any-block!.
+Redbin je binární formát, který přesně reprezentuje hodnoty Redu, uložené v paměti, přičemž umožňuje rychlé načítání (vyhýbaje se parsovací a ověřovací fázi prezentace textového formátu). Formát Redbin je převážně inspirován formátem http://www.rebol.com/article/0044.html[REBin]. Redbin umí zakódovat závaznou informaci pro slova a řídit cykly hodnot v blocích typu `any-block!`.
 
 Uživatelské rozhraní pro formát Redbin bude zpřístupněno specifikovanými příkazy `load/binary` a `mold/binary`. Související implementace `by mohla` využít subsystém codec, jakmile bude k disposici. 
 
@@ -12,9 +12,9 @@ Implementační omezení
 
 * Bázová adresa v paměti pro načítaná data Redbin musí být zarovnaná na 64 bitů.
 
-== Kódovací formát
+== Formát kódování
 
-_Implicitní_ kódovací formát je optimalizován pro rychlost dekódování, zatímco _kompaktní_ formát vyžaduje menší úložný prostor (za cenu mnohem pomalejšího dekódování).
+_Implicitní_ formát kódování je optimalizován pro rychlost dekódování, zatímco _kompaktní_ formát vyžaduje menší úložný prostor (za cenu mnohem pomalejšího dekódování).
 
 Hodnoty jsou uloženy ve formátu little-endian.
 
@@ -37,22 +37,21 @@ flags (option is enabled if bit is set):
     bit2: symbol table
     bit3-7: <reserved>
  
-length : number of root records to load.
-size   : size of records payload in bytes.
+length : počet načítaných kořenových záznamů (root records)
+size   : velikost záznamů v bajtech.
 ----
 
-Při použití komprese jsou data za záhlavím považovaná za payload, jenž má být komprimován. Výběr algoritmu pro kompresi závisí na implementaci.
+Při použití komprese jsou data za záhlavím považovaná za payload (přenášený obsah), jenž má být komprimován. Výběr algoritmu pro kompresi závisí na implementaci.
 
 == Tabulka symbolů
 
 Tabulka symbolů následuje bezprostředně za daty záhlaví. Je nepovinná a měla by být použita v případě, že slova jsou přítomná ve zbytku payloadu Redbinu. Tabulka má dvě části:
 
-* a table of offsets to string representation of each symbol
-* strings buffers, NUL-terminated and concatenated to each other
+* tabulka offsetů (odsazení) pro stringovou prezentaci každého symbolu
+* buffery stringů, zkončené nulou a navzájem propojené (concatenated)
 
-Pozice symbolu v tabulce je jeho (zero-based) _index_, použitý jako odkaz na symbol v kontextech a slovech.
-
-The strings buffers section contains UTF-8 encoded strings with an optional padding at end to ensure 64-bit alignment. The offsets in the table are offsets in bytes from beginning of the strings buffers section to the referred string buffer.
+Pozice symbolu v tabulce je daná jeho (nulou počínajícím) _indexem_ a je použitá jako odkaz na symbol v kontextech a slovech.
+Sekce bufferů obsahuje UTF-8 kódované stringy s volitelnou výstelkou (padding) na konci, kvůli 64-bitovému zarovnání (alignment). Offsety v tabulce udávají velikost odsazení (v bajtech) od počátku sekce stringových bufferů k odkazovanému bufferu.
 
 Kódování tabulky:
 
@@ -62,13 +61,13 @@ Kódování tabulky:
 Pole `length` obsahuje počet vstupů do tabulky. Pole `size` 
 indikuje velikost _string bufferu_ v bajtech (včetně nepovinných bajtů pro "tail padding").
 
-During the decoding process, these symbols are merged within Red's own symbol table and the offsets are replaced by the symbol ID value from Red table. That is, the symbol references in the Redbin records are an indirect reference to Red's internal symbol table entries used only during the loading process.
+Během dekódování jsou tyto symboly zahrnuty do vlastní tabulky symbolů a offsety jsou nahrazeny hodnotou ID symbolu z tabulky Redu. To jest, odkazy na symboly v záznamech Redbin jsou nepřímé odkazy na interní položky Redové tabulky symbolů, použité pouze při načítání.
 
-After the Symbol Table, Red values are stored as records in sequence with no special delimiter or end marker. The loaded values from root level are usually stored in a block! series.
+Za tabulkou symbolů jsou hodnoty Redu ukládány jako záznamy postupně za sebou bez specielního oddělovače nebo markeru. Načtené hodnoty z kořenové úrovně jsou obvykle uloženy v řadách typu `block!`.
 
 == Definice záznamů
 
-Každý záznam (record) začíná polem `header`, definovaným jako:
+Každý záznam začíná polem `header`, definovaným jako:
 ****
  * bit31    : new-line flag
  * bit30    : no-values flag (for contexts)
@@ -79,9 +78,9 @@ Každý záznam (record) začíná polem `header`, definovaným jako:
  * bit15-8  : unit (used for encoding elements size in a series buffer)
  * bit7-0   : type
 ****
-Here follows the description of each individual record:
+Dále následuje popis každého jednotlivého záznamu:
 
-=== Padding
+=== Padding anchor:padding[] 
   
 ----
 Default: header (4)
@@ -89,9 +88,10 @@ Compact: n/a
 
 header/type=0
 ----
-This empty type slot is used to properly align 64-bit values.
+Tento prázdný typ slotu se používá k řádnému zarovnání 64-bitových hodnot.
 
-=== Datatype!
+
+=== Datatype! anchor:datatype[]
 
 ----
 Default: header (4), value (4)
@@ -109,7 +109,7 @@ Compact: TBD
 header/type=2
 ----
 
-=== None! 
+=== None! anchor:none[]  
 
 ----
 Default: header (4)
@@ -118,7 +118,7 @@ Compact: TBD
 header/type=3
 ----
 
-=== Logic! 
+=== Logic! anchor:logic[]  
 
 ----
 Default: header (4), value=0|1 (4)
@@ -127,7 +127,7 @@ Compact: TBD
 header/type=4
 ----
 
-=== Block! 
+=== Block! anchor:block[] 
 
 ----
 Default: header (4), head (4), length (4), ...
@@ -136,7 +136,7 @@ Compact: TBD
 header/type=5
 ----
 
-The `head` field indicates the offset of the block reference, using a zero-based integer. The `length` field contains the number of values to be stored in the block. The block values simply follow the block definition, no separator or end delimiter is required.
+Pole `head` indikuje odsazení reference bloku s použitím indexu, počínajícího nulou. Pole `length` obsahuje počet hodnot, ukládaných v bloku. Hodnoty bloku jednoduše následují za definicí bloku, bez separátorů nebo oddělovačů.
 
 === Paren! anchor:paren[] 
 
@@ -146,9 +146,9 @@ Compact: TBD
 
 header/type=6
 ----
-Same encoding rules as block!.
+Stejná pravidla kódování jako pro `block!`.
 
-=== String! 
+=== String! anchor:string[] 
 
 ----
 Default: header (4), head (4), length (4), data (unit*length) [, padding (1-3)]
@@ -158,9 +158,9 @@ header/type=7
 header/unit=1|2|4
 ----
 
-`head` field has same meaning as for blocks. The `unit` sub-field indicates the encoding format of the string, only values of 1, 2 and 4 are valid. The `length` field contains the number of codepoints to be stored in the string, up to 16777215 codepoints (2^24 - 1) are supported. The string is encoded in UCS-1, UCS-2 or UCS-4 format. No NUL character is present, nor accounted for in the `length` field. An optional tail padding of 1 to 3 NUL bytes can be present to align the end of the string! record with a 32-bit boundary.
+Pole `head` ná stejný význam jako u bloků. Sub-pole `unit` indikuje formátování řetězce; přípustné jsou pouze hodnoty 1, 2 a 4. Pole `length` obsahuje počet kódových bodů (codepoints), které mají být v řetězci uloženy; podporováno je až 16777215 codepoints (2^24 - 1). Řetězec je kódován ve formátu UCS-1, UCS-2 nebo UCS-4. V poli `length` se neobjeví nulová hodnota. Volitelná výstelka (padding) o velikosti 1 až 3 nulových bajtů (NUL bytes) zarovná konec záznamu typu `string!` s 32-bitovou hranicí.
 
-=== File! 
+=== File! anchor:file[]  
 
 ----
 Default: header (4), head (4), length (4), data (unit*length)
@@ -169,9 +169,9 @@ Compact: TBD
 header/type=8
 header/unit=1|2|4
 ----
-Same encoding rules as string!.
+Tatáž pravidla kódování jako u záznamu `string!.
 
-=== Url! 
+=== Url! anchor:url[] 
 
 ----
 Default: header (4), head (4), length (4), data (unit*length)
@@ -180,9 +180,9 @@ Compact: TBD
 header/type=9
 header/unit=1|2|4
 ----
-Same encoding rules as string!.
+Tatáž pravidla kódování jako u záznamu `string!.
 
-=== Char! 
+=== Char! anchor:char[]  
 
 ----
 Default: header (4), value (4)
@@ -191,7 +191,7 @@ Compact: TBD
 header/type=10
 ----
 
-=== Integer!
+=== Integer! anchor:integer[] 
 
 ----
 Default: header (4), value (4)
@@ -200,7 +200,7 @@ Compact: TBD
 header/type=11
 ----
 
-=== Float!
+=== Float! anchor:float[] 
 
 ----
 Default: [padding=0 (4),] header (4), value (8)
@@ -208,7 +208,7 @@ Compact: TBD
 
 header/type=12
 ---- 
-The optional padding field is added to properly align the `value` field offset to a 64-bit value.
+Volitelné výstelkové (padding) pole je přidáno kvůli zarovnání offsetu pole `value` s 64-bitovou hodnotou.
 
 === Context! anchor:context[] 
 
@@ -222,9 +222,9 @@ header/stack?=0|1
 header/self?=0|1
 ----
 
-Contexts are Red values used internally by some datatypes like function!, object! and derivative types. A context contains two consecutive tables, the first one is the list of word entries in the context represented as symbol references, the second is the associated values for each of the symbols in the first table. `length` field indicates the number of entries in the context. Context records can only exist at root level, they cannot be nested. If `no-values` flag is set, it means that there are no values following the symbols (empty context). If `stack?` flag is set, then the values are allocated on the stack instead of the heap memory. The `self?` flag is used to indicate that the context is able to handle a self-referencing word (`self` in objects).
+Kontexty jsou Redové hodnoty, interně používané některými datovými typy jako `function!`, `object!` a odvozenými typy. Kontext obsahuje dvě související tabulky. První je seznam slov (word entries) v kontextu, reprezentovaných jako odkazy na symboly. Druhá tabulka obsahuje seznam přiřazených hodnot pro symboly v první tabulce. Pole  `length` indikuje počet záznamů v kontextu. Tyto záznamy mohou existovat pouze na kořenové úrovni, nelze je nořit jeden do druhého. Je-li nastaven flag `no-values`, znamená to, že za symboly nejsou žádné hodnoty (empty context). Je-li nastaven flag `stack?`, potom jsou hodnoty alokovány na paměti "stack" místo na paměti "heap". Flag `self?` se používá k indikaci, že je kontext schopen zacházet i se slovem, které odkazuje samo na sebe (`self` v objektech).
 
-=== Word!
+=== Word! anchor:word[]
 
 ----
 Default: header (4), symbol (4), context (4), index (4)
@@ -233,9 +233,9 @@ Compact: TBD
 header/type=15
 header/set?=0|1
 ----
-The `context` field is an offset from the beginning of the records section in the Redbin file referring to a context! value. The context needs to be located before the word record in the Redbin records list. If `context` equals -1, it refers to global context.
+Pole `context` je offset od začátku sekce záznamů v souboru Redbin, odkazující na hodnotu typu `context!`. Kontext musí být umístěn před záznamem slova v seznamu záznamů Redbinu. Jestliže se `context` rovná -1, odkazuje na globální context.
 
-If the `set?` field is defined, this record is followed by an [any-value!] record, and the word will need to be set to that value (in the right context) by the decoder. This forms a name/value couple allowing to encode words' values in an adhoc way, when providing a sequence of values for a given context is too expensive (mostly for name/value couples in global context).
+Je-li definováno pole `set?`, je tento záznam následován záznamem s hodnotou typu `any-value!` a tato hodnota bude dekodérem ve správném kontextu přiřazena ke slovu. Toto vytváří dvojici name/value, umožňující adhoc kódování hodnot jednotlivých slov, když poskytnutí sekvence hodnot pro daný kontext je příliš nákladné (většinou pro dvojice name/value v globálním kontextu).
 
 === Set-word! anchor:set-word[] 
 ----
@@ -244,9 +244,9 @@ Compact: TBD
 
 header/type=16
 ----
-Same as word!.
+Stejně jako pro `word!`.
 
-=== Lit-word!
+=== Lit-word! anchor:lit-word[] 
 
 ----
 Default: header (4), symbol (4), context (4), index (4)
@@ -254,27 +254,27 @@ Compact: TBD
 
 header/type=17
 ----
-Same as word!.
+Stejně jako pro `word!`.
 
-=== Get-word! 
+=== Get-word! anchor:get-word[] 
 ----
 Default: header (4), symbol (4), context (4), index (4)
 Compact: TBD
 
 header/type=18
 ----
-Same as word!.
+Stejně jako pro `word!`.
 
-=== Refinement!  
+=== Refinement! anchor:refinement[]   
 ----
 Default: header (4), symbol (4), context (4), index (4)
 Compact: TBD
 
 header/type=19
 ----
-Same as word!.
+Stejně jako pro `word!`.
 
-=== Issue! 
+=== Issue! anchor:issue[]  
 ----
 Default: header (4), symbol (4)
 Compact: TBD
@@ -282,36 +282,36 @@ Compact: TBD
 header/type=20
 ----
 
-=== Native! 
+=== Native! anchor:native[]  
 ----
 Default: header (4), ID (4), spec [block!]
 Compact: TBD
 
 header/type=21
 ----
-`ID` is an offset into the internal `natives/table` jump table.
+`ID` je offset do interní skokové tabulky `natives/table`.
 
 
-=== Action!
+=== Action! anchor:action[]
 ---- 
 Default: header (4), ID (4), spec [block!]
 Compact: TBD
 
 header/type=22
 ---- 
-`ID` is an offset into the internal `actions/table` jump table.
+`ID` je offset do interní skokové tabulky `actions/table`.
 
-=== Op!
+=== Op! anchor:op[] 
 ----
 Default: header (4), symbol (4), 
 Compact: TBD
 
 header/type=23
 ----
-`symbol` representes the action, native or function name (only from global context) used as the source for that op! value. 
+`symbol` reprezentuje jméno action, native nebo function (pouze z globálního kontextu), použité jako zdroj pro tuto hodnotu op!. 
 
 
-=== Function! 
+=== Function! anchor:function[]  
 ----
 Default: header (4), context [context!], spec [block!], body [block!], args [block!], obj-ctx [context!]
 Compact: TBD
@@ -319,52 +319,52 @@ Compact: TBD
 header/type=24
 ----
 
-=== Path! 
+=== Path! anchor:path[] 
 ----
 Default: header (4), head (4), length (4), ...
 Compact: TBD
 
 header/type=25
 ----
-Same encoding rules as block!.
+Stejná pravidla kódování jako pro `block!`.
 
-=== Lit-path! 
+=== Lit-path! anchor:lit-path[] 
 ----
 Default: header (4), head (4), length (4), ...
 Compact: TBD
 
 header/type=26
 ----
-Same encoding rules as block!.
+Stejná pravidla kódování jako pro `block!`.
 
-=== Set-path!
+=== Set-path! anchor:set-path[] 
 ----
 Default: header (4), head (4), length (4), ...
 Compact: TBD
 
 header/type=27
 ----
-Same encoding rules as block!.
+Stejná pravidla kódování jako pro `block!`.
 
-=== Get-path! 
+=== Get-path! anchor:get-path[] 
 ----
 Default: header (4), head (4), length (4), ...
 Compact: TBD
 
 header/type=28
 ----
-Same encoding rules as block!.
+Stejná pravidla kódování jako pro `block!`.
 
-=== Bitset! 
+=== Bitset! anchor:bitset[] 
 ----
 Default: header (4), length (4), bits (length)
 Compact: TBD
 
 header/type=30
 ----
-The `length` fields indicates the number of bits stored, rounded to the upper multiple of 8. The bits are memory dumps of the bitset! series buffer. Byte order is preserved. `bits` field needs to be padded with enough NUL bytes to keep the next record 32-bit aligned.
+Pole `length` indikuje počet uložených bitů, zaokrouhlený nahoru na násobek 8. Bity představují paměťová uložiště pro buffer řad typu `bitset!`. Pořadí bajtů je zachováno. Pole `bits` se doplňuje potřebným počtem nul (padding) pro zarovnání dalšího 32-bitového záznamu.
 
-=== Point!  
+=== Point! anchor:point[]  
 ----
 Default: header (4), x (4), y (4), z (4)
 Compact: TBD
@@ -372,16 +372,16 @@ Compact: TBD
 header/type=31
 ----
 
-=== Object! 
+=== Object! anchor:object[]  
 ----
 Default: header (4), context [reference!], class-id (4), on-set-idx (4), on-set-arity (4)
 Compact: TBD
 
 header/type=32
 ----
-The `on-set-idx` field indicates the offset of the `on-change*` in the context values table. The `on-set-arity` stores the arity of that function.
+Pole `on-set-idx` indikuje offset údaje `on-change*` v tabulce kontextových hodnot. Pole `on-set-arity` ukládá aritu dané funkce.
 
-=== Typeset!
+=== Typeset! anchor:typeset[]
 ----
 Default: header (4), array1 (4), array2 (4), array3 (4)
 Compact: TBD
@@ -389,7 +389,7 @@ Compact: TBD
 header/type=33
 ----
 
-=== Error! 
+=== Error! anchor:error[]  
 ----
 Default: header (4), context [reference!]
 Compact: TBD
@@ -397,16 +397,16 @@ Compact: TBD
 header/type=34
 ----
 
-=== Vector! 
+=== Vector! anchor:vector[]  
 ----
 Default: header (4), head (4), length (4), values (unit*length)
 Compact: TBD
 
 header/type=35
 ----
-`unit` indicates the size of the vector element type size: 1, 2, 4 or 8 bytes. The `values` field holds the list of values. `values` needs to be padded with NUL bytes to align the next record to a 32-bit boundary (if `unit` is equal to 1 or 2).
+Pole `unit` indikuje velikost elementu vektoru, danou hodnotami: 1, 2, 4 nebo 8 bajtů. Pole `values` uchovává seznam hodnot. Hodnoty musí být doplněný nulovými bajty pro zarovnání dalšího záznamu s 32-bitové hranici (je-li `unit` roven 1 nebo 2).
 
-=== Pair!
+=== Pair! anchor:pair[] 
 ----
 Default: header (4), x (4), y (4)
 Compact: TBD
@@ -414,16 +414,16 @@ Compact: TBD
 header/type=37
 ---- 
 
-=== Percent! 
+=== Percent! anchor:percent[] 
 ---- 
 Default: [padding=0 (4),] header (4), value (8)
 Compact: TBD
 
 header/type=38
 ---- 
-Percent value is stored as a 64-bit float. The optional padding field is added to properly align the `value` field offset to a 64-bit value.
+Procentní hodnota je uložena jako 64-bitový float. Volitelná výstelka (padding) doplňuje offset pole `value` na 64-bitovou hodnotu.
 
-=== Tuple!  
+=== Tuple! anchor:tuple[]   
 ----   
 Default: header (4), array1 (4), array2 (4), array3 (4)
 Compact: TBD
@@ -431,34 +431,34 @@ Compact: TBD
 header/type=39
 ---- 
 
-=== Map! 
+=== Map! anchor:map[]  
 ---- 
 Default: header (4), length (4), ...
 Compact: TBD
 
 header/type=40
 ---- 
-The `length` field contains the number of elements (keys + values) to be stored in the map. The map elements simply follow the length definition, no separator or end delimiter is required.
+Pole `length` obsahuje počet elementů (klíče + hodnoty), které mají být uloženy v mapě. Elementy mapy jednoduše sledují definici délky; žádné separátory nebo vymezovače nejsou požadovány.
 
-=== Binary! 
+=== Binary! anchor:binary[] 
 ---- 
 Default: header (4), head (4), length (4), ...
 Compact: TBD
 
 header/type=41
 ---- 
-Same encoding rules as block!.
+Stejná pravidla kódování jako pro `block!`
 
-=== Time!
+=== Time! anchor:time[] 
 ---- 
 Default: [padding=0 (4),] header (4), value (8)
 Compact: TBD
 
 header/type=43
 ---- 
-Time value is stored as a 64-bit float. The optional padding field is added to properly align the `value` field offset to a 64-bit value.
+Časová hodota je uložena jako 64-bitový float. Volitelné pole výstelky je přidáno za účelem řádného zarovnání offsetu pole `value` k 64-bitové hodnotě.
 
-=== Tag! 
+=== Tag! anchor:tag[] 
 ----  
 Default: header (4), head (4), length (4), data (unit*length)
 Compact: TBD
@@ -466,9 +466,9 @@ Compact: TBD
 header/type=44
 header/unit=1|2|4
 ---- 
-Same encoding rules as string!.
+Stejná pravidla kódování jako pro `string!`.
 
-=== Email! 
+=== Email! anchor:email[] 
 ---- 
 Default: header (4), head (4), length (4), data (unit*length)
 Compact: TBD
@@ -476,7 +476,7 @@ Compact: TBD
 header/type=45
 header/unit=1|2|4
 ----
-Same encoding rules as string!.
+Stejná pravidla kódování jako pro `string!`.
 
 === Date! anchor:date[] 
 ----
@@ -485,7 +485,7 @@ Compact: TBD
 
 header/type=47
 ----
-Date is packed into a 32-bit integer (same as in `red-date!`). Time value is stored as a 64-bit float.
+Datum je vložen do 32-bitové hodnoty typu integer! (stejně jako u`red-date!`). Časový údaj je uložen jako 64-bitový float.
 
 === Reference! anchor: reference[] 
 ---- 
@@ -494,4 +494,5 @@ Compact: TBD
 
 header/type=255
 ---- 
-This special record type stores a reference to an already loaded value of type any-block! or object!. This makes it possible to store cycles in Redbin. The reference is created from a path into the loaded values (assuming that the root values are stored in a block). Each `index` field points to the series or object value to go into, until the last one is reached, pointing to the value to refer to. The `count` field indicates the number of indexes to go through. If one of the indexes has to be applied to an object, it refers to the corresponding object's field (0 => 1st field, 1 => 2nd field,...). All indexes are zero-based.
+Tento speciální typ záznamu ukládá odkaz k již načtené hodnotě typu `any-block!` nebo `object!`. To umožňuje ukládání cyklů v Redbinu. Odkaz je vytvořen z cesty k načtené hodnotě (za předpokladu, že kořenové hodnoty jsou uloženy v bloku). Každé pole `index` ukazuje na řadu nebo na hodnotu objektu, k němuž se má postupně přejít. Pole `count` indikuje počet indexů, jimiž se má projít. Má-li být jeden z indexů aplikován na objekt, pak odkazuje na odpovídající pole objektu (0 => 1. pole, 1 => 2. pole, ...). Všechny indexy počínají nulou.
+

@@ -34,6 +34,7 @@ line <point> <point> ...
 
 <point> : coordinates of a point (pair!).
 ----
+
 *Description*
 
 Draws a line between two points. If more points are specified, additional lines are drawn, connecting each point in the provided order.
@@ -41,11 +42,13 @@ Draws a line between two points. If more points are specified, additional lines 
 === Triangle 
 
 *Syntax*
+
 ----
 triangle <point> <point> <point>
 
 <point> : coordinates of a vertex of the triangle (pair!).
 ----
+
 NOTE: A vertex is the point at which two lines meet. They are points where edges join.
 
 *Description*
@@ -55,6 +58,7 @@ Draws a triangle with edges between the supplied vertices.
 === Box 
 
 *Syntax*
+
 ----
 box <top-left> <bottom-right>
 box <top-left> <bottom-right> <corner>
@@ -63,6 +67,7 @@ box <top-left> <bottom-right> <corner>
 <bottom-right> : coordinates of the bottom-right of the box (pair!).
 <corner>       : (optional) radius of the arc used to draw a round corner (integer!).
 ----
+
 *Description*
 
 Draws a box using the top-left (first argument) and bottom-right (second argument) vertices. An optional radius can be provided for making round corners.
@@ -70,11 +75,13 @@ Draws a box using the top-left (first argument) and bottom-right (second argumen
 === Polygon 
 
 *Syntax*
+
 ----
 polygon <point> <point> ...
 
 <point> : coordinates of a vertex (pair!).
 ----
+
 *Description*
 
 Draws a polygon using the provided vertices. The last point does not need to be the starting point, an extra line will be drawn anyway to close the polygon. Minimal number of points to be provided is 3.
@@ -82,6 +89,7 @@ Draws a polygon using the provided vertices. The last point does not need to be 
 === Circle
  
 *Syntax*
+
 ----
 circle <center> <radius>
 circle <center> <radius-x> <radius-y>
@@ -91,6 +99,7 @@ circle <center> <radius-x> <radius-y>
 <radius-x> : (ellipse mode) radius of the circle along X axis (integer! float!).
 <radius-y> : (ellipse mode) radius of the circle along Y axis (integer! float!).
 ----
+
 *Description*
 
 Draws a circle from the provided center and radius values. The circle can be distorted to form an ellipse by adding an optional integer indicating the radius along Y axis (the other radius argument then becomes the radius along X).
@@ -98,12 +107,14 @@ Draws a circle from the provided center and radius values. The circle can be dis
 === Ellipse 
 
 *Syntax*
+
 ----
 ellipse <top-left> <size>
 
 <top-left> : coordinates of the ellipse's bounding box top-left point (pair!).
 <size>     : size of the bounding box (pair!).
 ----
+
 *Description*
 
 Draws an ellipse from the specified bounding box. The `size` argument represents the X and Y diameters of the ellipse.
@@ -113,6 +124,7 @@ NOTE: `ellipse` provide a more compact and box-oriented way to specify a circle/
 === Arc 
 
 *Syntax*
+
 ----
 arc <center> <radius> <begin> <sweep>
 arc <center> <radius> <begin> <sweep> closed
@@ -122,6 +134,7 @@ arc <center> <radius> <begin> <sweep> closed
 <begin>  : starting angle in degrees (integer!).
 <sweep>  : angle between the starting and ending points of the arc in degrees (integer!).
 ----
+
 *Description*
 
 Draws the arc of a circle from the provided center and radius values. The arc is defined by two angles values. An optional `closed` keyword can be used to draw a closed arc using two lines coming from the center point.
@@ -129,6 +142,7 @@ Draws the arc of a circle from the provided center and radius values. The arc is
 === Curve 
 
 *Syntax*
+
 ----
 curve <end-A> <control-A> <end-B>
 curve <end-A> <control-A> <control-B> <end-B>
@@ -138,6 +152,7 @@ curve <end-A> <control-A> <control-B> <end-B>
 <control-B> : control point B (pair!).
 <end-B>     : end point B (pair!).
 ----
+
 *Description*
 
 Draws a Bezier curve from 3 or 4 points:
@@ -150,12 +165,14 @@ Four points allow more complex curves to be created.
 === Spline 
 
 *Syntax*
+
 ----
 spline <point> <point> ...
 spline <point> <point> ... closed
 
 <point> : a control point (pair!).
 ----
+
 *Description*
 
 Draws a B-Spline curve from a sequence of points. At least 3 points are required to produce a spline. The optional `closed` keyword will draw an extra segment from the end point to the start point, in order to close the spline.
@@ -165,6 +182,7 @@ NOTE: 2 points are accepted, but they will produce only a straight line.
 === Image 
 
 *Syntax*
+
 ----
 image <image>
 image <image> <top-left>
@@ -183,24 +201,28 @@ image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color> crop <
 <offset>       : (optional) position for starting cropping (pair!).
 <size>         : (optional) size of cropping (pair!).
 ----
+
 *Description*
 
 Paints an image using the provided information for position and width. If the image has no positioning information provided, then the image is painted at 0x0 coordinates. A color value can be optionally provided, it will be used for transparency. 
 
-NOTE:
-
+[NOTE]
+====
 * Four points mode is not yet implemented. It will allow to stretch the image using 4 arbitrary-positioned edges.
 * `border` optional mode is not yet implemented.
+====
 
 === Text 
 
 *Syntax*
+
 ----
 text <position> <string>
 
 <position> : coordinates where the string is printed (pair!).
 <string>   : text to print (string!).
 ----
+
 *Description*
 
 Prints a text string at the provided coordinates using the current font. 
@@ -210,11 +232,13 @@ NOTE: If no font is selected or if the font color is set to `none`, then the pen
 === Font 
 
 *Syntax*
+
 ----
 font <font>
 
 <font> : new font object to use (object! word!).
 ----
+
 *Description*
 
 Selects the font to be used for text printing. The font object is a clone of `font!`.
@@ -226,11 +250,13 @@ This command defines the outlines drawing mode for other commands. Many differen
 ==== Color pen
 
 *Syntax*
+
 ----
 pen <color>
 
 <color> : new color to use for drawing (tuple! word!).
 ----
+
 *Description*
 
 Selects the color to be used for drawing operations. All shapes will be drawn by the selected color until the pen is set to `off`.
@@ -238,6 +264,7 @@ Selects the color to be used for drawing operations. All shapes will be drawn by
 ==== Linear gradient pen
 
 *Syntax*
+
 ----
 pen linear <color1> <offset> ... <colorN> <offset> <start> <end> <spread>
 
@@ -247,6 +274,7 @@ pen linear <color1> <offset> ... <colorN> <offset> <start> <end> <spread>
 <end>      : (optional unless <start>) ending point (pair!).
 <spread>   : (optional) spread method (word!).
 ----
+
 *Description*
 
 Sets a linear gradient to be used for drawing operations. The following values are accepted for the spread method: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
@@ -257,6 +285,7 @@ the gradient will be paint along a horizontal line inside the shape currently dr
 ==== Radial gradient pen
 
 *Syntax*
+
 ----
 pen radial <color1> <offset> ... <colorN> <offset> <center> <radius> <focal> <spread>
 
@@ -267,6 +296,7 @@ pen radial <color1> <offset> ... <colorN> <offset> <center> <radius> <focal> <sp
 <focal>    : (optional) focal point (pair!).
 <spread>   : (optional) spread method (word!).
 ----
+
 *Description*
 
 Sets a radial gradient to be used for drawing operations. The following values are accepted for the spread method: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
@@ -276,6 +306,7 @@ The radial gradient will be painted from focal point to the edge of a circle def
 ==== Diamond gradient pen
 
 *Syntax*
+
 ----
 pen diamond <color1> <offset> ... <colorN> <offset> <upper> <lower> <focal> <spread>
 
@@ -286,15 +317,17 @@ pen diamond <color1> <offset> ... <colorN> <offset> <upper> <lower> <focal> <spr
 <focal>    : (optional) focal point (pair!).
 <spread>   : (optional) spread method (word!).
 ----
+
 *Description*
 
 Sets a diamond-shaped gradient to be used for drawing operations. The following values are accepted for the spread method: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
 
-The diamond gradient will be painted from focal point to the edge of a rectangle defined by upper and lower. The start color will be painted in focal point and the end color will be painted in the edge of the circle.
+The diamond gradient will be painted from focal point to the edge of a rectangle defined by upper and lower. The start color will be painted in focal point and the end color will be painted in the edge of the diamond.
 
 ==== Pattern pen
 
 *Syntax*
+
 ----
 pen pattern <size> <start> <end> <mode> [<commands>]
 
@@ -304,6 +337,7 @@ pen pattern <size> <start> <end> <mode> [<commands>]
 <mode>     : (optional) tile mode (word!).
 <commands> : block of Draw commands to define the pattern.
 ----
+
 *Description*
 
 Sets a custom shape as pattern to be used for drawing operations. The following values are accepted for the tile mode: `tile` (default), `flip-x`, `flip-y`, `flip-xy`, `clamp`.
@@ -313,6 +347,7 @@ Starting default point is 0x0 and ending point is `<size>`.
 ==== Bitmap pen
 
 *Syntax*
+
 ----
 pen bitmap  <image> <start> <end> <mode>
 
@@ -321,6 +356,7 @@ pen bitmap  <image> <start> <end> <mode>
 <end>   : (optional) lower corner for crop section within image (pair!).
 <mode>  : (optional) tile mode (word!).
 ----
+
 *Description*
 
 Sets an image as pattern to be used for drawing operations. The following values are accepted for the tile mode: `tile` (default), `flip-x`, `flip-y`, `flip-xy`, `clamp`.
@@ -330,9 +366,11 @@ Starting default point is 0x0 and ending point is image's size.
 ==== Turning off the pen
 
 *Syntax*
+
 ----
 pen off
 ----
+
 *Description*
 
 Stop all outline drawing operations for subsequent commands.
@@ -344,11 +382,13 @@ This command defines the filling mode for other commands requiring filling opera
 ==== Color fill
 
 *Syntax*
+
 ----
 fill-pen <color>
 
 <color> : new color to use for filling (tuple! word!).
 ----
+
 *Description*
 
 Selects the color to be used for filling operations. All closed shapes will get filled by the selected color until the fill pen is set to `off`.
@@ -356,6 +396,7 @@ Selects the color to be used for filling operations. All closed shapes will get 
 ==== Linear gradient fill
 
 *Syntax*
+
 ----
 fill-pen linear <color1> <offset> ... <colorN> <offset> <start> <end> <spread>
 
@@ -365,6 +406,7 @@ fill-pen linear <color1> <offset> ... <colorN> <offset> <start> <end> <spread>
 <end>      : (optional unless <start>) ending point (pair!).
 <spread>   : (optional) spread method (word!).
 ----
+
 *Description*
 
 Sets a linear gradient to be used for filling operations. The following values are accepted for the spread method: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
@@ -375,6 +417,7 @@ the gradient will be paint along a horizontal line inside the shape currently dr
 ==== Radial gradient fill
 
 *Syntax*
+
 ----
 fill-pen radial <color1> <offset> ... <colorN> <offset> <center> <radius> <focal> <spread>
 
@@ -385,6 +428,7 @@ fill-pen radial <color1> <offset> ... <colorN> <offset> <center> <radius> <focal
 <focal>    : (optional) focal point (pair!).
 <spread>   : (optional) spread method (word!).
 ----
+
 *Description*
 
 Sets a radial gradient to be used for filling operations. The following values are accepted for the spread method: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
@@ -394,6 +438,7 @@ The radial gradient will be painted from focal point to the edge of a circle def
 ==== Diamond gradient fill
 
 *Syntax*
+
 ----
 fill-pen diamond <color1> <offset> ... <colorN> <offset> <upper> <lower> <focal> <spread>
 
@@ -404,15 +449,17 @@ fill-pen diamond <color1> <offset> ... <colorN> <offset> <upper> <lower> <focal>
 <focal>    : (optional) focal point (pair!).
 <spread>   : (optional) spread method (word!).
 ----
+
 *Description*
 
 Sets a diamond-shaped gradient to be used for filling operations. The following values are accepted for the spread method: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
 
-The diamond gradient will be painted from focal point to the edge of a rectangle defined by upper and lower. The start color will be painted in focal point and the end color will be painted in the edge of the circle.
+The diamond gradient will be painted from focal point to the edge of a rectangle defined by upper and lower. The start color will be painted in focal point and the end color will be painted in the edge of the diamond.
 
 ==== Pattern fill
 
 *Syntax*
+
 ----
 fill-pen pattern <size> <start> <end> <mode> [<commands>]
 
@@ -422,6 +469,7 @@ fill-pen pattern <size> <start> <end> <mode> [<commands>]
 <mode>     : (optional) tile mode (word!).
 <commands> : block of Draw commands to define the pattern.
 ----
+
 *Description*
 
 Sets a custom shape as pattern to be used for filling operations. The following values are accepted for the tile mode: `tile` (default), `flip-x`, `flip-y`, `flip-xy`, `clamp`.
@@ -431,6 +479,7 @@ Starting default point is 0x0 and ending point is `<size>`.
 ==== Bitmap fill
 
 *Syntax*
+
 ----
 fill-pen bitmap  <image> <start> <end> <mode>
 
@@ -439,6 +488,7 @@ fill-pen bitmap  <image> <start> <end> <mode>
 <end>   : (optional) lower corner for crop section within image (pair!).
 <mode>  : (optional) tile mode (word!).
 ----
+
 *Description*
 
 Sets an image as pattern to be used for filling operations. The following values are accepted for the tile mode: `tile` (default), `flip-x`, `flip-y`, `flip-xy`, `clamp`.
@@ -448,9 +498,11 @@ Starting default point is 0x0 and ending point is image's size.
 ==== Turning off the filling
 
 *Syntax*
+
 ----
 fill-pen off
 ----
+
 *Description*
 
 Stop all filling operations for subsequent commands.
@@ -458,11 +510,13 @@ Stop all filling operations for subsequent commands.
 === Line-width 
 
 *Syntax*
+
 ----
 line-width <value>
 
 <value> : new line width in pixels (integer!).
 ----
+
 *Description*
 
 Sets the new width for line operations.
@@ -470,11 +524,13 @@ Sets the new width for line operations.
 === Line-join 
 
 *Syntax*
+
 ----
 line-join <mode>
 
 <mode> : new line joining mode (word!).
 ----
+
 *Description*
 
 Sets the new line joining mode for line operations. Following values are accepted:
@@ -491,11 +547,13 @@ NOTE: `miter-bevel` mode selects automatically one or the other joining mode dep
 === Line-cap 
 
 *Syntax*
+
 ----
 line-cap <mode>
 
 <mode> : new line cap mode (word!).
 ----
+
 *Description*
 
 Sets the new line's ending cap mode for line operations. Following values are accepted:
@@ -509,11 +567,13 @@ image::../images/line-cap.png[Line-cap,align="center"]
 === Anti-alias 
 
 *Syntax*
+
 ----
 anti-alias <mode>
 
 <mode> : `on` to enable it or `off` to disable it.
 ----
+
 *Description*
 
 Turns on/off the anti-aliasing mode for following Draw commands.
@@ -523,6 +583,7 @@ NOTE: Anti-aliasing gives nicer visual rendering, but degrades performance.
 === Matrix 
 
 *Syntax*
+
 ----
 matrix <matrix-setup>
 matrix 'pen <matrix-setup>
@@ -530,15 +591,19 @@ matrix 'fill-pen <matrix-setup>
 
 <matrix-setup> : the matrix which is pre/post-multiplied to current matrix (block!).
 ----
+
 *Description*
 
 Performs matrix multiplication. The current transformation matrix is pre-multiplied by this matrix.
 
 The `matrix-setup` block must have 6 numbers (number!) in it. 
+
 ----
 matrix [a b c d e f]
 ----
+
 The block values are used internally for building following transformation matrix:
+
 ----
 |a c e|
 |b d f|
@@ -550,11 +615,13 @@ When the `'pen` or `'fill-pen` lit-words are used, the multiplication is applied
 === Matrix-order
 
 *Syntax*
+
 ----
 matrix-order <mode>
 
 <mode> : 'append or 'prepend (word!).
 ----
+
 *Description*
 
 Defines if new matrices in subsequent matrix operations, are pre-multiplied (`prepend`, default mode) or post-multiplied (`append`) to the current matrix.
@@ -562,11 +629,13 @@ Defines if new matrices in subsequent matrix operations, are pre-multiplied (`pr
 === Reset-matrix 
 
 *Syntax*
+
 ----
 reset-matrix
 reset-matrix 'pen
 reset-matrix 'fill-pen
 ----
+
 *Description*
 
 Resets the current transformation matrix to a unit matrix.
@@ -582,11 +651,13 @@ When the `'pen` or `'fill-pen` lit-words are used, the reset is applied respecti
 === Invert-matrix 
 
 *Syntax*
+
 ----
 invert-matrix
 invert-matrix 'pen
 invert-matrix 'fill-pen
 ----
+
 *Description*
 
 Applies an algebraic matrix inversion operation on the current transformation matrix.
@@ -596,11 +667,13 @@ When the `'pen` or `'fill-pen` lit-words are used, the inversion is applied resp
 === Push 
 
 *Syntax*
+
 ----
 push <draw-block>
 
 <draw-block> : block of Draw commands (block!).
 ----
+
 *Description*
 
 Saves the current state (transformations, clipping region, and pen settings) on the stack. You can then change the current transformation matrix, pens etc. inside the PUSH command block. After the PUSH command block, the current state is restored by pop from the stack. The PUSH command can be nested.
@@ -608,6 +681,7 @@ Saves the current state (transformations, clipping region, and pen settings) on 
 === Rotate 
 
 *Syntax*
+
 ----
 rotate <angle> <center> [<commands>]
 rotate 'pen <angle>
@@ -617,6 +691,7 @@ rotate 'fill-pen <angle>
 <center>   : (optional) center of rotation (pair!).
 <commands> : (optional) Draw dialect commands.
 ----
+
 *Description*
 
 Sets the clockwise rotation about a given point, in degrees. If optional `center` is not supplied, the rotate is about the origin of the current user coordinate system. Negative numbers can be used for counter-clockwise rotation. When a block is provided as last argument, the rotation will be applied only to the commands in that block.
@@ -626,6 +701,7 @@ When the `'pen` or `'fill-pen` lit-words are used, the rotation is applied respe
 === Scale 
 
 *Syntax*
+
 ----
 scale <scale-x> <scale-y> [<commands>]
 scale 'pen <scale-x> <scale-y>
@@ -635,6 +711,7 @@ scale 'fill-pen <scale-x> <scale-y>
 <scale-y>  : the scale amount in Y (number!).
 <commands> : (optional) Draw dialect commands.
 ----
+
 *Description*
 
 Sets the scale amounts. The values given are multipliers; use values greater than one to increase the scale; use values less than one to decrease it. When a block is provided as last argument, the scaling will be applied only to the commands in that block.
@@ -644,6 +721,7 @@ When the `'pen` or `'fill-pen` lit-words are used, the scaling is applied respec
 === Translate 
 
 *Syntax*
+
 ----
 translate <offset> [<commands>]
 translate 'pen <offset>
@@ -652,6 +730,7 @@ translate 'fill-pen <offset>
 <offset>   : the translation amounts (pair!).
 <commands> : (optional) Draw dialect commands.
 ----
+
 *Description*
 
 Sets the origin for drawing commands. Multiple translate commands will have a cumulative effect. When a block is provided as last argument, the translation will be applied only to the commands in that block.
@@ -661,6 +740,7 @@ When the `'pen` or `'fill-pen` lit-words are used, the translation is applied re
 === Skew 
 
 *Syntax*
+
 ----
 skew <skew-x> <skew-y> [<commands>]
 skew 'pen <skew-x> <skew-y>
@@ -670,6 +750,7 @@ skew 'fill-pen <skew-x> <skew-y>
 <skew-y>   : (optional) skew along the y-axis in degrees (integer! float!).
 <commands> : (optional) Draw dialect commands.
 ----
+
 *Description*
 
 Sets a coordinate system skewed from the original by the given number of degrees. If `<skew-y>` is not provided, it is assumed to be zero. When a block is provided as last argument, the skewing will be applied only to the commands in that block.
@@ -679,18 +760,20 @@ When the `'pen` or `'fill-pen` lit-words are used, the skewing is applied respec
 === Transform 
 
 *Syntax*
-----
-transform <angle> <center> <scale-x> <scale-y> <translation> [<commands>]
-transform 'pen <angle> <center> <scale-x> <scale-y> <translation>
-transform 'fill-pen <angle> <center> <scale-x> <scale-y> <translation>
 
-<angle>       : the rotation angle in degrees (integer! float!).
+----
+transform <center> <angle> <scale-x> <scale-y> <translation> [<commands>]
+transform 'pen <center> <angle> <scale-x> <scale-y> <translation>
+transform 'fill-pen <center> <angle> <scale-x> <scale-y> <translation>
+
 <center>      : (optional) center of rotation (pair!).
+<angle>       : the rotation angle in degrees (integer! float!).
 <scale-x>     : the scale amount in X (number!).
 <scale-y>     : the scale amount in Y (number!).
 <translation> : the translation amounts (pair!).
 <commands>    : (optional) Draw dialect commands.
 ----
+
 *Description*
 
 Sets a transformation such as translation, scaling, and rotation. When a block is provided as last argument, the transformation will be applied only to the commands in that block.
@@ -700,6 +783,7 @@ When the `'pen` or `'fill-pen` lit-words are used, the transformation is applied
 === Clip
 
 *Syntax*
+
 ----
 clip <start> <end> <mode> [<commands>]
 clip [<shape>] <mode> [<commands>]
@@ -710,6 +794,7 @@ clip [<shape>] <mode> [<commands>]
 <commands> : (optional) Draw dialect commands.
 <shape>    : Shape dialect commands.
 ----
+
 *Description*
 
 Defines a clipping rectangular region defined with two points (start and end) or an arbitrarily shaped region defined by a block of Shape sub-dialect commands. Such clipping applies to all subsequent Draw commands. When a block is provided as last argument, the clipping will be applied only to the commands in that block.
@@ -726,11 +811,13 @@ Additionally, the combining mode between a new clipping region and the previous 
 == Shape commands
 
 *Syntax*
+
 ----
 shape [<commands>]
 
 <commands> : shape dialect commands.
 ----
+
 *Description*
 
 The `shape` keywords gives access to the Shape sub-dialect drawing commands. The specific features of this drawing dialect are: 
@@ -746,12 +833,14 @@ NOTE: All drawing commands are using absolute coordinates by default, using the 
 === Move
 
 *Syntax*
+
 ----
  move <position>            (absolute)
 'move <position>            (relative)
 
 <position> : new pen position (pair!).
 ----
+
 *Description*
 
 Moves the pen to a new position. No drawing happens.
@@ -759,12 +848,14 @@ Moves the pen to a new position. No drawing happens.
 === Line
 
 *Syntax*
+
 ----
  line <point> <point> ...   (absolute)
 'line <point> <point> ...   (relative)
 
 <point> : coordinates of a point (pair!).
 ----
+
 *Description*
 
 Draws a line between two points. If more points are specified, additional lines are drawn, connecting each point in the provided order.
@@ -772,18 +863,20 @@ Draws a line between two points. If more points are specified, additional lines 
 === Arc
 
 *Syntax*
+
 ----
- arc <end> <radius-x> <radius-y> <angle> sweep closed       (absolute)
-'arc <end> <radius-x> <radius-y> <angle> sweep closed       (relative)
+ arc <end> <radius-x> <radius-y> <angle> sweep large        (absolute)
+'arc <end> <radius-x> <radius-y> <angle> sweep large        (relative)
 
 <end>      : arc's end point (pair!).
 <radius-x> : radius of the circle along x axis (integer! float!).
-<radius-y> : x coordinate of radius of the circle (integer! float!).
+<radius-y> : radius of the circle along y axis (integer! float!).
 <angle>    : angle between the starting and ending points of the arc in degrees (integer! float!).
 sweep      : (optional) draw the arc in the positive angle direction.
 large      : (optional) produces an inflated arc (goes with 'sweep option).
 
 ----
+
 *Description*
 
 Draws the arc of a circle between the current pen position and the end point, using radius values. The arc is defined by one angle value.
@@ -791,12 +884,14 @@ Draws the arc of a circle between the current pen position and the end point, us
 === Curve
 
 *Syntax*
+
 ----
  curve <point> <point> <point> ...   (absolute)
 'curve <point> <point> <point> ...   (relative)
 
 <point> : coordinates of a point (pair!).
 ----
+
 *Description*
 
 Draws a cubic Bezier curve from a sequence of points, starting from the current pen position. At least 3 points are required to produce a curve (the first point is the implicit starting point).
@@ -804,12 +899,14 @@ Draws a cubic Bezier curve from a sequence of points, starting from the current 
 === Curv
 
 *Syntax*
+
 ----
  curv <point> <point> ...   (absolute)
 'curv <point> <point> ...   (relative)
 
 <point> : coordinates of a point (pair!).
 ----
+
 *Description*
 
 Draws a smooth cubic Bezier curve from a sequence of points, starting from the current pen position. At least 2 points are required to produce a curve (the first point is the implicit starting point).
@@ -821,12 +918,14 @@ NOTE: From http://www.w3.org/TR/SVG11/paths.html
 === Qcurve
 
 *Syntax*
+
 ----
  qcurve <point> <point> ...   (absolute)
 'qcurve <point> <point> ...   (relative)
 
 <point> : coordinates of a point (pair!).
 ----
+
 *Description*
 
 Draws a quadratic Bezier curve from a sequence of points, starting from the current pen position. At least 2 points are required to produce a curve (the first point is the implicit starting point).
@@ -834,21 +933,24 @@ Draws a quadratic Bezier curve from a sequence of points, starting from the curr
 === Qcurv
 
 *Syntax*
+
 ----
  qcurv <point>   (absolute)
 'qcurv <point>   (relative)
 
 <point> : coordinates of the ending point (pair!).
 ----
+
 *Description*
 
 Draws a smooth quadratic Bezier curve from the current pen position to the specified point.
 
-NOTE: See See: http://www.w3.org/TR/SVG11/paths.html
+NOTE: See: http://www.w3.org/TR/SVG11/paths.html
 
 === Hline
 
 *Syntax*
+
 ----
  hline <end-x>   (absolute)
 'hline <length>  (relative)
@@ -856,6 +958,7 @@ NOTE: See See: http://www.w3.org/TR/SVG11/paths.html
 <end-x>  : ending position along X axis (integer! float!).
 <length> : length of the line segment (integer! float!).
 ----
+
 *Description*
 
 Draws a horizontal line from the current pen position.
@@ -863,6 +966,7 @@ Draws a horizontal line from the current pen position.
 === Vline
 
 *Syntax*
+
 ----
  vline <end-y>   (absolute)
 'vline <length>  (relative)
@@ -870,6 +974,7 @@ Draws a horizontal line from the current pen position.
 <end-y>  : ending position along Y axis (integer! float!).
 <length> : length of the line segment (integer! float!).
 ----
+
 *Description*
 
 Draws a vertical line from the current pen position.
@@ -901,16 +1006,15 @@ When a new Draw session starts, the following default values are used:
 
 [cols="2,3", options="header"]
 |===
-|Property | Value
-
-|background | `white`
-|pen color |  `black`
-|filling|    `off`
-|anti-alias|	 `on`
-|font|	 `none`
-|line width|	 `1`
-|line join|	 `miter`
-|line cap| `flat`
+|Property|   Value
+|background|   `white`
+|pen color|   `black`
+|filling|   `off`
+|anti-alias|   `on`
+|font|   `none`
+|line width|   `1`
+|line join|   `miter`
+|line cap|   `flat`
 |===
 
 == Sub blocks 
@@ -921,13 +1025,14 @@ Inside Draw code, commands can be arbitrarily grouped using blocks. Semantics re
 
 Set-words can be used in the Draw code *in-between* commands to record the current position in Draw block and be able to easily access it later.
 
-NOTE: If the Draw block length preceeding a set-word is changed, the recorded position will not be updated.
+NOTE: If the Draw block length preceeding a set-word is changed, the original position will be changed accordingly, so the set-word will not point to the same reference anymore.
 
 == Draw function 
 
 It is possible to render a Draw block directly to an image using the `draw` function.
 
 *Syntax*
+
 ----
 draw <size> <spec>
 draw <image> <spec>
@@ -936,6 +1041,7 @@ draw <image> <spec>
 <image> : image to use as canvas (image!).
 <spec>  : block of Draw commands (block!).
 ----
+
 *Description*
 
 Renders the provided Draw commands to an existing or a new image. The image value is returned by the function.
@@ -945,6 +1051,7 @@ Renders the provided Draw commands to an existing or a new image. The image valu
 Fill-pen also supports a deprecated API which exists only for sake of compatibility with Rebol/Draw, it should not be used by new Red scripts.
 
 *Syntax*
+
 ----
 fill-pen linear <grad-offset> <grad-start-rng> <grad-stop-rng>
          <grad-angle> <grad-scale-x> <grad-scale-y> <grad-color> <offset>
@@ -959,7 +1066,7 @@ fill-pen diamond <grad-offset> <grad-focal> <grad-radius>
          <grad-color> <offset> ...
 
 <grad-type>      : gradient type (word!).
-<grad-offset>    : offset from where should the gradient be rendered (pair!).
+<grad-offset>    : offset from where the gradient should be rendered (pair!).
 <grad-start-rng> : beginning of the gradient range (integer!).
 <grad-stop-rng>  : end of the gradient range (integer!).
 <grad-focal>     : focal point of the gradient (pair!).
@@ -969,6 +1076,7 @@ fill-pen diamond <grad-offset> <grad-focal> <grad-radius>
 <grad-scale-y>   : (optional) scale Y factor (integer! float!).
 <grad-color>     : color to use for gradient filling (tuple! word!).
 ----
+
 *Description*
 
 Sets the color gradient to be used for filling operations. The following values are accepted for the type: `linear`, `radial`, `diamond`.
@@ -984,6 +1092,7 @@ NOTE: the gradient can be defined by up to 256 colors.
 == Graphics source code 
 
 The graphics in this documentation are generated using Red and Draw dialect, here is the source code (you can copy/paste it in a Red console to try/play/improve it):
+
 ----
 Red [
 	Title:	"Graphics generator for Draw documentation"

@@ -13,14 +13,14 @@ VID je zkratkou označení Visual Interface Dialect. Je to dialekt Redu, umožň
 
 Kód grafického prostředí (GUI engine) se skládá z několika částí: 
 
-* Engine (strojek) pro správu piškotů, nezávislý na platformě
+* Systém View pro správu piškotů, nezávislý na platformě
 * Události reaktivních akcí
 * Interpret dialogu Draw
 * Backendy pro různé platformy
 
 === React
 
-Reaktivní akce mohou být definovány přímo z dialektu VID nebo mohou být určeny použitím funkce REACT.
+Reaktivní akce mohou být definovány z dialektu VID nebo mohou být určeny použitím funkce REACT.
 
 === Draw
 

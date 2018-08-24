@@ -16,13 +16,15 @@ VID umožňuje určení polohy každého grafického elementu a to třemi způso
 * umístění elementu do mřížky
 * absolutní zadání pozice
 
-VID automaticky vytvoří kontejnerový piškot pro popis zadaných piškotů. Implicitně je kontejnerový piškot typu `window`.
+VID automaticky vytvoří kontejnerový piškot pro umístění zadaných piškotů. Implicitně je kontejnerový piškot typu `window`.
 
 Kód VIDu je vyhodnocen funkcí `layout` (jež je interně volána funkcí `view`). Kód je poté kompilován do stromu piškotů, vhodného pro přímé zobrazení.
 
-NOTE: 
+[NOTE]
+==== 
 * Použijte `help view` a `help layout` v konzole Redu k získání přehledné informace.
 * Typy piškotů nepatří mezi datové typy!
+====
 
 == Struktura kódu 
 
@@ -37,11 +39,17 @@ Typický blok kódu VID má následující strukturu:
 
 * *popis rozvržení*: poziční příkazy, definice stylů a popisy piškotů.
 
-NOTE: Všechny sekce jsou nepovinné; blok VIDu nemá předepsaný obsah.
+[NOTE] 
+====
+Všechny sekce jsou nepovinné; blok VIDu nemá předepsaný obsah.
+====
 
 == Nastavení kontejnerů
 
-NOTE: Klíčové slovo `react` keyword může být použito při nastavení kontejneru i při výběru možností pro `face` - viz podrobný popis v odstavci <<anchor:_react, zde>>.
+[NOTE] 
+====
+Klíčové slovo `react` keyword může být použito při nastavení kontejneru i při výběru možností pro `face` - viz podrobný popis v odstavci <<anchor:_react, zde>>.
+====
 
 === title 
 
@@ -91,11 +99,15 @@ view layout [
 ]
 ----
 
+=== Definice aktérů
+
+V této oblasti kódu je také možné definovat aktéry kontejneru - viz sekci <<Actors>>.
+
 == Rozvržení (layout) 
 
-VID umisťuje piškoty do kontejneru podle jednoduchých pravidel:
+VID umisťuje piškoty do piškotu window podle jednoduchých pravidel:
 
-* směr může být horizontální nebo vertikální
+* směr řazení piškotů může být horizontální nebo vertikální
 * piškoty jsou v daném směru umisťovány jeden za druhým se zadaným odstupem
 
 Implicitní hodnoty:
@@ -143,12 +155,13 @@ Rozmisťování probíhá ve vertikálním směru shora dolů. Implicitní při�
 === return 
 
 *Syntaxe*
+
 ----
 return <alignment>
 
 <alignment> : (optional) possible values: left | center | right | top | middle | bottom.
+---- 
 
-----    
 *Popis*
 
 Přesouvá pozici na další řádek nebo sloupec piškotů v závislosti na aktuálním směru rozmisťování. Implicitní přiřazení piškotů v řadě či sloupci lze změnit modifikátorem přiřazení.
@@ -216,7 +229,7 @@ do <body>
 ----    
 *Popis*
 
-Vyhodnotí blok regulérního kódu Redu pro následné "last-minute" inicializační použití. Lze použít klíčové slovo `self` jako odkaz na piškot kontejneru (okno či panel).
+Vyhodnotí blok regulérního kódu Redu pro následné "last-minute" inicializační použití. Blok těla je vázán na piškot kontejneru (okno nebo panel), takže je možný přímý přístup k pišotu kontejneru. Na kontejner samotný lze odkazovat klíčovým slovem `self`.
 
 == Dodatečné styly
 
@@ -253,7 +266,7 @@ Styl `image` je typu `base` s implicitní velikostí 100x100.
 
 == Definice piškotů 
 
-Piškot lze vložit do aktuální pozice dispozice pouhým uvedením jména existujícího typu piškotu nebo dostupného stylu.
+Piškot lze vložit do aktuální pozice rozvržení (layout) jednoduše uvedením jména existujícího typu piškotu nebo dostupného stylu.
 
 *Syntaxe*
 ----
@@ -291,6 +304,7 @@ Zarovná text piškotu k levému okraji.
 ==== center
 
 *Syntaxe*
+
 ----
 center
 ----    
@@ -301,6 +315,7 @@ Vystředí text piškotu
 ==== right
 
 *Syntaxe*
+
 ----
 right
 ----    
@@ -311,6 +326,7 @@ Zarovná text pišotu k pravému okraji.
 ==== top
 
 *Syntaxe*
+
 ----
 top
 ----    
@@ -321,6 +337,7 @@ Zarovná text pišotu k hornímu okraji.
 ==== middle
 
 *Syntaxe*
+
 ----
 middle
 ----    
@@ -362,6 +379,7 @@ Nastaví styl textu na `italic`.
 ==== underline
 
 *Syntaxe*
+
 ----
 underline
 ----    
@@ -372,22 +390,24 @@ Nastaví styl textu na `underline`.
 ==== extra
 
 *Syntaxe*
+
 ----
-extra <value>
+extra <expr>
     
-<value> : jakákoli hodnota (any-type!).
+<expr> : jakákoli hodnota (any-type!).
 ----    
 *Popis*
 
-Nastaví aspekt `extra` piškotu na novou hodnotu.
+Nastaví aspekt `extra` piškotu na novou hodnotu (jež může být výsledkem výrazu).
 
 ==== data
 
 *Syntaxe*
+
 ----
 data <list>
     
-<list> : seznam položek (block!).
+<list> : literálový seznam položek nebo výraz Redu (block!).
 ----    
 *Popis*
 
@@ -399,11 +419,12 @@ Nastaví aspekt `data` piškotu na seznam hodnot. Formát seznamu závisí na po
 ----
 draw <commands>
     
-<commands> : seznam příkazů (block!).
+<commands> : literálový seznam příkazů nebo výraz Redu(block!).
 ----    
 *Popis*
 
-Nastaví aspekt `draw` piškotu na seznam příkazů dialektu Draw. Viz dokumentaci [Draw dialect](draw.html).
+Nastaví aspekt `draw` piškotu na seznam příkazů dialektu Draw.
+Viz link:draw.adoc [Draw dialect].
 
 ==== font
 
@@ -415,9 +436,12 @@ font <spec>
 ----    
 *Popis*
 
-Nastaví aspekt `font` piškotu na nový objekt typu `font!`. Objekt font! je popsán link:view.html#_font_object[zde].
+Nastaví aspekt `font` piškotu na nový objekt `font!`. Objekt font! je popsán link:view.adoc#_font_object[zde].
 
-NOTE: Je možné použít `font` spolu s jinými souvisejícími parametry. VID je sloučí dohromady s prioritou posledně zadaného parametru.
+[NOTE] 
+====
+Je možné použít `font` spolu s jinými souvisejícími parametry. VID je sloučí dohromady s prioritou posledně zadaného parametru.
+====
 
 ==== para
 
@@ -429,9 +453,12 @@ para <spec>
 ----    
 *Popis*
 
-Nastaví aspekt `para` novému objektu `para!`. Objekt para! je popsán link:view.html#_para_object[zde].
+Nastaví aspekt `para` novému objektu `para!`. Objekt para! je popsán link:view.adoc#_para_object[zde].
 
-NOTE: Je možné použít `para` spolu s jinými souvisejícími parametry. VID je sloučí dohromady s prioritou posledně zadaného parametru.
+[NOTE] 
+====
+Je možné použít `para` spolu s jinými souvisejícími parametry. VID je sloučí dohromady s prioritou posledně zadaného parametru.
+====
 
 ==== wrap
 
@@ -506,7 +533,10 @@ Vytvoří nový reaktor z těla bloku. Je-li `react` použito jako možnost (opt
 
 Nepovinné klíčové slovo `later` přeskočí první událost reakce bezprostředně po provedení `těla` bloku.
 
-NOTE: Reaktory jsou součástí reaktivního programování ve strojku View, jehož dokumentace se připravuje. Stručně řečeno, tělo bloku může popisovat jeden či více vztahů mezi vlastnostmi piškotů a to s použitím cest. Nastavení vlastnosti piškotu je zpracováno jako cíl (target) reaktoru (aktualizovaný piškot), zatímco cesta, vedoucí k vlastnosti piškotu je zpracována jako zdroj (source) reaktoru (změna zdroje spustí aktualizaci kódu reaktoru).
+[NOTE] 
+====
+Reaktory jsou součástí reaktivního programování ve View, jehož dokumentace se připravuje. Stručně řečeno, tělo bloku může popisovat jeden či více vztahů mezi vlastnostmi piškotů a to s použitím cest. Nastavení vlastnosti piškotu je zpracováno jako cíl (target) reaktoru (aktualizovaný piškot), zatímco cesta, vedoucí k vlastnosti piškotu je zpracována jako zdroj (source) reaktoru (změna zdroje spustí aktualizaci kódu reaktoru).
+====
 
 ==== loose
 
@@ -586,6 +616,7 @@ Poskytuje text návodu uvnitř polí piškotů, které dosud nemají žádný ob
 ==== rate
 
 *Syntaxe*
+
 ----
 rate <value>
 rate <value> now
@@ -608,8 +639,24 @@ default <value>
 
 Definuje implicitní hodnotu aspektu `data`, když konverze aspektu `text` vrací `none`. Tato implicitní hodnota je uložena v aspektu `options` jako pár key/value.
 
-NOTE: aktuálně používáno pouze u piškotů `text` a `field`.
+[NOTE] 
+====
+aktuálně používáno pouze u piškotů `text` a `field`.
+====
 
+==== with
+
+*Syntaxe*
+
+----
+with <body>
+
+<body>: blok kódu vázaný na aktuální piškot (block!)
+----
+
+*Popis*
+
+Vyhodnocuje blok kódu, vázaný na aktuálně definovaný piškot. Umožňuje přímé nastavení polí piškotu, potlačujíc jiná nastavení VID.
 
 === Datové typy 
 
@@ -620,14 +667,14 @@ Kromě klíčových slov je možné zadat nastavení piškotů s použitím lite
 |Datatype|      Purpose
 |*integer!*|    Určuje šířku piškotu. U panelů indikuje počet řad nebo sloupců v uspořádání (layout) v závislosti na aktuálním směru.
 |*pair!*|       Určuje šířku a výšku piškotu.
-|*tuple!*|       Určuje barvu pozadí piškotu (kde je použitelné).
+|*tuple!*       Určuje barvu pozadí piškotu (kde je použitelné).
 |*issue!*|      Určuje barvu pozadí piškotu pomocí hexadecimálního zápisu (#rgb, #rrggbb, #rrggbbaa).
 |*string!*|     Určuje text, který má být piškotem zobrazen.
 |*percent!*|    Nastavuje aspekt `data` piškotu (užitečné pro typy `progress` a `slider`).
 |*image!*|      Určuje obrázek pro pozadí piškotu(tam, kde je použitelné).
 |*url!*|        Načte zdroj, na nějž ukazuje URL a poté jej provede.
 |*block!*|      Udává akci pro implicitní událost piškotu. U panelů určuje jejich obsah.
-|*get-word!*|     Jako aktéra používá existující funkci.
+|get-word!|     Jako aktéra používá existující funkci.
 |*char!*|       _(vyhraženo pro budoucí použití)_.
 |===
 
@@ -651,9 +698,10 @@ Je možné určit aktéra zjednodušeným způsobem poskytnutím pouze bloku jeh
 ----
 func [face [object!] event [event! none!]][...body...]
 ----
-Platný seznam názvů událostí lze nalézt link:view.html#_actors[zde].
 
-Je-li zadán blok nebo get-word bez předložky s názvem aktéra, je implicitní aktér pro typ piškotu vytvořen podle definicí  https://github.com/red/red/blob/master/modules/view/styles.red[zde].
+Platný seznam názvů událostí lze nalézt link:view.adoc#_actors[zde].
+
+Je-li zadán blok nebo get-word bez předložky s názvem aktéra, je implicitní aktér pro typ piškotu vytvořen podle definicí  https://github.com/red/red/blob/master/modules/view/styles.red[zde]
 
 Aktér může být rovněž definován mimo VID a odkaz na něj zadán jako get-word argument za tečkou (dot).
 
@@ -662,7 +710,7 @@ Aktér může být rovněž definován mimo VID a odkaz na něj zadán jako get-
 
 Je možné definovat dětské panely pro seskupování piškotů a případně na ně aplikovat specifické styly. Není-li specificky určena, je velikost nového panelu automaticky spočítána podle velikosti jeho obsahu.
 
-Piškoty typu panel ze strojku View jsou ve VID podporovány se specifickou syntaxí: 
+Piškoty typu panel ze systému View jsou ve VID podporovány se specifickou syntaxí: 
 
 === panel 
 
@@ -677,14 +725,15 @@ panel <options> [<content>]
 
 Vytvoří dětský panel uvnitř aktuálního kontejneru, jehož obsah je další blok VID. Kromě dalších opcí piškotu lze zadat celočíselný dělitel, ustavujíc tak uspořádání do mřížky (grid-mode layout):
 
-* je-li zvolený směr across, představuje dělitel počet sloupců.
-* je-li zvolený směr below, představuje dělitel počet řad.
+* je-li zvolený směr `across`, představuje dělitel počet sloupců.
+* je-li zvolený směr `below`, představuje dělitel počet řad.
 
 
 
 === group-box 
 
 *Syntaxe*
+
 ----
 group-box <divider> <options> [<body>]
 
@@ -699,12 +748,13 @@ Vytvoří panel typu group-box uvnitř aktuálního kontejneru, kde obsahem je d
 * je-li zvolený směr `across`, představuje dělitel počet sloupců.
 * je-li zvolený směr `below`, představuje dělitel počet řad.
 
-NOTE: Zadaná hodnota typu string! jako opce představuje titulek panelu group-box.
+NOTE: Zadaná hodnota typu `string!` jako opce představuje titulek panelu group-box.
 
 
 === tab-panel 
 
 *Syntaxe*
+
 ----
 tab-panel <options> [<name> <body>...]
 
@@ -714,7 +764,7 @@ tab-panel <options> [<name> <body>...]
 ----	
 *Popis*
 
-Vytvoří panel Vytvoří panel typu tab-panel uvnitř aktuálního kontejneru. Specifikační blok musí obsahovat jméno a popis obsahu pro každou kartu (tab). Každé tělo obsahu je nový dětský piškot typu panel, působící jako jakékoliv jiné panely.
+Vytvoří `tab-panel` uvnitř aktuálního kontejneru. Specifikační blok musí obsahovat jméno a popis obsahu pro každou kartu (tab). Každé tělo obsahu je nový dětský piškot typu panel, působící jako jakékoliv jiné panely.
 
 
 == Určování stylu  
@@ -722,6 +772,7 @@ Vytvoří panel Vytvoří panel typu tab-panel uvnitř aktuálního kontejneru. 
 === style anchor:style[]
 
 *Syntaxe*
+
 ----
 style <new> <old> <options>
 

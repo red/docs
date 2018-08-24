@@ -72,7 +72,10 @@ void redOpen(void)
 ----
 Inicializuje novou seanci knihovny Red runtime. Tato funkce musí být volána před voláním jakékoliv jiné funkce API. Je bezpečné, volat ji v témže procesu několikrát; tak jako tak se otevře pouze jedna seance.
 
-NOTE: Je-li před `redOpen` volána jiná funkce, je vratnou hodnotou `-2` indikován ilegální pokus o přístup.
+[NOTE] 
+====
+Je-li před `redOpen` volána jiná funkce, je vratnou hodnotou `-2` indikován ilegální pokus o přístup.
+====
 
 ==== redClose()
 ----
@@ -129,7 +132,7 @@ redDoBlock(redBlock(redWord("print"), redInteger(42)));
 ----
 red_value redCall(red_word name, ..., red_integer 0)
 ----
-Invokuje funkci Redu (typu `any-function!`), uvedené názvem red_word, poskytujíc ji potřebné argumenty (jako hodnoty Redu). Vrací poslední hodnotu funkce. Seznam argumentů *musí* končit hodnotou `null` nebo `0` jako označením konce.
+Invokuje funkci Redu (typu `any-function!`), uvedené názvem red_word, poskytujíc ji potřebné argumenty (jako hodnoty Redu). Vrací poslední hodnotu funkce. Seznam argumentů *musí* končit hodnotou `null` nebo `0` jako označení konce.
 
 *Příklad*
 ----
@@ -144,7 +147,7 @@ Reagování na událost, která se vyskytla v Redu nebo přesměrování někter
 ----
 red_value redRoutine(red_word name, const char* spec, void* func_ptr)
 ----
-Definuje novou rutinu, zvanou _red_word_, s blokem specifikací a s tělem, jímž je pointer (ukazovátko) na funkci C. Funkce C *musí* vracet hodnotu Redu (lze použít `redUnset()` k indikaci toho, že návratová hodnota není použita).
+Definuje novou rutinu, zvanou _name_, s blokem specifikací _spec_ a s tělem, jímž je pointer (ukazovátko) na funkci C. Funkce C *musí* vracet hodnotu Redu (lze použít `redUnset()` k indikaci toho, že návratová hodnota není použita).
 
 *Příklad*
 ----
@@ -183,13 +186,13 @@ printf("%l\n", redGet(a));
 ----
 red_unset redUnset(void)
 ----
-Vrací hodnotu _unset!_.
+Vrací hodnotu `unset!`.
 
 ==== redNone()
 ----
 red_none redNone(void)
 ----
-Vrací hodnotu _none!_.
+Vrací hodnotu `none!`.
 
 ==== redLogic()
 ----
@@ -266,7 +269,7 @@ Vrací hodnotu `word!` z řetězce v C. Očekávané kódování řetězcového 
 red_block redBlock(red_value v,...)
 ----
 
-Vrací novou řadu (series) block!, vytvořenou ze seznamu argumentů. Seznam *musí* končit hodnotou `null` nebo `0`, jako označení konce.
+Vrací novou řadu `block!`, vytvořenou ze seznamu argumentů. Seznam *musí* končit hodnotou `null` nebo `0`, jako označení konce.
 
 *Examples*
 ----
@@ -279,7 +282,7 @@ redBlock(redInteger(42), redWord("hi"), 0);   // Creates [42 hi] block
 red_path redPath(red_value v, ...)
 ----
 
-Vrací novou řadu path!, vytvořenou ze seznamu argumentů. Seznam *musí* končit hodnotou `null` nebo `0`, jako označení konce.
+Vrací novou řadu `path!`, vytvořenou ze seznamu argumentů. Seznam *musí* končit hodnotou `null` nebo `0`, jako označení konce.
 
 *Příklad*
 ----
@@ -293,7 +296,7 @@ printf("%l\n", redCInt32(res));    // will output 123
 red_path redLoadPath(const char* path)
 ----
 
-Vrací řadu path!, vytvořenou z cesty, vyjádřené jako řetězed v C. To poskytuje rychlý způsob sestavení cest bez jednotlivého vytváření každého elementu.
+Vrací řadu `path!`, vytvořenou z cesty, vyjádřené jako řetězed v C. To poskytuje rychlý způsob sestavení cest bez jednotlivého vytváření každého elementu.
 
 *Příklad*
 ----
@@ -305,7 +308,7 @@ redDo(redLoadPath("a/b"));    // Creates and evaluates the a/b path! value.
 red_value redMakeSeries(unsigned long type, unsigned long slots)
 ----
 
-Vrací nový objekt series! typu _type_ s dostatkem místa pro uložení _slotových_ prvků. Toto je generická funkce pro tvorbu řad. Typ prvků musí být jedním z výčtových hodnot `RedType`. 
+Vrací nový objekt `series!` typu _type_ s dostatkem místa pro uložení _slotových_ prvků. Toto je generická funkce pro tvorbu řad. Typ prvků musí být jedním z výčtových hodnot `RedType`. 
 
 *Examples*
 ----
@@ -318,35 +321,35 @@ redAppend(path, redInteger(2));    // Now path is `a/2:`
 
 === Vytvoření Céčkových hodnot z Redu
 
-Konverze Redových hodnot na hodnoty hostitele je možná, byť s omezením menšího počtu typů v jazyce C.
+Konverze Redových hodnot na hodnoty _hostitele_ je možná, byť s omezením menšího počtu typů v jazyce C.
 
 ==== redCInt32()
 ----
 long redCInt32(red_integer number)
 ----
 
-Vrací 32-bitové signované celé číslo z hodnoty  integer! v Redu.
+Vrací 32-bitové signované celé číslo z hodnoty  `integer!` v Redu.
 
 ==== redCDouble()
 ----
 double redCDouble(red_float number)
 ----
 
-Vrací C_double_floating_point_value z hodnoty float! v Redu.
+Vrací 'C_double_floating_point_value' z hodnoty `float!` v Redu.
 
 ==== redCString()
 ----
 const char* redCString(red_string string)
 ----
 
-Vrací UTF-8_string_buffer_pointer z hodnoty string! v Redu. Jiná kódování lze definovat funkcí `redSetEncoding()`.
+Vrací 'UTF-8_string_buffer_pointer' z hodnoty `string!` v Redu. Jiná kódování lze definovat funkcí `redSetEncoding()`.
 
 ==== redTypeOf()
 ----
 long redTypeOf(red_value value)
 ----
 
-Vrací ID typu z hodnoty v Red. Hodnoty ID typů jsou definovány ve výčtu `RedType`. Viz link:libred.adoc#_datatypes_definition[Datatypes] section.
+Vrací ID typu z hodnoty v Red. Hodnoty ID typů jsou definovány ve výčtu `RedType`. Viz link:libred.adoc#datatypes-definition[Datatypes] section.
 
 === Volání akce v Redu
 
@@ -385,7 +388,7 @@ Vrací kopii neskalární hodnoty.
 red_value redFind(red_series series, red_value value)
 ----
 
-Vrací _řadu_ od místa, kde byla nalezena  _hodnota_ nebo NONE.
+Vrací _řadu_ od místa, kde byla nalezena  _hodnota_ nebo `none`.
 
 ==== redIndex()
 ----
@@ -434,7 +437,7 @@ Nahradí indexem označenou hodnotu _řady_ novou hodnotou a vrátí novou hodno
 red_value redPut(red_series series, red_value index, red_value value)
 ----
 
-Nahradí hodnotu za klíčem v _řadě_ nebo v hodnotě map! a vrátí novou hodnotu.
+Nahradí hodnotu za klíčem v _řadě_ nebo v hodnotě `map!` a vrátí novou hodnotu.
 
 ==== redRemove()
 ----
@@ -448,7 +451,7 @@ Odebere hodnotu aktuálního indexu _řady_ index a vrátí upravenou řadu.
 red_value redSelect(red_series series, red_value value)
 ----
 
-Nalezne _hodnotuy_ v _řadě_ a vrátí následující hodnotu nebo NONE.
+Nalezne _hodnotuy_ v _řadě_ a vrátí následující hodnotu nebo `none`.
 
 ==== redSkip()
 ----
@@ -466,7 +469,7 @@ Konvertuje hodnotu _spec_ na datový typ, specifikovaný v _proto_.
 
 === Přístup ke slovu Redu
 
-Zadání nebo získání hodnoty slova v Red je nejpřímějším způsobem předání hodnoty mezi hostitelským a Redovým běhovým prostředím.
+Zadání nebo získání hodnoty slova v Red je nejpřímějším způsobem předání hodnoty mezi _hostitelským_ a Redovým běhovým prostředím.
 
 ==== redSet()
 ----
@@ -491,7 +494,7 @@ Cesty jsou velmi flexibilním způsobem přístupu k datům v Redu, takže mají
 red_value redSetPath(red_path path, red_value value)
 ----
 
-Přiřadí _path_ k _value_ a vrací tuto hodnotu.
+Přiřadí _path_ k _value_ a vrací tuto _value_.
 
 ==== redGetPath()
 ----
@@ -545,7 +548,7 @@ Přenese (probes) _value_ do standardního výstupu, nebo do ladící konzoly, j
 red_value redHasError(void)
 ----
 
-Vrací hodnotu error!, vyskytla-li se chyba v předchozím volání API nebo `null`, pakliže se žádná chyba nevyskytla.
+Vrací hodnotu `error!`, vyskytla-li se chyba v předchozím volání API nebo `null`, pakliže se žádná chyba nevyskytla.
 
 ==== redFormError()
 ----
@@ -561,7 +564,10 @@ int redOpenLogWindow(void)
 
 Otevře logovací okno a přesměruje do něho všechen tiskový výstup Redu. Tento nástroj je užitečný, není-li hostitelská aplikace spouštěna ze systémové konzoly, která se implicitně používá pro tiskový výstup. Opakované volání této funkce je bez účinku, je-li již logovací okno otevřeno. Vrací `1` při úspěchu, `0` při selhání.
 
-NOTE: Pouze pro platformy Windows.
+[NOTE] 
+====
+Pouze pro platformy Windows.
+====
 
 ==== redCloseLogWindow()
 ----
@@ -588,6 +594,7 @@ Closes the log file opened with `redOpenLogFile()`.
 
 NOTE: V současné době *musí* být logovací soubor při exitu zavřen, jinak je nad ním držen zámek (lock) a to může způsobit zamrznutí nebo kolaps v některých hostitelských (např. MS Office) aplikacích.
 
+[#datatypes-definition]
 === Definice datových typů
 
 Některé funkce z libRed API se mohou odkazovat na datové typy Redu: `redTypeOf()`, `redMakeSeries()` a `redDatatype()`. Tyto typy jsou na hostitelské straně prezentovány jako výčet (`RedType`), kde typy jsou zastoupeny jmény podle následujícího schematu:
@@ -634,7 +641,7 @@ Vrací Redovou hodnotu `logic!`, vytvořenou z VB hodnoty `boolean`.
 ----
 Function redBlockVB(ParamArray args() As Variant) As Long
 ----
-Vrací novou řadu typu block!, vytvořenou ze seznamu argumentů. Počet argumentů je proměnný je je složen pouze z hodnot VisualBasic.
+Vrací novou řadu typu `block!`, vytvořenou ze seznamu argumentů. Počet argumentů je proměnný je je složen pouze z hodnot VisualBasic.
 
 *Příklady*
 ----
@@ -647,7 +654,7 @@ redProbe redBlockVB(42, "hello")   ' Creates the [42 "hello" hi] block
 Function redPathVB(ParamArray args() As Variant) As Long
 ----
 
-Vrací novou řadu typu path!, vytvořenou ze seznamu argumentů. Počet argumentů je proměnný je je složen pouze z hodnot VisualBasic.
+Vrací novou řadu typu `path!`, vytvořenou ze seznamu argumentů. Počet argumentů je proměnný je je složen pouze z hodnot VisualBasic.
 
 *Příklady*
 ----

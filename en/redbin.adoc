@@ -4,9 +4,9 @@
 
 _Specification version 1_
 
-Redbin is a binary format that accurately represents Red values stored in memory, while enabling fast loading (avoiding the parsing and validation stage of the text representation format). Redbin format is largely inspired by http://www.rebol.com/article/0044.html[REBin]. Redbin can encode binding information for words and can handle cycles in any-block! values.
+Redbin is a binary format that accurately represents Red values stored in memory, while enabling fast loading (avoiding the parsing and validation stage of the text representation format). Redbin format is largely inspired by http://www.rebol.com/article/0044.html[REBin]. Redbin can encode binding information for words and can handle cycles in `any-block!` values.
 
-The user interface for Redbin format access will be provided by `load/binary` and `mold/binary`. Underlying implementation _could_  use the codec sub-system, once available.
+The user interface for Redbin format access will be provided by `load/binary` and `mold/binary`. Underlying implementation _could_ use the codec sub-system, once available.
 
 Implementation constraints:
 
@@ -28,6 +28,7 @@ Lexical conventions:
 
 
 == Header
+
 ----
 magic="REDBIN" (6), version=1 (1), flags (1), length (4), size (4)
 
@@ -40,10 +41,12 @@ flags (option is enabled if bit is set):
 length : number of root records to load.
 size   : size of records payload in bytes.
 ----
+
 If compression is applied, the data following the header is the payload to be compressed. Compression algorithm choice is implementation-dependent.
 
 == Symbol Table
-The symbol table is following immediately the header data. It is optional and should only be used if words are present in the rest of the Redbin payload. The symbol table has two sections:
+
+The symbol table immediately follows the header data. It is optional and should only be used if words are present in the rest of the Redbin payload. The symbol table has two sections:
 
 * a table of offsets to string representation of each symbol
 * strings buffers, NUL-terminated and concatenated to each other
@@ -59,11 +62,12 @@ Table encoding:
 
 During the decoding process, these symbols are merged within Red's own symbol table and the offsets are replaced by the symbol ID value from Red table. That is, the symbol references in the Redbin records are an indirect reference to Red's internal symbol table entries used only during the loading process.
 
-After the Symbol Table, Red values are stored as records in sequence with no special delimiter or end marker. The loaded values from root level are usually stored in a block! series.
+After the Symbol Table, Red values are stored as records in sequence with no special delimiter or end marker. The loaded values from root level are usually stored in a `block!` series.
 
 == Records definitions
 
 Each records starts with a 32-bit `header` field defined as:
+
 ****
  * bit31    : new-line flag
  * bit30    : no-values flag (for contexts)
@@ -74,18 +78,22 @@ Each records starts with a 32-bit `header` field defined as:
  * bit15-8  : unit (used for encoding elements size in a series buffer)
  * bit7-0   : type
 ****
+
 Here follows the description of each individual record:
 
 === Padding anchor:padding[] 
+
 ----
 Default: header (4)
 Compact: n/a
 
 header/type=0
 ----
+
 This empty type slot is used to properly align 64-bit values.
 
 === Datatype! anchor:datatype[] 
+
 ----
 Default: header (4), value (4)
 Compact: TBD
@@ -94,6 +102,7 @@ header/type=1
 ----
 
 === Unset! anchor:unset[] 
+
 ----
 Default: header (4)
 Compact: TBD
@@ -102,6 +111,7 @@ header/type=2
 ----
 
 === None! anchor:none[] 
+
 ----
 Default: header (4)
 Compact: TBD
@@ -110,6 +120,7 @@ header/type=3
 ----
 
 === Logic! anchor:logic[] 
+
 ----
 Default: header (4), value=0|1 (4)
 Compact: TBD
@@ -118,24 +129,29 @@ header/type=4
 ----
 
 === Block! anchor:block[] 
+
 ----
 Default: header (4), head (4), length (4), ...
 Compact: TBD
 
 header/type=5
 ----
+
 The `head` field indicates the offset of the block reference, using a zero-based integer. The `length` field contains the number of values to be stored in the block. The block values simply follow the block definition, no separator or end delimiter is required.
 
 === Paren! anchor:paren[] 
+
 ----
 Default: header (4), head (4), length (4), ...
 Compact: TBD
 
 header/type=6
 ----
-Same encoding rules as block!.
+
+Same encoding rules as `block!`.
 
 === String! anchor:string[] 
+
 ----
 Default: header (4), head (4), length (4), data (unit*length) [, padding (1-3)]
 Compact: TBD
@@ -143,9 +159,11 @@ Compact: TBD
 header/type=7
 header/unit=1|2|4
 ----
-`head` field has same meaning as for blocks. The `unit` sub-field indicates the encoding format of the string, only values of 1, 2 and 4 are valid. The `length` field contains the number of codepoints to be stored in the string, up to 16777215 codepoints (2^24 - 1) are supported. The string is encoded in UCS-1, UCS-2 or UCS-4 format. No NUL character is present, nor accounted for in the `length` field. An optional tail padding of 1 to 3 NUL bytes can be present to align the end of the string! record with a 32-bit boundary.
+
+`head` field has same meaning as for blocks. The `unit` sub-field indicates the encoding format of the string, only values of 1, 2 and 4 are valid. The `length` field contains the number of codepoints to be stored in the string, up to 16777215 codepoints (2^24 - 1) are supported. The string is encoded in UCS-1, UCS-2 or UCS-4 format. No NUL character is present, nor accounted for in the `length` field. An optional tail padding of 1 to 3 NUL bytes can be present to align the end of the `string!` record with a 32-bit boundary.
 
 === File! anchor:file[] 
+
 ----
 Default: header (4), head (4), length (4), data (unit*length)
 Compact: TBD
@@ -153,18 +171,22 @@ Compact: TBD
 header/type=8
 header/unit=1|2|4
 ----
-Same encoding rules as string!.
+
+Same encoding rules as `string!`.
 
 === Url! anchor:url[] 
+
 ----
 Default: header (4), head (4), length (4), data (unit*length)
 Compact: TBD
 
 header/type=9
 ----
-Same encoding rules as string!.
+
+Same encoding rules as `string!`.
 
 === Char! anchor:char[] 
+
 ----
 Default: header (4), value (4)
 Compact: TBD
@@ -173,6 +195,7 @@ header/type=10
 ----
 
 === Integer! anchor:integer[] 
+
 ----
 Default: header (4), value (4)
 Compact: TBD
@@ -181,15 +204,18 @@ header/type=11
 ----
 
 === Float! anchor:float[] 
+
 ----
 Default: [padding=0 (4),] header (4), value (8)
 Compact: TBD
 
 header/type=12
+
 ----
 The optional padding field is added to properly align the `value` field offset to a 64-bit value.
 
 === Context! anchor:context[] 
+
 ----
 Default: header (4), length (4), symbol1 (4), symbol2 (4),..., value1 [any-type!], value2 [any-type!], ...
 Compact: TBD
@@ -199,9 +225,11 @@ header/no-values=0|1
 header/stack?=0|1
 header/self?=0|1
 ----
-Contexts are Red values used internally by some datatypes like function!, object! and derivative types. A context contains two consecutive tables, the first one is the list of word entries in the context represented as symbol references, the second is the associated values for each of the symbols in the first table. `length` field indicates the number of entries in the context. Context records can only exist at root level, they cannot be nested. If `no-values` flag is set, it means that there are no values following the symbols (empty context). If `stack?` flag is set, then the values are allocated on the stack instead of the heap memory. The `self?` flag is used to indicate that the context is able to handle a self-referencing word (`self` in objects).
+
+Contexts are Red values used internally by some datatypes like `function!`, `object!` and derivative types. A context contains two consecutive tables, the first one is the list of word entries in the context represented as symbol references, the second is the associated values for each of the symbols in the first table. `length` field indicates the number of entries in the context. Context records can only exist at root level, they cannot be nested. If `no-values` flag is set, it means that there are no values following the symbols (empty context). If `stack?` flag is set, then the values are allocated on the stack instead of the heap memory. The `self?` flag is used to indicate that the context is able to handle a self-referencing word (`self` in objects).
 
 === Word! anchor:word[] 
+
 ----
 Default: header (4), symbol (4), context (4), index (4)
 Compact: TBD
@@ -209,47 +237,55 @@ Compact: TBD
 header/type=15
 header/set?=0|1
 ----
-The `context` field is an offset from the beginning of the records section in the Redbin file referring to a context! value. The context needs to be located before the word record in the Redbin records list. If `context` equals -1, it refers to global context.
 
-If the `set?` field is defined, this record is followed by an [any-value!] record, and the word will need to be set to that value (in the right context) by the decoder. This forms a name/value couple allowing to encode words' values in an adhoc way, when providing a sequence of values for a given context is too expensive (mostly for name/value couples in global context).
+The `context` field is an offset from the beginning of the records section in the Redbin file referring to a `context!` value. The context needs to be located before the word record in the Redbin records list. If `context` equals `-1`, it refers to global context.
+
+If the `set?` field is defined, this record is followed by an `any-value!` record, and the word will need to be set to that value (in the right context) by the decoder. This forms a name/value couple allowing to encode words' values in an adhoc way, when providing a sequence of values for a given context is too expensive (mostly for name/value couples in global context).
 
 === Set-word! anchor:set-word[] 
+
 ----
 Default: header (4), symbol (4), context (4), index (4)
 Compact: TBD
 
 header/type=16
 ----
-Same as word!.
+
+Same as `word!`.
 
 === Lit-word! anchor:lit-word[] 
+
 ----
 Default: header (4), symbol (4), context (4), index (4)
 Compact: TBD
 
 header/type=17
 ----
-Same as word!.
+Same as `word!`.
 
 === Get-word! anchor:get-word[] 
+
 ----
 Default: header (4), symbol (4), context (4), index (4)
 Compact: TBD
 
 header/type=18
 ----
-Same as word!.
+Same as `word!`.
 
 === Refinement! anchor:refinement[] 
+
 ----
 Default: header (4), symbol (4), context (4), index (4)
 Compact: TBD
 
 header/type=19
 ----
-Same as word!.
+
+Same as `word!`.
 
 === Issue! anchor:issue[] 
+
 ----
 Default: header (4), symbol (4)
 Compact: TBD
@@ -258,35 +294,42 @@ header/type=20
 ----
 
 === Native! anchor:native[] 
+
 ----
 Default: header (4), ID (4), spec [block!]
 Compact: TBD
 
 header/type=21
 ----
+
 `ID` is an offset into the internal `natives/table` jump table.
 
 
 === Action! anchor:action[] 
+
 ----
 Default: header (4), ID (4), spec [block!]
 Compact: TBD
 
 header/type=22
 ----
+
 `ID` is an offset into the internal `actions/table` jump table.
 
 === Op! anchor:op[] 
+
 ----
 Default: header (4), symbol (4), 
 Compact: TBD
 
 header/type=23
 ----
-`symbol` representes the action, native or function name (only from global context) used as the source for that op! value. 
+
+`symbol` represents the action, native or function name (only from global context) used as the source for that `op!` value. 
 
 
 === Function! anchor:function[] 
+
 ----
 Default: header (4), context [context!], spec [block!], body [block!], args [block!], obj-ctx [context!]
 Compact: TBD
@@ -295,51 +338,62 @@ header/type=24
 ----
 
 === Path! anchor:path[] 
+
 ----
 Default: header (4), head (4), length (4), ...
 Compact: TBD
 
 header/type=25
 ----
-Same encoding rules as block!.
+
+Same encoding rules as `block!`.
 
 === Lit-path! anchor:lit-path[] 
+
 ----
 Default: header (4), head (4), length (4), ...
 Compact: TBD
 
 header/type=26
 ----
-Same encoding rules as block!.
+
+Same encoding rules as `block!`.
 
 === Set-path! anchor:set-path[] 
+
 ----
 Default: header (4), head (4), length (4), ...
 Compact: TBD
 
 header/type=27
 ----
-Same encoding rules as block!.
+
+Same encoding rules as `block!`.
 
 === Get-path! anchor:get-path[] 
+
 ----
 Default: header (4), head (4), length (4), ...
 Compact: TBD
 
 header/type=28
 ----
-Same encoding rules as block!.
+
+Same encoding rules as `block!`.
 
 === Bitset! anchor:bitset[] 
+
 ----
 Default: header (4), length (4), bits (length)
 Compact: TBD
 
 header/type=30
 ----
-The `length` fields indicates the number of bits stored, rounded to the upper multiple of 8. The bits are memory dumps of the bitset! series buffer. Byte order is preserved. `bits` field needs to be padded with enough NUL bytes to keep the next record 32-bit aligned.
+
+The `length` fields indicates the number of bits stored, rounded to the upper multiple of 8. The bits are memory dumps of the `bitset!` series buffer. Byte order is preserved. `bits` field needs to be padded with enough NUL bytes to keep the next record 32-bit aligned.
 
 === Point! anchor:point[] 
+
 ----
 Default: header (4), x (4), y (4), z (4)
 Compact: TBD
@@ -348,15 +402,18 @@ header/type=31
 ----
 
 === Object! anchor:object[] 
+
 ----
 Default: header (4), context [reference!], class-id (4), on-set-idx (4), on-set-arity (4)
 Compact: TBD
 
 header/type=32
 ----
+
 The `on-set-idx` field indicates the offset of the `on-change*` in the context values table. The `on-set-arity` stores the arity of that function.
 
 === Typeset! anchor:typeset[] 
+
 ----
 Default: header (4), array1 (4), array2 (4), array3 (4)
 Compact: TBD
@@ -365,6 +422,7 @@ header/type=33
 ----
 
 === Error! anchor:error[] 
+
 ----
 Default: header (4), context [reference!]
 Compact: TBD
@@ -373,15 +431,18 @@ header/type=34
 ----
 
 === Vector! anchor:vector[] 
+
 ----
 Default: header (4), head (4), length (4), values (unit*length)
 Compact: TBD
 
 header/type=35
 ----
+
 `unit` indicates the size of the vector element type size: 1, 2, 4 or 8 bytes. The `values` field holds the list of values. `values` needs to be padded with NUL bytes to align the next record to a 32-bit boundary (if `unit` is equal to 1 or 2).
 
 === Pair! anchor:pair[] 
+
 ----
 Default: header (4), x (4), y (4)
 Compact: TBD
@@ -390,15 +451,18 @@ header/type=37
 ----
 
 === Percent! anchor:percent[] 
+
 ----
 Default: [padding=0 (4),] header (4), value (8)
 Compact: TBD
 
 header/type=38
 ----
+
 Percent value is stored as a 64-bit float. The optional padding field is added to properly align the `value` field offset to a 64-bit value.
 
 === Tuple! anchor:tuple[] 
+
 ----
 Default: header (4), array1 (4), array2 (4), array3 (4)
 Compact: TBD
@@ -407,33 +471,40 @@ header/type=39
 ----
 
 === Map! anchor:map[] 
+
 ----
 Default: header (4), length (4), ...
 Compact: TBD
 
 header/type=40
 ----
+
 The `length` field contains the number of elements (keys + values) to be stored in the map. The map elements simply follow the length definition, no separator or end delimiter is required.
 
 === Binary! anchor:binary[] 
+
 ----
 Default: header (4), head (4), length (4), ...
 Compact: TBD
 
 header/type=41
 ----
-Same encoding rules as block!.
+
+Same encoding rules as `block!`.
 
 === Time! anchor:time[] 
+
 ----
 Default: [padding=0 (4),] header (4), value (8)
 Compact: TBD
 
 header/type=43
 ----
+
 Time value is stored as a 64-bit float. The optional padding field is added to properly align the `value` field offset to a 64-bit value.
 
 === Tag! anchor:tag[] 
+
 ----
 Default: header (4), head (4), length (4), data (unit*length)
 Compact: TBD
@@ -441,9 +512,11 @@ Compact: TBD
 header/type=44
 header/unit=1|2|4
 ----
-Same encoding rules as string!.
+
+Same encoding rules as `string!`.
 
 === Email! anchor:email[] 
+
 ----
 Default: header (4), head (4), length (4), data (unit*length)
 Compact: TBD
@@ -451,22 +524,27 @@ Compact: TBD
 header/type=45
 header/unit=1|2|4
 ----
-Same encoding rules as string!.
+
+Same encoding rules as `string!`.
 
 === Date! anchor:date[] 
+
 ----
 Default: header (4), date (4), time (8)
 Compact: TBD
 
 header/type=47
 ----
+
 Date is packed into a 32-bit integer (same as in `red-date!`). Time value is stored as a 64-bit float.
 
 === Reference! anchor:reference[] 
-----
- Default: header (4), count (4), index1 (4), index2 (4), ...
- Compact: TBD
 
- header/type=255
 ----
-This special record type stores a reference to an already loaded value of type any-block! or object!. This makes it possible to store cycles in Redbin. The reference is created from a path into the loaded values (assuming that the root values are stored in a block). Each `index` field points to the series or object value to go into, until the last one is reached, pointing to the value to refer to. The `count` field indicates the number of indexes to go through. If one of the indexes has to be applied to an object, it refers to the corresponding object's field (0 => 1st field, 1 => 2nd field,...). All indexes are zero-based.
+Default: header (4), count (4), index1 (4), index2 (4), ...
+Compact: TBD
+
+header/type=255
+----
+
+This special record type stores a reference to an already loaded value of type `any-block!` or `object!`. This makes it possible to store cycles in Redbin. The reference is created from a path into the loaded values (assuming that the root values are stored in a block). Each `index` field points to the series or object value to go into, until the last one is reached, pointing to the value to refer to. The `count` field indicates the number of indexes to go through. If one of the indexes has to be applied to an object, it refers to the corresponding object's field (0 => 1st field, 1 => 2nd field,...). All indexes are zero-based.

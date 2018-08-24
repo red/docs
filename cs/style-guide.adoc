@@ -21,7 +21,7 @@ Neexistuje striktně definovaný maximální počet sloupců pro řádek kódu, 
 
 Základní kód (codebase) Redu používá pro odsazení kódu tabulaci o velikosti *4*. To poskytuje dobrý kompromis mezi příliš malým (např. 2 sloupce) nebo příliš velkým (např. 8 slopců) odsazením. Použití tabulátoru umožňuje akomodaci osobní preference uživatele daným pravidlům.
 
-Všechny přispívající zdrojové soubory do repozitáře red/red by měly ve svém záhlaví obsahovat následující pole:
+Všechny přispívající zdrojové soubory do repozitáře `red/red` by měly ve svém záhlaví obsahovat následující pole:
 
  Tabs: 4
 
@@ -198,7 +198,7 @@ Všechny názvy proměnných a funkcí se píší malými písmeny, pokud není 
 * jméno je OS nebo (non-Red) API třetí strany
 
 
-== Makra (Red/System) 
+== Makra (Red/System) anchor:macros-redsystem[] 
 
 Pro názvy maker se obvykle používají velká písmena kvůli odlišení od zbytku kódu (pokud není přímo záměrem aby se nelišily od normálního kódu, 'like pseudo-custom datatype definitions'). Slova víceslovných názvů se oddělují podtržítkem `_`.
 
@@ -240,7 +240,7 @@ increment: func [
 ][n + 1]
 ----
 
-Je-li specifikace bloku příliš dlouhá, měla by být rozvinuta (wrapped) přes několik řádek ale tak, aby každá definice typu byla na stejném řádku, jako jeho argumenty. Nepovinné argumenty mají být na samostatném řádku. Každé upřesnění začíná na novém řádku. Je-li následováno jediným argumentem, může tento být na témže řádku nebo na novém řádku s odsazením (nutno zachovat konsistenci s ostatními upřesněními téhož bloku). U upřesnění /local mohou být argumenty na témže řádku, pokud nejsou lokální slova doprovázena popisem typu. 
+Je-li specifikace bloku příliš dlouhá, měla by být rozvinuta (wrapped) přes několik řádek ale tak, aby každá definice typu byla na stejném řádku, jako jeho argumenty. Nepovinné argumenty mají být na samostatném řádku. Každé upřesnění začíná na novém řádku. Je-li následováno jediným argumentem, může tento být na témže řádku nebo na novém řádku s odsazením (nutno zachovat konsistenci s ostatními upřesněními téhož bloku). U upřesnění `/local` mohou být argumenty na témže řádku, pokud nejsou lokální slova doprovázena popisem typu. 
 
 Při rozbalování (wrappin) specifikace bloku přes několik řádek se pro usnadnění čtení doporučuje zarovnat definice následujících argumentů do sloupců. Takové zarovnání se přednostně provede s použitím tabulátoru, případně mezerníkem.
 
@@ -373,7 +373,7 @@ head insert
 
 Zpravidla se má kvůli úspoře významného vertikálního místa vkládat komentář do stejného řádku jako počátek odpovídajícího kódu, místo na nový řádek. Pokud je však komentář použit také jako oddělovač odlišných porcí kódu, je jeho umístění na nový řádek vhodné.
 
-== Skladba řetězce anchor:string-syntax[] 
+== Skladba řetězce 
 
 
 Pro jednořádkové řetězce se používají dvojité uvozovky `""`. Forma `{}`
