@@ -1,0 +1,58 @@
+= Datový typ none!
+:toc:
+:numbered:
+
+
+== Úvodem
+
+None! reprezentuje hodnotu, která nepatří k žádnému jinému datovému typu. Je to entita, analogická k `nil` nebo `nothing` v jiných programovacích jazycích.
+
+`None!` je člen typesetu `immediate!`
+
+== Vytvoření
+
+Hodnoty none! mohou být vytvořeny literálovou syntaxí nebo při runtimu konstruktorem `make` či konverzí `to`.
+````
+>> make none! 'x
+== none
+
+>> to none! 42
+== none
+````
+== Literálová skladba
+
+Lze použít přímo předdefinované slovo `none` nebo serializovanou skladbu:
+----
+#[none]
+----
+
+== Testování hodnot
+
+Funkce `none?` ověří, zda je hodnota typu `none!`.
+
+----
+>> none? 1
+== false
+
+>> none? true
+== false
+
+>> none? none
+== true
+----
+
+Funkce `type?` vrací datový typ zadané hodnoty.
+
+----
+>> type? none
+== none!
+----
+
+== Předdefinovaná slova
+
+=== Funkce
+
+`to-none`
+
+
+

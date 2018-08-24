@@ -1,0 +1,142 @@
+= Datový typ paren!
+:toc:
+:numbered:
+
+== Úvodem
+
+Datový typ `paren!` je okamžitě vyhodnocovaný blok s elementy libovolného typu . Patří k typesetu `series!`.
+
+Hodnoty objektu paren jsou obklopený závorkami `(` a `)`. 
+
+Vyhodnocení obsahu lze potlačit slovem `quote` před parenem. 
+
+----
+quote (print 42)
+== (print 42)
+----
+
+`Paren!` je členem typesetů: `any-block!`, `any-list!`, `series!`
+
+== Vytvoření
+
+Objekt paren lze vytvořit literálovou syntaxí nebo při runtimeu použitím konstruktoru `make`, konverzí `to` conversion nebo funkcí `as`.
+
+Prázdný paren pro 10 elementů vytvoříme příkazem:
+
+----
+>> make paren! 10
+== ()
+----
+
+Paren s deseti elementy počáteční hodnoty `none`:
+
+----
+>> append/dup make paren! 10 none 10
+== (none none none none none none none none none none)
+----
+
+Použití konverze `to`:
+
+----
+>> to paren! {one 2 "three" 4:00}
+== (one 2 "three" 4:00:00)
+
+>> to paren! "foo 1.23 me@me.com"
+== (foo 1.23 me@me.com)
+
+>> to paren! 42
+== (42)
+----
+
+Použití `as`:
+
+----
+>> as paren! [1 2 3]
+== (1 2 3)
+----
+
+
+== Literálová skladba
+
+Tvoří ji kolekce hodnot, vymezených závorkami a oddělených mezerami.
+ 
+`()`
+
+`quote (one 2 "three")` 
+
+`(print 1.23)`
+
+Pareny lze rozepsat do více řádů a mohou obsahovat další pareny.
+
+----
+(1
+2
+"three"
+)
+
+quote (1 2 "three" (x foo 1.23))
+----
+
+Řádky, mezery a tabulátory jsou dovoleny, pokud nerozdělují hodnoty.
+
+Ok:  `(print "foo")`
+
+Not ok: `(pr   int "foo")`
+
+
+== Komparace
+
+Lze použít všechny komparátory `=, ==, <>, >, <, >=, &lt;=, =?`, včetně funkcí `min` a `max`.
+
+[NOTE]
+Protože jsou hodnoty objektu typu `paren!` ihned vyhodnocovány, je vratnou hodnotou funkcí `min` nebo `max` hodnota posledního výrazu v parenu. Komparátory porovnávají poslední elementy porovnávaných parenů, není-li jejich vyhodnocení potlačeno.
+
+----
+>> max (1 2 3) (4 5 6)
+== 6
+----
+
+
+----
+>> (1 2 3) < (4 5 6)
+== true
+
+>> (1 2 3) < (4 5 2)
+== false
+
+>> (quote (1 2 3)) < (quote (4 5 2))
+== true
+----
+
+
+== Testování hodnot
+
+Použijte funkci `paren?` k ověření, zda je posuzovaná hodnota typu  `paren!`.
+
+----
+>> paren? quote (42 print "foo")
+== true
+ALE:
+>> paren? (42 print "foo")
+foo
+== false
+----
+
+
+Funkce `type?` vrací datový typ zadané hodnoty.
+
+----
+>> type? quote (42)
+== paren!
+----
+
+
+== Předdefinovaná slova
+
+=== Funkce
+
+`expand-directives`, `paren?`, `series?`, `to-paren`
+
+=== Natives
+
+`as`, `compose`

@@ -1,0 +1,89 @@
+= Datový typ integer!
+:toc:
+:numbered:
+
+== Úvodem
+
+Hodnoty typu`integer!` jsou 32-bitová pozitivní a negativní čísla bez desetinné čárky.
+
+Mají rozsah od `-2147483648` do `2147483647`.
+
+Při přetečení nekonvertuje `integer!` automaticky na `float!`.
+
+Typ `integer` je členem těchto typesetů: `immediate!`, `number!` a `scalar`.
+
+
+== Literálová skladba
+
+Sekvence číslic bez desetinné čárky.
+
+`1234`
+
+Znak `+` nebo `-` bezprostředně před první číslicí označuje pozitivní nebo negativní hodnotu celého čísla.
+
+`-1234`
+
+`+1234`
+
+Předcházející nuly jsou ignorovány.
+
+----
+>> +001234
+== 1234
+----
+
+Jednoduchý apostrof `'` se používá jako místní oddělovač hodnot u dlouhých čísel a může být použit kdekoliv po první číslici.
+
+----
+60'000'000
+----
+
+Apostrof `'` za poslední číslicí vyvolá chybové hlášení:
+
+----
+>> 60'000'000'
+
+*** Syntax Error: invalid ...
+----
+
+== Komparace
+
+Pro hodnotu typu `integer!` lze být použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
+
+
+== Konverze
+
+Hodnotu `integer` lze za běhu programu konvertovat na `float!` nebo `string!` s použitím akce `to`. 
+
+----
+>> to float! 42
+== 42.0
+
+>> to string! 42
+== "42"
+----
+
+Je-li ve výrazu kombinován `integer!` a `float!`, je výsledkem `float!`.
+
+----
+>> 42 * 42.0
+== 1764.0
+----
+
+
+== Testování hodnot
+
+K ověření, zda hodnota je typu `integer!` použijeme funkci `integer?`.
+
+----
+>> integer? 42
+== true
+----
+
+Funkce `type?` vrací datový typ zadané hodnoty.
+
+----
+>> type? 42
+== integer!
+----
+

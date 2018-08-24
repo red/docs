@@ -1,0 +1,114 @@
+= Datový typ float!
+:toc:
+:numbered:
+
+
+== Úvodem
+
+Hodnoty typu`float!` jsou 64-bitové pozitivní a negativní čísla, která obsahují desetinnou čárku.
+
+Mají rozsah od `-1.7E+308` do `+1.7E+308`.
+
+Při přetečení vracejí #INF.
+
+----
+>> 1.8E+308
+== 1.#INF
+
+>> -1.8E+308
+== -1.#INF
+----
+
+Dělení `0.0` číslem `0.0` rezultuje v `1.#NaN`
+
+
+== Literálová skladba
+
+Žádná nebo více číslic, následovaných tečkou, následovanou žádnou nebo více číslicemi.
+Pořadí číslic s desetinnou tečkou nebo čárkou.
+
+`123.4`
+
+`123,4`
+
+Místo desetinné tečky lze použít desetinnou čárku.
+
+`123,4`
+[NOTE]
+====
+A formed value will normalize a decimal comma to a decimal point as the decimal mark. 
+====
+
+Znak `+` nebo `-` bezprostředně před první číslicí označuje pozitivní nebo negativní hodnotu typu `float!`.
+
+`+123.4`
+
+`-123.4`
+
+Předcházející nuly jsou ignorovány.
+
+----
+>> +00123.4
+== 123.4
+----
+
+Jednoduchý apostrof `'` se používá jako místní oddělovač hodnot u dlouhých čísel a může se použít kdekoli po první číslici.
+
+----
+>> 60'000'123.4
+== 60000123.4
+----
+
+Jednoduchý apostrof `'` bezprostředně před nabo za desetinnou tečkou vyvolá chybové hlášení.
+
+----
+>> 60'000'123'.4
+*** Syntax Error: invalid integer! at "60'000'123'.4"
+*** Where: do
+*** Stack: load
+----
+
+== Komparace
+
+Pro hodnotu typu `float!` lze použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
+
+
+
+== Konverze
+
+Hodnotu `float` lze při runtime konvertovat na `integer!` nebo `string!` s použitím akce `to`. 
+
+[NOTE]
+Při konverzi float na integer jsou odvrženy všechny číslice za desetinnou čárkou. Žádné zaokrouhlení se neprovádí.
+
+----
+>> to integer! 123.4
+== 123
+
+>> to string! 123.4
+== "123.4"
+----
+
+Jsou-li ve výrazu kombinovány typy `float!` a `integer!`, je výsledek typu `float!`.
+
+----
+>> 123.4 * 42
+== 5182.8
+----
+
+
+== Testování hodnot
+
+K ověření, zda hodnota je typu `float!` použijeme funkci `float?`.
+
+----
+>> float? 123.4
+== true
+----
+
+Funkce `type?` vrací datový typ zadané hodnoty.
+
+----
+>> type? 123.4
+== float!
+----

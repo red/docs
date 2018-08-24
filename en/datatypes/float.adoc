@@ -1,0 +1,121 @@
+= Float! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+`Float!` values are 64-bit positive and negative numbers that contain a decimal point.
+
+Floats span a range from `-1.7E+308` to `+1.7E+308`.
+
+Floats return #INF on overflow by design.
+
+```red
+>> 1.8E+308
+== 1.#INF
+
+>> -1.8E+308
+== -1.#INF
+```
+
+Dividing 0.0 by 0.0 results in `1.#NaN`
+
+`Float!` is a member of the following typesets: `immediate!`, `number!`, `scalar!`
+
+== Literal syntax
+
+Zero or more digits, followed by a dot `.`, followed by one or more digits.
+
+`0.42`
+
+`123.4`
+
+A comma can be used in place of the dot for the decimal point.
+
+`123,4`
+
+[NOTE, caption=Note]
+
+A formed value will normalize a decimal comma to a decimal point as the decimal mark.
+
+
+`+` or `-` immediately before the first digit indicates the positive or negative sign of the `float!`.
+
+`+123.4`
+
+`-123.4`
+
+Leading zeros are ignored.
+
+```red
+>> +00123.4
+== 123.4
+```
+
+Single quote `'` is used as a place value separator for large values, and can appear anywhere after the first digit.
+
+```red
+>> 60'000'12'3.4
+== 60000123.4
+```
+
+A single quote `'` immediately before or after the decimal point will raise an error.
+
+```red
+>> 60'000'123'.4
+*** Syntax Error: invalid integer! at "60'000'123'.4"
+*** Where: do
+*** Stack: load 
+```
+
+```red
+>> 60'000'123.'4
+*** Syntax Error: invalid integer! at "60'000'123.'4"
+*** Where: do
+*** Stack: load 
+```
+
+== Comparisons
+
+All comparators can be applied on `float!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+
+
+== Conversion
+
+A float value can be converted at runtime to `integer!` or `string!` by using a `to` conversion. 
+
+[NOTE, caption=Note]
+
+The digits after the decimal point will be discarded when converting a float to an integer. No rounding will take place.
+
+```red
+>> to integer! 123.4
+== 123
+
+>> to string! 123.4
+== "123.4"
+```
+
+If `float!` and `integer!` are combined in an expression, the result will be a `float!` value.
+
+```red
+>> 123.4 * 42
+== 5182.8
+```
+
+== Testing values
+
+Use `float?` to check if a value is of the `float!` datatype.
+
+```red
+>> float? 123.4
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? 123.4
+== float!
+```

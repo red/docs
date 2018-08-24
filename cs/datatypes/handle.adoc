@@ -1,0 +1,25 @@
+= Datový typ handle!
+:toc:
+:numbered:
+
+
+== Úvodem
+
+Hodnoty typu `handle!` reprezentují  nesrozumitelná (opaque) celá čísla, použitá pro interakci s operačním systémem.
+
+`Handle!` je člen těchto typesetů: `default!`, `immediate!`
+
+== Vytvoření
+
+Hodnoty typu `handle!` se používají p?i komunikaci s operačním systémem a mohou byt reprezentovány pouze slovy, které jsou argumenty funkcí, jež tuto komunikaci ošetřují.
+
+== Testování hodnot
+
+Použijeme funkci `handle?` pro ověření, zda je hodnota typu `handle!`.
+
+
+== Předdefinovaná slova
+
+=== Funkce
+
+`handle?`

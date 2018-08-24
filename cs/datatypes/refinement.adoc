@@ -1,0 +1,83 @@
+= Datovýtyp refinement!
+:toc:
+:numbered:
+
+
+== Úvodem
+
+`Refinement!` (upřesnění) je symbolická hodnota typu word!, který se nejčastěji používák zadáníspecifikací funkce. Koncepčně je cesta (path) řadou postupných upřesění. Tato forma se používá při specifikaci souborů, adres URL, rovněž se používá za účlem přístupu ke konkretním hodnotám v objektech.
+
+
+Funkce `repend` bez upřesnění:
+```red
+>> repend ["foo"] [21 * 2]
+== ["foo" 42]
+```
+
+S upřesněním `/only`:
+
+```red
+>> repend/only ["foo"] [21 * 2]
+== ["foo" [42]]
+```
+
+Typ `refinement!` je subtypem typesetů `all-word!` a `immediate!`.
+
+== Vytvoření
+
+Hodnoty typu refinement! lze vytvo?it použití literálovésyntaxe nebo při runtimu konstruktorem `make` nebo konverzí `to`.
+
+```red
+>> make refinement! "foo"
+== /foo
+```
+```red
+>> to refinement! 'bar
+== /bar
+```
+
+== Literálováskladba
+
+Lomíko `/`, následované jední či více znaky sady Unicode, včetně interpunkčních znaků ze sady ASCII:  `! & ' * + - . < = > ? _ | ~``
+
+Nepovolenýi znaky jsou řídící znaky, znaky mezer a interpunkční znaky ze sady ASCII: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+
+[NOTE, caption=Note]
+
+Použití znaku `@` nevyvolá chybu, ale způsobí, že se hodnota `refinement!` vrátí jako `email!`.
+
+== Komparace
+
+Na `refinement!` lze aplikovat všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. 
+
+== Testování hodnot
+
+Funkce `refinement?` slouží k ověření, zda je zadaná hodnota typu `refinement!`.
+
+```red
+>> refinement? /foo
+== true
+
+>> refinement? third [42 "Foo" /bar]
+== true
+```
+
+Funkce `type?` vrací datový typ zadané hodnoty.
+
+```red
+>> type? /foo
+== refinement!
+
+>> type? third [42 "Foo" /bar]
+== refinement!
+```
+
+== Předdefinovaná slova
+
+=== Funkce
+
+`parse-func-spec`, `refinement?`, `to-refinement`
+
+=== Natives
+
+`function`

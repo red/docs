@@ -1,0 +1,551 @@
+= Redbin 格式
+:toc:
+:toc-title: 目录
+:numbered:
+
+__规格版本 1__
+
+Redbin 是一种二进制格式，可以准确表示存储在内存中的 Red 值，同时使快速加载成为可能（避免文本表示格式的解析和验证阶段）。Redbin 格式受到了 link:http://www.rebol.com/article/0044.html[REBin] 很大的启发。Redbin 可以编码单词的绑定信息，并可以处理 `any-block!` 值里的环路。
+
+用于访问 Redbin 格式的用户接口将由 `load/binary` 和 `mold/binary` 提供。当编解码器子系统可用时，底层的实现__可能__会使用它。
+
+实现上的约束：
+
+* 在 Redbin 数据内存里将要被加载的基地址需要是 64 位对齐的。
+
+== 编码格式
+
+__默认__编码格式针对解码速度进行了优化，而__紧凑__格式需要较小的存储空间（以较慢的解码速度为代价）。
+
+值以小端序格式存储。
+
+词法惯例：
+
+. __圆块中的数字表示字段的字节大小。__
+
+. __后跟一个放在区块里的数据类型名字的字段名称是该数据类型的一个值的占位符。__
+
+. __后跟等号的字段名称有一个固定的值。__
+
+
+== 头部
+
+----
+magic="REDBIN" (6), version=1 (1), flags (1), length (4), size (4)
+
+flags （若设置了某个比特，对应选项会被启用）:
+    bit0: 紧凑模式
+    bit1: 压缩
+    bit2: 符号表
+    bit3-7: <保留>
+
+length : 要加载的根记录的数量。
+size   : 记录的载荷大小，以字节为单位。
+----
+
+如果应用了压缩，则跟在首部后面的数据就是要压缩的载荷。压缩算法的选择是依赖于实现的。
+
+== 符号表
+
+符号表紧跟首部数据。它是可选的，只有在 Redbin 载荷的其余部分中存在单词时才应使用它。符号表有两个小节：
+
+* 内含偏移量的表，偏移量指向每个符号的字符串表示
+* 字符串缓冲区，以 NUL 终止并且是相互连接的
+
+表中一个符号的位置是它的__索引__（基于 0 的），它用作语境和单词中的符号的引用。字符串缓冲区部分包含 UTF-8 编码的字符串，其末尾带有可选的填充以确保是 64 位对齐的。表中的偏移量是从字符串缓冲区小节的开头到引用的字符串缓冲区的偏移量，以字节为单位。
+
+表的编码：
+
+ 默认: length (4), size (4), offset1 (4), offset2 (4),...
+ 紧凑: 待定
+
+`length` 字段含有该表中的条目数量。`size` 字段表示字符串缓冲区的大小，以字节为单位（包括可选的尾部填充字节）。
+
+在解码过程中，这些符号被合并到 `Red` 自身的符号表中，偏移量被 Red 的符号表中的符号 ID 值替换。也就是说，在 Redbin 记录中的符号引用是一个仅在加载过程中使用的指向 Red 的内部符号表条目的间接引用。
+
+符号表之后，Red 值按顺序存储为记录，不带有特殊的定界符或结束标记。来自根层级的加载过的值通常存储在 `block!` 序列中。
+
+== 记录定义
+
+每个记录以一个 32 位 `header` 字段开头，定义为：
+
+****
+ * bit31    : new-line 标记
+ * bit30    : no-values 标记（用于语境）
+ * bit29    : stack? 标记   （用于语境）
+ * bit28    : self? 标记    （用于语境）
+ * bit27    : set? 标记     （用于语境）
+ * bit26-16 : <保留>
+ * bit15-8  : 单位（用于编码在某个序列的缓冲区的元素大小）
+ * bit7-0   : 类型
+****
+
+以下是对于每个单独的记录的描述：
+
+=== 填充 anchor:padding[] 
+
+----
+默认: header (4)
+紧凑: n/a
+
+header/type=0
+----
+
+这个空的类型槽位用于正确地对齐 64 位值。
+
+=== `datatype!` anchor:datatype[] 
+
+----
+默认: header (4), value (4)
+紧凑: 待定
+
+header/type=1
+----
+
+=== `unset!` anchor:unset[] 
+
+----
+默认: header (4)
+紧凑: 待定
+
+header/type=2
+----
+
+=== `none!` anchor:none[] 
+
+----
+默认: header (4)
+紧凑: 待定
+
+header/type=3
+----
+
+=== `logic!` anchor:logic[] 
+
+----
+默认: header (4), value=0|1 (4)
+紧凑: 待定
+
+header/type=4
+----
+
+=== `block!` anchor:block[] 
+
+----
+默认: header (4), head (4), length (4), ...
+紧凑: 待定
+
+header/type=5
+----
+
+`head` 字段使用基于 0 的整数表示该区块引用的偏移。`length` 字段包含要存储在该区块中的值的数量。区块值简单地遵循区块的定义，不需要分隔符和结束定界符。
+
+=== `paren!` anchor:paren[] 
+
+----
+默认: header (4), head (4), length (4), ...
+紧凑: 待定
+
+header/type=6
+----
+
+与 `block!` 的编码规则相同。
+
+=== `string!` anchor:string[] 
+
+----
+默认: header (4), head (4), length (4), data (unit*length) [, padding (1-3)]
+紧凑: 待定
+
+header/type=7
+header/unit=1|2|4
+----
+
+`head` 字段跟用于区块的含义一样。`unit` 子字段表示字符串的编码格式，只有 1、2 和 4 的值是有效的。`length` 字段含有要存储在该字符串中的代码点的数量，最多支持 16777215（2 ^ 24 - 1）个代码点。字符串以 UCS-1、UCS-2 或 UCS-4 格式编码。`length` 字段中不存在 NUL 字符，也不需要它。可能会存在 1 到 3 个 NUL 字节的可选的尾部填充，以将 `string!` 记录的末尾与 32 位边界对齐。
+
+=== `file!` anchor:file[] 
+
+----
+默认: header (4), head (4), length (4), data (unit*length)
+紧凑: 待定
+
+header/type=8
+header/unit=1|2|4
+----
+
+与 `string!` 的编码规则相同。
+
+=== `url!` anchor:url[] 
+
+----
+默认: header (4), head (4), length (4), data (unit*length)
+紧凑: 待定
+
+header/type=9
+----
+
+与 `string!` 的编码规则相同。
+
+=== `char!` anchor:char[] 
+
+----
+默认: header (4), value (4)
+紧凑: 待定
+
+header/type=10
+----
+
+=== `integer!` anchor:integer[] 
+
+----
+默认: header (4), value (4)
+紧凑: 待定
+
+header/type=11
+----
+
+=== `float!` anchor:float[] 
+
+----
+默认: [padding=0 (4),] header (4), value (8)
+紧凑: 待定
+
+header/type=12
+----
+
+添加了可选的填充字段以将 `value` 字段偏移量正确地对齐到 64 位值。
+
+=== `context!` anchor:context[] 
+
+----
+默认: header (4), length (4), symbol1 (4), symbol2 (4),..., value1 [any-type!], value2 [any-type!], ...
+紧凑: 待定
+
+header/type=14
+header/no-values=0|1
+header/stack?=0|1
+header/self?=0|1
+----
+
+语境是一些数据类型在内部使用的 Red 值，如 `function!`、`object!` 和派生类型。语境包含两个连续的表，第一个是内含在语境中表示为符号引用的单词条目的列表，第二个是在第一个表中每个符号的关联值。`length` 字段表示语境中条目的数量。语境记录只能存在于根层级，不能嵌套。如果设置了 `no-values` 标记，则表示符号之后没有值（空的语境）。如果设置了 `stack?` 标记，那么这个值将在栈上而不是堆上分配。`self?` 标记用于表示该语境能够处理自引用的单词（对象中的 `self`）。
+
+=== `word!` anchor:word[] 
+
+----
+默认: header (4), symbol (4), context (4), index (4)
+紧凑: 待定
+
+header/type=15
+header/set?=0|1
+----
+
+`context` 字段是引用 `context` 值的相对于 Redbin 文件中记录小节开头的偏移量。这个语境在 Redbin 记录列表中，并需要位于该单词记录之前。如果 `context` 等于 `-1`，则指的是全局语境。
+
+如果定义了 `set?` 字段，则该记录后跟的是 `any-value!` 记录，解码器将需要（在正确的语境中）把该单词设置为这个值。这形成一个名称/值对，允许在为一个给定的语境提供一系列值代价太昂贵时（主要对于在全局语境中的名称/值对）用直接写值的方式编码单词的值。
+
+=== `set-word!` anchor:set-word[] 
+
+----
+默认: header (4), symbol (4), context (4), index (4)
+紧凑: 待定
+
+header/type=16
+----
+
+和 `word!` 相同。
+
+=== `lit-word!` anchor:lit-word[] 
+
+----
+默认: header (4), symbol (4), context (4), index (4)
+紧凑: 待定
+
+header/type=17
+----
+
+和 `word!` 相同。
+
+=== `get-word!` anchor:get-word[] 
+
+----
+默认: header (4), symbol (4), context (4), index (4)
+紧凑: 待定
+
+header/type=18
+----
+
+和 `word!` 相同。
+
+=== `refinement!` anchor:refinement[] 
+
+----
+默认: header (4), symbol (4), context (4), index (4)
+紧凑: 待定
+
+header/type=19
+----
+
+和 `word!` 相同。
+
+=== `issue!` anchor:issue[] 
+
+----
+默认: header (4), symbol (4)
+紧凑: 待定
+
+header/type=20
+----
+
+=== `native!` anchor:native[] 
+
+----
+默认: header (4), ID (4), spec [block!]
+紧凑: 待定
+
+header/type=21
+----
+
+`ID` 是指入内部 `natives/table` 跳转表的偏移量。
+
+=== `action!` anchor:action[] 
+
+----
+默认: header (4), ID (4), spec [block!]
+紧凑: 待定
+
+header/type=22
+----
+
+`ID` 是指入内部 `actions/table` 跳转表的偏移量。
+
+=== `op!` anchor:op[] 
+
+----
+默认: header (4), symbol (4), 
+紧凑: 待定
+
+header/type=23
+----
+
+`symbol` 表示作为该 `op!` 值的源的动作、原生或函数名称（仅来自全局语境中的）。
+
+=== `function!` anchor:function[] 
+
+----
+默认: header (4), context [context!], spec [block!], body [block!], args [block!], obj-ctx [context!]
+紧凑: 待定
+
+header/type=24
+----
+
+=== `path!` anchor:path[] 
+
+----
+默认: header (4), head (4), length (4), ...
+紧凑: 待定
+
+header/type=25
+----
+
+与 `block!` 的编码规则相同。
+
+=== `lit-path!` anchor:lit-path[] 
+
+----
+默认: header (4), head (4), length (4), ...
+紧凑: 待定
+
+header/type=26
+----
+
+与 `block!` 的编码规则相同。
+
+=== `set-path!` anchor:set-path[] 
+
+----
+默认: header (4), head (4), length (4), ...
+紧凑: 待定
+
+header/type=27
+----
+
+与 `block!` 的编码规则相同。
+
+=== `get-path!` anchor:get-path[] 
+
+----
+默认: header (4), head (4), length (4), ...
+紧凑: 待定
+
+header/type=28
+----
+
+与 `block!` 的编码规则相同。
+
+=== `bitset!` anchor:bitset[] 
+
+----
+默认: header (4), length (4), bits (length)
+紧凑: 待定
+
+header/type=30
+----
+
+`length` 字段表示存储的位数，舍入到 8 的上倍数。这些比特是 `bitset!` 序列缓冲区的内存转储，端序会被保留。`bits` 字段需要用足够的 NUL 字节进行填充，以保持下一个记录是 32 位对齐的。
+
+=== `point!` anchor:point[] 
+
+----
+默认: header (4), x (4), y (4), z (4)
+紧凑: 待定
+
+header/type=31
+----
+
+=== `object!` anchor:object[] 
+
+----
+默认: header (4), context [reference!], class-id (4), on-set-idx (4), on-set-arity (4)
+紧凑: 待定
+
+header/type=32
+----
+
+`on-set-idx` 字段表示该语境值表中 `on-change*` 的偏移量。`on-set-arity` 存储该函数的参数个数。
+
+=== `typeset!` anchor:typeset[] 
+
+----
+默认: header (4), array1 (4), array2 (4), array3 (4)
+紧凑: 待定
+
+header/type=33
+----
+
+=== `error!` anchor:error[] 
+
+----
+默认: header (4), context [reference!]
+紧凑: 待定
+
+header/type=34
+----
+
+=== `vector!` anchor:vector[] 
+
+----
+默认: header (4), head (4), length (4), values (unit*length)
+紧凑: 待定
+
+header/type=35
+----
+
+`unit` 表示向量元素类型的大小：1、2、4 或 8 个字节。`values` 字段持有内含值的该列表。`values` 需要用 NUL 字节填充，以将下一个记录对齐到 32 位边界（如果 `unit` 等于 1 或 2）。
+
+=== `pair!` anchor:pair[] 
+
+----
+默认: header (4), x (4), y (4)
+紧凑: 待定
+
+header/type=37
+----
+
+=== `percent!` anchor:percent[] 
+
+----
+默认: [padding=0 (4),] header (4), value (8)
+紧凑: 待定
+
+header/type=38
+----
+
+百分数值存储为 64 位浮点数。添加了可选的填充字段将 `value` 字段的偏移量正确地对齐到 64 位值。
+
+=== `tuple!` anchor:tuple[] 
+
+----
+默认: header (4), array1 (4), array2 (4), array3 (4)
+紧凑: 待定
+
+header/type=39
+----
+
+=== `map!` anchor:map[] 
+
+----
+默认: header (4), length (4), ...
+紧凑: 待定
+
+header/type=40
+----
+
+`length` 字段含有要存储在该映射中的元素数量（键 + 值）。映射的元素简单地遵循长度的定义，不需要分隔符或结尾定界符。
+
+=== `binary!` anchor:binary[] 
+
+----
+默认: header (4), head (4), length (4), ...
+紧凑: 待定
+
+header/type=41
+----
+
+与 `block!` 的编码规则相同。
+
+=== `time!` anchor:time[] 
+
+----
+默认: [padding=0 (4),] header (4), value (8)
+紧凑: 待定
+
+header/type=43
+----
+
+时间值存储为 64 位浮点数。添加了可选的填充字段将 `value` 字段的偏移量正确地对齐到 64 位值。
+
+=== `tag!` anchor:tag[] 
+
+----
+默认: header (4), head (4), length (4), data (unit*length)
+紧凑: 待定
+
+header/type=44
+header/unit=1|2|4
+----
+
+与 `string!` 的编码规则相同。
+
+=== `email!` anchor:email[] 
+
+----
+默认: header (4), head (4), length (4), data (unit*length)
+紧凑: 待定
+
+header/type=45
+header/unit=1|2|4
+----
+
+与 `string!` 的编码规则相同。
+
+=== `date!` anchor:date[] 
+
+----
+默认: header (4), date (4), time (8)
+紧凑: 待定
+
+header/type=47
+----
+
+`date` 被包装成一个 32 位整数（与 `red-date!` 相同）。`time` 值存储为 64 位浮点数。
+
+=== `reference!` anchor:reference[] 
+
+----
+默认: header (4), count (4), index1 (4), index2 (4), ...
+紧凑: 待定
+
+header/type=255
+----
+
+这个特殊的记录类型存储对已经加载的类型为 `any-block!` 或 `object!` 的值的引用，这使其可以在 Redbin 中存储环路。该引用由路径创建，指向加载的值（假定根的值存储在区块中）。每个 `index` 字段指向要进入的序列或对象的值，直到到达最后一个值，这个值指向要引用的值。`count` 字段表示要走过的索引数量。如果其中一个索引必须应用于对象，它引用的是相应的对象的字段（0 => 第 1 个字段，1 => 第 2 个字段，...）。所有索引都是基于零的。

@@ -1,0 +1,66 @@
+= Datový typ url!
+:toc:
+:numbered:
+
+
+== Úvodem
+
+Hodnota typu `url!` reprezentuje odkaz na zdroj ze sítě a umo??uje p?ímé vyjád?ení Uniform Resource Locators.
+
+Typ `url!` je subsetem typeset? `any-string!` a `series!`
+
+== Vytvoření
+
+Hodnoty url! lze vytvo?it literálovou syntaxí neb p?i runtime pou?itím konstruktoru `make` nebo konverzí `to`.
+
+```red
+>> make url! [foo bar baz]
+== foo://bar/baz
+```
+
+```red
+>> to url! [ftp localhost]
+== ftp://localhost
+```
+
+== Literálová skladba
+
+Jeden či více znaků, následovaných dvojtečkou `:`, následovanou jedním či více znaky.
+
+Jsou dovoleny kódovací převodníky Url, jako je %20 a %30.
+
+
+== Komparace
+
+Na typ `url!` lze aplikovat v?echny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
+
+
+== Testování hodnot
+
+Funkcí `url?` ověříme, zda je hodnota datového typu `url!`.
+
+```red
+>> url? https://www.foo.org
+== true
+```
+
+Funkce `type?` vrací datový typ dané hodnoty.
+
+```red
+>> url? http://bar.net
+== true
+```
+
+== P?eddefinovaná slova
+
+=== Akce
+
+`read`, `write`
+
+=== Funkce
+
+`clean-path`, `dir?`, `dirize`, `do-file`, `do-thru`, `exists-thru?`, `load`, `load-thru`, `path-thru`, `read-thru`, `save`, `split-path`, `suffix?`, `to-url`, `url?`
+
+=== Natives
+
+`browse`, `dehex`

@@ -1,0 +1,127 @@
+= Datový typ pair!
+:toc:
+:numbered:
+
+
+== Úvodem
+
+Datový typ `pair!` (*pár*) se používá k prezentaci dvourozměrových souřadnic.
+
+== Literálová skladba
+
+Pár se zapisuje jako součin dvou celých čísel.
+
+
+`1024×768`
+
+`-42x42`
+
+
+== Vytvoření
+
+Hodnoty typu `pair!` lze vytvořit s použitím literálové skladby nebo při běhu programu konstruktorem `make`, konverzí `to` nebo funkcí `as-pair`.
+
+----
+>> make pair! [20 30]
+== 20x30
+
+>> make pair! 42
+== 42x42
+----
+
+
+----
+>> to pair! [20 30]
+== 20x30
+
+>> to pair! 42
+== 42x42
+
+>> to pair! "42x42"
+== 42x42
+----
+
+Funkce `as-pair` přijímá argumenty `x` a `y` typu `integer!` nebo `float!`. Hodnoty float budou okleštěny.
+
+----
+>> as-pair 20 30
+== 20x30
+
+>> as-pair 1.23 42
+== 1x42
+----
+
+== Komparace
+
+Pro hodnotu typu `pair!` lze použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
+
+
+
+== Aritmetika
+
+Funkce `+`, `-`, `*`, `/`, `%`, `//`, `add`, `subtract`, `multiply`, `divide`, `remainder` a `mod`, lze použít s hodnotami typu `pair!`.
+
+
+== Upřesnění
+
+Typ `pairs!` podporuje upřesnění (refinements) `/x` a `/y` pro zobrazení nebo úpravu souřadnic.
+
+----
+>> my-pair: 1024x768
+== 1024x768
+
+>> my-pair/x
+== 1024
+
+>> my-pair/y
+== 768
+
+>> my-pair/y: 42
+== 42
+
+>> my-pair
+== 1024x42
+----
+
+
+
+== Testování hodnot
+
+K ověření, zda hodnota je typu `pair!` použijeme funkci `pair?`.
+
+----
+>> pair? 42x42
+== true
+
+>> pair? 42
+== false
+----
+
+Funkce `type?` vrací datový typ zadané hodnoty.
+
+----
+>> type? 42x42
+== pair!
+----
+
+
+== Předdefinovaná slova
+
+
+=== Akce 
+
+`absolute`, `add`, `and~`, `at`, `copy`, `divide`, `multiply`, `negate`, `or~`, `pick`, `remainder`, `reverse`, `round`, `skip`, `subtract`, `xor~`
+
+=== Funkce
+
+`caret-to-offset`, `draw`, `first`, `make-face`, `metrics?`, `mod`, `modulo`, `offset-to-caret`, `offset-to-char`, `pair?`, `second`, `size-text`, `to-pair`, `within?`
+
+=== Nativní funkce (native!)
+
+`as-pair`, `case`, `extend`, `zero?`
+
+
+=== Operátory
+
+`%`, `*`, `+`, `-`, `/`, `//`, `and`, `or`, `xor`
+
