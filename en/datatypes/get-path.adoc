@@ -49,7 +49,7 @@ BNF:
 Parse:
 
 ```
-get-path: [get-word! some selection-expression=]
+get-path: [get-word! some selection-expression]
 selection-expression: [#"/" [integer! | word! | get-word! | paren!]]
 ```
 
