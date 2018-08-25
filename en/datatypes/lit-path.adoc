@@ -41,17 +41,27 @@ You can create an empty lit-path of a given size by supplying an integer value a
 
 == Literal syntax
 
+"Paths are expressed relative to a root word by providing a number of selection expressions." - Carl Sassenrath
+
+BNF:
+
 ```
 <lit-path-literal> ::= '<path-literal>
 
-<path-literal> ::= <path-head>/<selector>
+<path-literal> ::= <path-head>/<selection-expression>
 <path-head>    ::= <word-literal> | <path-literal>
-<selector>     ::= <integer> | <word-literal> | :<word-literal> | <paren>
+<selection-expression> ::= <integer> | <word-literal> | :<word-literal> | <paren>
+```
+
+Parse:
+```
+lit-path=:[lit-word! some selection-expression=]
+selection-expression=: [#"/" [integer! | word! | get-word! | paren!]]
 ```
 
 Path-head datatypes: link:lit-word.adoc[lit-word!], link:lit-path.adoc[lit-path!]
 
-Selector datatypes: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
+Selection-expression datatypes: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
 
 
 == Testing values
