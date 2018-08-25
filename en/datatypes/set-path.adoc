@@ -50,7 +50,7 @@ BNF:
 Parse:
 
 ```
-set-path: [set-word! some selection-expression=]
+set-path: [set-word! some selection-expression]
 selection-expression: [#"/" [integer! | word! | get-word! | paren!]]
 ```
 
