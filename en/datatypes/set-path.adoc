@@ -50,8 +50,8 @@ BNF:
 Parse:
 
 ```
-set-path=: [set-word! some selection-expression=]
-selection-expression=: [#"/" [integer! | word! | get-word! | paren!]]
+set-path: [set-word! some selection-expression=]
+selection-expression: [#"/" [integer! | word! | get-word! | paren!]]
 ```
 
 Path-head datatypes: link:set-word.adoc[set-word!], link:set-path.adoc[set-path!]
