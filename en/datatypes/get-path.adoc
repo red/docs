@@ -49,8 +49,8 @@ BNF:
 Parse:
 
 ```
-get-path=:[get-word! some selection-expression=]
-selection-expression=: [#"/" [integer! | word! | get-word! | paren!]]
+get-path: [get-word! some selection-expression]
+selection-expression: [#"/" [integer! | word! | get-word! | paren!]]
 ```
 
 Path-head datatypes: link:get-word.adoc[get-word!], `get-path!`

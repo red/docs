@@ -55,8 +55,8 @@ BNF:
 
 Parse:
 ```
-lit-path=:[lit-word! some selection-expression=]
-selection-expression=: [#"/" [integer! | word! | get-word! | paren!]]
+lit-path: [lit-word! some selection-expression]
+selection-expression: [#"/" [integer! | word! | get-word! | paren!]]
 ```
 
 Path-head datatypes: link:lit-word.adoc[lit-word!], link:lit-path.adoc[lit-path!]
