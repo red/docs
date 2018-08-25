@@ -34,7 +34,7 @@ You can create an empty get-path of a given size by supplying an integer value a
 
 == Literal syntax
 
-"Paths are expressed relative to a root word by providing a number of selection expressions." 
+"Paths are expressed relative to a root word by providing a number of selection expressions." - Carl Sassenrath
 
 BNF:
 
