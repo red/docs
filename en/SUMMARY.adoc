@@ -1,15 +1,8 @@
 = Summary
 
-<<<<<<< HEAD
 . link:README.adoc[Red/Core Language]
-=======
-.  link:README.adoc[Red/Core Language]
-<<<<<<< HEAD
-=======
->>>>>>> 7b7a5d458919071132eb54d81822b6c233bca790
 
 . link:datatypes.adoc[Datatypes]
->>>>>>> 9a939eabd8d97bd54d66812f511bf6a285c6fc19
 .. link:datatypes/block.adoc[Block!]
 .. link:datatypes/char.adoc[Char!]
 .. link:datatypes/date.adoc[Date!]

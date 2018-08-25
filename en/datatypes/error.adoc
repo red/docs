@@ -19,6 +19,10 @@ SYSTEM/STANDARD/ERROR is an object! with the following words and values:
      stack  none!         none
 ```
 
+== Abstract
+
+`Error!` values represent specialized `object!` values used for error conditions.
+
 `Error!` is a member of the following typesets: `any-object!`, `default!`
 
 == Creation
