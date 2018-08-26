@@ -879,7 +879,7 @@ A simple example, which leverages the buttons ordering and capitalization rules:
     ]
 ```
 
-You can see, side-by-side, the macOS and Windows generated forms. Notice the button text and ordering. 
+Notice the button text and ordering on the macOS and Windows generated forms.
 
 [.left]
 image:mac-OS-buttons.png[mac]
