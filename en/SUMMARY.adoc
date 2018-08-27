@@ -28,6 +28,7 @@
 .. link:datatypes/set-word.adoc[Set-word!]
 .. link:datatypes/string.adoc[String!]
 .. link:datatypes/tag.adoc[Tag!]
+.. link:datatypes/time.adoc[Time!]
 .. link:datatypes/tuple.adoc[Tuple!]
 .. link:datatypes/unset.adoc[Unset!]
 .. link:datatypes/url.adoc[Url!]
