@@ -22,6 +22,16 @@
 
 == Runtime Creation
 
+----
+make time! [<hour> <minute> <second>]
+make time! <integer-literal> | <float-literal> 
+
+<hour>    : <integer-literal>
+<minute>  : <integer-literal>
+<second>  : <integer-literal> | <float-literal>
+----
+
+
 ```red
 >> make time! 60
 == 0:01:00
@@ -31,6 +41,9 @@
 
 >> make time! [3 2 1]
 == 3:02:01
+
+>> make time! 300.45
+== 0:05:00.45
 ```
 
 ```red
