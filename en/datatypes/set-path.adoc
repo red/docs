@@ -35,28 +35,26 @@ You can create an empty set-path of a given size by supplying an integer value a
 
 == Literal syntax
 
-"Paths are expressed relative to a root word by providing a number of selection expressions." - Carl Sassenrath
-
 BNF:
 
 ```
 <set-path-literal> ::= <path-literal>:
 
-<path-literal> ::= <path-head>/<selection-expression>
+<path-literal> ::= <path-head>/<selector>
 <path-head>    ::= <word-literal> | <path-literal>
-<selection-expression> ::= <integer> | <word-literal> | :<word-literal> | <paren>
+<selector> ::= <integer> | <word-literal> | :<word-literal> | <paren>
 ```
 
 Parse:
 
 ```
-set-path: [set-word! some selection-expression]
-selection-expression: [#"/" [integer! | word! | get-word! | paren!]]
+set-path: [set-word! some selector]
+selector: [#"/" [integer! | word! | get-word! | paren!]]
 ```
 
 Path-head datatypes: link:set-word.adoc[set-word!], link:set-path.adoc[set-path!]
 
-Selection-expression datatypes: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
+Selector datatypes: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
 
 
 == Evaluation Steps

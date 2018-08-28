@@ -34,28 +34,26 @@ You can create an empty get-path of a given size by supplying an integer value a
 
 == Literal syntax
 
-"Paths are expressed relative to a root word by providing a number of selection expressions." - Carl Sassenrath
-
 BNF:
 
 ```
 <get-path-literal>  ::= :<path-literal>
 
-<path-literal> ::= <path-head>/<selection-expression>
+<path-literal> ::= <path-head>/<selector>
 <path-head>    ::= <word-literal> | <path-literal>
-<selection-expression> ::= <integer> | <word-literal> | :<word-literal> | <paren>
+<selector> ::= <integer> | <word-literal> | :<word-literal> | <paren>
 ```
 
 Parse:
 
 ```
-get-path: [get-word! some selection-expression]
-selection-expression: [#"/" [integer! | word! | get-word! | paren!]]
+get-path: [get-word! some selector]
+selector: [#"/" [integer! | word! | get-word! | paren!]]
 ```
 
 Path-head datatypes: link:get-word.adoc[get-word!], `get-path!`
 
-Selection-expression datatypes: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
+Selector datatypes: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
 
 
 == Evaluation Steps
