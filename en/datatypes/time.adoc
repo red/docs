@@ -14,6 +14,8 @@
 
 == Literal syntax
 
+BNF:
+
 ```
 <time-literal> ::= <Red-time> | +<Red-time> | -<Red-time>
 <Red-time> ::= <hours>:<minutes> | <hours>:<minutes>:<seconds> | <hours>:<minutes>:<seconds>.<decimals> |
@@ -25,6 +27,9 @@
 ----
 make time! [<hour> <minute> <second>]
 make time! <integer-literal> | <float-literal> 
+
+to time! [<hour> <minute> <second>]
+to time! <integer-literal> | <float-literal> 
 
 <hour>    : <integer-literal>
 <minute>  : <integer-literal>
