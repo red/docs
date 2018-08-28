@@ -62,26 +62,24 @@ It is possible to create `path!` values programmatically that do not conform to 
 
 == Literal syntax
 
-"Paths are expressed relative to a root word by providing a number of selection expressions." - Carl Sassenrath
-
 BNF:
 
 ```
-<path-literal> ::= <path-head>/<selection-expression>
+<path-literal> ::= <path-head>/<selector>
 <path-head>    ::= <word-literal> | <path-literal>
-<selection-expression> ::= <integer> | <word-literal> | :<word-literal> | <paren>
+<selector> ::= <integer> | <word-literal> | :<word-literal> | <paren>
 ```
 
 Parse:
 
 ```
-path: [word! some selection-expression]
-selection-expression: [#"/" [integer! | word! | get-word! | paren!]]
+path: [word! some selector]
+selector: [#"/" [integer! | word! | get-word! | paren!]]
 ```
 
 Path-head datatypes: link:word.adoc[word!], `path!`
 
-Selection-expression datatypes: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
+Selector datatypes: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
 
 == Evaluation Steps
 
@@ -125,13 +123,13 @@ If the selection does not exist in the path-head value, `select` will return `no
 * Word! expressions in paths, after the first, are not evaluated. If you want to evaluate them, use `get-word!` or `paren!` in the path.
 
 ```red
->> selection-expression: 'bar
+>> selector: 'bar
 == bar
 
 >> my-block: [foo bar baz]
 == [foo bar baz]
 
->> my-block/:selection-expression
+>> my-block/:selector
 == baz
 ```
 
