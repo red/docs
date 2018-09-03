@@ -5,7 +5,7 @@
 
 == Abstract
 
-`Float!` values are 64-bit positive and negative numbers that contain a decimal point.
+`Float!` values represent 64-bit positive and negative numbers that contain a decimal point.
 
 Floats span a range from `-1.7E+308` to `+1.7E+308`.
 
@@ -23,13 +23,28 @@ Dividing 0.0 by 0.0 results in `1.#NaN`
 
 `Float!` is a member of the following typesets: `immediate!`, `number!`, `scalar!`
 
+== Creation
+
+Float! values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+
+```red
+>> 100.1
+== 100.1
+```
+
+```red
+>> make float! 1
+== 1.0
+```
+
+```red
+>> to float! 1
+== 1.0
+```
+
 == Literal syntax
 
 Zero or more digits, followed by a dot `.`, followed by one or more digits.
-
-`0.42`
-
-`123.4`
 
 A comma can be used in place of the dot for the decimal point.
 
@@ -119,3 +134,17 @@ Use `type?` to return the datatype of a given value.
 >> type? 123.4
 == float!
 ```
+
+== Pre-defined words
+
+=== Functions
+
+`acos`, `asin`, `atan`, `atan2`, `cos`, `distance?`, `float?`, `sin`, `sqrt`, `tan`, `to-float`
+
+=== Natives
+
+`arccosine`, `arcsine`, `arctangent`, `arctangent2`, `as-pair`, `cosine`, `exp`, `log-10`, `log-2`, `log-e`, `sine`, `square-root`, `tangent`
+
+=== Operators
+
+`**`
