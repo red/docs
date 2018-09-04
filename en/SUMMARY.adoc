@@ -23,6 +23,7 @@
 .. link:datatypes/object.adoc[Object!]
 .. link:datatypes/pair.adoc[Pair!]
 .. link:datatypes/path.adoc[Path!]
+.. link:datatypes/percent.adoc[Percent!]
 .. link:datatypes/refinement.adoc[Refinement!]
 .. link:datatypes/set-path.adoc[Set-path!]
 .. link:datatypes/set-word.adoc[Set-word!]
