@@ -100,6 +100,32 @@ Ok: `[42 print "foo"]`
 Not ok: `[42 pr   int "foo"]`
 
 
+== Accessing block elements
+
+Elements of block variables can be accessed using slash and index of an element:
+
+----
+>> b: [12 34 56]
+== [12 34 56]
+
+>> b/1
+== 12
+----
+
+A block can also be treated as key/value store:
+
+----
+>> b: [x 12 y 34]
+== [x 12 y 34]
+
+>> b/x
+== 12
+
+>> b/y
+== 34
+----
+
+
 == Comparisons
 
 All comparators can be applied on `block!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
