@@ -58,7 +58,7 @@ native!
 
 link:datatypes/none.adoc[none!] 
 
-object! 
+link:datatypes/object.adoc[object!]
 
 op! 
 
