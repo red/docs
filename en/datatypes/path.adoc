@@ -62,10 +62,19 @@ It is possible to create `path!` values programmatically that do not conform to 
 
 == Literal syntax
 
+BNF:
+
 ```
 <path-literal> ::= <path-head>/<selector>
 <path-head>    ::= <word-literal> | <path-literal>
-<selector>     ::= <integer> | <word-literal> | :<word-literal> | <paren>
+<selector> ::= <integer> | <word-literal> | :<word-literal> | <paren>
+```
+
+Parse:
+
+```
+path: [word! some selector]
+selector: [#"/" [integer! | word! | get-word! | paren!]]
 ```
 
 Path-head datatypes: link:word.adoc[word!], `path!`
@@ -114,18 +123,18 @@ If the selection does not exist in the path-head value, `select` will return `no
 * Word! expressions in paths, after the first, are not evaluated. If you want to evaluate them, use `get-word!` or `paren!` in the path.
 
 ```red
->> my-selector: 'bar
+>> selector: 'bar
 == bar
 
 >> my-block: [foo bar baz]
 == [foo bar baz]
 
->> my-block/:my-selector
+>> my-block/:selector
 == baz
 ```
 
 ```red
->> my-block/('bar)  ; paren! is experimental
+>> my-block/('bar) 
 == baz
 ```
 

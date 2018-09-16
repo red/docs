@@ -11,7 +11,7 @@
 
 == Creation
 
-Object values can be created by using a `make` constructor, or by using the functions `context`, `object` and `contruct`.
+Object values can be created at runtime by using a `make` constructor, or by using the functions `context`, `object` and `contruct`.
 
 `Make object!` creates a new object, evaluating the spec block.
 

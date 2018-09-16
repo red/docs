@@ -850,3 +850,73 @@ style <new> <old> <options>
 Sets a new style in the current panel. The new style can be created from existing face types or from other styles. The new style is valid only in the current panel and child panels.
 
 Styles can be cascaded from parent panels to child panels, so that the same style name can be redefined or extended in child panels without affecting the definitions in parent panels.
+
+== Cross-Platform GUI Metrics
+
+In order to cope with different UI guidelines across GUI platforms, VID includes a rule-oriented GUI rewriting engine that is capable of modifying a face tree dynamically according to pre-set rules. It is integrated as a last stage in VID processing. 
+
+Windows rules:
+
+* color-backgrounds: color the background of some colorless faces to match their parent's color
+* color-tabpanel-children: Like color-backgrounds, but tab-panel specific
+* OK-Cancel: buttons ordering rule, puts Cancel/Delete/Remove buttons last
+
+macOS rules:
+
+* adjust-buttons: use standard button sub-classes when buttons are narrow enough
+* capitalize: capitalize widget text according to macOS guidelines
+* Cancel-OK: buttons ordering rule, puts Ok/Save/Apply buttons last
+
+***
+
+A simple example, which leverages the buttons ordering and capitalization rules:
+
+```red
+    view [
+        text "Name" right 50 field return
+        text "Age"  right 50 field return
+        button "ok" button "cancel"
+    ]
+```
+
+Notice the button text and ordering on the macOS and Windows generated forms.
+
+[.left]
+image:mac-OS-buttons.png[mac]
+[.left]
+image:win-OS-buttons.png[windows]
+
+***
+
+The GUI rules have ensured that:
+
+*  The buttons are ordered according to each platform's guidelines, "Ok" last on macOS, "Cancel" last on Windows.
+ * The button's labels are properly capitalized on macOS.
+
+You can disable GUI-rules by setting `system/view/VID/GUI-rules/active?` to no.
+
+```red
+    system/view/VID/GUI-rules/active?: no
+```
+
+You can also remove rules selectively, by modifying the content of the following lists:
+
+```red
+    system/view/VID/GUI-rules/OS/Windows
+    == [
+        color-backgrounds
+        color-tabpanel-children
+        OK-Cancel
+    ]
+```
+
+```red
+    system/view/VID/GUI-rules/OS/macOS
+    == [
+        adjust-buttons
+        capitalize
+        Cancel-OK
+    ]
+```
+
+This allows you total control where needed, but also helps you conform to UI guidelines with no effort.
