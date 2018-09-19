@@ -35,12 +35,21 @@ You can create an empty set-path of a given size by supplying an integer value a
 
 == Literal syntax
 
+BNF:
+
 ```
 <set-path-literal> ::= <path-literal>:
 
 <path-literal> ::= <path-head>/<selector>
 <path-head>    ::= <word-literal> | <path-literal>
-<selector>     ::= <integer> | <word-literal> | :<word-literal> | <paren>
+<selector> ::= <integer> | <word-literal> | :<word-literal> | <paren>
+```
+
+Parse:
+
+```
+set-path: [set-word! some selector]
+selector: [#"/" [integer! | word! | get-word! | paren!]]
 ```
 
 Path-head datatypes: link:set-word.adoc[set-word!], link:set-path.adoc[set-path!]

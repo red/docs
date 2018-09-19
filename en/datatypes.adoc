@@ -4,55 +4,96 @@
 
 _This is a work in progress, only some of the datatypes are currently documented._
 
-'''
+*Available datatypes in Red:*
 
-* Available datatypes in Red:
+action! 
 
-```red
-    action! 
-    binary!
-    bitset! 
-    block! 
-    char! 
-    datatype! 
-    date!
-    email!
-    error! 
-    event!
-    file! 
-    float! 
-    function! 
-    get-path! 
-    get-word! 
-    handle!
-    hash! 
-    image!
-    integer! 
-    issue! 
-    lit-path! 
-    lit-word! 
-    logic! 
-    map!
-    native! 
-    none! 
-    object! 
-    op! 
-    paren! 
-    pair!
-    path! 
-    percent!
-    point! 
-    refinement! 
-    routine! 
-    set-path! 
-    set-word! 
-    string! 
-    tag!
-    time!
-    tuple!
-    typeset! 
-    unset! 
-    url! 
-    vector! 
-    word!
-```
+binary!
+
+bitset! 
+
+link:datatypes/block.adoc[block!]
+    
+link:datatypes/char.adoc[char!] 
+
+datatype! 
+
+link:datatypes/date.adoc[date!]
+
+link:datatypes/email.adoc[email!]
+
+link:datatypes/error.adoc[error!] 
+
+event!
+
+link:datatypes/file.adoc[file!]
+
+link:datatypes/float.adoc[float!]! 
+
+function! 
+
+link:datatypes/get-path.adoc[get-path!] 
+
+link:datatypes/get-word.adoc[get-word!] 
+
+link:datatypes/handle.adoc[handle!]
+
+hash! 
+
+link:datatypes/image.adoc[image!]
+
+link:datatypes/integer.adoc[integer!]
+
+link:datatypes/issue.adoc[issue!] 
+
+link:datatypes/lit-path.adoc[lit-path!] 
+
+link:datatypes/lit-word.adoc[lit-word!] 
+
+link:datatypes/logic.adoc[logic!]
+
+link:datatypes/map.adoc[map!]
+
+native! 
+
+link:datatypes/none.adoc[none!] 
+
+link:datatypes/object.adoc[object!]
+
+op! 
+
+link:datatypes/pair.adoc[pair!]
+
+link:datatypes/paren.adoc[paren!]
+
+link:datatypes/path.adoc[path!]
+
+link:datatypes/percent.adoc[percent!]
+
+point! 
+
+link:datatypes/refinement.adoc[refinement!] 
+
+routine! 
+
+link:datatypes/set-path.adoc[set-path!] 
+
+link:datatypes/set-word.adoc[set-word!] 
+
+link:datatypes/string.adoc[string!]
+
+link:datatypes/tag.adoc[tag!]
+
+link:datatypes/time.adoc[time!]
+
+link:datatypes/tuple.adoc[tuple!]
+
+typeset! 
+
+link:datatypes/unset.adoc[unset!]
+
+link:datatypes/url.adoc[url!] 
+
+vector! 
+
+link:datatypes/word.adoc[word!]

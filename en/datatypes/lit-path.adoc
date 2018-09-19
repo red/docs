@@ -41,12 +41,20 @@ You can create an empty lit-path of a given size by supplying an integer value a
 
 == Literal syntax
 
+BNF:
+
 ```
 <lit-path-literal> ::= '<path-literal>
 
 <path-literal> ::= <path-head>/<selector>
 <path-head>    ::= <word-literal> | <path-literal>
-<selector>     ::= <integer> | <word-literal> | :<word-literal> | <paren>
+<selector> ::= <integer> | <word-literal> | :<word-literal> | <paren>
+```
+
+Parse:
+```
+lit-path: [lit-word! some selector]
+selector: [#"/" [integer! | word! | get-word! | paren!]]
 ```
 
 Path-head datatypes: link:lit-word.adoc[lit-word!], link:lit-path.adoc[lit-path!]

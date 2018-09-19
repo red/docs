@@ -34,12 +34,21 @@ You can create an empty get-path of a given size by supplying an integer value a
 
 == Literal syntax
 
+BNF:
+
 ```
 <get-path-literal>  ::= :<path-literal>
 
 <path-literal> ::= <path-head>/<selector>
 <path-head>    ::= <word-literal> | <path-literal>
-<selector>     ::= <integer> | <word-literal> | :<word-literal> | <paren>
+<selector> ::= <integer> | <word-literal> | :<word-literal> | <paren>
+```
+
+Parse:
+
+```
+get-path: [get-word! some selector]
+selector: [#"/" [integer! | word! | get-word! | paren!]]
 ```
 
 Path-head datatypes: link:get-word.adoc[get-word!], `get-path!`

@@ -737,7 +737,7 @@ Returns a new `block!` series built from the arguments list. The arguments numbe
 
 ----
 redProbe redBlockVB()              ' Creates an empty block
-redProbe redBlockVB(42, "hello")   ' Creates the [42 "hello" hi] block
+redProbe redBlockVB(42, "hello")   ' Creates the [42 "hello"] block
 ----
 
 ==== redPathVB()
