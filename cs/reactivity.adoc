@@ -33,13 +33,13 @@ V reaktivním výrazu musí být pouze zdrojový objekt reaktorem. Cílem může
 [cols="1,2", options="header"]
 |===
 |Expression | Definition
-|*reaktivní programování* | Programovací paradigma, podmnožina programování toku dat, založené na událostech, které "push" (posílají) změny.
+|*reaktivní programování* | Programovací paradigma, podmnožina programování toku dat, založené na událostech, které "push" (posílaní) změny.
 |*reakce* | Blok kódu, který obsahuje jeden nebo víc reaktivních výrazů.
 |*reaktivní výraz* | Výraz, který odkazuje alespoň na jeden reaktivní zdroj.
 |*reaktivní vztah* | Vztah mezi dvěma či více objekty, zavedený s použitím reaktivních vztahů.
 |*reaktivní zdroj* | Hodnota `path!`, odkazující na pole reaktivního objektu.
 |*reaktivní formule* | Reakce, která vrací poslední výsledek vyhodnoceného vyrazu.
-|*reaktivní objekt* | Objekt, jehož pole mohou byt použita jako reaktivní zdroje.
+|*reaktivní objekt* | Objekt, jehož pole mohou byt použita jako raktivní zdroje.
 |*reaktor*	| Alias pro "reaktivní objekt".
 |===
 

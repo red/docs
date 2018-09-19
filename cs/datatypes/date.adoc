@@ -204,7 +204,7 @@ make date! [99 12 31]
 
 == Přístup ve formátu cesty
 
-Přístup ve formátu cesty (path accessor) poskytuje vhodný způsob získání či zadání všech polí hodoty `date!`.
+Přístup ve formátu `path!` (path accessor) poskytuje vhodný způsob získání či zadání všech polí hodoty `date!`.
 
 === /date
 
