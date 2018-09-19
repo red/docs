@@ -10,6 +10,7 @@ _This is a work in progress, only some of the datatypes are currently documented
 
 ```red
     action! 
+    binary!
     bitset! 
     block! 
     char! 
@@ -30,7 +31,8 @@ _This is a work in progress, only some of the datatypes are currently documented
     issue! 
     lit-path! 
     lit-word! 
-    logic! 
+    logic!
+    map!
     native! 
     none! 
     object! 
@@ -38,7 +40,8 @@ _This is a work in progress, only some of the datatypes are currently documented
     paren! 
     pair!
     path! 
-    point! 
+    percent!
+    point!
     refinement! 
     routine! 
     set-path! 
