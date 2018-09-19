@@ -785,3 +785,75 @@ style <new> <old> <options>
 Nastaví nový styl v aktuálním panelu. Nový styl může být vytvořen z existujících typů piškotů neb z jiných stylů. Nový styl je platný pouze v aktuálním panelu a jeho dětských panelech.
 
 Styly lze kaskádovat od rodičovských panelů k dětským panelům, takže týž styl může být v dětských panelech redefinován nebo rozšířen bez ovlivnění definic v rodičovských panelech.
+
+== Cross-Platform GUI Metrics
+
+Aby bylo možné vyhovět odlišným UI požadavkům různých platforem GUI, vkládá VID přepisovací strojek, schopný dynamické úpravy stromu piškotů (face tree) podle zadaných pravidel. Je zařazen jako poslední stupeň procesu VID.
+
+Pravidla pro Windows:
+
+* color-backgrounds: color the background of some colorless faces to match their parent's color
+* color-tabpanel-children: Like color-backgrounds, but tab-panel specific
+* OK-Cancel: buttons ordering rule, puts Cancel/Delete/Remove buttons last
+
+Pravidla pro macOS:
+
+* adjust-buttons: use standard button sub-classes when buttons are narrow enough
+* capitalize: capitalize widget text according to macOS guidelines
+* Cancel-OK: buttons ordering rule, puts Ok/Save/Apply buttons last
+
+***
+
+Jednoduchý příklad, který využívá pravidla pro uspořádání tlačítek (buttons) a pro zvětšování písmen:
+
+```red
+    view [
+        text "Name" right 50 field return
+        text "Age"  right 50 field return
+        button "ok" button "cancel"
+    ]
+```
+
+Všimněte si textu a uspořádání tlačítek u zobrazení v macOS a ve Windows.
+
+[.left]
+image:mac-OS-buttons.png[mac]
+[.left]
+image:win-OS-buttons.png[windows]
+
+***
+
+Popisovaná pravidla pro GUI zajistila, že:
+
+*  tlačítka jsou uspořádána  podle pravidel jednotlivých platforem, "Ok" poslední v macOS, "Cancel" poslední ve Windows.
+ * popisky tlačítek jsou řádně 'kapitalizované' v macOS.
+
+Pravidla pro GUI lze vypnout nastavením `system/view/VID/GUI-rules/active?` na `no`.
+
+```red
+    system/view/VID/GUI-rules/active?: no
+```
+
+Pravidla lze odpojit selektivně úpravou obsahu následujcích seznamů:
+
+```red
+    system/view/VID/GUI-rules/OS/Windows
+    == [
+        color-backgrounds
+        color-tabpanel-children
+        OK-Cancel
+    ]
+```
+
+```red
+    system/view/VID/GUI-rules/OS/macOS
+    == [
+        adjust-buttons
+        capitalize
+        Cancel-OK
+    ]
+```
+
+Tato procedura umožňuje podřídít se různým požadavkům pro UI bez většího úsilí.
+
+

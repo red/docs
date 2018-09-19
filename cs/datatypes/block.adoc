@@ -99,6 +99,32 @@ Ok: `[42 print "foo"]`
 
 Not ok: `[42 pr   int "foo"]`
 
+== Přístup k prvkům bloku
+
+Elementy bloku jsou přístupné prostřednictvím lomítka a indexem elementu:
+
+----
+>> b: [12 34 56]
+== [12 34 56]
+
+>> b/1
+== 12
+----
+
+Blok lze rovněž používat jako uložiště dvojic key/value:
+
+----
+>> b: [x 12 y 34]
+== [x 12 y 34]
+
+>> b/x
+== 12
+
+>> b/y
+== 34
+----
+
+
 
 == Komparace
 
