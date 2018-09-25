@@ -102,7 +102,7 @@ Not ok: `[42 pr   int "foo"]`
 
 == Accessing block elements
 
-A block can be indexed with so-called _path notation_, using integer value for 1-based indexing:
+A block can be indexed with _path notation_, using integer values for 1-based indexing:
 
 ----
 >> b: [12 [34 56]]
@@ -115,7 +115,7 @@ A block can be indexed with so-called _path notation_, using integer value for 1
 == 56
 ----
 
-A block (and any `any-list!` value for that matter) can also be treated as key/value store;
+A block (and any `any-list!` value for that matter) can also be treated as a key/value store;
 in such case the first occurence of value, supplied to path, will be searched, and the value
 that follows it will be returned.
 
@@ -132,7 +132,6 @@ that follows it will be returned.
 >> b/y/z
 == 34
 ----
-
 
 == Comparisons
 
