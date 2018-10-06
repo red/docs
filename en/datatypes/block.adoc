@@ -102,29 +102,36 @@ Not ok: `[42 pr   int "foo"]`
 
 == Accessing block elements
 
-Elements of block variables can be accessed using slash and index of an element:
+A block can be indexed with _path notation_, using integer values for 1-based indexing:
 
 ----
->> b: [12 34 56]
-== [12 34 56]
+>> b: [12 [34 56]]
+== [12 [34 56]]
 
 >> b/1
 == 12
+
+>> b/2/2
+== 56
 ----
 
-A block can also be treated as key/value store:
+A block (and any `any-list!` value for that matter) can also be treated as a key/value store;
+in such case the first occurence of value, supplied to path, will be searched, and the value
+that follows it will be returned.
 
 ----
->> b: [x 12 y 34]
-== [x 12 y 34]
+>> b: [x 12 y [z 34]]
+== [x 12 y [z 34]]
 
 >> b/x
 == 12
 
 >> b/y
+== [z 34]
+
+>> b/y/z
 == 34
 ----
-
 
 == Comparisons
 
