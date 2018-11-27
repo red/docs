@@ -28,12 +28,16 @@ When <image-spec> is pair! or [pair!], the pair defines the image size, and RGB 
 == make image! [2x3 #{FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}]
 ```
 
-When <image-spec> is [pair! tuple!], the pair defines the image size, and the tuple defines the initial RGB color of all pixels. 
+When <image-spec> is [pair! tuple!], the pair defines the image size, and the tuple defines the initial RGB color and opacity of all pixels. 
+
+With RGB. Opacity defaults to fully opaque (255):
 
 ```red
 >> img: make image! [2x3 255.210.0]
 == make image! [2x3 #{FFD200FFD200FFD200FFD200FFD200FFD200}]
 ```
+
+With RGB and Alpha channel (RGBA):
 
 ```red
 >> img: make image! [2x3 255.210.0.120]
@@ -41,17 +45,10 @@ When <image-spec> is [pair! tuple!], the pair defines the image size, and the tu
 787878787878}]
 ```
 
-When <image-spec> is [pair! tuple! binary!], the pair defines the image size, the tuple defines the initial RGB color of all pixels, and the binary value defines the intial opacity of the image.
+// When <image-spec> is [pair! tuple! binary!], the pair defines the image size, the tuple defines the initial RGB color of all pixels, and the binary value defines the intial opacity of the image.
 
-```red
 
-```
-
-When <image-spec> is [pair! binary! binary!], the pair defines the image size, the first binary value defines the initial RGB color of all pixels, and the second binary value defines the intial opacity of the image.
-
-```red
-
-```
+// When <image-spec> is [pair! binary! binary!], the pair defines the image size, the first binary value defines the initial RGB color of all pixels, and the second binary value defines the intial opacity of the image.
 
 == Path accessors (Image components)
 
@@ -130,11 +127,21 @@ Gets or sets the RGB values of an image.
     color: none
     menu: none
     data:...
-```
 
-```red
->> to image! lay
-== none
+>> view/no-wait lay
+== make object! [
+    type: 'window
+    offset: 644x386
+    size: 126x45
+    text: "Red: untitled"
+    image: none
+    color: none
+    menu:...
+
+    >> to image! lay
+== make image! [132x73 #{
+    0000000000000000000000004D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D
+    4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4...
 ```
 
 == Testing values
