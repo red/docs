@@ -24,8 +24,8 @@ Image! values can be created using literal syntax, or at runtime by using a `mak
 When <image-spec> is pair! or [pair!], the pair defines the image size, and RGB and Alpha values are set to 255. 
 
 ```red
->> make image! 2x3
-== make image! [2x3 #{FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}]
+>> make image! 1x1
+== make image! [1x1 #{FFFFFF}]
 ```
 
 When <image-spec> is [pair! tuple!], the pair defines the image size, and the tuple defines the initial RGB color and opacity of all pixels. 
@@ -33,22 +33,32 @@ When <image-spec> is [pair! tuple!], the pair defines the image size, and the tu
 With RGB. Opacity defaults to fully opaque (255):
 
 ```red
->> img: make image! [2x3 255.210.0]
-== make image! [2x3 #{FFD200FFD200FFD200FFD200FFD200FFD200}]
+>> img: make image! [1x1 255.210.0]
+== make image! [1x1 #{FFD200}]
 ```
 
 With RGB and Alpha channel (RGBA):
 
 ```red
->> img: make image! [2x3 255.210.0.120]
-== make image! [2x3 #{FFD200FFD200FFD200FFD200FFD200FFD200} #{
-787878787878}]
+>> img: make image! [1x1 255.210.0.42]
+== make image! [1x1 #{FFD200} #{
+2A}]
 ```
 
-// When <image-spec> is [pair! tuple! binary!], the pair defines the image size, the tuple defines the initial RGB color of all pixels, and the binary value defines the intial opacity of the image.
+When <image-spec> is [pair! tuple! binary!], the pair defines the image size, the tuple defines the initial RGB color of all pixels, and the binary value defines the intial opacity of the image.
 
+```red
+>> img: make image! [1x1 255.210.0 #{42}]
+== make image! [1x1 #{FFD200}]
+```
 
-// When <image-spec> is [pair! binary! binary!], the pair defines the image size, the first binary value defines the initial RGB color of all pixels, and the second binary value defines the intial opacity of the image.
+When <image-spec> is [pair! binary! binary!], the pair defines the image size, the first binary value defines the initial RGB color of all pixels, and the second binary value defines the intial opacity of the image.
+
+```red
+>> img: make image! [1x1 #{FFD200} #{2A}]
+== make image! [1x1 #{FFD200} #{
+2A}]
+```
 
 == Path accessors (Image components)
 
@@ -58,15 +68,15 @@ Gets or sets the Alpha channel value of an image.
 
 ```red
 >> img/alpha
-== #{787878787878}
+== #{2A}
 ```
 
 ```red
->> img/alpha: 42
-== 42
+>> img/alpha: 210
+== 210
 
 >> img/alpha
-== #{2A2A2A2A2A2A}
+== #{D2}
 ```
 
 === /argb
@@ -74,16 +84,20 @@ Gets or sets the Alpha channel value of an image.
 Gets or sets the Alpha and RGB values of an image.
 
 ```red
+>> img: make image! [1x1 255.210.0.120]
+== make image! [1x1 #{FFD200} #{
+78}]
+
 >> img/argb
-== #{00D2FF8700D2FF8700D2FF8700D2FF8700D2FF8700D2FF87}
+== #{00D2FF87}
 ```
 
 ```red
->> img/argb: 42
-== 42
+>> img/argb: 255.255.210.0
+== 255.255.210.0
 
 >> img/argb
-== #{00002AFF00002AFF00002AFF00002AFF00002AFF00002AFF}
+== #{D2FFFFFF}
 ```
 
 === /rgb
@@ -91,16 +105,20 @@ Gets or sets the Alpha and RGB values of an image.
 Gets or sets the RGB values of an image.
 
 ```red
+>> img: make image! [1x1 255.210.0.120]
+== make image! [1x1 #{FFD200} #{
+78}]
+
 >> img/rgb
-== #{FFD200FFD200FFD200FFD200FFD200FFD200}
+== #{FFD200}
 ```
 
 ```red
->> img/rgb: 42
-== 42
+>> img/rgb: 255.255.255
+== 255.255.255
 
 >> img/rgb
-== #{2A00002A00002A00002A00002A00002A0000}
+== #{FFFFFF}
 ```
 === /size
 
@@ -108,7 +126,7 @@ Gets or sets the RGB values of an image.
 
 ```red
 >> img/size
-== 2x3
+== 1x1
 ```
 
 
