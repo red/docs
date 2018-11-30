@@ -10,16 +10,14 @@
 
 == Creation
 
-Image! values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+Image! values can be created at runtime by using a `make` constructor or `to` conversion.
 
-== Literal syntax
+=== Runtime creation
 
 ```
 <image> ::= make image! <image-spec>
 <image-spec> ::= <pair> | [<pair> <tuple> <binary>°] | [<pair> <binary> <binary>°]
 ```
-
-=== Runtime creation
 
 When <image-spec> is pair! or [pair!], the pair defines the image size, and RGB and Alpha values are set to 255. 
 
