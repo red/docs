@@ -28,6 +28,11 @@ When <image-spec> is pair! or [pair!], the pair defines the image size, and RGB 
 == make image! [1x1 #{FFFFFF}]
 ```
 
+```red
+>> make image! [1x1]
+== make image! [1x1 #{FFFFFF}]
+```
+
 When <image-spec> is [pair! tuple!], the pair defines the image size, and the tuple defines the initial RGB color and opacity of all pixels. 
 
 With RGB. Opacity defaults to fully opaque (255):
@@ -60,11 +65,42 @@ When <image-spec> is [pair! binary! binary!], the pair defines the image size, t
 2A}]
 ```
 
+[NOTE, caption=Note]
+
+When using binary! values, you must repeat the binary value to match the image size. For any image size of X by Y, multiply X by Y to determine the number of times that the binary value must be repeated.
+
+*Examples*
+
+```red
+>> make image! [2x2 #{FFD200FFD200FFD200FFD200} #{2A2A2A2A}]
+== make image! [2x2 #{FFD200FFD200FFD200FFD200} #{
+2A2A2A2A}]                                        ; RGB and A values in binary repeated 2 * 2 times
+```
+Binary values are padded with 00 if binary values are not repeated:
+
+```red
+>> make image! [2x2 #{FFD200} #{2A}]
+== make image! [2x2 #{FFD200000000000000000000} #{
+2A000000}]
+```
+
+```red
+>> make image! [2x2 255.210.0.42]                  
+== make image! [2x2 #{FFD200FFD200FFD200FFD200} #{ ; RGB and A values in binary repeated 2 * 2 times
+2A2A2A2A}]
+
+>> make image! [2x3 255.210.0.42]
+== make image! [2x3 #{FFD200FFD200FFD200FFD200FFD200FFD200} #{
+2A2A2A2A2A2A}]                                     ; RGB and A values in binary repeated 2 * 3 times
+```
+
 == Path accessors (Image components)
 
 === /alpha
 
 Gets or sets the Alpha channel value of an image.
+
+*Examples*
 
 ```red
 >> img/alpha
@@ -82,6 +118,8 @@ Gets or sets the Alpha channel value of an image.
 === /argb
 
 Gets or sets the Alpha and RGB values of an image.
+
+*Examples*
 
 ```red
 >> img: make image! [1x1 255.210.0.120]
@@ -104,6 +142,8 @@ Gets or sets the Alpha and RGB values of an image.
 
 Gets or sets the RGB values of an image.
 
+*Examples*
+
 ```red
 >> img: make image! [1x1 255.210.0.120]
 == make image! [1x1 #{FFD200} #{
@@ -123,6 +163,8 @@ Gets or sets the RGB values of an image.
 === /size
 
  Returns the size of an image as a pair value.
+
+*Examples*
 
 ```red
 >> img/size
