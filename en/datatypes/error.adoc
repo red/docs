@@ -19,13 +19,14 @@ SYSTEM/STANDARD/ERROR is an object! with the following words and values:
      stack  none!         none
 ```
 
-== Abstract
-
-`Error!` values represent specialized `object!` values used for error conditions.
-
 `Error!` is a member of the following typesets: `any-object!`, `default!`
 
-== Creation
+== Runtime creation
+
+```
+<error>      ::= make error! <error-spec>
+<error-spec> ::= <integer> | <block> | <string>
+```
 
 Error values can be created at runtime by using `make` or `cause-error`.
 
@@ -154,13 +155,6 @@ Arg values in the block are reduced.
 *** Script Error: foo has no value
 *** Where: reduce
 *** Stack: cause-error  
-```
-
-== Literal syntax
-
-```
-<error>      ::= make error! <error-spec>
-<error-spec> ::= <integer> | <block> | <string>
 ```
 
 == Testing values
