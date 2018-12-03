@@ -222,7 +222,7 @@ Use `type?` to return the datatype of a given value.
 == image!
 ```
 
-== Pre-defined words
+== Predefined words
 
 Many words are predefined to point to tuple values.
 

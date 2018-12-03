@@ -74,7 +74,7 @@ Use `type?` to return the datatype of a given value.
 == percent!
 ```
 
-== Pre-defined words
+== Predefined words
 
 === Functions
 

@@ -85,7 +85,7 @@ Use `type?` to return the datatype of a given value.
 == set-path!
 ```
 
-== Pre-defined words
+== Predefined words
 
 === Functions
 

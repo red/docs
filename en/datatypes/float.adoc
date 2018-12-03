@@ -135,7 +135,7 @@ Use `type?` to return the datatype of a given value.
 == float!
 ```
 
-== Pre-defined words
+== Predefined words
 
 === Functions
 
