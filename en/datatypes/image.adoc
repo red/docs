@@ -16,7 +16,7 @@ Image! values can be created at runtime by using a `make` constructor or `to` co
 
 ```
 <image> ::= make image! <image-spec>
-<image-spec> ::= <pair> | [<pair> <tuple> <binary>°] | [<pair> <binary> <binary>°]
+<image-spec> ::= <pair> | [<pair> <tuple>] | [<pair> <binary> <binary>°]
 ```
 
 When <image-spec> is pair! or [pair!], the pair defines the image size, the RGB values are set to 255 and the Alpha value is set to 0. 
@@ -48,14 +48,6 @@ With RGB and Alpha channel (RGBA):
 
 ```red
 >> img: make image! [1x1 255.210.0.42]
-== make image! [1x1 #{FFD200} #{
-2A}]
-```
-
-When <image-spec> is [pair! tuple! binary!], the pair defines the image size, the tuple defines the initial RGB color of all pixels, and the binary value defines the intial opacity of the image.
-
-```red
->> img: make image! [1x1 255.210.0 #{2A}]
 == make image! [1x1 #{FFD200} #{
 2A}]
 ```
