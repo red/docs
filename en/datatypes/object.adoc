@@ -131,7 +131,7 @@ Use `type?` to return the datatype of a given value.
 ```
 
 
-== Pre-defined words
+== Predefined words
 
 === Actions
 

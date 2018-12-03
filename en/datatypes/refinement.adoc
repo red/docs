@@ -72,7 +72,7 @@ Use `type?` to return the datatype of a given value.
 == refinement!
 ```
 
-== Pre-defined words
+== Predefined words
 
 === Functions
 

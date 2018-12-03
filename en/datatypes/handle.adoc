@@ -18,7 +18,7 @@
 Use `handle?` to check if a value is of the `handle!` datatype.
 
 
-== Pre-defined words
+== Predefined words
 
 === Functions
 

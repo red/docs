@@ -16,10 +16,10 @@ Image! values can be created at runtime by using a `make` constructor or `to` co
 
 ```
 <image> ::= make image! <image-spec>
-<image-spec> ::= <pair> | [<pair> <tuple> <binary>°] | [<pair> <binary> <binary>°]
+<image-spec> ::= <pair> | [<pair> <tuple>] | [<pair> <binary> <binary>°]
 ```
 
-When <image-spec> is pair! or [pair!], the pair defines the image size, and RGB and Alpha values are set to 255. 
+When <image-spec> is pair! or [pair!], the pair defines the image size, the RGB values are set to 255 and the Alpha value is set to 0. 
 
 ```red
 >> make image! 1x1
@@ -33,7 +33,11 @@ When <image-spec> is pair! or [pair!], the pair defines the image size, and RGB 
 
 When <image-spec> is [pair! tuple!], the pair defines the image size, and the tuple defines the initial RGB color and opacity of all pixels. 
 
-With RGB. Opacity defaults to fully opaque (255):
+[NOTE, caption=Note]
+
+Saving an image in .png format will preserve the opacity, e.g. `save/as %img.png img 'png`
+
+With RGB. Opacity defaults to fully opaque (0):
 
 ```red
 >> img: make image! [1x1 255.210.0]
@@ -46,13 +50,6 @@ With RGB and Alpha channel (RGBA):
 >> img: make image! [1x1 255.210.0.42]
 == make image! [1x1 #{FFD200} #{
 2A}]
-```
-
-When <image-spec> is [pair! tuple! binary!], the pair defines the image size, the tuple defines the initial RGB color of all pixels, and the binary value defines the intial opacity of the image.
-
-```red
->> img: make image! [1x1 255.210.0 #{42}]
-== make image! [1x1 #{FFD200}]
 ```
 
 When <image-spec> is [pair! binary! binary!], the pair defines the image size, the first binary value defines the initial RGB color of all pixels, and the second binary value defines the intial opacity of the image.
@@ -169,7 +166,6 @@ Gets or sets the RGB values of an image.
 == 1x1
 ```
 
-
 == Conversions
 
 `To image!` converts Red/View face! objects to image values.
@@ -218,8 +214,73 @@ Use `type?` to return the datatype of a given value.
 == image!
 ```
 
+== Predefined words
 
-== Pre-defined words
+Many words are predefined to point to tuple values.
+
+```red
+>> help tuple!
+    Red              255.0.0
+    white            255.255.255
+    transparent      0.0.0.255
+    gray             128.128.128
+    aqua             40.100.130
+    beige            255.228.196
+    black            0.0.0
+    blue             0.0.255
+    brick            178.34.34
+    brown            139.69.19
+    coal             64.64.64
+    coffee           76.26.0
+    crimson          220.20.60
+    cyan             0.255.255
+    forest           0.48.0
+    gold             255.205.40
+    green            0.255.0
+    ivory            255.255.240
+    khaki            179.179.126
+    leaf             0.128.0
+    linen            250.240.230
+    magenta          255.0.255
+    maroon           128.0.0
+    mint             100.136.116
+    navy             0.0.128
+    oldrab           72.72.16
+    olive            128.128.0
+    orange           255.150.10
+    papaya           255.80.37
+    pewter           170.170.170
+    pink             255.164.200
+    purple           128.0.128
+    reblue           38.58.108
+    rebolor          142.128.110
+    sienna           160.82.45
+    silver           192.192.192
+    sky              164.200.255
+    snow             240.240.240
+    tanned           222.184.135
+    teal             0.128.128
+    violet           72.0.90
+    water            80.108.142
+    wheat            245.222.129
+    yello            255.240.120
+    yellow           255.255.0
+    glass            0.0.0.255
+```
+
+These words can be reduced and their values used in place of literal tuple values:
+
+```red
+>> img: make image! reduce [1x1 red]
+== make image! [1x1 #{FF0000}]
+```
+
+This is equivalent to using a literal tuple value:
+
+```red
+>> img: make image! [1x1 255.0.0]
+== make image! [1x1 #{FF0000}]
+```
 
 === Functions
 
