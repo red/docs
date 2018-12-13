@@ -6,38 +6,38 @@
 
 Datový typ `paren!` je okamžitě vyhodnocovaný blok s elementy libovolného typu . Patří k typesetu `series!`.
 
-Hodnoty objektu paren jsou obklopený závorkami `(` a `)`. 
+Hodnoty objektu paren jsou obklopeny závorkami `(` a `)`. 
 
-Vyhodnocení obsahu lze potlačit slovem `quote` před parenem. 
+Vyhodnocení obsahu lze potlačit slovem `quote` před parenem neboli závorkou. 
 
-```red
+----
 quote (print 42)
 == (print 42)
-```
+----
 
 `Paren!` je členem typesetů: `any-block!`, `any-list!`, `series!`
 
 == Vytvoření
 
-Objekt paren lze vytvořit literálovou syntaxí nebo při runtimeu použitím konstruktoru `make`, konverzí `to` conversion nebo funkcí `as`.
+Objekt paren lze vytvořit literálovou syntaxí nebo při runtime použitím konstruktoru `make`, konverzí `to` nebo funkcí `as`.
 
 Prázdný paren pro 10 elementů vytvoříme příkazem:
 
-```red
+----
 >> make paren! 10
 == ()
-```
+----
 
 Paren s deseti elementy počáteční hodnoty `none`:
 
-```red
+----
 >> append/dup make paren! 10 none 10
 == (none none none none none none none none none none)
-```
+----
 
 Použití konverze `to`:
 
-```red
+----
 >> to paren! {one 2 "three" 4:00}
 == (one 2 "three" 4:00:00)
 
@@ -46,14 +46,14 @@ Použití konverze `to`:
 
 >> to paren! 42
 == (42)
-```
+----
 
 Použití `as`:
 
-```red
+----
 >> as paren! [1 2 3]
 == (1 2 3)
-```
+----
 
 
 == Literálová skladba
@@ -68,14 +68,14 @@ Tvoří ji kolekce hodnot, vymezených závorkami a oddělených mezerami.
 
 Pareny lze rozepsat do více řádů a mohou obsahovat další pareny.
 
-```red
+----
 (1
 2
 "three"
 )
 
 quote (1 2 "three" (x foo 1.23))
-```
+----
 
 Řádky, mezery a tabulátory jsou dovoleny, pokud nerozdělují hodnoty.
 
@@ -91,13 +91,13 @@ Lze použít všechny komparátory `=, ==, <>, >, <, >=, &lt;=, =?`, včetně fu
 [NOTE]
 Protože jsou hodnoty objektu typu `paren!` ihned vyhodnocovány, je vratnou hodnotou funkcí `min` nebo `max` hodnota posledního výrazu v parenu. Komparátory porovnávají poslední elementy porovnávaných parenů, není-li jejich vyhodnocení potlačeno.
 
-```red
+----
 >> max (1 2 3) (4 5 6)
 == 6
-```
+----
 
 
-```red
+----
 >> (1 2 3) < (4 5 6)
 == true
 
@@ -106,31 +106,29 @@ Protože jsou hodnoty objektu typu `paren!` ihned vyhodnocovány, je vratnou hod
 
 >> (quote (1 2 3)) < (quote (4 5 2))
 == true
-```
+----
 
 
 == Testování hodnot
 
 Použijte funkci `paren?` k ověření, zda je posuzovaná hodnota typu  `paren!`.
 
-```red
+----
 >> paren? quote (42 print "foo")
 == true
-
-ALE !:
-
->> paren? (42 print "foo")    ; potřebné vysvětlení
+ALE:
+>> paren? (42 print "foo")
 foo
 == false
-```
+----
 
 
 Funkce `type?` vrací datový typ zadané hodnoty.
 
-```red
+----
 >> type? quote (42)
 == paren!
-```
+----
 
 
 == Předdefinovaná slova

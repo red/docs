@@ -5,9 +5,9 @@
 
 == Úvodem
 
-Typ `get-path!` vrací neredukovanou (nevyhodnocenou) hodnotu typu `path!`.
+Typ `get-path!` vrací neredukovanou (nevyhodnocenou) hodnotu selektoru cesty.
 
-Typ get-path! je členem těchto typesetů: `series!`, `any-block!`, `any-path!`.
+Typ get-path! je členem těchto typesetů: `any-block!`, `any-path!`, `series!`
 
 == Vytvoření
 
@@ -18,11 +18,11 @@ Hodnoty typu `get-path!` mohou být vytvořeny při runtime použitím konstrukt
 == :foo/bar/baz
 ```
 
-Prázdný objekt dané velikosti typu get-path lze vytvořit zadáním celočíselné hodnoty coby argument funkcí `make`:
+Prázdný objekt typu get-path lze vytvořit funkcí `make` pro libovolný celočíselný argument:
 
 ```red
 >> make get-path! 10
-== :                        
+== :                         ; k čeme to je dobré?
 ```
 
 Konverze `to`:
@@ -34,21 +34,12 @@ Konverze `to`:
 
 == Literálová skladba
 
-BNF:
-
 ```
 <get-path-literal>  ::= :<path-literal>
 
 <path-literal> ::= <path-head>/<selector>
 <path-head>    ::= <word-literal> | <path-literal>
 <selector>     ::= <integer> | <word-literal> | :<word-literal> | <paren>
-```
-
-Parse:
-
-```
-get-path: [get-word! some selector]
-selector: [#"/" [integer! | word! | get-word! | paren!]]
 ```
 
 Path-head datatypes: link:get-word.adoc[get-word!], `get-path!`

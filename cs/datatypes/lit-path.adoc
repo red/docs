@@ -5,40 +5,24 @@
 
 == Úvodem
 
-Hodnota typu `lit-path!` je nevyhodnocená (citovaná) hodnota typu path!.
+Typ `lit-path!` je citovaná (quoted) nebo nevyhodnocená forma typu path!.
 
 Hodnota typu `lit-path!` se při vyhodnocení přemění na hodnotu typu path!, např. při zadání do prostředí Red REPL.
 
-Typ lit-path! je členem těchto typesetů: `series!`, `any-block!`, `any-path!`. 
+Typ lit-path! je členem těchto typesetů: `any-block!`, `any-path!`, `series!`
 
 == Vytvoření
 
-Hodnoty `lit-path!` lze vytvořit použitím apostrofu `'` (quote) a literálovou syntaxí 
+Hodnoty `lit-path!` lze vytvořit použitím `quote` a literálovou syntaxí 
 nebo při runtimu použitím konstruktoru `make` či konverzí `to` .
-
-```red
->> 'foo/bar/baz
-== foo/bar/baz
-
->> type? 'foo/bar/baz
-== path!
-```
 
 ```red
 >> quote 'foo/bar/baz
 == 'foo/bar/baz
- 
->> type? quote 'foo/bar/baz
-== lit-path!
 ```
 
 ```red
 >> make lit-path! [foo bar baz]
-== 'foo/bar/baz
-```
-
-```red
->> to lit-path! [foo bar baz]
 == 'foo/bar/baz
 ```
 
@@ -58,8 +42,6 @@ Konverze `to`:
 
 == Literálová skladba
 
-BNF:
-
 ```
 <lit-path-literal> ::= '<path-literal>
 
@@ -67,13 +49,6 @@ BNF:
 <path-head>    ::= <word-literal> | <path-literal>
 <selector>     ::= <integer> | <word-literal> | :<word-literal> | <paren>
 ```
-
-Parse:
-```
-lit-path: [lit-word! some selector]
-selector: [#"/" [integer! | word! | get-word! | paren!]]
-```
-
 
 Datové typy pro path-head: link:lit-word.adoc[lit-word!], link:lit-path.adoc[lit-path!]
 
