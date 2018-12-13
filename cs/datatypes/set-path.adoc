@@ -27,7 +27,7 @@ Lze vytvořit prázdný set-path zadané velikosti funkcí `make` a celým čís
 
 POZNÁMKA: Set-path se zde jeví jako název kontejneru. Hodnota integrálu není závazná:
 
-```RED
+```red
 sp: make set-path! 2
 == :
 append sp [fok sok bok]
@@ -47,7 +47,7 @@ Konverze `to:
 
 == Literálová skladba
 
-```
+```red
 <set-path-literal> ::= <path-literal>:
 
 <path-literal> ::= <path-head>/<selector>

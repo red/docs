@@ -61,7 +61,7 @@ It is possible to create `path!` values programmatically that do not conform to 
 
 == Literálová skladba
 
-```
+```red
 <path-literal> ::= <path-head>/<selector>
 <path-head>    ::= <word-literal> | <path-literal>
 <selector>     ::= <integer> | <word-literal> | :<word-literal> | <paren>

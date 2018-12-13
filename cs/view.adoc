@@ -402,6 +402,11 @@ Tento typ představuje vertikální seznam textových řetězců, zobrazený ve 
 
 Facet `data` přijímá libovolné hodnoty, avšak pouze hodnoty typu string jsou zařazeny do seznamu a zobrazeny. Neřetězcové hodnoty lze použít pro vytvoření asociativní řady (array) v níž řetězce slouží jako klíče. Facet `selected` je celočíselný index, počínající jedničkou, indikující pozici vybraného řetězce v seznamu, nikoliv ve facetu `data`.
 
+*Podporované flagy:*
+
+* `scrollable`: Ručně povolit vertikální scroll-bar.
+
+
 [cols="1,1,3", options="header"]
 |===
 |Event type | Ovladač | Popis
@@ -428,6 +433,10 @@ Tento typ představuje editovatelné pole s vertikálním seznamem zobrazeným v
 |===
 
 Facet `data` přijímá libovolné hodnoty avšak pouze hodnoty typu string jsou zařazeny do seznamu a zobrazeny. Neřetězcové hodnoty lze použít pro vytvoření asociativní řady, v níž řetězce slouží jako klíče. Facet `selected` je celočíselný index, počínající jedničkou, indikující pozici vybraného řetězce v seznamu.
+
+*Podporované flagy:*
+
+* `scrollable`: Ručně povolit vertikální scroll-bar.
 
 [cols="1,1,3", options="header"]
 |===

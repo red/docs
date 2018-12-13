@@ -33,14 +33,12 @@ Příkaz `to logic!` konvertuje na `true` všechny hodnoty kromě `false` a `non
 
 == Literálová skladba
 
-Předdefinovaná slova `true` a `false` mají samy o sobě literálovou formu:
+Předdefinovaná slova `true` a `false` nebo serializovaná skladba:
 
 ```red
 true
 == true
 ```
-
-== Serializovaná skladba
 
 ```red
 #[true]

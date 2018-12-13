@@ -36,7 +36,7 @@ olleH
 == [unset 4 42]
 ----
 
-Typ `block!` je člen následujících typesetů: `any-block!`, `any-list!` a  `series!`.
+Typ `block!` je člen následujících typesetů:  `series!`, `any-block!` a `any-list!`.
 
 == Vytvoření
 
@@ -104,25 +104,32 @@ Not ok: `[42 pr   int "foo"]`
 Elementy bloku jsou přístupné prostřednictvím lomítka a indexem elementu:
 
 ----
->> b: [12 34 56]
+>> b: [12 [34 56]]
 == [12 34 56]
 
 >> b/1
 == 12
+
+>> b/2/2
+== 56
 ----
 
-Blok lze rovněž používat jako uložiště dvojic key/value:
+Blok (a rovněž každý objekt typu `any-list!`) lze rovněž používat jako uložiště dvojic key/value. V tom případě se hledání uskutečňuje pro první zadanou hodnotu dvojice:
 
 ----
->> b: [x 12 y 34]
-== [x 12 y 34]
+>> b: [x 12 y [z 34]]
+== [x 12 y [z 34]]
 
 >> b/x
 == 12
 
 >> b/y
+== [z 34]
+
+>> b/y/z
 == 34
 ----
+
 
 
 

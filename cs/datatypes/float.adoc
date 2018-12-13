@@ -11,33 +11,50 @@ Mají rozsah od `-1.7E+308` do `+1.7E+308`.
 
 Při přetečení vracejí #INF.
 
-----
+```red
 >> 1.8E+308
 == 1.#INF
 
 >> -1.8E+308
 == -1.#INF
-----
+```
 
 Dělení `0.0` číslem `0.0` rezultuje v `1.#NaN`
 
+Typ `float!` je členem následujících typesetů: `immediate!`, `scalar!` a `number!`. 
+
+
+== Vytvoření
+
+Hodnoty float! lze vytvořit literálovou syntaxí nebo při runtime  použitím konstruktoru `make` nebo konverzí `to`:
+
+```red
+>> 100.1
+== 100.1
+```
+
+```red
+>> make float! 1
+== 1.0
+```
+
+```red
+>> to float! 1
+== 1.0
+``` 
 
 == Literálová skladba
 
-Žádná nebo více číslic, následovaných tečkou, následovanou žádnou nebo více číslicemi.
-Pořadí číslic s desetinnou tečkou nebo čárkou.
+Žádná nebo více číslic, následovaných tečkou, následovanou jednou nebo více číslicemi. Místo tečky lze použít čárku:
 
 `123.4`
 
 `123,4`
 
-Místo desetinné tečky lze použít desetinnou čárku.
+[NOTE, caption=Poznámka]
 
-`123,4`
-[NOTE]
-====
 A formed value will normalize a decimal comma to a decimal point as the decimal mark. 
-====
+
 
 Znak `+` nebo `-` bezprostředně před první číslicí označuje pozitivní nebo negativní hodnotu typu `float!`.
 
@@ -47,26 +64,26 @@ Znak `+` nebo `-` bezprostředně před první číslicí označuje pozitivní n
 
 Předcházející nuly jsou ignorovány.
 
-----
+```red
 >> +00123.4
 == 123.4
-----
+```
 
 Jednoduchý apostrof `'` se používá jako místní oddělovač hodnot u dlouhých čísel a může se použít kdekoli po první číslici.
 
-----
+```red
 >> 60'000'123.4
 == 60000123.4
-----
+```
 
 Jednoduchý apostrof `'` bezprostředně před nabo za desetinnou tečkou vyvolá chybové hlášení.
 
-----
+```red
 >> 60'000'123'.4
 *** Syntax Error: invalid integer! at "60'000'123'.4"
 *** Where: do
 *** Stack: load
-----
+```
 
 == Komparace
 
@@ -78,37 +95,52 @@ Pro hodnotu typu `float!` lze použít všechny komparátory: `=, ==, <>, >, <, 
 
 Hodnotu `float` lze při runtime konvertovat na `integer!` nebo `string!` s použitím akce `to`. 
 
-[NOTE]
+[NOTE, caption=Poznámka]
+
 Při konverzi float na integer jsou odvrženy všechny číslice za desetinnou čárkou. Žádné zaokrouhlení se neprovádí.
 
-----
+```red
 >> to integer! 123.4
 == 123
 
 >> to string! 123.4
 == "123.4"
-----
+```
 
 Jsou-li ve výrazu kombinovány typy `float!` a `integer!`, je výsledek typu `float!`.
 
-----
+```red
 >> 123.4 * 42
 == 5182.8
-----
+```
 
 
 == Testování hodnot
 
 K ověření, zda hodnota je typu `float!` použijeme funkci `float?`.
 
-----
+```red
 >> float? 123.4
 == true
-----
+```
 
 Funkce `type?` vrací datový typ zadané hodnoty.
 
-----
+```red
 >> type? 123.4
 == float!
-----
+```
+
+== Předdefinovaná slova
+
+=== Funkce
+
+`acos`, `asin`, `atan`, `atan2`, `cos`, `distance?`, `float?`, `sin`, `sqrt`, `tan`, `to-float`
+
+=== Nativa
+
+`arccosine`, `arcsine`, `arctangent`, `arctangent2`, `as-pair`, `cosine`, `exp`, `log-10`, `log-2`, `log-e`, `sine`, `square-root`, `tangent`
+
+=== Operátory
+
+`**`
