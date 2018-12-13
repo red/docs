@@ -56,7 +56,7 @@ Funkce `type?` vrací datový typ dané hodnoty.
 == tag!
 ```
 
-== P?eddefinovaná slova
+== Předdefinovaná slova
 
 === Funkce
 

@@ -49,7 +49,7 @@ Hodnoty typu percent! lze vytvořit s použitím literálové syntaxe nebo při 
 
 == Literálová skladba
 
-```
+```red
 <percent-literal> ::= <integer-literal>% | <float-literal>% 
 ```
 

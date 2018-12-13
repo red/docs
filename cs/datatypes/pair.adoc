@@ -21,16 +21,16 @@ Pár se zapisuje jako součin dvou celých čísel.
 
 Hodnoty typu `pair!` lze vytvořit s použitím literálové skladby nebo při běhu programu konstruktorem `make`, konverzí `to` nebo funkcí `as-pair`.
 
-----
+```red
 >> make pair! [20 30]
 == 20x30
 
 >> make pair! 42
 == 42x42
-----
+```
 
 
-----
+```red
 >> to pair! [20 30]
 == 20x30
 
@@ -39,17 +39,17 @@ Hodnoty typu `pair!` lze vytvořit s použitím literálové skladby nebo při b
 
 >> to pair! "42x42"
 == 42x42
-----
+```
 
 Funkce `as-pair` přijímá argumenty `x` a `y` typu `integer!` nebo `float!`. Hodnoty float budou okleštěny.
 
-----
+```red
 >> as-pair 20 30
 == 20x30
 
 >> as-pair 1.23 42
 == 1x42
-----
+```
 
 == Komparace
 
@@ -66,7 +66,7 @@ Funkce `+`, `-`, `*`, `/`, `%`, `//`, `add`, `subtract`, `multiply`, `divide`, `
 
 Typ `pairs!` podporuje upřesnění (refinements) `/x` a `/y` pro zobrazení nebo úpravu souřadnic.
 
-----
+```red
 >> my-pair: 1024x768
 == 1024x768
 
@@ -81,7 +81,7 @@ Typ `pairs!` podporuje upřesnění (refinements) `/x` a `/y` pro zobrazení neb
 
 >> my-pair
 == 1024x42
-----
+```
 
 
 
@@ -89,20 +89,20 @@ Typ `pairs!` podporuje upřesnění (refinements) `/x` a `/y` pro zobrazení neb
 
 K ověření, zda hodnota je typu `pair!` použijeme funkci `pair?`.
 
-----
+```red
 >> pair? 42x42
 == true
 
 >> pair? 42
 == false
-----
+```
 
 Funkce `type?` vrací datový typ zadané hodnoty.
 
-----
+```red
 >> type? 42x42
 == pair!
-----
+```
 
 
 == Předdefinovaná slova

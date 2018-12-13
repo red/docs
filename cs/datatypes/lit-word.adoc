@@ -8,6 +8,13 @@ Hodnota typu `lit-word!` je nevyhodnocená hodnota typu `word!`. Sama o sobě je
 
 Hodnota `lit-word!` se při vyhodnocení přemění na typ `word!`, jako např. při zadání do prostředí Red REPL.
 
+`Lit-word!` je členem těchto typesetů: `any-word!`, `all-word!`, `immediate!`
+
+
+== Vytvoření
+
+Hodnoty `lit-word!` lze vytvořit literálovou syntaxí nebo při runtime použitím konverze `to` z datových typů: `char!`, `logic!`, `string!`, `datatype!`, `issue!` a `refinement!`.
+
 ```red
 >> 'test
 == test
@@ -15,12 +22,6 @@ Hodnota `lit-word!` se při vyhodnocení přemění na typ `word!`, jako např. 
 >> type? 'test
 == word!
 ```
-
-`Lit-word!` je členem těchto typesetů: `any-word!`, `all-word!`, `immediate!`
-
-== Vytvoření
-
-Hodnoty `lit-word!` lze vytvořit literálovou syntaxí nebo při runtime použitím konverze `to` z datových typů: `char!`, `logic!`, `string!`, `datatype!`, `issue!` a `refinement!`.
 
 ```red
 >> to lit-word! #"X"

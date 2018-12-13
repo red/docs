@@ -4,7 +4,7 @@
 
 == Úvodem
 
-Entita typu `get-word!` vrací nevyhodnocené slovo z kontextu, ve kterém je vázané.
+Hodnota typu `get-word!` vrací nevyhodnocené slovo z kontextu, ve kterém je vázané.
 
 `Get-word!` je člen následujících typesetů: `any-word!`, `all-word!`, `immediate!`
 
