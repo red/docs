@@ -57,7 +57,7 @@ Use `type?` to return the datatype of a given value.
 == tag!
 ```
 
-== Pre-defined words
+== Predefined words
 
 === Functions
 

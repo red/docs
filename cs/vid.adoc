@@ -99,9 +99,9 @@ view layout [
 ]
 ----
 
-=== actors
+=== Definice aktérů
 
-V této oblasti kódu je také možné definovat aktéry kontejneru - viz sekci <<Aktéři>>.
+V této oblasti kódu je také možné definovat aktéry kontejneru - viz sekci <<Actors>>.
 
 == Rozvržení (layout) 
 

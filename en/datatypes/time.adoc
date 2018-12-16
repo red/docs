@@ -14,8 +14,6 @@
 
 == Literal syntax
 
-BNF:
-
 ```
 <time-literal> ::= <Red-time> | +<Red-time> | -<Red-time>
 <Red-time> ::= <hours>:<minutes> | <hours>:<minutes>:<seconds> | <hours>:<minutes>:<seconds>.<decimals> |
@@ -320,7 +318,7 @@ Use `type?` to return the datatype of a given value.
 >> 
 ```
 
-== Pre-defined words
+== Predefined words
 
 === Actions
 

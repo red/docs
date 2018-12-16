@@ -13,13 +13,13 @@ Typ `issue!` je součástí typové sady `all-word!`.
 
 Hodnoty typu `issue!` lze vytvořit s použitím literálové syntaxe nebo za běhu programu použitím konverze `to`.
 
-----
+```red
 >> to issue! "123.42-xxx"
 == #123.42-xxx
 
 >> to issue! #"R"
 == #R
-----
+```
 
 
 == Literálová skladba
@@ -42,7 +42,7 @@ Pro hodnotu typu `issue!` lze použít všechny komparátory: `=, ==, <>, <, <=,
 
 K ověření, zda hodnota je typu `issue!` použijeme funkci `issue?`.
 
-----
+```red
 >> issue? #ABC-123-xyx
 == true
 
@@ -51,18 +51,18 @@ K ověření, zda hodnota je typu `issue!` použijeme funkci `issue?`.
 
 >> issue? my-word
 == true
-----
+```
 
 Funkce `type?` vrací datový typ zadané hodnoty.
 
 
-----
+```red
 >> type? #ABC-123-xyx
 == issue!
 
 >> type? my-word
 == issue!
-----
+```red
 
 == Předdefinovaná slova
 
@@ -70,6 +70,6 @@ Funkce `type?` vrací datový typ zadané hodnoty.
 
 `hex-to-rgb`, `issue?`, `to-issue`
 
-=== Natives
+=== Nativa
 
 `to-hex`
