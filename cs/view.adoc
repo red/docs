@@ -20,20 +20,14 @@ Virtuální strom se skládá z piškotů. Každý piškot koresponduje s přís
 
 == Piškoty
 
-Piškoty - tváře neboli faces (od slova interface) jsou klony výchozího objektu `face!`. 
-Vlastnosti, stavy i aktivity piškotů jsou popsány sadou parametrů (polí), zvaných 
-_facet_, neboli `aspekt`, jichž je aktuálně 23 - viz link:view.html#_typy_piškotů[dole]. 
-
-Nový piškot (face) se vytvoří klonováním objektu `face!` a zadáním  *alespoň* platného názvu `typu`.
-
+Piškoty (tváře neboli *faces* - od slova interface) jsou klony prototypového objektu `face!`.
+Nový piškot se deklaruje idiomem `make face!` a zadáním 
+   alespoň platného názvu `typu`.
 ----
-    button: make face! [type: 'button]
+     button: make face! [type: 'button]
 ----
 
-Měnit pole `type` není u deklarovaného piškotu dovoleno.
-
-
-
+Vlastnosti, stavy i aktivity piškotů jsou vyjádřeny inherentní sadou parametrů (polí), zvaných `facet`, neboli `aspekt`. Seznam těchto (aktuálně) 23 parametru je uveden v odstavci link:view.html#_aspekty[6. Aspekty]. 
 
 
 == Strom piškotů 
@@ -496,25 +490,24 @@ Group-box je kontejner pro jiné piškoty s viditelným rámečkem. _Tento doča
 ====
 * Souřadnice odsazení (offset) dětí jsou relativní k levému hornímu rohu group-boxu.
 * Dětské piškoty jsou připojeny do rámečku group-boxu.
-
 ====
 
 
-== Životní cyklus piškotu 
+== Životní cyklus piškotu
 
-. Vytvořte piškot pomocí prototypu `face!`.
-. Vložte piškot do stromu piškotů spojeného s piškotem screen. 
-. Piškot zobrazíte na monitoru příkazem `show`. 
+. Vytvořený piškot je vložen do stromu piškotů, spojeného s piškotem `screen`. 
+. Je zobrazen na monitoru příkazem `show`. 
 .. v tomto okamžiku jsou přiděleny systémové zdroje 
-.. blok `face/state` je nastaven.
-. Odebráním piškotu z panelu (pane) jej odeberete ze zobrazení. 
+.. je nastaven aspekt `face/state`.
+. Odebráním ze seznamu v aspektu `pane` je piškot odebrán ze zobrazení. 
 . Vymizí-li odkazy na piškot, postará se garbage collector o uvolnění obsazených zdrojů.
 
 [NOTE]
-====
+
+* Měnit pole `type` (viz Aspekty) není u uživatelsky deklarovaného piškotu dovoleno.
 * U aplikací, hladových na zdroje, lze použít funkci `free` pro manuální uvolnění systémových zdrojů.
 
-====
+
 
 == Aspekty 
 
@@ -551,6 +544,10 @@ Seznam vytvořených aspektů:
 |*extra*	| any-type!		| no	|  all	| Volitelná uživatelská data připojená k piškotu.
 |*draw*	| block! 		| no	|  all	| Seznam příkazů Draw, jež mají být provedeny v piškotu.
 
+[NOTE]
+====
+Aspekty `font` a `para` odkazují na instance (klony) prototypů `font!` a `para!`. Tyto objekty jsou popsány v následujících dvou odstavcích.
+
 |===
 
 Seznam globálně použitelných flagů pro facet `flags`:
@@ -584,14 +581,17 @@ Facet `options` obsahuje nastavitelné volby, používané pro specifické chov�
 |*drag&#8209;on* | Možnými volbami jsou: 'down, 'mid-down, 'alt-down, 'aux-down. Používá se pro operace drag'n drop.
 |===
 	
-=== Aspekt font
+=== Objekt font
 
-Font je facet typu object!, obsahující atributy textu v piškotu. Při editaci tohoto facetu je nutné použít jeho kopii:
+Aspekt `font` odkazuje na entitu typu `object!`, jež je vytvořena klonováním prototypu `font!`.
 ----
 font: make font! [field: value ...]
 ----
 
-Na jeden font může odkazovat jeden či více piškotů, umožňujíc tak kontrolu vlastností skupiny piškotů z jediného místa.
+Tento objekt má předdefinovaných 9 polí, obsahujících atributy textu v piškotu. 
+
+
+Na jeden objekt *font* může odkazovat jeden či více piškotů, umožňujíc tak kontrolu vlastností skupiny piškotů z jediného místa.
 
 [cols="1,1,1,3", options="header"]
 |===
@@ -612,7 +612,7 @@ Na jeden font může odkazovat jeden či více piškotů, umožňujíc tak kontr
 [NOTE]
 ====
 * Nepovinné facety mohou byt nastaveny na hodnotu `none`.
-* pole `angle` zatím nepracuje jak má.
+* Pole `angle` zatím nepracuje jak má.
 * V budoucnu se hodnoty všech polí mají stát nepovinné.
 
 ====
@@ -630,12 +630,15 @@ Nabízené režimy vyhlazení:
 * ClearType mode (`anti-alias?: 'ClearType`)
 
 
-=== Aspekt para 
+=== Objekt para
 
-Para (zkratka od paragraph, neboli odstavec) je aspekt (facet) typu `object!`, obsahující atributy textového odstavce. Při editaci tohoto aspektu je nutné použít jeho kopii:
+Aspekt `para` odkazuje na entitu typu `object!`, jež je vytvořena klonováním prototypu `para!`.
 ----
 para: make para! [field: value ...]
-----
+---- 
+
+Objekt para (zkratka od paragraph, neboli odstavec) má předdefinovaných 7 polí, obsahující atributy textového odstavce
+
 Na jeden objekt para může odkazovat jeden či více piškotů, umožňujíc tak kontrolu vlastností skupiny piškotů z jediného místa.
  
 [cols="1,1,3", options="header"]
@@ -660,14 +663,12 @@ Na jeden objekt para může odkazovat jeden či více piškotů, umožňujíc ta
 
 === Aspekt options
 
-Aspekt options obsahuje volitelné parametry, kterými se zadává specifické chování:
+Aspekt `options` obsahuje volitelné parametry, kterými se zadává specifické chování:
 
 [cols="1,4" options="header"]
 |===
 |Option| Description
 |*drag&#8209;on*| Can be one of: `'down`, `'mid-down`, `'alt-down`, `'aux-down`. Used for enabling a drag'n drop operation.
-|*offset*| Odsazení okna od levého horního rohu obrazovky v px ve formátu `pair!`.
-|*size*| Velikos okna v pixelech ve formátu `pair!`.
 |===
 
 === Aspekt state

@@ -28,7 +28,7 @@ event!
 
 link:datatypes/file.adoc[file!]
 
-link:datatypes/float.adoc[float!]! 
+link:datatypes/float.adoc[float!] 
 
 function! 
 
