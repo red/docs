@@ -4,6 +4,8 @@
 
 _This is a work in progress, only some of the datatypes are currently documented._
 
+***
+
 *Available datatypes in Red:*
 
 action! 
@@ -70,7 +72,7 @@ link:datatypes/path.adoc[path!]
 
 link:datatypes/percent.adoc[percent!]
 
-point! 
+// point! 
 
 link:datatypes/refinement.adoc[refinement!] 
 

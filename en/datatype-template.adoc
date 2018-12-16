@@ -15,6 +15,11 @@ X values can be created using literal syntax, or at runtime by using a `make` co
 
 == Literal syntax
 
+=== Runtime creation
+
+*Examples*
+
+== Conversions
 
 == Comparisons
 
@@ -36,7 +41,7 @@ Use `type?` to return the datatype of a given value.
 ```
 
 
-== Pre-defined words
+== Predefined words
 
 === Actions
 
