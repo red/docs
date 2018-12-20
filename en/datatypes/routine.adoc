@@ -44,18 +44,20 @@ increment: routine [
 ```
 
 
-Argument types for routines are restricted to the single word `any-type!`, or to a type that has a Red/System struct! alias defined here: https://github.com/red/red/blob/master/runtime/datatypes/structures.reds
+Argument types for routines are restricted to the single words `any-type!`, `integer!`, `float!`, `logic!`, or to a type that has a Red/System struct! alias defined here: https://github.com/red/red/blob/master/runtime/datatypes/structures.reds
+
+`Integer!`, `float!`, and `logic!` are not translated to a Red/System equivalent.
 
 *Example*
 
-`integer!` is translated to the Red/System equivalent:
+`block!` is translated to the Red/System equivalent:
 
 ```red
-red-integer!: alias struct! [
+red-block!: alias struct! [
 	header 	[integer!]								;-- cell header
-	padding	[integer!]								;-- align value on 64-bit boundary
-	value	[integer!]								;-- 32-bit signed integer value
-	_pad	[integer!]	
+	head	[integer!]								;-- block's head index (zero-based)
+	node	[node!]									;-- series node pointer
+	extra	[integer!]								;-- (reserved for block-derivative types)
 ]
 ```
 
