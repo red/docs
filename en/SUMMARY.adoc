@@ -3,6 +3,7 @@
 . link:README.adoc[Red/Core Language]
 
 . link:datatypes.adoc[Datatypes]
+.. link:datatypes/binary.adoc[Binary!]
 .. link:datatypes/block.adoc[Block!]
 .. link:datatypes/char.adoc[Char!]
 .. link:datatypes/date.adoc[Date!]
