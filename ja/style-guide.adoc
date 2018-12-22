@@ -1,0 +1,390 @@
+= コーディングスタイルガイド
+:toc:
+:toc-title: 目次
+:numbered:
+
+== はじめに
+
+Redはコードがデータとして表現される同図象性を持つ言語です。その特性の結果として、どんな形でもデータを取り扱えるよう、言語はほぼ完全なフリーフォームとなっていて、またDSL特有のフォーマッティングのニーズを叶える柔軟性を持っています。以下のコンテンツはRedのコードをフォーマットする _膨大な方法の1つでしかありません。_
+
+このドキュメントは _Redのソースコードの中で使用されているオフィシャルなコーディングスタイル_ を説明します。従ってGithubのred/redリポジトリにサブミットされる全てのプルリクエストはこのコーディングスタイルに準拠する必要があります。
+
+Red/SystemはRedのダイアレクトであり、Redと同じシンタックス、コーディングスタイルルールを共有します。Red/System固有のルールはそのように記載がされます。
+
+以下のルールの目的は、コメントの必要性を最小にし、スクリーン上に見えるコードの行数を最適に維持することなど、可読性を最大化することです。
+
+== 1行のコードの長さ
+
+1行のコードに対して最大何文字とするかの厳格な定義はありません。使用されているフォントタイプ（サイズやプロポーショナル、固定長の違いなど）やハイライト効果によっても異なるからです。1080ポイントのモニターの半分の幅で、エディタ上で1行の全てのコード（コメントを含めた）が読めるようにするべきです。私達がRedのコードベースをコーディングしているディスプレイ上では、概ね100文字です。以下の説明の通り、 _サイズを超えたり長過ぎる_ 表現は前述の基準に違反するコードサイズの行になるでしょう。
+
+== インデント 
+
+Redのコードベースはソースコードのインデントとして *4* 文字のタブを使用しています。これは小さすぎる値（2文字）や大きすぎる値（8文字）との間のよいトレードオフです。タブを使うことはルールに準拠しつつ（右寄せタブを使うことにだけ注意してください）、エディタ上で自分の好みに合わせて表示を調整できることを意味します。
+
+red/redリポジトリ上の全てのRedのファイルはヘッダに以下のフィールドを含める必要があります。
+
+ Tabs: 4
+
+ブロックか括弧を開いた後は、改行し、タブ１つ分インデントします。
+
+.*正しい例*
+----
+ func [
+     arg1
+     arg2
+     ...
+ ][
+     print arg1
+     ...
+ ]
+----
+.悪い例
+---- 
+ func [
+ arg1				;-- インデントがない！
+ arg2
+ ...
+ ][
+		print arg1		;-- インデントが多すぎる！
+		...
+ ]
+----
+
+== ブロックのレイアウト 
+
+以下のルールは全てブロック `[]` と同様括弧 `()` にも適用されます。
+
+空のブロックはスペースを含みません。
+ 
+ a: []
+ 
+連続するブロックの間はスペースは不要です。
+
+ [][]
+ []()
+
+ [
+    hello
+ ][						;-- スペースは不要です
+	   world
+ ]
+ 
+しかし、ネストしたブロックの間にスペースを使うのは許されます。
+----
+ array: [[] [] [] []]
+ list:  [ [] [] [] [] ]
+
+ either a = 1 [["hello"]][["world"]]
+ either a = 1 [ ["hello"] ][ ["world"] ]
+----
+
+小さいブロックを含む式では、通常同じ行で括弧を開いて閉じます。
+ 
+ b: either a = 1 [a + 1][3]
+ 
+
+もし一行が長すぎる場合、ブロックは一段階のインデントで複数行にまたがって書きます。
+
+.*正しい例*
+----
+ b: either a = 1 [
+     a + 1
+ ][
+     123 + length? mold a
+ ]
+----
+
+.悪い例
+----
+ b: either a = 1 
+     [a + 1][123 + length? mold a]
+----
+_このスタイルはRedコンソールにコードをコピー／ペーストできなくするため、不適切です（ `either` はブロックの引数が検知される前に評価されてしまいます）。_
+
+もし最初のブロックが十分短く、同じ行が書くことが適切な場合は、後続のブロックのみを複数行に渡ってラップします。
+----
+ print either a = 1 ["hello"][
+     append mold a "this is a very long expression"
+ ]
+
+ while [not tail? series][
+     print series/1
+     series: next series
+ ]
+----
+
+== 命名規則 
+
+*変数名* は位置単語の *名詞* を使用します。できるだけ短く意味を捉えた単語を選びます。一般的な単語をまずは検討します（そうではないケースとして、同じコンテキスト内でRedのソースコードに同じwordが使われている場合があります）。必要であれば、link:http://www.thesaurus.com/browse/synonym[シノニムの辞書] を使い、使用する最適な単語を見つけてください。一文字や省略された単語は（省略された単語が一般的に使われている場合以外は）できるだけ避けるべきです。
+
+複数の単語からなる名前はダッシュ `-` で区切ります。二文字の言葉は適切な一文字の単語が見つからなかったり、すでに使用されていて混乱を招く場合にのみ使うべきです。2文字より多い単語の変数名はレアケースでのみ使うべきです。できる限り一単語の変数使うことは、コードをトータルでずっとコンパクトにし、可読性を大きく向上させ、冗長性を低減させます。
+
+.*正しい例*
+----
+ code: 123456
+ name: "John"
+ table: [2 6 8 4 3]
+ lost-items: []
+
+ unless tail? list [author: select list index]
+----
+
+.悪い例
+----
+ code_for_article: 123456
+ Mytable: [2 6 8 4 3]
+ lostItems: []
+
+ unless tail? list-of-books [author-property: select list-of-books selected-index]
+----
+
+*関数名* はアクションでることを示すため、一単語の _動詞_ を使うようにしますが、２、３語からなる名称が必要になることはしばしばあります。３文字を超えるwordはできるだけ避けるべきです。変数の命名規則は関数の名前にも適用されます。名詞か形容詞にクエスチョンマークを付けたものも許されます。しばしば、それは返り値が `logic!` 型であることを示しますが、厳格なルールではありません。プロパティを取得する一単語のアクション名として便利なためです（例 `length?`、 `index?`）。２語以上の単語の関数名を作る場合、動詞を最初に配置します。もし変数名と関数名が注意深く選択されている場合、コード自体がドキュメントのように機能し、コメントの必要性を軽減します。
+
+.*正しい例*
+----
+ make:   func [...
+ reduce: func [...
+ allow:  func [...
+ crunch: func [...
+----
+
+.悪い例
+----
+ length:    func [...
+ future:    func [...
+ position:  func [...
+ blue-fill: func [...		;-- fill-blueにするべきです
+----
+
+命名規則の例外はOSやRedではないサードパーティのAPIの名称の場合です。API固有の関数や構造体のフィールド名であることが分かりやすいように、オリジナルの名前を使うべきです。それは通常のRedやRed/Systemコードと、そのようなインポートされた名称を区別するのに役立ちます。以下が例です。
+
+
+----
+ tagMSG: alias struct! [
+     hWnd   [handle!]
+     msg    [integer!]
+     wParam [integer!]
+     lParam [integer!]
+     time   [integer!]
+     x      [integer!]
+     y      [integer!]	
+  ]
+
+ #import [
+    "User32.dll" stdcall [
+        CreateWindowEx: "CreateWindowExW" [
+            dwExStyle    [integer!]
+            lpClassName  [c-string!]
+            lpWindowName [c-string!]
+            dwStyle      [integer!]
+            x            [integer!]
+            y            [integer!]
+            nWidth       [integer!]
+            nHeight      [integer!]
+            hWndParent   [handle!]
+            hMenu        [handle!]
+            hInstance    [handle!]
+            lpParam      [int-ptr!]
+            return:      [handle!]
+        ]
+    ]
+]
+----
+
+== 大文字・小文字 
+
+全ての変数と関数の名称は基本的には小文字にします。大文字にするのは以下の様な場合です：
+
+* 名称が略語である場合。例えば GMT （グリニッジ標準時）
+* オペレーティングシステムや（Redではない）サードパーティのAPIに関連する名称である場合
+
+== マクロ（Red/System） anchor:macros-redsystem[]
+
+Red/Systemのマクロの名称を選択する時も同様の命名規則を適用します。マクロは一般的に名前には大文字を使い、他のコードと容易に区別できるようにします（擬似的な独自のデータ型の定義のように）一般的なコードと同じように見せたい、のような明確的な意図がない限り）。複数語の名称を使う場合、アンダースコア `_` で区切り、通常のコードとの差異が際立つようにします。
+
+_（未定：Redのコードベースの全ての一単語の名称を例として列挙します）_
+
+== 関数の定義 
+
+全般的なルールはスペックブロックを１行に収めることです。ボディブロックは同じ行か複数行にまたがることができます。Red/Systemの場合、スペックブロックは長くなることが多いため、ほとんどの関数のスペックブロックは複数行にまたがります。そのため視覚的な一貫性の観点から、短いスペックブロックでも折り返すことがあります。
+
+.*正しい例*
+----
+ do-nothing: func [][]
+ increment: func [n [integer!]][n + 1]
+
+ increment: func [n [integer!]][
+    n + 1
+ ]
+
+ increment: func [
+     n [integer!]
+ ][
+     n + 1
+ ]
+----
+.悪い例
+----
+ do-nothing: func [
+ ][
+ ]
+
+ do-nothing: func [
+
+ ][
+
+ ]
+
+ increment: func [
+     n [integer!]
+ ][n + 1]
+----
+
+スペックブロックが長すぎる場合、複数行にまたがるべきです。スペックブロックを折り返す場合、各型の定義は引数と同じ行にします。オプショナルな属性はのブロックは同じ行に記載します。それぞれのリファインメントは新しい行で始めます。引数が１つの場合、同じ行に書くか、インデントを１つ付けます（スペックブロック内の他のリファインメントと揃えてください）。/localリファインメントについては、ローカルのwordに型アノテーションを付けない場合、同じ行に書いてかまいません。
+
+スペックブロックを複数行にまたがって書く場合、可読性のため一連の引数のデータ型の定義を同じ行で揃えることを推奨します。行揃えは、コーディングスタイルを厳密に守るのであればタブで行ってください。もしくはスペースを使います。
+
+.*正しい例*
+----
+ make-world: func [
+     earth	 [word!]
+     wind 	 [bitset!]
+     fire	 [binary!]
+     water	 [string!]
+     /with
+         thunder [url!]
+     /only
+     /into
+         space   [block! none!]
+     /local
+	 plants animals men women computers robots
+ ][
+     ...
+ ]
+----
+.悪い例
+----
+ make-world: func [
+  	[throw] earth [word!]		;-- 属性ブロックが独立した行になっていない
+    	wind	[bitset!]
+    	fire [binary!]			;-- 型の定義が揃っていない
+    	water	[string!]
+    	/with
+            thunder [url!]
+    	/only
+    	/into space [block! none!]	;-- /withとフォーマットが揃っていない
+    	/local
+    	    plants animals		;-- 改行が早すぎる
+    	    men women computers robots
+][
+	...
+]
+----
+
+docstringは、スペックブロックが折り返しする場合のメインのドキュメント（関数自体の説明）は独立した行に記載します。引数とリファインメントのdocstringは対象と同じ行に記載します。docstringは大文字で始め、文末にはピリオドはなくてかまいません（ `help` 関数は自動的にピリオドを補完します）。
+
+.*正しい例*
+----
+ increment: func ["Add 1 to the argument value" n][n + 1]
+
+ make-world: func [
+     "Build a new World"
+     earth    [word!]      "1st element"
+     wind     [bitset!]    "2nd element"
+     fire     [binary!]    "3rd element"
+     water    [string!]
+     /with 		   "Additional element"
+         thunder [url!]
+     /only		   "Not implemented yet"
+     /into		   "Provides a container"
+         space [unset!]    "The container"
+     /local
+         plants animals men women computers robots
+ ][
+	...
+ ]
+----
+.悪い例
+----
+ make-world: func ["Build a new World"	;-- 改行するべき
+     earth	[word!]		"1st element"
+     wind	[bitset!]	  "2nd element"	;-- インデントが多すぎる
+     fire	[binary!]
+     "3rd element"			;-- `fire` と同じ行に書くべき
+     water	[string!]
+     /with 			"Additional element"
+    		thunder [url!]
+     /only "Not implemented yet"	;-- 他のdocstringと列を揃えるべき
+     /into
+           "Provides a container"      ;-- リファインメントの後に書くべき
+    	    space [unset!]	"The container"
+     /local
+         plants animals men women computers robots
+ ][
+    	...
+ ]
+----
+
+== 関数呼び出し 
+
+関数の後の引数は同じ行に書きます。もし行が長くなりすぎる場合、引数は複数行（１つの引数につき１行）にまたがってインデント付きで記載します。
+
+.*正しい例*
+----
+ foo arg1 arg2 arg3 arg4 arg5
+
+ process-many
+     argument1
+     argument2
+     argument3
+     argument4
+     argument5
+----
+.悪い例
+----
+ foo arg1 arg2 arg3
+     arg4 arg5
+
+ foo
+     arg1 arg2 arg3
+     arg4 arg5
+
+ process-many
+     argument1
+         argument2
+             argument3
+                 argument4
+                     argument5
+----
+
+ネストが多く長い式については、それぞれの式の区切りを明示することが難しい場合があります。引数を伴うネストした関数呼び出しをグルーピングするために、丸括弧を使うことは許可されます（ただし、必須ではありません）。
+----
+ head insert (copy/part [1 2 3 4] 2) (length? mold (2 + index? find "Hello" #"o"))
+
+ head insert 
+     copy/part [1 2 3 4] 2
+     length? mold (2 + index? find "Hello" #"o")
+----
+
+== コメント 
+
+Redのコードベースでは以下のようになっています。
+
+* 視覚的に分かりやすくするため、プレフィックスとして `;--` を使います。
+* 1行のコメントは57列目から始まります（平均的にはこれが最も適切な列数です。もしくは53列目を使います）。
+* 複数行のコメントは `comment {...}` 形式よりも、1行コメントを複数行使って記載します。
+
+一般的なルールとして、縦のスペースを取りすぎないように、コメントは対応するコードと同じ行に書きます。ただし、コメントがコードと分離している場合、新しい行に書いても問題ありません。
+
+== 文字列のシンタックス 
+
+1行の文字列は `""` を使います。 `{}` 形式は複数行文字列のために使います。このルールを遵守することで、以下のことが保証できます。
+
+* コードをloadする前後におけるソースの表示の一貫性
+* 意味の分かりやすさ
+
+このルールの例外は1行の文字列の中身に " を含む場合です。この場合、 `{}` 形式を使うことで、エスケープクォート `^"` を使わずにすむため、可読性が向上します。
+
+== 改行の使い方 
+
+未定
