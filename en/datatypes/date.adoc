@@ -201,6 +201,15 @@ make date! [99 12 31]
 *** Where: make
 ----
 
+* Using a `to` conversion (see 4.1 <<_epoch_time>>).
+
+----
+to-integer <date>
+to-date <epoch>
+
+<date>  : a date! value
+<epoch> : an integer value representing an epoch time
+----
 
 == Path accessors
 
@@ -823,7 +832,7 @@ to date! <spec>
 <spec> : a block of values for date fields
 ----
 
-The argument block will be converted to a `date!` value according to the same syntax as for `make` (see 2.2 <<runtime-creation>>). Out of range argument values will result in a normalized date. For a strict conversion from a block, that will error out instead of normalizing, use `make`.
+The argument block will be converted to a `date!` value according to the same syntax as for `make` (see 2.2 <<_runtime_creation>>). Out of range argument values will result in a normalized date. For a strict conversion from a block, that will error out instead of normalizing, use `make`.
 
 
 == Comparisons
