@@ -3,6 +3,7 @@
 . link:README.adoc[Red/Core Language]
 
 . link:datatypes.adoc[Datatypes]
+.. link:datatypes/binary.adoc[Binary!]
 .. link:datatypes/block.adoc[Block!]
 .. link:datatypes/char.adoc[Char!]
 .. link:datatypes/date.adoc[Date!]
@@ -26,6 +27,7 @@
 .. link:datatypes/path.adoc[Path!]
 .. link:datatypes/percent.adoc[Percent!]
 .. link:datatypes/refinement.adoc[Refinement!]
+.. link:datatypes/routine.adoc[Routine!]
 .. link:datatypes/set-path.adoc[Set-path!]
 .. link:datatypes/set-word.adoc[Set-word!]
 .. link:datatypes/string.adoc[String!]

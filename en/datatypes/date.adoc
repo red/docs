@@ -201,6 +201,16 @@ make date! [99 12 31]
 *** Where: make
 ----
 
+* Using a `to` conversion (see 4.1 <<_epoch_time>>).
+
+----
+to-integer <date>
+to-date <epoch>
+
+<date>  : a date! value
+<epoch> : an integer value representing an epoch time
+----
+
 
 == Path accessors
 
