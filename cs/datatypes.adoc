@@ -37,8 +37,8 @@ _This is a work in progress, only some of the datatypes are currently documented
     none! 
     object! 
     op! 
-    paren! 
     pair!
+	paren! 
     path! 
     percent!
     point!
@@ -49,6 +49,7 @@ _This is a work in progress, only some of the datatypes are currently documented
     string! 
     tag!
     time!
+	tuple!
     typeset! 
     unset! 
     url! 
