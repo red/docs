@@ -205,8 +205,8 @@ Nakreslí obrázek s použitím poskytnuté inforace o pozici a šířce. Nemá-
 [NOTE]
 ==== 
 * Čtyři body nejsou dosud zavedeny. Budou umožňovat roztažení (stretch) obrázku s použitím čtyř libovolně umístěných hran. 
-Four points mode is not yet implemented. It will allow to stretch the image using 4 arbitrary-positioned edges.
-* `border` Tento nepovinný režim není dosud zaveden.
+* `border` Tento nepovinný režim není dosud zaveden a nejspíš asi nikdy nebude.
+* Ke specifikaci obrázku nelze použít cesty. Zpracování cest je nákladné a proto je nevhodné pro dialekt `draw`, který je zaměřen na výkon. Použjte selektivní vyhodnocení (`compose`).
 ====
 
 === Text
