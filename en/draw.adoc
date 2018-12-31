@@ -872,7 +872,7 @@ Draws a line between two points. If more points are specified, additional lines 
 <end>      : arc's end point (pair!).
 <radius-x> : radius of the circle along x axis (integer! float!).
 <radius-y> : radius of the circle along y axis (integer! float!).
-<angle>    : angle between the starting and ending points of the arc in degrees (integer! float!).
+<angle>    : rotation angle of the underlying ellipse in degrees (integer! float!).
 sweep      : (optional) draw the arc in the positive angle direction.
 large      : (optional) produces an inflated arc (goes with 'sweep option).
 
