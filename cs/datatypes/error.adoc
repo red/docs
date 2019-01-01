@@ -149,11 +149,6 @@ Arg values in the block are reduced.
 *** Syntax Error: missing "foo" at "bar"
 *** Where: do
 *** Stack: cause-error  
-
->> cause-error 'syntax 'missing [foo bar]
-*** Script Error: foo has no value
-*** Where: reduce
-*** Stack: cause-error  
 ```
 
 == Testování hodnot

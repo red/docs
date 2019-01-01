@@ -209,7 +209,7 @@ Paints an image using the provided information for position and width. If the im
 [NOTE]
 ====
 * Four points mode is not yet implemented. It will allow to stretch the image using 4 arbitrary-positioned edges.
-* `border` optional mode is not yet implemented.
+* `border` optional mode is not yet implemented. It is unlikely that this feature will be supported:
 * You can't use paths to specify images. Processing paths is expensive, so it's a bad fit for the `draw` dialect that's optimized for performance. Use selective evaluation (`compose`) instead.
 ====
 
