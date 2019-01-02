@@ -23,6 +23,7 @@
 .. link:datatypes/none.adoc[Datový typ none!]
 .. link:datatypes/object.adoc[Datový typ object!]
 .. link:datatypes/pair.adoc[Datový typ pair!]
+.. link:datatypes/paren.adoc[Datový typ paren!]
 .. link:datatypes/path.adoc[Datový typ path!]
 .. link:datatypes/percent.adoc[Datový typ percent!]
 .. link:datatypes/refinement.adoc[Datový typ refinement!]
