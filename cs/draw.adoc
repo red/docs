@@ -830,8 +830,8 @@ Nakreslí úsečku mezi dvěma body. Je-li zadáno více bodů, kreslí se dalš
 <end>      : koncový bod oblouku (pair!).
 <radius-x> : poloměr kružnice ve směru osy x (integer! float!).
 <radius-y> : poloměr kružnice ve směru osy y (integer! float!).
-<angle>    : úhel mezi počátečním a koncovým bodem oblouku ve stupních (integer! float!).
-sweep      : (optional) oblouk je kreslen ve směru pozitivního úhlu.
+<angle>    : úhel pootočení výchozí (underlying) elipsy ve stupních (integer! float!).
+sweep      : (optional) kreslit oblouk ve směru pozitivního úhlu.
 large      : (optional) vytvoří konvexní oblouk (souvisí s volbou 'sweep).
 
 ----
