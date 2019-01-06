@@ -8,7 +8,7 @@ Hodnoty `tag!` reprezentují tagy a elementy zna?kovacího (markup) jazyka.
 
 Typ `tag!` je subtyp typeset? `any-string!` a `series!`
 
-== Vytvo?ení
+== Vytvoření
 
 Hodnoty typu tag! lze vytvo?it literálovou syntaxí nebo p?i runtime pou?itím konstruktoru `make` a konverzí `to`.
 ```red

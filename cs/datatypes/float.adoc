@@ -158,7 +158,7 @@ Při konverzi čísla typu `float` na `char` nebo `integer` jsou odvrženy všec
 == 123
 ```
 
-* `to string!` returns the result of `load` 
+* `to string!` 
 
 ```red
 >> to string! 123.4
