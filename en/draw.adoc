@@ -209,7 +209,7 @@ Paints an image using the provided information for position and width. If the im
 [NOTE]
 ====
 * Four points mode is not yet implemented. It will allow to stretch the image using 4 arbitrary-positioned edges.
-* `border` optional mode is not yet implemented. It is unlikely that this feature will be supported:
+* `border` optional mode is not yet implemented.It is unlikely that this feature will be supported:
 * You can't use paths to specify images. Processing paths is expensive, so it's a bad fit for the `draw` dialect that's optimized for performance. Use selective evaluation (`compose`) instead.
 ====
 
@@ -872,7 +872,7 @@ Draws a line between two points. If more points are specified, additional lines 
 <end>      : arc's end point (pair!).
 <radius-x> : radius of the circle along x axis (integer! float!).
 <radius-y> : radius of the circle along y axis (integer! float!).
-<angle>    : angle between the starting and ending points of the arc in degrees (integer! float!).
+<angle>    : rotation angle of the underlying ellipse in degrees (integer! float!).
 sweep      : (optional) draw the arc in the positive angle direction.
 large      : (optional) produces an inflated arc (goes with 'sweep option).
 

@@ -5,43 +5,17 @@
 
 == Úvodem
 
-Hodnoty typu`float!` jsou 64-bitové pozitivní a negativní čísla, která obsahují desetinnou čárku.
+Hodnoty typu`float!` jsou 64-bitové pozitivní nebo negativní čísla, která obsahují desetinnou čárku.
 
-Mají rozsah od `-1.7E+308` do `+1.7E+308`.
+Mají rozsah od `-1.7E+308` do `+1.7E+308` a při přetečení vracejí `#INF`.
+Dělení nulou vrací `1.#NaN`
 
-Při přetečení vracejí #INF.
-
-```red
->> 1.8E+308
-== 1.#INF
-
->> -1.8E+308
-== -1.#INF
-```
-
-Dělení `0.0` číslem `0.0` rezultuje v `1.#NaN`
-
-Typ `float!` je členem následujících typesetů: `immediate!`, `scalar!` a `number!`. 
+Typ `float!` je členem typesetů: `immediate!`, `scalar!` a `number!`. 
 
 
 == Vytvoření
 
-Hodnoty float! lze vytvořit literálovou syntaxí nebo při runtime  použitím konstruktoru `make` nebo konverzí `to`:
-
-```red
->> 100.1
-== 100.1
-```
-
-```red
->> make float! 1
-== 1.0
-```
-
-```red
->> to float! 1
-== 1.0
-``` 
+Hodnoty float! lze vytvořit literálovou syntaxí nebo při runtime  použitím konstruktoru `make` nebo konverzí `to`.
 
 == Literálová skladba
 
@@ -53,8 +27,7 @@ Hodnoty float! lze vytvořit literálovou syntaxí nebo při runtime  použitím
 
 [NOTE, caption=Poznámka]
 
-A formed value will normalize a decimal comma to a decimal point as the decimal mark. 
-
+Formátovaná hodnota normalizuje desetinnou čárku na desetinnou tečku coby označení desetinného čísla.
 
 Znak `+` nebo `-` bezprostředně před první číslicí označuje pozitivní nebo negativní hodnotu typu `float!`.
 
@@ -84,27 +57,119 @@ Jednoduchý apostrof `'` bezprostředně před nabo za desetinnou tečkou vyvol�
 *** Where: do
 *** Stack: load
 ```
+=== Vytvoření ve fázi runtime
+
+* Literálová syntaxe
+
+```red
+>> 100.1
+== 100.1
+```
+
+* Konstruktor `make`
+
+```red
+>> make float! 1
+== 1.0
+```
+
+* Transformace `to`
+
+```red
+>> to float! 42
+== 42.0
+```
+
+[NOTE, caption=Poznámka]
+
+Hodnota typu `any-list`, zadávaná funkcím `make` nebo `to`, musí obsahovat dvě čísla. Výsledkem bude první číslo násobené desítkou, umocněnou druhým číslem: `first-number * (power 10 second-number)`
+
+* `block`
+
+```red
+>> make float! [2 3]
+== 2000.0
+
+>> to float! [4 2]
+== 400.0
+```
+
+* `paren`
+
+```red
+>> make float! quote (2 3)
+== 2000.0
+
+>> to float! quote (4 2)
+== 400.0
+```
+
+* `hash`
+
+```red
+>> list: make hash! [2 3]
+== make hash! [2 3]
+
+>> to float! list
+== 2000.0
+
+>> list: make hash! [4 2]
+== make hash! [4 2]
+
+>> to float! list
+== 400.0
+```
 
 == Komparace
 
 Pro hodnotu typu `float!` lze použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
 
 
-
 == Konverze
 
-Hodnotu `float` lze při runtime konvertovat na `integer!` nebo `string!` s použitím akce `to`. 
+Hodnotu `float` lze při runtime konvertovat na `any-list!`, `binary!`, `char!`, `integer!`, `string!` nebo `time!` s použitím konverze `to`. 
+
+Hodnota typu `any-list` musí obsahovat dvě čísla. Výsledkem bude první číslo násobené desítkou, umocněnou druhým číslem: `first-number * (power 10 second-number)`
+
+```red
+>> to float! [4 2]  ; 4 * (power 10 2)
+== 400.0
+```
+
+* `to binary!` interpretuje prvních 8 bajtů jako desetinné číslo (floating point number). Je-li k dispozici méně než 8 bajtů, jsou předsazeny bajty #{00}.
+
+```red
+>> to binary! 42.3
+== #{4045266666666666}
+```
 
 [NOTE, caption=Poznámka]
 
-Při konverzi float na integer jsou odvrženy všechny číslice za desetinnou čárkou. Žádné zaokrouhlení se neprovádí.
+Při konverzi čísla typu `float` na `char` nebo `integer` jsou odvrženy všechny číslice za desetinnou čárkou. Žádné zaokrouhlení se neprovádí.
 
 ```red
+>> to char! 123.4
+== #"{"
+
+>> to char! 123    ; equivalent, since .4 is discarded
+== #"{"
+
 >> to integer! 123.4
 == 123
+```
 
+* `to string!` 
+
+```red
 >> to string! 123.4
 == "123.4"
+```
+
+* `to time!` vrací počet sekund a milisekund
+
+```red
+>> to time! 42.7
+== 0:00:42.7
 ```
 
 Jsou-li ve výrazu kombinovány typy `float!` a `integer!`, je výsledek typu `float!`.

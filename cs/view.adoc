@@ -1015,7 +1015,7 @@ Red [
 |*do&#8209;events* | Spustí smyčku událostí (optionally just process pending events and return).
 |*draw* | Vykreslí blok dialektu Draw do obrázku.
 |*to&#8209;image* | Přemění jakýkoliv vykreslovaný piškot na obrázek.
-|*set&#8209;focus*| Nastaví focus na určený piškot (face).  
+|*set&#8209;focus*| Nastaví focus na určený piškot (face). 
 |*size&#8209;text* | Změří v pixelech velikost textu v piškotu (berouce v úvahu vybraný font).
 |===
 
@@ -1023,7 +1023,7 @@ Red [
 *Bude přidáno:*
 
 * specifikace facetu `menu`
-* popis datového typu `image!`
+* popis datového typu `Image!`
 
 
 
