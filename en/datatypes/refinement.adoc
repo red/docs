@@ -5,8 +5,7 @@
 
 == Abstract
 
-A `refinement!` is a symbolic value, like a word!, that is most often used for fine tuning in function specifications. Conceptually, a path is a series of successive refinements, whether for a path! value, or in files and URLs. They are also used to access specific values in objects, and to add flexibility and control when calling functions.
-
+`Refinement!` values are symbolic values that are used as modifiers to functions or as extensions to objects, files, urls, or paths.
 
 The `repend` function with no refinement:
 ```red
@@ -28,12 +27,18 @@ With the `/only` refinement:
 Refinement! values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
 
 ```red
->> make refinement! "foo"
+>> /foo
 == /foo
 ```
+
 ```red
->> to refinement! 'bar
+>> make refinement! "bar"
 == /bar
+```
+
+```red
+>> to refinement! 'baz
+== /baz
 ```
 
 == Literal syntax
