@@ -5,6 +5,6 @@
     "styles": {
 	  "website": "styles/website.css"
 	},
-    "plugins": [ "versions" ],
+    "plugins": [ "versions" ]
 
 }
