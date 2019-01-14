@@ -4,7 +4,6 @@
     "author": "Nenad Rakocevic & Contributors",
     "styles": {
 	  "website": "styles/website.css"
-	},
-    "plugins": [ "versions" ]
+	}
 
 }
