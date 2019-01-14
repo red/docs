@@ -5,7 +5,7 @@
 
 == Úvodem
 
-Hodnoty typu `object!` reprezentují pojmenované nebo nepojmenované kontexty, které obsahují páry `word: value` pairs.
+Hodnoty typu `object!` reprezentují pojmenované nebo nepojmenované kontexty, které obsahují páry `word: value`.
 
 Typ `object!` je členem typesetů: `any-object!`, `default!`
 
