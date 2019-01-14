@@ -167,7 +167,7 @@ The digits after the decimal point will be discarded when converting a float to 
 == 123
 ```
 
-* `to string!` returns the result of `load`.
+* `to string!`
 
 ```red
 >> to string! 123.4
