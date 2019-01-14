@@ -5,7 +5,7 @@
 
 == Úvodem
 
-`Refinement!` (upřesnění) je symbolická hodnota typu word!, který se nejčastěji používák zadáníspecifikací funkce. Koncepčně je cesta (path) řadou postupných upřesění. Tato forma se používá při specifikaci souborů, adres URL, rovněž se používá za účlem přístupu ke konkretním hodnotám v objektech.
+Hodntoty typu `refinement!` (upřesnění) jsou symbolické hodnoty, používané jako modifikátory *funkcí* nebo jako extenze u *objektů*, *souborů*, *URL* nebo *cest*. 
 
 
 Funkce `repend` bez upřesnění:
@@ -21,24 +21,29 @@ S upřesněním `/only`:
 == ["foo" [42]]
 ```
 
-Typ `refinement!` je subtypem typesetů `all-word!` a `immediate!`.
+Datový typ `refinement!` je subtypem typesetů `all-word!` a `immediate!`.
 
 == Vytvoření
 
-Hodnoty typu refinement! lze vytvo?it použití literálovésyntaxe nebo při runtimu konstruktorem `make` nebo konverzí `to`.
+Hodnoty typu refinement! lze vytvořit použitím literálové syntaxe nebo při runtimu konstruktorem `make` či konverzí `to`.
 
 ```red
->> make refinement! "foo"
+>> /foo
 == /foo
 ```
+ 
 ```red
->> to refinement! 'bar
+>> make refinement! "bar"
 == /bar
 ```
+```red
+>> to refinement! 'baz
+== /baz
+```
 
-== Literálováskladba
+== Literálová skladba
 
-Lomíko `/`, následované jední či více znaky sady Unicode, včetně interpunkčních znaků ze sady ASCII:  `! & ' * + - . < = > ? _ | ~``
+Lomíko `/`, následované jedním či více znaky sady Unicode, včetně interpunkčních znaků ze sady ASCII:  `! & ' * + - . < = > ? _ | ~``
 
 Nepovolenýi znaky jsou řídící znaky, znaky mezer a interpunkční znaky ze sady ASCII: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
 
