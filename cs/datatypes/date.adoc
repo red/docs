@@ -166,7 +166,10 @@ make date! [<day> <month> <year> <hour> <minute> <second> <zone>]
 ====
 * Argumenty mimo stanovený rozsah vyvolají chybu. Pro normalizovaný výsledek se doporučuje použít akci `to` místo `make`.
 
-* Pole `year` a `day` jsou zaměnitelná, avšak jen pro nízké hodnoty roků. Rok může být použit na první pozici *pouze tehdy*, je-li jeho hodnota >= 100 a menší než hodnota třetího pole. Nejsou-li tyto podmínky splněny, je třetí pole vymezeno pro rok. Negativní roky mají být vždy určeny ve třetí pozici.
+* Argumenty `year` a `day` jsou zaměnitelné, avšak jen pro nízké hodnoty roků. 
+Argument `year` může být s příkazem `make` použit na první pozici pouze tehdy, je-li jeho hodnota >= 100.
+S příkazem `to` může být `year` použít na první pozici pouze tehdy, je-li jeho hodnota >= 100 a zároveň větší než hodnota třetího pole. Není-li těmto požadavkům vyhověno, má se zato, že třetí pole obsahuje argument `year`.
+Negativní roky mají být vždy určeny ve třetí pozici.
 
 ====
 
