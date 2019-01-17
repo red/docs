@@ -4,6 +4,7 @@
 
 . link:datatypes.adoc[Datatypes]
 .. link:datatypes/binary.adoc[Binary!]
+.. link:datatypes/bit.adsetoc[Bitset!]
 .. link:datatypes/block.adoc[Block!]
 .. link:datatypes/char.adoc[Char!]
 .. link:datatypes/date.adoc[Date!]
