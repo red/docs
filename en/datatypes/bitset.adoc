@@ -14,17 +14,17 @@ A `bitset!` value is an array of bits that is used to store boolean values. Bits
 
 Bitset! values can be created by using a `make` constructor, a `to` conversion, or by using the function `charset`.
 
-== Creation syntax
+== Runtime creation
 
 // from https://github.com/meijeru/red.specs-public
 
 ```
-<bitset> ::= make bitset! <binary> | make bitset! <bitset-spec> | charset <bitset-spec>
+<bitset> ::= make bitset! <binary> | make bitset! <bitset-spec> | to bitset! <bitset-spec> | charset <bitset-spec>
 <bitset-spec> ::= <integer> | <char> | <string> | [<bit-position>*] | [not <bit-position>*]
 <bit-position> ::= <integer> | <char> | <string> | <char> - <char> | <integer> - <integer>
 ```
 
-* `Make`
+=== Make
 
 ```red
 >> make bitset! 50    ; create an empty bitset with places for at least 50 bits
@@ -57,9 +57,7 @@ Ranges are defined using two `char!`, or `integer!` values, separated by a dash 
 
 Bitsets are auto-sized to fit the specification values provided. The size is rounded to the upper byte bound.
 
-***
-
-* `To`
+=== To
 
 Converting a value to a bitset value using `to` is equivalent to using `make bitset!`, with the exception that `integer!` values are not allowed.
 
@@ -85,9 +83,7 @@ Converting a value to a bitset value using `to` is equivalent to using `make bit
 == make bitset! #{000000000000FFC0000000007FFFFFE0}
 ```
 
-***
-
-* `Charset`
+=== Charset
 
 ```red
 >> source charset
@@ -117,15 +113,13 @@ charset: func ["Shortcut for `make bitset!`"
 == make bitset! #{000000000000FFC0000000007FFFFFE0}  
 ```
 
-***
+== Complements
 
 In order to cope with the wide range of Unicode characters, bits outside of the bitsets are treated as virtual bits
 so they can be tested and set without errors. The bitset size will auto-expand according to the needs. 
 
-[NOTE]
-====
-This is still not enough to deal with big ranges such as a bitset for all Unicode characters except digits. For such cases, it is possible to define a complemented bitset that represents the complement range of the specified bits. This makes it possible to have large bitsets while using only a tiny memory portion.
-====
+This is still not enough to deal with big ranges such as a bitset for `all Unicode characters except digits`. For such cases, it is possible to define a complemented bitset that represents the complement range of the specified bits. This makes it possible to have large bitsets while using only a tiny memory portion.
+
 
 Complemented bitsets can be created by including the word `not` in a block spec.
 
@@ -171,9 +165,9 @@ bs/97: false
 bs/97     ; will return false
 ```
 
-== Set operations
+== Data set operations
 
-The following Data Set operations are possible with bitset values: `difference`, `exclude`, `intersect`, `union`
+The following data set operations are possible with bitset values: `difference`, `exclude`, `intersect`, `union`
 
 ```red
 >> a: charset "abc"
@@ -251,4 +245,4 @@ Use `type?` to return the datatype of a given value.
 
 === Operators
 
-`and`
+`and`, `or`, `xor`
