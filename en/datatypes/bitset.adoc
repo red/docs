@@ -14,7 +14,7 @@ A `bitset!` value is an array of bits that is used to store boolean values. Bits
 
 Bitset! values can be created by using a `make` constructor, a `to` conversion, or by using the function `charset`.
 
-== Literal syntax
+== Creation syntax
 
 // from https://github.com/meijeru/red.specs-public
 
@@ -23,8 +23,6 @@ Bitset! values can be created by using a `make` constructor, a `to` conversion, 
 <bitset-spec> ::= <integer> | <char> | <string> | [<bit-position>*] | [not <bit-position>*]
 <bit-position> ::= <integer> | <char> | <string> | <char> - <char> | <integer> - <integer>
 ```
-
-== Creation syntax
 
 * `Make`
 
