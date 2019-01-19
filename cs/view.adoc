@@ -551,9 +551,9 @@ Seznam vytvořených aspektů:
 |*color*	| tuple!		| no	|  some	| Barva pozadí piškotu ve formátu R.G.B nebo R.G.B.A.
 |*menu*	| block! 		| no	|  all	| Lišta nabídky (menu) nebo kontextuálního menu.
 |*data*	| any-type!		| no	|  all	| Data o stavu piškotu a další relevantní informace.
-|*enable?*	| logic!		| yes	|  all	| Umožnit nebo znemožnit události vstupu v piškotu. 
+|*enabled?*	| logic!		| yes	|  all	| Umožnit nebo znemožnit události vstupu v piškotu. 
 |*visible?*	| logic!		| yes	|  all	| Zobrazit či skrýt piškot.
-|*selected*	| integer! 		| no	|  some	| Index aktuálně vybraného elementu seznamu.
+|*selected?*	| integer! 		| no	|  some	| Index aktuálně vybraného elementu seznamu.
 |*flags*	| block!, word!		| no	|  some	| Seznam speciálních klíčových slov, měnících zobrazení nebo chování piškotu.
 |*options*	| block! 		| no	|  some	| Další vlastnosti piškotu ve formátu [name: value].
 |*parent*	| object! 		| no	|  all	| Odkaz na rodičovský piškot (pokud existuje).
@@ -1020,10 +1020,7 @@ Red [
 |===
 
 
-*Bude přidáno:*
 
-* specifikace facetu `menu`
-* popis datového typu `Image!`
 
 
 
