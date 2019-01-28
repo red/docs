@@ -14,8 +14,9 @@
 .. link:datatypes/float.adoc[Float!]
 .. link:datatypes/get-path.adoc[Get-path!]
 .. link:datatypes/get-word.adoc[Get-word!]
+.. link:datatypes/handle.adoc[Handle!]
+.. link:datatypes/hash.adoc[Hash!]
 .. link:datatypes/integer.adoc[Integer!]  
-.. link:datatypes/handle.adoc[Handle!] 
 .. link:datatypes/image.adoc[Image!]
 .. link:datatypes/issue.adoc[Issue!]
 .. link:datatypes/lit-path.adoc[Lit-path!]
@@ -37,6 +38,7 @@
 .. link:datatypes/tuple.adoc[Tuple!]
 .. link:datatypes/unset.adoc[Unset!]
 .. link:datatypes/url.adoc[Url!]
+.. link:datatypes/vector.adoc[Vector!]
 .. link:datatypes/word.adoc[Word!]
 
 .  link:gui.adoc[GUI System]
