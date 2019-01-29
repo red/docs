@@ -4,17 +4,15 @@
 
 == Abstract
 
-`Event!` values represent external activity.
+`Event!` values are object-like values that represent external activity.
 
 `Event!` is a member of the following typesets: `default!`, `external!`
 
 == Creation
 
-// Description taken from https://github.com/meijeru/red.specs-public/blob/master/specs.adoc#51-introduction
+`Event!`` values cannot be created with `make` or `to`, and they have no literal form. They are sourced from the operating system and are effectively read-only values.
 
-`Event!` values cannot be created. They are used to communicate with the operating system and can only be represented by words that are arguments to functions handling this communication.
-
-See link:gui.adoc[GUI System] for more information on events.
+See link:https://doc.red-lang.org/en/view.html#_events[View documentation] for more information on events.
 
 == Testing values
 
