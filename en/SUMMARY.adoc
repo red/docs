@@ -10,6 +10,7 @@
 .. link:datatypes/date.adoc[Date!]
 .. link:datatypes/email.adoc[Email!]
 .. link:datatypes/error.adoc[Error!]
+.. link:datatypes/event.adoc[Event!]
 .. link:datatypes/file.adoc[File!]
 .. link:datatypes/float.adoc[Float!]
 .. link:datatypes/get-path.adoc[Get-path!]
