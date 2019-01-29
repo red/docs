@@ -1,0 +1,27 @@
+= Event! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+`Event!` values represent external activity.
+
+`Event!` is a member of the following typesets: `default!`, `external!`
+
+== Creation
+
+// Description taken from https://github.com/meijeru/red.specs-public/blob/master/specs.adoc#51-introduction
+
+`Event!` values cannot be created. They are used to communicate with the operating system and can only be represented by words that are arguments to functions handling this communication.
+
+See link:gui.adoc[GUI System] for more information on events.
+
+== Testing values
+
+Use `event?` to check if a value is of the `event!` datatype.
+
+== Predefined words
+
+=== Functions
+
+`event?`
