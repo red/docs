@@ -6,7 +6,15 @@
 
 == Overview
 
-== High-level Rich-Text Dialect
+Rich-Text is text that supports formatting. Different graphic styles can be applied to text or to segments of text.
+
+The Rich-Text API has three different levels, from simplest to most optimized:
+
+* Using RTD (from VID, or when manually constructing the face).
+* A low-level rich styling dialect for one text string (for fast performance).
+* Multiple rich text paragraphs in a single face (for complex layouts).
+
+== High-level Rich-Text Dialect (RTD)
 
 *Grammar* 
 
