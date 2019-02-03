@@ -5,7 +5,7 @@
 
 == Úvodem
 
-Hodnota `binary!` reprezentuje řadu bajtů.
+Hodnota `binary!` je tvořena řadou číselných znaků zvolené číselné soustavy.
 
 Typ `binary!` je člen typesetů `default!` a `series!`
 
@@ -16,32 +16,36 @@ Hodnoty typu binary! lze vytvořit s použitím literálové syntaxe nebo při r
 == Literálová skladba
 
 ```
-<binary-literal> ::= 2#{<base2-byte>*} | 16#{<hex-byte>*} | 64#{<base64-char>*} | #{<hex-byte>*}
+<binary-literal> ::=  2#{<base2-byte>*} | 
+                     16#{<hex-byte>*} OR #{<hex-byte>*} | 
+                     64#{<base64-char>*}
 ```
 
-=== Vytvoření při runtime
 
-***
+Hodnota *base2* se skládá z jedné či více skupin osmi číslic `0-1`. Skupiny lze oddělovat mezerou
 
-S použitím literálové syntaxe:
-
-Báze 2 se skládá ze skupin 8 znaků z rozsahu `0-1`.
 ```red
 >> 2#{11111111}
 == #{FF}
 
->> 2#{1111000000001111}
+>> 2#{11110000 00001111}
 == #{F00F}
 ```
 
-Báze 16 je implicitní binární báze a skládá se dvou znaků nebo skupin dvou znaků z rozsahu `0-9 A-F a-f`.
-
+Hodnota *base16* je hexadecimální formát čísla a skládá se z jedné či více skupin dvou znaků `0-9 A-F a-f`
 ```red
 >> 16#{2A}
 == #{2A}
 
->> 16#{2AFF}
+>> 16#{2A FF}
 == #{2AFF}
+```
+
+Tento formát je implicitní a lze jej psát i bez označení báze.
+
+```red
+>> #{2A}
+== #{2A}
 ```
 
 Lichý počet znaků vyvolá chybu.
@@ -53,14 +57,7 @@ Lichý počet znaků vyvolá chybu.
 *** Stack: load 
 ```
 
-Implicitní binární bázi (16) lze psát bez označení báze.
-
-```red
->> #{2A}
-== #{2A}
-```
-
-Báze 64 se skládá ze čtyřech znaků nebo skupin čtyř znaků z rozsahu `0-9 A-Z a-z +/`. 
+Hodnota *base64* se skládá z jedné či více skupin skupin čtyř znaků `0-9 A-Z a-z +/`. 
 
 ```red
 >> 64#{2AQQ}
@@ -70,7 +67,7 @@ Báze 64 se skládá ze čtyřech znaků nebo skupin čtyř znaků z rozsahu `0-
 == #{D80FBF}
 ```
 
-Méně než čtyři znaky nebo lichý počet znaků vyvolá chybu.
+Méně než čtyři znaky nebo lichý počet znaků vyvolá chybu. Potřebnou délku lze vytvořit doplněním hodnoty (maximálně) dvěma rovnítky `=`. 
 
 ```red
 >> 64#{2A}
@@ -78,45 +75,39 @@ Méně než čtyři znaky nebo lichý počet znaků vyvolá chybu.
 *** Where: do
 *** Stack: load 
 
->> 64#{2A2}
-*** Syntax Error: invalid binary! at "64#{2A2}"
-*** Where: do
-*** Stack: load 
+>> 64#{2A2=}
+== #{D80D}
+
+>> 64#{D75q31==}
+== #{0FBE6ADF}
 ```
 
-Výplňové znaky `=` mohou být rovněž použity pro kódovací (encoding) a dekódovací (decoding) účely.
+== Vytvoření při runtime
 
-*Encoding Example*
-
-`I` se kóduje na `SQ` - s výplňovými znaky, doplňujícími výsledek na čtyři znaky.
-
-```red
->> enbase/base "I" 64
-== "SQ=="
-```
-
-***
-
-Použití `make`.
+*Použití* `make`:
 
 ```red
 >> make binary! [42]
 == #{2A}
 ```
 
-Konverze `to`.
+*Konverze* `to`:
 
 ```red
 >> to binary! 42
 == #{0000002A}
+
+>> to binary! [42]
+== #{2A}
 ```
 
 == Související funkce
 
-* ENBASE
+=== enbase
 
 ```red
 >> help enbase
+
 USAGE:
      ENBASE value
 
@@ -135,14 +126,21 @@ REFINEMENTS:
 *Příklad*
 
 ```red
->> enbase/base "I" 64
-== "SQ=="
+>> enbase #{0FBE6ADF}
+== "D75q3w=="              ; báze 64 je pro funkci enbase implicitní
+
+>> enbase/base #{0FBE6ADF} 2
+== "00001111101111100110101011011111"
+
+>> enbase "I"
+== "SQ=="         
 ```
 
-* DEBASE
+=== debase
 
 ```red
 >> help debase
+
 USAGE:
      DEBASE value
 
@@ -159,13 +157,24 @@ REFINEMENTS:
 
 ```
 
-*Příklad*
+*Příklad převodů tam a zpět:*
 
 ```red
->> debase/base "SQ==" 64
+>> enbase "I"
+== "SQ==" 
+
+>> debase "SQ=="
 == #{49}
 
->> to string! debase/base "SQ==" 64
+>> to string! debase "SQ=="  
+== "I"
+
+Případně:
+
+>> to-binary "I"
+== #{49}
+
+>> to string! #{49}
 == "I"
 ```
 

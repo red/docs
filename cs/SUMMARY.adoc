@@ -3,6 +3,8 @@
 . link:README.adoc[Red/Core README]
 
 . link:datatypes.adoc[Datové typy]
+.. link:datatypes/binary.adoc[Datový typ binary!]
+.. link:datatypes/bitset.adoc[Datový typ bitset!]
 .. link:datatypes/block.adoc[Datový typ block!]
 .. link:datatypes/date.adoc[Datový typ date!]
 .. link:datatypes/email.adoc[Datový typ email!]
@@ -23,7 +25,6 @@
 .. link:datatypes/none.adoc[Datový typ none!]
 .. link:datatypes/object.adoc[Datový typ object!]
 .. link:datatypes/pair.adoc[Datový typ pair!]
-.. link:datatypes/paren.adoc[Datový typ paren!]
 .. link:datatypes/path.adoc[Datový typ path!]
 .. link:datatypes/percent.adoc[Datový typ percent!]
 .. link:datatypes/refinement.adoc[Datový typ refinement!]
@@ -42,6 +43,7 @@
 .. link:view.adoc[Prostředí View]
 .. link:vid.adoc[Dialekt VID]
 .. link:draw.adoc[Dialekt Draw]
+.. link:rtd.adoc[Dialekt Rich-Text]
 
 ### Další dokumentace  
 

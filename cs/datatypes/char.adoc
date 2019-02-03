@@ -5,71 +5,80 @@ Version: Draft 3
 
 == Úvodem
 
-Hodnoty `char!` reprezentují kódový bod Unicode. Jsou to celá čísla v rozsahu od hexadecimální nuly do hexadecimální hodnoty 10FFFF (od nuly do 1,114,111 v dekadickém systému).
+Hodnoty typu `char!` odkazují na kódové body (code points) znakové sady  Unicode, jimiž jsou celá čísla v rozsahu od hexadecimální nuly (00) do hexadecimální hodnoty 10FFFF.
 
-Typ `char!` je členem následujících typesetů: `immediate!`, `scalar!`
+Znaky (characters) mohou být tisknutelné (viewable) nebo řídící netisknutelné (escaped or control). Řídící znak je kódový bod v sadě znaků, který nereprezentuje psaný symbol. 
 
-== Charakteristika
+V Redu jsou řídící znaky předznamenány symbolem `^` (caret).
 
-Hodnoty typu 'char!' jsou 'přímé', 'atomické' a 'pasivní'.
-
-[NOTE]
-Předpokládá se, že charakteristiky typu byly již dříve v dokumentu definovány.
-
+Typ `char!` je členem typesetů `immediate!`, `scalar!` a `default!`.
 
 == Vytvoření
 
-Hodnoty `char!` mohou být vytvořeny s použitím literálové syntaxe nebo při běhu programu s použitím konstruktoru 'make' nebo konverzí &nbsp; 'to' &nbsp; jednou z mnoha funkcí, které z hodnoty `string!` extrahují hodnotu `char!`.
+Hodnoty `char!` mohou být vytvořeny s použitím literálové syntaxe nebo při běhu programu s použitím konstruktoru 'make' či konverzí  'to'  nebo jednou z mnoha funkcí, které z hodnoty `string!` extrahují hodnotu `char!`.
 
 
 === Literálová syntaxe
 
-Základní literálový formát pro hodnoty `char!` jest:
+Formát hodnoty typu `char!` je tento:
 ----
-#"<character>"
-<character> : jeden kódový bod Unicode (obvykle zadaný z klávesnice)
+<char-lit>     :: = #"<single-char>"
+
+<single-char>  :: = <viewable-char> | <escaped-char> | <hex-codepoint>
+<vieable-char> :: = zobrazený znak, zadaný z klávesnice
+<escaped-char> :: = ^(null) or ^@ | ^(back) or ^H | ^(tab) or ^_
+                    ^(line) or ^/ | ^(page) or ^L | ^(esc) or ^[
+                    ^(del)  or ^~ | ^A|^B| ... ^Z |
+                    ^] | ^" | ^^
+<hex-codepoint>:: = ^(hex-number)
+hex-number     :: = platné hexadecimální číslo 00 až 10FFFF					
 ----
 
-Literálová syntaxe rovněž podporuje únikové znaky (escaped characters) pro řídící znaky a pro znaky, které se obtížně píší na standardní klávesnici.
-
-Únikovým znakem v Redu je '^' - codepoint U+005E. V důsledku toho musí být samotný znak ^ rovněž předsazen únikovým znakem. Stringový literál pro kódový bod je #"^^" nikoliv #"^"; označení #"^" je neplatné.
+Únikovým znakem (escape character) v Redu je `^` (U+005E). V důsledku toho musí být samotný znak `^` rovněž předsazen únikovým znakem. Stringový literál pro tento znak je #"^^", nikoliv #"^"; označení #"^" je neplatné.
 
 V Redu existují tři formy únikových literálů, jeden pro číselné kódové body, další pro pojmenované znaky a poslední pro "řídící" znaky.
 
-Formát kódového bodu je:
+Formát grafického znaku je:
 ----
 #"^(<codepoint>)"
-<codepoint> : a valid hexadecimal e.g. 00, ABCD, 10FFFFF
+<codepoint> : platné hexadecimální číslo 00 až 10FFFF
 ----
 
-Formát "řídících" znaků je:
+Formát řídícího znaku je:
 ----
 #"^<cc>"
-<cc> : A single character from the set - A-Z, [, \, ], _
 ----
+kde <cc> je jeden znak sady &nbsp; `A-Z`, `[`(escape), `\`(line feed), `]`(group separator, `_` (unit separator), například:
+```red
+
 
 .Únikové řídící znaky
-[cols="2*"]
+[cols="3*"]
 |===
 
 |Únikový znak
 |Codepoint
+|Jméno
 
 |#"^A" - #"^Z"
-|U+0001 - U+001A.
+|U+0001 - U+001A
+|
 
 |#"^["
 |U+001B
+|escape
 
 |#"^\"
 |U+001C
+|line feed
 
 |#"^]"
 |U+001D
+|group separator
 
 |#"^_"
 |U+001F
-
+|unit separator
 |===
 
 Formát "pojmenovaných" znaků je:
@@ -88,33 +97,33 @@ Formát "pojmenovaných" znaků je:
 |character
 |codepoint
 
-|#"^(null)    
+|#"^(null)"    
 |#"^@"    
 |null                
 |U+0000
 
 |#"^(back)"   
-|
+|#"^H"
 |backspace           
 |U+0008
 
 |#"^(tab)"    
-|#"^-" 
+|#"^I" #"^-" 
 |horizontal tab      
 |U+0009
 
 |#"^(line)"    
-|#"^/"   
-|line feed           
+|#"^J" #"^/"   
+|new line           
 |U+000A 
 
 |#"^(page)"   
-|
-|form feed           
+|#"^L"
+|new page           
 |U+000C
 
 |#"^(esc)"    
-|
+|#"^["
 |escape              
 |U+001B
 
@@ -125,14 +134,23 @@ Formát "pojmenovaných" znaků je:
 
 |
 |#"^""                      
-|" - double quote    
+|double quote 
 |U+0022
 
 |
 |#"^^"
-|^ - caret           
+|caret char.           
 |U+005E
 
+|
+|#"^A" - #"^]"
+|control chars           
+|U+0001-U+001D
+
+|
+|#"^_"
+|control char.           
+|U+001F
 |===
 
 
