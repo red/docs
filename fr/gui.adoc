@@ -1,0 +1,36 @@
+== Architecture GUI (interface utilisateur graphique) de Red ==
+
+image::../images/view-overview.png[Aperçu,align="center"]
+
+=== VID 
+
+VID signifie Visual Interface Dialect (dialecte d'interfaces visuelles). C'est un dialecte de Red, qui fournit la manière la plus simple possible de spécifier des composants graphiques avec leurs propriétés, leur disposition et même des gestionnaires d'événements. Le code VID est compilé à l'exécution en un arbre de figures adapté à l'affichage.
+
+=== View
+ 
+Le moteur de code GUI comprend plusieurs parties:
+
+* Un moteur de gestion des figures indépendant de la plateforme
+* Des événements d'actions réactives
+* Un interpréteur du dialecte Draw
+* Des systèmes d'arrière-plan spécifiques aux plateformes
+
+=== React
+
+Des actions réactives peuvent être définies à partir du dialecte VID ou spécifiées directement à l'aide de la fonction REACT.
+
+=== Draw
+
+Draw est un dialecte de Red pour le dessin vectoriel 2D. Il peut être spécifié de différentes manières:
+
+* dans des layouts VID
+* directement dans la propriété `draw` de n'importe quel objet `face` (figure)
+* en utilisant la fonction DRAW pour dessiner directement sur une image
+
+=== Systèmes d'arrière-plan spécifiques aux plateformes
+
+Une API interne permet de multiples systèmes d'arrière-plan (combinaisons OS/système graphique) de telle sorte que le moteur View peut être implémenté dans différents environnements. Chaque système doit permettre extensivement les dessins 2D pour un support complet du dialecte Draw.
+
+.Avertissement
+
+La conception initiale de VID, de Draw et de l'essentiel de View (à l'exception des parties réactives) a été faite par Carl Sassenrath et implémentée en Rebol. Red View est une implementation complètement nouvelle et indépendante, fournissant des fonctionnalités similaires avec certaines améliorations souhaitables - les actions réactives étant un premier exemple.

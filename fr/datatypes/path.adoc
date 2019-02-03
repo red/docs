@@ -1,0 +1,184 @@
+= Le type Path!
+:toc:
+:numbered:
+
+== Résumé
+
+Les chemins (Path!) sont une série de valeurs délimitées par des slashs (`/`). C'est un type de `block!` limité dans les types de valeurs qu'il peut contenir. Les valeurs `Word!`, `integer!`, `get-word!`, et `paren!` sont acceptées. 
+
+`Path!` appartient aux ensembles de types suivants: `any-block!`, `any-path!`, `series!`
+
+=== Formes dérivées de Path
+
+|========================================================================
+|*Syntaxe*|*Datatype*|*Testing Values*|*Conversion*
+|foo/bar|`path!`|`path?`|`to path!`
+|foo/bar:|link:set-path.adoc[set-path!]|`set-path?`|`to set-path!`
+|:foo/bar|link:get-path.adoc[get-path!]|`get-path?`|`to get-path!`
+|'foo/bar|link:lit-path.adoc[lit-path!]|`lit-path?`|`to lit-path!`
+|========================================================================
+
+== Création
+
+Les valeurs de type Path! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
+
+```red
+>> 'foo/bar/baz 
+== foo/bar/baz
+```
+
+```red
+>> make path! [foo bar baz]
+== foo/bar/baz
+```
+
+Vous pouvez créer un chemin vide d'une taille donnée en passant une valeur entière en argument à `make`:
+
+```red
+>> make path! 10
+== 
+```
+
+Conversion avec To:
+
+```red
+>> to path! "foo bar baz"
+== foo/bar/baz
+```
+
+[NOTE, caption=Caution]
+
+Il est possible de créer par programmation des valeurs de type `path!` qui ne respectent pas les règles lexicales d'un chemin littéral. 
+
+```red
+>> mold to path! [a #(b: 2) c 1.2 /z]
+== "a/#(^/    b: 2^/)/c/1.2//z"
+
+>> load mold to path! [a #(b: 2) c 1.2 /z]
+*** Syntax Error: invalid path! at "a/#(    b: 2)/c/1.2//z"
+*** Where: do
+*** Stack: load  
+```
+
+== Syntaxe littérale
+
+BNF:
+
+```
+<path-literal> ::= <path-head>/<selector>
+<path-head>    ::= <word-literal> | <path-literal>
+<selector> ::= <integer> | <word-literal> | :<word-literal> | <paren>
+```
+
+Parse:
+
+```
+path: [word! some selector]
+selector: [#"/" [integer! | word! | get-word! | paren!]]
+```
+
+Types de données pour la tête du chemin (Path-head): link:word.adoc[word!], `path!`
+
+Types de données pour le sélecteur (selector): link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
+
+== Etapes d'évaluation
+
+Les chemins mènent à une valeur imbriquée, ou à un comportement plus spécifique dans un appel de fonction. Ils doivent commencer par un mot, et la valeur référencée par ce mot détermine comment le chemin sera évalué.
+
+* Si cette valeur est une fonction, les expressions qui suivent dans le chemin doivent être des valeurs de type `word!`. Ces mots sont traités comme des raffinements dans l'appel de la fonction. 
+
+```red
+>> append/only [42][foo]
+== [42 [foo]]
+```
+
+Une erreur sera générée s'il n'existe pas de raffinement correspondant dans la fonction:
+
+```red
+>> append/xyz [42][foo]
+*** Script Error: append has no refinement called xyz
+*** Where: append
+*** Stack: 
+```
+
+* Si la valeur n'est pas une fonction, les règles suivantes s'appliquent:
+
+** Si l'expression suivante dans le chemin est un mot, celui-ci est utilisé pour faire un `select` dans la valeur en tête du chemin. Cette valeur doit être d'un type qui permet l'action `select` (c'est-à-dire `block!`, `map!`, ou `object!`).
+
+```red
+>> blk: [foo bar baz]
+== [foo bar baz]
+
+>> blk/bar
+== baz
+```
+
+Si la sélection n'existe pas dans la valeur de tête du chemin, `select` renverra `none`:
+
+```red
+>> blk/sheboygan
+== none
+```
+
+* En dehors du premier, les Word! dans un chemin ne sont pas évalués. Si vous voulez les évaluer, utilisez `get-word!` ou `paren!` dans le chemin.
+
+```red
+>> selector: 'bar
+== bar
+
+>> my-block: [foo bar baz]
+== [foo bar baz]
+
+>> my-block/:selector
+== baz
+```
+
+```red
+>> my-block/('bar) 
+== baz
+```
+
+* Si l'expression suivante dans un chemin est un entier, celui-ci est utilisé comme argument pour un `pick` dans la valeur de tête du chemin. Cette valeur doit être d'un type qui permet l'action `pick` (c'est-à-dire `series!`, `tuple!`, ou `date!`).
+
+```red
+>> blk: [foo bar baz qux]
+== [foo bar baz qux]
+
+>> blk/3  ; pick du troisième élément d'un block
+== baz
+```
+
+Si l'entier tombe hors des limites de la valeur de tête du chemin, `pick` renvoie `none`:
+
+```red
+>> length? blk
+== 4
+
+>> blk/7
+== none
+
+>> blk/-1
+== none
+```
+
+== Test de valeurs
+
+Utilisez `path?` pour vérifier si une valeur est du type `Path!`.
+
+```red
+>> path? 'foo/bar
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? 'foo/bar
+== path!
+```
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`any-block?`, `any-path?`, `path?`, `series?`, `to-path`

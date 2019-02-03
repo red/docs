@@ -1,0 +1,150 @@
+= Le type Float!
+:toc:
+:numbered:
+
+
+== Résumé
+
+Les valeurs du type `Float!` représentent sur 64 bits des nombres à virgule positifs ou négatifs.
+
+Les Floats couvrent l'intervalle de `-1.7E+308` à `+1.7E+308`.
+
+Par conception les Floats renvoient #INF en cas de dépassement.
+
+```red
+>> 1.8E+308
+== 1.#INF
+
+>> -1.8E+308
+== -1.#INF
+```
+
+La division de 0.0 par 0.0 renvoie `1.#NaN`
+
+`Float!` appartient aux ensembles de types suivants: `immediate!`, `number!`, `scalar!`
+
+== Création
+
+Les valeurs de type Float! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution par le constructeur `make` ou par conversion avec `to`.
+
+```red
+>> 100.1
+== 100.1
+```
+
+```red
+>> make float! 1
+== 1.0
+```
+
+```red
+>> to float! 1
+== 1.0
+```
+
+== Syntaxe littérale
+
+Zero à plusieurs chiffres, suivis par un point `.`, suivis par un ou plusieurs chiffres.
+
+Une virgule peut être utilisée à la place du point comme séparateur décimal.
+
+`123,4`
+
+[NOTE, caption=Note]
+
+La conversion en string! par form changera une virgule en point comme séparateur décimal.
+
+
+`+` ou `-` placé juste avant le premier chiffre indiquent le signe positif ou négatif du `float!`.
+
+`+123.4`
+
+`-123.4`
+
+Les zéros initiaux sont ignorés.
+
+```red
+>> +00123.4
+== 123.4
+```
+
+L'apostrophe simple `'` est utilisée comme séparateur repère pour les grandes valeurs, et peut apparaître n'importe où après le premier chiffre.
+
+```red
+>> 60'000'12'3.4
+== 60000123.4
+```
+
+Une apostrophe simple `'` placée juste avant ou juste après le point décimal provoquera une erreur.
+
+```red
+>> 60'000'123'.4
+*** Syntax Error: invalid integer! at "60'000'123'.4"
+*** Where: do
+*** Stack: load 
+```
+
+```red
+>> 60'000'123.'4
+*** Syntax Error: invalid integer! at "60'000'123.'4"
+*** Where: do
+*** Stack: load 
+```
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués à `Float!`: `=, ==, <>, >, <, >=, &lt;=, =?`. De plus, `min`, et `max` sont aussi supportés.
+
+
+== Conversion
+
+Une valeur de float peut être convertie durant l'exécution en `integer!` ou en `string!` en utilisant une conversion avec `to`. 
+
+[NOTE, caption=Note]
+
+Les chiffres suivant le point décimal seront ignorés lors de la conversion d'un float en entier. Aucun arrondi ne sera opéré.
+
+```red
+>> to integer! 123.4
+== 123
+
+>> to string! 123.4
+== "123.4"
+```
+
+Si un `float!` et un `integer!` sont combinés dans une expression, le résultat sera une valeur de type `float!`.
+
+```red
+>> 123.4 * 42
+== 5182.8
+```
+
+== Test de valeurs
+
+Utilisez `float?` pour vérifier si une valeur est du type `Float!`.
+
+```red
+>> float? 123.4
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? 123.4
+== float!
+```
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`acos`, `asin`, `atan`, `atan2`, `cos`, `distance?`, `float?`, `sin`, `sqrt`, `tan`, `to-float`
+
+=== Natifs
+
+`arccosine`, `arcsine`, `arctangent`, `arctangent2`, `as-pair`, `cosine`, `exp`, `log-10`, `log-2`, `log-e`, `sine`, `square-root`, `tangent`
+
+=== Opérateurs
+
+`**`

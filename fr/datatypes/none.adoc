@@ -1,0 +1,60 @@
+= Le type None!
+:toc:
+:numbered:
+
+
+== Résumé
+
+None! représente une valeur qui n'appartient à aucun autre type de données. Elle est analogue à nil ou nothing dans d'autres langages de programmation.
+
+`None!` appartient aux ensembles de types suivants: `immediate!`
+
+== Création
+
+Les valeurs de type None! peuvent être créées à l'aide de la syntaxe littérale, ou lors de l'exécution en utilisant le constructeur `make`, ou la conversion `to`.
+
+----
+>> make none! 'x
+== none
+
+>> to none! 42
+== none
+----
+
+== Syntaxe littérale
+
+Le mot préféfini `none` ou la syntaxe littérale:
+----
+#[none]
+----
+
+== Test de valeurs
+
+Utilisez `none?` pour vérifier si une valeur est du type `None!`.
+
+----
+>> none? 1
+== false
+
+>> none? true
+== false
+
+>> none? none
+== true
+----
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+----
+>> type? none
+== none!
+----
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`to-none`
+
+
+
