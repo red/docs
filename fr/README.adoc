@@ -16,9 +16,9 @@ Les traductions utilisées sont présentées dans la table ci-dessous.
 [cols="3*"]
 |===
 
-|Anglais
-|Français
-|Commentaire
+|_Anglais_
+|_Français_
+|_Commentaire_
 
 |block
 |bloc
@@ -43,6 +43,22 @@ Les traductions utilisées sont présentées dans la table ci-dessous.
 |word
 |mot
 |valeur du type `word!` 
+
+|face
+|figure
+|objet de l'interface graphique, du type `face!` (texte, champ de saisie, bouton...)
+
+|facet
+|facette
+|champ d'un objet figure
+
+|layout
+|agencement
+|disposition des figures; `layout` est également une fonction de création d'un arbre de figures dans le dialecte VID
+
+|panel
+|panneau
+|objet figure de type `panel`, conteneur pour d'autres figures
 
 |===
 
