@@ -20,12 +20,16 @@ SYSTEM/STANDARD/ERROR je kontejner typu object! s těmito slovy a hodnotami:
 
 Typ `error!` je člen těchto typesetů: `any-object!`, `default!`
 
-== Vytvoření
+== Vytvoření při běhu programu
 
+```
+<error>      ::= make error! <error-spec>
+<error-spec> ::= <integer> | <block> | <string>
+```
 
 Hodnoty 'error' mohou být vytvořeny při běhu programu (runtime) použitím  `make` nebo `cause-error`.
 
-Je-li zadaným argumentem funkce `make` hodnota typu `integer!`, je error v příslušném seznemu vyhledán podle pole `code`. Chybové hlášení (error message) bude sestaveno z hodnoty `string!` prvního pole `id` v seznamu jmen `id`.
+Je-li zadaným argumentem funkce `make` hodnota typu `integer!`, je error vyhledán podle pole `code`. Chybové hlášení (error message) bude sestaveno z hodnoty `string!` prvního pole `id` v seznamu jmen `id`.
 
 ```red
 SYSTEM/CATALOG/ERRORS/MATH is an object! with the following words and values:
@@ -145,18 +149,6 @@ Arg values in the block are reduced.
 *** Syntax Error: missing "foo" at "bar"
 *** Where: do
 *** Stack: cause-error  
-
->> cause-error 'syntax 'missing [foo bar]
-*** Script Error: foo has no value
-*** Where: reduce
-*** Stack: cause-error  
-```
-
-== Literálová skladba
-
-```
-<error>      ::= make error! <error-spec>
-<error-spec> ::= <integer> | <block> | <string>
 ```
 
 == Testování hodnot

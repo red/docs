@@ -11,7 +11,7 @@ Hodnoty typu `handle!` reprezentují  nesrozumitelná (opaque) celá čísla, po
 
 == Vytvoření
 
-Hodnoty typu `handle!` se používají p?i komunikaci s operačním systémem a mohou byt reprezentovány pouze slovy, které jsou argumenty funkcí, jež tuto komunikaci ošetřují.
+Hodnoty typu `handle!` se používají při komunikaci s operačním systémem a mohou byt reprezentovány pouze slovy, které jsou argumenty funkcí, jež tuto komunikaci ošetřují.
 
 == Testování hodnot
 

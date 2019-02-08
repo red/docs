@@ -205,8 +205,8 @@ Nakreslí obrázek s použitím poskytnuté inforace o pozici a šířce. Nemá-
 [NOTE]
 ==== 
 * Čtyři body nejsou dosud zavedeny. Budou umožňovat roztažení (stretch) obrázku s použitím čtyř libovolně umístěných hran. 
-Four points mode is not yet implemented. It will allow to stretch the image using 4 arbitrary-positioned edges.
-* `border` Tento nepovinný režim není dosud zaveden.
+* `border` Tento nepovinný režim není dosud zaveden a nejspíš asi nikdy nebude.
+* Ke specifikaci obrázku nelze použít cesty. Zpracování cest je nákladné a proto je nevhodné pro dialekt `draw`, který je zaměřen na výkon. Použijte selektivní vyhodnocení (`compose`).
 ====
 
 === Text
@@ -830,7 +830,7 @@ Nakreslí úsečku mezi dvěma body. Je-li zadáno více bodů, kreslí se dalš
 <end>      : koncový bod oblouku (pair!).
 <radius-x> : poloměr kružnice ve směru osy x (integer! float!).
 <radius-y> : poloměr kružnice ve směru osy y (integer! float!).
-<angle>    : úhel mezi počátečním a koncovým bodem oblouku ve stupních (integer! float!).
+<angle>    :  úhel pootočení výchozí elipsy ve stupních (integer! float!).
 sweep      : (optional) oblouk je kreslen ve směru pozitivního úhlu.
 large      : (optional) vytvoří konvexní oblouk (souvisí s volbou 'sweep).
 

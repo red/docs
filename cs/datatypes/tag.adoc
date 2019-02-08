@@ -8,7 +8,7 @@ Hodnoty `tag!` reprezentují tagy a elementy zna?kovacího (markup) jazyka.
 
 Typ `tag!` je subtyp typeset? `any-string!` a `series!`
 
-== Vytvo?ení
+== Vytvoření
 
 Hodnoty typu tag! lze vytvo?it literálovou syntaxí nebo p?i runtime pou?itím konstruktoru `make` a konverzí `to`.
 ```red
@@ -25,15 +25,56 @@ Hodnoty typu tag! lze vytvo?it literálovou syntaxí nebo p?i runtime pou?itím 
 
 Jeden či více znaků uvnitř  `<` lomených závorek `>`.
 
-Prvním znakem za první závorkou nemohou být znaky  `<`,  `>` nebo `=`. 
-
-Mezi první závorkou a prvním znakem nesmí být mezera, neboť by ji lexer interpretoval jako neplatný komparační operátor.
+Na první pozici za úvodní závorkou (`<`) nemohou být znaky  `<`, `>`, `=` nebo mezera.
 
 ```red
+>> <<foo>
+*** Script Error: < operator is missing an argument
+*** Where: catch
+*** Stack:  
+
+>> <>foo>
+*** Script Error: <> operator is missing an argument
+*** Where: catch
+*** Stack:  
+
+>> <=foo>
+*** Syntax Error: invalid value at "<=foo>"
+*** Where: do
+*** Stack: load  
+
 >> < foo>
 *** Script Error: < operator is missing an argument
 *** Where: catch
 *** Stack:  
+```
+
+Znak `<` je povolen až za první pozicí.
+
+```red
+>> type? <f<oo>
+== tag!
+```
+
+[NOTE, caption=Poznámka]
+
+It is possible to create `tag!` values using `make` that are not affected by current lexer limitations. 
+
+```red
+>> make tag! " foo"
+== < foo>
+
+>> make tag! "<foo"
+== <<foo>
+
+>> make tag! ">foo"
+== <>foo>
+
+>> make tag! "=foo"
+== <=foo>
+
+>> make tag! " foo"
+== < foo>
 ```
 
 == Komparace
@@ -56,7 +97,7 @@ Funkce `type?` vrací datový typ dané hodnoty.
 == tag!
 ```
 
-== P?eddefinovaná slova
+== Předdefinovaná slova
 
 === Funkce
 

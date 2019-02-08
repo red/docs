@@ -1,0 +1,210 @@
+= Binary! datatype
+:toc:
+:numbered:
+
+
+== Úvodem
+
+Hodnota `binary!` reprezentuje řadu bajtů.
+
+Typ `binary!` je člen typesetů `default!` a `series!`
+
+== Vytvoření
+
+Hodnoty typu binary! lze vytvořit s použitím literálové syntaxe nebo při runtime s použitím konstruktoru `make` nebo konverzí `to`.
+
+== Literálová skladba
+
+```
+<binary-literal> ::= 2#{<base2-byte>*} | 16#{<hex-byte>*} | 64#{<base64-char>*} | #{<hex-byte>*}
+```
+
+=== Vytvoření při runtime
+
+***
+
+S použitím literálové syntaxe:
+
+Báze 2 se skládá ze skupin 8 znaků z rozsahu `0-1`.
+```red
+>> 2#{11111111}
+== #{FF}
+
+>> 2#{1111000000001111}
+== #{F00F}
+```
+
+Báze 16 je implicitní binární báze a skládá se dvou znaků nebo skupin dvou znaků z rozsahu `0-9 A-F a-f`.
+
+```red
+>> 16#{2A}
+== #{2A}
+
+>> 16#{2AFF}
+== #{2AFF}
+```
+
+Lichý počet znaků vyvolá chybu.
+
+```red
+>> 16#{2AF}
+*** Syntax Error: invalid binary! at "#{2AF}"
+*** Where: do
+*** Stack: load 
+```
+
+Implicitní binární bázi (16) lze psát bez označení báze.
+
+```red
+>> #{2A}
+== #{2A}
+```
+
+Báze 64 se skládá ze čtyřech znaků nebo skupin čtyř znaků z rozsahu `0-9 A-Z a-z +/`. 
+
+```red
+>> 64#{2AQQ}
+== #{D80410}
+
+>> 64#{2A+/}
+== #{D80FBF}
+```
+
+Méně než čtyři znaky nebo lichý počet znaků vyvolá chybu.
+
+```red
+>> 64#{2A}
+*** Syntax Error: invalid binary! at "64#{2A}"
+*** Where: do
+*** Stack: load 
+
+>> 64#{2A2}
+*** Syntax Error: invalid binary! at "64#{2A2}"
+*** Where: do
+*** Stack: load 
+```
+
+Výplňové znaky `=` mohou být rovněž použity pro kódovací (encoding) a dekódovací (decoding) účely.
+
+*Encoding Example*
+
+`I` se kóduje na `SQ` - s výplňovými znaky, doplňujícími výsledek na čtyři znaky.
+
+```red
+>> enbase/base "I" 64
+== "SQ=="
+```
+
+***
+
+Použití `make`.
+
+```red
+>> make binary! [42]
+== #{2A}
+```
+
+Konverze `to`.
+
+```red
+>> to binary! 42
+== #{0000002A}
+```
+
+== Související funkce
+
+* ENBASE
+
+```red
+>> help enbase
+USAGE:
+     ENBASE value
+
+DESCRIPTION: 
+     Encodes a string into a binary-coded string (BASE-64 default). 
+     ENBASE is a native! value.
+
+ARGUMENTS:
+     value        [binary! string!] "If string, will be UTF8 encoded."
+
+REFINEMENTS:
+     /base        => Binary base to use.
+        base-value   [integer!] "The base to convert from: 64, 58, 16, or 2."
+```
+
+*Příklad*
+
+```red
+>> enbase/base "I" 64
+== "SQ=="
+```
+
+* DEBASE
+
+```red
+>> help debase
+USAGE:
+     DEBASE value
+
+DESCRIPTION: 
+     Decodes binary-coded string (BASE-64 default) to binary value. 
+     DEBASE is a native! value.
+
+ARGUMENTS:
+     value        [string!] "The string to decode."
+
+REFINEMENTS:
+     /base        => Binary base to use.
+        base-value   [integer!] "The base to convert from: 64, 58, 16, or 2."
+
+```
+
+*Příklad*
+
+```red
+>> debase/base "SQ==" 64
+== #{49}
+
+>> to string! debase/base "SQ==" 64
+== "I"
+```
+
+== Komparace
+
+Na hodnotu typu `binary!` lze aplikovat všechny komparační oprátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
+
+
+== Ověřování hodnot
+
+Přímým dotazem:
+
+```red
+>> binary? #{2A} 
+== true
+```
+
+Obecným dotazem:
+
+```red
+>> type? #{2A}
+== binary!
+```
+
+
+== Předdefinovaná slova
+
+=== Akce
+
+`complement`, `or~`, `put`, `read`, `trim`, `write`, `xor~`
+
+=== Funkce
+
+`binary?`, `load`, `read-thru`, `save`, `to-binary`
+
+=== Nativa
+
+`call`, `checksum`, `debase`, `decompress`, `enbase`, `parse`
+
+=== Operátory
+
+`and`, `or`, `xor`

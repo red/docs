@@ -6,7 +6,7 @@ _This is a work in progress, only some of the datatypes are currently documented
 
 '''
 
-* Aktuálně (20.8.2018) dostupné datové typy v jazyce Red:
+* Aktuálně (10.12.2018) dostupné datové typy v jazyce Red:
 
 ```red
     action! 
@@ -37,8 +37,8 @@ _This is a work in progress, only some of the datatypes are currently documented
     none! 
     object! 
     op! 
-    paren! 
     pair!
+	paren! 
     path! 
     percent!
     point!
@@ -49,6 +49,7 @@ _This is a work in progress, only some of the datatypes are currently documented
     string! 
     tag!
     time!
+	tuple!
     typeset! 
     unset! 
     url! 
