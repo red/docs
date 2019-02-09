@@ -5,7 +5,7 @@
 
 == Úvodem
 
-Hodnota `binary!` je tvořena řadou číselných znaků zvolené číselné soustavy.
+Hodnota `binary!` je tvořena řadou číselných znaků **zvolené** číselné soustavy - nikoliv jak název napovídá - pouze dvojkové soustavy.
 
 Typ `binary!` je člen typesetů `default!` a `series!`
 
@@ -16,11 +16,10 @@ Hodnoty typu binary! lze vytvořit s použitím literálové syntaxe nebo při r
 == Literálová skladba
 
 ```
-<binary-literal> ::=  2#{<base2-byte>*} | 
-                     16#{<hex-byte>*} OR #{<hex-byte>*} | 
+<binary-literal> ::=  2#{<base2-char>*} | 
+                     16#{<hex-char>*} OR #{<hex-char>*} | 
                      64#{<base64-char>*}
 ```
-
 
 Hodnota *base2* se skládá z jedné či více skupin osmi číslic `0-1`. Skupiny lze oddělovat mezerou
 
@@ -82,7 +81,7 @@ Méně než čtyři znaky nebo lichý počet znaků vyvolá chybu. Potřebnou d�
 == #{0FBE6ADF}
 ```
 
-== Vytvoření při runtime
+== Deklarace pro runtime
 
 *Použití* `make`:
 

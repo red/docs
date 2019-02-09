@@ -7,9 +7,9 @@ Version: Draft 3
 
 Hodnoty typu `char!` odkazují na kódové body (code points) znakové sady  Unicode, jimiž jsou celá čísla v rozsahu od hexadecimální nuly (00) do hexadecimální hodnoty 10FFFF.
 
-Znaky (characters) mohou být tisknutelné (viewable) nebo řídící netisknutelné (escaped or control). Řídící znak je kódový bod v sadě znaků, který nereprezentuje psaný symbol. 
+Red používá kódování `UTF-8`, převádějící číselné dekadické či hexadecimální hodnoty Unicode na binární čísla o proměnné délce 1 až 4 bajty - viz link:https://www.fileformat.info/info/charset/UTF-8/list.htm[UTF-8 encoding table]. 
 
-V Redu jsou řídící znaky předznamenány symbolem `^` (caret).
+Znaky (characters) mohou být tisknutelné (printable or graphical) nebo netisknutelné, řídící (escaped or control). Řídící znak je odkazem na interní proceduru či hodnotu, například `horizontal tab`, `null`, atp. 
 
 Typ `char!` je členem typesetů `immediate!`, `scalar!` a `default!`.
 
@@ -20,82 +20,48 @@ Hodnoty `char!` mohou být vytvořeny s použitím literálové syntaxe nebo př
 
 === Literálová syntaxe
 
-Formát hodnoty typu `char!` je tento:
+Skladba hodnoty typu `char!` je tato:
 ----
 <char-lit>     :: = #"<single-char>"
 
 <single-char>  :: = <viewable-char> | <escaped-char> | <hex-codepoint>
-<vieable-char> :: = zobrazený znak, zadaný z klávesnice
+<vieable-char> :: = zobrazitelný znak, případně zadaný z klávesnice
 <escaped-char> :: = ^(null) or ^@ | ^(back) or ^H | ^(tab) or ^_
                     ^(line) or ^/ | ^(page) or ^L | ^(esc) or ^[
                     ^(del)  or ^~ | ^A|^B| ... ^Z |
                     ^] | ^" | ^^
 <hex-codepoint>:: = ^(hex-number)
-hex-number     :: = platné hexadecimální číslo 00 až 10FFFF					
+hex-number     :: = platné hexadecimální číslo 00 až 10FFFF
 ----
 
-Únikovým znakem (escape character) v Redu je `^` (U+005E). V důsledku toho musí být samotný znak `^` rovněž předsazen únikovým znakem. Stringový literál pro tento znak je #"^^", nikoliv #"^"; označení #"^" je neplatné.
+Únikovým znakem (escape character) v Redu je caret `^`. V důsledku toho musí být samotný znak `^` rovněž předsazen únikovým znakem. Stringový literál pro tento znak je #"^^", nikoliv #"^"; označení #"^" je neplatné.
 
-V Redu existují tři formy únikových literálů, jeden pro číselné kódové body, další pro pojmenované znaky a poslední pro "řídící" znaky.
+Únikové znaky `^` signalizují alternativní interpretaci následujícího řídícího znaku; spolu s ním tvoří tzv. `escape sekvenci`. Nejpoužívanější řídící znaky mají kromě krátké formy ještě pojmenovanou formu, například znak pro `delete` má krátkou formu `#"^~"` a dlouhou (mnemotechnickou) formu `#"^(del)"`.
 
-Formát grafického znaku je:
+
+Formát dlouhé formy je:
 ----
 #"^(<codepoint>)"
-<codepoint> : platné hexadecimální číslo 00 až 10FFFF
+<codepoint> : platné hexadecimální číslo 00 až 10FFFF |
+              jméno symbolu pro kontrolní znak
+              
 ----
+Formátem dlouhé formy vyjádříme libovolný znak sady Unicode v kódování UTF-8, například `#"^(2b)"` pro znaménko `+`. 
 
-Formát řídícího znaku je:
+Formát krátké formy je:
 ----
 #"^<cc>"
 ----
-kde <cc> je jeden znak sady &nbsp; `A-Z`, `[`(escape), `\`(line feed), `]`(group separator, `_` (unit separator), například:
-```red
-
-
-.Únikové řídící znaky
-[cols="3*"]
-|===
-
-|Únikový znak
-|Codepoint
-|Jméno
-
-|#"^A" - #"^Z"
-|U+0001 - U+001A
-|
-
-|#"^["
-|U+001B
-|escape
-
-|#"^\"
-|U+001C
-|line feed
-
-|#"^]"
-|U+001D
-|group separator
-
-|#"^_"
-|U+001F
-|unit separator
-|===
-
-Formát "pojmenovaných" znaků je:
-----
-#"^(<name>)" nebo #"^<symbol>" 
-<name> : název z tabulky Únikové řídící znaky
-<symbol> : symbol z tabulky Únikové řídící znaky
-----
-
-.Pojmenované únikové znaky
+kde <cc> je jeden znak sady &nbsp; `A-Z`, `[`(escape), `\`(line feed), `]`(group separator), `_` (unit separator), atp - viz tabulka:
+  
+  
+**Často používané řídící znaky**
 [cols="4*"]
 |===
-
-|name
-|symbol
-|character
-|codepoint
+|**name**
+|**symbol**
+|**character**
+|**codepoint**
 
 |#"^(null)"    
 |#"^@"    
@@ -108,12 +74,12 @@ Formát "pojmenovaných" znaků je:
 |U+0008
 
 |#"^(tab)"    
-|#"^I" #"^-" 
+|#"^I" or #"^-" 
 |horizontal tab      
 |U+0009
 
 |#"^(line)"    
-|#"^J" #"^/"   
+|#"^J" or #"^/"   
 |new line           
 |U+000A 
 
@@ -122,15 +88,20 @@ Formát "pojmenovaných" znaků je:
 |new page           
 |U+000C
 
+|#"^(del)"    
+|#"^~"   
+|delete              
+|U+007F
+
 |#"^(esc)"    
 |#"^["
 |escape              
 |U+001B
 
-|#"^(del)"    
-|#"^~"   
-|delete              
-|U+007F
+|    
+|#"^]"
+|group separator              
+|U+005D
 
 |
 |#"^""                      
@@ -143,20 +114,26 @@ Formát "pojmenovaných" znaků je:
 |U+005E
 
 |
-|#"^A" - #"^]"
+|#"^A" - #"^Z"
 |control chars           
-|U+0001-U+001D
+|U+0041-U+005A
 
 |
 |#"^_"
 |control char.           
 |U+001F
+
 |===
+
+== TBD
+
+Sem patří popis argumentů pro funkce `make char!` a `to-char` včetně příkladů.
+
 
 
 == Komparace
 
-Pro hodnoty typu 'char!' mohou být použity všechny komparátory : `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány `min`, `max` a `sort`. Porovnávání hodnot typu `char!` values je 'case sensitive'.
+Pro hodnoty typu 'char!' mohou být použity všechny komparátory : `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min`, `max` a `sort`. Porovnávání hodnot typu `char!` je 'case sensitive'.
 
 *Příklady*
 
@@ -173,7 +150,7 @@ sort [#"c" #"b" #"d" #"a"]
 
 
 == Aritmetika
-Pro hodnoty `char!` lze použít celý rozsah matematických funkcí. Pokud se výsledek aritmetického výrazu dostane mimo rozsah  00 - 10FFFF (hexadecimal), je vyvolána chyba `Math Error`.
+Pro hodnoty typu `char!` lze použít celý rozsah matematických funkcí. Pokud se výsledek aritmetického výrazu dostane mimo rozsah  00 - 10FFFF, je vyvolána chyba `Math Error`.
 
 *Příklady*
 
