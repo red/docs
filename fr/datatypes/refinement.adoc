@@ -1,0 +1,83 @@
+= Le type Refinement!
+:toc:
+:numbered:
+
+
+== Résumé
+
+Un raffinement (`refinement!`) est une valeur symbolique, comme un word!, qui est le plus souvent utilisée pour un réglage fin dans les spécifications de fonctions. Conceptuellement, un chemin (path) est une série de raffinements successifs, que ce soit pour des valeurs de path!, de fichiers ou d'URLs. Les raffinements sont également utilisés pour accéder à des valeurs spécifiques dans les objets, et pour ajouter de la flexibilité et du contrôle dans l'appel de fonctions.
+
+
+La fonction `repend` sans raffinements:
+```red
+>> repend ["foo"] [21 * 2]
+== ["foo" 42]
+```
+
+Avec le raffinement `/only`:
+
+```red
+>> repend/only ["foo"] [21 * 2]
+== ["foo" [42]]
+```
+
+`Refinement!` appartient aux ensembles de types suivants: `all-word!`, `immediate!`
+
+== Création
+
+Les valeurs de type Refinement! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
+
+```red
+>> make refinement! "foo"
+== /foo
+```
+```red
+>> to refinement! 'bar
+== /bar
+```
+
+== Syntaxe littérale
+
+Un slash `/` suivi par un ou plusieurs caractères de toute l'étendue d'Unicode, incluant les caractères de ponctuation du sous-ensemble ASCII suivant: `! & ' * + - . < = > ? _ | ~``
+
+Les caractères interdits sont les caractères de contrôle, les caractères d'espace, et les caractères de ponctuation du sous-ensemble ASCII suivant: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+
+[NOTE, caption=Note]
+
+L'utilisation de `@` ne générera pas d'erreur, mais provoquera le renvoi de la valeur du `refinement!` sous forme d'un `email!`.
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués à `refinement!`: `=, ==, <>, >, <, >=, &lt;=, =?`. 
+
+== Test de valeurs
+
+Utilisez `refinement?` pour vérifier si une valeur est du type `Refinement!`.
+
+```red
+>> refinement? /foo
+== true
+
+>> refinement? third [42 "Foo" /bar]
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? /foo
+== refinement!
+
+>> type? third [42 "Foo" /bar]
+== refinement!
+```
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`parse-func-spec`, `refinement?`, `to-refinement`
+
+=== Natifs
+
+`function`

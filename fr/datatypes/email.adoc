@@ -1,0 +1,62 @@
+= Le type Email!
+:toc:
+:numbered:
+
+== Résumé
+
+Les valeurs de type `email!` permettent d'exprimer directement des adresses de courriel, par exemple `foo@bar.net`
+
+`email!` appartient aux ensembles de types suivants: `any-string!`, `series!`
+
+== Création
+
+Les valeurs de type `email!` peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution par le constructeur `make` ou par conversion avec `to`.
+
+```red
+>> f: make email! "foo"
+== foo
+
+>> type? f
+== email!
+```
+
+```red
+>> b: to email! 'bar
+== bar
+
+>> type? b
+== email!
+```
+
+== Syntaxe littérale
+
+Un ou plusieurs caractères, suivis du symbole `@`, puis de 0 à plusieurs caractères additionnels.
+
+Caractères invalides: `%` `(` `)` `:` `"`
+
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués à `email!`: `=, ==, <>, >, <, >=, &lt;=, =?`. De plus, `min`, et `max` sont aussi supportés.
+
+== Test de valeurs
+
+Utilisez `email?` pour vérifier si une valeur est du type `email!`.
+
+```red
+>> email? foo@bar.net
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? foo@bar.net
+== email!
+```
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`email?`, `suffix?`, `to-email`

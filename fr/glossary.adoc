@@ -1,0 +1,107 @@
+= Glossaire
+Version: Draft 1
+
+[glossary]
+Action:: 
+  Une fonction d'un ensemble de fonctions applicables à tous types de données. Toutes les actions ne sont pas applicables à tous les types de données.
+Actor::
+  
+all-word!::
+  
+any-block!::
+  
+any-function!::
+  
+any-list!::
+  
+any-object!::
+  
+any-path!::
+  
+any-string!::
+  
+any-type!::
+  
+any-word!::
+  
+Block::
+    
+Compiler::
+    
+Console::
+    
+Context::
+    
+Datatype::
+  Les types de données sont le fondement de Red...
+default!::
+  
+Dialect::
+    Une DSL incorporée qui partage la même syntaxe que le langage Red.
+Domain Specific Language (DSL)::
+    Un langage informatique spécialisé pour un domaine d'application particulier. Parfois appelé un Langage Orienté Problème (POL - Problem Oriented Language).
+Draw::
+    
+Event::
+    
+external!::
+  
+Face::
+    
+Facet::
+    
+immediate!::
+ 
+Op::
+    Une fonction ayant une interface infixe, où le premier argument apparaît à gauche du nom de la fonction.
+internal!::
+  
+Interpreter::
+    
+Layout::
+    
+libRed::
+    
+List::
+  
+Mezzanine::
+  Il s'agit d'un terme de Rebol. Il désigne une fonction écrite en Rebol (par opposition à une fonction écrite en C) qui est incluse dans la distribution standard. Une mezzanine en Red est une fonction écrite entièrement en Red qui est incluse dans la distribution standard. Les fonctions mezzanines n'ont pas besoin de compilation.
+ 
+Module::
+    
+Native:: 
+  Fonctions écrites en Red/System, et exposées pour être utilisées dans Red.  
+Number::
+    
+number!::
+    
+Object::
+    
+Pane::
+    
+Path::
+  
+Pseudo-type::
+  Un nom informel pour `typeset`.
+Routine::
+  Une fonction Red/System écrite en ligne en Red.  
+Runtime::
+    
+scalar!::
+    
+Series::
+    
+series!::
+  
+String::
+    
+Typeset::   
+  Les Typesets sont des groupes de types de données qui partagent certaines caractéristiques...
+Toolchain::
+    
+VID::
+    
+View::
+    
+Word::
+    
