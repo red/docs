@@ -1,0 +1,25 @@
+= Le type Event!
+:toc:
+:numbered:
+
+== Résumé
+
+Les valeurs de type `Event!` (événement) sont des valeurs similaires à des objets qui représentent une activité externe.
+
+`Event!` appartient aux ensembles de types suivants: `default!`, `external!`
+
+== Création
+
+Les valeurs de type `Event!` ne peuvent pas être créées avec `make` ou `to`, et elles n'ont pas de forme littérale. Elles proviennent du système d'exploitation et sont de fait en lecture seule.
+
+Voir la link:https://doc.red-lang.org/fr/view.html#_events[documentation de View] pour plus d'information sur les événements.
+
+== Test de valeurs
+
+Utilisez `event?` pour vérifier si une valeur est du type `Event!`.
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`event?`
