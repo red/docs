@@ -3,15 +3,19 @@
 . link:README.adoc[Red/Core README]
 
 . link:datatypes.adoc[Datové typy]
+.. link:datatypes/binary.adoc[Datový typ binary!]
+.. link:datatypes/bitset.adoc[Datový typ bitset!]
 .. link:datatypes/block.adoc[Datový typ block!]
 .. link:datatypes/date.adoc[Datový typ date!]
 .. link:datatypes/email.adoc[Datový typ email!]
 .. link:datatypes/error.adoc[Datový typ error!]
+.. link:datatypes/event.adoc[Datový typ event!]
 .. link:datatypes/file.adoc[Datový typ file!]
 .. link:datatypes/float.adoc[Datový typ float!]
 .. link:datatypes/get-path.adoc[Datový typ get-path!]
 .. link:datatypes/get-word.adoc[Datový typ get-word!]
 .. link:datatypes/handle.adoc[Datový typ handle!]
+.. link:datatypes/hash.adoc[Datový typ hash!]
 .. link:datatypes/char.adoc[Datový typ char!]
 .. link:datatypes/integer.adoc[Datový typ integer!]
 .. link:datatypes/image.adoc[Datový typ image!]
@@ -23,7 +27,6 @@
 .. link:datatypes/none.adoc[Datový typ none!]
 .. link:datatypes/object.adoc[Datový typ object!]
 .. link:datatypes/pair.adoc[Datový typ pair!]
-.. link:datatypes/paren.adoc[Datový typ paren!]
 .. link:datatypes/path.adoc[Datový typ path!]
 .. link:datatypes/percent.adoc[Datový typ percent!]
 .. link:datatypes/refinement.adoc[Datový typ refinement!]
@@ -36,12 +39,14 @@
 .. link:datatypes/tuple.adoc[Datový typ tuple!]
 .. link:datatypes/unset.adoc[Datový typ unset!]
 .. link:datatypes/url.adoc[Datový typ url!]
+.. link:datatypes/vector.adoc[Datový typ vector!]
 .. link:datatypes/word.adoc[Datový typ word!]
 
 .  link:gui.adoc[Systém GUI]
 .. link:view.adoc[Prostředí View]
 .. link:vid.adoc[Dialekt VID]
 .. link:draw.adoc[Dialekt Draw]
+.. link:rtd.adoc[Dialekt Rich-Text]
 
 ### Další dokumentace  
 
