@@ -172,7 +172,15 @@ make date! [<day> <month> <year> <hour> <minute> <second> <zone>]
 ====
 * Les valeurs d'arguments hors limites provoqueront une erreur. Pour un résultat normalisé, utilisez l'action `to` plutôt que `make`.
 
-* les champs `year` et `day` sont interchangeables, mais seulement pour les faibles valeurs d'année. L'année peut être utilisée en première position *seulement* si sa valeur est >= 100 et inférieure à la valeur du troisième champ. Lorsque cette règle n'est pas satisfaite, le troisième champ est considéré comme étant l'année. Les années négatives devraient toujours être spécifiées en troisième position.
+* les champs `year` et `day` sont interchangeables, mais seulement pour les faibles valeurs d'année. 
+
+Lorsqu'on utilise `make`, l'année peut être utilisée en première position *seulement* si sa valeur est >= 100.
+
+Lorsqu'on utilise `to`, la première position peut être utilisée pour l'année *seulement* si sa valeur est >= 100 et sa valeur est plus grande que celle du troisième champ.
+
+Lorsque cette règle n'est pas satisfaite, le troisième champ est considéré comme étant l'année. 
+ 
+Les années négatives devraient toujours être spécifiées en troisième position.
 ====
 
 *Exemples*
@@ -208,6 +216,15 @@ make date! [99 12 31]
 *** Where: make
 ----
 
+* Utilisation de la conversion avec `to` (voir <<_heure_unix>>)
+
+----
+to-integer <date>
+to-date <epoch>
+
+<date>  : une valeur de type date!
+<epoch> : une valeur entière représentant une heure Unix
+----
 
 == Les accesseurs par chemin
 

@@ -21,7 +21,12 @@ SYSTEM/STANDARD/ERROR est un object! avec les mots et valeurs suivants:
 
 `error!` appartient aux ensembles de types suivants: `any-object!`, `default!`
 
-== Création
+== Création lors de l'exécution
+
+```
+<error>      ::= make error! <error-spec>
+<error-spec> ::= <integer> | <block> | <string>
+```
 
 Les valeurs de type `error!` peuvent être créées au cours de l'exécution en utilisant `make` ou `cause-error`.
 
@@ -65,7 +70,7 @@ Si l'argument passé à `make` est une valeur de type `block!`, ce bloc doit con
 
 Si l'argument passé à `make` est le corps d'un `object!`, les champs requis sont `type` et `id`. Les champs optionnels sont `arg1`, `arg2`, `arg3`, `near`, `where`, et `stack`.
 
-Utilisez les mots suivants pour la valeur du `type` dans un objet erreur: `throw`,`note`, `syntax`, `script`, `math`, `access`, `user`, `internal`
+Utilisez les mots suivants pour la valeur du `type` dans un objet erreur: `throw`,`note`, `syntax`, `script`, `math`, `access`, `user`, `internal`.
 
 Vous pouvez trouver les `id` s des types d'erreur disponibles en saisissant `help system/catalog/errors/<error-type>` dans la console Red, `<error-type>` étant l'un des mots susmentionnés.
 
@@ -145,18 +150,6 @@ Les valeurs d'arguments (arg) dans le bloc sont réduites (évaluées).
 *** Syntax Error: missing "foo" at "bar"
 *** Where: do
 *** Stack: cause-error  
-
->> cause-error 'syntax 'missing [foo bar]
-*** Script Error: foo has no value
-*** Where: reduce
-*** Stack: cause-error  
-```
-
-== Syntaxe littérale
-
-```
-<error>      ::= make error! <error-spec>
-<error-spec> ::= <integer> | <block> | <string>
 ```
 
 == Test de valeurs

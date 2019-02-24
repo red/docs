@@ -209,7 +209,8 @@ Affiche une image en utilisant les informations de position et de taille spécif
 [NOTE]
 ====
 * Le mode à quatre points n'est pas encore implémenté. Il permettra d'étirer l'image en utilisant 4 coins positionnés arbitrairement.
-* le mode optionnel `border` n'est pas encore implémenté.
+* Le mode optionnel `border` n'est pas encore implémenté. Il est peu probable que cette fonctionnalité soit supportée.
+* Vous ne pouvez pas utiliser des chemins pour spécifier des images. Le traitement des chemins est coûteux, c'est donc un mauvais choix pour le dialecte `draw` qui est optimisé pour les performances. Utilisez plutôt l'évaluation sélective (`compose`).
 ====
 
 === Text (texte)
@@ -872,7 +873,7 @@ Trace une ligne entre deux points. Si plus de points sont spécifiés, des ligne
 <end>      : extrémité de l'arc (pair!).
 <radius-x> : rayon du cercle suivant l'axe des X (integer! float!).
 <radius-y> : rayon du cercle suivant l'axe des Y (integer! float!).
-<angle>    : angle en degrés entre les points de début et de fin de l'arc (integer! float!).
+<angle>    : angle de rotation de l'ellipse sous-jacente en degrés (integer! float!).
 sweep      : (optionnel) dessine l'arc dans la sens des angles positifs.
 large      : (optionnel) produit un arc grossi (va avec l'option 'sweep).
 
