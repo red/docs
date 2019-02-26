@@ -4,9 +4,15 @@
 
 == Résumé
 
-Une valeur de type `lit-word!` est un `word!` non évalué. Il a comme valeur littérale lui-même.
+Une valeur de type `lit-word!` est une valeur de `word!` non évaluée. Elle a comme valeur littérale elle-même.
 
-Une valeur de type `lit-word!` sera réduite à un `word!` à l'évaluation, comme si elle était saisie dans la console Red.
+Une valeur de type `lit-word!` sera réduite à un `word!` à l'évaluation, par exemple si elle est saisie dans la console Red.
+
+`Lit-word!` appartient aux ensembles de types suivants: `any-word!`, `all-word!`, `immediate!`
+
+== Création
+
+Les valeurs de type Lit-word! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant la conversion `to` à partir des types de données: `char!`, `logic!`, `string!`, `datatype!`, `issue!` et `refinement!`.
 
 ```red
 >> 'test
@@ -15,12 +21,6 @@ Une valeur de type `lit-word!` sera réduite à un `word!` à l'évaluation, com
 >> type? 'test
 == word!
 ```
-
-`Lit-word!` appartient aux ensembles de types suivants: `any-word!`, `all-word!`, `immediate!`
-
-== Création
-
-Les valeurs de type Lit-word! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant la conversion `to` à partir des types de données: `char!`, `logic!`, `string!`, `datatype!`, `issue!` et `refinement!`.
 
 ```red
 >> to lit-word! #"X"

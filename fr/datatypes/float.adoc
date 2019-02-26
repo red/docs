@@ -5,42 +5,17 @@
 
 == Résumé
 
-Les valeurs du type `Float!` représentent sur 64 bits des nombres à virgule positifs ou négatifs.
+Une valeur de type `Float!` représente sur 64 bits un nombre à virgule positif ou négatif.
 
-Les Floats couvrent l'intervalle de `-1.7E+308` à `+1.7E+308`.
+Les valeurs de type Float! couvrent l'intervalle de `-1.7E+308` à `+1.7E+308` et renvoient `#INF` en cas de dépassement.
 
-Par conception les Floats renvoient #INF en cas de dépassement.
-
-```red
->> 1.8E+308
-== 1.#INF
-
->> -1.8E+308
-== -1.#INF
-```
-
-La division de 0.0 par 0.0 renvoie `1.#NaN`
+La division par zéro renvoie `1.#NaN`
 
 `Float!` appartient aux ensembles de types suivants: `immediate!`, `number!`, `scalar!`
 
 == Création
 
 Les valeurs de type Float! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution par le constructeur `make` ou par conversion avec `to`.
-
-```red
->> 100.1
-== 100.1
-```
-
-```red
->> make float! 1
-== 1.0
-```
-
-```red
->> to float! 1
-== 1.0
-```
 
 == Syntaxe littérale
 
@@ -91,6 +66,69 @@ Une apostrophe simple `'` placée juste avant ou juste après le point décimal 
 *** Stack: load 
 ```
 
+=== Création lors de l'exécution
+
+* Syntaxe littérale
+
+```red
+>> 100.1
+== 100.1
+```
+
+* `make`
+
+```red
+>> make float! 1
+== 1.0
+```
+
+* `to`
+
+```red
+>> to float! 42
+== 42.0
+```
+
+[NOTE, caption=Note]
+
+Lorsqu'on fournit une valeur de type `any-list` à `make` ou `to`, la valeur `any-list` doit contenir deux nombres. Le résultat sera le premier nombre multiplié par la valeur de 10 à la puissance du deuxième nombre arrondi à l'entier inférieur: `premier-nombre * (power 10 deuxième-nombre)`
+
+* `block`
+
+```red
+>> make float! [2 3]
+== 2000.0
+
+>> to float! [4 2]
+== 400.0
+```
+
+* `paren`
+
+```red
+>> make float! quote (2 3)
+== 2000.0
+
+>> to float! quote (4 2)
+== 400.0
+```
+
+* `hash`
+
+```red
+>> list: make hash! [2 3]
+== make hash! [2 3]
+
+>> to float! list
+== 2000.0
+
+>> list: make hash! [4 2]
+== make hash! [4 2]
+
+>> to float! list
+== 400.0
+```
+
 == Comparaisons
 
 Tous les comparateurs peuvent être appliqués à `Float!`: `=, ==, <>, >, <, >=, &lt;=, =?`. De plus, `min`, et `max` sont aussi supportés.
@@ -98,18 +136,49 @@ Tous les comparateurs peuvent être appliqués à `Float!`: `=, ==, <>, >, <, >=
 
 == Conversion
 
-Une valeur de float peut être convertie durant l'exécution en `integer!` ou en `string!` en utilisant une conversion avec `to`. 
+Une valeur de float peut être convertie durant l'exécution en `any-list!`, `binary!`, `char!`, `integer!`, `string!`, ou `time!` en utilisant une conversion avec `to`. 
+
+Une valeur de type `any-list` doit contenir deux nombres. Le résultat sera le premier nombre multiplié par la valeur de 10 à la puissance du deuxième nombre arrondi à l'entier inférieur: `premier-nombre * (power 10 deuxième-nombre)`
+
+```red
+>> to float! [4 2]  ; 4 * (power 10 2)
+== 400.0
+```
+
+* `to binary!` interprète les 8 premiers octets comme un nombre à virgule flottante. S'il y a moins de 8 octets, des octets #{00} sont ajoutés au début.
+
+```red
+>> to binary! 42.3
+== #{4045266666666666}
+```
 
 [NOTE, caption=Note]
 
-Les chiffres suivant le point décimal seront ignorés lors de la conversion d'un float en entier. Aucun arrondi ne sera opéré.
+Les chiffres suivant le point décimal seront ignorés lors de la conversion d'un float en `char!` ou en `integer!`. Aucun arrondi ne sera effectué.
 
 ```red
+>> to char! 123.4
+== #"{"
+
+>> to char! 123  ; équivalent, puisque .4 est éliminé
+== #"{"
+
 >> to integer! 123.4
 == 123
+```
 
+* `to string!`
+
+```red
 >> to string! 123.4
 == "123.4"
+```
+
+* `to time!` renvoie le nombre de secondes et de millisecondes.
+
+```red
+>> to time! 42.7
+== 0:00:42.7
 ```
 
 Si un `float!` et un `integer!` sont combinés dans une expression, le résultat sera une valeur de type `float!`.

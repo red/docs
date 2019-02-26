@@ -11,7 +11,7 @@ Les valeurs du type `Handle!` représentent des entiers qui sont utilisés pour 
 
 == Création
 
-Les valeurs du type `Handle!` sont utilisés pour communiquer avec le système d'exploitation et peuvent être représentées uniquement par des mots qui sont des arguments des fonctions gérant cette communication.
+Les valeurs du type `Handle!` ne peuvent pas être créées. Elles sont utilisés pour communiquer avec le système d'exploitation et peuvent être représentées uniquement par des mots qui sont des arguments des fonctions gérant cette communication.
 
 == Test de valeurs
 

@@ -5,7 +5,7 @@
 
 == Résumé
 
-Get-path! renvoie la valeur d'un sélecteur de chemin (voir link:path.adoc[path!]), non évaluée.
+Une valeur de type `get-path!` renvoie la valeur d'un `path!`, non évaluée.
 
 Get-path! appartient aux ensembles de types suivants: `any-block!`, `any-path!`, `series!`
 

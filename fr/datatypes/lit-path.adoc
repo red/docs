@@ -5,23 +5,41 @@
 
 == Résumé
 
-Un `lit-path!` est un path! cité (avec `quote`) ou non évalué.
+Un `lit-path!` est un path! non évalué (cité avec `quote`).
 
-Une valeur de `lit-path!` sera réduite à un path! à l'évaluation, comme par exemple si elle est entrée dans la console Red.
+Une valeur de `lit-path!` se réduira à une valeur de type path! à l'évaluation, comme par exemple si elle est entrée dans la console Red.
 
 Lit-path! appartient aux ensembles de types suivants: `any-block!`, `any-path!`, `series!`
 
 == Création
 
-Les valeurs de type `Lit-path!` peuvent être créées en utilisant `quote` et la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
+Les valeurs de type `lit-path!` peuvent être créées en utilisant `quote` et la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
+
+Une valeur de type `lit-path!` se réduira à une valeur de type path! à l'évaluation, par exemple si elle est saisie dans la console Red.
+
+```red
+>> 'foo/bar/baz
+== foo/bar/baz
+
+>> type? 'foo/bar/baz
+== path!
+```
 
 ```red
 >> quote 'foo/bar/baz
 == 'foo/bar/baz
+
+>> type? quote 'foo/bar/baz
+== lit-path!
 ```
 
 ```red
 >> make lit-path! [foo bar baz]
+== 'foo/bar/baz
+```
+
+```red
+>> to lit-path! "foo bar baz"
 == 'foo/bar/baz
 ```
 
@@ -30,13 +48,6 @@ Vous pouvez créer un lit-path vide d'une taille donnée en passant une valeur e
 ```red
 >> make lit-path! 10
 == '
-```
-
-Conversion `To`:
-
-```red
->> to lit-path! "foo bar baz"
-== 'foo/bar/baz
 ```
 
 == Syntaxe littérale

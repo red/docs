@@ -396,6 +396,10 @@ Ce type représente une liste verticale de chaînes de texte, affichée dans un 
 
 La facette `data` accepte des valeurs arbitraires, mais seulement les valeurs de type chaîne seront ajoutées à la liste et affichées. Des valeurs supplémentaires de type de données autre que chaîne peuvent être utilisées pour créer des tableaux associatifs, en utilisant les chaînes comme clés. La facette `selected` est un index entier en base 10 indiquant la position de la chaîne sélectionnée dans la liste, et non pas dans la facette `data`.
 
+*Drapeaux supportés:*
+
+* `scrollable`: active manuellement une barre de défilement verticale.
+
 [cols="1, 1, 3", options="header"]
 |===
 
@@ -423,6 +427,10 @@ Ce type représente un champ éditable avec une liste verticale de chaînes de t
 |===
 
 La facette `data` accepte des valeurs arbitraires, mais seulement les valeurs de type chaîne seront ajoutées à la liste et affichées. Des valeurs supplémentaires de type de données autre que chaîne peuvent être utilisées pour créer des tableaux associatifs, en utilisant les chaînes comme clés. La facette `selected` est un index entier en base 10 indiquant la position de la chaîne sélectionnée dans la liste, et non pas dans la facette `data`.
+
+*Drapeaux supportés:*
+
+* `scrollable`: active manuellement une barre de défilement verticale.
 
 [cols="1, 1, 3", options="header"]
 |===
@@ -973,6 +981,7 @@ NOTE: L'usage des consoles automatiquement générées par l'exécutable `red` i
 |*do&#8209;events*| Lance une boucle d'événements (optionnellement, traite juste les événements en attente et se termine).
 |*draw*| Rend un bloc de dialecte Draw dans une image.
 |*to&#8209;image*| Convertit toute figure affichée en une image.
+|*set&#8209;focus*| Donne le focus à une figure spécifique.
 |*size&#8209;text*| Mesure la taille en pixels du texte dans une figure (en prenant en compte la police sélectionnée).
 |===
 

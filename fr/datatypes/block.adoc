@@ -101,26 +101,30 @@ Not ok: `[42 pr   int "foo"]`
 
 == Accès aux éléments d'un bloc
 
-Les éléments d'une variable de type block! peuvent être atteints en utilisant un slash suivi de l'indice de l'élément:
+Un bloc peut être indexé avec la _notation par chemin_, en utilisant des valeurs d'index entières commençant à 1:
 
 ----
->> b: [12 34 56]
-== [12 34 56]
+>> b: [12 [34 56]]
+== [12 [34 56]]
 
 >> b/1
 == 12
+>> b/2/2
+== 56
 ----
 
-Un bloc peut également être traité comme un ensemble de couples clé/valeur:
+Un bloc (et toute valeur de type `any-list!` d'ailleurs) peut également être traité comme un ensemble de couples clé/valeur; auquel cas la première occurence de la valeur, fournie au chemin, sera recherchée, et la valeur qui la suit sera renvoyée.
 
 ----
->> b: [x 12 y 34]
-== [x 12 y 34]
+>> b: [x 12 y [z 34]]
+== [x 12 y [z 34]]
 
 >> b/x
 == 12
 
 >> b/y
+== [z 34]
+>> b/y/z
 == 34
 ----
 
