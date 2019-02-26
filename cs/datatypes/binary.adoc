@@ -5,7 +5,11 @@
 
 == Úvodem
 
+<<<<<<< HEAD
 Hodnota `binary!` reprezentuje řadu bajtů.
+=======
+Hodnota `binary!` je tvořena řadou číselných znaků **zvolené** číselné soustavy - nikoliv jak název napovídá - pouze dvojkové soustavy.
+>>>>>>> 88f463f616c17f9da298661abd3ba4377ed92ca0
 
 Typ `binary!` je člen typesetů `default!` a `series!`
 
@@ -16,6 +20,7 @@ Hodnoty typu binary! lze vytvořit s použitím literálové syntaxe nebo při r
 == Literálová skladba
 
 ```
+<<<<<<< HEAD
 <binary-literal> ::= 2#{<base2-byte>*} | 16#{<hex-byte>*} | 64#{<base64-char>*} | #{<hex-byte>*}
 ```
 
@@ -26,24 +31,55 @@ Hodnoty typu binary! lze vytvořit s použitím literálové syntaxe nebo při r
 S použitím literálové syntaxe:
 
 Báze 2 se skládá ze skupin 8 znaků z rozsahu `0-1`.
+=======
+<binary-literal> ::=  2#{<base2-char>*} | 
+                     16#{<hex-char>*} OR #{<hex-char>*} | 
+                     64#{<base64-char>*}
+```
+
+Hodnota *base2* se skládá z jedné či více skupin osmi číslic `0-1`. Skupiny lze oddělovat mezerou
+
+>>>>>>> 88f463f616c17f9da298661abd3ba4377ed92ca0
 ```red
 >> 2#{11111111}
 == #{FF}
 
+<<<<<<< HEAD
 >> 2#{1111000000001111}
 == #{F00F}
 ```
 
 Báze 16 je implicitní binární báze a skládá se dvou znaků nebo skupin dvou znaků z rozsahu `0-9 A-F a-f`.
 
+=======
+>> 2#{11110000 00001111}
+== #{F00F}
+```
+
+Hodnota *base16* je hexadecimální formát čísla a skládá se z jedné či více skupin dvou znaků `0-9 A-F a-f`
+>>>>>>> 88f463f616c17f9da298661abd3ba4377ed92ca0
 ```red
 >> 16#{2A}
 == #{2A}
 
+<<<<<<< HEAD
 >> 16#{2AFF}
 == #{2AFF}
 ```
 
+=======
+>> 16#{2A FF}
+== #{2AFF}
+```
+
+Tento formát je implicitní a lze jej psát i bez označení báze.
+
+```red
+>> #{2A}
+== #{2A}
+```
+
+>>>>>>> 88f463f616c17f9da298661abd3ba4377ed92ca0
 Lichý počet znaků vyvolá chybu.
 
 ```red
@@ -53,6 +89,7 @@ Lichý počet znaků vyvolá chybu.
 *** Stack: load 
 ```
 
+<<<<<<< HEAD
 Implicitní binární bázi (16) lze psát bez označení báze.
 
 ```red
@@ -61,6 +98,9 @@ Implicitní binární bázi (16) lze psát bez označení báze.
 ```
 
 Báze 64 se skládá ze čtyřech znaků nebo skupin čtyř znaků z rozsahu `0-9 A-Z a-z +/`. 
+=======
+Hodnota *base64* se skládá z jedné či více skupin skupin čtyř znaků `0-9 A-Z a-z +/`. 
+>>>>>>> 88f463f616c17f9da298661abd3ba4377ed92ca0
 
 ```red
 >> 64#{2AQQ}
@@ -70,7 +110,11 @@ Báze 64 se skládá ze čtyřech znaků nebo skupin čtyř znaků z rozsahu `0-
 == #{D80FBF}
 ```
 
+<<<<<<< HEAD
 Méně než čtyři znaky nebo lichý počet znaků vyvolá chybu.
+=======
+Méně než čtyři znaky nebo lichý počet znaků vyvolá chybu. Potřebnou délku lze vytvořit doplněním hodnoty (maximálně) dvěma rovnítky `=`. 
+>>>>>>> 88f463f616c17f9da298661abd3ba4377ed92ca0
 
 ```red
 >> 64#{2A}
@@ -78,6 +122,7 @@ Méně než čtyři znaky nebo lichý počet znaků vyvolá chybu.
 *** Where: do
 *** Stack: load 
 
+<<<<<<< HEAD
 >> 64#{2A2}
 *** Syntax Error: invalid binary! at "64#{2A2}"
 *** Where: do
@@ -98,25 +143,55 @@ Výplňové znaky `=` mohou být rovněž použity pro kódovací (encoding) a d
 ***
 
 Použití `make`.
+=======
+>> 64#{2A2=}
+== #{D80D}
+
+>> 64#{D75q31==}
+== #{0FBE6ADF}
+```
+
+== Deklarace pro runtime
+
+*Použití* `make`:
+>>>>>>> 88f463f616c17f9da298661abd3ba4377ed92ca0
 
 ```red
 >> make binary! [42]
 == #{2A}
 ```
 
+<<<<<<< HEAD
 Konverze `to`.
+=======
+*Konverze* `to`:
+>>>>>>> 88f463f616c17f9da298661abd3ba4377ed92ca0
 
 ```red
 >> to binary! 42
 == #{0000002A}
+<<<<<<< HEAD
+=======
+
+>> to binary! [42]
+== #{2A}
+>>>>>>> 88f463f616c17f9da298661abd3ba4377ed92ca0
 ```
 
 == Související funkce
 
+<<<<<<< HEAD
 * ENBASE
 
 ```red
 >> help enbase
+=======
+=== enbase
+
+```red
+>> help enbase
+
+>>>>>>> 88f463f616c17f9da298661abd3ba4377ed92ca0
 USAGE:
      ENBASE value
 
@@ -135,6 +210,7 @@ REFINEMENTS:
 *Příklad*
 
 ```red
+<<<<<<< HEAD
 >> enbase/base "I" 64
 == "SQ=="
 ```
@@ -143,6 +219,23 @@ REFINEMENTS:
 
 ```red
 >> help debase
+=======
+>> enbase #{0FBE6ADF}
+== "D75q3w=="              ; báze 64 je pro funkci enbase implicitní
+
+>> enbase/base #{0FBE6ADF} 2
+== "00001111101111100110101011011111"
+
+>> enbase "I"
+== "SQ=="         
+```
+
+=== debase
+
+```red
+>> help debase
+
+>>>>>>> 88f463f616c17f9da298661abd3ba4377ed92ca0
 USAGE:
      DEBASE value
 
@@ -159,6 +252,7 @@ REFINEMENTS:
 
 ```
 
+<<<<<<< HEAD
 *Příklad*
 
 ```red
@@ -166,6 +260,26 @@ REFINEMENTS:
 == #{49}
 
 >> to string! debase/base "SQ==" 64
+=======
+*Příklad převodů tam a zpět:*
+
+```red
+>> enbase "I"
+== "SQ==" 
+
+>> debase "SQ=="
+== #{49}
+
+>> to string! debase "SQ=="  
+== "I"
+
+Případně:
+
+>> to-binary "I"
+== #{49}
+
+>> to string! #{49}
+>>>>>>> 88f463f616c17f9da298661abd3ba4377ed92ca0
 == "I"
 ```
 

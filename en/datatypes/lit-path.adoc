@@ -5,7 +5,7 @@
 
 == Abstract
 
-A `lit-path!` is a quoted or unevaluated path!.
+A `lit-path!` value is an unevaluated (quoted) path! value.
 
 A `lit-path!` value will decay into a path! value when evaluated, such as when entered into the Red REPL.
 
@@ -15,13 +15,31 @@ Lit-path! is a member of the following typesets: `any-block!`, `any-path!`, `ser
 
 `Lit-path!` values can be created using `quote` and literal syntax, or at runtime by using a `make` constructor or `to` conversion.
 
+A `lit-path!` value will decay into a path! value when evaluated, such as when entered into the Red REPL.
+
+```red
+>> 'foo/bar/baz
+== foo/bar/baz
+
+>> type? 'foo/bar/baz
+== path!
+```
+
 ```red
 >> quote 'foo/bar/baz
 == 'foo/bar/baz
+
+>> type? quote 'foo/bar/baz
+== lit-path!
 ```
 
 ```red
 >> make lit-path! [foo bar baz]
+== 'foo/bar/baz
+```
+
+```red
+>> to lit-path! [foo bar baz]
 == 'foo/bar/baz
 ```
 
@@ -30,13 +48,6 @@ You can create an empty lit-path of a given size by supplying an integer value a
 ```red
 >> make lit-path! 10
 == '
-```
-
-`To` conversion:
-
-```red
->> to lit-path! "foo bar baz"
-== 'foo/bar/baz
 ```
 
 == Literal syntax
@@ -84,7 +95,7 @@ Use `type?` to return the datatype of a given value.
 == lit-path!
 ```
 
-== Pre-defined words
+== Predefined words
 
 === Functions
 

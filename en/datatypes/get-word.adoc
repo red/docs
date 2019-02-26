@@ -69,7 +69,7 @@ Use `type?` to return the datatype of a given value.
 == get-word!
 ```
 
-== Pre-defined words
+== Predefined words
 
 === Functions
 

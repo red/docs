@@ -4,7 +4,15 @@
 
 == Abstract
 
-A `lit-word!` value is an unevaluated `word!`. It has the literal value of itself.
+A `lit-word!` value is an unevaluated `word!` value. It has the literal value of itself.
+
+A `lit-word!` value will decay into a `word!` when evaluated, such as when entered into the Red REPL.
+
+`Lit-word!` is a member of the following typesets: `any-word!`, `all-word!`, `immediate!`
+
+== Creation
+
+Lit-word! values can be created using literal syntax, or at runtime using a `to` conversion from the datatypes: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, and `refinement!`.
 
 A `lit-word!` value will decay into a `word!` when evaluated, such as when entered into the Red REPL.
 
@@ -15,12 +23,6 @@ A `lit-word!` value will decay into a `word!` when evaluated, such as when enter
 >> type? 'test
 == word!
 ```
-
-`Lit-word!` is a member of the following typesets: `any-word!`, `all-word!`, `immediate!`
-
-== Creation
-
-Lit-word! values can be created using literal syntax, or at runtime using a `to` conversion from the datatypes: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, and `refinement!`.
 
 ```red
 >> to lit-word! #"X"
@@ -70,7 +72,7 @@ Use `type?` to return the datatype of a given value.
 == lit-word!
 ```
 
-== Pre-defined words
+== Predefined words
 
 === Functions
 
