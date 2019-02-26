@@ -10,11 +10,7 @@ Hodnoty `handle!` reprezentují opaktní celá čísla při interakci s operačn
 
 == Vytvoření
 
-<<<<<<< HEAD
-Hodnoty typu `handle!` se používají při komunikaci s operačním systémem a mohou byt reprezentovány pouze slovy, které jsou argumenty funkcí, jež tuto komunikaci ošetřují.
-=======
 Hodnoty `handle!` nelze uživatelsky vytvořit. Používají se při komunikaci s operačním systémem a mohou být reprezentovány pouze slovy, jež jsou argumenty funkcí, ošetřujících tuto komunikaci.
->>>>>>> 88f463f616c17f9da298661abd3ba4377ed92ca0
 
 == Testování hodnot
 

@@ -5,21 +5,11 @@
 
 == Úvodem
 
-<<<<<<< HEAD
-Hodnoty typu `object!` reprezentují pojmenované nebo nepojmenované kontexty, které obsahují páry `word: value`.
-
-Typ `object!` je členem typesetů: `any-object!`, `default!`
-
-== Vytvoření
-
-Objekty lze vytvořit funkcemi `make` (konstruktor), `context`, `object` a  `contruct`.
-=======
 Datový typ `object!` vymezuje skladbu a chování *objektu* (kontejneru ve formě bloku), který obsahuje páry `word: value`. Typ `object!` je členem typesetů `any-object!` a  `default!`
 
 == Vytvoření
 
 Objekty se vytvářejí při runtime použitím konstruktoru `make` nebo použitím funkcí `context`, `object` a  `contruct`.
->>>>>>> 88f463f616c17f9da298661abd3ba4377ed92ca0
 
 Idiom `make object!` vytváří nový objekt, vyhodnocujíce blok specifikací.
 
@@ -105,12 +95,6 @@ Je-li funkce `construct` použita s upřesněním `/with`, vytvoří se nový ob
 ]
 ```
 
-<<<<<<< HEAD
-== Literálová skladba
-
-```red
-<object> ::= make object! <object-spec> | object <object-spec> | context <object-spec> | make <object> <object-spec>
-=======
 Tento objekt je totožný s objektem bar:
 ```red
 bar == zar
@@ -125,7 +109,6 @@ Výše uvedené způsoby vytvoření objektu lze schematicky vyjádřit takto:
 ```red
 <object> ::= make object! <object-spec> | object <object-spec> | context <object-spec> 
              make <object> <object-spec>
->>>>>>> 88f463f616c17f9da298661abd3ba4377ed92ca0
 
 <object-spec> ::= <block>
 <object> ::= <název existujícího objektu>

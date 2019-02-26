@@ -9,10 +9,7 @@
 .. link:datatypes/date.adoc[Datový typ date!]
 .. link:datatypes/email.adoc[Datový typ email!]
 .. link:datatypes/error.adoc[Datový typ error!]
-<<<<<<< HEAD
-=======
 .. link:datatypes/event.adoc[Datový typ event!]
->>>>>>> 88f463f616c17f9da298661abd3ba4377ed92ca0
 .. link:datatypes/file.adoc[Datový typ file!]
 .. link:datatypes/float.adoc[Datový typ float!]
 .. link:datatypes/get-path.adoc[Datový typ get-path!]
