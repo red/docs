@@ -5,6 +5,7 @@
 
 == Úvodem
 
+<<<<<<< HEAD
 Hodnoty typu `object!` reprezentují pojmenované nebo nepojmenované kontexty, které obsahují páry `word: value`.
 
 Typ `object!` je členem typesetů: `any-object!`, `default!`
@@ -12,6 +13,13 @@ Typ `object!` je členem typesetů: `any-object!`, `default!`
 == Vytvoření
 
 Objekty lze vytvořit funkcemi `make` (konstruktor), `context`, `object` a  `contruct`.
+=======
+Datový typ `object!` vymezuje skladbu a chování *objektu* (kontejneru ve formě bloku), který obsahuje páry `word: value`. Typ `object!` je členem typesetů `any-object!` a  `default!`
+
+== Vytvoření
+
+Objekty se vytvářejí při runtime použitím konstruktoru `make` nebo použitím funkcí `context`, `object` a  `contruct`.
+>>>>>>> 88f463f616c17f9da298661abd3ba4377ed92ca0
 
 Idiom `make object!` vytváří nový objekt, vyhodnocujíce blok specifikací.
 
@@ -23,8 +31,7 @@ Použití funkce *make:*
 >> foo: make object! [x: "bar" y: "baz"]
 == make object! [
     x: "bar"
-    y: "baz"
-]
+    y: "baz"    ]
 
 >> foo: make object! [x: "bar" y: ()]   ; spec block is evaluated
 *** Script Error: y: needs a value
@@ -38,8 +45,7 @@ Použití funkce *context:*
 >> foo: context [x: "bar" y: "baz"]
 == make object! [
     x: "bar"
-    y: "baz"
-]
+    y: "baz"    ]
 
 >> foo: context [x: "bar" y: ()]   ; spec block is evaluated
 *** Script Error: y: needs a value
@@ -53,8 +59,7 @@ Použití funkce *object:*
 >> foo: object [x: "bar" y: "baz"] 
 == make object! [
     x: "bar"
-    y: "baz"
-]
+    y: "baz"    ]
 
 >> foo: object [x: "bar" y: ()]   ; spec block is evaluated
 *** Script Error: y: needs a value
@@ -62,7 +67,7 @@ Použití funkce *object:*
 *** Stack: object  
 ```
 
-Je-li argumentem funkce make hodnota typu `object!`, vytvoří se nový objekt s argumentem coby prototyp.
+Je-li argumentem funkce make hodnota typu `object!`, vytvoří se nový objekt se zadaným argumentem coby prototypem.
 
 ```red
 >> foo: make object! [x: "bar" y: "baz"]
@@ -92,20 +97,38 @@ Funkce `construct` vytváří objekt bez vyhodnocení bloku specifikací:
 Je-li funkce `construct` použita s upřesněním `/with`, vytvoří se nový objekt který je rozšířením zadané hodnoty typu `object!`:
 
 ```red
->> bar: construct/with [a: 42] foo
+>> zar: construct/with [z: 42] foo
 == make object! [
     x: "bar"
     y: ()
-    a: 42
+    z: 42
 ]
 ```
 
+<<<<<<< HEAD
 == Literálová skladba
 
 ```red
 <object> ::= make object! <object-spec> | object <object-spec> | context <object-spec> | make <object> <object-spec>
+=======
+Tento objekt je totožný s objektem bar:
+```red
+bar == zar
+== true
+```
+
+
+== Literálové schema skladby
+
+Výše uvedené způsoby vytvoření objektu lze schematicky vyjádřit takto:
+
+```red
+<object> ::= make object! <object-spec> | object <object-spec> | context <object-spec> 
+             make <object> <object-spec>
+>>>>>>> 88f463f616c17f9da298661abd3ba4377ed92ca0
 
 <object-spec> ::= <block>
+<object> ::= <název existujícího objektu>
 ```
 
 == Komparace

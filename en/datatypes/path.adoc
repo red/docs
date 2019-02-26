@@ -177,7 +177,7 @@ Use `type?` to return the datatype of a given value.
 == path!
 ```
 
-== Pre-defined words
+== Predefined words
 
 === Functions
 

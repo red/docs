@@ -5,7 +5,7 @@
 
 == Abstract
 
-Get-path! returns the value of a paths selector, unevaluated.
+A `get-path!` value returns the value of a `path!`, unevaluated.
 
 Get-path! is a member of the following typesets: `any-block!`, `any-path!`, `series!`
 
@@ -82,7 +82,7 @@ Use `type?` to return the datatype of a given value.
 == get-path!
 ```
 
-== Pre-defined words
+== Predefined words
 
 === Functions
 

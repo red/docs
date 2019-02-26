@@ -47,19 +47,19 @@ Pokus o převod hodnoty `none` konverzí `to` vyvolává chybové hlá?ení.
 
 == Literálová skladba
 
-Jednořádkový řetězec:
+*Jednořádkový řetězec*:
 
 (Žádný či více znaků uvnitř apostrofů.
 
 `"foo"`
 
-Víceřádkový řet?zec:
+*Víceřádkový řetězec*:
 
 Žádný či více znaků uvnitř složených závorek.
 
 `{foo}` 
 
-A single-line string cannot contain unescaped new-line characters.
+Jednořádkový řetězec nemůže obsahovat neodcuknuté (unescaped) znaky pro nový řádek:
 
 ```red
 >> cr
@@ -72,7 +72,7 @@ A single-line string cannot contain unescaped new-line characters.
 == "^M^/"
 ```
 
-A multi-line string can contain new-line characters, quotation marks, and paired braces. Unpaired braces must be escaped by preceding the character with `^`, e.g. `{foo^{}`.
+Víceřádkový řetězec můž obsahovat znaky nového řádku, uvozovky a páry závorek. Nespárované závorky musí být odcuknuty (escaped) předsazením znakem `^`, např. `{foo^{}`.
 
 == Komparace
 
