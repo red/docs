@@ -32,7 +32,11 @@ Funkce `make bitset!` a `to-bitset` mohou mít také jako argument hodnotu typu 
 >> to-bitset tb
 == make bitset! #{5A}
 ```
+Obě funkce lze také použít k převodu skutečně binárního čísla na hexadecimální:
 
+```red
+>> to-bitset 2#{10000101}   ; binární formát
+== make bitset #{85}        ; hexadecimální formát
 
 === Make, To
 

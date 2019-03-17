@@ -3,9 +3,9 @@
 . link:README.adoc[Red/Core README]
 
 . link:datatypes.adoc[Datové typy]
-.. link:datatypes/block.adoc[Datový typ block!]
 .. link:datatypes/binary.adoc[Datový typ binary!]
 .. link:datatypes/bitset.adoc[Datový typ bitset!]
+.. link:datatypes/block.adoc[Datový typ block!]
 .. link:datatypes/date.adoc[Datový typ date!]
 .. link:datatypes/email.adoc[Datový typ email!]
 .. link:datatypes/error.adoc[Datový typ error!]
@@ -47,6 +47,7 @@
 .. link:view.adoc[Prostředí View]
 .. link:vid.adoc[Dialekt VID]
 .. link:draw.adoc[Dialekt Draw]
+.. link:rtd.adoc[Dialekt Rich-Text]
 
 ### Další dokumentace  
 
