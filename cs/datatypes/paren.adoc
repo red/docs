@@ -119,17 +119,34 @@ Použijte funkci `paren?` k ověření, zda je posuzovaná hodnota typu  `paren!
 
 ALE !:
 
->> paren? (42 print "foo")    ; potřebné vysvětlení
+>> paren? (42 print "foo")    
 foo
-== false
+== false                         ; proč?
+
+>> type? (42 print "foo")        ; protože
+foo
+== unset!
+
+>> type? quote (42 print "foo")
+== paren!                     
 ```
 
+[NOTE, caption=Poznámka]
 
-Funkce `type?` vrací datový typ zadané hodnoty.
+Neparafrázované (unquoted) hodnoty paren vrací typ poslední hodnoty
 
 ```red
->> type? quote (42)
-== paren!
+>> paren? (42)
+== false
+
+>> any-list? (42)
+== false
+
+>> type? (42)
+== integer!
+
+>> type? ('a 2 + 2 "hello")
+== string!
 ```
 
 
