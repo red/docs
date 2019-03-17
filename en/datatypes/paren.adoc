@@ -18,21 +18,21 @@ Paren values can be created using literal syntax, or at runtime using a `make` c
 
 To create an empty paren pre-allocated for 10 elements:
 
-----
+```red
 >> make paren! 10
 == ()
-----
+```
 
 To create a paren of 10 elements with initial values set to none:
 
-----
+```red
 >> append/dup make paren! 10 none 10
 == (none none none none none none none none none none)
-----
+```
 
 Using a `to` conversion:
 
-----
+```red
 >> to paren! {one 2 "three" 4:00}
 == (one 2 "three" 4:00:00)
 
@@ -41,14 +41,14 @@ Using a `to` conversion:
 
 >> to paren! 42
 == (42)
-----
+```
 
 Using `as`:
-----
+
+```red
 >> as paren! [1 2 3]
 == (1 2 3)
-----
-
+```
 
 == Literal syntax
 
@@ -61,14 +61,14 @@ A collection of values that are delimited by an opening and closing parenthesis,
 `(print 1.23)`
 
 Parens can extend over multiple lines, and can contain other parens.
-----
+```red
 (1
 2
 "three"
 )
 
 quote (1 2 "three" (x foo 1.23))
-----
+```
 
 
 Extra lines, spaces, and tabs are allowed as long as they do not break up values.
@@ -82,15 +82,15 @@ Not ok: `(pr   int "foo")`
 
 All comparators can be applied on `paren!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
 
-NOTE:
+[NOTE]
 Since `paren!` values are immediately evaluated, the return value of `min` or `max` will be the value of the last expression in a `paren!`. Comparators will be comparing the last element in a paren if evaluation is not suppressed.
 
-----
+```red
 >> max (1 2 3) (4 5 6)
 == 6
-----
+```
 
-----
+```red
 >> (1 2 3) < (4 5 6)
 == true
 
@@ -99,24 +99,40 @@ Since `paren!` values are immediately evaluated, the return value of `min` or `m
 
 >> (quote (1 2 3)) < (quote (4 5 2))
 == true 
-----
-
+```
 
 == Testing values
 
 Use `paren?` to check if a value is of the `paren!` datatype.
-----
+```red
 >> paren? quote (42 print "foo")
 == true
-----
+```
 
 
 Use `type?` to return the datatype of a given value.
-----
+```red
 >> type? quote (42)
 == paren!
-----
+```
 
+[NOTE, caption=Caution]
+
+Unquoted paren values will return the type of the last expression.
+
+```red
+>> paren? (42)
+== false
+
+>> any-list? (42)
+== false
+
+>> type? (42)
+== integer!
+
+>> type? ('a 2 + 2 "hello")
+== string!
+```
 
 == Predefined words
 

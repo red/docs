@@ -15,6 +15,11 @@ Les valeurs de type X peuvent être créées à l'aide de la syntaxe littérale,
 
 == Syntaxe littérale
 
+=== Création lors de l'exécution
+
+*Exemples*
+
+== Conversions
 
 == Comparaisons
 

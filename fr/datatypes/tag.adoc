@@ -26,15 +26,56 @@ Les valeurs de type Tag! peuvent être créées à l'aide de la syntaxe littéra
 
 Un ou plusieurs caractères placés entre le signe `<` et le signe `>`.
 
-Le premier caractère qui suit le signe ouvrant `<` ne peut être `<`, `>`, ou `=`. 
-
-Aucun caractère d'espace n'est autorisé entre le signe ouvrant `<` et le premier caractère, car l'interpréteur analyserait celui-ci comme un opérateur de comparaison invalide.
+Le premier caractère qui suit le signe ouvrant `<` ne peut être `<`, `>`, ou `=` , ou un espace blanc littéral.
 
 ```red
->> < foo>
+>> <<foo>
 *** Script Error: < operator is missing an argument
 *** Where: catch
 *** Stack:  
+
+>> <>foo>
+*** Script Error: <> operator is missing an argument
+*** Where: catch
+*** Stack:
+
+>> <=foo>
+*** Syntax Error: invalid value at "<=foo>"
+*** Where: do
+*** Stack: load
+
+>> < foo>
+*** Script Error: < operator is missing an argument
+*** Where: catch
+*** Stack:
+```
+
+`<` est autorisé après la première position.
+
+```red
+>> type? <f<oo>
+== tag!
+```
+
+[NOTE, caption=Note]
+
+Il est possible de créer des valeurs de type `tag!` en utilisant `make` , qui ne sont pas affectées par ces limitations d'analyseur syntaxique.
+
+```red
+>> make tag! " foo"
+== < foo>
+
+>> make tag! "<foo"
+== <<foo>
+
+>> make tag! ">foo"
+== <>foo>
+
+>> make tag! "=foo"
+== <=foo>
+
+>> make tag! " foo"
+== < foo>
 ```
 
 == Comparaisons
