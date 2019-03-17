@@ -4,7 +4,7 @@
 
 == Abstract
 
-A `set-word!` sets a reference to a value.
+The `set-word!` datatype sets a reference to a value.
 
 If used outside of an `object!` or `map!` value, a set-word will set a reference in the current context to the value of the expression that follows the set-word.
 

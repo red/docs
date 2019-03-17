@@ -10,7 +10,7 @@
 
 == Creation
 
-File! values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+File values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
 
 ```red
 >> %file-literal

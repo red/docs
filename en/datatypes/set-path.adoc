@@ -5,13 +5,13 @@
 
 == Abstract
 
-Set-path! sets a "contextual reference" (word in a context, indexes slot in a series, or keyed reference in a series or map).
+The `set-path!` datatype sets a "contextual reference" (word in a context, indexes slot in a series, or keyed reference in a series or map).
 
-Set-path! is a member of the following typesets: `any-block!`, `any-path!`, `series!`
+`Set-path!` is a member of the following typesets: `any-block!`, `any-path!`, `series!`
 
 == Creation
 
-`Set-path!` values can be created at runtime by using a `make` constructor or `to` conversion.
+Set-path values can be created at runtime by using a `make` constructor or `to` conversion.
 
 ```red
 >> make set-path! [foo bar baz]
