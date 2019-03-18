@@ -20,14 +20,34 @@ Příkaz `to logic!` konvertuje na `true` všechny hodnoty kromě `false` a `non
 >> to logic! 'hi
 == true
 
->> to logic! 123
+>> to logic! 5
+== true
+
+>> to logic! < -5 | 0 | on | yes > 
 == true
 
 >> to logic! none
 == false
 
->> to logic! false
+>> to logic! < off | no >
 == false
+```
+
+[NOTE, caption=Poznámka]
+Pro podporu booleovské logiky lze hodnoty `true` a `false` vytvořit z 1 a 0 s použitím `make`.
+
+```red
+>> make logic! 1
+== true
+
+>> make logic! 0
+== false
+
+>> make integer! true
+== 1
+
+>> make integer! false
+== 0
 ```
 
 

@@ -9,7 +9,7 @@
 
 Draw je dialekt jazyka (DSL) Red, který poskytuje jednoduchý deklarativní způsob kreslení rovinných útvarů. Operace kreslení jsou vyjádřeny jako seznamy uspořádaných příkazů (používajících bloky hodnot), které je snadné sestavovat a měnit při běhu programu.
 
-Bloky dialektu Draw lze vykreslovat přímo do obrázku s použitím funkce `draw` nebo uvnitř piškotu View s použitím aspektu `draw` (viz View documentation).
+Bloky dialektu Draw lze vykreslovat přímo do obrázku s použitím funkce `draw` nebo uvnitř piškotu View s použitím aspektu `draw` (viz dokumentace View).
 
 == Příkazy
 
@@ -152,10 +152,10 @@ curve <end-A> <control-A> <control-B> <end-B>
 
 Nakreslí Beziérovu křivku (curve) ze 3 nebo 4 bodů:
 
-* 3 body: 2 koncové, 1 kontrolní.
-* 4 body: 2 koncové, 2 kontrolní.
+* 3 body: 2 koncové, 1 kontrolní - pro křivku kvadratickou
+* 4 body: 2 koncové, 2 kontrolní - pro křivku kubickou
 
-Čtyři body umožňují vytvoření složitější křivky.
+Zadají-li se více než 4 body, je poslední zadaný ignorován.
 
 === Spline
 
@@ -850,7 +850,7 @@ Kreslí kruhový oblouk mezi aktuální polohou pera a koncovým bodem oblouku. 
 ----
 *Popis*
 
-Kreslí kubickou Bezierovu křivku, danou třemi body. Počátečním bodem je aktuální pozice pera.
+Kreslí kubickou Bezierovu křivku, danou čtyřmi body. Počátečním bodem je aktuální pozice pera.
 
 === Curv
 
@@ -867,10 +867,10 @@ Kreslí hladkou kubickou Bezierovu křivku, danou pořadím alespoň dvou bodů.
 
 [NOTE]
 ====
-From http://www.w3.org/TR/SVG11/paths.html
+From http://www.w3.org/TR/SVG11/paths.html:
 ====
 
-"The first control point is assumed to be the reflection of the second control point on the previous command relative to the current point. (If there is no previous curve command, the first control point is the current point.)"
+"Za první kontrolní bod se považuje reflexe druhého kontrolního bodu předchozího příkazu relativně k aktuálnímu bodu. Není-li takového příkazu, je prvním kontrolním bodem aktuální bod."
 
 === Qcurve
 

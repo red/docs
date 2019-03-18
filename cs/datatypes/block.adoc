@@ -11,14 +11,14 @@ Bloky jsou vymezeny hranatými závorkami.
 Hodnoty a výrazy v bloku se implicitně nevyhodnocují:
 
 ----
->> my-block: [print reverse "Hello" 2 * 2 42]
-== [print reverse "Hello" 2 * 2 42]
+>> my-block: [print reverse "Hello" (2 + 3 42]
+== [print reverse "Hello" (2 + 3) 42]
 
 >> my-block
-== [print reverse "Hello" 2 * 2 42]
+== [print reverse "Hello" (2 + 3) 42]
 ----
 
-`Nativní` hodnoty `do` a `reduce` spouští vyhodnocení výrazu v bloku.
+`Nativní` příkazy `do` a `reduce` spouští vyhodnocení výrazu v bloku.
 
 * `do` vyhodnotí blok a vrátí výsledek posledního výrazu:
 
@@ -33,7 +33,7 @@ olleH
 ----
 >> reduce my-block
 olleH
-== [unset 4 42]
+== [unset 5 42]
 ----
 
 Typ `block!` je člen následujících typesetů:  `series!`, `any-block!` a `any-list!`.
@@ -62,7 +62,7 @@ Použití konverze `to`:
 >> to block! {one 2 "three" 4:00}
 == [one 2 "three" 4:00:00]
 
->> to block! "foo 1.23 me@me.com"
+>> to-block "foo 1.23 me@me.com"         ; varianta příkazu   
 == [foo 1.23 me@me.com]
 
 >> to block! 42
