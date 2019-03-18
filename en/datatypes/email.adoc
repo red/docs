@@ -10,7 +10,7 @@
 
 == Creation
 
-`Email!` values can be created using literal syntax, or at runtime using a `make` constructor or a `to` conversion.
+Email values can be created using literal syntax, or at runtime using a `make` constructor or a `to` conversion.
 
 ```red
 >> f: make email! "foo"

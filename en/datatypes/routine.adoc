@@ -14,7 +14,7 @@ Red/System documentation can be found here: https://static.red-lang.org/red-syst
 
 == Creation
 
-Routine! values can be created using the built-in function `routine`.
+Routine values can be created using the built-in function `routine`.
 
 == Literal syntax
 
@@ -30,7 +30,7 @@ Routine! values can be created using the built-in function `routine`.
 
 === Runtime creation
 
-Routine! values are not allowed in the interpreter. They must be preceded by a set-word and then compiled.
+Routine values are not allowed in the interpreter. They must be preceded by a set-word and then compiled.
 
 ```red
 Red []

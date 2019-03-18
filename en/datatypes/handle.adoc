@@ -10,7 +10,7 @@
 
 == Creation
 
-`Handle!` values cannot be created. They are used to communicate with the operating system and can only be represented by words that are arguments to functions handling this communication.
+Handle values cannot be created. They are used to communicate with the operating system and can only be represented by words that are arguments to functions handling this communication.
 
 == Testing values
 

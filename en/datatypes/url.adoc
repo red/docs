@@ -11,7 +11,7 @@ An `url!` value represents a reference to a network resource and allows for dire
 
 == Creation
 
-Url! values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+Url values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
 
 ```red
 >> make url! [foo bar baz]
