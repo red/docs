@@ -4,7 +4,7 @@
 
 == Úvodem
 
-Cesty (paths) jsou řady hodnot, oddělených lomítky (`/`). Tvoří uspořádanou řadu, jejíž elementy mohou být typu `word!`, `integer!`, `get-word!` a `paren!`.
+Datový typ `path!` reprezentuje řadu hodnot, oddělených lomítky (`/`). Elementy této řady mohou být typu `word!`, `integer!`, `get-word!` a `paren!`.
 
 Typ `path!` je člen těchto typesetů: `any-block!`, `any-path!`, `series!`
 

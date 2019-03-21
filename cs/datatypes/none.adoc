@@ -5,7 +5,7 @@
 
 == Úvodem
 
-None! reprezentuje hodnotu, která nepatří k žádnému jinému datovému typu. Je to entita, analogická k `nil` nebo `nothing` v jiných programovacích jazycích.
+Datový typ none! reprezentuje hodnotu, která nepatří k žádnému jinému datovému typu. Je to entita, analogická k `nil` nebo `nothing` v jiných programovacích jazycích.
 
 `None!` je člen typesetu `immediate!`
 

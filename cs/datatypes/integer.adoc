@@ -6,8 +6,6 @@
 
 Hodnoty typu`integer!` jsou 32-bitová pozitivní a negativní čísla bez desetinné čárky.
 
-Mají rozsah od `-2147483648` do `2147483647`.
-
 Při přetečení nekonvertuje `integer!` automaticky na `float!`.
 
 Typ `integer` je členem těchto typesetů: `immediate!`, `number!` a `scalar`.
