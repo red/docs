@@ -6,8 +6,6 @@
 
 Blocks are used to represent data or code that can be evaluated at any point in time. They are a type of `series!` with no restriction on the type of values that can be referenced.
 
-Blocks are delimited by opening and closing square brackets, separated by spaces.
-
 Values and expressions in a block are not evaluated by default:
 
 ----
@@ -95,12 +93,12 @@ Blocks can extend over multiple lines, and can contain other blocks.
 
 Extra lines, spaces, and tabs are allowed as long as they do not break up values.
 
-Ok: `[42 print "foo"]`
+Correct: `[42 print "foo"]`
 
-Not ok: `[42 pr   int "foo"]`
+Incorrect: `[42 pr int "foo"]`
 
 
-== Accessing block elements
+== Accessing `block!` elements
 
 A block can be indexed with _path notation_, using integer values for 1-based indexing:
 

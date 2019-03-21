@@ -7,11 +7,11 @@
 
 A `get-path!` value returns the value of a `path!`, unevaluated.
 
-Get-path! is a member of the following typesets: `any-block!`, `any-path!`, `series!`
+`Get-path!` is a member of the following typesets: `any-block!`, `any-path!`, `series!`
 
 == Creation
 
-`Get-path!` values can be created at runtime by using a `make` constructor or `to` conversion.
+Get-path! values can be created at runtime by using a `make` constructor or `to` conversion.
 
 ```red
 >> make get-path! [foo bar baz]

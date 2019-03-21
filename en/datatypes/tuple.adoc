@@ -27,7 +27,7 @@ A sequence of three to twelve positive integers separated by decimal points.
 == Creation
 
 
-Tuple! values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+Tuple values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
 
 ```red
 >> make tuple! [1 2 3]

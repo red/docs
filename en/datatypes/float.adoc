@@ -7,7 +7,7 @@
 
 A `float!` value represents a 64-bit positive or negative number that contains a decimal point.
 
-Float! values span a range from `-1.7E+308` to `+1.7E+308` and return `#INF` on overflow.
+Float values span a range from `-1.7E+308` to `+1.7E+308` and return `#INF` on overflow.
 
 Dividing by zero returns `1.#NaN`.
 
@@ -15,7 +15,7 @@ Dividing by zero returns `1.#NaN`.
 
 == Creation
 
-Float! values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+Float values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
 
 == Literal syntax
 

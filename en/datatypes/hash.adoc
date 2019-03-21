@@ -14,7 +14,7 @@ The underlying hashing function is a custom implementation of the link:https://g
 
 == Creation
 
-Hash! values can be created at runtime by using a `make` constructor or a `to` conversion.
+Hash values can be created at runtime by using a `make` constructor or a `to` conversion.
 
 === Runtime creation
 

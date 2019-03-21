@@ -13,9 +13,7 @@ Lit-path! is a member of the following typesets: `any-block!`, `any-path!`, `ser
 
 == Creation
 
-`Lit-path!` values can be created using `quote` and literal syntax, or at runtime by using a `make` constructor or `to` conversion.
-
-A `lit-path!` value will decay into a path! value when evaluated, such as when entered into the Red REPL.
+Lit-path values can be created using `quote` and literal syntax, or at runtime by using a `make` constructor or `to` conversion.
 
 ```red
 >> 'foo/bar/baz

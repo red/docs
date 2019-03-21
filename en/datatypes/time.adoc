@@ -10,7 +10,7 @@
 
 == Creation
 
-`Time!` values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+Time values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
 
 == Literal syntax
 

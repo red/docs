@@ -10,7 +10,7 @@
 
 == Creation
 
-Image! values can be created at runtime by using a `make` constructor or `to` conversion.
+Image values can be created at runtime by using a `make` constructor or `to` conversion.
 
 === Runtime creation
 

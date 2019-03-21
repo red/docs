@@ -11,7 +11,7 @@
 
 == Creation
 
-`Issue!` values can be created using literal syntax, or at runtime by using a `to` conversion.
+Issue values can be created using literal syntax, or at runtime by using a `to` conversion.
 
 ----
 >> to issue! "123.42-xxx"
