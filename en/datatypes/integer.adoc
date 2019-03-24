@@ -4,9 +4,7 @@
 
 == Abstract
 
-Integer values are 32-bit positive and negative numbers with no decimal point.
-
-Integer spans a range from `-2147483648` to `2147483647`.
+`Integer!` values are 32-bit numbers with no decimal point. They span a range from `-2147483648` to `2147483647`.
 
 By design `integer!` does not auto convert to `float!` on overflow.
 

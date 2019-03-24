@@ -10,7 +10,7 @@
 
 == Creation
 
-`Unset!` values can be created at runtime using a `make` constructor or a `to` conversion.
+Unset values can be created at runtime using a `make` constructor or a `to` conversion.
 
 `make unset! <any-thing>`
 

@@ -4,7 +4,7 @@
 
 == Abstract
 
-Paths are a series of values delimited by slashes (`/`). They are a type of `block!` that are limited in the types of values that they can contain. `Word!`, `integer!`, `get-word!`, and `paren!` values are supported. 
+The `path!` datatype represents a series of values delimited by slashes (`/`). `Path!` is a type of `block!` that is limited in the types of values that it can contain. `Word!`, `integer!`, `get-word!`, and `paren!` values are supported. 
 
 `Path!` is a member of the following typesets: `any-block!`, `any-path!`, `series!`
 
@@ -20,7 +20,7 @@ Paths are a series of values delimited by slashes (`/`). They are a type of `blo
 
 == Creation
 
-Path! values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+Path values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
 
 ```red
 >> 'foo/bar/baz 

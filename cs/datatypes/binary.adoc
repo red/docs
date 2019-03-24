@@ -11,7 +11,7 @@ Typ `binary!` je člen typesetů `default!` a `series!`
 
 == Vytvoření
 
-Hodnoty typu binary! lze vytvořit s použitím literálové syntaxe nebo při runtime s použitím konstruktoru `make` nebo konverzí `to`.
+Hodnoty typu binary lze vytvořit s použitím literálové syntaxe nebo při runtime s použitím konstruktoru `make` nebo konverzí `to`.
 
 == Literálová skladba
 
@@ -56,7 +56,7 @@ Lichý počet znaků vyvolá chybu.
 *** Stack: load 
 ```
 
-Hodnota *base64* se skládá z jedné či více skupin skupin čtyř znaků `0-9 A-Z a-z +/`. 
+Hodnota *base64* se musí skládat ze čtyř znaků nebo ze skupin čtyř znaků z množiny `0-9 A-Z a-z +/`. 
 
 ```red
 >> 64#{2AQQ}
@@ -66,7 +66,7 @@ Hodnota *base64* se skládá z jedné či více skupin skupin čtyř znaků `0-9
 == #{D80FBF}
 ```
 
-Méně než čtyři znaky nebo lichý počet znaků vyvolá chybu. Potřebnou délku lze vytvořit doplněním hodnoty (maximálně) dvěma rovnítky `=`. 
+Méně než čtyři znaky nebo lichý počet znaků vyvolá chybu. Potřebnou délku lze vytvořit doplněním (maximálně) dvěma rovnítky `=`. 
 
 ```red
 >> 64#{2A}
@@ -161,6 +161,9 @@ REFINEMENTS:
 ```red
 >> enbase "I"
 == "SQ==" 
+
+>> enbase/base "I" 64
+== "SQ=="
 
 >> debase "SQ=="
 == #{49}

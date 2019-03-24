@@ -23,7 +23,7 @@ Words do not store values, they point to values in a given context, and will def
 
 == Creation
 
-Word! values can be created using literal syntax, or at runtime using a `to` conversion from the datatypes: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, and `refinement!`.
+Word values can be created using literal syntax, or at runtime using a `to` conversion from the datatypes: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, and `refinement!`.
 
 
 ```red

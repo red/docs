@@ -12,7 +12,7 @@
 
 == Creation
 
-Percent! values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+Percent values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
 
 ```red
 >> 100%

@@ -10,7 +10,7 @@ A `get-word!` value retieves an unevaluated word value from the context to which
 
 == Creation
 
-Get-word! values can be created using literal syntax, or at runtime using a `to` conversion from the datatypes: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, `refinement!`, and `lit-word!`.
+Get-word values can be created using literal syntax, or at runtime using a `to` conversion from the datatypes: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, `refinement!`, and `lit-word!`.
 
 ```red
 >> to get-word! #"X"

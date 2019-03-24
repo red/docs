@@ -10,7 +10,7 @@ Hodnoty typu `email!` umožňují přímé vyjádření emailových adres, např
 
 == Vytvoření
 
-Hodnoty typu `email!` lze vytvo?it s použitím literálové syntaxe nebo při runtime použitím konstruktoru `make` nebo konverzí `to`.
+Hodnoty typu `email!` lze vytvořit s použitím literálové syntaxe nebo při runtime použitím konstruktoru `make` nebo konverzí `to`.
 ```red
 >> f: make email! "foo"
 == foo

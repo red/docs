@@ -24,7 +24,7 @@ With the `/only` refinement:
 
 == Creation
 
-Refinement! values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+Refinement values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
 
 ```red
 >> /foo
