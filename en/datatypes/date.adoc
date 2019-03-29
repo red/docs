@@ -518,6 +518,18 @@ d/zone: -4:00
 == 1-Mar-2017/5:30:00-04:00
 ----
 
+[NOTE]
+Setting a `/zone` value to a date that lacks a `time` value will result in `/zone` defaulting to 0:0:0. 
+
+*Examples*
+
+----
+d: 28-Mar-2019
+== 28-Mar-2019
+
+d/zone: 1 d
+== 28-Mar-2019/0:00:00+01:00
+----
 
 === /timezone
 
