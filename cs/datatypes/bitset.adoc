@@ -21,7 +21,7 @@ integer* ::= nelze použít u `to-bitset`
 ```
 Výsledným formátem po kompilaci (ale před runtime) je:
 ```red
-== make bitset! #{hex-number}    ; což je binary!
+== make bitset! #{hex-number}   
 ```
 
 Funkce `make bitset!` a `to-bitset` mohou mít také jako argument hodnotu typu `binary!`
@@ -37,6 +37,7 @@ Obě funkce lze také použít k převodu skutečně binárního čísla na hexa
 ```red
 >> to-bitset 2#{10000101}   ; binární formát
 == make bitset #{85}        ; hexadecimální formát
+```
 
 === Make, To
 
