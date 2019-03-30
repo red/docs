@@ -69,12 +69,13 @@ Příklad:
 >> type? mop/c             ; == logic!
 >> type? mop/d             ; == block!
 >> type? mop/e             ; == word!
-
+```
 
 
 Je-li klíč typu *any-word* (zde a, e), je v mapě kvůli lepší přehlednosti konvertován na typ *set-word*. Nicméně, při dotazování na hodnotu klíčů, lze pro klíč z praktických důvodů (jednodušší zápis, zejména u cest) použít jednoduchý tvar slova místo typu `set-word!`.
 
 Strukturální skladba má pro některá slova formát:
+
 ```red
 #[...]
 ```
