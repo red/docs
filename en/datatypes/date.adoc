@@ -519,7 +519,7 @@ d/zone: -4:00
 ----
 
 [NOTE]
-Setting a `/zone` value to a date that lacks a `time` value will result in `/zone` defaulting to 0:0:0. 
+Setting a `/zone` value to a date that lacks a `time` value will result in the `time` value defaulting to 0:0:0. 
 
 *Examples*
 
