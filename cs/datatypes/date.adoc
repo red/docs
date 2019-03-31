@@ -10,7 +10,7 @@ Hodnota `date!` představuje datum, vycházející z Gregoriánského kalendář
 ====
 * `date!` používá https://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar[proleptický Gregoriánský kalendář], s rozšířenou platností před rok svého vzniku, t.j. rok 1582. Je třeba se mít na pozoru při používání tohoto datového typu pro vyjadřování před gregoriánských datumů.
 
-* Podporované jsou datumy od `1/Jan/-16384` do `31/Dec/16383`, zahrnujíce rozšiřující matematické operace (s přechody u matematických operací, způsobujících překročení mezí). Pro vstup je tento rozsah z praktických důvodů omezen na úsek od `1/Jan/-9999` do `31/Dec/9999`.
+* Podporované jsou datumy od `1/Jan/-16383` do `31/Dec/16383`, zahrnujíce rozšiřující matematické operace (s přechody u matematických operací, způsobujících překročení mezí). Pro vstup je tento rozsah z praktických důvodů omezen na úsek od `1/Jan/-9999` do `31/Dec/9999`.
 
 ====
 
@@ -470,15 +470,17 @@ Je-li časové pásmo zadáno celým číslem, vztahuje se na hodiny, zatímco m
 
 Minuty časového pásma se uvádějí v násobcích čísla 15; jiné hodnoty se zaokrouhlují na nejbližší násobek patnácti dolů.
 
+[NOTE]
+Přidání hodnoty `/zone` k datumu bez hodnoty `time` má za následek nastavení implicitní hodnoty času 0:0:0. 
+
 *Příklady*
 
 ----
-d: 1/3/2017/5:30:0
-d/zone: 8
-== 1-Mar-2017/5:30:00+08:00
+d: 28-Mar-2019
+== 28-Mar-2019
 
-d/zone: -4:00
-== 1-Mar-2017/5:30:00-04:00
+d/zone: 1 5
+== 28-Mar-2019/0:00:00+01:00
 ----
 
 === /timezone
