@@ -102,7 +102,7 @@ An error will be raised if no corresponding refinement exists in the function:
 ```
 
 [NOTE]
-Paths are an active type and will evaluate stored functions.
+Paths are an active type and will evaluate stored functions. `Op!` values are not currently evaluated.
 
 ```red
 >> f: does [42]
