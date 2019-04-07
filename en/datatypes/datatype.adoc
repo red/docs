@@ -64,7 +64,7 @@ Use `type?` to return the datatype of a given value.
 
 == Predefined words
 
-The word `datatype!` refers to all pre-defined datatypes. Pre-defined datatypes can be viewed by typing `help datatype!` in the Red console.
+The word `datatype!` refers to all predefined datatypes. Predefined datatypes can be viewed by typing `help datatype!` in the Red console.
 
 === Actions
 
