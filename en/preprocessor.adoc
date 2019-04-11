@@ -37,17 +37,17 @@ NOTE: When using the preprocessor at runtime (from Red's interpreter), the `conf
 
 === Execution context
 
-All the expressions used in directives are bound to a dedicated context to avoid leaking words in global context, causing unwanted side-effects. That context is extended with every set-word used in conditional expressions, macros and `#do` directives.
+All the expressions used in directives are bound to a dedicated context to avoid leaking words in global context, causing unwanted side-effects. That context is extended with every set-word used in conditional expressions, macros and `#do` directives. 
 
 [TIP]
 ====
 * It is possible to print out the content of that hidden context using the following expression:
         
-        #do [probe self]
+    #do [probe self]
         
 * When used at runtime, the hidden context can also be accessed directly using:
         
-        probe preprocessor/exec
+    probe preprocessor/exec
 ====
 
 === Implementation note
@@ -356,7 +356,18 @@ print "Medium"
 
 *Description*
 
-When evaluated at compile-time, read and include the argument file contents at the current position. The file can contain a path, absolute or relative to the current script. When run by the Red interpreter, this directive is just replaced by a `do`, and no file inclusion occurs.
+When evaluated at compile-time, read and include the argument file contents at the current position. The file can contain a path, absolute or relative to the current script. Directives from included file cannot see values set in directives set in including file:
+----
+Red [File: %main.red]
+#do [a: true]
+#include %incl.red
+----
+----
+Red [File: %incl.red]
+#either a [print "a"] [print "not a"]   ;-- this will result in "a has no value" preprocessor error.
+----
+
+When run by the Red interpreter, this directive is just replaced by a `do`, and no file inclusion occurs.
 
 === #do 
 
