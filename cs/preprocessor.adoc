@@ -317,7 +317,8 @@ print "Medium"
     
 *Popis*
 
-Při vyhodnocení při kompilaci přečte a vloží obsah souboru v aktuální pozici. Soubor může obsahovat absolutní nebo relativní cestu vzhledem k aktuálnímu skriptu. Při vyhodnocení interpretem je tato direktiva pouze nahrazena slovem `do` a k žádné iknluzi nedojde.
+Při vyhodnocení při kompilaci přečte a vloží obsah souboru v aktuální pozici. Soubor může obsahovat absolutní nebo relativní cestu vzhledem k aktuálnímu skriptu. Direktivy z přiloženého souboru nemohou vidět hodnoty
+Při vyhodnocení interpretem je tato direktiva pouze nahrazena slovem `do` a k žádné iknluzi nedojde.
 
 === #include-binary
 
