@@ -6,8 +6,6 @@ _This is a work in progress, only some of the datatypes are currently documented
 
 '''
 
-* Aktuálně (10.12.2018) dostupné datové typy v jazyce Red:
-
 ```red
     action! 
     binary!

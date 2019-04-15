@@ -101,6 +101,20 @@ An error will be raised if no corresponding refinement exists in the function:
 *** Stack: 
 ```
 
+[NOTE]
+Paths are an active type and will evaluate stored functions. `Op!` values are not currently evaluated.
+
+```red
+>> f: does [42]
+== func [][42]
+
+>> insert b: [] :f
+== []
+
+>> b/1
+== 42
+```
+
 * If the value is not a function, the following rules apply:
 
 ** If the next expression in the path is a word, it is used to `select` from the path-head value. The path-head value must be of a type that supports `select` (e.g. a `block!`, `map!`, or `object!`).
