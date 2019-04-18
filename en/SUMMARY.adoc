@@ -28,6 +28,7 @@
 .. link:datatypes/map.adoc[Map!]
 .. link:datatypes/none.adoc[None!]
 .. link:datatypes/object.adoc[Object!]
+.. link:datatypes/op.adoc[Op!]
 .. link:datatypes/pair.adoc[Pair!]
 .. link:datatypes/paren.adoc[Paren!]
 .. link:datatypes/path.adoc[Path!]
