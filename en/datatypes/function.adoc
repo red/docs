@@ -111,6 +111,8 @@ Result is 18
 == "Result is"
 ```
 
+// anchor for cross-referencing function evaluation steps from other any-funtion! types
+[[evaluation]]  
 == Evalutaion Steps
 
 *Functions with no arguments:*
