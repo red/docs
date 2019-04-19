@@ -111,43 +111,13 @@ Result is 18
 == "Result is"
 ```
 
-// anchor for cross-referencing function evaluation steps from other any-funtion! types
-[[evaluation]]  
-== Evalutaion Steps
-
-*Functions with no arguments:*
-
-* Create a context for the `function!` value.
-* Bind the functions body to the context previously created.
-* Evaluate the body of the function and return the result of the last expression.
-
-
-*Functions with one or more arguments:*
-
-* Create a context for the `function!` value. Set the words of the function to an initial value of `none`.
-* Evaluate expressions to obtain values for all of the functions required arguments.
-** If an argument is a `lit-word!` and the value passed in is of the type `get-word!`, `get-path!` or `paren!`, evaluate the value and set the `lit-word!` to refer to that value; else pass in the value 'as is'.
-** If an argument is a `get-word!`, pass in the value 'as is'.
-* Set each argument word to refer to the value of the corresponding expression.
-* Check to make sure that each value matches the type(s) specified in the function spec.
-* Bind the functions body to the context previously created.
-* Evaluate the body of the function, and return the result of the last expression.
-
-*If `refinement!` values are used in the body of the function:*
-
-* Check to ensure that the refinement values match up with the refinements in the functions spec.
-* Set each refinement to an initial value of `true`.
-* Evaluate expressions as above to obtain values for all arguments following each refinement.
-
-***
-
 == Conversions
 
 No conversions are supported for `function!` values.
 
 == Comparisons
 
-No comparisons are supported for `function!` values.
+Function values can be compared for sameness and equality with `same?`, `==`, `equal?`, `strict-equal?`, `not-equal?`, `<>`.
 
 == Testing values
 
