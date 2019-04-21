@@ -1,0 +1,140 @@
+= Function! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+`Function!` values represent user-defined functions.
+
+`Function!` is a member of the following typesets: `any-function!`, `default!`
+
+== Creation
+
+Function values can be created at runtime by using `make` or by using one of the predefined words `func`, `has`, `does`, or `function`.
+
+=== Runtime creation
+// grammar from https://github.com/meijeru/red.specs-public/blob/master/specs.adoc#538-function
+
+* BNF syntax:
++
+```
+<function> ::= make function! [<function-spec> <function-body>] | func <function-spec> <function-body> |
+               has [<argument>*] <function-body> | does <function-body> | function <function-spec> <function-body>
+
+<function-spec> ::= [<docstring>° <argument-spec> <return-spec>°]
+
+<docstring> ::= <string>
+
+<argument-spec> ::= <argument>* <optional-arguments>*
+
+<argument> ::= <argument-name> <argument-doc>° | <argument-name> [<typeset-element>*] <argument-doc>°
+
+<argument-name> ::= <word-literal> | '<word-literal> | :<word-literal>
+
+<argument-doc> ::= <string>
+
+<optional-arguments> ::= <function-refinement> <argument-doc>° <argument>*
+
+<function-refinement> ::= /<word-literal>
+
+<return-spec> ::= return: [<typeset-element>*] <return-doc>°
+
+<return-doc> ::= <string>
+
+<function-body> ::= <block>
+```
+***
+
+*Examples*
+
+* `Make`
++
+```red
+>> double: make function! [[n [number!]] [n * 2]]
+== func [n [number!]][n * 2]
+```
+
+* `Func` is equivalent to `make function!`. 
++
+```red
+>> double: func [n [number!]][n * 2]
+== func [n [number!]][n * 2]
+```
++
+Words following the optional refinement `/local` will be marked as local to the function body.
+
+* `Has` is equivalent to `func` with the `/local` refinement. 
++
+```red
+>> fourty-two: has [value][value: 42 print value]
+== func [/local value][value: 42 print value]
+```
+
+* `Does` is equivalent to `func` with no arguments. 
++
+```red
+>> h: does [print "Hi"]
+== func [][print "Hi"]
+```
+
+* `Function` is equivalent to `func`, but will mark all `set-word!` values and words of `foreach`, `remove-each`, and `repeat` as local to the function body.
+
++
+```red
+>> double: function [n [number!]][val: "Result is" print [val n * 2]]
+== func [n [number!] /local val][val: "Result is" print [val n * 2]]
+
+>> double 9
+Result is 18
+```
++
+The word `val` remains local to the function and is not accessible from the default `system/words` context.
++
+```red
+>> val
+*** Script Error: val has no value
+*** Where: catch
+*** Stack:
+```
+
++
+Words following the optional refinement `/extern` will be accessible from the default `system/words` context.
++
+```red
+>> double: function [n [number!] /extern val][val: "Result is" print [val n * 2]
+== func [n [number!]][val: "Result is" print [val n * 2]]
+
+>> double 9
+Result is 18
+
+>> val
+== "Result is"
+```
+
+== Conversions
+
+No conversions are supported for `function!` values.
+
+== Comparisons
+
+Function values can be compared for sameness and equality with `same?`, `==`, `equal?`, `strict-equal?`, `not-equal?`, `<>`.
+
+== Testing values
+
+Use `function?` to check if a value is of the `function!` datatype.
+
+```red
+>> function? :double
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? :double
+== function!
+```
+
+== Predefined words
+
+Predefined `function!` values can be viewed by typing `help function!` in the Red console.
