@@ -1,12 +1,11 @@
-= Summary
+= Seznam
 
-. link:README.adoc[Red/Core Language]
+. link:README.adoc[Red/Core README]
 
-. link:datatypes.adoc[Datatypes]
+. link:datatypes.adoc[Datové typy]
 .. link:datatypes/binary.adoc[Binary!]
 .. link:datatypes/bitset.adoc[Bitset!]
 .. link:datatypes/block.adoc[Block!]
-.. link:datatypes/char.adoc[Char!]
 .. link:datatypes/datatype.adoc[Datatype!]
 .. link:datatypes/date.adoc[Date!]
 .. link:datatypes/email.adoc[Email!]
@@ -19,8 +18,9 @@
 .. link:datatypes/get-word.adoc[Get-word!]
 .. link:datatypes/handle.adoc[Handle!]
 .. link:datatypes/hash.adoc[Hash!]
-.. link:datatypes/integer.adoc[Integer!]  
+.. link:datatypes/char.adoc[Char!]
 .. link:datatypes/image.adoc[Image!]
+.. link:datatypes/integer.adoc[Integer!]
 .. link:datatypes/issue.adoc[Issue!]
 .. link:datatypes/lit-path.adoc[Lit-path!]
 .. link:datatypes/lit-word.adoc[Lit-word!]
@@ -47,16 +47,17 @@
 .. link:datatypes/vector.adoc[Vector!]
 .. link:datatypes/word.adoc[Word!]
 
-.  link:gui.adoc[GUI System]
-.. link:view.adoc[View Engine]
-.. link:vid.adoc[VID Dialect]
-.. link:draw.adoc[Draw Dialect]
-.. link:rtd.adoc[Rich-Text Dialect]
+.  link:gui.adoc[Systém GUI]
+.. link:view.adoc[Prostředí View]
+.. link:vid.adoc[Dialekt VID]
+.. link:draw.adoc[Dialekt Draw]
+.. link:rtd.adoc[Dialekt Rich-Text]
 
-### Other Docs
+### Další dokumentace  
 
-. link:reactivity.adoc[Reactive Programming]
-. link:libred.adoc[LibRed API]
-. link:preprocessor.adoc[Preprocessor]
-. link:redbin.adoc[Redbin Format Specification]
-. link:style-guide.adoc[Coding Style Guide]
+. link:reactivity.adoc[Reaktivní programování]
+. link:libred.adoc[Libred API]
+. link:preprocessor.adoc[Preprocesor]
+. link:redbin.adoc[Specificace formátu Redbin]
+. link:style-guide.adoc[Kódovací styl]
+
