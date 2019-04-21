@@ -317,22 +317,19 @@ print "Medium"
     
 *Popis*
 
-Při vyhodnocení při kompilaci přečte a vloží obsah souboru v aktuální pozici. Soubor může obsahovat absolutní nebo relativní cestu vzhledem k aktuálnímu skriptu. Direktivy z přiloženého souboru nemohou vidět hodnoty
-Při vyhodnocení interpretem je tato direktiva pouze nahrazena slovem `do` a k žádné iknluzi nedojde.
-
-=== #include-binary
-
-*Syntaxe*
+Při vyhodnocení při kompilaci načíst obsah souboru s argumenty a vložit jej v aktuální pozici do skriptu. Soubor může obsahovat absolutní nebo relativní cestu vzhledem k aktuálnímu skriptu. Direktivy z připojovaného souboru nemají přístup k hodnotám direktiv rozšiřovaného souboru.
 
 ----
-#include-binary <file>
-
-<file> : Soubor Redu, připojovaný jako binární hodnota (file!).
+Red [File: %main.red]
+#do [a: true]
+#include %incl.red
+----
+----
+Red [File: %incl.red]
+#either a [print "a"] [print "not a"]   ;-- this will result in "a has no value" preprocessor error.
 ----
 
-*Popis*
-
-Probíhá-li vyhodnocení při kompilaci, načítá a připojuje se obsah souboru v hrubé binární formě (bez konverzí) v aktuální pozici.  Soubor může obsahovat cestu, absolutní nebo relativní k aktuálnímu skriptu. Při spuštění interpretem Redu je tato direktiva nahrazena direktivou `read/binary` a k žádné inkluzi souboru nedojde.
+Při realizaci v interpretu Redu je tato direktiva pouze nahrazena příkazem `do` a k žádné inkluzi nedojde.
 
 === #do
 
