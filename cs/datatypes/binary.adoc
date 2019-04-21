@@ -182,7 +182,7 @@ Případně:
 
 == Komparace
 
-Na hodnotu typu `binary!` lze aplikovat všechny komparační oprátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
+Na hodnotu typu `binary!` lze aplikovat všechny komparační operátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
 
 
 == Ověřování hodnot
