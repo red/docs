@@ -4,13 +4,13 @@
 
 == Abstract
 
-`Datatype!` represents all valid types that are pre-defined for Red. 
+`Datatype!` represents all valid types that are predefined for Red. 
 
 `Datatype!` is a member of the following typesets: `default!`, `immediate!`
 
 == Creation
 
-`Datatype!` values are pre-defined for Red and cannot be created.
+`Datatype!` values are predefined for Red and cannot be created.
 
 == Literal syntax
 
