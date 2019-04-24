@@ -1,0 +1,41 @@
+= Action! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+`Action!` values are analogous to datatype "methods" in the Red internal OO model. Actions are written in Red/System for a fixed set of operations and are used like normal function values.
+
+`Action!` is a member of the following typesets: `any-function!`, `default!`
+
+== Creation
+
+Action values cannot be created at runtime.
+
+== Conversions
+
+No conversions are supported for `action!` values.
+
+== Comparisons
+
+Action values can be compared for sameness and equality with `same?`, `==`, `equal?`, `strict-equal?`, `not-equal?`, `<>`.
+
+== Testing values
+
+Use `action?` to check if a value is of the `action!` datatype.
+
+```red
+>> action? :to
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? :to
+== action!
+```
+
+== Predefined words
+
+Predefined `action!` values can be viewed by typing `help action!` in the Red console.
