@@ -4,7 +4,9 @@
 
 == Abstract
 
-`Action!` values are analogous to datatype "methods" in the Red internal OO model. Actions are written in Red/System for a fixed set of operations and are used like normal function values.
+`Action!` values represent datatype "methods" in the Red internal OO model. They are written in Red/System and define a fixed interface that each datatype may, or may not, provide an implementation for. Not all datatypes support all actions, but they all share the same set of possible actions. 
+
+Actions are used like normal function values.
 
 `Action!` is a member of the following typesets: `any-function!`, `default!`
 
