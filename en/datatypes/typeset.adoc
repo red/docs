@@ -4,7 +4,7 @@
 
 == Abstract
 
-A `typeset!` value represents a set, or collection, of pre-defined `datatype!` values.
+A `typeset!` value represents a set, or collection, of predefined `datatype!` values.
 
 `Typeset!` is a member of the following typesets: `default!`, `immediate!`
 
