@@ -4,7 +4,7 @@
 
 == Úvodem
 
-Datový typ `datatype!` representuje všechny platné předdefinované typy Redu, jedním z nichž je rovněž typ `datatype`. 
+Datový typ `datatype!` representuje všechny platné předdefinované typy Redu. 
 
 `Datatype!` je člen typesetů `immediate!` a `default!`. 
 
