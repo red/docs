@@ -4,7 +4,7 @@
 
 == Úvodem
 
-Hodnota typu `typeset!` reprezentuje sadu či kolekci předdefinovaných hodnot typu `datatype!`.
+Datový typ `typeset!` reprezentuje sadu či kolekci předdefinovaných hodnot typu `datatype!`.
 
 `Typeset!` je členem typesetů `default!` a `immediate!`
 
