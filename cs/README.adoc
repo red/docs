@@ -8,32 +8,3 @@ Více informací o programovacím jazyku Red lze číst na stránkách http://re
 
 Join the chat at https://gitter.im/red/docs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge[image:https://badges.gitter.im/red/docs.svg[https://gitter.im/red/docs]]
 
-== Pokyny pro překladatele dokumentace
-
-* Navigujte k repozitáři https://github.com/red/docs[red/docs]. Tam aktivujte tlačítko `Fork`, kterým přenesete obsah zdrojového repozitáře do repozitáře vašeho profilu v GitHub.
-* Zkontrolujte svůj profil na GitHub, abyste se ujistili že k forku došlo.
-* Z příkazového řádku klonujte fork do vhodné složky v počítači:
-** `git clone https://github.com/<your-github-profile>/docs.git`
-
-* Ve svém oblíbeném editoru otevřte právě klonovanou složku (s podsložkou `.git`). Označte ji zkratkou vašeho cílového jazyka - viz https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes [Language codes].
-* Zkopírujte zvolený soubor ze složky `en` do své jazykové složky a přeložte jej.
-
-*Příklad práce v systému Git*
-
-* Zkontrolujte si, že váš fork je aktuální vhledem k `red/docs`:
-
-** `git pull https://github.com/red/docs.git`
-
-* Přeložené texty předejte do indexu git:
-
-** `git add <your-translated-file>`
-
-* Komitujte (přidané) změny se sdělením:
-
-** `git commit -m "Your message."`
-
-* Komitované změny pošlete do svého forku:
-
-** `git push https://github.com/<your-github-profile>/docs.git`
-
-* Nově došlé změny ve forku avizujte zdrojovému repozitáři aktivací tlačítka `New pull request` a vytvořením Pull Request.
