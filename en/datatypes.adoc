@@ -1,24 +1,18 @@
 = Datatypes
 
-== English version
-
-_This is a work in progress, only some of the datatypes are currently documented._
-
-***
-
 *Available datatypes in Red:*
 
-action! 
+link:datatypes/action.adoc[action!]
 
-binary!
+link:datatypes/binary.adoc[binary!]
 
-bitset! 
+link:datatypes/bitset.adoc[bitset!]
 
 link:datatypes/block.adoc[block!]
     
 link:datatypes/char.adoc[char!] 
 
-datatype! 
+link:datatypes/datatype.adoc[datatype!] 
 
 link:datatypes/date.adoc[date!]
 
@@ -26,13 +20,13 @@ link:datatypes/email.adoc[email!]
 
 link:datatypes/error.adoc[error!] 
 
-event!
+link:datatypes/event.adoc[event!] 
 
 link:datatypes/file.adoc[file!]
 
 link:datatypes/float.adoc[float!]
 
-function! 
+link:datatypes/function.adoc[function!]  
 
 link:datatypes/get-path.adoc[get-path!] 
 
@@ -40,7 +34,7 @@ link:datatypes/get-word.adoc[get-word!]
 
 link:datatypes/handle.adoc[handle!]
 
-hash! 
+link:datatypes/hash.adoc[hash!] 
 
 link:datatypes/image.adoc[image!]
 
@@ -56,13 +50,13 @@ link:datatypes/logic.adoc[logic!]
 
 link:datatypes/map.adoc[map!]
 
-native! 
+link:datatypes/native.adoc[native!] 
 
 link:datatypes/none.adoc[none!] 
 
 link:datatypes/object.adoc[object!]
 
-op! 
+link:datatypes/op.adoc[op!] 
 
 link:datatypes/pair.adoc[pair!]
 
@@ -72,11 +66,9 @@ link:datatypes/path.adoc[path!]
 
 link:datatypes/percent.adoc[percent!]
 
-// point! 
-
 link:datatypes/refinement.adoc[refinement!] 
 
-routine! 
+link:datatypes/routine.adoc[routine!]  
 
 link:datatypes/set-path.adoc[set-path!] 
 
@@ -90,12 +82,12 @@ link:datatypes/time.adoc[time!]
 
 link:datatypes/tuple.adoc[tuple!]
 
-typeset! 
+link:datatypes/typeset.adoc[typeset!] 
 
 link:datatypes/unset.adoc[unset!]
 
 link:datatypes/url.adoc[url!] 
 
-vector! 
+link:datatypes/vector.adoc[vector!] 
 
 link:datatypes/word.adoc[word!]
