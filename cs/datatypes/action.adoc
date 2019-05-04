@@ -24,7 +24,7 @@ Akce lze porovnávat z hlediska stejnosti a rovnosti funkcemi `same?`,`equal?`, 
 
 == Testování hodnot
 
-K určení, zda je hodnota typu `action!` použijeme funkci  `action?`:.
+K určení, zda je hodnota typu `action!` použijeme funkci  `action?`:
 
 ```red
 >> action? :to
