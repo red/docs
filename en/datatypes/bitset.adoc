@@ -147,6 +147,11 @@ The `action!` value `complement` can also be used to create complemented bitsets
 == true
 ```
 
+[NOTE]
+In order to cope with the wide range of Unicode characters, bits outside of the bitsets are treated as virtual bits
+so they can be tested and set without errors. The bitset size will auto-expand according to the needs. 
+This is still not enough to deal with big ranges such as a bitset for example, `all Unicode characters except digits`. For such cases, it is possible to define a complemented bitset that represents the complement range of the specified bits. This makes it possible to have large bitsets while using only a tiny memory portion.
+
 == Path notation
 
 For reading and writing single bits, use path notation.
