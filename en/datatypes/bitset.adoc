@@ -24,40 +24,42 @@ Bitset! values can be created by using a `make` constructor, a `to` conversion, 
 <bit-position> ::= <integer> | <char> | <string> | <char> - <char> | <integer> - <integer>
 ```
 
-=== Make
+* `Make`
++
 
 ```red
 >> make bitset! 50    ; create an empty bitset with places for at least 50 bits
 == make bitset! #{00000000000000}
 ```
-
++
 ```red
 >> make bitset! #"A"   ; create a bitset with bit 65 set
 == make bitset! #{000000000000000040} 
 ```
-
++
 ```red
 >> make bitset! "hi"   ; create a bitset with bits 104 and 105 set
 == make bitset! #{00000000000000000000000000C0}
 ```
-
++
 ```red
 >> make bitset! [120 "hello" #"A"]   ; create and set bits using different value representations
 == make bitset! #{00000000000000004000000004890080}
 ```
-
++
 Using ranges:
-
++
 Ranges are defined using two `char!`, or `integer!` values, separated by a dash word.
-
++
 ```red
 >> make bitset! [#"0" - #"9" #"a" - #"z"]   ; create a bitset using ranges of values
 == make bitset! #{000000000000FFC0000000007FFFFFE0}
 ```
-
++
 Bitsets are auto-sized to fit the specification values provided. The size is rounded to the upper byte bound.
 
-=== To
+* `To`
++
 
 Converting a value to a bitset value using `to` is equivalent to using `make bitset!`, with the exception that `integer!` values are not allowed.
 
@@ -83,7 +85,8 @@ Converting a value to a bitset value using `to` is equivalent to using `make bit
 == make bitset! #{000000000000FFC0000000007FFFFFE0}
 ```
 
-=== Charset
+* `Charset`
++
 
 ```red
 >> source charset
@@ -94,32 +97,28 @@ charset: func ["Shortcut for `make bitset!`"
 ]
 ```
 
-`Charset` is a shortcut for `make bitset!`, with the exception that `binary!` values are not allowed.
++
 
+`Charset` is a shortcut for `make bitset!`, with the exception that `binary!` values are not allowed.
++
 ```red
 >> charset #{2A}
 *** Script Error: charset does not allow binary! for its spec argument
 *** Where: charset
 *** Stack: charset  
 ```
-
++
 ```red
 >> charset [120 "hello" #"A"]   ; create and set bits using different value representations
 == make bitset! #{00000000000000004000000004890080}
 ```
-
++
 ```red
 >> charset [#"0" - #"9" #"a" - #"z"]   ; create a bitset using ranges of values
 == make bitset! #{000000000000FFC0000000007FFFFFE0}  
 ```
 
 == Complements
-
-In order to cope with the wide range of Unicode characters, bits outside of the bitsets are treated as virtual bits
-so they can be tested and set without errors. The bitset size will auto-expand according to the needs. 
-
-This is still not enough to deal with big ranges such as a bitset for `all Unicode characters except digits`. For such cases, it is possible to define a complemented bitset that represents the complement range of the specified bits. This makes it possible to have large bitsets while using only a tiny memory portion.
-
 
 Complemented bitsets can be created by including the word `not` in a block spec.
 
@@ -128,28 +127,23 @@ charset [not "0123456789"]   ; all characters except digits
 == make bitset! [not #{000000000000FFC0}]
 ```
 
-`Complement` can also be used to create complemented bitsets.
+The `action!` value `complement` can also be used to create complemented bitsets.
 
 ```red
->> b: make bitset! 42
+>> make bitset! 42
 == make bitset! #{000000000000}
 
->> complemented-b: complement b
-== make bitset! [not #{000000000000}]
-```
-
-```red
->> b: complement make bitset! 42
+>> complement make bitset! 42
 == make bitset! [not #{000000000000}]
 ```
 
 `Complement?` can be used to check if a bitset has been complemented.
 
 ```red
->> complement? complemented-b
-== true
+>> b: complement make bitset! 42
+== make bitset! [not #{000000000000}]
 
->> complement? b: complement make bitset! 42
+>> complement? b
 == true
 ```
 
@@ -165,7 +159,7 @@ bs/97: false
 bs/97     ; will return false
 ```
 
-== Data set operations
+== Data Set operations
 
 The following data set operations are possible with bitset values: `difference`, `exclude`, `intersect`, `union`
 
