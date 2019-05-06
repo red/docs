@@ -3,6 +3,8 @@
 . link:README.adoc[Red/Core Language]
 
 . link:datatypes.adoc[Datatypes]
+. link:typesets.adoc[Typesets]
+
 .  link:gui.adoc[GUI System]
 .. link:view.adoc[View Engine]
 .. link:vid.adoc[VID Dialect]
