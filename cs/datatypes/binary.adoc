@@ -1,4 +1,4 @@
-= Binary! datatype
+= Datový typ binary!
 :toc:
 :numbered:
 

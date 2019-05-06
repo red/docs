@@ -62,7 +62,7 @@ Funkce `type?` vrací datový typ zadané hodnoty.
 
 >> type? my-word
 == issue!
-```red
+```
 
 == Předdefinovaná slova
 

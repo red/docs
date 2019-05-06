@@ -1,4 +1,4 @@
-= Function! datatype
+= Datový typ function! 
 :toc:
 :numbered:
 

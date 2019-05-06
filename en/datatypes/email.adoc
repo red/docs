@@ -12,6 +12,26 @@
 
 Email values can be created using literal syntax, or at runtime using a `make` constructor or a `to` conversion.
 
+== Literal syntax
+
+One or more characters, followed by the `@` symbol, followed by zero or more additional characters.
+
+*Examples*
+
+```
+foo@bar.net
+gregg@red-lang.org
+g@
+```
+
+*Invalid characters* 
+
+`%` `(` `)` `:` `"`
+
+== Runtime creation
+
+* `Make`
++
 ```red
 >> f: make email! "foo"
 == foo
@@ -20,6 +40,8 @@ Email values can be created using literal syntax, or at runtime using a `make` c
 == email!
 ```
 
+* `To`
++
 ```red
 >> b: to email! 'bar
 == bar
@@ -27,13 +49,6 @@ Email values can be created using literal syntax, or at runtime using a `make` c
 >> type? b
 == email!
 ```
-
-== Literal syntax
-
-One or more characters, followed by the `@` symbol, followed by zero or more additional characters.
-
-Invalid characters: `%` `(` `)` `:` `"`
-
 
 == Comparisons
 
