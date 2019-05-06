@@ -1,4 +1,4 @@
-= Op! datatype
+= Datový typ op!
 :toc:
 :numbered:
 
