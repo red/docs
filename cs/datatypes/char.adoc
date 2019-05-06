@@ -1,4 +1,4 @@
-= Char! datatype
+= Datový typ char! 
 Version: Draft 3
 :toc:
 :numbered:
@@ -43,7 +43,7 @@ Formát dlouhé formy je:
 ----
 #"^(<codepoint>)"
 <codepoint> : platné hexadecimální číslo 00 až 10FFFF |
-              jméno symbolu pro kontrolní znak
+                                   jméno symbolu pro kontrolní znak
               
 ----
 Formátem dlouhé formy vyjádříme libovolný znak sady Unicode v kódování UTF-8, například `#"^(2b)"` pro znaménko `+`. 
@@ -150,24 +150,62 @@ sort [#"c" #"b" #"d" #"a"]
 
 
 == Aritmetika
+
 Pro hodnoty typu `char!` lze použít celý rozsah matematických funkcí. Pokud se výsledek aritmetického výrazu dostane mimo rozsah  00 - 10FFFF, je vyvolána chyba `Math Error`.
 
 *Příklady*
 
-----
+```red
 #"a" + 1
 == #"b"
+
 #"a" - 32
 == #"A"
 #"a" * 256
 == #"愀"
+
 #"a" - 98
 *** Math Error: math or number overflow
 *** Where: -
 *** Stack:  
+```
+
+[NOTE] 
+Výsledkům aritmetických operací je přiřazen typ prvního argumentu.
+
+```red
+>> #"a" + 1
+== #"b"
+
+>> 1 + #"a"
+== 98
+
+>> #"a" - 32
+== #"A"
+
+>> 32 - #"a"
+== -65
+
+>> 256.00 * #"a"
+== 24832.0
+```
+
+== Předdefinovaná slova
 
 ----
-
+null             #"^@"
+newline          #"^/"
+slash            #"/"
+dbl-quote        #"^""
+space            #" "
+lf               #"^/"
+tab              #"^-"
+CR               #"^M"
+dot              #"."
+escape           #"^["
+sp               #" "
+comma            #","
+----
 
 
 == Další souvisící funkce

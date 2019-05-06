@@ -1,4 +1,4 @@
-= Vector! datatype
+= Datový typ vector!
 :toc:
 :numbered:
 
