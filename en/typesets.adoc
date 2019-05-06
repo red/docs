@@ -1,0 +1,69 @@
+= Typesets
+
+*Available typesets in Red:*
+
+* `all-word!`
++
+`make typeset! [word! set-word! lit-word! get-word! refinement! issue!]`
+
+* `any-block!`
++
+`make typeset! [block! paren! path! lit-path! set-path! get-path! hash!]`
+
+* `any-function!`
++
+`make typeset! [native! action! op! function! routine!]`
+
+* `any-list!`
++
+`make typeset! [block! paren! hash!]`
+    
+* `any-object!`
++
+`make typeset! [object! error!]`
+
+* `any-path!`
++
+`make typeset! [path! lit-path! set-path! get-path!]`
+
+* `any-string!`
++
+`make typeset! [string! file! url! tag! email!]`
+
+* `any-type!`
++
+```red
+make typeset! [datatype! unset! none! logic! block! paren! string! file! url! char! integer! float! word! set-word! lit-word! get-word! refinement! issue! native! action! op! function! path! lit-path! set-path! get-path! routine! bitset! object! typeset! error! vector! hash! pair! percent! tuple! map! binary! time! tag! email! handle! date! image! event!]
+```
+
+* `any-word!`
++
+`make typeset! [word! set-word! lit-word! get-word!]`
+
+* `default!`
++
+```red
+make typeset! [datatype! none! logic! block! paren! string! file! url! char! integer! float! word! set-word! lit-word! get-word! refinement! issue! native! action! op! function! path! lit-path! set-path! get-path! routine! bitset! object! typeset! error! vector! hash! pair! percent! tuple! map! binary! time! tag! email! handle! date! image! event!]
+```
+
+* `external!`
++
+`make typeset! [event!]`
+
+* `immediate!`
++
+```red
+make typeset! [datatype! none! logic! char! integer! float! word! set-word! lit-word! get-word! refinement! issue! typeset! pair! percent! tuple! time! handle! date!]
+```
+
+* `internal!`
++
+`make typeset! [unset!]`
+
+* `scalar!`
++
+`make typeset! [char! integer! float! pair! percent! tuple! time! date!]`
+
+* `series!`
++
+`make typeset! [block! paren! string! file! url! path! lit-path! set-path! get-path! vector! hash! binary! tag! email! image!]`
