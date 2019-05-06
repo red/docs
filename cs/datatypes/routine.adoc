@@ -1,4 +1,4 @@
-= Routine! datatype
+= Datový typ routine!
 :toc:
 :numbered:
 
