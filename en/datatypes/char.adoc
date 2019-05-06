@@ -156,24 +156,63 @@ sort [#"c" #"b" #"d" #"a"]
 
 
 == Arithmetic
+
 The full range of mathematical functions can be used with `char!` values. A `Math Error` is raised if the result of the arithmetic falls outside of the range 00 - 10FFFF (hexadecimal).
 
 *Examples*
 
-----
-#"a" + 1
+```red
+>> #"a" + 1
 == #"b"
-#"a" - 32
+
+>> #"a" - 32
 == #"A"
-#"a" * 256
+
+>> #"a" * 256
 == #"愀"
-#"a" - 98
+
+>> #"a" - 98
 *** Math Error: math or number overflow
 *** Where: -
 *** Stack:  
+```
+
+[NOTE] 
+Arithmetic results will be cast to the type of the first argument for `char!` values.
+
+```red
+>> #"a" + 1
+== #"b"
+
+>> 1 + #"a"
+== 98
+
+>> #"a" - 32
+== #"A"
+
+>> 32 - #"a"
+== -65
+
+>> 256.00 * #"a"
+== 24832.0
+```
+
+== Predefined words
 
 ----
-
+null             #"^@"
+newline          #"^/"
+slash            #"/"
+dbl-quote        #"^""
+space            #" "
+lf               #"^/"
+tab              #"^-"
+CR               #"^M"
+dot              #"."
+escape           #"^["
+sp               #" "
+comma            #","
+----
 
 == Other char-related functions
 
