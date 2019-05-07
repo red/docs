@@ -1,5 +1,18 @@
 = Seznam
 
-. link:README.adoc[Red/Core README]
+. link:README.adoc[Red/Core Language]
 
-. link:datatypes.adoc[Datové typy]
+. link:datatypes.adoc[Datatypes]
+.  link:gui.adoc[GUI System]
+.. link:view.adoc[View Engine]
+.. link:vid.adoc[VID Dialect]
+.. link:draw.adoc[Draw Dialect]
+.. link:rtd.adoc[Rich-Text Dialect]
+
+### Other Docs
+
+. link:reactivity.adoc[Reactive Programming]
+. link:libred.adoc[LibRed API]
+. link:preprocessor.adoc[Preprocessor]
+. link:redbin.adoc[Redbin Format Specification]
+. link:style-guide.adoc[Coding Style Guide]
