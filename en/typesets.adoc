@@ -1,69 +1,69 @@
 = Typesets
 
-== all-word!
+== Abstract
 
-`make typeset! [word! set-word! lit-word! get-word! refinement! issue!]`
+Typesets represents sets, or collections, of `datatype!` values.
 
-== any-block!
+See: link:datatypes/typeset.adoc[typeset!]
 
-`make typeset! [block! paren! path! lit-path! set-path! get-path! hash!]`
+== Available typesets in Red
 
-== any-function!
+=== all-word!
 
-`make typeset! [native! action! op! function! routine!]`
+* make typeset! [link:datatypes/word.adoc[word!] link:datatypes/set-word.adoc[set-word!] link:datatypes/lit-word.adoc[lit-word!] link:datatypes/get-word.adoc[get-word!] link:datatypes/refinement.adoc[refinement!] link:datatypes/issue.adoc[issue!]]
 
-== any-list!
+=== any-block!
 
-`make typeset! [block! paren! hash!]`
-    
-== any-object!
+* make typeset! [link:datatypes/block.adoc[block!] link:datatypes/paren.adoc[paren!] link:datatypes/path.adoc[path!] link:datatypes/lit-path.adoc[lit-path!] link:datatypes/set-path.adoc[set-path!] link:datatypes/get-path.adoc[get-path!] link:datatypes/hash.adoc[hash!]]
 
-`make typeset! [object! error!]`
+=== any-function!
 
-== any-path!
+* make typeset! [link:datatypes/native.adoc[native!] link:datatypes/action.adoc[action!] link:datatypes/op.adoc[op!] link:datatypes/function.adoc[function!] link:datatypes/routine.adoc[routine!]]
 
-`make typeset! [path! lit-path! set-path! get-path!]`
+=== any-list!
 
-== any-string!
+* make typeset! [link:datatypes/block.adoc[block!] link:datatypes/paren.adoc[paren!] link:datatypes/hash.adoc[hash!]]
 
-`make typeset! [string! file! url! tag! email!]`
+=== any-object!
 
-== any-type!
+* make typeset! [link:datatypes/object.adoc[object!] link:datatypes/error.adoc[error!]]
 
-```red
-make typeset! [datatype! unset! none! logic! block! paren! string! file! url! char! integer! float! word! set-word! lit-word! get-word! refinement! issue! native! action! op! function! path! lit-path! set-path! get-path! routine! bitset! object! typeset! error! vector! hash! pair! percent! tuple! map! binary! time! tag! email! handle! date! image! event!]
-```
+=== any-path!
 
-== any-word!
+* make typeset! [link:datatypes/path.adoc[path!] link:datatypes/lit-path.adoc[lit-path!] link:datatypes/set-path.adoc[set-path!] link:datatypes/get-path.adoc[get-path!]]
 
-`make typeset! [word! set-word! lit-word! get-word!]`
+=== any-string!
 
-== default!
+* make typeset! [link:datatypes/string.adoc[string!] link:datatypes/file.adoc[file!] link:datatypes/url.adoc[url!] link:datatypes/tag.adoc[tag!] link:datatypes/email.adoc[email!]]
 
-```red
-make typeset! [datatype! none! logic! block! paren! string! file! url! char! integer! float! word! set-word! lit-word! get-word! refinement! issue! native! action! op! function! path! lit-path! set-path! get-path! routine! bitset! object! typeset! error! vector! hash! pair! percent! tuple! map! binary! time! tag! email! handle! date! image! event!]
-```
+=== any-type!
 
-== external!
+* make typeset! [link:datatypes/datatype.adoc[datatype!] link:datatypes/unset.adoc[unset!] link:datatypes/none.adoc[none!] link:datatypes/logic.adoc[logic!] link:datatypes/block.adoc[block!] link:datatypes/paren.adoc[paren!] link:datatypes/string.adoc[string!] link:datatypes/file.adoc[file!] link:datatypes/url.adoc[url!] link:datatypes/none.char[char!] link:datatypes/integer.adoc[integer!] link:datatypes/float.adoc[float!] link:datatypes/word.adoc[word!] link:datatypes/set-word.adoc[set-word!] link:datatypes/lit-word.adoc[lit-word!] link:datatypes/get-word.adoc[get-word!] link:datatypes/refinement.adoc[refinement!] link:datatypes/issue.adoc[issue!] link:datatypes/native.adoc[native!] link:datatypes/action.adoc[action!] link:datatypes/op.adoc[op!] link:datatypes/function.adoc[function!] link:datatypes/path.adoc[path!] link:datatypes/lit-path.adoc[lit-path!] link:datatypes/set-path.adoc[set-path!] link:datatypes/get-path.adoc[get-path!] link:datatypes/routine.adoc[routine!] link:datatypes/bitset.adoc[bitset!] link:datatypes/object.adoc[object!] link:datatypes/typeset.adoc[typeset!] link:datatypes/error.adoc[error!] link:datatypes/vector.adoc[vector!] link:datatypes/hash.adoc[hash!] link:datatypes/pair.adoc[pair!] link:datatypes/percent.adoc[percent!] link:datatypes/tuple.adoc[tuple!] link:datatypes/map.adoc[map!] link:datatypes/binary.adoc[binary!] link:datatypes/time.adoc[time!] link:datatypes/tag.adoc[tag!] link:datatypes/email.adoc[email!] link:datatypes/handle.adoc[handle!] link:datatypes/date.adoc[date!] link:datatypes/image.adoc[image!] link:datatypes/event.adoc[event!]]
 
-`make typeset! [event!]`
+=== any-word!
 
-== immediate!
+* make typeset! [link:datatypes/word.adoc[word!] link:datatypes/set-word.adoc[set-word!] link:datatypes/lit-word.adoc[lit-word!] link:datatypes/get-word.adoc[get-word!]]
 
-```red
-make typeset! [datatype! none! logic! char! integer! float! word! set-word! lit-word! get-word! refinement! issue! typeset! pair! percent! tuple! time! handle! date!]
-```
+=== default!
 
-== internal!
+* make typeset! [link:datatypes/datatype.adoc[datatype!] link:datatypes/none.adoc[none!] link:datatypes/logic.adoc[logic!] link:datatypes/block.adoc[block!] link:datatypes/paren.adoc[paren!] link:datatypes/string.adoc[string!] link:datatypes/file.adoc[file!] link:datatypes/url.adoc[url!] link:datatypes/none.char[char!] link:datatypes/integer.adoc[integer!] link:datatypes/float.adoc[float!] link:datatypes/word.adoc[word!] link:datatypes/set-word.adoc[set-word!] link:datatypes/lit-word.adoc[lit-word!] link:datatypes/get-word.adoc[get-word!] link:datatypes/refinement.adoc[refinement!] link:datatypes/issue.adoc[issue!] link:datatypes/native.adoc[native!] link:datatypes/action.adoc[action!] link:datatypes/op.adoc[op!] link:datatypes/function.adoc[function!] link:datatypes/path.adoc[path!] link:datatypes/lit-path.adoc[lit-path!] link:datatypes/set-path.adoc[set-path!] link:datatypes/get-path.adoc[get-path!] link:datatypes/routine.adoc[routine!] link:datatypes/bitset.adoc[bitset!] link:datatypes/object.adoc[object!] link:datatypes/typeset.adoc[typeset!] link:datatypes/error.adoc[error!] link:datatypes/vector.adoc[vector!] link:datatypes/hash.adoc[hash!] link:datatypes/pair.adoc[pair!] link:datatypes/percent.adoc[percent!] link:datatypes/tuple.adoc[tuple!] link:datatypes/map.adoc[map!] link:datatypes/binary.adoc[binary!] link:datatypes/time.adoc[time!] link:datatypes/tag.adoc[tag!] link:datatypes/email.adoc[email!] link:datatypes/handle.adoc[handle!] link:datatypes/date.adoc[date!] link:datatypes/image.adoc[image!] link:datatypes/event.adoc[event!]]
 
-`make typeset! [unset!]`
+=== external!
 
-== scalar!
+* make typeset! [link:datatypes/event.adoc[event!]]
 
-`make typeset! [char! integer! float! pair! percent! tuple! time! date!]`
+=== immediate!
 
-== series!
+* make typeset! [link:datatypes/datatype.adoc[datatype!] link:datatypes/none.adoc[none!] link:datatypes/logic.adoc[logic!] link:datatypes/char.adoc[char!] link:datatypes/integer.adoc[integer!] link:datatypes/float.adoc[float!] link:datatypes/word.adoc[word!] link:datatypes/set-word.adoc[set-word!] link:datatypes/lit-word.adoc[lit-word!] link:datatypes/get-word.adoc[get-word!] link:datatypes/refinement.adoc[refinement!] link:datatypes/issue.adoc[issue!] link:datatypes/typeset.adoc[typeset!] link:datatypes/pair.adoc[pair!] link:datatypes/percent.adoc[percent!] link:datatypes/tuple.adoc[tuple!] link:datatypes/time.adoc[time!] link:datatypes/handle.adoc[handle!] link:datatypes/date.adoc[date!]]
 
-```red
-make typeset! [block! paren! string! file! url! path! lit-path! set-path! get-path! vector! hash! binary! tag! email! image!]
-```
+=== internal!
+
+* make typeset! [link:datatypes/unset.adoc[unset!]]
+
+=== scalar!
+
+* make typeset! [link:datatypes/char.adoc[char!] link:datatypes/integer.adoc[integer!] link:datatypes/float.adoc[float!] link:datatypes/pair.adoc[pair!] link:datatypes/percent.adoc[percent!] link:datatypes/tuple.adoc[tuple!] link:datatypes/time.adoc[time!] link:datatypes/date.adoc[date!]]
+
+=== series!
+
+* make typeset! [link:datatypes/block.adoc[block!] link:datatypes/paren.adoc[paren!] link:datatypes/string.adoc[string!] link:datatypes/file.adoc[file!] link:datatypes/url.adoc[url!] link:datatypes/path.adoc[path!] link:datatypes/lit-path.adoc[lit-path!] link:datatypes/set-path.adoc[set-path!] link:datatypes/get-path.adoc[get-path!] link:datatypes/vector.adoc[vector!] link:datatypes/hash.adoc[hash!] link:datatypes/binary.adoc[binary!] link:datatypes/tag.adoc[tag!] link:datatypes/email.adoc[email!] link:datatypes/image.adoc[image!]]
