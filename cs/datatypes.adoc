@@ -2,92 +2,90 @@
 
 *Aktuálně dostupné typy:*
 
-link:datatypes/action.adoc[action!]
+* action!
 
-link:datatypes/binary.adoc[binary!]
+* binary!
 
-link:datatypes/bitset.adoc[bitset!]
+* bitset!
 
-link:datatypes/block.adoc[block!]
+* block!
     
-link:datatypes/char.adoc[char!] 
+* char!
 
-link:datatypes/datatype.adoc[datatype!] 
+* datatype!
 
-link:datatypes/date.adoc[date!]
+* date!
 
-link:datatypes/email.adoc[email!]
+* email!
 
-link:datatypes/error.adoc[error!] 
+* error!
 
-link:datatypes/event.adoc[event!] 
+* event!
 
-link:datatypes/file.adoc[file!]
+* file!
 
-link:datatypes/float.adoc[float!]
+* float!
 
-link:datatypes/function.adoc[function!]  
+* function!
 
-link:datatypes/get-path.adoc[get-path!] 
+* get-path!
 
-link:datatypes/get-word.adoc[get-word!] 
+* get-word!
 
-link:datatypes/handle.adoc[handle!]
+* handle!
 
-link:datatypes/hash.adoc[hash!] 
+* hash!
 
-link:datatypes/image.adoc[image!]
+* image!
 
-link:datatypes/integer.adoc[integer!]
+* integer!
 
-link:datatypes/issue.adoc[issue!] 
+* issue!
 
-link:datatypes/lit-path.adoc[lit-path!] 
+* lit-path!
 
-link:datatypes/lit-word.adoc[lit-word!] 
+* lit-word!
 
-link:datatypes/logic.adoc[logic!]
+* logic!
 
-link:datatypes/map.adoc[map!]
+* map!
 
-link:datatypes/native.adoc[native!] 
+* native!
 
-link:datatypes/none.adoc[none!] 
+* none!
 
-link:datatypes/object.adoc[object!]
+* object!
 
-link:datatypes/op.adoc[op!] 
+* op!
 
-link:datatypes/pair.adoc[pair!]
+* pair!
 
-link:datatypes/paren.adoc[paren!]
+* paren!
 
-link:datatypes/path.adoc[path!]
+* path!
 
-link:datatypes/percent.adoc[percent!]
+* percent!
 
-link:datatypes/refinement.adoc[refinement!] 
+* refinement!
 
-link:datatypes/routine.adoc[routine!]  
+* routine!
 
-link:datatypes/set-path.adoc[set-path!] 
+* set-path!
 
-link:datatypes/set-word.adoc[set-word!] 
+* set-word!
 
-link:datatypes/string.adoc[string!]
+* tag!
 
-link:datatypes/tag.adoc[tag!]
+* time!
 
-link:datatypes/time.adoc[time!]
+* tuple!
 
-link:datatypes/tuple.adoc[tuple!]
+* typeset!
 
-link:datatypes/typeset.adoc[typeset!] 
+* unset!
 
-link:datatypes/unset.adoc[unset!]
+* url!
 
-link:datatypes/url.adoc[url!] 
+* vector!
 
-link:datatypes/vector.adoc[vector!] 
-
-link:datatypes/word.adoc[word!]
+* word!
