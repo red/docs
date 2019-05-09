@@ -38,7 +38,7 @@ link:datatypes/hash.adoc[hash!]
 
 link:datatypes/image.adoc[image!]
 
-link:datatypes/image.adoc[integer!]
+link:datatypes/integer.adoc[integer!]
 
 link:datatypes/issue.adoc[issue!]
 
