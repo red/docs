@@ -2,90 +2,90 @@
 
 *Available datatypes in Red:*
 
-* action!
+link:datatypes/action.adoc[action!]
 
-* binary!
+link:datatypes/binary.adoc[binary!]
 
-* bitset!
+link:datatypes/bitset.adoc[bitset!]
 
-* block!
-    
-* char!
+link:datatypes/block.adoc[block!]
 
-* datatype!
+link:datatypes/char.adoc[char!]
 
-* date!
+link:datatypes/datatype.adoc[datatype!]
 
-* email!
+link:datatypes/date.adoc[date!]
 
-* error!
+link:datatypes/email.adoc[email!]
 
-* event!
+link:datatypes/error.adoc[error!]
 
-* file!
+link:datatypes/event.adoc[event!]
 
-* float!
+link:datatypes/file.adoc[file!]
 
-* function!
+link:datatypes/float.adoc[float!]
 
-* get-path!
+link:datatypes/function.adoc[function!]
 
-* get-word!
+link:datatypes/get-path.adoc[get-path!]
 
-* handle!
+link:datatypes/get-word.adoc[get-word!]
 
-* hash!
+link:datatypes/handle.adoc[handle!]
 
-* image!
+link:datatypes/hash.adoc[hash!]
 
-* integer!
+link:datatypes/image.adoc[image!]
 
-* issue!
+link:datatypes/integer.adoc[integer!]
 
-* lit-path!
+link:datatypes/issue.adoc[issue!]
 
-* lit-word!
+link:datatypes/lit-path.adoc[lit-path!]
 
-* logic!
+link:datatypes/lit-word.adoc[lit-word!]
 
-* map!
+link:datatypes/logic.adoc[logic!]
 
-* native!
+link:datatypes/map.adoc[map!]
 
-* none!
+link:datatypes/native.adoc[native!]
 
-* object!
+link:datatypes/none.adoc[none!]
 
-* op!
+link:datatypes/object.adoc[object!]
 
-* pair!
+link:datatypes/op.adoc[op!]
 
-* paren!
+link:datatypes/pair.adoc[pair!]
 
-* path!
+link:datatypes/paren.adoc[paren!]
 
-* percent!
+link:datatypes/path.adoc[path!]
 
-* refinement!
+link:datatypes/percent.adoc[percent!]
 
-* routine!
+link:datatypes/refinement.adoc[refinement!]
 
-* set-path!
+link:datatypes/routine.adoc[routine!]
 
-* set-word!
+link:datatypes/set-path.adoc[set-path!]
 
-* tag!
+link:datatypes/set-word.adoc[set-word!]
 
-* time!
+link:datatypes/tag.adoc[tag!]
 
-* tuple!
+link:datatypes/time.adoc[time!]
 
-* typeset!
+link:datatypes/tuple.adoc[tuple!]
 
-* unset!
+link:datatypes/typeset.adoc[typeset!]
 
-* url!
+link:datatypes/unset.adoc[unset!]
 
-* vector!
+link:datatypes/url.adoc[url!]
 
-* word!
+link:datatypes/vector.adoc[vector!]
+
+link:datatypes/word.adoc[word!]
