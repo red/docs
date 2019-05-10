@@ -399,7 +399,10 @@ The `data` facet accepts arbitrary values, but only string values will be added 
 
 *Supported flags:*
 
-* `scrollable`: Manually enable a vertical scroll-bar.
+[NOTE, caption="Not yet implemented"]
+====
+* `scrollable`: Manually enable a vertical scroll-bar. 
+====
 
 [cols="1, 1, 3", options="header"]
 |===
@@ -431,7 +434,10 @@ The `data` facet accepts arbitrary values, but only string values will be added 
 
 *Supported flags:*
 
-* `scrollable`: Manually enable a vertical scroll-bar.
+[NOTE, caption="Not yet implemented"]
+====
+* `scrollable`: Manually enable a vertical scroll-bar. 
+====
 
 [cols="1, 1, 3", options="header"]
 |===
