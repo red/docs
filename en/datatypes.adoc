@@ -74,6 +74,8 @@ link:datatypes/set-path.adoc[set-path!]
 
 link:datatypes/set-word.adoc[set-word!]
 
+link:datatypes/string.adoc[string!]
+
 link:datatypes/tag.adoc[tag!]
 
 link:datatypes/time.adoc[time!]
