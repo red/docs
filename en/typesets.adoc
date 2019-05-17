@@ -1,4 +1,6 @@
 = Typesets
+:toc:
+:numbered:
 
 == Abstract
 
