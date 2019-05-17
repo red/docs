@@ -104,4 +104,4 @@ Several references can be set to the same series with different starting positio
 The type of the elements in a series is dependant on the link:datatypes/datatype.adoc[datatype!] of the series. For example, a link:datatypes/block.adoc[block!] series can contain values of any type. A link:datatypes/string.adoc[string!] series can only contain link:datatypes/char.adoc[char!] values, etc.
 +
 
-A series provides an index variable that can be leveraged by all series link:datatypes/action.adoc[action!] values.
+`Series!` provides an index variable that can be leveraged by all series link:datatypes/action.adoc[action!] values.
