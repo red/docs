@@ -1,4 +1,6 @@
 = Typesety
+:toc:
+:numbered:
 
 == Úvodem
 
@@ -65,3 +67,38 @@ Typesety reprezentují sady neboli kolekce hodnot typu `datatype!`.
 === series!
 
 * make typeset! [link:datatypes/block.adoc[block!] link:datatypes/paren.adoc[paren!] link:datatypes/string.adoc[string!] link:datatypes/file.adoc[file!] link:datatypes/url.adoc[url!] link:datatypes/path.adoc[path!] link:datatypes/lit-path.adoc[lit-path!] link:datatypes/set-path.adoc[set-path!] link:datatypes/get-path.adoc[get-path!] link:datatypes/vector.adoc[vector!] link:datatypes/hash.adoc[hash!] link:datatypes/binary.adoc[binary!] link:datatypes/tag.adoc[tag!] link:datatypes/email.adoc[email!] link:datatypes/image.adoc[image!]]
+
++
+// Adapted from https://www.quora.com/Computer-Programming-What-is-a-series-in-Rebol by Nenad Rakocevic.
+Slovo `series` má v prostředí jazyka Red dva významy. Jednak to je (s vykřičníkem) označení typesetu (viz výše), jednak to je (bez vykřičníku) označení druhu objektu.
+Řada (series) je v Redu definována jako sekvence prvků, jež má počáteční pozici, která může být posunována z první pozice (`head`) k poslední pozici (`tail`). Počátek prázdné řady je na poslední pozici (`tail`). Jednotlivé pozice jsou označeny pořadovým číslem - indexem.
++
+```red
+>> a: "hello"
+== "hello"
+
+>> b: next a
+== "ello"
+
+>> index? a
+== 1
+
+>> index? b
+== 2
+
+>> same? a b
+== false
+
+>> same? a head b
+== true
+
+>> append a " world"
+== "hello world"
+
+>> b
+== "ello world"
+```
+
+// Typ prvků v řadě je závislý na datovém typu řady, např. řada typu `block!` může obsahovat dle definice bloku (link:datatypes/block.adoc[block!]) hodnoty libovolného typu. Řada typu `string` - opět podle definice řetězce (link:datatypes/string.adoc[string!]) může obsahovat pouze hodnoty typu `char`.
+
+
