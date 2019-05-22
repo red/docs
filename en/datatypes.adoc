@@ -1,6 +1,59 @@
 = Datatypes
 
-*Available datatypes in Red:*
+Each value in Red is of a specific datatype. Red values are strongly typed, but variables (words used to refer to values), are not. Values are the foundation of Red. Where most languages have 6-8 base datatypes, Red has almost 50. Many of these have unique, literal forms. There are some implementation details that, for the most part, you don't need to worry about. For example, `[native! action! function! routine!]` are all types of functions, and you can use them without knowing the type. 
+
+To use Red effectively, you should become familiar with all the datatypes available.
+
+* The following datatypes have unique, literal forms.
++
+```red
+binary!
+block!
+char!
+datatype!
+date!
+email!
+file!
+float!
+get-path!
+get-word!
+integer!
+issue!
+lit-path!
+lit-word!
+none!
+pair!
+paren!
+path!
+percent!
+refinement!
+set-path!
+set-word!
+string!
+tag!
+time!
+tuple!
+url!
+word!
+```
+
+*Examples*
+
+```red
+3-Feb-1978  ;date!
+
+adams@fourty-two.net  ;email!
+
+%manifesto.pdf  ;file!
+
+100%  ;percent!
+
+1.2.3  ;tuple!
+
+https://www.red-lang.org/  ;url!
+```
+
+== Available datatypes in Red
 
 link:datatypes/action.adoc[action!]
 
