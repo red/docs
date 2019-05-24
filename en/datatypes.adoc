@@ -12,7 +12,7 @@ To use Red effectively, you should become familiar with all the datatypes availa
 |========================================================================
 |*Type*|*Literal Form*|*Description*
 |link:datatypes/action.adoc[action!]|`-`|Datatype "methods" in the Red internal OO model.
-|link:datatypes/binary.adoc[binary!]|`2#{11111111}`, `16#{2A}`, `64#{2AQQ}`|A series of bytes.
+|link:datatypes/binary.adoc[binary!]|`2#{11111111}`, `16#{2A}`, `64#{2AQQ}`|Series of bytes.
 |link:datatypes/bitset.adoc[bitset!]|`-`|Array of bits used to store boolean values.
 |link:datatypes/block.adoc[block!]|`[]`, `[one 2 "three"]`, `[print 1.23]`|Collections of data or code that can be evaluated at any point in time.
 |link:datatypes/char.adoc[char!]|#"z", #"^C", #"^(esc)"|Unicode code points.
@@ -25,12 +25,12 @@ To use Red effectively, you should become familiar with all the datatypes availa
 |link:datatypes/float.adoc[float!]|`+123.4`, `-123.4`, `0042.0`, `60'000'12'3.4`|64-bit positive or negative number that contains a decimal point.
 |link:datatypes/function.adoc[function!]|`-`|User-defined functions.
 |link:datatypes/get-path.adoc[get-path!]|`:foo/bar/baz`|Unevaluated `path!` value.
-|link:datatypes/get-word.adoc[get-word!]|`:foo`|Unevaluated `word!` value from the context to which it is bound.
+|link:datatypes/get-word.adoc[get-word!]|`:foo`|Unevaluated `word!` value.
 |link:datatypes/handle.adoc[handle!]|`-`|Opaque integers used for interacting with the operating system.
 |link:datatypes/hash.adoc[hash!]|`-`|Block-like interface with fast lookups.
-|link:datatypes/image.adoc[image!]|`-`|Series of RGBA values representing pixels in 2D images.
+|link:datatypes/image.adoc[image!]|`-`|Series of RGBA values that represent pixels in 2D images.
 |link:datatypes/integer.adoc[integer!]|`1234`, `+1234`, `-1234`, `60'000'000`|32-bit numbers with no decimal point.
-|link:datatypes/issue.adoc[issue!]|`#555-555-5555`, `#ABC-123-xyx`, `#ID`|Hashtags, keywords, and identifiersthat don’t contain spaces.
+|link:datatypes/issue.adoc[issue!]|`#555-555-5555`, `#ABC-123-xyx`, `#ID`|Hashtags, keywords, and identifiers that do not contain spaces.
 |link:datatypes/lit-path.adoc[lit-path!]|`'foo/bar/baz`|Unevaluated (quoted) `path!` value.
 |link:datatypes/lit-word.adoc[lit-word!]|`'foo`|Unevaluated `word!` value.
 |link:datatypes/logic.adoc[logic!]|`true` `false`, `yes` `no`, `on` `off`|Boolean values.
@@ -38,10 +38,10 @@ To use Red effectively, you should become familiar with all the datatypes availa
 |link:datatypes/native.adoc[native!]|`-`|External functions written in Red/System.
 |link:datatypes/none.adoc[none!]|`-`|Value that does not belong to any other datatype. Analogous to nil or nothing.
 |link:datatypes/object.adoc[object!]|`-`|Named or unnamed contexts that contain `word: value` pairs.
-|link:datatypes/op.adoc[op!]|`-`|Infix functions of two arguments.
+|link:datatypes/op.adoc[op!]|`-`|Infix function of two arguments.
 |link:datatypes/pair.adoc[pair!]|`42x42`|Two-dimensional coordinates.
 |link:datatypes/paren.adoc[paren!]|`(one 2 "three" 4:00:00)`|Immediately evaluated `block!`.
-|link:datatypes/path.adoc[path!]|`foo/bar/baz`|Series of values delimited by slashes (`/`). Limited in the types of values that it can contain.
+|link:datatypes/path.adoc[path!]|`foo/bar/baz`|Series of values delimited by slashes `/`. Limited in the types of values that they can contain.
 |link:datatypes/percent.adoc[percent!]|`100%`, `0.76%`|Float values expressed as percentages.
 |link:datatypes/refinement.adoc[refinement!]|`/foo`|Symbolic values used as modifiers to functions or extensions to objects, files, urls, or paths.
 |link:datatypes/routine.adoc[routine!]|`-`|Function with a Red spec and Red/System body.
@@ -49,7 +49,7 @@ To use Red effectively, you should become familiar with all the datatypes availa
 |link:datatypes/set-word.adoc[set-word!]|`foo:`|Sets a reference to a value.
 |link:datatypes/string.adoc[string!]|`"foo"`|Sequence of Unicode code points (`char!` values) wrapped in quotes.
 |link:datatypes/tag.adoc[tag!]|`<foo>`|Markup language tags and elements.
-|link:datatypes/time.adoc[time!]|`0:01:00`, `3:02:01`, `0:05:00.45`|Amount of time specified in hours, minutes, and seconds.
+|link:datatypes/time.adoc[time!]|`0:01:00`, `3:02:01`, `0:05:00.45`|Directly expressed time values. Hours, minutes, seconds, and milliseconds.
 |link:datatypes/tuple.adoc[tuple!]|`1.2.3`, `255.255.255.0`, `1.2.3.4.5.6.7.8.9.10.11.12`|RGB and RGBA color values, ip addresses, and version numbers. Three to twelve positive integers separated by decimal points.
 |link:datatypes/typeset.adoc[typeset!]|`series!`, `number!`|Set, or collection, of predefined `datatype!` values.
 |link:datatypes/unset.adoc[unset!]|`-`|Single value that represents no usable value.
