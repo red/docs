@@ -4,7 +4,11 @@
 
 == Úvodem
 
-Typesety reprezentují sady neboli kolekce hodnot typu `datatype!`.
+Typesety jsou sady hodnot typu `datatype!`, uložených v kompaktní řadě (array) bitů (max 96 bitů), umožňujících podporu vysokorychlostní kontroly typů při runtime.
+
+Datové typy v typesetu mohou mít společné rysy nebo chování ale není to podmínkou. Typeset lze vytvořit v závislosti na kriteriích, vyhovujících potřebám uživatele.
+
+Viz: link:datatypes/typeset.adoc[typeset!]
 
 == Aktuálně existující typesesty:
 
@@ -58,7 +62,12 @@ Typesety reprezentují sady neboli kolekce hodnot typu `datatype!`.
 
 === internal!
 
-* make typeset! [link:datatypes/unset.adoc[unset!]]
+* make typeset! [link:datatypes/unset.adoc[unset!] link:datatypes/float.adoc[float!] link:datatypes/percent.adoc[percent!]]
+
+=== number!
+
+* make typeset! [link:datatypes/integer.adoc[integer!] link:datatypes/float.adoc[float!] link:datatypes/percent.adoc[percent!]]
+
 
 === scalar!
 
