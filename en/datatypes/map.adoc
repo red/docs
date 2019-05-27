@@ -221,6 +221,8 @@ m
 remove/key m 'b
 == #(
     a: 1
+    "c" 3
+    d: 99
 )
 ----
 
@@ -237,13 +239,13 @@ clear #(a 1 b 2 c 3)
 * `find` checks if a key is defined in a map and returns the first matched key, or else `none`. Use `/case` for case-sensitive matching.
 
  find #(a 123 b 456) 'b
- == 'b
+ == b
  
  find #(a 123 A 456) 'A
- == 'a
+ == a
  
  find/case #(a 123 A 456) 'A
- == 'A
+ == A
 
 * `length?` returns the number of a key/value pairs in a map.
 
