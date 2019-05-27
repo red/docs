@@ -4,7 +4,9 @@
 
 == Abstract
 
-Typesets represents sets, or collections, of `datatype!` values.
+Typesets represents sets of datatype values stored in a compact array of bits (up to 96 bits), allowing for high performance runtime type-checking support.
+
+Datatypes in a typeset may share common traits or behaviors, but that is not a requirement. A typeset can be created based on any criteria that suits the users needs.
 
 See: link:datatypes/typeset.adoc[typeset!]
 
@@ -60,7 +62,11 @@ See: link:datatypes/typeset.adoc[typeset!]
 
 === internal!
 
-* make typeset! [link:datatypes/unset.adoc[unset!]]
+* make typeset! [link:datatypes/unset.adoc[unset!] link:datatypes/float.adoc[float!] link:datatypes/percent.adoc[percent!]]
+
+=== number!
+
+* make typeset! [link:datatypes/integer.adoc[integer!] link:datatypes/float.adoc[float!] link:datatypes/percent.adoc[percent!]]
 
 === scalar!
 
