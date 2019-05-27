@@ -16,7 +16,7 @@ Akci nelze v runtime vytvořit
 
 == Konverze
 
-Pro hodnoty typu `action!` nejsou koverze podporovány.
+Pro hodnoty typu `action!` nejsou konverze podporovány.
 
 == Komparace
 
