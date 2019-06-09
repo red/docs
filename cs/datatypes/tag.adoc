@@ -4,13 +4,13 @@
 
 == Úvodem
 
-Hodnoty `tag!` reprezentují tagy a elementy zna?kovacího (markup) jazyka.
+Hodnoty `tag!` reprezentují tagy a elementy značkovacího (markup) jazyka.
 
-Typ `tag!` je subtyp typeset? `any-string!` a `series!`
+Typ `tag!` je subtyp typesetů `any-string!` a `series!`
 
 == Vytvoření
 
-Hodnoty typu tag! lze vytvo?it literálovou syntaxí nebo p?i runtime pou?itím konstruktoru `make` a konverzí `to`.
+Hodnoty typu tag! lze vytvořit literálovou syntaxí nebo při runtime použitím konstruktoru `make` a konverzí `to`.
 ```red
 >> make tag! "foo"
 == <foo>
@@ -79,7 +79,7 @@ It is possible to create `tag!` values using `make` that are not affected by cur
 
 == Komparace
 
-Na typ `tag!` lze aplikovat v?echny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min`a `max`.
+Na typ `tag!` lze aplikovat všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min`a `max`.
 
 == Testování hodnot
 

@@ -184,6 +184,8 @@ Vybraný (`selected`) piškot řídí zvýraznění textu (read/write). Hodnota 
 
 * `no-border`: odstraní dekoraci okraje, vytvořenou výchozím frameworkem GUI.
 
+* `password`: místo zadávaných znaků se zobrazují (\*).
+
 Facet `data` je synchronizován v reálném čase s facetem `text` s použitím následujících pravidel:
 
 * při změně facetu `text` je facet `data` nastaven na načítanou hodnotu `text` nebo `none` nebo na `options/default`, je-li určeno
