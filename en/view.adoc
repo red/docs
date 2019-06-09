@@ -300,6 +300,8 @@ The `selected` facet controls the text highlighting (read/write). A pair value i
 
 * `no-border`: removes edge decorations made by the underlying GUI framework.
 
+* `password`: instead of input characters, asterisks (\*) are displayed.
+
 `data` facet is synchronized in real-time with `text` facet using the following conversion rules:
 
 * when `text` changes, `data` is set to the `load`-ed `text` value, or `none`, or to `options/default` if defined.
