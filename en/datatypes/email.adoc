@@ -50,6 +50,39 @@ g@
 == email!
 ```
 
+== Path accessors
+
+Path accessors provide a convenient way for getting or setting the user name or host name of an email value.
+
+=== /user
+
+```red
+>> e: me@me.net
+== me@me.net
+
+>> e/user
+== "me"
+
+>> e/user: "you"
+== "you"
+
+>> e
+== you@me.net
+```
+
+=== /host
+
+```red
+>> e/host
+== "me.net"
+
+>> e/host: "red-lang.org"
+== "red-lang.org"
+
+>> e
+== you@red-lang.org
+```
+
 == Comparisons
 
 All comparators can be applied on `email!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
