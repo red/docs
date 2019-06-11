@@ -242,9 +242,7 @@ m: #(a: 1 b 2 "c" 3 d: 99)
 )
 
 remove/key m 'b
-== #(
-    a: 1
-)
+== #(a: 1 "c" 3 d: 99)
 ----
 
 Je rovněž možné smazat všechny klíče najednou akcí `clear`:
@@ -262,13 +260,13 @@ Pro práci s mapou (slovníkem) se s výhodou použijí další pomocné funkce:
 * `find` ověří přítomnost klíče v mapě a vrátí `true`, byl-li nalezen, v opačném případě vrátí `none`. Pro case-sensitive srovnávání použijte upřesnění `/case`.
 
  find #(a 123 b 456) 'b
- == 'b
+ == b
  
  find #(a 123 A 456) 'A
- == 'a
+ == a
  
  find/case #(a 123 A 456) 'A
- == 'A
+ == A
 
 * `length?` vrací počet dvojic `key/value` v mapě.
 
