@@ -51,6 +51,39 @@ g@
 == email!
 ```
 
+== Path accessors
+
+Přístupy k cestě poskytují vhodný způsob získání či zadání jména uživatele nebo hostitele v emailové adrese.
+
+=== /user
+
+```red
+>> e: me@me.net
+== me@me.net
+
+>> e/user
+== "me"
+
+>> e/user: "you"
+== "you"
+
+>> e
+== you@me.net
+```
+
+=== /host
+
+```red
+>> e/host
+== "me.net"
+
+>> e/host: "red-lang.org"
+== "red-lang.org"
+
+>> e
+== you@red-lang.org
+```
+
 == Komparace
 
 Lze použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporováy také funkce `min` a  `max`.
