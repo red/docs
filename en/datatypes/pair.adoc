@@ -57,6 +57,21 @@ Pair values can be created using literal syntax, or at runtime by using a `make`
 
 All comparators can be applied on `pair!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
 
+When comparing `pair!` values, they are compared by their second parts, `/y`, and if it's equal in both numbers, they are compared by their first parts, `/x`. If both parts are the same, `pair!`s are equal. For example:
+
+```red
+>> 5x3 = 5x3
+== true
+
+>> 0x0 < 1x1
+== true
+
+>> 999x999 < 1x1
+== false
+
+>> 999x0 < 1x1
+== true
+```
 
 == Arithmetic
 
