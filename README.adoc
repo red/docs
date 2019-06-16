@@ -1,0 +1,14 @@
+= Red Programming Language Documentation
+
+This is the https://doc.red-lang.org[Red's official documentation] and its translations' repository.
+
+If you want to translate the official documents please see link:TRANSLATIONS.adoc[How-to for documentation translators].
+
+Check also link:https://github.com/red/REP/blob/master/REPs/rep-0003.adoc[Red Documentation Proposal] and the language-specific Gitter rooms:
+
+* link:https://gitter.im/red/Czech[Czech]
+* link:https://gitter.im/red/Spanish[Spanish]
+* link:https://gitter.im/red/Russian[Russian]
+* link:https://gitter.im/red/red/Chinese[Chinese]
+* link:https://gitter.im/red/red/France[France]
+
