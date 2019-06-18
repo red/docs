@@ -55,6 +55,21 @@ Funkce `as-pair` přijímá argumenty `x` a `y` typu `integer!` nebo `float!`. H
 
 Pro hodnotu typu `pair!` lze použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
 
+Porovnávání dvou hodnot typu `pair!` začíná jejich druhou částí `/y`. Jsou-li stejné, porovnávají se první části `/x`. Jsou-li i tyto části stejné, jsou oba páry stejné. Na příklad:
+
+```red
+>> 5x3 = 5x3
+== true
+
+>> 0x0 < 1x1
+== true
+
+>> 999x999 < 1x1
+== false
+
+>> 999x0 < 1x1
+== true
+```
 
 
 == Aritmetika
