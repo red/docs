@@ -1,101 +1,59 @@
 = Types de données
 
-== Version française
+Chaque valeur en Red est d'un type donné. Les valeurs Red sont fortement typées, mais les variables (les mots utilisés pour se référer aux valeurs) ne le sont pas. Les valeurs sont le fondement de Red. Tandis que la plupart des langages ont 6 à 8 types de données de base, Red en a presque 50. Beaucoup d'entre eux ont des formes littérales uniques. Il y a certains détails d'implémentation dont, dans la plupart des cas, vous n'avez pas à vous préoccuper. Par exemple, `[native! action! function! routine!]` sont tous des types de fonctions, et vous pouvez les utiliser sans connaître leur type.
 
-_Ceci est un travail en cours, seulement quelques-uns des types de données sont déjà documentés._
+Pour utiliser Red efficacement, vous devriez devenir familier avec tous les types de données disponibles.
 
-***
+== Table des types de données
 
-*Types de données disponibles en Red:*
+* `-` indique qu'une valeur n'a pas de forme littérale. Ces valeurs doivent être créées avec `make` ou avec une syntaxe de construction (qui reste à définir pour de nombreux types).
 
-action! 
-
-binary!
-
-bitset! 
-
-link:datatypes/block.adoc[block!]
-    
-link:datatypes/char.adoc[char!] 
-
-datatype! 
-
-link:datatypes/date.adoc[date!]
-
-link:datatypes/email.adoc[email!]
-
-link:datatypes/error.adoc[error!] 
-
-event!
-
-link:datatypes/file.adoc[file!]
-
-link:datatypes/float.adoc[float!]
-
-function! 
-
-link:datatypes/get-path.adoc[get-path!] 
-
-link:datatypes/get-word.adoc[get-word!] 
-
-link:datatypes/handle.adoc[handle!]
-
-hash! 
-
-link:datatypes/image.adoc[image!]
-
-link:datatypes/integer.adoc[integer!]
-
-link:datatypes/issue.adoc[issue!] 
-
-link:datatypes/lit-path.adoc[lit-path!] 
-
-link:datatypes/lit-word.adoc[lit-word!] 
-
-link:datatypes/logic.adoc[logic!]
-
-link:datatypes/map.adoc[map!]
-
-native! 
-
-link:datatypes/none.adoc[none!] 
-
-link:datatypes/object.adoc[object!]
-
-op! 
-
-link:datatypes/pair.adoc[pair!]
-
-link:datatypes/paren.adoc[paren!]
-
-link:datatypes/path.adoc[path!]
-
-link:datatypes/percent.adoc[percent!]
-
-// point! 
-
-link:datatypes/refinement.adoc[refinement!] 
-
-routine! 
-
-link:datatypes/set-path.adoc[set-path!] 
-
-link:datatypes/set-word.adoc[set-word!] 
-
-link:datatypes/string.adoc[string!]
-
-link:datatypes/tag.adoc[tag!]
-
-link:datatypes/time.adoc[time!]
-
-link:datatypes/tuple.adoc[tuple!]
-
-typeset! 
-
-link:datatypes/unset.adoc[unset!]
-
-link:datatypes/url.adoc[url!] 
-
-vector! 
-
-link:datatypes/word.adoc[word!]
+[cols="20,60,90"]
+|========================================================================
+|*Type*|*Forme littérale*|*Description*
+|link:datatypes/action.adoc[action!]|`-`|"Méthodes" du modèle orienté objet interne de Red.
+|link:datatypes/binary.adoc[binary!]|`2#{11111111}`, `16#{2A}`, `64#{2AQQ}`|Séries d'octets.
+|link:datatypes/bitset.adoc[bitset!]|`-`|Tableaux de bits utilisé pour stocker des valeurs booléennes.
+|link:datatypes/block.adoc[block!]|`[]`, `[one 2 "three"]`, `[print 1.23]`|Collections de données ou de code qui peuvent être évaluées à n'importe quel moment.
+|link:datatypes/char.adoc[char!]|#"z", #"^C", #"^(esc)"|Points de code (caractères) Unicode.
+|link:datatypes/datatype.adoc[datatype!]|`bitset!`, `string!`, `time!`, `word!`|Types valides qui sont prédéfinis pour Red.
+|link:datatypes/date.adoc[date!]|`1999-10-5`, `5/10/1999`, `5-October-1999`|Dates calendaires, basées sur le calendrier Grégorien.
+|link:datatypes/email.adoc[email!]|`adams@fourty-two.net`, `gregg@red-lang.org`|Adresses email brutes.
+|link:datatypes/error.adoc[error!]|`-`|Valeurs de type `object!` spéciales utilisées en cas d'erreur.
+|link:datatypes/event.adoc[event!]|`-`|Valeurs similaires à des objets, qui représentent une activité externe. En lecture seule.
+|link:datatypes/file.adoc[file!]|`%foo`, `%alongfilename`, `%/C/`|Noms de fichiers, ou noms de répertoires et de chemins d'accès.
+|link:datatypes/float.adoc[float!]|`+123.4`, `-123.4`, `0042.0`, `60'000'12'3.4`|Nombres à virgule positifs ou négatifs codés sur 64 bits.
+|link:datatypes/function.adoc[function!]|`-`|Fonctions définies par l'utilisateur.
+|link:datatypes/get-path.adoc[get-path!]|`:foo/bar/baz`|Valeurs de type `path!` non évaluées.
+|link:datatypes/get-word.adoc[get-word!]|`:foo`|Valeurs de type `word!` non évaluées.
+|link:datatypes/handle.adoc[handle!]|`-`|Entiers cachés utilisés pour l'interaction avec le système d'exploitation.
+|link:datatypes/hash.adoc[hash!]|`-`|Interface de type bloc permettant des recherches rapides.
+|link:datatypes/image.adoc[image!]|`-`|Séries de valeurs RGBA qui représentent des pixels dans les images 2D.
+|link:datatypes/integer.adoc[integer!]|`1234`, `+1234`, `-1234`, `60'000'000`|Nombres sans virgule codés sur 32 bits.
+|link:datatypes/issue.adoc[issue!]|`#555-555-5555`, `#ABC-123-xyx`, `#ID`|Hashtags, mots-clés, et identifiants qui ne contiennent pas d'espace.
+|link:datatypes/lit-path.adoc[lit-path!]|`'foo/bar/baz`|Valeurs de type `path!` précédées d'une apostrophe, non évaluées.
+|link:datatypes/lit-word.adoc[lit-word!]|`'foo`|Valeurs de type `word!` précédées d'une apostrophe, non évaluées.
+|link:datatypes/logic.adoc[logic!]|`true` `false`, `yes` `no`, `on` `off`|Valeurs booléennes.
+|link:datatypes/map.adoc[map!]|#( ), #(a: 1 b: 2)|Tableau associatif de paires clé/valeur.
+|link:datatypes/native.adoc[native!]|`-`|Fonctions externes écrites en Red/System.
+|link:datatypes/none.adoc[none!]|`-`|Valeurs qui n'appartiennent à aucun autre type de données. Analogue à nil ou nothing.
+|link:datatypes/object.adoc[object!]|`-`|Contextes nommés ou non, qui contiennent des paires mot: valeur (`word: value`).
+|link:datatypes/op.adoc[op!]|`-`|Fonctions infixe à deux arguments.
+|link:datatypes/pair.adoc[pair!]|`42x42`|Coordonnées bidimensionnelles.
+|link:datatypes/paren.adoc[paren!]|`(one 2 "three" 4:00:00)`|`block!`s immédiatement évalués.
+|link:datatypes/path.adoc[path!]|`foo/bar/baz`|Séries de valeurs délimitées par des "slash" `/`. Les types de valeurs qu'elles peuvent contenir sont limités.
+|link:datatypes/percent.adoc[percent!]|`100%`, `0.76%`|Nombres à virgule exprimés sous forme de pourcentages.
+|link:datatypes/refinement.adoc[refinement!]|`/foo`|Valeurs symboliques utilisées comme modificateurs de fonctions ou extensions d'objets, fichiers, urls ou chemins.
+|link:datatypes/routine.adoc[routine!]|`-`|Fonctions ayant une spécification en Red et un corps en Red/System.
+|link:datatypes/set-path.adoc[set-path!]|`foo/bar/baz:`|Définit une "référence contextuelle" (mot dans un contexte, position d'index dans une série, ou référence correspondant à une clé dans une série ou un tableau de type `map!`).
+|link:datatypes/set-word.adoc[set-word!]|`foo:`|Définit une référence à une valeur.
+|link:datatypes/string.adoc[string!]|`"foo"`|Séquences de points de code Unicode (valeurs de type `char!`) encadrées de guillemets.
+|link:datatypes/tag.adoc[tag!]|`<foo>`|Tags et éléments de langages à balises.
+|link:datatypes/time.adoc[time!]|`0:01:00`, `3:02:01`, `0:05:00.45`|Valeurs horaires brutes. Heures, minutes, secondes et millisecondes.
+|link:datatypes/tuple.adoc[tuple!]|`1.2.3`, `255.255.255.0`, `1.2.3.4.5.6.7.8.9.10.11.12`|Valeurs de couleurs RGB et RGBA adresses IP, et numéros de versions. Trois à douze entiers positifs séparés par des points décimaux.
+|link:datatypes/typeset.adoc[typeset!]|`series!`, `number!`|Ensembles, ou collections, de valeurs `datatype!` prédéfinies.
+|link:datatypes/unset.adoc[unset!]|`-`|Valeur unique qui représente l'absence de valeur utilisable.
+|link:datatypes/url.adoc[url!]|\https://www.red-lang.org, \ftp://localhost|URLs (adresses de ressource) brutes.
+|link:datatypes/vector.adoc[vector!]|`-`|Séquences ordonnées de valeurs d'un type identique (`char!`, `integer!`, `percent!`, `float!`).
+|link:datatypes/word.adoc[word!]|`foo`|Valeurs symboliques qui peuvent être utilisées comme des variables. Identifiant qui fait référence à une valeur dans un contexte donné.
+|========================================================================
