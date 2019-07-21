@@ -1,0 +1,77 @@
+= Datový typ datatype!
+:toc:
+:numbered:
+
+== Úvodem
+
+Datový typ `datatype!` representuje všechny platné předdefinované typy Redu. 
+
+`Datatype!` je člen typesetů `immediate!` a `default!`. 
+
+== Vytvoření
+
+Hodnoty typu `datatype!` jsou předdefinované a nelze je vytvořit.
+
+== Literálová skladba
+
+Dle konvence je součástí názvu datového typu vykřičník, například: `bitset!`, `string!`, `time!`, `word!`
+
+== Konverze
+
+Hodnotu typu `datatype!` lze konvertovat na jakýkoli typ  typesetu any-word! a na datové typy `issue!` a `refinement!`.
+
+```red
+>> to word! string!
+== string!
+
+>> to set-word! string!
+== string!:
+
+>> to lit-word! string!
+== 'string!
+
+>> to get-word! string!
+== :string!
+
+>> to issue! string!
+== #string!
+
+>> to refinement! string!
+== /string!
+```
+
+== Komparace
+
+Pro datový typ `datatype!` nejsou žádné komparace podporovány.
+
+== Testování hodnot
+
+K ověření, zda hodnota je typu `datatype!`, lze použít funkci `datatype?`.
+
+```red
+>> datatype? datatype!
+== true
+```
+
+Funkce `type?` vrací datový typ zadané hodnoty.
+
+```red
+>> type? string!
+== datatype!
+```
+
+== Předdefinovaná slova
+
+Slovo `datatype!` se vztahuje na všechny předdefinované datové typy. Výpis datových typů lze v konzole získat idiomem `help datatype!`.
+
+=== Akce
+
+`copy`
+
+=== Funkce
+
+`to-get-word`, `to-issue`, `to-lit-word`, `to-refinement`, `to-set-word`, `to-word`
+
+=== Nativní funkce
+
+`as`

@@ -13,7 +13,7 @@ Typ lit-path! je členem těchto typesetů: `series!`, `any-block!`, `any-path!`
 
 == Vytvoření
 
-Hodnoty `lit-path!` lze vytvořit použitím apostrofu `'` (quote) a literálovou syntaxí 
+Hodnoty `lit-path!` lze vytvořit použitím apostrofu `'` případně `quote` a literálovou syntaxí 
 nebo při runtimu použitím konstruktoru `make` či konverzí `to` .
 
 ```red

@@ -1,4 +1,4 @@
-= Handle! datatype
+= Datový typ handle!
 :toc:
 :numbered:
 

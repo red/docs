@@ -1,0 +1,35 @@
+= How-to for documentation translators
+
+* Navigate to https://github.com/red/docs[red/docs]. Click the `Fork` button.
+* Inspect your github profile to ensure that the fork was successful.
+* If succesful, use `git` command line to clone your fork and bring the `docs` files to your local machine.
+** `git clone https://github.com/<your-github-profile>/docs.git`
+
+* In your favorite editor, open the docs directory that has been cloned to your local machine, and create a new language directory.  
+Name the new directory using the appropriate language code for the language that you are translating. https://iso639-3.sil.org/code_tables/639/data/all[Language Codes]
+
+* Copy the contents of the `en` directory into the newly created language directory. Make your edits to the copied files.
+
+*Example git workflow*
+
+* Navigate to your cloned directory and use `git pull` to ensure that the cloned directory is up to date with `red/docs`.
+** `git pull https://github.com/red/docs.git`
+
+* After translating a file, add the file to your git index.
+
+** `git add <your-translated-file>`
+
+* Commit the file with a message.
+
+** `git commit -m "Your message."`
+
+* When you are finished translating files, add a language link to `LANGS.adoc`, then push the files to your Fork.
+
+** `git add LANGS.adoc`
+
+** `git commit -m "Added link for <language-code>"`
+
+** `git push https://github.com/<your-github-profile>/docs.git`
+
+* Once the files have been pushed to your Fork, click the `New pull request` button on your GitHub Fork to create a Pull Request.
+

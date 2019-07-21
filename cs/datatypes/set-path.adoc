@@ -5,7 +5,7 @@
 
 == Úvodem
 
-Hodnota typu set-path! nastavuje "kontextuální odkaz" (kontext slova, index slotu v řadě nebo odkaz klíče v řadě (series) nebo mapě).
+Hodnota typu set-path! nastavuje "kontextuální odkaz" (kontext slova, index slotu v řadě nebo odkaz klíče v řadě nebo mapě).
 
 Set-path! je subset těchto typesetů: `any-block!`, `any-path!`, `series!`
 

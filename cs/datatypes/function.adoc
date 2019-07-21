@@ -1,0 +1,142 @@
+= Datový typ function! 
+:toc:
+:numbered:
+
+== Úvodem
+
+Hodnotami typu `function!` jsou uživatelsky definované funkce.
+
+Typ `function!` je členem typesetů `any-function!` a `default!`
+
+== Vytvoření
+
+Uživatelské funkce se vytvářejí za běhu programu pomocí `make` nebo s použitím `func`, `has`, `does` či `function`.
+
+// grammar from https://github.com/meijeru/red.specs-public/blob/master/specs.adoc#538-function
+
+* Skladba BNF:
++
+```
+<function>      ::= make function! [<function-spec> <function-body>] | 
+                    func <function-spec> <function-body> |
+                    has [<argument>*] <function-body> | 
+					does <function-body> | 
+					function <function-spec> <function-body>
+
+<function-spec> ::= [<docstring>° <argument-spec> <return-spec>°]
+
+<docstring>     ::= <string>
+
+<argument-spec> ::= <argument>* <optional-arguments>*
+
+<argument>      ::= <argument-name> <argument-doc>° | 
+                    <argument-name> [<typeset-element>*] <argument-doc>°
+
+<argument-name> ::= <word-literal> | '<word-literal> | :<word-literal>
+
+<argument-doc>  ::= <string>
+
+<optional-arguments>  ::= <function-refinement> <argument-doc>° <argument>*
+
+<function-refinement> ::= /<word-literal>
+
+<return-spec>   ::= return: [<typeset-element>*] <return-doc>°
+
+<return-doc>    ::= <string>
+
+<function-body> ::= <block>
+```
+***
+
+*Příklady*
+
+* *Make*
++
+```red
+>> double: make function! [[n [number!]] [n * 2]]
+== func [n [number!]][n * 2]
+```
+
+* *Func* je ekvivalentní k `make function!`. 
++
+```red
+>> double: func [n [number!]][n * 2]
+== func [n [number!]][n * 2]
+```
++
+Slova za volitelným upřesněním (refinement) `/local` budou považována za lokální pro tělo funkce.
+
+* *Has* je ekvivalentní k `func` s upřeněním `/local`. 
++
+```red
+>> fourty-two: has [value][value: 42 print value]
+== func [/local value][value: 42 print value]
+```
+
+* *Does* je ekvivalentní k `func` bez argumentů. 
++
+```red
+>> h: does [print "Hi"]
+== func [][print "Hi"]
+```
+
+* *Function* je ekvivalentní k `func` avšak všechny hodnoty typu `set-word!` a slova `foreach`, `remove-each` a `repeat` budou považována za lokální v těle funkce.
++
+```red
+>> double: function [n [number!]][val: "Result is" print [val n * 2]]
+== func [n [number!] /local val][val: "Result is" print [val n * 2]]
+
+>> double 9
+Result is 18
+```
++
+Slovo `val` zůstává pro funkci lokální a není dostupné ze základního kontextu `system/words`.
++
+```red
+>> val
+*** Script Error: val has no value
+*** Where: catch
+*** Stack:
+```
+
++
+Slova za volitelným upřesněním `/extern` jsou dostupná ze základního kontextu `system/words`.
++
+```red
+>> double: function [n [number!] /extern val][val: "Result is" print [val n * 2]
+== func [n [number!]][val: "Result is" print [val n * 2]]
+
+>> double 9
+Result is 18
+
+>> val
+== "Result is"
+```
+
+== Konverze
+
+Pro hodnoty typu `function!` nejsou podporovány žádné koverze.
+
+== Komparace
+
+Hodnoty funkce lze porovnávat z hlediska stejnosti a rovnosti pomocí dotazů `same?`, `==`, `equal?`, `strict-equal?`, `not-equal?`, `<>`.
+
+== Testování hodnot
+
+K ověření zda zda posuzovaná hodnota je typu `function!` použijeme dotaz `function?`.
+
+```red
+>> function? :double
+== true
+```
+
+Typ hodnoty zjistíme dotazem `type?`.
+
+```red
+>> type? :double
+== function!
+```
+
+== Předdefinovaná slova
+
+Výpis předdefinovaných hodnot typu `function!` lze získat příkazem `help function!` v konzole.

@@ -1,4 +1,4 @@
-= Datový typ mail!
+= Datový typ email!
 :toc:
 :numbered:
 
@@ -6,11 +6,33 @@
 
 Hodnoty typu `email!` umožňují přímé vyjádření emailových adres, např. `foo@bar.net`
 
-`Email!` je člen těchto typesetů: `any-string!`, `series!`
+`Email!` je člen typesetů `any-string!` a `series!`
 
 == Vytvoření
 
-Hodnoty typu `email!` lze vytvo?it s použitím literálové syntaxe nebo při runtime použitím konstruktoru `make` nebo konverzí `to`.
+Hodnoty typu `email!` lze vytvořit s použitím literálové syntaxe nebo při runtime použitím konstruktoru `make` či konverzí `to`.
+
+== Literálová skladba
+
+Jeden nebo více znaků, následovaných symbolem `@`, doplněným dalšími znaky.
+
+*Příklady*
+
+```
+foo@bar.net
+gregg@red-lang.org
+g@
+```
+
+*Neplatné znaky* 
+
+`%` `(` `)` `:` `"`
+
+== Vytvoření při runtime
+
+=== make
+
+
 ```red
 >> f: make email! "foo"
 == foo
@@ -18,6 +40,8 @@ Hodnoty typu `email!` lze vytvo?it s použitím literálové syntaxe nebo při r
 >> type? f
 == email!
 ```
+=== to
+
 
 ```red
 >> b: to email! 'bar
@@ -27,12 +51,38 @@ Hodnoty typu `email!` lze vytvo?it s použitím literálové syntaxe nebo při r
 == email!
 ```
 
-== Literáová skladba
+== Path accessors
 
-Je tvořena jedním nebo více znaky, následovanými symbolem `@`, doplněným žádným nebo více znaky.
+Přístupy k cestě poskytují vhodný způsob získání či zadání jména uživatele nebo hostitele v emailové adrese.
 
-Neplatné znaky: `%` `(` `)` `:` `"`
+=== /user
 
+```red
+>> e: me@me.net
+== me@me.net
+
+>> e/user
+== "me"
+
+>> e/user: "you"
+== "you"
+
+>> e
+== you@me.net
+```
+
+=== /host
+
+```red
+>> e/host
+== "me.net"
+
+>> e/host: "red-lang.org"
+== "red-lang.org"
+
+>> e
+== you@red-lang.org
+```
 
 == Komparace
 

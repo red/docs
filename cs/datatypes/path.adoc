@@ -4,7 +4,7 @@
 
 == Úvodem
 
-Cesty (paths) jsou řady hodnot, oddělených lomítky (`/`). Tvoří uspořádanou řadu, jejíž elementy mohou být typu `word!`, `integer!`, `get-word!` a `paren!`.
+Datový typ `path!` reprezentuje řadu hodnot, oddělených lomítky (`/`). Elementy této řady mohou být typu `word!`, `integer!`, `get-word!` a `paren!`.
 
 Typ `path!` je člen těchto typesetů: `any-block!`, `any-path!`, `series!`
 
@@ -94,12 +94,22 @@ Cesty (paths) vedou ke vnořené hodnotě nebo k více specifickému chování p
 ```
 
 [NOTE]
-Při vyhledávání jednotlivých elementů cesty se interně používá funkce `select`.
-Tato funkce vyhledá zadaný element v řadě a je-li úspěšná, vrací bezprostředně následující element.
+Cesty jsou aktivním typem a provádějí vyhodnocení uložených funkci. Hodnoty typu `op` se zatím nevyhodnocují.
 
-*Není-li kořenová hodnota funkcí*, platí následující pravidla:
+```red
+>> f: does [42]
+== func [][42]
 
-* Je-li dalším výrazem v cestě (selektorem) slovo, je použito  k výběru  z kolektoru path-head. Hodnota části path-head musí být typem, který podporuje funkci  `select` (např. `block!`, `map!` nebo `object!`).
+>> insert b: [] :f
+== []
+
+>> b/1
+== 42
+```
+
+* Není-li hodnota funkcí, platí následující pravidla:
+
+** Je-li dalším výrazem v cestě slovo, je použito  k výběru  z hodnoty path-head. Hodnota path-head musí být typem, který podporuje funkci  `select` (např. `block!`, `map!` nebo `object!`).
 
 Práci funkce `select` demonstruje tato ukázka:
 

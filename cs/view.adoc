@@ -184,6 +184,8 @@ Vybraný (`selected`) piškot řídí zvýraznění textu (read/write). Hodnota 
 
 * `no-border`: odstraní dekoraci okraje, vytvořenou výchozím frameworkem GUI.
 
+* `password`: místo zadávaných znaků se zobrazují (\*).
+
 Facet `data` je synchronizován v reálném čase s facetem `text` s použitím následujících pravidel:
 
 * při změně facetu `text` je facet `data` nastaven na načítanou hodnotu `text` nebo `none` nebo na `options/default`, je-li určeno
@@ -284,8 +286,10 @@ Facet `data` přijímá libovolné hodnoty, avšak pouze hodnoty typu string jso
 
 *Podporované flagy:*
 
+[NOTE, caption="Dosud nezavedeno"]
+====
 * `scrollable`: Ručně povolit vertikální scroll-bar.
-
+====
 
 [cols="1,1,3", options="header"]
 |===
@@ -317,6 +321,8 @@ Tento typ představuje editovatelné pole s vertikálním seznamem zobrazeným v
 Facet `data` přijímá libovolné hodnoty avšak pouze hodnoty typu string jsou zařazeny do seznamu a zobrazeny. Neřetězcové hodnoty lze použít pro vytvoření asociativní řady, v níž řetězce slouží jako klíče. Facet `selected` je celočíselný index, počínající jedničkou, indikující pozici vybraného řetězce v seznamu.
 
 *Podporované flagy:*
+
+[NOTE, caption="Dosud nezavedeno"]
 
 * `scrollable`: Ručně povolit vertikální scroll-bar.
 
