@@ -154,20 +154,23 @@ Funkce `/unlink` přijímá reaktivní blok nebo funkci jako argument, takže js
 
 *Syntaxe*
 ----
-<word>: is <code>
+<word>: is [<body>]
+<word>: is [[<default>] <body>]
     
 <word> : slovo, které má být přiřazeno k výsledku reakce (set-word!).
-<code> : blok kódu, který obsahuje alespoň jeden reaktivní zdroj (block!).
+<body>    : libovolný kód Redu, který obsahuje alespoň jeden reaktivní zdroj.
+<default> : libovolný kód Redu, který vrací počáteční implicitní hodnotu, použitou pro <word>.
 ----
     
 *Popis*
 
 Operátor `is` vytváří reaktivní formuli, jejíž výsledek bude přiřazen ke slovu. Blok `<code>` může obsahovat odkazy jak na pole obalujícího (wrapping) objektu (pokud je použit v těle bloku reaktoru), tak na pole externího reaktoru.
+Jako první element reaktivní formule bloku může být vložen blok s implicitní hodnotou. To je zejména důležité při použití dopředného odkazu pro reaktivní zdroje, které nejsou zadány v okamžiku vyhodnocení formule.
 
 Poznámka: Tento operátor vytváří reaktivní formule, napodobující formule modelu Excel.
 
-*Příklad*
-----
+*Příklady*
+----------
 a: make reactor! [x: 1 y: 2 total: is [x + y]]
     
 a/total
@@ -175,6 +178,15 @@ a/total
 a/x: 100
 a/total
 == 102
+----
+
+----
+make reactor! [a: 1 b: is [[none] c] c: is [a < 4]]
+== make object! [
+    a: 1
+    b: true
+    c: true
+]
 ----
 
 === react? 
