@@ -198,9 +198,12 @@ Udává novou pozici počátku, relativně k rohu kontejnerového piškotu.
 *Syntaxe*
 ----
 at <offset>
+at <expr>
     
 <offset> : pozice dalšího piškotu (pair!).
-----    
+<expr>   : výraz, vracející hodnotou typu pair! jako pozici
+---- 
+   
 *Popis*
 
 Umisťuje další piškot do absolutně zadané pozice. Tento poziční režim se vztahuje pouze k následujícímu piškotu a nemění zadaný způsob umístění pro piškoty další. 
@@ -394,11 +397,11 @@ Nastaví styl textu na `underline`.
 ----
 extra <expr>
     
-<expr> : jakákoli hodnota (any-type!).
+<expr> : jakákoli hodnota nebo výraz Redu (any-type!).
 ----    
 *Popis*
 
-Nastaví aspekt `extra` piškotu na novou hodnotu (jež může být výsledkem výrazu).
+Nastaví aspekt piškotu `extra` na novou hodnotu.
 
 ==== data
 
@@ -406,8 +409,10 @@ Nastaví aspekt `extra` piškotu na novou hodnotu (jež může být výsledkem v
 
 ----
 data <list>
+data <expr>
     
 <list> : literálový seznam položek nebo výraz Redu (block!).
+<expr> : výraz, vracející seznam jako block!
 ----    
 *Popis*
 
@@ -418,9 +423,12 @@ Nastaví aspekt `data` piškotu na seznam hodnot. Formát seznamu závisí na po
 *Syntaxe*
 ----
 draw <commands>
+draw <expr>
     
 <commands> : literálový seznam příkazů nebo výraz Redu(block!).
-----    
+<expr>     : výraz, vracející blok příkazů (block!).
+---- 
+   
 *Popis*
 
 Nastaví aspekt `draw` piškotu na seznam příkazů dialektu Draw.
