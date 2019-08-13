@@ -193,8 +193,10 @@ Sets the new origin position, relative to container face.
 
 ----
 at <offset>
+at <expr>
 
 <offset> : position of next face (pair!).
+<expr>   : Red expression returning a pair! value used as position.
 ----
 
 *Description*
@@ -414,11 +416,11 @@ Sets the face's text style to `underline`.
 ----
 extra <expr>
 
-<expr> : any value (any-type!).
+<expr> : any value or Red expression (any-type!).
 ----
 *Description*
 
-Sets the face's `extra` facet to a value (can be the result of a Red expression).
+Sets the face's `extra` facet to a value.
 
 
 ==== data
@@ -427,8 +429,10 @@ Sets the face's `extra` facet to a value (can be the result of a Red expression)
 
 ----
 data <list>
+data <expr>
 
-<list> : literal list of items or a Red expression (block!).
+<list> : literal list of items (block!).
+<expr> : Red expression returning a list as a block! value.
 ----
 
 *Description*
@@ -442,9 +446,10 @@ Sets the face's `data` facet to a list of values. Format of the list depends on 
 
 ----
 draw <commands>
+draw <expr>
 
-<commands> : literal list commands or Red expression (block!).
----- 
+<commands> : literal commands list (block!).
+<expr>     : Red expression returning a block! of commands.
 
 *Description*
 
