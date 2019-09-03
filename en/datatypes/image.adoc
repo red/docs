@@ -4,7 +4,7 @@
 
 == Abstract
 
-`Image!` values contain a series! of RGBA values, which represent pixels in a 2D image.
+`Image!` values contain a series! of RGBA values, which represent pixels in a 2D image. 2D is mapped to 1D space by taking first row of pixels from left to right, then second row, and so on.
 
 `Image!` is a member of the following typesets: `any-type!`, `default!`, `series!`
 
@@ -164,6 +164,34 @@ Gets or sets the RGB values of an image.
 ```red
 >> img/size
 == 1x1
+```
+
+== Manipulation
+
+`Image!` can be manipulated as `series!`:
+
+```red
+>> a: make image! [2x2 #{111111222222333333444444}]
+== make image! [2x2 #{111111222222333333444444}]
+
+>> copy/part a 1
+== make image! [1x1 #{111111}]
+
+>> copy/part a 2
+== make image! [2x1 #{111111222222}]
+```
+
+And sometimes `image!` can be interpreted as a 2D series:
+
+```red
+>> a: make image! [2x2 #{111111222222333333444444}]
+== make image! [2x2 #{111111222222333333444444}]
+
+>> copy/part a 1x2
+== make image! [1x2 #{111111333333}]
+
+>> copy/part a 2x1
+== make image! [2x1 #{111111222222}]
 ```
 
 == Conversions
