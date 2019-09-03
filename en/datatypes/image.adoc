@@ -220,7 +220,7 @@ And sometimes `image!` can be interpreted as a 2D series:
     color: none
     menu:...
 
-    >> to image! lay
+>> to image! lay
 == make image! [132x73 #{
     0000000000000000000000004D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D
     4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4...
