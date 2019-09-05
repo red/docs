@@ -450,6 +450,7 @@ draw <expr>
 
 <commands> : literal commands list (block!).
 <expr>     : Red expression returning a block! of commands.
+----
 
 *Description*
 
