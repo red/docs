@@ -69,6 +69,9 @@ Porovnávání dvou hodnot typu `pair!` začíná jejich druhou částí `/y`. J
 
 >> 999x0 < 1x1
 == true
+
+>> sort [0x1 1x0 0x2 2x0 1x1 2x2]
+== [1x0 2x0 0x1 1x1 0x2 2x2]
 ```
 
 
