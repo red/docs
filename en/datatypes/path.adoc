@@ -39,7 +39,7 @@ You can create an empty path of a given size by supplying an integer value as an
 == 
 ```
 
-`To conversion:
+`To` conversion:
 
 ```red
 >> to path! "foo bar baz"
