@@ -266,3 +266,34 @@ clear #(a 1 b 2 c 3)
 
  body-of #(a: 123 b: 456)
  == [a: 123 b: 456]
+
+ 
+== Iteration
+
+
+* Using `keys-of` with `foreach`
++
+
+```red
+>> foreach k keys-of #(a: 123 b: 456) [print k]
+a
+b
+```
+
+* Using `values-of` with `foreach`
++
+
+```red
+>> foreach v values-of #(a: 123 b: 456) [print v]
+123
+456
+```
+
+* A block of two values must be provided when using `foreach` without `keys-of` or `values-of`
++
+
+```red
+>> foreach [k v] #(a: 123 b: 456) [print [k v]]
+a 123
+b 456
+```
