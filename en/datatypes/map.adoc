@@ -289,7 +289,7 @@ b
 456
 ```
 
-* A block of two values must be provided when using `foreach` without `keys-of` or `values-of`
+* A block of two words must be provided when using `foreach` without `keys-of` or `values-of`
 +
 
 ```red
