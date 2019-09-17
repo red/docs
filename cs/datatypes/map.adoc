@@ -289,3 +289,33 @@ Pro práci s mapou (slovníkem) se s výhodou použijí další pomocné funkce:
  == [a: 123 b: 456]
  
 
+== Iterace
+
+
+* Použití `keys-of` s `foreach`
++
+
+```red
+>> foreach k keys-of #(a: 123 b: 456) [print k]
+a
+b
+```
+
+* Použití `values-of` s `foreach`
++
+
+```red
+>> foreach v values-of #(a: 123 b: 456) [print v]
+123
+456
+```
+
+* Bez `keys-of` nebo `values-of` musí být zadán blok se dvěmi slovy
++
+
+```red
+>> foreach [k v] #(a: 123 b: 456) [print [k v]]
+a 123
+b 456
+```
+
