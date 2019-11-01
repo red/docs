@@ -10,7 +10,7 @@ Slova neobsahují hodnoty, pouze na ně v daném kontextu ukazují a mají glob�
 
 Typ `word!` je subtypem těchto typesetů: `any-word!`, `all-word!`, `immediate!`
 
-==== Variace slova `word`
+*Variace slova `word`*
 
 |========================================================================
 |*Syntax*|*Type*|*Description*
