@@ -63,7 +63,7 @@ to time! <integer-literal> | <float-literal>
 
 == Path accessors
 
-Přístup ve formátu cesty (path accessors) je vhodný pro získání i zadání hodntot polí objektu typu `time!`.
+Přístup ve formátu cesty (path accessor) je vhodný pro získání i zadání hodntot polí objektu typu `time!`.
 
 === /hour
 

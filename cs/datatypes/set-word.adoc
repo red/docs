@@ -1,4 +1,4 @@
-== Datový typ set-word!
+= Datový typ set-word!
 :toc:
 :numbered:
 
