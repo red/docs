@@ -51,7 +51,7 @@ Funkce `type?` vrací datový typ dané hodnoty.
 == true
 ```
 
-== P?eddefinovaná slova
+== Předdefinovaná slova
 
 === Akce
 

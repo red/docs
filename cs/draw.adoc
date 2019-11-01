@@ -1006,9 +1006,9 @@ draw <image> <spec>
 
 Přenese poskytnuté příkazy Draw do existujícího nebo nového obrázku. Vratnou hodnotou funkce je obsah obrázku.
 
-== Deprecated API
+== Zastaralé API
 
-Fill-pen také podporuje překonané API, které existuje jenom kvůli kompatibilitě s Rebol/Draw; v nových skriptech Redu by se nemělo používat.
+Fill-pen také podporuje zastaralé API, které existuje jenom kvůli kompatibilitě s Rebol/Draw; v nových skriptech Redu by se nemělo používat.
 
 *Syntaxe*
 ----
