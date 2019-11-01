@@ -139,7 +139,7 @@ Jsou podporovány tyto styly:
 Barva textu nemá následovat bezprostředně za dekorátorem `strike` nebo `underline`. Modifikace barvy a typu za uvedenými pokyny by se vztahovala na úpravu čáry a nikoli textu. Poněvadž tyto dekorátory nejsou ještě zavedeny, nemá určení barvy nebo typu za těmto klíčovými slovy žádný účinek.
 ====
 
-== Piškot rich-text
+== Face rich-text
 
 Nový nativní piškot (face) *rich-text* podporuje vlastnosti bohatého textu s hardwarovým urychlením. Tento piškot má dva režimy zobrazení bohatého textu.
 

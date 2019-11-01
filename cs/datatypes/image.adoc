@@ -13,8 +13,6 @@ Typ `image!` je člen těchto typesetů: `any-type!`, `default!` a `series!`.
 
 Hodnoty typu image! lze vytvořit při běhu programu (runtime) s použitím konstruktoru `make` a konverzí `to`.
 
-=== Deklarace pro runtime
-
 ```
 <image> ::= make image! <image-spec>
 <image-spec> ::= <pair> | [<pair> <tuple>] | [<pair> <binary> <binary>°]
@@ -91,7 +89,7 @@ Nejsou-li binární hodnoty opakovány, doplňují se nulami na stejnou délku, 
    ; hodnoty RGB a A v binárním čísle opakovány 2 * 3 krát
 ```
 
-== Path accessors (Přístup ke komponentám zobrazení)
+== Komponenty zobrazení
 
 === /alpha
 

@@ -675,14 +675,14 @@ Kromě klíčových slov je možné zadat nastavení piškotů s použitím lite
 |Datatype|      Purpose
 |*integer!*|    Určuje šířku piškotu. U panelů indikuje počet řad nebo sloupců v uspořádání (layout) v závislosti na aktuálním směru.
 |*pair!*|       Určuje šířku a výšku piškotu.
-|*tuple!*       Určuje barvu pozadí piškotu (kde je použitelné).
+|*tuple!*|       Určuje barvu pozadí piškotu (kde je použitelné).
 |*issue!*|      Určuje barvu pozadí piškotu pomocí hexadecimálního zápisu (#rgb, #rrggbb, #rrggbbaa).
 |*string!*|     Určuje text, který má být piškotem zobrazen.
 |*percent!*|    Nastavuje aspekt `data` piškotu (užitečné pro typy `progress` a `slider`).
 |*image!*|      Určuje obrázek pro pozadí piškotu(tam, kde je použitelné).
 |*url!*|        Načte zdroj, na nějž ukazuje URL a poté jej provede.
 |*block!*|      Udává akci pro implicitní událost piškotu. U panelů určuje jejich obsah.
-|get-word!|     Jako aktéra používá existující funkci.
+|*get-word!*|     Jako aktéra používá existující funkci.
 |*char!*|       _(vyhraženo pro budoucí použití)_.
 |===
 
@@ -794,9 +794,9 @@ Nastaví nový styl v aktuálním panelu. Nový styl může být vytvořen z exi
 
 Styly lze kaskádovat od rodičovských panelů k dětským panelům, takže týž styl může být v dětských panelech redefinován nebo rozšířen bez ovlivnění definic v rodičovských panelech.
 
-== Cross-Platform GUI Metrics
+== Metriky GUI pro různé platformy
 
-Aby bylo možné vyhovět odlišným UI požadavkům různých platforem GUI, vkládá VID přepisovací strojek, schopný dynamické úpravy stromu piškotů (face tree) podle zadaných pravidel. Je zařazen jako poslední stupeň procesu VID.
+Aby bylo možné vyhovět odlišným GUI požadavkům různých platforem, vkládá VID přepisovací stroj, schopný dynamické úpravy stromu piškotů (face tree) podle zadaných pravidel. Je zařazen jako poslední stupeň procesu VID.
 
 Pravidla pro Windows:
 
