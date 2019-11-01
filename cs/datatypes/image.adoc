@@ -91,7 +91,7 @@ Nejsou-li binární hodnoty opakovány, doplňují se nulami na stejnou délku, 
    ; hodnoty RGB a A v binárním čísle opakovány 2 * 3 krát
 ```
 
-== Path accessors (Přístup ke komponentám zobrazení)
+== Komponenty zobrazení
 
 === /alpha
 
