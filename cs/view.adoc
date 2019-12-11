@@ -678,7 +678,7 @@ Aspekt options obsahuje volitelné parametry, kterými se zadává specifické c
 [cols="1,4" options="header"]
 |===
 |Option| Popis
-|*drag&#8209;on*| Možné volby jsou: `'down`, `'mid-down`, `'alt-down`, `'aux-down`. Používá se pro operace drag'n drop.
+|*drag-on*| Možné volby jsou: `'down`, `'mid-down`, `'alt-down`, `'aux-down`. Používá se pro operace drag'n drop.
 |*offset*| Odsazení okna od levého horního rohu obrazovky v pixelech ve formátu `pair!`.
 |*size*| Velikost okna v pixelech ve formátu `pair!`.
 |===
@@ -769,17 +769,17 @@ view [
 |Jméno | Typ vstupu | Příčina
 |*down*	| mouse | Left mouse button pressed.	
 |*up*		| mouse | Left mouse button released.
-|*mid&#8209;down*	| mouse | Middle mouse button pressed.
-|*mid&#8209;up*	| mouse | Middle mouse button released.
-|*alt&#8209;down*	| mouse | Right mouse button pressed.
-|*alt&#8209;up*	| mouse | Right mouse button released.
-|*aux&#8209;down*	| mouse | Auxiliary mouse button pressed.
-|*aux&#8209;up*	| mouse | Auxiliary mouse button released.
-|*drag&#8209;start*	| mouse | A face dragging starts.
+|*mid-down*	| mouse | Middle mouse button pressed.
+|*mid-up*	| mouse | Middle mouse button released.
+|*alt-down*	| mouse | Right mouse button pressed.
+|*alt-up*	| mouse | Right mouse button released.
+|*aux-down*	| mouse | Auxiliary mouse button pressed.
+|*aux-up*	| mouse | Auxiliary mouse button released.
+|*drag-start*	| mouse | A face dragging starts.
 |*drag*		| mouse | A face is being dragged.
 |*drop*		| mouse | A dragged face has been dropped.
 |*click*		| mouse | Left mouse click (button widgets only).
-|*dbl&#8209;click*	| mouse | Left mouse double-click.
+|*dbl-click*	| mouse | Left mouse double-click.
 |*over*		| mouse | Kurzor myši přechází přes piškot. Tato událost vzniká jednou, když kurzor vstupuje na piškot a jednou, když jej opouští. Pokud facet `flags` obsahuje flag `all-over`, jsou rovněž produkovány všechny mezilehlé události
 |*move*		| mouse | A window has moved.
 |*resize*		| mouse | A window has been resized.
@@ -789,11 +789,11 @@ view [
 |*zoom*		| touch | A zooming gesture (pinching) has been recognized.
 |*pan*			| touch | A panning gesture (sweeping) has been recognized.
 |*rotate*		| touch | A rotating gesture (sweeping) has been recognized.
-|*two&#8209;tap*	| touch | A double tapping gesture has been recognized.
-|*press&#8209;tap*	| touch | A press-and-tap gesture has been recognized.
-|*key&#8209;down*	| keyboard | A key is pressed down.
+|*two-tap*	| touch | A double tapping gesture has been recognized.
+|*press-tap*	| touch | A press-and-tap gesture has been recognized.
+|*key-down*	| keyboard | A key is pressed down.
 |*key*			| keyboard | Byl zadán znak nebo stisknuta speciální klávesa (kromě control, shift a nabídkové klávesy).
-|*key&#8209;up*	| keyboard | A pressed key is released.
+|*key-up*	| keyboard | A pressed key is released.
 |*enter*		| keyboard | Enter key is pressed down.
 |*focus*		| any	| A face just got the focus.
 |*unfocus*		| any	| A face just lost the focus.
@@ -1015,14 +1015,14 @@ Red [
 |*view* | Zobrazit na monitoru okno ze stromu poškotů nebo z bloku kódu VID. Zavede smyčku událostí, pokud není použito upřesnění (refinement) `/no-wait`.
 |*unview* | Zruší jedno či více oken.
 |*layout* | Přemění blok kódu VID na strom piškotů.
-|*center&#8209;face* | Vystředí piškot relativně ke svému rodiči.
-|*dump&#8209;face* | Poskytne kompaktní popis stromové struktury piškotů (pro účely ladění).
-|*do&#8209;actor* | Vyhodnotí ručně aktéra piškotu.
-|*do&#8209;events* | Spustí smyčku událostí (optionally just process pending events and return).
+|*center-face* | Vystředí piškot relativně ke svému rodiči.
+|*dump-face* | Poskytne kompaktní popis stromové struktury piškotů (pro účely ladění).
+|*do-actor* | Vyhodnotí ručně aktéra piškotu.
+|*do-events* | Spustí smyčku událostí (optionally just process pending events and return).
 |*draw* | Vykreslí blok dialektu Draw do obrázku.
-|*to&#8209;image* | Přemění jakýkoliv vykreslovaný piškot na obrázek.
-|*set&#8209;focus*| Nastaví focus na určený piškot (face). 
-|*size&#8209;text* | Změří v pixelech velikost textu v piškotu (berouce v úvahu vybraný font).
+|*to-image* | Přemění jakýkoliv vykreslovaný piškot na obrázek.
+|*set-focus*| Nastaví focus na určený piškot (face). 
+|*size-text* | Změří v pixelech velikost textu v piškotu (berouce v úvahu vybraný font).
 |===
 
 
