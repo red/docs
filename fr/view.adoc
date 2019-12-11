@@ -84,7 +84,7 @@ La facette options regroupe des facettes optionnelles qui sont utilisées pour d
 [cols="1,4" options="header"]
 |===
 |Option| Description
-|*drag&#8209;on*| Peut être l'une des valeurs suivantes: `'down`, `'mid-down`, `'alt-down`, `'aux-down`. Utilisé pour permettre une opération de glisser-déposer.
+|*drag-on*| Peut être l'une des valeurs suivantes: `'down`, `'mid-down`, `'alt-down`, `'aux-down`. Utilisé pour permettre une opération de glisser-déposer.
 |===
 
 	
@@ -717,18 +717,18 @@ view [
 |Nom| Type d'entrée| Cause
 |*down*| souris| Le bouton gauche de la souris a été pressé.
 |*up*| souris| Le bouton gauche de la souris a été relâché.
-|*mid&#8209;down*| souris| Le bouton du milieu de la souris a été pressé.
-|*mid&#8209;up*| souris| Le bouton du milieu de la souris a été relâché.
-|*alt&#8209;down*| souris| Le bouton droit de la souris a été pressé.
-|*alt&#8209;up*| souris| Le bouton droit de la souris a été relâché.
-|*aux&#8209;down*| souris| Le bouton auxiliaire de la souris a été pressé.
-|*aux&#8209;up*|	souris| Le bouton auxiliaire de la souris a été relâché.
-|*drag&#8209;start*| souris| Démarrage d'un déplacement de figure à la souris.
+|*mid-down*| souris| Le bouton du milieu de la souris a été pressé.
+|*mid-up*| souris| Le bouton du milieu de la souris a été relâché.
+|*alt-down*| souris| Le bouton droit de la souris a été pressé.
+|*alt-up*| souris| Le bouton droit de la souris a été relâché.
+|*aux-down*| souris| Le bouton auxiliaire de la souris a été pressé.
+|*aux-up*|	souris| Le bouton auxiliaire de la souris a été relâché.
+|*drag-start*| souris| Démarrage d'un déplacement de figure à la souris.
 |*drag*| souris| Une figure est en cours de déplacement à la souris.
 |*drop*| souris| Une figure déplacée à la souris a été relâchée.
 |*click*| souris| Clic gauche de la souris (widgets boutons seulement).
-|*dbl&#8209;click*| souris| Double clic gauche de la souris.
-|*over*| souris| Le curseur de la souris passe sur une figure. Cet événement est produit une fois lorsque la souris entre sur la figure, et une fois lorsqu'elle la quitte. Si la facette `flags` contient le drapeau *all&#8209;over*, alors tous les événements intermédiaires sont également produits.
+|*dbl-click*| souris| Double clic gauche de la souris.
+|*over*| souris| Le curseur de la souris passe sur une figure. Cet événement est produit une fois lorsque la souris entre sur la figure, et une fois lorsqu'elle la quitte. Si la facette `flags` contient le drapeau *all-over*, alors tous les événements intermédiaires sont également produits.
 |*move*|	souris| Une fenêtre a été déplacée.
 |*resize*| souris| Une fenêtre a été redimensionnée.
 |*moving*| souris| Une fenêtre est en cours de déplacement.
@@ -737,11 +737,11 @@ view [
 |*zoom*|	tactile| Un geste de zoomage (pincement) a été reconnu.
 |*pan*| tactile| Un geste de déplacement (balayage) a été reconnu.
 |*rotate*| tactile| Un geste de rotation a été reconnu.
-|*two&#8209;tap*| tactile| Un geste de double tapotement a été reconnu.
-|*press&#8209;tap*| tactile| Un geste de pression-et-tapotement a été reconnu.
-|*key&#8209;down*| clavier| Une touche est pressée.
+|*two-tap*| tactile| Un geste de double tapotement a été reconnu.
+|*press-tap*| tactile| Un geste de pression-et-tapotement a été reconnu.
+|*key-down*| clavier| Une touche est pressée.
 |*key*| clavier| Un caractère a été entré ou une touche spéciale a été pressée (à l'exception des touches control, majuscule et menu).
-|*key&#8209;up*| clavier| Une touche pressée est relâchée.
+|*key-up*| clavier| Une touche pressée est relâchée.
 |*enter*| clavier| La touche Entrée est pressée.
 |*focus*| any| Une figure vient de recevoir le focus.
 |*unfocus*| any| Une figure vient de perdre le focus.
@@ -975,14 +975,14 @@ NOTE: L'usage des consoles automatiquement générées par l'exécutable `red` i
 |*view*| Rend une fenêtre à l'écran à partir d'un arbre de figures ou d'un bloc de code VID. Entre dans une boucle d'événements sauf si le *raffinement* `/no-wait` est employé.
 |*unview*| Détruit une ou plusieurs fenêtre(s).
 |*layout*| Convertit un bloc de code VID en un arbre de figures.
-|*center&#8209;face*| Centre une figure par rapport à son parent.
-|*dump&#8209;face*| Affiche une description compacte de la structure d'un arbre de figures (à des fins de débogage).
-|*do&#8209;actor*| Evalue manuellement un acteur de figure.
-|*do&#8209;events*| Lance une boucle d'événements (optionnellement, traite juste les événements en attente et se termine).
+|*center-face*| Centre une figure par rapport à son parent.
+|*dump-face*| Affiche une description compacte de la structure d'un arbre de figures (à des fins de débogage).
+|*do-actor*| Evalue manuellement un acteur de figure.
+|*do-events*| Lance une boucle d'événements (optionnellement, traite juste les événements en attente et se termine).
 |*draw*| Rend un bloc de dialecte Draw dans une image.
-|*to&#8209;image*| Convertit toute figure affichée en une image.
-|*set&#8209;focus*| Donne le focus à une figure spécifique.
-|*size&#8209;text*| Mesure la taille en pixels du texte dans une figure (en prenant en compte la police sélectionnée).
+|*to-image*| Convertit toute figure affichée en une image.
+|*set-focus*| Donne le focus à une figure spécifique.
+|*size-text*| Mesure la taille en pixels du texte dans une figure (en prenant en compte la police sélectionnée).
 |===
 
 
