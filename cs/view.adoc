@@ -565,7 +565,7 @@ Seznam vytvořených aspektů:
 |*parent*	| object! 		| no	|  all	| Odkaz na rodičovský piškot (pokud existuje).
 |*pane*	| block! 		| no	|  some	| Seznam dětí (child faces), zobrazených uvnitř piškotu.
 |*state*	| block! 		| no	|  all	| Informace o interním stavu piškotu (používané pouze prostředím View engine).
-|*rate*	| integer! time! | no	|  all	| Časovač piškotu. Celé číslo udává frekvenci, time nastavuje trvání a none činnost končí.
+|*rate*	| integer! time! | no	|  all	| Časovač piškotu. Periodicky spouští událost `time`. Celé číslo udává frekvenci v Hz, `time!` nastavuje interval a `none` činnost končí.
 |*edge*	| object! 		| no	|  all	| _(vyhrazeno pro budoucí použití)_
 |*para*	| object! 		| no	|  all	| Nastavení úpravy textu v odstavci - počátek, okraje, odsazení, tabulátor, rolování textu a další.
 |*font*	| object! 		| no	|  all	| Nastavení vlastností fontu (style, velikost, barva, zarovnání, a jiné) pro piškot.
