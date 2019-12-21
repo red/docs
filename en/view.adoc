@@ -44,7 +44,7 @@ List of available facets:
 |parent| object!| no| all|	Back-reference to parent face (if any).
 |pane| block!| no| some| List of child face(s) displayed inside the face.
 |state| block| no| all| Internal face state info _(used by View engine only)_.
-|rate| integer!, time!| no| all| Face's timer. An integer sets a frequency, a time sets a duration, none stops it.
+|rate| integer!, time!| no| all| Face's timer. Periodically fires `time` event. An `integer!` sets a frequency in Hz, a `time!` sets an interval, `none` stops it.
 |edge|	object!| no| all| _(reserved for future use)_
 |para| object!| no| all| Para object reference for text positioning.
 |font|	object!| no| all| Font object reference for setting text facet's font properties.
