@@ -38,7 +38,7 @@ List of available facets:
 |data| any-type!| no| all| Content data of the face.
 |enabled?| logic!| yes| all| Enable or disable input events on the face.
 |visible?| logic!|	yes| all| Display or hide the face.
-|selected| integer!, pair!, object!, date! | no| some| For lists types, index of currently selected element. For text inputs, selected text. For windows, focused face. For calendar, selected date.
+|selected| integer!, pair!, object!| no| some| For lists types, index of currently selected element. For text inputs, selected text. For windows, focused face.
 |flags| block!, word!| no|	some| List of special keywords altering the display or behavior of the face.
 |options| block!| no| some| Extra face properties in a [name: value] format.
 |parent| object!| no| all|	Back-reference to parent face (if any).
@@ -458,19 +458,18 @@ This type represents a monthly Gregorian calendar in the range from 1-Jan-1601 t
 |===
 |Facet| Description
 |`type`| `'calendar`
-|`selected`| `date!` value that represents selected day.
+|`data`| `date!` value that represents selected day.
 |===
 
 [cols="1, 1, 3", options="header"]
 |===
 |Event type| Handler| Description
-|`select`| `on-select`| Occurs when a date in the calendar is selected. `selected` facet refers to *old* selected date.
-|`change`| `on-change`| Occurs after a `select` event. `selected` facet refers to the *new* selected date.
+|`change`| `on-change`| Occurs when a date in the calendar is selected.
 |===
 
 [NOTE]
 ====
-* By default, `selected` facet is initialized to "today" date.
+* By default, `data` facet is initialized to "today" date.
 * `date!` value below or above specificed calendar boundaries selects minimum or maximum supported date, respectively.
 ====
 
