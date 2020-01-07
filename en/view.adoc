@@ -38,7 +38,7 @@ List of available facets:
 |data| any-type!| no| all| Content data of the face.
 |enabled?| logic!| yes| all| Enable or disable input events on the face.
 |visible?| logic!|	yes| all| Display or hide the face.
-|selected| integer!| no| some| For lists types,  index of currently selected element. For text inputs, selected text. For windows, focused face.
+|selected| integer!, pair!, object!| no| some| For lists types, index of currently selected element. For text inputs, selected text. For windows, focused face.
 |flags| block!, word!| no|	some| List of special keywords altering the display or behavior of the face.
 |options| block!| no| some| Extra face properties in a [name: value] format.
 |parent| object!| no| all|	Back-reference to parent face (if any).
@@ -189,7 +189,6 @@ The `base` type is the most basic face type, but also the most versatile one. By
 
 _This face type should be used for any custom graphic component implementation._
 
-'''
 
 === Text 
 
@@ -214,7 +213,6 @@ The `text` type is a static label to be displayed.
 
 * `default`: can be set to any value, it will be used by the `data` facet if converting `text` returns `none`, like for non-loadable strings.
 
-'''
 
 === Button 
 
@@ -278,7 +276,6 @@ This type represents a radio button, with an optional label text, displayed on l
 |===
 
 
-
 === Field 
 
 This type represents a single-line input field.
@@ -322,7 +319,6 @@ The `selected` facet controls the text highlighting (read/write). A pair value i
 |===
 
 
-
 === Area 
 
 This type represents a multi-line input field.
@@ -355,7 +351,6 @@ The `selected` facet controls the text highlighting (read/write). A pair value i
 |`key`| `on-key`| Occurs each time a key is pressed down in the area.
 |===
 
-'''
 
 === Text-list 
 
@@ -455,6 +450,30 @@ The `data` facet accepts arbitrary values, but only string values will be added 
 ====
 
 
+=== Calendar
+
+This type represents a monthly Gregorian calendar in the range from 1-Jan-1601 to 31-Dec-9999. 
+
+[cols="1, 4", options="header"]
+|===
+|Facet| Description
+|`type`| `'calendar`
+|`data`| `date!` value that represents selected day.
+|===
+
+[cols="1, 1, 3", options="header"]
+|===
+|Event type| Handler| Description
+|`change`| `on-change`| Occurs when a date in the calendar is selected.
+|===
+
+[NOTE]
+====
+* By default, `data` facet is initialized to "today" date.
+* `date!` value below or above specificed calendar boundaries selects minimum or maximum supported date, respectively.
+====
+
+
 === Progress 
 
 This type represents a horizontal or vertical progress bar.
@@ -509,7 +528,6 @@ This type is used to display a video camera feed.
 ====
 
 
-
 === Panel 
 
 A panel is a container for other faces.
@@ -528,7 +546,6 @@ A panel is a container for other faces.
 * Children faces are clipped into the panel frame.
 ====
 
-'''
 
 === Tab-panel 
 
@@ -555,7 +572,6 @@ A tab-panel is a list of panels where only one can be visible at a given time. A
 * If `pane` contains more panels than specified tabs, they will be ignored.
 * When adding/removing a tab, the corresponding panel needs to be added/removed too to/from `pane` list.
 ====
-
 
 
 === Window 
