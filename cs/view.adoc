@@ -73,7 +73,6 @@ Piškot typu `base` je nejzákladnějším a nejvšestrannějším typem piškot
 
 _Tento typ piškotu může být použit pro zavedení libovolné grafické komponenty._
 
-'''
 
 === Text 
 
@@ -98,7 +97,6 @@ Facet `options` přijímá následující vlastnosti:
 
 * `default`: může být nastaven na libovolnou hodnotu, bude použit facetem `data`, vrací-li konverze facetu `text` hodnotu `none`, stejně jako u nenačítatelných řetězců.
 
-'''
 
 === Button 
 
@@ -241,7 +239,6 @@ Aspekt `selected` řídí zvýraznění textu (read/write). Hodnota typu `pair!`
 |*key*| `on-key`| Vyskytne se v dané oblasti při každém stisku klávesy.
 |===
 
-'''
 
 === Text-list 
 
@@ -339,7 +336,28 @@ Facet `data` přijímá libovolné hodnoty avšak pouze hodnoty typu string jsou
 
 ====
 
-'''
+=== Calendar
+
+Tento typ představuje měsíční Gregoriánský kalendář pro období od 1-Jan-1601 do 31-Dec-9999. 
+
+[cols="1, 4", options="header"]
+|===
+|Facet| Description
+|`type`| `'calendar`
+|`data`| hodnota `date!`, která představuje vybraný den.
+|===
+
+[cols="1, 1, 3", options="header"]
+|===
+|Event type| Handler| Description
+|`change`| `on-change`| Vyskytne se při výběru data v kalendáři.
+|===
+
+[NOTE]
+====
+* Implicitně je aspekt `data` nastaven na "dnes".
+* hodnota `date!` nad nebo pod zadanými mezemi v kalendáři vybere minimální nebo maximální podporované datum.
+====
 
 === Progress 
 
@@ -358,7 +376,6 @@ Tento typ představuje horizontální nebo vertikální průběhovou lištu.
 
 ====
 
-'''
 
 === Slider 
 
@@ -377,7 +394,6 @@ Tento typ představuje kurzor, posuvný podél horizontální nebo vertikální 
 
 ====
 
-'''
 
 === Camera 
 
@@ -398,7 +414,6 @@ Tento typ se používá k zobrazení "video camera feed".
 
 ====
 
-'''
 
 === Panel 
 
@@ -418,7 +433,6 @@ Panel je kontejner pro další piškoty.
 
 ====
 
-'''
 
 === Tab-panel 
 
@@ -433,7 +447,6 @@ Tab-panel je seznam karet (panelů), z nichž pouze jedna může být v daném o
 |*selected* | Index vybraného panelu nebo hodnota none (integer!, read/write).
 |===
 
-'''
 
 [cols="1,1,3", options="header"]
 |===
@@ -449,7 +462,6 @@ Tab-panel je seznam karet (panelů), z nichž pouze jedna může být v daném o
 
 ====
 
-'''
 
 === Window 
 
@@ -485,7 +497,6 @@ Reprezentuje okno, zobrazené na monitoru počítače.
 
 ====
 
-'''
 
 === Screen 
 
@@ -501,7 +512,6 @@ Představuje grafickou zobrazovací jednotku, připojenou k počítači (obvykle
 
 Všechny zobrazené piškoty oken musí být dětmi piškotu screen.
 
-'''
 
 === Group-box 
 
@@ -559,7 +569,7 @@ Seznam vytvořených aspektů:
 |*data*	| any-type!		| no	|  all	| Data o stavu piškotu a další relevantní informace.
 |*enabled?*	| logic!		| yes	|  all	| Umožnit nebo znemožnit události vstupu v piškotu. 
 |*visible?*	| logic!		| yes	|  all	| Zobrazit či skrýt piškot.
-|*selected?*	| integer! 		| no	|  some	| Index aktuálně vybraného elementu seznamu.
+|*selected?*	| integer!, pair!, object! | no	|  some	| Index aktuálně vybraného elementu seznamu.
 |*flags*	| block!, word!		| no	|  some	| Seznam speciálních klíčových slov, měnících zobrazení nebo chování piškotu.
 |*options*	| block! 		| no	|  some	| Další vlastnosti piškotu ve formátu [name: value].
 |*parent*	| object! 		| no	|  all	| Odkaz na rodičovský piškot (pokud existuje).
