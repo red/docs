@@ -384,8 +384,9 @@ follow: charset "🚶👣🚸"
 parse "👣 the white 🐇" [follow " the white " animal]
 ----
 
-NOTE: Lowercase/uppercase variants of the same character have different UCPs. It follows that match by character set is case-sensitive, regardless of the <<Parsing modes, parsing mode>>. +
-For `binary!` input, only UCPs up to `255` are meaningful, since Parsing in this mode is byte-granular.
+NOTE: Lowercase/uppercase variants of the same character have different UCPs. It follows that match by character set is case-sensitive, regardless of the <<Parsing modes, parsing mode>>.
+
+NOTE: For `binary!` input, only UCPs up to `255` are meaningful, since Parsing in this mode is byte-granular.
 
 ==== `quote`
 
@@ -500,9 +501,9 @@ parse [great times ahead][ahead ['great 'times] 'great ahead ['times ahead word!
 *Example*
 
 ----
-parse [(did it matched?)][
+parse [(did it match?)][
     block! (not matched)
-    | (probe 'backtracked) quote (did it matched?) (probe 'matched!)
+    | (probe 'backtracked) quote (did it match?) (probe 'matched!)
 ]
 ----
 
@@ -798,8 +799,9 @@ Extraction rules copy out matched values from the input series.
 
 Sets a given word to the first value in a matched portion of the input.
 
-NOTE: Word is set to `none` if the matched rule did not advance the input position. +
-For `binary!` input, word is set to `integer!` value between `0` and `255`.
+NOTE: Word is set to `none` if the matched rule did not advance the input position.
+
+NOTE: For `binary!` input, word is set to `integer!` value between `0` and `255`.
 
 *Syntax*
 
@@ -840,9 +842,9 @@ parse [Huston do you copy?][2 word! copy Huston [2 word!] copy we opt "have a pr
 
 ==== `collect`
 
-Collects values matched by rules that are marked with `keep` keyword. Succeeds if given rule succeeds, advancing past the matched input portion.
+Collects values matched by rules that are marked with `keep` keyword. Succeeds if a given rule succeeds, advancing past the matched input portion.
 
-`keep` rule succeeds if provided rule succeeded, inserted matched values into a block allocated by `collect` rule in which it resides.
+`keep` rule succeeds if provided rule succeeds, inserting matched values into a block allocated by `collect` rule in which it resides.
 
 NOTE: Usage of `keep` keyword without wrapping `collect` is forbidden.
 
@@ -866,11 +868,11 @@ By default, values are inserted at the tail of a block. This behavior can be cha
 |===
 | Option | Description
 | `set`
-| Sets given word to a block of collected values.
+| Sets a given word to a block of collected values.
 | `into`
-| Inserts collected values into a series referred by word, resets series' index to the head.
+| Inserts collected values into a series referred by a word, resets series' index to the head.
 | `after`
-| Inserts collected values into a series referred by word, moves series' index to the point of insertion.
+| Inserts collected values into a series referred by a word, moves series' index to the point of insertion.
 |===
 
 * If `collect` is used without `into` or `after` option in any of the rules, `parse` function will return a block of collected values (see <<Parsing modes>>); if top-level `collect` is used with `set` option, `parse` will return `logic!` value as usual.
@@ -892,7 +894,7 @@ keep pick <expression>
 * If matched rule did not advance the input, `keep` does not keep anything.
 * If rule matched a single value, this value is kept.
 * If rule matched multiple values, they are grouped into a series of the same type as input; with `pick` option, values are not grouped but kept one-by-one.
-* If `keep` is used with `paren!` expression, result of evaluation is kept as-is.
+* If `keep` is used with `paren!` expression, result of its evaluation is kept as-is.
 
 *Example*
 
@@ -916,7 +918,7 @@ Parse can modify its input series by inserting new values and removing/changing 
 
 Either removes a portion of the input matched by a given rule or removes input between the current position and the marked one; after that, it succeeds and advances the input (see the note below).
 
-NOTE: Removal of values is a forward-consuming operation. In other words, it counts as input advancement.
+NOTE: Removal of values is a forward-consuming operation. In other words, it counts as an input advancement.
 
 *Syntax*
 
@@ -951,7 +953,7 @@ insert only <expression>
 <expression> : paren! expression
 ----
 
-If a literal value is a `word!`, its value will be fetched. `only` option enforces `insert/only` semantics.
+If literal value is a `word!`, its value will be fetched. `only` option enforces `insert/only` semantics.
 
 *Example*
 
@@ -983,7 +985,7 @@ change only <word> <expression>
 <expression> : paren! expression
 ----
 
-If a literal value is a `word!`, its value will be fetched. `only` option enforces `change/only` semantics.
+If literal value is a `word!`, its value will be fetched. `only` option enforces `change/only` semantics.
 
 *Example*
 
@@ -999,7 +1001,7 @@ Parse dialect is implemented as a pushdown automaton; at each state transition, 
 
 The list of all events with conditions under which they occur is given below.
 
-.List of events.
+.List of Parse events.
 [options="header" cols="1,4"]
 |===
 | Event | Description
@@ -1029,7 +1031,7 @@ The list of all events with conditions under which they occur is given below.
 
 == Extra functions
 
-The entry point for Parse dialect is a `parse` native that accepts input series and a block of rules, and supports additional refinements.
+The entry point for Parse dialect is a `parse` native that accepts input series with a block of rules and supports additional refinements.
 
 .`parse` refinements.
 [options="header" cols="1,3"]
