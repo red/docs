@@ -1,0 +1,82 @@
+= Lexer
+:imagesdir: ../images
+:toc:
+:toclevels: 3
+:numbered:
+
+== Concept 
+
+
+== Loading values
+
+=== `load`
+
+=== `transcode`
+
+*Syntax*
+
+----
+transcode <input>
+
+<input> : series to load (binary! string!).
+
+Returns : a single value or a block of values.
+----
+
+*Description*
+
+Converts an UTF-8 encoded input binary series into a Red value according to Red syntactic rules. Non-conformity with such rules will result in throwing an error. When a string series is provided, it will be internally first converted to a UTF-8 binary series before processing.
+
+== Instrumenting the lexer
+
+=== `transcode/trace`
+
+*Syntax*
+
+----
+transcode/trace <input> <callback>
+
+<input>    : series to load (binary! string!).
+<callback> : a callback function to process lexer events.
+
+Returns    : a single value or a block of values.
+----
+
+*Description*
+
+
+Callback function specification block:
+
+----
+func [
+    event [word!]                    ;-- current lexer state (see table below).
+    input [string! binary!]          ;-- reference to the input series at current loading position (can be changed).
+    type  [datatype! word! none!]    ;-- word or datatype describing the type of token or value currently processed.
+    line  [integer!]                 ;-- current input line number.
+    token                            ;-- current token as an input slice (pair!) or a loaded value.
+    return: [logic!]
+]
+----
+
+The meaning of some arguments and return value depends on the event. The following table documents the possible combinations and effects:
+
+[cols="1,1,1,1,2", options="header"]
+|===
+|Event | Type | Token | Return Value | Description
+|scan| word!| pair!| `true`: load + 
+`false`: drop| When a Red token has been recognized.
+|load| datatype!| <value>| `true`: store +
+`false`: drop| When a Red token has been converted to a Red value.
+|open| datatype!| pair!| `true`: open +
+`false`: drop| When a new block!, paren!, path! or map! is opened.
+|close| datatype!| pair!| `true`: close + 
+`false`: drop| When a new block!, paren! +
+path! or map! is closed.
+|error| datatype!| pair!| `true`: throw +
+`false`: ignore| When a syntax error occurs.
+|===
+
+
+Notes:
+
+* If an `open` event is dropped, also drop the corresponding `close` event.
