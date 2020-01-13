@@ -32,7 +32,7 @@ By default, `parse` returns `logic!` value to indicate whether or not provided g
 
 Parse grammar rules define patterns that are used to _consume_ the input series. The basic evaluation step of Parse dialect is a rule _match_, which has one of the two outcomes:
 
-* When a given rule matches, it _succeeds_, and Parse (optionally) _advances_ past the matched portion of the input, fetching subsequent rule (if any);
+* When a given rule matches, it _succeeds_, and Parse (optionally) _advances_ past the matched portion of the input and past the matched rule;
 * If there is no match, rule _fails_, while Parse _backtracks_ and falls back on _alternative_ rules (if any).
 
 Input processing (_parsing_) is an indefinite application of this basic step, which is halted by either of the two terminating conditions:
@@ -52,8 +52,11 @@ Grammar rules::
 Advancing::
     The advance of input series by a sequential match of grammar rules until top-level rule's success or failure.
 
+Fetching::
+    Search for a subsequent rule to apply after a successful match.
+
 Alternating (described in PEG as _ordered choice_)::
-    Attempt to match alternative rules following the next `|` ("pipe", "bar", "or else") word in the same block, one-by-one, until either some alternative rule succeeds or the end of the block is reached.
+    In case of a rule failure, attempt to match alternative rules following the next `|` ("pipe", "bar", "or else") word in the same block, one-by-one, until either some alternative rule succeeds or the end of the block is reached.
 
 Backtracking::
     Restoration of input and rules to their positions before the rule failure. Other changes (such as side-effects and modification of input/rules) remain.
@@ -97,15 +100,14 @@ Depending on the type of input series, some Parse rules are not applicable or be
 Grammar rules in Parse dialect can have several forms and usually have nested or recursive structure. Any given rule is one of the following:
 
 * Dialect-reserved _keyword_, optionally followed by arguments and options (see <<Parse rules, below>>);
-* `|` word, a delimiter for alternative rules;
 * Value of one of the following datatypes:
     ** `datatype!` or `typeset!` that match input value by its <<Datatype, type>>;
     ** `bitset!`, which represents <<Character set, character set>>;
-    ** `word!` that refers to well-formed sub-rule (except for `|` special construct);
+    ** `word!` that refers to well-formed sub-rule;
     ** `lit-word!` or `lit-path!` — convenient shortcuts for <<Literal value, literal matching>> of `word!` and `path!` input values, respectively;
     ** `set-word!`, used to <<Marking, set>> word to current input position;
     ** `get-word!`, <<Restoring, restores>> input position to which word was set previously;
-    ** `block!` value that contains well-formed sub-rules;
+    ** `block!` value that contains any number of sub-rules and `|` words, which act as delimiters for alternative rules;
     ** `integer!` value, serves as a counter for <<Iteration count, repetition>> of a rule; two subsequent `integer!` values denote a range of possible iterations;
     ** `paren!` value, acts as a dialect <<Expression evaluation, escape mechanism>> by evaluating contained Red expression and resuming Parse input processing; some Parse keywords use the value returned from expression according to their specified semantics;
 * Any other literal value not mentioned above, which is used as-is for direct matching of the input.
@@ -314,8 +316,8 @@ NOTE: All example rules given in the sections below fully match their input.
 
 At the structural level, Parse grammar is composed of _sequences_ and _alternatives_.
 
-* A sequence of rules constitutes a rule. Such rule succeeds if Parse, by sequentially fetching and matching its sub-rules, reached the end of the rule. In case of sub-rule's failure, Parse backtracks to the beginning of the failed sequence.
-* End of the rule is either the end of the wrapping block or alternative rule boundary (`|` word).
+* A sequence of rules (terminated by the end of the sequence) constitutes a rule. Such rule succeeds if Parse, by sequentially matching all sub-rules, reaches its end. In case of any sub-rule's failure, Parse backtracks to the beginning of the failed sequence.
+* End of the sequence of rules is either the end of the wrapping block or an alternative rule boundary (`|` word).
 * Alternative rule is an option that Parse attempts to match in case of the previous (i.e. located before the rule boundary) rule failure.
 
 === Direct matching
@@ -324,7 +326,9 @@ Rules described in this section directly match input data, and serve as basic bu
 
 ==== Literal value
 
-Match by literal value succeeds and advances the input if the same value was found in the input series at the current position.
+Match by literal value succeeds and advances the input if said literal value is equal to the value at the current position.
+
+NOTE: By default, Parse uses loose comparison for equality checking. <<Case-sensitivity, Case-sensitive mode>> enforces case-sensitive comparison.
 
 *Example*
 
@@ -668,11 +672,9 @@ parse [throw for a loop][
 
 Search rules seek specified pattern by advancing the input until a match is found.
 
-NOTE: Search rules have greedy behavior, and will match as much input as possible.
-
 ==== `to`
 
-Repeatedly attempts to match a given rule until its a full match. In case of a failure, the input is advanced by one element. In case of a full match, the input position is placed at the head of the matched portion. Succeeds if rule match succeeded.
+Repeatedly attempts to match a given rule until its a full match. If said rule fails, the input is advanced by one element, which counts as a partial match. In case of a full match, the input position is placed at the head of the matched portion. Succeeds if rule match succeeded.
 
 *Syntax*
 
@@ -698,7 +700,7 @@ parse matrix [
 
 ==== `thru`
 
-Repeatedly attempts to match a given rule until its a full match. In case of a failure, the input is advanced by one element. In case of a full match, the input position is placed at the tail of the matched portion. Succeeds if rule match succeeded.
+Repeatedly attempts to match a given rule until its a full match. If said rule fails, the input is advanced by one element, which counts as a partial match. In case of a full match, the input position is placed at the tail of the matched portion. Succeeds if rule match succeeded.
 
 *Syntax*
 
@@ -760,17 +762,17 @@ parse [we [need [to [go [deeper]]]]] rule
 
 ==== `fail`
 
-Forces enclosing `block!` rule to instantly fail. Never succeeds or advances the input.
+Forces enclosing rule to instantly fail if placed at the end of it. Never succeeds or advances the input.
 
 *Example*
 
 ----
-parse foo@bar.baz [["quux" | fail] | "foo" [fail] | thru "@" "bar.baz"]
+parse foo@bar.baz [["quux" | some fail | "foo"] "@" [fail] | thru "bar.baz"]
 ----
 
 ==== `break`
 
-Forces enclosing `block!` rule to instantly succeed. Breaks the matching loop if used inside a <<Repetition, repetition>> rule. Always succeeds and never advances the input.
+Forces enclosing `block!` rule to instantly succeed. Breaks the matching loop if used at the top-level of a <<Repetition, repetition>> rule. Always succeeds and never advances the input.
 
 *Example*
 
@@ -780,7 +782,7 @@ parse [break away from everything][some [break] 0 1 [break] [2 [break] | 3 word!
 
 ==== `reject`
 
-Forces enclosing `block!` rule to instantly fail. Breaks the matching loop if used inside a <<Repetition, repetition>> rule. Never succeeds or advances the input.
+Forces enclosing `block!` rule to instantly fail. Breaks the matching loop if used at the top-level of a <<Repetition, repetition>> rule. Never succeeds or advances the input.
 
 *Example*
 
@@ -872,11 +874,11 @@ By default, values are inserted at the tail of a block. This behavior can be cha
 | `into`
 | Inserts collected values into a series referred by a word, resets series' index to the head.
 | `after`
-| Inserts collected values into a series referred by a word, moves series' index to the point of insertion.
+| Inserts collected values into a series referred by a word, moves series' index past the insertion.
 |===
 
 * If `collect` is used without `into` or `after` option in any of the rules, `parse` function will return a block of collected values (see <<Parsing modes>>); if top-level `collect` is used with `set` option, `parse` will return `logic!` value as usual.
-* Top-level `collect` allocates a new block that is returned by `parse` function, nested `collect` allocates at the tail of its parent's block; with `into` or `after` option, `collect` reuses provided series buffer rather than allocating a new block.
+* First use of `collect` allocates a new block that is returned by `parse` function, any subsequent `collect` allocates at the tail of its predecessor's block; with `into` or `after` option, `collect` reuses provided series buffer rather than allocating a new block.
 
 Syntax for `keep`:
 
@@ -916,9 +918,9 @@ Parse can modify its input series by inserting new values and removing/changing 
 
 ==== `remove`
 
-Either removes a portion of the input matched by a given rule or removes input between the current position and the marked one; after that, it succeeds and advances the input (see the note below).
+Either removes a portion of the input matched by a given rule or removes input between the current position and the marked one; after that, it succeeds and retains the input position after removal.
 
-NOTE: Removal of values is a forward-consuming operation. In other words, it counts as an input advancement.
+NOTE: Removal of values is a forward-consuming operation. In other words, it counts as a match, despite the absence of input advancement.
 
 *Syntax*
 
@@ -953,7 +955,7 @@ insert only <expression>
 <expression> : paren! expression
 ----
 
-If literal value is a `word!`, its value will be fetched. `only` option enforces `insert/only` semantics.
+If literal value is a `word!`, value referred by it will be used. `only` option enforces `insert/only` semantics.
 
 *Example*
 
@@ -985,7 +987,7 @@ change only <word> <expression>
 <expression> : paren! expression
 ----
 
-If literal value is a `word!`, its value will be fetched. `only` option enforces `change/only` semantics.
+If literal value is a `word!`, value referred by it will be used. `only` option enforces `change/only` semantics.
 
 *Example*
 
