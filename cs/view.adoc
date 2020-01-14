@@ -73,7 +73,6 @@ Piškot typu `base` je nejzákladnějším a nejvšestrannějším typem piškot
 
 _Tento typ piškotu může být použit pro zavedení libovolné grafické komponenty._
 
-'''
 
 === Text 
 
@@ -98,7 +97,6 @@ Facet `options` přijímá následující vlastnosti:
 
 * `default`: může být nastaven na libovolnou hodnotu, bude použit facetem `data`, vrací-li konverze facetu `text` hodnotu `none`, stejně jako u nenačítatelných řetězců.
 
-'''
 
 === Button 
 
@@ -241,7 +239,6 @@ Aspekt `selected` řídí zvýraznění textu (read/write). Hodnota typu `pair!`
 |*key*| `on-key`| Vyskytne se v dané oblasti při každém stisku klávesy.
 |===
 
-'''
 
 === Text-list 
 
@@ -339,7 +336,28 @@ Facet `data` přijímá libovolné hodnoty avšak pouze hodnoty typu string jsou
 
 ====
 
-'''
+=== Calendar
+
+Tento typ představuje měsíční Gregoriánský kalendář pro období od 1-Jan-1601 do 31-Dec-9999. 
+
+[cols="1, 4", options="header"]
+|===
+|Facet| Description
+|`type`| `'calendar`
+|`data`| hodnota `date!`, která představuje vybraný den.
+|===
+
+[cols="1, 1, 3", options="header"]
+|===
+|Event type| Handler| Description
+|`change`| `on-change`| Vyskytne se při výběru data v kalendáři.
+|===
+
+[NOTE]
+====
+* Implicitně je aspekt `data` nastaven na "dnes".
+* hodnota `date!` nad nebo pod zadanými mezemi v kalendáři vybere minimální nebo maximální podporované datum.
+====
 
 === Progress 
 
@@ -358,7 +376,6 @@ Tento typ představuje horizontální nebo vertikální průběhovou lištu.
 
 ====
 
-'''
 
 === Slider 
 
@@ -377,7 +394,6 @@ Tento typ představuje kurzor, posuvný podél horizontální nebo vertikální 
 
 ====
 
-'''
 
 === Camera 
 
@@ -398,7 +414,6 @@ Tento typ se používá k zobrazení "video camera feed".
 
 ====
 
-'''
 
 === Panel 
 
@@ -418,7 +433,6 @@ Panel je kontejner pro další piškoty.
 
 ====
 
-'''
 
 === Tab-panel 
 
@@ -433,7 +447,6 @@ Tab-panel je seznam karet (panelů), z nichž pouze jedna může být v daném o
 |*selected* | Index vybraného panelu nebo hodnota none (integer!, read/write).
 |===
 
-'''
 
 [cols="1,1,3", options="header"]
 |===
@@ -449,7 +462,6 @@ Tab-panel je seznam karet (panelů), z nichž pouze jedna může být v daném o
 
 ====
 
-'''
 
 === Window 
 
@@ -485,7 +497,6 @@ Reprezentuje okno, zobrazené na monitoru počítače.
 
 ====
 
-'''
 
 === Screen 
 
@@ -501,7 +512,6 @@ Představuje grafickou zobrazovací jednotku, připojenou k počítači (obvykle
 
 Všechny zobrazené piškoty oken musí být dětmi piškotu screen.
 
-'''
 
 === Group-box 
 
@@ -559,13 +569,13 @@ Seznam vytvořených aspektů:
 |*data*	| any-type!		| no	|  all	| Data o stavu piškotu a další relevantní informace.
 |*enabled?*	| logic!		| yes	|  all	| Umožnit nebo znemožnit události vstupu v piškotu. 
 |*visible?*	| logic!		| yes	|  all	| Zobrazit či skrýt piškot.
-|*selected?*	| integer! 		| no	|  some	| Index aktuálně vybraného elementu seznamu.
+|*selected?*	| integer!, pair!, object! | no	|  some	| Index aktuálně vybraného elementu seznamu.
 |*flags*	| block!, word!		| no	|  some	| Seznam speciálních klíčových slov, měnících zobrazení nebo chování piškotu.
 |*options*	| block! 		| no	|  some	| Další vlastnosti piškotu ve formátu [name: value].
 |*parent*	| object! 		| no	|  all	| Odkaz na rodičovský piškot (pokud existuje).
 |*pane*	| block! 		| no	|  some	| Seznam dětí (child faces), zobrazených uvnitř piškotu.
 |*state*	| block! 		| no	|  all	| Informace o interním stavu piškotu (používané pouze prostředím View engine).
-|*rate*	| integer! time! | no	|  all	| Časovač piškotu. Celé číslo udává frekvenci, time nastavuje trvání a none činnost končí.
+|*rate*	| integer! time! | no	|  all	| Časovač piškotu. Periodicky spouští událost `time`. Celé číslo udává frekvenci v Hz, `time!` nastavuje interval a `none` činnost končí.
 |*edge*	| object! 		| no	|  all	| _(vyhrazeno pro budoucí použití)_
 |*para*	| object! 		| no	|  all	| Nastavení úpravy textu v odstavci - počátek, okraje, odsazení, tabulátor, rolování textu a další.
 |*font*	| object! 		| no	|  all	| Nastavení vlastností fontu (style, velikost, barva, zarovnání, a jiné) pro piškot.
@@ -678,7 +688,7 @@ Aspekt options obsahuje volitelné parametry, kterými se zadává specifické c
 [cols="1,4" options="header"]
 |===
 |Option| Popis
-|*drag&#8209;on*| Možné volby jsou: `'down`, `'mid-down`, `'alt-down`, `'aux-down`. Používá se pro operace drag'n drop.
+|*drag-on*| Možné volby jsou: `'down`, `'mid-down`, `'alt-down`, `'aux-down`. Používá se pro operace drag'n drop.
 |*offset*| Odsazení okna od levého horního rohu obrazovky v pixelech ve formátu `pair!`.
 |*size*| Velikost okna v pixelech ve formátu `pair!`.
 |===
@@ -769,17 +779,17 @@ view [
 |Jméno | Typ vstupu | Příčina
 |*down*	| mouse | Left mouse button pressed.	
 |*up*		| mouse | Left mouse button released.
-|*mid&#8209;down*	| mouse | Middle mouse button pressed.
-|*mid&#8209;up*	| mouse | Middle mouse button released.
-|*alt&#8209;down*	| mouse | Right mouse button pressed.
-|*alt&#8209;up*	| mouse | Right mouse button released.
-|*aux&#8209;down*	| mouse | Auxiliary mouse button pressed.
-|*aux&#8209;up*	| mouse | Auxiliary mouse button released.
-|*drag&#8209;start*	| mouse | A face dragging starts.
+|*mid-down*	| mouse | Middle mouse button pressed.
+|*mid-up*	| mouse | Middle mouse button released.
+|*alt-down*	| mouse | Right mouse button pressed.
+|*alt-up*	| mouse | Right mouse button released.
+|*aux-down*	| mouse | Auxiliary mouse button pressed.
+|*aux-up*	| mouse | Auxiliary mouse button released.
+|*drag-start*	| mouse | A face dragging starts.
 |*drag*		| mouse | A face is being dragged.
 |*drop*		| mouse | A dragged face has been dropped.
 |*click*		| mouse | Left mouse click (button widgets only).
-|*dbl&#8209;click*	| mouse | Left mouse double-click.
+|*dbl-click*	| mouse | Left mouse double-click.
 |*over*		| mouse | Kurzor myši přechází přes piškot. Tato událost vzniká jednou, když kurzor vstupuje na piškot a jednou, když jej opouští. Pokud facet `flags` obsahuje flag `all-over`, jsou rovněž produkovány všechny mezilehlé události
 |*move*		| mouse | A window has moved.
 |*resize*		| mouse | A window has been resized.
@@ -789,11 +799,11 @@ view [
 |*zoom*		| touch | A zooming gesture (pinching) has been recognized.
 |*pan*			| touch | A panning gesture (sweeping) has been recognized.
 |*rotate*		| touch | A rotating gesture (sweeping) has been recognized.
-|*two&#8209;tap*	| touch | A double tapping gesture has been recognized.
-|*press&#8209;tap*	| touch | A press-and-tap gesture has been recognized.
-|*key&#8209;down*	| keyboard | A key is pressed down.
+|*two-tap*	| touch | A double tapping gesture has been recognized.
+|*press-tap*	| touch | A press-and-tap gesture has been recognized.
+|*key-down*	| keyboard | A key is pressed down.
 |*key*			| keyboard | Byl zadán znak nebo stisknuta speciální klávesa (kromě control, shift a nabídkové klávesy).
-|*key&#8209;up*	| keyboard | A pressed key is released.
+|*key-up*	| keyboard | A pressed key is released.
 |*enter*		| keyboard | Enter key is pressed down.
 |*focus*		| any	| A face just got the focus.
 |*unfocus*		| any	| A face just lost the focus.
@@ -1015,14 +1025,14 @@ Red [
 |*view* | Zobrazit na monitoru okno ze stromu poškotů nebo z bloku kódu VID. Zavede smyčku událostí, pokud není použito upřesnění (refinement) `/no-wait`.
 |*unview* | Zruší jedno či více oken.
 |*layout* | Přemění blok kódu VID na strom piškotů.
-|*center&#8209;face* | Vystředí piškot relativně ke svému rodiči.
-|*dump&#8209;face* | Poskytne kompaktní popis stromové struktury piškotů (pro účely ladění).
-|*do&#8209;actor* | Vyhodnotí ručně aktéra piškotu.
-|*do&#8209;events* | Spustí smyčku událostí (optionally just process pending events and return).
+|*center-face* | Vystředí piškot relativně ke svému rodiči.
+|*dump-face* | Poskytne kompaktní popis stromové struktury piškotů (pro účely ladění).
+|*do-actor* | Vyhodnotí ručně aktéra piškotu.
+|*do-events* | Spustí smyčku událostí (optionally just process pending events and return).
 |*draw* | Vykreslí blok dialektu Draw do obrázku.
-|*to&#8209;image* | Přemění jakýkoliv vykreslovaný piškot na obrázek.
-|*set&#8209;focus*| Nastaví focus na určený piškot (face). 
-|*size&#8209;text* | Změří v pixelech velikost textu v piškotu (berouce v úvahu vybraný font).
+|*to-image* | Přemění jakýkoliv vykreslovaný piškot na obrázek.
+|*set-focus*| Nastaví focus na určený piškot (face). 
+|*size-text* | Změří v pixelech velikost textu v piškotu (berouce v úvahu vybraný font).
 |===
 
 

@@ -5,6 +5,7 @@
 == Úvodem
 
 Hodnoty typu `image!` obsahují řady (series!) hodnot RGBA, které reprezentují pixely ve 2D zobrazení.
+2D je na 1D prostor mapován tak, že se bere bere první řada pixelů zleva doprava, potom druhá řada a tak dále.
 
 Typ `image!` je člen těchto typesetů: `any-type!`, `default!` a `series!`.
 
@@ -90,7 +91,7 @@ Nejsou-li binární hodnoty opakovány, doplňují se nulami na stejnou délku, 
    ; hodnoty RGB a A v binárním čísle opakovány 2 * 3 krát
 ```
 
-== Path accessors (Přístup ke komponentám zobrazení)
+== Komponenty zobrazení
 
 === /alpha
 
@@ -165,6 +166,35 @@ Vrací velikost zobrazení jako hodnotu typu pair!
 == 1x1
 ```
 
+== Manipulace
+
+`Image!` lze manipulovat jako typeset `series!`:
+
+```red
+>> a: make image! [2x2 #{111111222222333333444444}]
+== make image! [2x2 #{111111222222333333444444}]
+
+>> copy/part a 1
+== make image! [1x1 #{111111}]
+
+>> copy/part a 2
+== make image! [2x1 #{111111222222}]
+```
+
+Někdy může být objekt typu `image!` interpretován jako 2D `series!`:
+
+```red
+>> a: make image! [2x2 #{111111222222333333444444}]
+== make image! [2x2 #{111111222222333333444444}]
+
+>> copy/part a 1x2
+== make image! [1x2 #{111111333333}]
+
+>> copy/part a 2x1
+== make image! [2x1 #{111111222222}]
+```
+
+
 == Konverze
 
 Funkce `to image!` konvertuje objekty Red/View typu face! na hodnoty typu image!.
@@ -191,7 +221,7 @@ Funkce `to image!` konvertuje objekty Red/View typu face! na hodnoty typu image!
     color: none
     menu:...
 
-    >> to image! lay
+>> to image! lay
 == make image! [132x73 #{
     0000000000000000000000004D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D
     4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4...

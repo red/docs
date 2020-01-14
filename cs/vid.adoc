@@ -198,9 +198,12 @@ Udává novou pozici počátku, relativně k rohu kontejnerového piškotu.
 *Syntaxe*
 ----
 at <offset>
+at <expr>
     
 <offset> : pozice dalšího piškotu (pair!).
-----    
+<expr>   : výraz, vracející hodnotou typu pair! jako pozici
+---- 
+   
 *Popis*
 
 Umisťuje další piškot do absolutně zadané pozice. Tento poziční režim se vztahuje pouze k následujícímu piškotu a nemění zadaný způsob umístění pro piškoty další. 
@@ -394,11 +397,11 @@ Nastaví styl textu na `underline`.
 ----
 extra <expr>
     
-<expr> : jakákoli hodnota (any-type!).
+<expr> : jakákoli hodnota nebo výraz Redu (any-type!).
 ----    
 *Popis*
 
-Nastaví aspekt `extra` piškotu na novou hodnotu (jež může být výsledkem výrazu).
+Nastaví aspekt piškotu `extra` na novou hodnotu.
 
 ==== data
 
@@ -406,8 +409,10 @@ Nastaví aspekt `extra` piškotu na novou hodnotu (jež může být výsledkem v
 
 ----
 data <list>
+data <expr>
     
 <list> : literálový seznam položek nebo výraz Redu (block!).
+<expr> : výraz, vracející seznam jako block!
 ----    
 *Popis*
 
@@ -418,9 +423,12 @@ Nastaví aspekt `data` piškotu na seznam hodnot. Formát seznamu závisí na po
 *Syntaxe*
 ----
 draw <commands>
+draw <expr>
     
 <commands> : literálový seznam příkazů nebo výraz Redu(block!).
-----    
+<expr>     : výraz, vracející blok příkazů (block!).
+---- 
+   
 *Popis*
 
 Nastaví aspekt `draw` piškotu na seznam příkazů dialektu Draw.
@@ -667,14 +675,14 @@ Kromě klíčových slov je možné zadat nastavení piškotů s použitím lite
 |Datatype|      Purpose
 |*integer!*|    Určuje šířku piškotu. U panelů indikuje počet řad nebo sloupců v uspořádání (layout) v závislosti na aktuálním směru.
 |*pair!*|       Určuje šířku a výšku piškotu.
-|*tuple!*       Určuje barvu pozadí piškotu (kde je použitelné).
+|*tuple!*|       Určuje barvu pozadí piškotu (kde je použitelné).
 |*issue!*|      Určuje barvu pozadí piškotu pomocí hexadecimálního zápisu (#rgb, #rrggbb, #rrggbbaa).
 |*string!*|     Určuje text, který má být piškotem zobrazen.
 |*percent!*|    Nastavuje aspekt `data` piškotu (užitečné pro typy `progress` a `slider`).
 |*image!*|      Určuje obrázek pro pozadí piškotu(tam, kde je použitelné).
 |*url!*|        Načte zdroj, na nějž ukazuje URL a poté jej provede.
 |*block!*|      Udává akci pro implicitní událost piškotu. U panelů určuje jejich obsah.
-|get-word!|     Jako aktéra používá existující funkci.
+|*get-word!*|     Jako aktéra používá existující funkci.
 |*char!*|       _(vyhraženo pro budoucí použití)_.
 |===
 
@@ -786,9 +794,9 @@ Nastaví nový styl v aktuálním panelu. Nový styl může být vytvořen z exi
 
 Styly lze kaskádovat od rodičovských panelů k dětským panelům, takže týž styl může být v dětských panelech redefinován nebo rozšířen bez ovlivnění definic v rodičovských panelech.
 
-== Cross-Platform GUI Metrics
+== Metriky GUI pro různé platformy
 
-Aby bylo možné vyhovět odlišným UI požadavkům různých platforem GUI, vkládá VID přepisovací strojek, schopný dynamické úpravy stromu piškotů (face tree) podle zadaných pravidel. Je zařazen jako poslední stupeň procesu VID.
+Aby bylo možné vyhovět odlišným GUI požadavkům různých platforem, vkládá VID přepisovací stroj, schopný dynamické úpravy stromu piškotů (face tree) podle zadaných pravidel. Je zařazen jako poslední stupeň procesu VID.
 
 Pravidla pro Windows:
 

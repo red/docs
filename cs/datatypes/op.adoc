@@ -65,6 +65,6 @@ Typ hodnoty zjistíme dotazem `type?`.
 == op!
 ```
 
-== Predefined words
+== Předdefinovaná slova
 
 Výpis předdefinovaných hodnot typu `op!` lze získat příkazem `help op!` v konzole.
