@@ -84,7 +84,7 @@ Moins de quatre caractères, ou un nombre inégal de caractères causera une err
 *** Stack: load 
 ```
 
-Des caractères de remplissage `=` peuvent aussi être utilisés à des fins d'encodage et de décodage.
+Le caractère de remplissage `=` peut aussi être utilisé à des fins d'encodage et de décodage.
 
 *Exemple d'encodage*
 

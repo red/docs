@@ -11,7 +11,7 @@ A `binary!` value represents a series of bytes.
 
 == Creation
 
-Binary! values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+Binary values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
 
 == Literal syntax
 
@@ -84,7 +84,8 @@ Less than four characters, or an uneven number of characters will cause an error
 *** Stack: load 
 ```
 
-Padding characters `=` can also be used for encoding and decoding purposes.
+[NOTE]
+The padding character `=` can also be used for encoding and decoding purposes.
 
 *Encoding Example*
 
