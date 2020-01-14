@@ -61,8 +61,8 @@ Alternating (described in PEG as _ordered choice_)::
 Backtracking::
     Restoration of input and rules to their positions before the rule failure. Other changes (such as side-effects and modification of input/rules) remain.
 
-Greedy matching::
-    Parse rules always try to match as much input data as possible.
+Possessive matching::
+    Parse rules (mainly <<Repetition>>) always try to match as much input data as possible.
 
 == Parsing modes
 
@@ -316,9 +316,9 @@ NOTE: All example rules given in the sections below fully match their input.
 
 At the structural level, Parse grammar is composed of _sequences_ and _alternatives_.
 
-* A sequence of rules (terminated by the end of the sequence) constitutes a rule. Such rule succeeds if Parse, by sequentially matching all sub-rules, reaches its end. In case of any sub-rule's failure, Parse backtracks to the beginning of the failed sequence.
-* End of the sequence of rules is either the end of the wrapping block or an alternative rule boundary (`|` word).
-* Alternative rule is an option that Parse attempts to match in case of the previous (i.e. located before the rule boundary) rule failure.
+* A sequence of rules is a group of zero or more rules, terminated by the _end_ of the sequence. Such sequence succeeds if Parse, by successively matching its sub-rules (if any), reaches the end of the sequence. In case of any sub-rule's failure, Parse backtracks to the beginning of the failed sequence.
+* End of the sequence of rules is either the end of the wrapping block or an alternative _boundary_ (`|` word).
+* Alternative is an optional sequence that Parse attempts to match in case of the previous (i.e. located before the `|` boundary) sequence failure.
 
 === Direct matching
 
@@ -551,7 +551,7 @@ NOTE: Restoring position to series other than the input one is forbidden.
 
 Rules described below act as loops or iterators by matching either a specified number of times or until failure.
 
-NOTE: Repetition rules have greedy behavior, and will match as much input as possible.
+NOTE: Repetition rules have possessive behavior, and will match as much input as possible.
 
 ==== Iteration count
 
