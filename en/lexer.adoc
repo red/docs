@@ -58,7 +58,7 @@ func [
 ]
 ----
 
-The meaning of some arguments and return value depends on the event. The following table documents the possible combinations and effects:
+The meaning of some arguments and return value _depends_ on the event. The following table documents the possible combinations and effects:
 
 [cols="1,1,1,1,2", options="header"]
 |===
@@ -68,10 +68,10 @@ The meaning of some arguments and return value depends on the event. The followi
 |load| datatype!| <value>| `true`: store +
 `false`: drop| When a Red token has been converted to a Red value.
 |open| datatype!| pair!| `true`: open +
-`false`: drop| When a new block!, paren!, path! or map! is opened.
+`false`: drop| When a new block!, paren!, path!, map! or multiline string! is opened.
 |close| datatype!| pair!| `true`: close + 
 `false`: drop| When a new block!, paren! +
-path! or map! is closed.
+path!, map! or multiline string! is closed.
 |error| datatype!| pair!| `true`: throw +
 `false`: ignore| When a syntax error occurs.
 |===
