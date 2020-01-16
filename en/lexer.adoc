@@ -37,7 +37,7 @@ Converts an UTF-8 encoded input binary series into a Red value according to Red 
 transcode/trace <input> <callback>
 
 <input>    : series to load (binary! string!).
-<callback> : a callback function to process lexer events.
+<callback> : a callback function to process lexer events (function!).
 
 Returns    : a single value or a block of values.
 ----
@@ -63,20 +63,40 @@ The meaning of some arguments and return value _depends_ on the event. The follo
 [cols="1,1,1,1,2", options="header"]
 |===
 |Event | Type | Token | Return Value | Description
-|scan| word!| pair!| `true`: load + 
+|`scan`| word!| pair!| `true`: load + 
 `false`: drop| When a Red token has been recognized.
-|load| datatype!| <value>| `true`: store +
+|`load`| datatype!| <value>| `true`: store +
 `false`: drop| When a Red token has been converted to a Red value.
-|open| datatype!| pair!| `true`: open +
+|`open`| datatype!| pair!| `true`: open +
 `false`: drop| When a new block!, paren!, path!, map! or multiline string! is opened.
-|close| datatype!| pair!| `true`: close + 
+|`close`| datatype!| pair!| `true`: close + 
 `false`: drop| When a new block!, paren! +
 path!, map! or multiline string! is closed.
-|error| datatype!| pair!| `true`: throw +
+|`error`| datatype!| pair!| `true`: throw +
 `false`: ignore| When a syntax error occurs.
 |===
 
+Possible values for `type` field (word!) in `scan` event:
+----
+eof comment hex error! block! paren! string! map! path! word! refinement!
+issue! file! binary! char! percent! integer! float! tuple! date! pair! time!
+money! tag! url! email! lit-word! get-word! set-word!
+----
+
+Possible values for `type` field (datatype!) in `open` event:
+----
+block! paren! string!(1) map! path! lit-path! get-path!
+----
+
+Possible values for `type` field (datatype!) in `close` event:
+----
+block! paren! string!(1) map! path! lit-path! get-path! set-path!
+----
+
+(1): only for strings delimited by brackets.
 
 Notes:
+
+* If `false` is returned on a `scan` event, the corresponding `load` event will be skipped.
 
 * If an `open` event is dropped, also drop the corresponding `close` event.
