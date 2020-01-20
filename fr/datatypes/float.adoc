@@ -91,7 +91,7 @@ Une apostrophe simple `'` placée juste avant ou juste après le point décimal 
 
 [NOTE, caption=Note]
 
-Lorsqu'on fournit une valeur de type `any-list` à `make` ou `to`, la valeur `any-list` doit contenir deux nombres. Le résultat sera le premier nombre multiplié par la valeur de 10 à la puissance du deuxième nombre arrondi à l'entier inférieur: `premier-nombre * (power 10 deuxième-nombre)`
+Lorsqu'on fournit une valeur de type `any-list` à `make` ou `to`, la valeur `any-list` doit contenir deux nombres. Le résultat sera `premier-nombre * (10 ** deuxième-nombre)`.
 
 * `block`
 
@@ -138,7 +138,7 @@ Tous les comparateurs peuvent être appliqués à `Float!`: `=, ==, <>, >, <, >=
 
 Une valeur de float peut être convertie durant l'exécution en `any-list!`, `binary!`, `char!`, `integer!`, `string!`, ou `time!` en utilisant une conversion avec `to`. 
 
-Une valeur de type `any-list` doit contenir deux nombres. Le résultat sera le premier nombre multiplié par la valeur de 10 à la puissance du deuxième nombre arrondi à l'entier inférieur: `premier-nombre * (power 10 deuxième-nombre)`
+Une valeur de type `any-list` doit contenir deux nombres. Le résultat sera `premier-nombre * (10 ** deuxième-nombre)`
 
 ```red
 >> to float! [4 2]  ; 4 * (power 10 2)
@@ -152,9 +152,7 @@ Une valeur de type `any-list` doit contenir deux nombres. Le résultat sera le p
 == #{4045266666666666}
 ```
 
-[NOTE, caption=Note]
-
-Les chiffres suivant le point décimal seront ignorés lors de la conversion d'un float en `char!` ou en `integer!`. Aucun arrondi ne sera effectué.
+Les chiffres suivant le point décimal seront ignorés lors de la conversion en `char!` ou en `integer!`. Aucun arrondi ne sera effectué.
 
 ```red
 >> to char! 123.4

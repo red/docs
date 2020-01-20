@@ -7,7 +7,7 @@
 
 A `float!` value represents a 64-bit positive or negative number that contains a decimal point.
 
-Float! values span a range from `-1.7E+308` to `+1.7E+308` and return `#INF` on overflow.
+Float values span a range from `-1.7E+308` to `+1.7E+308` and return `#INF` on overflow.
 
 Dividing by zero returns `1.#NaN`.
 
@@ -15,7 +15,7 @@ Dividing by zero returns `1.#NaN`.
 
 == Creation
 
-Float! values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+Float values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
 
 == Literal syntax
 
@@ -70,12 +70,16 @@ A single quote `'` immediately before or after the decimal point will raise an e
 
 * Literal syntax
 
++
+
 ```red
 >> 100.1
 == 100.1
 ```
 
 * `make`
+
++
 
 ```red
 >> make float! 1
@@ -84,6 +88,8 @@ A single quote `'` immediately before or after the decimal point will raise an e
 
 * `to`
 
++
+
 ```red
 >> to float! 42
 == 42.0
@@ -91,9 +97,11 @@ A single quote `'` immediately before or after the decimal point will raise an e
 
 [NOTE, caption=Note]
 
-When supplying a value of `any-list` to `make` or `to`, the `any-list` value must contain two numbers. The result will be the first number multiplied with the value of 10 to the power of the truncated second number. `first-number * (power 10 second-number)`
+When supplying a value of `any-list!` to `make` or `to`, the `any-list!` value must contain two numbers. The result will be `first-number * (10 ** second-number)`.
 
 * `block`
+
++
 
 ```red
 >> make float! [2 3]
@@ -105,6 +113,8 @@ When supplying a value of `any-list` to `make` or `to`, the `any-list` value mus
 
 * `paren`
 
++
+
 ```red
 >> make float! quote (2 3)
 == 2000.0
@@ -114,6 +124,8 @@ When supplying a value of `any-list` to `make` or `to`, the `any-list` value mus
 ```
 
 * `hash`
+
++
 
 ```red
 >> list: make hash! [2 3]
@@ -138,7 +150,7 @@ All comparators can be applied on `float!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In
 
 A float value can be converted at runtime to `any-list!`, `binary!`, `char!`, `integer!`, `string!`, or `time!` by using a `to` conversion. 
 
-An `any-list!` value must contain two numbers. The result will be the first number multiplied with the value of 10 to the power of the truncated second number. `first-number * (power 10 second-number)`
+An `any-list!` value must contain two numbers. The result will be `first-number * (10 ** second-number)`.
 
 ```red
 >> to float! [4 2]  ; 4 * (power 10 2)
@@ -147,14 +159,16 @@ An `any-list!` value must contain two numbers. The result will be the first numb
 
 * `to binary!` interprets the first 8 bytes as a floating point number. If there are fewer than 8 bytes, #{00} bytes are prepended.
 
++
+
 ```red
 >> to binary! 42.3
 == #{4045266666666666}
 ```
 
-[NOTE, caption=Note]
+* Digits after the decimal point will be discarded when converting to `char!` or `integer!`. No rounding will take place.
 
-The digits after the decimal point will be discarded when converting a float to `char!` or `integer!`. No rounding will take place.
++
 
 ```red
 >> to char! 123.4
@@ -169,12 +183,16 @@ The digits after the decimal point will be discarded when converting a float to 
 
 * `to string!`
 
++
+
 ```red
 >> to string! 123.4
 == "123.4"
 ```
 
 * `to time!` returns the number of seconds and milliseconds.
+
++
 
 ```red
 >> to time! 42.7

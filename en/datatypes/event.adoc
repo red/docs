@@ -10,7 +10,7 @@
 
 == Creation
 
-`Event!`` values cannot be created with `make` or `to`, and they have no literal form. They are sourced from the operating system and are effectively read-only values.
+Event values cannot be created with `make` or `to`, and they have no literal form. They are sourced from the operating system and are effectively read-only values.
 
 See link:https://doc.red-lang.org/en/view.html#_events[View documentation] for more information on events.
 
