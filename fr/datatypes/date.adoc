@@ -527,6 +527,18 @@ d/zone: -4:00
 == 1-Mar-2017/5:30:00-04:00
 ----
 
+[NOTE]
+Fixer une valeur de `/zone` à une date qui n'a pas de valeur de `time` résultera en l'affectation de la valeur par défaut 0:0:0 à la valeur de `time`.
+
+*Exemples*
+
+----
+d: 28-Mar-2019
+== 28-Mar-2019
+
+d/zone: 1 d
+== 28-Mar-2019/0:00:00+01:00
+----
 
 === /timezone
 

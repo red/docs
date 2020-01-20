@@ -4,9 +4,7 @@
 
 == Abstract
 
-Blocks are used to represent data or code that can be evaluated at any point in time. They are a type of `series!` with no restriction on the type of values that can be referenced.
-
-Blocks are delimited by opening and closing square brackets, separated by spaces.
+Blocks are used to represent collections of data or code that can be evaluated at any point in time. They are a type of `series!` with no restriction on the type of values that can be referenced.
 
 Values and expressions in a block are not evaluated by default:
 
@@ -42,34 +40,6 @@ olleH
 
 Block values can be created using literal syntax, or at runtime using a `make` constructor or a `to` conversion.
 
-To create an empty block pre-allocated for 10 elements:
-
-----
->> make block! 10
-== []
-----
-
-To create a block of 10 elements with initial values set to none:
-
-----
->> append/dup make block! 10 none 10
-== [none none none none none none none none none none]
-----
-
-Using a `to` conversion:
-
-----
->> to block! {one 2 "three" 4:00}
-== [one 2 "three" 4:00:00]
-
->> to block! "foo 1.23 me@me.com"
-== [foo 1.23 me@me.com]
-
->> to block! 42
-== [42]
-----
-
-
 == Literal syntax
 
 A collection of values delimited by opening and closing square brackets, separated by spaces.
@@ -95,10 +65,40 @@ Blocks can extend over multiple lines, and can contain other blocks.
 
 Extra lines, spaces, and tabs are allowed as long as they do not break up values.
 
-Ok: `[42 print "foo"]`
+Correct: `[42 print "foo"]`
 
-Not ok: `[42 pr   int "foo"]`
+Incorrect: `[42 pr int "foo"]`
 
+== Runtime creation
+
+* `Make`
++
+To create an empty block pre-allocated for 10 elements:
+
+----
+>> make block! 10
+== []
+----
+
+To create a block of 10 elements with initial values set to none:
+
+----
+>> append/dup make block! 10 none 10
+== [none none none none none none none none none none]
+----
+
+* `To`
++
+----
+>> to block! {one 2 "three" 4:00}
+== [one 2 "three" 4:00:00]
+
+>> to block! "foo 1.23 me@me.com"
+== [foo 1.23 me@me.com]
+
+>> to block! 42
+== [42]
+----
 
 == Accessing block elements
 
