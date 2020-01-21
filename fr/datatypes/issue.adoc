@@ -70,6 +70,6 @@ Utilisez `type?` pour connaître le type d'une valeur donnée.
 
 `hex-to-rgb`, `issue?`, `to-issue`
 
-=== Natifs
+=== Natives
 
 `to-hex`

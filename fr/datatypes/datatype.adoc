@@ -74,6 +74,6 @@ Le mot `datatype!` renvoie à tous les types de données prédéfinis. Les types
 
 `to-get-word`, `to-issue`, `to-lit-word`, `to-refinement`, `to-set-word`, `to-word`
 
-=== Natifs
+=== Natives
 
 `as`

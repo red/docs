@@ -20,7 +20,10 @@ Les valeurs de type Logic! peuvent être créées à l'aide de la syntaxe litté
 >> to logic! 'hi
 == true
 
->> to logic! 123
+>> to logic! 1
+== true
+
+>> to logic! 0
 == true
 
 >> to logic! none
@@ -29,6 +32,24 @@ Les valeurs de type Logic! peuvent être créées à l'aide de la syntaxe litté
 >> to logic! false
 == false
 ```
+
+[NOTE]
+Pour les besoins de la logique booléenne, les valeurs `true` et `false` peuvent être construites à partir de 1 et 0 en utilisant `make`.
+
+```red
+>> make logic! 1
+== true
+
+>> make logic! 0
+== false
+
+>> make integer! true
+== 1
+
+>> make integer! false
+== 0
+```
+
 
 
 == Syntaxe littérale

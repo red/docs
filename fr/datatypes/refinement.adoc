@@ -81,6 +81,6 @@ Utilisez `type?` pour connaître le type d'une valeur donnée.
 
 `parse-func-spec`, `refinement?`, `to-refinement`
 
-=== Natifs
+=== Natives
 
 `function`

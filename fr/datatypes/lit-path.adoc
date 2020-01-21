@@ -15,8 +15,6 @@ Lit-path! appartient aux ensembles de types suivants: `any-block!`, `any-path!`,
 
 Les valeurs de type `lit-path!` peuvent être créées en utilisant `quote` et la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
 
-Une valeur de type `lit-path!` se réduira à une valeur de type path! à l'évaluation, par exemple si elle est saisie dans la console Red.
-
 ```red
 >> 'foo/bar/baz
 == foo/bar/baz

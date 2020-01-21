@@ -10,7 +10,7 @@ Une valeur de type `get-word!` renvoie la valeur non évaluée d'un mot dans le 
 
 == Création
 
-Les valeurs de type Get-word! peuvent être créées à l'aide de la syntaxe littérale, ou lors de l'exécution en utilisant la conversion `to` à partir des types: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, `refinement!`, et `lit-word!`.
+Les valeurs de type `get-word!` peuvent être créées à l'aide de la syntaxe littérale, ou lors de l'exécution en utilisant la conversion `to` à partir des types: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, `refinement!`, et `lit-word!`.
 
 ```red
 >> to get-word! #"X"

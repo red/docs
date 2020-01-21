@@ -4,13 +4,13 @@
 
 == Abstract
 
-`Image!` values contain a series! of RGBA values, which represent pixels in a 2D image.
+`Image!` values contain a series! of RGBA values, which represent pixels in a 2D image. 2D is mapped to 1D space by taking first row of pixels from left to right, then second row, and so on.
 
 `Image!` is a member of the following typesets: `any-type!`, `default!`, `series!`
 
 == Creation
 
-Image! values can be created at runtime by using a `make` constructor or `to` conversion.
+Image values can be created at runtime by using a `make` constructor or `to` conversion.
 
 === Runtime creation
 
@@ -166,6 +166,34 @@ Gets or sets the RGB values of an image.
 == 1x1
 ```
 
+== Manipulation
+
+`Image!` can be manipulated as `series!`:
+
+```red
+>> a: make image! [2x2 #{111111222222333333444444}]
+== make image! [2x2 #{111111222222333333444444}]
+
+>> copy/part a 1
+== make image! [1x1 #{111111}]
+
+>> copy/part a 2
+== make image! [2x1 #{111111222222}]
+```
+
+And sometimes `image!` can be interpreted as a 2D series:
+
+```red
+>> a: make image! [2x2 #{111111222222333333444444}]
+== make image! [2x2 #{111111222222333333444444}]
+
+>> copy/part a 1x2
+== make image! [1x2 #{111111333333}]
+
+>> copy/part a 2x1
+== make image! [2x1 #{111111222222}]
+```
+
 == Conversions
 
 `To image!` converts Red/View face! objects to image values.
@@ -192,7 +220,7 @@ Gets or sets the RGB values of an image.
     color: none
     menu:...
 
-    >> to image! lay
+>> to image! lay
 == make image! [132x73 #{
     0000000000000000000000004D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D
     4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4...

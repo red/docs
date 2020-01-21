@@ -182,6 +182,6 @@ Utilisez `type?` pour connaître le type d'une valeur donnée.
 
 `attempt`, `cause-error`
 
-=== Natifs
+=== Natives
 
 `in`, `try`

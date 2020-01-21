@@ -55,7 +55,6 @@ If the key is of *any-word!* type, the key type is converted to *set-word!* in t
 [NOTE]
 ====
 * Like `hash!` and `block!`, `map!` is **case-preserving**, and **case-insensitive for lookup** by default.
-* If a `none` value is specified as value, the key will not be created (see "Deleting keys" section).
 * All the keys are deep copied on creation of the map.
 * Series! values are not copied on creation of the map, the choice is left to the user (this optimizes resources for the common use-case).
 ====
@@ -91,7 +90,10 @@ get/case '<map>/<key>
 select/case <map> <key>
 ----
 
-Trying to access a key not defined in a map will return a `none` value.
+Trying to access a key not defined in a map will:
+
+* produce an error if the path syntax is used.
+* return a `none` value if `select` is used.
 
 Examples:
 
@@ -105,6 +107,8 @@ get/case 'm/aB
 == 5
 select/case m 'ab
 == 10
+select m 'x
+== none
 ----
 
 
@@ -199,10 +203,9 @@ m
 )
 ----
 
+== Removing keys
 
-== Deleting keys
-
-In order to delete a key/value pair from a map, you simply set the key to `none` value using one of the available ways.
+Use `remove/key` to remove a key/value pair from a map, returning the map value. The key lookup is always case-sensitive.
 
 Example:
 
@@ -215,18 +218,15 @@ m
     "c" 3
     d: 99
 )
-m/b: none
-put m "c" none
-extend m [d #[none]]
-m
+remove/key m 'b
 == #(
     a: 1
+    "c" 3
+    d: 99
 )
 ----
 
-NOTE: Construction syntax is required in the above example in order to pass a `none!` value and not a `word!` value (just one way to construct the spec block needed there).
-
-It is also possible to delete all keys at same time using `clear` action:
+It is also possible to remove all keys at same time using `clear` action:
 
 ----
 clear #(a 1 b 2 c 3)
@@ -236,10 +236,16 @@ clear #(a 1 b 2 c 3)
 
 == Reflection
 
-* `find` checks if a key is defined in a map and returns `true` if    found, or else `none`.
+* `find` checks if a key is defined in a map and returns the first matched key, or else `none`. Use `/case` for case-sensitive matching.
 
  find #(a 123 b 456) 'b
- == true
+ == b
+ 
+ find #(a 123 A 456) 'A
+ == a
+ 
+ find/case #(a 123 A 456) 'A
+ == A
 
 * `length?` returns the number of a key/value pairs in a map.
 
@@ -260,3 +266,34 @@ clear #(a 1 b 2 c 3)
 
  body-of #(a: 123 b: 456)
  == [a: 123 b: 456]
+
+ 
+== Iteration
+
+
+* Using `keys-of` with `foreach`
++
+
+```red
+>> foreach k keys-of #(a: 123 b: 456) [print k]
+a
+b
+```
+
+* Using `values-of` with `foreach`
++
+
+```red
+>> foreach v values-of #(a: 123 b: 456) [print v]
+123
+456
+```
+
+* A block of two words must be provided when using `foreach` without `keys-of` or `values-of`
++
+
+```red
+>> foreach [k v] #(a: 123 b: 456) [print [k v]]
+a 123
+b 456
+```

@@ -4,13 +4,13 @@
 
 == Abstract
 
-A `get-word!` value retieves an unevaluated word value from the context to which it is bound.
+A `get-word!` value retrieves an unevaluated word value from the context to which it is bound.
 
 `Get-word!` is a member of the following typesets: `any-word!`, `all-word!`, `immediate!`
 
 == Creation
 
-Get-word! values can be created using literal syntax, or at runtime using a `to` conversion from the datatypes: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, `refinement!`, and `lit-word!`.
+Get-word values can be created using literal syntax, or at runtime using a `to` conversion from the datatypes: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, `refinement!`, and `lit-word!`.
 
 ```red
 >> to get-word! #"X"

@@ -208,7 +208,7 @@ Utilisez `type?` pour connaître le type d'une valeur donnée.
 
 `acos`, `asin`, `atan`, `atan2`, `cos`, `distance?`, `float?`, `sin`, `sqrt`, `tan`, `to-float`
 
-=== Natifs
+=== Natives
 
 `arccosine`, `arcsine`, `arctangent`, `arctangent2`, `as-pair`, `cosine`, `exp`, `log-10`, `log-2`, `log-e`, `sine`, `square-root`, `tangent`
 

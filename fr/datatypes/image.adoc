@@ -4,7 +4,7 @@
 
 == Résumé
 
-Les valeurs de type `Image!` contiennent une série (series!) de valeurs RGBA, qui représentent les pixels d'une image 2D.
+Les valeurs de type `Image!` contiennent une série (series!) de valeurs RGBA, qui représentent les pixels d'une image 2D. La 2D est représentée dans l'espace 1D en prenant la première ligne de pixels de gauche à droite, puis la seconde ligne, etc.
 
 `Image!` appartient aux ensembles de types suivants: `any-type!`, `default!`, `series!`
 
@@ -166,6 +166,35 @@ Renvoie la taille d'une image sous forme d'une valeur de type pair!.
 >> img/size
 == 1x1
 ```
+
+== Manipulation
+
+Une `Image!` peut être manipulée comme une `series!`:
+
+```red
+>> a: make image! [2x2 #{111111222222333333444444}]
+== make image! [2x2 #{111111222222333333444444}]
+
+>> copy/part a 1
+== make image! [1x1 #{111111}]
+
+>> copy/part a 2
+== make image! [2x1 #{111111222222}]
+```
+
+Et parfois `image!` peut être interprétée comme une série 2D:
+
+```red
+>> a: make image! [2x2 #{111111222222333333444444}]
+== make image! [2x2 #{111111222222333333444444}]
+
+>> copy/part a 1x2
+== make image! [1x2 #{111111333333}]
+
+>> copy/part a 2x1
+== make image! [2x1 #{111111222222}]
+```
+
 
 == Conversions
 

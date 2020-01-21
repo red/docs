@@ -329,7 +329,7 @@ Utilisez `type?` pour connaître le type d'une valeur donnée.
 
 `first`, `mod`, `modulo`, `second`, `third`, `time?`, `to-time`
 
-=== Natifs
+=== Natives
 
 `loop`, `negative?`, `now`, `positive?`, `remove-each`, `repeat`, `sign?`, `wait`, `zero?`
 

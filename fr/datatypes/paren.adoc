@@ -124,6 +124,6 @@ Utilisez `type?` pour connaître le type d'une valeur donnée.
 
 `expand-directives`, `paren?`, `series?`, `to-paren`
 
-=== Natifs
+=== Natives
 
 `as`, `compose`

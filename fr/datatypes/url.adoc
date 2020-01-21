@@ -61,6 +61,6 @@ Utilisez `type?` pour connaître le type d'une valeur donnée.
 
 `clean-path`, `dir?`, `dirize`, `do-file`, `do-thru`, `exists-thru?`, `load`, `load-thru`, `path-thru`, `read-thru`, `save`, `split-path`, `suffix?`, `to-url`, `url?`
 
-=== Natifs
+=== Natives
 
 `browse`, `dehex`

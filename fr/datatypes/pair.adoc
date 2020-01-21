@@ -21,7 +21,7 @@ Une paire s'écrit comme deux entiers séparés par un `x`.
 
 == Création
 
-Les valeurs de type Pair! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make`, `to` conversion, ou le natif `as-pair`.
+Les valeurs de type Pair! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make`, `to` conversion, ou la native `as-pair`.
 
 ```red
 >> make pair! [20 30]
@@ -113,7 +113,7 @@ Utilisez `type?` pour connaître le type d'une valeur donnée.
 
 `caret-to-offset`, `draw`, `first`, `make-face`, `metrics?`, `mod`, `modulo`, `offset-to-caret`, `offset-to-char`, `pair?`, `second`, `size-text`, `to-pair`, `within?`
 
-=== Natifs
+=== Natives
 
 `as-pair`, `case`, `extend`, `zero?`
 

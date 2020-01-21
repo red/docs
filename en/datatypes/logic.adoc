@@ -11,8 +11,7 @@ The `logic!` datatype represents the boolean values `true` and `false`.
 
 == Creation
 
-Logic! values can be created using literal syntax, or at runtime using a `make` constructor, or a `to` conversion.
-
+Logic values can be created using literal syntax, or at runtime using a `make` constructor, or a `to` conversion.
 
 `to logic!` converts to `true` for any value except for `false` and `none`.
 
@@ -20,7 +19,10 @@ Logic! values can be created using literal syntax, or at runtime using a `make` 
 >> to logic! 'hi
 == true
 
->> to logic! 123
+>> to logic! 1
+== true
+
+>> to logic! 0
 == true
 
 >> to logic! none
@@ -30,6 +32,22 @@ Logic! values can be created using literal syntax, or at runtime using a `make` 
 == false
 ```
 
+[NOTE]
+For boolean logic support, `true` and `false` values can be constructed from 1 and 0 using `make`.
+
+```red
+>> make logic! 1
+== true
+
+>> make logic! 0
+== false
+
+>> make integer! true
+== 1
+
+>> make integer! false
+== 0
+```
 
 == Literal syntax
 
