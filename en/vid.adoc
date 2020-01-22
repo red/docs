@@ -633,6 +633,17 @@ disabled
 
 Disables the face by default (the face will not process any event until it is enabled).
 
+==== tri-state
+
+*Syntax*
+
+----
+tri-state
+----
+
+*Description*
+
+Enables 3-state mode of a check box.
 
 ==== select
 
