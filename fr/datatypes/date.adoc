@@ -886,7 +886,7 @@ sort [1/1/2017 5/10/1999 3-Jul-2017/5:41:40-2:00 1/1/1950 1/1/1980/2:2:2]
 ----
 
 
-== Arithmétique
+== Calculs
 
 Les opérations supportées sur les dates comprennent:
 

@@ -12,7 +12,7 @@ Une valeur de type `vector!` est une séquence ordonnée de valeurs de même typ
 
 == Création
 
-Les valeurs de type Vector! peuvent être créées à l'exécution en utilisant le constructeur `make`.
+Les valeurs de type `vector!` peuvent être créées à l'exécution en utilisant le constructeur `make`.
 
 === Création lors de l'exécution
 
@@ -49,7 +49,7 @@ Si une valeur d' `integer!` ou de `float!` est passée à `make`, un vecteur de 
 
 Tous les comparateurs peuvent être appliqués à `Vector!`: `=, ==, <>, >, <, >=, &lt;=, =?`. De plus, `min`, et `max` sont aussi supportés.
 
-== Arithmétique
+== Calculs
 
 `+ - * / // %` 
 

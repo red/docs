@@ -12,7 +12,7 @@ A `vector!` value is an ordered sequence of values of identical type, which can 
 
 == Creation
 
-Vector! values can be created at runtime by using a `make` constructor.
+Vector values can be created at runtime by using a `make` constructor.
 
 === Runtime creation
 

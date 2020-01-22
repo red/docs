@@ -4,7 +4,7 @@
 
 == Abstract
 
-Paths are a series of values delimited by slashes (`/`). They are a type of `block!` that are limited in the types of values that they can contain. `Word!`, `integer!`, `get-word!`, and `paren!` values are supported. 
+The `path!` datatype represents a series of values delimited by slashes (`/`). `Path!` is a type of `block!` that is limited in the types of values that it can contain. `Word!`, `integer!`, `get-word!`, and `paren!` values are supported. 
 
 `Path!` is a member of the following typesets: `any-block!`, `any-path!`, `series!`
 
@@ -20,7 +20,7 @@ Paths are a series of values delimited by slashes (`/`). They are a type of `blo
 
 == Creation
 
-Path! values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+Path values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
 
 ```red
 >> 'foo/bar/baz 
@@ -39,7 +39,7 @@ You can create an empty path of a given size by supplying an integer value as an
 == 
 ```
 
-`To conversion:
+`To` conversion:
 
 ```red
 >> to path! "foo bar baz"
@@ -99,6 +99,20 @@ An error will be raised if no corresponding refinement exists in the function:
 *** Script Error: append has no refinement called xyz
 *** Where: append
 *** Stack: 
+```
+
+[NOTE]
+Paths are an active type and will evaluate stored functions. `Op!` values are not currently evaluated.
+
+```red
+>> f: does [42]
+== func [][42]
+
+>> insert b: [] :f
+== []
+
+>> b/1
+== 42
 ```
 
 * If the value is not a function, the following rules apply:

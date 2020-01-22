@@ -155,7 +155,7 @@ sort [#"c" #"b" #"d" #"a"]
 ----
 
 
-== Calcul
+== Calculs
 L'éventail complet des fonctions mathématiques peut être utilisé sur les valeurs de type `char!`. Une erreur `Math Error` est produite si le résultat du calcul sort de l'intervalle (hexadécimal) 00 - 10FFFF.
 
 *Exemples*

@@ -40,7 +40,7 @@ Pour utiliser Red efficacement, vous devriez devenir familier avec tous les type
 |link:datatypes/object.adoc[object!]|`-`|Contextes nommés ou non, qui contiennent des paires mot: valeur (`word: value`).
 |link:datatypes/op.adoc[op!]|`-`|Fonctions infixe à deux arguments.
 |link:datatypes/pair.adoc[pair!]|`42x42`|Coordonnées bidimensionnelles.
-|link:datatypes/paren.adoc[paren!]|`(one 2 "three" 4:00:00)`|`block!`s immédiatement évalués.
+|link:datatypes/paren.adoc[paren!]|`(one 2 "three" 4:00:00)`|`block!` immédiatement évalués.
 |link:datatypes/path.adoc[path!]|`foo/bar/baz`|Séries de valeurs délimitées par des "slash" `/`. Les types de valeurs qu'elles peuvent contenir sont limités.
 |link:datatypes/percent.adoc[percent!]|`100%`, `0.76%`|Nombres à virgule exprimés sous forme de pourcentages.
 |link:datatypes/refinement.adoc[refinement!]|`/foo`|Valeurs symboliques utilisées comme modificateurs de fonctions ou extensions d'objets, fichiers, urls ou chemins.

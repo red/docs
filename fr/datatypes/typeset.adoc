@@ -4,28 +4,28 @@
 
 == Résumé
 
-A `typeset!` value represents a set, or collection, of predefined `datatype!` values.
+Une valeur de type `typeset!` représente un ensemble, ou une collection, de valeurs de `datatype!` prédéfinies.
 
 `Typeset!` appartient aux ensembles de types suivants: `default!`, `immediate!`
 
 == Création
 
-Les valeurs de type `Typeset!` peuvent être créées by using le constructeur `make` ou la conversion avec `to`.
+Les valeurs de type `typeset!` peuvent être créées en utilisant le constructeur `make` ou la conversion avec `to`.
 
 == Syntaxe littérale
 
-By convention, literal syntax is a `word!` value ending with an exclamation mark `!`.
+Par convention, la syntaxe littérale est une valeur de type `word!` se terminant par un point d'exclamation `!`.
 
-Examples: `any-list!`, `number!`, `series!`
+Exemples: `any-list!`, `number!`, `series!`
 
-=== Runtime creation
+=== Création lors de l'exécution
 
 ```
 <typeset> ::= make typeset! [<typeset-element>*]
 <typeset-element> ::= <typeset-name> | <datatype-name>
 ```
 
-*Examples*
+*Exemples*
 
 ```red
 >> number!: make typeset! [integer! float! percent!]
@@ -38,7 +38,7 @@ Examples: `any-list!`, `number!`, `series!`
 == make typeset! [integer! float! percent!]
 ```
 
-Empty typesets are allowed.
+Les typesets vides sont autorisés.
 
 ```red
 >> empty!: make typeset! []
@@ -47,7 +47,7 @@ Empty typesets are allowed.
 
 == Conversions
 
-A `typeset!` value can be converted to any value of the typeset `any-list!`
+Une valeur de type `typeset!` peut être convertie en n'importe quelle valeur du typeset `any-list!`
 
 ```red
 >> to block! number!
@@ -62,17 +62,17 @@ A `typeset!` value can be converted to any value of the typeset `any-list!`
 
 == Comparaisons
 
-No comparisons are supported for `typeset!`.
+Aucune comparaison n'est supportée pour `typeset!`.
 
-== Data set operations
+== Opérations sur les ensembles de données
 
-The following data set operations are possible with `typeset!` values: 
+Les opérations sur les ensembles de données suivantes sont possibles avec les valeurs de type `typeset!` : 
 
 `difference`, `exclude`, `intersect`, `union`
 
 == Test de valeurs
 
-Utilisez `typeset?` pour vérifier si une valeur est du type `Typeset!`.
+Utilisez `typeset?` pour vérifier si une valeur est du type `typeset!`.
 
 ```red
 >> typeset? number!
@@ -86,7 +86,7 @@ Utilisez `type?` pour connaître le type d'une valeur donnée.
 == typeset!
 ```
 
-== Predefined words
+== Mots prédéfinis
 
 === Actions
 

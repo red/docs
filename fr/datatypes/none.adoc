@@ -5,13 +5,13 @@
 
 == Résumé
 
-None! représente une valeur qui n'appartient à aucun autre type de données. Elle est analogue à nil ou nothing dans d'autres langages de programmation.
+Le type `none!` représente une valeur qui n'appartient à aucun autre type de données. Elle est analogue à nil ou nothing dans d'autres langages de programmation.
 
 `None!` appartient aux ensembles de types suivants: `immediate!`
 
 == Création
 
-Les valeurs de type None! peuvent être créées à l'aide de la syntaxe littérale, ou lors de l'exécution en utilisant le constructeur `make`, ou la conversion `to`.
+Les valeurs de type `none!` peuvent être créées à l'aide de la syntaxe littérale, ou lors de l'exécution en utilisant le constructeur `make`, ou la conversion `to`.
 
 ----
 >> make none! 'x

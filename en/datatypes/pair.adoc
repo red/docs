@@ -21,7 +21,7 @@ A pair is written as two integers separated by an `x`.
 
 == Creation
 
-Pair! values can be created using literal syntax, or at runtime by using a `make` constructor, `to` conversion, or `as-pair` native.
+Pair values can be created using literal syntax, or at runtime by using a `make` constructor, `to` conversion, or `as-pair` native.
 
 ```red
 >> make pair! [20 30]
@@ -57,6 +57,24 @@ Pair! values can be created using literal syntax, or at runtime by using a `make
 
 All comparators can be applied on `pair!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
 
+When comparing `pair!` values, they are compared by their second parts, `/y`, and if it's equal in both numbers, they are compared by their first parts, `/x`. If both parts are the same, `pair!`s are equal. For example:
+
+```red
+>> 5x3 = 5x3
+== true
+
+>> 0x0 < 1x1
+== true
+
+>> 999x999 < 1x1
+== false
+
+>> 999x0 < 1x1
+== true
+
+>> sort [0x1 1x0 0x2 2x0 1x1 2x2]
+== [1x0 2x0 0x1 1x1 0x2 2x2]
+```
 
 == Arithmetic
 

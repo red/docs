@@ -4,7 +4,7 @@
 
 == Résumé
 
-Un `set-word!` établit une référence à une valeur.
+Le type `set-word!` établit une référence à une valeur.
 
 Lorsqu'il est utilisé en dehors d'une valeur de type `object!` ou `map!`, un set-word établira dans le contexte actuel une référence à la valeur de l'expression qui suit le set-word.
 

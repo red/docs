@@ -11,7 +11,7 @@ Une valeur de type `url!` représente une référence à une ressource réseau e
 
 == Création
 
-Les valeurs de type Url! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
+Les valeurs de type `url!` peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
 
 ```red
 >> make url! [foo bar baz]
