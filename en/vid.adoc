@@ -758,6 +758,7 @@ In addition to keywords, it is allowed to pass settings to faces using literal v
 |tuple!|	Specifies the color of the face's background (where applicable).
 |issue!|	Specifies the color of the face's background using hex notation (#rgb, #rrggbb, #rrggbbaa).
 |string!|	Specifies the text to be displayed by the face.
+|date!|		Sets the `data` facet (useful for `calendar` type).
 |percent!|	Sets the `data` facet (useful for `progress` and `slider` types).
 |logic!|	Sets the `data` facet (useful for `check` and `radio` types).
 |image!| 	Sets the image to be displayed as face's background (where applicable).
