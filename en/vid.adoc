@@ -633,6 +633,19 @@ disabled
 
 Disables the face by default (the face will not process any event until it is enabled).
 
+==== password
+
+*Syntax*
+
+----
+password
+----
+
+*Description*
+
+Hides user's input in a text field.
+
+
 ==== tri-state
 
 *Syntax*
