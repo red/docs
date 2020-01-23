@@ -245,7 +245,7 @@ This type represents a check box, with an optional label text, displayed on left
 |`type`| `'check`
 |`text`| Label text.
 |`para`| The `align` field controls if the text is displayed on the `left` or on the `right` side.
-|`data`| `true`: checked; `false`: unchecked; `none`: unchecked for 2-state check box, indeterminate for 3-state check box.
+|`data`| `true`: checked; `false`: unchecked; `none`: unchecked for 2-state check box, indeterminate for 3-state check box (default).
 |`flags`| Turn on tri-state check box feature (word!).
 |===
 
