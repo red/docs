@@ -59,7 +59,7 @@ This example sets a reactive relation between a slider named `s` and a base face
 
 *Example 2*
 
-    vec: make reactor! [x: 0 y: 10]
+    vec: reactor [x: 0 y: 10]
     box: object [length: is [square-root (vec/x ** 2) + (vec/y ** 2)]]
 
 Another form of static relation can be defined using the `is` operator, where the value of the reaction evaluation is set to a word (in any context).
@@ -68,13 +68,13 @@ This example is not related to the GUI system. It calculates the length of a vec
 
 *Example 3*
 
-	a: make reactor! [x: 1 y: 2 total: is [x + y]]
+	a: reactor [x: 1 y: 2 total: is [x + y]]
 	
 The word `total` above has its value set to the `x + y` expression. Each time the `x` or `y` values change, `total` is immediately updated. Notice that paths are not needed in this case, to specify the reactive sources, because `is` is used directly inside the reactor's body and so knows its context.
 
 *Example 4*
 
-	a: make reactor! [x: 1 y: 2]
+	a: reactor [x: 1 y: 2]
 	total: is [a/x + a/y]
 
 This variation of Example 3 shows that a global word can also be the target of a reactive relation (though it can't be the source). This form is the closest to that of a spreadsheet's (e.g. Excel) formula model.
@@ -167,7 +167,7 @@ NOTE: This operator creates reactive formulas which closely mimic Excel's formul
 
 *Examples*
 ----
-a: make reactor! [x: 1 y: 2 total: is [x + y]]
+a: reactor [x: 1 y: 2 total: is [x + y]]
 
 a/total
 == 3
@@ -176,7 +176,7 @@ a/total
 == 102
 ----
 ----
-make reactor! [a: 1 b: is [[none] c] c: is [a < 4]]
+reactor [a: 1 b: is [[none] c] c: is [a < 4]]
 == make object! [
     a: 1
     b: true
@@ -235,7 +235,7 @@ Returns : a reactive object.
 ----
 *Description*
 
-Constructs a new reactive object from the body block. In the returned object, setting a field to a new value will trigger reactions defined for that field.
+Constructs a new reactive object from the body block. In the returned object, setting a field to a new value will trigger reactions defined for that field. `reactor` function is a convenient shortcut for this type of constructor.
 
 NOTE: The body may contain `is` expressions.
 
@@ -251,7 +251,7 @@ Returns : a reactive object.
 ----
 *Description*
 
-Constructs a new reactive object from the body block. In the returned object, setting a field to a new value or changing a series the field refers to, including nested series, will trigger reactions defined for that field.
+Constructs a new reactive object from the body block. In the returned object, setting a field to a new value or changing a series the field refers to, including nested series, will trigger reactions defined for that field. `deep-reactor` function is a convenient shortcut for this type of constructor.
 
 NOTE: The body may contain `is` expressions.
 
@@ -261,7 +261,7 @@ This shows how change to a series, even a nested one, triggers a reaction.
 
 NOTE: It is up to the user to prevent cycles at this time. For example, if a `deep-reactor!` changes series values in a reactor formula (e.g. `is`), it may create endless reaction cycles.
 ----
-r: make deep-reactor! [
+r: deep-reactor [
     x: [1 2 3]
     y: [[a b] [c d]]
     total: is [append copy x copy y]
