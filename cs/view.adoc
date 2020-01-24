@@ -128,8 +128,13 @@ Tento typ představuje zatržítko s volitelným popiskem na levé či právé s
 |*type*	| `'check`
 |*text*	| Text popisku.
 |*para*	| Pole `align` určuje, zda je text zobrazen na levé nebo pravé straně.
-|*data*	| `true`:  zatrženo, `false`: nezatrženo (default).
+|*data*	| `true`:  zatrženo, `false`: nezatrženo; `none`: nezatrženo pro dvou-stavové zatržítko, neurčeno pro 3-stavové zatržitko (default).
+|`flags`| Zapnout tří-stavové zatržíko (word!). 
 |===
+
+*Podporované flagy:*
+
+* `tri-state`: umožňuje třetí, neurčený stav, který je reprezentován hodnotou `none` aspektu `data`.
 
 [cols="1,1,3", options="header"]
 |===
