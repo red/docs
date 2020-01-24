@@ -57,7 +57,7 @@ Tento příklad zavádí reaktivní vztah mezi posuvníkem (slider), zvaným `s`
 
 *Příklad 2*
 ----
-vec: make reactor! [x: 0 y: 10]
+vec: reactor [x: 0 y: 10]
 box: object [length: is [square-root (vec/x ** 2) + (vec/y ** 2)]]
 ----
 
@@ -67,14 +67,14 @@ Tento příklad nesouvisí se systémem GUI. Počítá délku vektoru, určenéh
 
 *Příklad 3*
 ----
-a: make reactor! [x: 1 y: 2 total: is [x + y]]
+a: reactor [x: 1 y: 2 total: is [x + y]]
 ----
 	
 Slovo `total` má svou hodnotu vztaženu k výrazu `x + y`. S každou změnou hodnot `x` nebo `y` je okamžitě aktualizována hodnota slova `total`. Všimněte si, že v tomto případě není zapotřebí určovat cesty k reaktivním zdrojům, neboť funkce `is` je použita přímo uvnitř těla reaktoru, jenž zná její souvislosti.
 
 *Příklad 4*
 ----
-a: make reactor! [x: 1 y: 2]
+a: reactor [x: 1 y: 2]
 total: is [a/x + a/y]
 ----
 
@@ -171,7 +171,7 @@ Poznámka: Tento operátor vytváří reaktivní formule, napodobující formule
 
 *Příklady*
 ----------
-a: make reactor! [x: 1 y: 2 total: is [x + y]]
+a: reactor [x: 1 y: 2 total: is [x + y]]
     
 a/total
 == 3
@@ -181,7 +181,7 @@ a/total
 ----
 
 ----
-make reactor! [a: 1 b: is [[none] c] c: is [a < 4]]
+reactor [a: 1 b: is [[none] c] c: is [a < 4]]
 == make object! [
     a: 1
     b: true
@@ -262,7 +262,7 @@ Vrací  : reaktivní objekt.
     
 *Popis*
 
-Vytvoří nový reaktivní objekt z těla bloku. Nastavení pole vráceného objektu na novou hodnotu nebo změna řady (series), na kterou pole odkazuje (včetně vnořených řad), spustí reakce prot toto pole definované.
+Vytvoří nový reaktivní objekt z těla bloku. Nastavení pole vráceného objektu na novou hodnotu nebo změna řady (series), na kterou pole odkazuje (včetně vnořených řad), spustí reakce pro toto pole definované.
 
 NOTE: Tělo může obsahovat výrazy s `is`.
 
@@ -272,7 +272,7 @@ Ukazuje, jak změna řady, dokonce i vnořené, spustí reakci.
 
 NOTE: Je na uživateli aby v tomto případě zabránil cyklování. Když například `deep-reactor!` mění ve formuli reaktoru (e.g. `is` hodnoty řad, může vytvořit nekonečné reaktivní cyckly.
 ----
-r: make deep-reactor! [
+r: deep-reactor [
     x: [1 2 3]
     y: [[a b] [c d]]
     total: is [append copy x copy y]
