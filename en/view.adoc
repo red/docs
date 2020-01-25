@@ -38,13 +38,13 @@ List of available facets:
 |data| any-type!| no| all| Content data of the face.
 |enabled?| logic!| yes| all| Enable or disable input events on the face.
 |visible?| logic!|	yes| all| Display or hide the face.
-|selected| integer!| no| some| For lists types,  index of currently selected element. For text inputs, selected text. For windows, focused face.
+|selected| integer!, pair!, object!| no| some| For lists types, index of currently selected element. For text inputs, selected text. For windows, focused face.
 |flags| block!, word!| no|	some| List of special keywords altering the display or behavior of the face.
 |options| block!| no| some| Extra face properties in a [name: value] format.
 |parent| object!| no| all|	Back-reference to parent face (if any).
 |pane| block!| no| some| List of child face(s) displayed inside the face.
 |state| block| no| all| Internal face state info _(used by View engine only)_.
-|rate| integer!, time!| no| all| Face's timer. An integer sets a frequency, a time sets a duration, none stops it.
+|rate| integer!, time!| no| all| Face's timer. Periodically fires `time` event. An `integer!` sets a frequency in Hz, a `time!` sets an interval, `none` stops it.
 |edge|	object!| no| all| _(reserved for future use)_
 |para| object!| no| all| Para object reference for text positioning.
 |font|	object!| no| all| Font object reference for setting text facet's font properties.
@@ -85,7 +85,7 @@ Options facet holds optional facets which are used for specific behaviors:
 [cols="1,4" options="header"]
 |===
 |Option| Description
-|*drag&#8209;on*| Can be one of: `'down`, `'mid-down`, `'alt-down`, `'aux-down`. Used for enabling a drag'n drop operation.
+|*drag-on*| Can be one of: `'down`, `'mid-down`, `'alt-down`, `'aux-down`. Used for enabling a drag'n drop operation.
 |===
 
 	
@@ -189,7 +189,6 @@ The `base` type is the most basic face type, but also the most versatile one. By
 
 _This face type should be used for any custom graphic component implementation._
 
-'''
 
 === Text 
 
@@ -214,7 +213,6 @@ The `text` type is a static label to be displayed.
 
 * `default`: can be set to any value, it will be used by the `data` facet if converting `text` returns `none`, like for non-loadable strings.
 
-'''
 
 === Button 
 
@@ -278,7 +276,6 @@ This type represents a radio button, with an optional label text, displayed on l
 |===
 
 
-
 === Field 
 
 This type represents a single-line input field.
@@ -300,6 +297,8 @@ The `selected` facet controls the text highlighting (read/write). A pair value i
 
 * `no-border`: removes edge decorations made by the underlying GUI framework.
 
+* `password`: instead of input characters, asterisks (\*) are displayed.
+
 `data` facet is synchronized in real-time with `text` facet using the following conversion rules:
 
 * when `text` changes, `data` is set to the `load`-ed `text` value, or `none`, or to `options/default` if defined.
@@ -318,7 +317,6 @@ The `selected` facet controls the text highlighting (read/write). A pair value i
 |`select`| `on-select`| Occurs each time after a text is selected using mouse or keyboard.
 |`key`| `on-key`| Occurs each time a key is pressed down in the field.
 |===
-
 
 
 === Area 
@@ -353,7 +351,6 @@ The `selected` facet controls the text highlighting (read/write). A pair value i
 |`key`| `on-key`| Occurs each time a key is pressed down in the area.
 |===
 
-'''
 
 === Text-list 
 
@@ -399,7 +396,10 @@ The `data` facet accepts arbitrary values, but only string values will be added 
 
 *Supported flags:*
 
-* `scrollable`: Manually enable a vertical scroll-bar.
+[NOTE, caption="Not yet implemented"]
+====
+* `scrollable`: Manually enable a vertical scroll-bar. 
+====
 
 [cols="1, 1, 3", options="header"]
 |===
@@ -431,7 +431,10 @@ The `data` facet accepts arbitrary values, but only string values will be added 
 
 *Supported flags:*
 
-* `scrollable`: Manually enable a vertical scroll-bar.
+[NOTE, caption="Not yet implemented"]
+====
+* `scrollable`: Manually enable a vertical scroll-bar. 
+====
 
 [cols="1, 1, 3", options="header"]
 |===
@@ -444,6 +447,30 @@ The `data` facet accepts arbitrary values, but only string values will be added 
 [NOTE]
 ====
 * number of visible items cannot yet be defined by user.
+====
+
+
+=== Calendar
+
+This type represents a monthly Gregorian calendar in the range from 1-Jan-1601 to 31-Dec-9999. 
+
+[cols="1, 4", options="header"]
+|===
+|Facet| Description
+|`type`| `'calendar`
+|`data`| `date!` value that represents selected day.
+|===
+
+[cols="1, 1, 3", options="header"]
+|===
+|Event type| Handler| Description
+|`change`| `on-change`| Occurs when a date in the calendar is selected.
+|===
+
+[NOTE]
+====
+* By default, `data` facet is initialized to "today" date.
+* `date!` value below or above specificed calendar boundaries selects minimum or maximum supported date, respectively.
 ====
 
 
@@ -501,7 +528,6 @@ This type is used to display a video camera feed.
 ====
 
 
-
 === Panel 
 
 A panel is a container for other faces.
@@ -520,7 +546,6 @@ A panel is a container for other faces.
 * Children faces are clipped into the panel frame.
 ====
 
-'''
 
 === Tab-panel 
 
@@ -547,7 +572,6 @@ A tab-panel is a list of panels where only one can be visible at a given time. A
 * If `pane` contains more panels than specified tabs, they will be ignored.
 * When adding/removing a tab, the corresponding panel needs to be added/removed too to/from `pane` list.
 ====
-
 
 
 === Window 
@@ -718,18 +742,18 @@ view [
 |Name| Input type| Cause
 |*down*| mouse| Left mouse button pressed.	
 |*up*| mouse| Left mouse button released.
-|*mid&#8209;down*| mouse| Middle mouse button pressed.
-|*mid&#8209;up*| mouse| Middle mouse button released.
-|*alt&#8209;down*| mouse| Right mouse button pressed.
-|*alt&#8209;up*| mouse| Right mouse button released.
-|*aux&#8209;down*| mouse| Auxiliary mouse button pressed.
-|*aux&#8209;up*|	mouse| Auxiliary mouse button released.
-|*drag&#8209;start*| mouse| A face dragging starts.
+|*mid-down*| mouse| Middle mouse button pressed.
+|*mid-up*| mouse| Middle mouse button released.
+|*alt-down*| mouse| Right mouse button pressed.
+|*alt-up*| mouse| Right mouse button released.
+|*aux-down*| mouse| Auxiliary mouse button pressed.
+|*aux-up*|	mouse| Auxiliary mouse button released.
+|*drag-start*| mouse| A face dragging starts.
 |*drag*| mouse| A face is being dragged.
 |*drop*| mouse| A dragged face has been dropped.
 |*click*| mouse| Left mouse click (button widgets only).
-|*dbl&#8209;click*| mouse| Left mouse double-click.
-|*over*| mouse| Mouse cursor passing over a face. This event is produced once when the mouse enters the face and once when it exits. If `flags` facet contains *all&#8209;over* flag, then all intermediary events are produced too.
+|*dbl-click*| mouse| Left mouse double-click.
+|*over*| mouse| Mouse cursor passing over a face. This event is produced once when the mouse enters the face and once when it exits. If `flags` facet contains *all-over* flag, then all intermediary events are produced too.
 |*move*|	mouse| A window has moved.
 |*resize*| mouse| A window has been resized.
 |*moving*| mouse| A window is being moved.
@@ -738,11 +762,11 @@ view [
 |*zoom*|	touch| A zooming gesture (pinching) has been recognized.
 |*pan*| touch| A panning gesture (sweeping) has been recognized.
 |*rotate*| touch| A rotating gesture has been recognized.
-|*two&#8209;tap*| touch| A double tapping gesture has been recognized.
-|*press&#8209;tap*| touch| A press-and-tap gesture has been recognized.
-|*key&#8209;down*| keyboard| A key is pressed down.
+|*two-tap*| touch| A double tapping gesture has been recognized.
+|*press-tap*| touch| A press-and-tap gesture has been recognized.
+|*key-down*| keyboard| A key is pressed down.
 |*key*| keyboard| A character was input or a special key has been pressed (except control; shift and menu keys).
-|*key&#8209;up*| keyboard| A pressed key is released.
+|*key-up*| keyboard| A pressed key is released.
 |*enter*| keyboard| Enter key is pressed down.
 |*focus*| any| A face just got the focus.
 |*unfocus*| any| A face just lost the focus.
@@ -976,14 +1000,14 @@ NOTE: Using consoles auto-generated by `red` binary will include the View compon
 |*view*| Render on screen a window from a face tree or a block of VID code. Enters an event loop unless `/no-wait` *refinement* is used.
 |*unview*| Destroy one or more window(s).
 |*layout*| Convert a block of VID code into a face tree.
-|*center&#8209;face*| Center a face relatively to its parent.
-|*dump&#8209;face*| Output a compact description of a face tree structure (debugging purpose).
-|*do&#8209;actor*| Evaluate a face actor manually.
-|*do&#8209;events*| Launch an event loop (optionally just process pending events and return).
+|*center-face*| Center a face relatively to its parent.
+|*dump-face*| Output a compact description of a face tree structure (debugging purpose).
+|*do-actor*| Evaluate a face actor manually.
+|*do-events*| Launch an event loop (optionally just process pending events and return).
 |*draw*| Render a Draw dialect block onto an image.
-|*to&#8209;image*| Convert any rendered face to an image.
-|*set&#8209;focus*| Sets focus on a specific face.
-|*size&#8209;text*| Measure the size in pixels of a text in a face (taking the selected font into account).
+|*to-image*| Convert any rendered face to an image.
+|*set-focus*| Sets focus on a specific face.
+|*size-text*| Measure the size in pixels of a text in a face (taking the selected font into account).
 |===
 
 

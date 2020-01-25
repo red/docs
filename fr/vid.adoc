@@ -193,8 +193,10 @@ Définit la nouvelle position d'origine, relative à la figure conteneur.
 
 ----
 at <offset>
+at <expr>
 
 <offset> : position de la figure suivante (pair!).
+<expr>   : expression Red qui renvoie une valeur de type `pair!` utilisée comme position.
 ----
 
 *Description*
@@ -413,11 +415,11 @@ Souligne le texte de la figure.
 ----
 extra <expr>
 
-<expr> : toute valeur (any-type!).
+<expr> : toute valeur ou expression Red (any-type!).
 ----
 *Description*
 
-Donne une valeur (qui peut être le résultat d'une expression Red) à la facette `extra` de la figure.
+Donne une valeur à la facette `extra` de la figure.
 
 
 ==== data
@@ -426,8 +428,10 @@ Donne une valeur (qui peut être le résultat d'une expression Red) à la facett
 
 ----
 data <list>
+data <expr>
 
-<list> : liste littérale d'éléments ou expression Red (block!).
+<list> : liste littérale d'éléments (block!).
+<expr> : expression Red qui renvoie une liste sous forme de valeur de type `block!`
 ----
 
 *Description*
@@ -441,8 +445,10 @@ Définit une liste de valeurs comme facette `data` de la figure. Le format de la
 
 ----
 draw <commands>
+draw <expr>
 
-<commands> : liste littérale de commandes ou expression Red (block!).
+<commands> : liste littérale de commandes (block!).
+<expr>     : expression Red qui renvoie un `block!` de commandes.
 ---- 
 
 *Description*

@@ -153,18 +153,20 @@ On supprime une réaction en utilisant le raffinement `unlink` avec l'un des él
 
 *Syntaxe*
 ----
-<word>: is <code>
+<word>: is [<body>]
+<word>: is [[<default>] <body>]
 
-<word> : mot qui doit prendre pour valeur le résultat de la réaction (set-word!).
-<code> : bloc de code contenant au moins une source réactive (block!).
+<word>    : mot qui doit prendre pour valeur le résultat de la réaction (set-word!).
+<body>    : bloc de code Red quelconque contenant au moins une source réactive.
+<default> : bloc de code Red quelconque qui renvoie une valeur utilisée initialement par défaut pour <word>.
 ----
 *Description*
 
-`is` crée un formule réactive dont le résultat sera assigné à un mot. Le bloc `<code>` peut contenir des références à la fois aux champs de l'objet encapsulant, s'il est utilisé dans le bloc de corps d'un réacteur, et à des champs de réacteurs externes.
+`is` crée un formule réactive dont le résultat sera assigné à un mot. Le bloc `<code>` peut contenir des références à la fois aux champs de l'objet encapsulant, s'il est utilisé dans le bloc de corps d'un réacteur, et à des champs de réacteurs externes. Pour spécifier une valeur par défaut, un bloc renvoyant cette valeur par défaut peut être renvoyé comme premier élément du bloc de la formule réactive. Ceci est particulièrement utile quand on utilise des références vers l'avant à des sources réactives qui ne sont pas définies (`unset`) au moment de l'évaluation de la formule.
 
 NOTE: Cet opérateur crée des formules réactives qui imitent étroitement le modèle des formules d'Excel.
 
-*Exemple*
+*Exemples*
 ----
 a: make reactor! [x: 1 y: 2 total: is [x + y]]
 
@@ -173,6 +175,14 @@ a/total
 a/x: 100
 a/total
 == 102
+----
+----
+make reactor! [a: 1 b: is [[none] c] c: is [a < 4]]
+== make object! [
+    a: 1
+    b: true
+    c: true
+]
 ----
 === react? 
 

@@ -38,13 +38,13 @@ Liste des facettes disponibles:
 |data| any-type!| non| tous| Données contenues par la figure.
 |enabled?| logic!| oui| tous| Active ou désactive le traitement des événements par la figure.
 |visible?| logic!|	oui| tous| Affiche ou cache la figure.
-|selected| integer!| non| certains| Pour les types liste, index de l'élément actuellement sélectionné. Pour les champs d'entrée de texte, le texte sélectionné. Pour les fenêtres, la figure qui a le focus.
+|selected| integer!, pair!, object!| non| certains| Pour les types liste, index de l'élément actuellement sélectionné. Pour les champs d'entrée de texte, le texte sélectionné. Pour les fenêtres, la figure qui a le focus.
 |flags| block!, word!| non|	certains| Liste de mot-clés spéciaux qui altèrent l'affichage ou le comportement de la figure.
 |options| block!| non| certains| Propriétés supplémentaires de la figure au format [name: value].
 |parent| object!| non| tous| Référence arrière vers la figure parent (s'il y en a une).
 |pane| block!| non| certains| Liste des figures enfant affichées dans la figure.
 |state| block| non| tous| Information d'état interne de la figure _(utilisé uniquement par le moteur View)_.
-|rate| integer!, time!| non| tous| Minuteur de la figure. Un entier définit une fréquence, un horaire définit une durée, `none` arrête le minuteur.
+|rate| integer!, time!| non| tous| Minuteur de la figure. Génère périodiquement des événements `time`. Un entier définit une fréquence, un horaire (`time`) définit un intervalle, `none` arrête le minuteur.
 |edge|	object!| non| tous| _(réservé pour un usage futur)_
 |para| object!| non| tous| Référence à un objet para pour le positionnement du texte.
 |font|	object!| non| tous| Référence à un objet font pour fixer les propriétés de la police de la facette texte.
@@ -84,7 +84,7 @@ La facette options regroupe des facettes optionnelles qui sont utilisées pour d
 [cols="1,4" options="header"]
 |===
 |Option| Description
-|*drag&#8209;on*| Peut être l'une des valeurs suivantes: `'down`, `'mid-down`, `'alt-down`, `'aux-down`. Utilisé pour permettre une opération de glisser-déposer.
+|*drag-on*| Peut être l'une des valeurs suivantes: `'down`, `'mid-down`, `'alt-down`, `'aux-down`. Utilisé pour permettre une opération de glisser-déposer.
 |===
 
 	
@@ -188,7 +188,6 @@ Le type `base` est le type de figure le plus basique, mais aussi le plus versati
 
 _Ce type de face devrait être utilisé pour toute implémentation de composant graphique personnalisé._
 
-'''
 
 === Text (texte)
 
@@ -213,7 +212,6 @@ La facette `options` accepte les propriétés suivantes:
 
 * `default`: peut prendre n'importe quelle valeur, qui sera utilisée par la facette `data` si la conversion de `text` retourne `none`, comme dans le cas des chaînes de caractères ne pouvant être chargées par `load`.
 
-'''
 
 === Button (bouton)
 
@@ -277,7 +275,6 @@ Ce type représente un bouton de radio, avec un texte de label optionnel, affich
 |===
 
 
-
 === Field (champ de saisie)
 
 Ce type représente un champ de saisie sur une seule ligne.
@@ -297,7 +294,9 @@ La facette `selected` contrôle le surlignage du texte (en lecture/écriture). U
 
 *Drapeaux supportés:*
 
-* `no-border`: supprime les décorations de bordure faites par le système sous-jacent d'interface graphique.
+* `no-border` : supprime les décorations de bordure faites par le système sous-jacent d'interface graphique.
+
+* `password` : au lieu des caractères tapés, des astérisques (\*) sont affichées.
 
 La facette `data` est synchronisée en temps réel avec la facette `text` en utilisant les règles de conversion suivantes:
 
@@ -317,7 +316,6 @@ La facette `options` accepte les propriétés suivantes:
 |`select`| `on-select`| Se produit chaque fois qu'un texte a été sélectionné en utilisant la souris ou le clavier.
 |`key`| `on-key`| Se produit chaque fois qu'une touche est pressée dans le champ de saisie.
 |===
-
 
 
 === Area (champ multiligne)
@@ -352,7 +350,6 @@ La facette `selected` contrôle le surlignage du texte (en lecture/écriture). U
 |`key`| `on-key`| Se produit chaque fois qu'une touche est pressée dans le champ multiligne.
 |===
 
-'''
 
 === Text-list (liste de textes)
 
@@ -398,7 +395,10 @@ La facette `data` accepte des valeurs arbitraires, mais seulement les valeurs de
 
 *Drapeaux supportés:*
 
+[NOTE, caption="Pas encore implémenté"]
+====
 * `scrollable`: active manuellement une barre de défilement verticale.
+====
 
 [cols="1, 1, 3", options="header"]
 |===
@@ -430,7 +430,10 @@ La facette `data` accepte des valeurs arbitraires, mais seulement les valeurs de
 
 *Drapeaux supportés:*
 
+[NOTE, caption="Pas encore implémenté"]
+====
 * `scrollable`: active manuellement une barre de défilement verticale.
+====
 
 [cols="1, 1, 3", options="header"]
 |===
@@ -443,6 +446,30 @@ La facette `data` accepte des valeurs arbitraires, mais seulement les valeurs de
 [NOTE]
 ====
 * Le nombre d'entrées visibles ne peut pas encore être défini par l'utilisateur.
+====
+
+
+=== Calendar
+
+Ce type représente un calendrier Grégorien mensuel couvrant l'intervalle du 1er janvier 1601 au 31 décembre 9999.
+
+[cols="1, 4", options="header"]
+|===
+|Facette| Description
+|`type`| `'calendar`
+|`data`| valeur de type `date!` qui représente le jour sélectionné.
+|===
+
+[cols="1, 1, 3", options="header"]
+|===
+|Type d'événement| Gestionnaire| Description
+|`change`| `on-change`| Se produit lorsqu'une date est sélectionnée dans le calendrier.
+|===
+
+[NOTE]
+====
+* By default, la facette `data` est initialisée à la date du jour.
+* Une valeur de `date!` inférieure ou supérieure aux limites spécifiées du calendrier sélectionnera respectivement la date minimale ou maximale supportée.
 ====
 
 
@@ -500,7 +527,6 @@ Ce type est utilisé pour afficher le flux d'une caméra vidéo.
 ====
 
 
-
 === Panel (panneau)
 
 Un panel est un conteneur pour d'autres figures.
@@ -546,7 +572,6 @@ Un tab-panel est une liste de panneaux dont un seul peut être visible à la foi
 * Si `pane` contient plus de panneaux que le nombre spécifié d'onglets, ils seront ignorés.
 * Lors de l'ajout/la suppression d'un onglet, le panneau correspondant doit être ajouté à/supprimé de la liste `pane`.
 ====
-
 
 
 === Window (fenêtre)
@@ -717,18 +742,18 @@ view [
 |Nom| Type d'entrée| Cause
 |*down*| souris| Le bouton gauche de la souris a été pressé.
 |*up*| souris| Le bouton gauche de la souris a été relâché.
-|*mid&#8209;down*| souris| Le bouton du milieu de la souris a été pressé.
-|*mid&#8209;up*| souris| Le bouton du milieu de la souris a été relâché.
-|*alt&#8209;down*| souris| Le bouton droit de la souris a été pressé.
-|*alt&#8209;up*| souris| Le bouton droit de la souris a été relâché.
-|*aux&#8209;down*| souris| Le bouton auxiliaire de la souris a été pressé.
-|*aux&#8209;up*|	souris| Le bouton auxiliaire de la souris a été relâché.
-|*drag&#8209;start*| souris| Démarrage d'un déplacement de figure à la souris.
+|*mid-down*| souris| Le bouton du milieu de la souris a été pressé.
+|*mid-up*| souris| Le bouton du milieu de la souris a été relâché.
+|*alt-down*| souris| Le bouton droit de la souris a été pressé.
+|*alt-up*| souris| Le bouton droit de la souris a été relâché.
+|*aux-down*| souris| Le bouton auxiliaire de la souris a été pressé.
+|*aux-up*|	souris| Le bouton auxiliaire de la souris a été relâché.
+|*drag-start*| souris| Démarrage d'un déplacement de figure à la souris.
 |*drag*| souris| Une figure est en cours de déplacement à la souris.
 |*drop*| souris| Une figure déplacée à la souris a été relâchée.
 |*click*| souris| Clic gauche de la souris (widgets boutons seulement).
-|*dbl&#8209;click*| souris| Double clic gauche de la souris.
-|*over*| souris| Le curseur de la souris passe sur une figure. Cet événement est produit une fois lorsque la souris entre sur la figure, et une fois lorsqu'elle la quitte. Si la facette `flags` contient le drapeau *all&#8209;over*, alors tous les événements intermédiaires sont également produits.
+|*dbl-click*| souris| Double clic gauche de la souris.
+|*over*| souris| Le curseur de la souris passe sur une figure. Cet événement est produit une fois lorsque la souris entre sur la figure, et une fois lorsqu'elle la quitte. Si la facette `flags` contient le drapeau *all-over*, alors tous les événements intermédiaires sont également produits.
 |*move*|	souris| Une fenêtre a été déplacée.
 |*resize*| souris| Une fenêtre a été redimensionnée.
 |*moving*| souris| Une fenêtre est en cours de déplacement.
@@ -737,11 +762,11 @@ view [
 |*zoom*|	tactile| Un geste de zoomage (pincement) a été reconnu.
 |*pan*| tactile| Un geste de déplacement (balayage) a été reconnu.
 |*rotate*| tactile| Un geste de rotation a été reconnu.
-|*two&#8209;tap*| tactile| Un geste de double tapotement a été reconnu.
-|*press&#8209;tap*| tactile| Un geste de pression-et-tapotement a été reconnu.
-|*key&#8209;down*| clavier| Une touche est pressée.
+|*two-tap*| tactile| Un geste de double tapotement a été reconnu.
+|*press-tap*| tactile| Un geste de pression-et-tapotement a été reconnu.
+|*key-down*| clavier| Une touche est pressée.
 |*key*| clavier| Un caractère a été entré ou une touche spéciale a été pressée (à l'exception des touches control, majuscule et menu).
-|*key&#8209;up*| clavier| Une touche pressée est relâchée.
+|*key-up*| clavier| Une touche pressée est relâchée.
 |*enter*| clavier| La touche Entrée est pressée.
 |*focus*| any| Une figure vient de recevoir le focus.
 |*unfocus*| any| Une figure vient de perdre le focus.
@@ -975,14 +1000,14 @@ NOTE: L'usage des consoles automatiquement générées par l'exécutable `red` i
 |*view*| Rend une fenêtre à l'écran à partir d'un arbre de figures ou d'un bloc de code VID. Entre dans une boucle d'événements sauf si le *raffinement* `/no-wait` est employé.
 |*unview*| Détruit une ou plusieurs fenêtre(s).
 |*layout*| Convertit un bloc de code VID en un arbre de figures.
-|*center&#8209;face*| Centre une figure par rapport à son parent.
-|*dump&#8209;face*| Affiche une description compacte de la structure d'un arbre de figures (à des fins de débogage).
-|*do&#8209;actor*| Evalue manuellement un acteur de figure.
-|*do&#8209;events*| Lance une boucle d'événements (optionnellement, traite juste les événements en attente et se termine).
+|*center-face*| Centre une figure par rapport à son parent.
+|*dump-face*| Affiche une description compacte de la structure d'un arbre de figures (à des fins de débogage).
+|*do-actor*| Evalue manuellement un acteur de figure.
+|*do-events*| Lance une boucle d'événements (optionnellement, traite juste les événements en attente et se termine).
 |*draw*| Rend un bloc de dialecte Draw dans une image.
-|*to&#8209;image*| Convertit toute figure affichée en une image.
-|*set&#8209;focus*| Donne le focus à une figure spécifique.
-|*size&#8209;text*| Mesure la taille en pixels du texte dans une figure (en prenant en compte la police sélectionnée).
+|*to-image*| Convertit toute figure affichée en une image.
+|*set-focus*| Donne le focus à une figure spécifique.
+|*size-text*| Mesure la taille en pixels du texte dans une figure (en prenant en compte la police sélectionnée).
 |===
 
 
