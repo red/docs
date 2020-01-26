@@ -52,7 +52,7 @@ En utilisant `as`:
 
 == Syntaxe littérale
 
-Une colection, délimitée par des parenthèses ouvrante et fermante, de valeurs séparées par des espaces.
+Une collection, délimitée par des parenthèses ouvrante et fermante, de valeurs séparées par des espaces.
  
 `()`
 

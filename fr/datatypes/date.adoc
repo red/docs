@@ -352,7 +352,7 @@ Obtient ou fixe le champ jour d'une date. Les jours sout renvoyés sous forme d'
 *Exemples*
 
 ----
- d: 1-jan-2017
+d: 1-jan-2017
 == 1-Jan-2017
 d/day: 32
 == 32
