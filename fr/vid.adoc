@@ -634,6 +634,31 @@ disabled
 
 Désactive la figure par défaut (la figure ne traitera aucun événement jusqu'à ce qu'elle soit activée).
 
+==== password
+
+*Syntaxe*
+
+----
+password
+----
+
+*Description*
+
+Cache l'entrée de l'utilisateur dans un champ de texte.
+
+
+==== tri-state
+
+*Syntaxe*
+
+----
+tri-state
+----
+
+*Description*
+
+Active le mode à 3 états d'une case à cocher.
+
 
 ==== select
 
@@ -735,6 +760,7 @@ Additionnellement aux mots-clés, il est permis de passer des paramètres aux fi
 |tuple!|	Spécifie la couleur de fond de la figure (lorsque c'est applicable).
 |issue!|	Spécifie la couleur de fond de la figure en utilisant la notation hexadécimale (#rgb, #rrggbb, #rrggbbaa).
 |string!|	Spécifie le texte à afficher par la figure.
+|date!|		Définit la facette `data` (utile pour le type `calendar`)
 |percent!|	Définit la facette `data` (utile pour les types `progress` et `slider`).
 |logic!|	Définit la facette `data` (utile pour les types `check` et `radio`).
 |image!| 	Définit l'image à afficher comme fond de la figure (lorsque c'est applicable).

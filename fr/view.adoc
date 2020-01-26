@@ -244,8 +244,13 @@ Ce type représente une case à cocher, avec un texte de label optionnel, affich
 |`type`| `'check`
 |`text`| Texte du label.
 |`para`| Le champ `align` contrôle si le texte est affiché du côté gauche ou du côté droit.
-|`data`| `true`: coché; `false`: décoché (par défaut).
+|`data`| `true`: coché; `false`: décoché; `none`: décoché pour une case à cocher à 2 états, indéterminé pour une case à cocher à 3 états (par défaut);
+|`flags`| Active la fonctionnalité de case à cocher à 3 états (`word!`).
 |===
+
+*Drapeaux supportés:*
+
+* `tri-state`: active le troisième état, état indéterminé représenté par la valeur `none` dans la facette `data`.
 
 [cols="1, 1, 3", options="header"]
 |===
