@@ -28,7 +28,7 @@ Une séquence de trois à douze entiers positifs séparés par des points décim
 == Création
 
 
-Les valeurs de type Tuple! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
+Les valeurs de type `tuple!` peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
 
 ```red
 >> make tuple! [1 2 3]
@@ -57,7 +57,7 @@ Lorsqu'ils sont appliqués à deux `tuple!`, `min` et `max` requièrent des tupl
 == 4.5.6
 ```
 
-== Arithmétique
+== Calculs
 
 `+`, `-`, `*`, `/`, `%`, `//`, `add`, `subtract`,  `multiply`, `divide`, `remainder`, et `mod` peuvent être utilisés sur des valeurs de `tuple!`. 
 
@@ -97,7 +97,7 @@ Utilisez `type?` pour connaître le type d'une valeur donnée.
 
 `first`, `second`, `third`, `fourth`, `fifth`, `to-tuple`, `tuple?`, `mod`, `modulo`
 
-=== Natifs
+=== Natives
 
 `zero?`
 

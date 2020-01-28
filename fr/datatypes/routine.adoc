@@ -14,7 +14,7 @@ La documentation de Red/System peut être trouvée ici: https://static.red-lang.
 
 == Création
 
-Les valeurs de type routine! peuvent être créées en utilisant la fonction intégrée `routine`.
+Les valeurs de type `routine!` peuvent être créées en utilisant la fonction intégrée `routine`.
 
 == Syntaxe littérale
 
@@ -30,7 +30,7 @@ Les valeurs de type routine! peuvent être créées en utilisant la fonction int
 
 === Création lors de l'exécution
 
-Les valeurs de type routine! ne sont pas autorisées dans l'interpréteur. Elles doivent être précédées d'un set-word puis compilées.
+Les valeurs de type `routine!` ne sont pas autorisées dans l'interpréteur. Elles doivent être précédées d'un set-word puis compilées.
 
 ```red
 Red []

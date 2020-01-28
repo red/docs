@@ -1,0 +1,115 @@
+= Jeux de types (Typesets)
+:toc:
+:numbered:
+
+== Résumé
+
+Les jeux de types représentent des ensembles de valeurs de type `datatype!` stockées dans un tableau de bits compact (jusqu'à 96 bits), permettant une haute performance dans la vérification de type en temps réel.
+
+Les types de données dans un jeu de types peuvent partager des traits ou comportements communs, mais cela n'est pas requis. Un jeu de types peut être créé à partir de tous critères correspondant aux besoins de l'utilisateur.
+
+Voir: link:datatypes/typeset.adoc[typeset!]
+
+== Jeux de types disponibles en Red
+
+=== all-word!
+
+* make typeset! [link:datatypes/word.adoc[word!] link:datatypes/set-word.adoc[set-word!] link:datatypes/lit-word.adoc[lit-word!] link:datatypes/get-word.adoc[get-word!] link:datatypes/refinement.adoc[refinement!] link:datatypes/issue.adoc[issue!]]
+
+=== any-block!
+
+* make typeset! [link:datatypes/block.adoc[block!] link:datatypes/paren.adoc[paren!] link:datatypes/path.adoc[path!] link:datatypes/lit-path.adoc[lit-path!] link:datatypes/set-path.adoc[set-path!] link:datatypes/get-path.adoc[get-path!] link:datatypes/hash.adoc[hash!]]
+
+=== any-function!
+
+* make typeset! [link:datatypes/native.adoc[native!] link:datatypes/action.adoc[action!] link:datatypes/op.adoc[op!] link:datatypes/function.adoc[function!] link:datatypes/routine.adoc[routine!]]
+
+=== any-list!
+
+* make typeset! [link:datatypes/block.adoc[block!] link:datatypes/paren.adoc[paren!] link:datatypes/hash.adoc[hash!]]
+
+=== any-object!
+
+* make typeset! [link:datatypes/object.adoc[object!] link:datatypes/error.adoc[error!]]
+
+=== any-path!
+
+* make typeset! [link:datatypes/path.adoc[path!] link:datatypes/lit-path.adoc[lit-path!] link:datatypes/set-path.adoc[set-path!] link:datatypes/get-path.adoc[get-path!]]
+
+=== any-string!
+
+* make typeset! [link:datatypes/string.adoc[string!] link:datatypes/file.adoc[file!] link:datatypes/url.adoc[url!] link:datatypes/tag.adoc[tag!] link:datatypes/email.adoc[email!]]
+
+=== any-type!
+
+* make typeset! [link:datatypes/datatype.adoc[datatype!] link:datatypes/unset.adoc[unset!] link:datatypes/none.adoc[none!] link:datatypes/logic.adoc[logic!] link:datatypes/block.adoc[block!] link:datatypes/paren.adoc[paren!] link:datatypes/string.adoc[string!] link:datatypes/file.adoc[file!] link:datatypes/url.adoc[url!] link:datatypes/none.char[char!] link:datatypes/integer.adoc[integer!] link:datatypes/float.adoc[float!] link:datatypes/word.adoc[word!] link:datatypes/set-word.adoc[set-word!] link:datatypes/lit-word.adoc[lit-word!] link:datatypes/get-word.adoc[get-word!] link:datatypes/refinement.adoc[refinement!] link:datatypes/issue.adoc[issue!] link:datatypes/native.adoc[native!] link:datatypes/action.adoc[action!] link:datatypes/op.adoc[op!] link:datatypes/function.adoc[function!] link:datatypes/path.adoc[path!] link:datatypes/lit-path.adoc[lit-path!] link:datatypes/set-path.adoc[set-path!] link:datatypes/get-path.adoc[get-path!] link:datatypes/routine.adoc[routine!] link:datatypes/bitset.adoc[bitset!] link:datatypes/object.adoc[object!] link:datatypes/typeset.adoc[typeset!] link:datatypes/error.adoc[error!] link:datatypes/vector.adoc[vector!] link:datatypes/hash.adoc[hash!] link:datatypes/pair.adoc[pair!] link:datatypes/percent.adoc[percent!] link:datatypes/tuple.adoc[tuple!] link:datatypes/map.adoc[map!] link:datatypes/binary.adoc[binary!] link:datatypes/time.adoc[time!] link:datatypes/tag.adoc[tag!] link:datatypes/email.adoc[email!] link:datatypes/handle.adoc[handle!] link:datatypes/date.adoc[date!] link:datatypes/image.adoc[image!] link:datatypes/event.adoc[event!]]
+
+=== any-word!
+
+* make typeset! [link:datatypes/word.adoc[word!] link:datatypes/set-word.adoc[set-word!] link:datatypes/lit-word.adoc[lit-word!] link:datatypes/get-word.adoc[get-word!]]
+
+=== default!
+
+* make typeset! [link:datatypes/datatype.adoc[datatype!] link:datatypes/none.adoc[none!] link:datatypes/logic.adoc[logic!] link:datatypes/block.adoc[block!] link:datatypes/paren.adoc[paren!] link:datatypes/string.adoc[string!] link:datatypes/file.adoc[file!] link:datatypes/url.adoc[url!] link:datatypes/none.char[char!] link:datatypes/integer.adoc[integer!] link:datatypes/float.adoc[float!] link:datatypes/word.adoc[word!] link:datatypes/set-word.adoc[set-word!] link:datatypes/lit-word.adoc[lit-word!] link:datatypes/get-word.adoc[get-word!] link:datatypes/refinement.adoc[refinement!] link:datatypes/issue.adoc[issue!] link:datatypes/native.adoc[native!] link:datatypes/action.adoc[action!] link:datatypes/op.adoc[op!] link:datatypes/function.adoc[function!] link:datatypes/path.adoc[path!] link:datatypes/lit-path.adoc[lit-path!] link:datatypes/set-path.adoc[set-path!] link:datatypes/get-path.adoc[get-path!] link:datatypes/routine.adoc[routine!] link:datatypes/bitset.adoc[bitset!] link:datatypes/object.adoc[object!] link:datatypes/typeset.adoc[typeset!] link:datatypes/error.adoc[error!] link:datatypes/vector.adoc[vector!] link:datatypes/hash.adoc[hash!] link:datatypes/pair.adoc[pair!] link:datatypes/percent.adoc[percent!] link:datatypes/tuple.adoc[tuple!] link:datatypes/map.adoc[map!] link:datatypes/binary.adoc[binary!] link:datatypes/time.adoc[time!] link:datatypes/tag.adoc[tag!] link:datatypes/email.adoc[email!] link:datatypes/handle.adoc[handle!] link:datatypes/date.adoc[date!] link:datatypes/image.adoc[image!] link:datatypes/event.adoc[event!]]
+
+=== external!
+
+* make typeset! [link:datatypes/event.adoc[event!]]
+
+=== immediate!
+
+* make typeset! [link:datatypes/datatype.adoc[datatype!] link:datatypes/none.adoc[none!] link:datatypes/logic.adoc[logic!] link:datatypes/char.adoc[char!] link:datatypes/integer.adoc[integer!] link:datatypes/float.adoc[float!] link:datatypes/word.adoc[word!] link:datatypes/set-word.adoc[set-word!] link:datatypes/lit-word.adoc[lit-word!] link:datatypes/get-word.adoc[get-word!] link:datatypes/refinement.adoc[refinement!] link:datatypes/issue.adoc[issue!] link:datatypes/typeset.adoc[typeset!] link:datatypes/pair.adoc[pair!] link:datatypes/percent.adoc[percent!] link:datatypes/tuple.adoc[tuple!] link:datatypes/time.adoc[time!] link:datatypes/handle.adoc[handle!] link:datatypes/date.adoc[date!]]
+
+=== internal!
+
+* make typeset! [link:datatypes/unset.adoc[unset!] link:datatypes/float.adoc[float!] link:datatypes/percent.adoc[percent!]]
+
+=== number!
+
+* make typeset! [link:datatypes/integer.adoc[integer!] link:datatypes/float.adoc[float!] link:datatypes/percent.adoc[percent!]]
+
+=== scalar!
+
+* make typeset! [link:datatypes/char.adoc[char!] link:datatypes/integer.adoc[integer!] link:datatypes/float.adoc[float!] link:datatypes/pair.adoc[pair!] link:datatypes/percent.adoc[percent!] link:datatypes/tuple.adoc[tuple!] link:datatypes/time.adoc[time!] link:datatypes/date.adoc[date!]]
+
+=== series!
+
+* make typeset! [link:datatypes/block.adoc[block!] link:datatypes/paren.adoc[paren!] link:datatypes/string.adoc[string!] link:datatypes/file.adoc[file!] link:datatypes/url.adoc[url!] link:datatypes/path.adoc[path!] link:datatypes/lit-path.adoc[lit-path!] link:datatypes/set-path.adoc[set-path!] link:datatypes/get-path.adoc[get-path!] link:datatypes/vector.adoc[vector!] link:datatypes/hash.adoc[hash!] link:datatypes/binary.adoc[binary!] link:datatypes/tag.adoc[tag!] link:datatypes/email.adoc[email!] link:datatypes/image.adoc[image!]]
+
++
+// Adapté de https://www.quora.com/Computer-Programming-What-is-a-series-in-Rebol par Nenad Rakocevic.
+Une série en Red est définie comme une séquence d'éléments, et une position de départ qui peut être déplacée le long de la séquence à partir de la première position (`head`), jusqu'à la dernière position (`tail`). La position de départ d'une série vide est la dernière position (`tail`).
++
+Plusieurs références peuvent être faites à la même séries avec des position de départ différentes:
++
+```red
+>> a: "hello"
+== "hello"
+
+>> b: next a
+== "ello"
+
+>> index? a
+== 1
+
+>> index? b
+== 2
+
+>> same? a b
+== false
+
+>> same? a head b
+== true
+
+>> append a " world"
+== "hello world"
+
+>> b
+== "ello world"
+```
+
++
+Le type des éléments dans une série dépend du link:datatypes/datatype.adoc[datatype!] de la série. par exemple, une série de type link:datatypes/block.adoc[block!] peut contenir des valeurs de n'importe quel type. Une série de type link:datatypes/string.adoc[string!] ne peut contenir que des valeurs de type link:datatypes/char.adoc[char!], etc.
++
+
+`Series!` fournit une variable index qui peut être exploitée par toutes les valeurs d'link:datatypes/action.adoc[action!] sur les séries.

@@ -43,11 +43,11 @@ Toutes les expressions utilisées dans les directives sont liées à un contexte
 ====
 * Il est possible d'afficher le contenu de ce contexte caché en utilisant l'expression suivante:
         
-        #do [probe self]
+	#do [probe self]
         
 * Lorsqu'il est utilisé au moment de l'exécution, le contexte caché peut aussi être interrogé directement en utilisant:
         
-        probe preprocessor/exec
+	probe preprocessor/exec
 ====
 
 === Note d'implémentation
@@ -357,7 +357,19 @@ print "Medium"
 
 *Description*
 
-Lors de l'évaluation au moment de la compilation, lit et inclut le contenu du fichier argument à la position courante. Le fichier peut contenir un chemin, absolu ou relatif au script courant. Lors de l'évaluation par l'interpréteur Red, cette directive est juste remplacée par un `do`, et aucune inclusion de fichier n'a lieu.
+Lors de l'évaluation au moment de la compilation, lit et inclut le contenu du fichier argument à la position courante. Le fichier peut contenir un chemin, absolu ou relatif au script courant. Les directives du fichier inclus ne penvent pas voir les valeurs définies dans les fichiers qui l'incluent:
+
+----
+Red [File: %main.red]
+#do [a: true]
+#include %incl.red
+----
+----
+Red [File: %incl.red]
+#either a [print "a"] [print "not a"]   ;-- ceci provoquera l'erreur de préprocesseur "a has no value".
+----
+
+Lors de l'évaluation par l'interpréteur Red, cette directive est juste remplacée par un `do`, et aucune inclusion de fichier n'a lieu.
 
 === #do 
 

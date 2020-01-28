@@ -1,11 +1,10 @@
 = Le type Block!
+:toc:
 :numbered:
 
 == Résumé
 
-Les blocs sont utilisés pour représenter des données ou du code qui peut être évalué à n'importe quel moment. Ils sont un type de `series!` sans restriction sur les types des valeurs qui peuvent être référencées.
-
-Les blocs sont délimités par des crochets ouvrant et fermant, séparés par des espaces.
+Les blocs sont utilisés pour représenter des collections de données ou de code qui peuvent être évaluées à n'importe quel moment. Ils sont un type de `series!` sans restriction sur les types des valeurs qui peuvent être référencées.
 
 Par défaut les valeurs et les expressions dans un bloc ne sont pas évaluées:
 
@@ -41,34 +40,6 @@ olleH
 
 Les valeurs de type block! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution par le constructeur `make` ou par conversion avec `to`.
 
-Pour créer un bloc vide pré-alloué pour 10 éléments:
-
-----
->> make block! 10
-== []
-----
-
-Pour créer un bloc de 10 éléments dont les valeurs initiales sont toutes none:
-
-----
->> append/dup make block! 10 none 10
-== [none none none none none none none none none none]
-----
-
-Usage de la conversion `to` :
-
-----
->> to block! {one 2 "three" 4:00}
-== [one 2 "three" 4:00:00]
-
->> to block! "foo 1.23 me@me.com"
-== [foo 1.23 me@me.com]
-
->> to block! 42
-== [42]
-----
-
-
 == Syntaxe littérale
 
 Un ensemble, délimité par un crochet ouvrant et un crochet fermant, de valeurs séparées par des espaces.
@@ -94,10 +65,40 @@ Les blocs peuvent s'étendre sur plusieurs lignes, et peuvent contenir d'autres 
 
 Des lignes, espaces et tabulations supplémentaires sont permis tant qu'ils n'interrompent pas des valeurs.
 
-Ok: `[42 print "foo"]`
+Correct: `[42 print "foo"]`
 
-Not ok: `[42 pr   int "foo"]`
+Incorrect: `[42 pr   int "foo"]`
 
+== Création lors de l'exécution
+
+* `Make`
+
+Pour créer un bloc vide pré-alloué pour 10 éléments:
+
+----
+>> make block! 10
+== []
+----
+
+Pour créer un bloc de 10 éléments dont les valeurs initiales sont toutes none:
+
+----
+>> append/dup make block! 10 none 10
+== [none none none none none none none none none none]
+----
+
+* `To`
+
+----
+>> to block! {one 2 "three" 4:00}
+== [one 2 "three" 4:00:00]
+
+>> to block! "foo 1.23 me@me.com"
+== [foo 1.23 me@me.com]
+
+>> to block! 42
+== [42]
+----
 
 == Accès aux éléments d'un bloc
 

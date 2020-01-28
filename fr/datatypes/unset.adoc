@@ -10,7 +10,7 @@
 
 == Création
 
-Les valeurs de type `Unset!` peuvent être créées à l'exécution par le constructeur `make` ou la conversion `to`.
+Les valeurs de type `unset!` peuvent être créées à l'exécution par le constructeur `make` ou la conversion `to`.
 
 `make unset! <any-thing>`
 
@@ -50,6 +50,6 @@ Utilisez `type?` pour connaître le type d'une valeur donnée.
 
 `to-unset`
 
-=== Natifs
+=== Natives
 
 `unset`

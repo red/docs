@@ -11,7 +11,7 @@ Une valeur de type chaîne (`string!`) est une séquence de caractères Unicode,
 
 == Création
 
-Les valeurs de type String! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
+Les valeurs de type `string!` peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
 
 ```red
 >> s: make string! 100
@@ -105,7 +105,7 @@ Utilisez `type?` pour connaître le type d'une valeur donnée.
 
 `a-an`, `any-string?`, `ask`, `charset`, `clean-path`, `dirize`, `ellipsize-at`, `help-string`, `input`, `load`, `pad`, `string?`, `to-string`
 
-=== Natifs
+=== Natives
 
 `as`, `call`, `checksum`, `debase`, `dehex`, `difference`, `do`, `enbase`, `exclude`, `get-env`, `intersect`, `lowercase`, `parse`, `set-env`, `to-local-file`, `union`, `unique`, `uppercase`
 
