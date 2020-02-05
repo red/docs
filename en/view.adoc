@@ -234,6 +234,25 @@ This type represents a simple button.
 |`click`| `on-click`| Triggered when the user clicks on the button.
 |===
 
+=== Toggle
+
+This type represents a button that retains its state after being pushed.
+
+[cols="1,4", options="header"]
+|===
+|Facet| Description
+|`type`| `'toggle`
+|`text`| Toggle's label text.
+|`para`| Controls vertical and horizontal text alignment.
+|`data`| `true`: toggled; `false`: untoggled (default).
+|`image`| The image will be displayed inside the toggle. Can be combined with a text.
+|===
+
+[cols="1,1,3", options="header"]
+|===
+|Event type| Handler| Description
+|`change`| `on-change`| Triggered when the toggle state is changed by a user action.
+|===
 
 === Check 
 
