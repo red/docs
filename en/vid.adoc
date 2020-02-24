@@ -735,7 +735,7 @@ In addition to keywords, it is allowed to pass settings to faces using literal v
 |issue!|	Specifies the color of the face's background using hex notation (#rgb, #rrggbb, #rrggbbaa).
 |string!|	Specifies the text to be displayed by the face.
 |percent!|	Sets the `data` facet (useful for `progress` and `slider` types).
-|logic!|	Sets the `data` facet (useful for `check` and `radio` types).
+|logic!|	Sets the `data` facet (useful for `toggle`, `check` and `radio` types).
 |image!| 	Sets the image to be displayed as face's background (where applicable).
 |url!| 		Loads the resource pointed to by the URL, then process the resource according to its loaded type.
 |block!|	Sets the action for the default event of the face. For panels, specifies their content.
