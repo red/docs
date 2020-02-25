@@ -161,8 +161,7 @@ The meaning of some arguments and return value _depends_ on the event. The follo
 |`open`| datatype!| pair!| `true`: open +
 `false`: drop| When a new block!, paren!, path!, map! or multiline string! is opened.
 |`close`| datatype!| pair!| `true`: close + 
-`false`: drop| When a new block!, paren! +
-path!, map! or multiline string! is closed.
+`false`: drop| When a new block!, paren!, path!, map! or multiline string! is closed.
 |`error`| datatype!| pair!| `true`: throw +
 `false`: ignore| When a syntax error occurs.
 |===
