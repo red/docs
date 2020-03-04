@@ -8,10 +8,11 @@
 .. link:view.adoc[View Engine]
 .. link:vid.adoc[VID Dialect]
 .. link:draw.adoc[Draw Dialect]
-.. link:rich-text.adoc[Rich-Text Dialect]
+.. link:rtd.adoc[Rich-Text Dialect]
 
 ### Other Docs
 
+. link:parse.adoc[Parse]
 . link:reactivity.adoc[Reactive Programming]
 . link:libred.adoc[LibRed API]
 . link:preprocessor.adoc[Preprocessor]
