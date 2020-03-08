@@ -1071,7 +1071,7 @@ Při použití upřesnění `/trace` musí být určena funkce "zpětného volá
 
 | `event`
 | `word!`
-| Některá z <<Události akce parse>>.
+| Některá z <<Události procesu parse>>.
 
 | `match?`
 | `logic!`
