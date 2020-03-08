@@ -8,7 +8,7 @@
 == Úvod
 
 
-*Dialekt Parse* je jazyk specifické domény (domain-specific language - DSL) programovacího jazyka Red, který umožňuje stručné a přesné *ošetřen* vstupu (input) podle zadaných gramatických pravidel (rules). 
+*Dialekt Parse* je jazyk specifické domény (domain-specific language - DSL) programovacího jazyka Red, který umožňuje stručné a přesné *ošetření* vstupu (input) podle zadaných gramatických pravidel (rules). 
 
 Ošetřením jsou zde míněny tyto procesy:
 
@@ -36,12 +36,12 @@ Celkové vyhodnocení vrací hodnotu typu `logic!` jako sdělení, zda zadaná g
 
 === Základní principy
 
-Gramatická pravidla definují vzory, použité pro _vyhodnocení_ vstupních dat. Základní vyhodnocovací krok dialektu Parse je pravidlo _match_, které má jeden z těchto dvou výstupů:
+Gramatická pravidla definují vzory, použité pro _vyhodnocení_ vstupních dat. Základní hodnotící krok dialektu Parse je pravidlo _match_, které má jeden z těchto dvou výstupů:
 
-* Pokud se zadané pravidlo shoduje s posuzovanou částí vstupu, je _úspěšné_ a proces parse může (také nemusí) _postoupit_ (advance) za konformní část vstupu (i pravidla);
-* Pokud se neshoduje, pravidlo _selhává- (fails), načež se parse _vrátí_ (backtracks)  k _alternativním_ pravidlům - pokud existují.
+* Pokud se zadané pravidlo _shoduje_ s posuzovanou částí vstupu, je _úspěšné_ a proces parse _postoupí_ (advance) za konformní část vstupu (i pravidla);
+* Pokud se _neshoduje_, pravidlo _selhává_ (fails), načež se parse _vrátí_ (backtracks)  k _alternativním_ pravidlům - pokud existují.
 
-Zpracování vstupu (_parsing_) je stále se opakující aplikace tohoto základního kroku, která je zastavena jednou z následujících dvou ukončujících podmínek:
+Hodnocení vstupu (parsing) je stále se opakující aplikace tohoto základního kroku, která je zastavena jednou z následujících dvou ukončujících podmínek:
 
 * Neúspěšná aplikace pravidla: `parse` vrací `false`, signalizujíce neshodu
 * Úplná shoda pravidla s porovnávaným vstupem a vyčerpání vstupu (to jest dosažení konce zkoumaného vstupu): `parse` vrací `true`, signalizujíce shodu.
@@ -57,23 +57,23 @@ Gramatická pravidla::
     Hierarchické výrazy s prakticky neomezenou skladebností. Jejich skladba a sémantika jsou popsány v sekci <<Pravidla dialektu Parse>>.
 
 Postupování::
-    Procházení vstupní řadou (advancing) postupným ověřováním shody jednotlivého elementu s gramatickými pravidly až ke konci řady nebo k výskytu neshody.
+    Procházení (advancing) vstupní řadou postupným ověřováním shody jednotlivého elementu s gramatickými pravidly - až ke konci řady nebo k výskytu neshody.
 
 Vyhledání::
-    Hledání následného uplatnitelného pravidla za úspěšnou shodou (fetching).
+    Hledání následného pravidla, k uplatnění za úspěšnou shodou (fetching).
 
-Alternace (v PEG popsáno jako ordered choice)::
+Alternace (v PEG popsáno jako uspořádaný výběr)::
     V případě výskytu neshody s pravidlem se postupně pokoušet o shodu s následujícími alternativními pravidly v témže bloku za znakem `|` ("pipe", "bar", "nebo").
 
 Navrácení::
     Vrácení vstupu a pravidel na pozici před selháním pravidla (backtracking). Ostatní změny (vedlejší účinky a úpravy vstupu či pravidel) zůstávají.
 
-Hrabivé chování::
+Kumulativní chování::
     Parsovací pravidla (zejména <<Opakování>>) se vždycky snaží posoudit co nejvíce vstupních dat (possessive matching).
 
 == Režimy parsování
 
-Procedura _parse_ nabízí jistý stupeň flexibility provedení podporou různých režimů.
+Procedura _parse_ nabízí určitou flexibilitu provedení podporou různých režimů.
 
 === Rozlišení malých a velkých písmen
 
@@ -95,7 +95,7 @@ Pravidlo `collect` přikazuje, aby `parse` vrátilo blok místo hodnoty `logic!`
 
 === Typy vstupu
 
-V závislosti na typu vstupních řad nejsou některá pravidla Parse uplatnitelná nebo se chovají odlišně.
+V závislosti na typu vstupních dat nejsou některá pravidla Parse uplatnitelná nebo se chovají odlišně.
 
 * `any-block!`:
     ** Vyhledávání shody se sadou znaků nemá žádný význam a vždycky selže;
@@ -113,14 +113,14 @@ Gramatická pravidla v dialektu Parse mohou mít několik forem a obvykle mají 
     ** `word!` - odkazuje na _well-formed_ sub-pravidlo;
     ** `lit-word!` nebo `lit-path!` — zavedené zkratky pro <<Literálová hodnota, parsování>> vstupních hodnot typu `word!` případně `path!`;
     ** `set-word!` - se používá k <<Označení, nastavení>> slova na aktuální vstupní pozici;
-    ** `get-word!` - <<Přemístění, vrátí>> pozici vstupu k dříve nastavenému slovu;
+    ** `get-word!` - <<Přemístění, vrátí>> pozici vstupu k místu, označeném slovem;
     ** `block!` - hodnota, která obsahuje libovolný počet sub-pravidel a znaků `|`, jež působí jako oddělovače pro alternativní pravidla;
     ** `integer!` - hodnota, která slouží jako počítadlo pro
 	<<Počet iterací, opakování>> pravidla; dvě následující hodnoty typu `integer!` označují rozsah možných iterací;
-    ** `paren!` - hodnota, která působí jako 	 <<Vyhodnocení výrazu, únikový mechanizmus>> dialektu vyhodnocením obsaženého výrazu Red a pokračováním v parsování vstupu; některá klíčová slova Parse používají vrácené hodnoty z výrazu ve shodě se svou vlastní sémantikou;
+    ** `paren!` - hodnota, která působí jako <<Vyhodnocení výrazu, únikový mechanizmus>> dialektu vyhodnocením obsaženého výrazu Red a pokračováním v parsování vstupu; některá klíčová slova Parse používají vrácené hodnoty z výrazu ve shodě se svou vlastní sémantikou;
 * Jakákoliv jiná literálová hodnota výše nezmíněná, jež se používá _tak jak je_ pro přímé porovnávání se vstupem.
 
-POZN: Parse je konsistentní s Redem v používání <<Volná komparace,volných komparací>> pro porovnávání s literálovými hodnotami.
+POZN: Parse je konsistentní s Redem v používání <<Volné přirovnání, volného přirovnání>> pro porovnávání s literálovými hodnotami.
 
 Každé pravidlo (rule) je charakterizováno podmínkami, při kterých parsování pokročí vstupem a uspěje. Přehled pravidel (jak vyhražená, tak klíčová slova) je tabelárně uveden níže.
 
@@ -144,7 +144,7 @@ Každé pravidlo (rule) je charakterizováno podmínkami, při kterých parsová
 | Depends
 | Depends
 
-| Literal value
+| literal value
 | <<Přímé posouzení shody>>
 | Depends
 | Depends
@@ -195,17 +195,17 @@ Každé pravidlo (rule) je charakterizováno podmínkami, při kterých parsová
 | Depends
 
 | `opt`
-| <<Pohled vpřed>>
+| <<Předstih>>
 | Depends
 | Always
 
 | `not`
-| <<Pohled vpřed>>
+| <<Předstih>>
 | Never
 | Depends
 
 | `ahead`
-| <<Pohled vpřed>>
+| <<Předstih>>
 | Never
 | Depends
 
@@ -245,12 +245,12 @@ Každé pravidlo (rule) je charakterizováno podmínkami, při kterých parsová
 | Always
 
 | `to`
-| <<Search>>
+| <<Hledání>>
 | Depends
 | Depends
 
 | `thru`
-| <<Search>>
+| <<Hledání>>
 | Depends
 | Depends
 
@@ -320,12 +320,12 @@ POZN: Všechna pravidla v dále uvedených odstavcích se plně shodují se svý
 
 === Skladba
 
-Pravidla typu `block!` přímo  seskupují ostatní prvidla, jsouce prostředkem pro kombinaci.  Pravidla typu `word!` nepřímo odkazují na jiná pravidla, jsouce tak prostředkem abstrakce. Společně tvoří základ mluvnické skladby dialektu Parse.
+Pravidla `block!` přímo  seskupují ostatní prvidla, jsouce prostředkem pro kombinaci.  Pravidla `word!` nepřímo odkazují na jiná pravidla, jsouce tak prostředkem abstrakce. Společně tvoří základ mluvnické skladby dialektu Parse.
 
 Na strukturální úrovni je gramatika dialektu Parse složena ze _sekvencí_ a _alternativ_.
 
 * Sekvence pravidel je skupina nula či více pravidel, individuelně ukončených _koncem_ sekvence. Tato sekvence je úspěšná, dospěje-li parsování (postupně úspěšnou aplikací svých sub-pravidel) ke svému konci. V případě selhání některého sub-pravidla se proces vrátí (backtracks) na počátek neúspěšné sekvence.
-* Koncem sekvence pravidel je buď konec obalujícího bloku nebo _hraniční_ znak `|` alternativy.
+* Koncem sekvence pravidel je buď konec vymezujícího bloku nebo _hraniční_ znak `|` alternativy.
 * Alternativa je volitelná sekvence, kterou se Parse pokusí posoudit v případě, že předchozí (to jest před hranicí `|`) sekvence selže.
 
 === Přímé posouzení shody
@@ -336,7 +336,7 @@ Pravidla, popsaná v této části, přímo posuzují shodu vstupnch dat a slou�
 
 Posouzení shody literálové hodnoty je úspěšné a vede k pokročení zadaným vstupem, je-li posuzovaná literálová hodnota totožná s hodnotou na aktuální pozici.
 
-POZN: Parse používá volnou komparaci pro ověření rovnosti. <<Rozlišení malých a velkých písmen, Case-sensitivní režim>> vynucuje porovnání s rozlišením malých a velkých písmen.
+POZN: Parse používá _volnou komparaci_ pro ověření rovnosti. <<Rozlišení malých a velkých písmen, Case-sensitivní režim>> vynucuje porovnání s rozlišením malých a velkých písmen.
 
 *Příklad*
 
@@ -384,7 +384,7 @@ POZN: Ověření shody podle typové sady není podporováno pro vstup typu `bin
 ==== Znaková sada
 
 Jsou-li vstupní data typu `any-string!` nebo `binary!` a vstupní
-hodnota reprezentuje Unicode Code Point (UCP), který patří k dané sadě znaků, je ověření shody úspěšné a vede k pokročení vstupem. Ve všech ostatních případech je ověření shody neúspěšné.
+hodnotu reprezentuje Unicode Code Point (UCP), který patří k dané sadě znaků, je ověření shody úspěšné a vede k posunu vstupem. Ve všech ostatních případech je ověření shody neúspěšné.
 
 Podrobnosti o vytvoření datové sady lze nalézt v 
 https://doc.red-lang.org/cs/datatypes/bitset.html[documentaci] k datovému typu `bitset!`.
@@ -541,7 +541,7 @@ parse [match this input][
 ]
 ----
 
-==== Obnovení
+==== Přemístění
 
 Pravidlo `get-word!` nastaví pozici vstupu do místa, označeného zadaným slovem. Je vždy úspěšné a buď posouvá vpřed, zůstává stát nebo posouvá vzad - v závislosti na postavení markeru vzhledem k aktuální pozici vstupu.
 
@@ -856,9 +856,7 @@ parse [Huston do you copy?][2 word! copy Huston [2 word!] copy we opt "have a pr
 
 ==== `collect`
 
-return a block of collected values from the matched rule.
-
-Shromáždí konformní hodnoty které jsou označeny klíčovým slovem `keep`. Uspěje, uspěje-li dané pravidlo - postupujíc za konformní (matched) část vstupu.
+Shromáždí konformní hodnoty, které jsou označeny klíčovým slovem `keep`. Uspěje, uspěje-li dané pravidlo - postupujíc za konformní (matched) část vstupu.
 
 Pravidlo `keep` uspěje, uspěje-li poskytnuté pravidlo - vkládajíc konformní hodnoty do bloku, vymezeného pravidlem `collect`.
 
@@ -891,7 +889,7 @@ Hodnoty jsou implicitně vkládány do chvostu (tail) bloku. Toto chování lze 
 | Vloží shromážděné hodnoty do řady (series), označené slovem, přemístí index řady za vloženou část.
 |===
 
-* Je-li v kterémkoli pravidlu použit pokyn `collect` bez volby `into` či `after`, vráti funkce `parse` blok shromážděných hodnot (viz  <<Režim parsování>>); je-li pokyn `collect` použit s volbou `set`, vrátí funkce `parse` hodnotu typu `logic!` jako obvykle.
+* Je-li v kterémkoli pravidlu použit pokyn `collect` bez volby `into` či `after`, vráti funkce `parse` blok shromážděných hodnot (viz <<Režimy parsování>>); je-li pokyn `collect` použit s volbou `set`, vrátí funkce `parse` hodnotu typu `logic!` jako obvykle.
 * První použití pokynu `collect` alokuje nový blok, který je vrácen funkcí `parse`, každé další použití pokynu `collect` alokuje hodnoty (blok) na chvostu (tail) předchozího bloku; pokyn `collect` s volbou `into` či `after` použije již vytvořený buffer spíše než alokaci nového bloku.
 
 Syntaxe pro `keep`:
@@ -1013,7 +1011,7 @@ parse [some things never change][
 
 == Události procesu parse
 
-Dialekt Parse je implementován jako pushdown automaton (PDA - využívající paměti typu stack); při každé změně stavu emituje _událost_ (event, hodnota typu `word!`), která informuje uživatele o parsovacím procesu. Interakce mezi událostmi a interním stavem aktivity parse je dosaženo upřesněním `/trace` a "callback" funkcí (viz <<Extra funkce, další odstavec>>).
+Dialekt Parse je implementován jako pushdown automaton (PDA), využívající paměti typu stack. Při každé změně stavu emituje _událost_ (event, hodnota typu `word!`), která informuje uživatele o parsovacím procesu. Interakce mezi událostmi a interním stavem aktivity parse je dosaženo upřesněním `/trace` a "callback" funkcí (viz <<Extra funkce, další odstavec>>).
 
 Níže je uveden seznam všech událostí s podmínkami, které je vyvolávají (štos = stack):
 
@@ -1035,7 +1033,7 @@ Níže je uveden seznam všech událostí s podmínkami, které je vyvolávají 
 | Poté co byla nalezena shoda hodnoty s pravidlem.
 
 | `iterate`
-| Po započetí nového iteračního kola (viz <<Repetition>>).
+| Po započetí nového iteračního kola (viz <<Opakování>>).
 
 | `paren`
 | Po vyhodnocení výrazu typu `paren!`.
@@ -1047,20 +1045,20 @@ Níže je uveden seznam všech událostí s podmínkami, které je vyvolávají 
 
 == Extra funkce
 
-Vstupním bodem do dialektu Parse je nativní funkce `parse`, která přijme vstupní *objekt* typu series! a *blok* s pravidly a podporuje dodatečná upřesnění (refinements): 
+Vstupním bodem do dialektu Parse je nativní funkce `parse`, která přijme vstupní *objekt* typu series!, *blok* s pravidly a která podporuje dodatečná upřesnění (refinements): 
 
 .`parse` refinements.
 [options="header" cols="1,3"]
 |===
 | Refinement | Description
 | `/case`
-| Enable <<Režimy parsování, case-sensitive režim>>.
+| Umožnit <<Režimy parsování, case-sensitive režim>>.
 
 | `/part`
 | Limitovat parsování určenou délkou nebo pozicí vstupu.
 
 | `/trace`
-| Spolupůsobit s <<Události akce parse, rozhraním PDA>> přes zadaný _callback_.
+| Spolupůsobit s <<Události procesu parse, rozhraním PDA>> přes zadaný _callback_.
 
 |===
 
@@ -1094,7 +1092,7 @@ Při použití upřesnění `/trace` musí být určena funkce "zpětného volá
 
 |===
 
-Callback funkce musí vrátit hodnotu typu `logic!`, jež indikuje zda se má v parsování pokračovat (`true`) či nikoli (`false`). 
+Callback funkce musí vrátit hodnotu typu `logic!`, jež indikuje, zda se má v parsování pokračovat (`true`) či nikoli (`false`). 
 
 Za účelem ladění je implicitně poskytnuto zpětné volání (callback) `on-parse-event` a jeho `parse-trace` wrapper.
 
@@ -1102,9 +1100,9 @@ Za účelem ladění je implicitně poskytnuto zpětné volání (callback) `on-
 
 V této části jsou stručně zmíněny některé údaje o návrhu a implementaci dialektu Parse.
 
-=== Volná komparace
+=== Volné přirovnání
 
-Jak již bylo dříve zmíněno, Parse používá volnou komparaci (loose comparison) pro porovnávání literálových hodnot, což je konsistentní s Redem.
+Jak již bylo dříve zmíněno, Parse používá volné přirovnání (loose comparison) pro porovnávání literálových hodnot, což je konsistentní s Redem.
 
 *Příklad*
 
@@ -1173,7 +1171,7 @@ Nevyřešené chyby a inkozistence návrhu, související s dialektem Parse jsou
 
 |===
 
-=== Poznámka k překladu
+== Poznámka k překladu
 
 Kromě anglických i obecně cizích slov jsou v překladu použity jisté rádoby ekvivalentní výrazy, na něž chci zde upozornit:
 
