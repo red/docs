@@ -212,7 +212,7 @@ Compact: TBD
 header/type=12
 
 ----
-The optional padding field is added to properly align the `value` field offset to a 64-bit value.
+The optional padding field is added to properly align the `value` field offset to a 64-bit boundary.
 
 === Context! anchor:context[] 
 
@@ -459,7 +459,7 @@ Compact: TBD
 header/type=38
 ----
 
-Percent value is stored as a 64-bit float. The optional padding field is added to properly align the `value` field offset to a 64-bit value.
+Percent value is stored as a 64-bit float. The optional padding field is added to properly align the `value` field offset to a 64-bit boundary.
 
 === Tuple! anchor:tuple[] 
 
@@ -501,7 +501,7 @@ Compact: TBD
 header/type=43
 ----
 
-Time value is stored as a 64-bit float. The optional padding field is added to properly align the `value` field offset to a 64-bit value.
+Time value is stored as a 64-bit float. The optional padding field is added to properly align the `value` field offset to a 64-bit boundary.
 
 === Tag! anchor:tag[] 
 
@@ -544,7 +544,7 @@ Date is packed into a 32-bit integer (same as in `red-date!`). Time value is sto
 Default: header (4), currency (1),  amount (11)
 Compact: TBD
 
-header/type=48
+header/type=49
 header/sign=1|0 (bit 14)
 ----
 
