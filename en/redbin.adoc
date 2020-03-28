@@ -541,14 +541,14 @@ Date is packed into a 32-bit integer (same as in `red-date!`). Time value is sto
 === Money! anchor:money[] 
 
 ----
-Default: header (4), currency (1),  amount (11)
+Default: header (4), currency (4), padding (1), amount (11)
 Compact: TBD
 
 header/type=49
 header/sign=1|0 (bit 14)
 ----
 
-`amount` is a sequence of nibbles representing the money integral and decimal part (22 digits) in network byte order. If `sign` is set, the amount is interpreted as negative.
+`amount` is a sequence of nibbles representing the money integral and decimal part (22 digits) in network byte order. If `sign` is set, the amount is interpreted as negative. `currency` is a 3 bytes code plus a NUL terminal byte.
 
 === Reference! anchor:reference[] 
 
