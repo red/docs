@@ -400,14 +400,23 @@ Properties of `money!` values can be accessed via path notation or with `pick` a
 Given `money: -USD$123.45`:
 
 ----
-pick money 'code
-== USD
+pick money 2
+== -$123.45
 
 money/amount
 == -$123.45
 
-pick $67.89 'code
+pick money 'code
+== USD
+
+money/code
+== USD
+
+pick $67.89 1
 == none
+
+pick $67.89 'amount
+== $67.89
 ----
 
 == Currency list
