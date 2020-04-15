@@ -280,7 +280,7 @@ sort [$8 $23 $4 $42 $16 $15]
 `money!` supports basic arithmetic operations (`+`, `-`, `*`, `/`, `%`, `absolute`, `negate`), but enforces specific semantic rules for some of them.
 
 * Arithmetic operations between two `money!` values of given currencies are forbidden if said currencies are different. However, operations that involve generic currency are allowed;
-* Addition and subtraction between `money!` and any of the following datatypes are allowed: `money!` (see above), `float!` and `integer!`. In such a case, `money!` value is returned as a result;
+* Addition and subtraction between `money!` and any of the following datatypes are allowed: `money!` (see above), `float!`, `percent!` and `integer!`. In such a case, `money!` value is returned as a result;
 * Multiplication, division, and remainder enforce semantic rules described in the table below.
 
 .Overview of arithmetic semantics for `*`, `/` and `%`.
@@ -295,11 +295,11 @@ sort [$8 $23 $4 $42 $16 $15]
 
 | Multiplication
 | `money!`
-| `integer!`, `float!`
+| `integer!`, `float!`, `percent!`
 | `money!`
 
 | Multiplication
-| `integer!`, `float!`
+| `integer!`, `float!`, `percent!`
 | `money!`
 | `money!`
 
@@ -310,11 +310,11 @@ sort [$8 $23 $4 $42 $16 $15]
 
 | Division
 | `money!`
-| `integer!`, `float!`
+| `integer!`, `float!`, `percent!`
 | `money!`
 
 | Division
-| `integer!`, `float!`
+| `integer!`, `float!`, `percent!`
 | `money!`
 | Error
 
@@ -325,17 +325,21 @@ sort [$8 $23 $4 $42 $16 $15]
 
 | Remainder
 | `money!`
-| `integer!`, `float!`
+| `integer!`, `float!`, `percent!`
 | `money!`
 
 | Remainder
-| `integer!`, `float!`
+| `integer!`, `float!`, `percent!`
 | `money!`
 | Error
 
 |===
 
-NOTE: Multiplication and division truncate the result, taking only the first 5 fractional digits into account; this may lead to an underflow.
+[NOTE]
+====
+* Multiplication and division truncate the result, taking only the first 5 fractional digits into account; this may lead to an underflow;
+* Arithmetic operations between generic and specific currencies preserve specific currency.
+====
 
 *Examples*
 
