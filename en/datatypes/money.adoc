@@ -412,14 +412,14 @@ pick $67.89 'code
 
 == Currency list
 
-`system/locale/currencies` object contains two lists (blocks) of currency codes (`word!` values):
+`system/locale/currencies/list` is a list (`block!`) of currency codes (`word!` values):
 
-* `base` list is immutable and contains all the https://en.wikipedia.org/wiki/ISO_4217[ISO 4217] currencies in addition to `ETH`, `BTC` and `RED`;
-* `extra` list is `append`-only and can be extended with user-defined currencies.
+* by default, it contains all the https://en.wikipedia.org/wiki/ISO_4217[ISO 4217] currencies in addition to `ETH`, `BTC` and `RED`;
+* currency list is `append`-only, and can be extended with user-defined currencies represented as 3-letter `word!` values; on appending, such values are uppercased.
 
-`money!` value with currency not presented in either of these lists cannot be created or converted from other values.
+`money!` value with currency not present in the list cannot be created or converted from other values.
 
-A list of custom currencies can also be specified in the `Currencies` field of the Red script header. That makes it possible to use custom money literals in any file interpreted with `do` from within the script.
+A list of custom currencies can also be specified in the `Currencies` field of the Red script header. This makes it possible to use custom money literals in any file interpreted with `do` from within the script.
 
 NOTE: The total number of unique currency codes is limited to `255`.
 
