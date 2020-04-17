@@ -26,8 +26,8 @@
     <sign><currency>$<amount>
 
 <amount> formats :
-    <base><separator><subunit>
     <base>
+    <base><separator><subunit>
 
 <sign>      : sign
 <currency>  : currency code
@@ -39,13 +39,12 @@
 * `<sign>` is either negative `-` or positive `+`;
 * `<currency>` must be a 3-letter currency code present in the currency list;
 * `<base>` is an integer with the number of digits lying in the `[1, 17]` range, excluding leading zeroes;
-* `<subunit>` is an integer with the number of digits lying in the `[1, 5]` range, excluding trailing zeroes;
+* `<subunit>` is an integer with the number of digits lying in the `[1, 5]` range;
 * `<separator>` is either dot `.` or comma `,`.
 
 [NOTE]
 ====
 * `<base>` can be delimited with thousands separators `'`;
-* Only first 5 fractional digits of the `<subunit>` are taken into account, the rest, if present, are discarded (truncation);
 * Currency codes are case-insensitive.
 ====
 
@@ -57,10 +56,10 @@ Examples of valid literal `money!` forms are given below.
 $123
 $123.45
 $678,90
-$00000000000000000000123.45000000
+$00000000000000000000123.45
 $12345678901234567.12345
 +$1.23
--$4.56
+-$4,56
 $1'234'567.89
 USD$0.50
 -eur$20
@@ -94,7 +93,7 @@ make money! <spec>
 ----
 
 * `<currency>` is a 3-letter currency code present in the currency list;
-* `<amount>` is a signed value that represents the total amount and a sign;
+* `<amount>` is a signed value that represents the total amount and a sign; fractional part of `float!` values must contain no more than 5 digits;
 * `<base>` is a signed value that represents the main currency unit and a sign;
 * `<subunit>` is a non-negative value that represents subunit (fraction of the main unit); the number of digits must lie in the `[1, 5]` range.
 
@@ -158,7 +157,7 @@ Datatypes that can be converted to and/or from `money!` value are listed below.
 | Conversion to this type may result in datatype overflow if an integral part takes more than 10 digits. The fractional part is discarded.
 
 | `float!`
-| Conversion from this type truncates the result by taking only the first 5 fractional digits into account and may result in datatype overflow or underflow.
+| Conversion from this type accepts only values with no more than 5 fractional digits.
 
 | `any-string!`
 | Conversion to any type in this typeset aliases to `form` action (preserving the target type) and decorates the result with thousand's separators.
@@ -199,10 +198,13 @@ to-money 1e-5
 == $0.00001
 
 to-money 1e-6
-** money overflow/underflow error
+** cannot make money
 
 to-money 12345678901234567890.0
-** money overflow/underflow error
+** cannot make money
+
+to-money 0.123456
+** cannot make money
 
 to-string $1234567.89
 == "$1'234'567.89000"
@@ -216,8 +218,11 @@ to-money "456"
 to-money "-123.45"
 == -$123.45000
 
-to-money "+USD$00000000000000678.900000000000000"
+to-money "+USD$00000000000000678.9"
 == USD$678.90000
+
+to-money "EUR$0.123456"
+** cannot make money
 ----
 
 == Comparison
@@ -226,11 +231,15 @@ All comparison operations can be applied to `money!` value (`=`, `==`, `<>`, `>`
 
 When two `money!` values are compared with lax comparison (`=`), either they must have the same currencies, or one of them should represent a generic currency; in the latter case only amounts are compared and the currency is ignored.
 
-When two `money!` values are compared with strict comparison (`==`, `=?`), either they must have the same currencies or both of them should represent a generic currency.
+When two `money!` values are compared with strict comparison (`==`), either they must have the same currencies or both of them should represent a generic currency.
 
-If specific currencies are not the same then an error is raised, regardless of the comparison type.
+If specific currencies are not the same then an error is raised, regardless of the comparison type, with an exception of identity comparison described below.
+
+When two `money!` values are compared with identity comparison (`=?`), a `logic!` value is returned that denotes whether or not they are identical (strict equality of amounts and currencies).
 
 Comparison of `money!` value with a value of `integer!` or `float!` datatype is the same as a comparison with a generic currency converted from a value of a given datatype, except for the cases where type and currency equalities are mandatory (`==`, `=?`).
+
+`money!` values of different currencies are sorted lexicographically by their currency codes; values of the same currency are sorted by their monetary amounts. Generic currency takes precedence in lexicographical comparison.
 
 *Examples*
 
@@ -262,6 +271,9 @@ USD$123 == USD$123
 USD$456 = EUR$456
 ** not same denomination error
 
+USD$123 =? EUR$123
+== false
+
 $456 = "456"
 == false
 
@@ -273,6 +285,9 @@ min 56 $78
 
 sort [$8 $23 $4 $42 $16 $15]
 == [$4.00 $8.00 $15.00 $16.00 $23.00 $42.00]
+
+sort [USD$1 -$2 EUR$3 -USD$4 $5 -EUR$6]
+== [-$2.00 $5.00 -EUR$6.00 EUR$3.00 -USD$4.00 USD$1.00]
 ----
 
 == Arithmetic
@@ -280,7 +295,7 @@ sort [$8 $23 $4 $42 $16 $15]
 `money!` supports basic arithmetic operations (`+`, `-`, `*`, `/`, `%`, `absolute`, `negate`), but enforces specific semantic rules for some of them.
 
 * Arithmetic operations between two `money!` values of given currencies are forbidden if said currencies are different. However, operations that involve generic currency are allowed;
-* Addition and subtraction between `money!` and any of the following datatypes are allowed: `money!` (see above), `float!` and `integer!`. In such a case, `money!` value is returned as a result;
+* Addition and subtraction between `money!` and any of the following datatypes are allowed: `money!` (see above), `float!`, `percent!` and `integer!`. In such case `money!` value is returned as a result;
 * Multiplication, division, and remainder enforce semantic rules described in the table below.
 
 .Overview of arithmetic semantics for `*`, `/` and `%`.
@@ -295,11 +310,11 @@ sort [$8 $23 $4 $42 $16 $15]
 
 | Multiplication
 | `money!`
-| `integer!`, `float!`
+| `integer!`, `float!`, `percent!`
 | `money!`
 
 | Multiplication
-| `integer!`, `float!`
+| `integer!`, `float!`, `percent!`
 | `money!`
 | `money!`
 
@@ -310,11 +325,11 @@ sort [$8 $23 $4 $42 $16 $15]
 
 | Division
 | `money!`
-| `integer!`, `float!`
+| `integer!`, `float!`, `percent!`
 | `money!`
 
 | Division
-| `integer!`, `float!`
+| `integer!`, `float!`, `percent!`
 | `money!`
 | Error
 
@@ -325,17 +340,21 @@ sort [$8 $23 $4 $42 $16 $15]
 
 | Remainder
 | `money!`
-| `integer!`, `float!`
+| `integer!`, `float!`, `percent!`
 | `money!`
 
 | Remainder
-| `integer!`, `float!`
+| `integer!`, `float!`, `percent!`
 | `money!`
 | Error
 
 |===
 
-NOTE: Multiplication and division truncate the result, taking only the first 5 fractional digits into account; this may lead to an underflow.
+[NOTE]
+====
+* Multiplication and division truncate the result, taking only the first 5 fractional digits into account; this may lead to an underflow;
+* Arithmetic operations between generic and specific currencies preserve specific currency.
+====
 
 *Examples*
 
@@ -400,26 +419,35 @@ Properties of `money!` values can be accessed via path notation or with `pick` a
 Given `money: -USD$123.45`:
 
 ----
-pick money 'code
-== USD
+pick money 2
+== -$123.45
 
 money/amount
 == -$123.45
 
-pick $67.89 'code
+pick money 'code
+== USD
+
+money/code
+== USD
+
+pick $67.89 1
 == none
+
+pick $67.89 'amount
+== $67.89
 ----
 
 == Currency list
 
-`system/locale/currencies` object contains two lists (blocks) of currency codes (`word!` values):
+`system/locale/currencies/list` is a list (`block!`) of currency codes (`word!` values):
 
-* `base` list is immutable and contains all the https://en.wikipedia.org/wiki/ISO_4217[ISO 4217] currencies in addition to `ETH`, `BTC` and `RED`;
-* `extra` list is `append`-only and can be extended with user-defined currencies.
+* by default, it contains all the https://en.wikipedia.org/wiki/ISO_4217[ISO 4217] currencies in addition to `ETH`, `BTC` and `RED`;
+* currency list is `append`-only, and can be extended with user-defined currencies represented as 3-letter `word!` values; on appending, such values are uppercased.
 
-`money!` value with currency not presented in either of these lists cannot be created or converted from other values.
+`money!` value with currency not present in the list cannot be created or converted from other values.
 
-A list of custom currencies can also be specified in the `Currencies` field of the Red script header. That makes it possible to use custom money literals in any file interpreted with `do` from within the script.
+A list of custom currencies can also be specified in the `Currencies` field of the Red script header. This makes it possible to use custom money literals in any file interpreted with `do` from within the script.
 
 NOTE: The total number of unique currency codes is limited to `255`.
 
