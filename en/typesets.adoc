@@ -38,7 +38,7 @@ See: link:datatypes/typeset.adoc[typeset!]
 
 === any-string!
 
-* make typeset! [link:datatypes/string.adoc[string!] link:datatypes/file.adoc[file!] link:datatypes/url.adoc[url!] link:datatypes/tag.adoc[tag!] link:datatypes/email.adoc[email!]]
+* make typeset! [link:datatypes/string.adoc[string!] link:datatypes/file.adoc[file!] link:datatypes/url.adoc[url!] link:datatypes/tag.adoc[tag!] link:datatypes/email.adoc[email!] link:datatypes/ref.adoc[ref!]]
 
 === any-type!
 
