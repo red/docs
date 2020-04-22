@@ -4,7 +4,7 @@
 
 == Abstract
 
-`ref!` values denote named references, such as social media handlers or munged e-mail addresses with an implied domain name.
+`ref!` values denote named references, such as social media handles or identifiers with an implied domain name.
 
 `ref!` datatype belongs to `any-string!` typeset while being conceptually close to an `issue!` datatype, differing from it in implementation (string-like vs. symbol-like) and offered set of trade-offs.
 
