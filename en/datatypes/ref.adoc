@@ -30,8 +30,10 @@
 *Examples*
 
 ----
+@
 @red_lang
-Nenad Rakocevic @ Dockimbel
+@dockimbel
+@§2.1
 ----
 
 === Runtime construction
