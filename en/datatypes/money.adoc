@@ -227,17 +227,17 @@ to-money "EUR$0.123456"
 
 == Comparison
 
-All comparison operations can be applied to `money!` value (`=`, `==`, `<>`, `>`, `<`, `>=`, `&lt;=`, `=?`). `min`, `max` and `sort` are also supported.
+All comparison operations can be applied to `money!` value (`=`, `==`, `<>`, `>`, `<`, `>=`, `&lt;=`, `=?`). `min`, `max`, `find` and `sort` are also supported.
 
-When two `money!` values are compared with lax comparison (`=`), either they must have the same currencies, or one of them should represent a generic currency; in the latter case only amounts are compared and the currency is ignored.
+When two `money!` values are compared with lax comparison (`=`, `<>`), either they must have the same currencies, or one of them should represent a generic currency; in the latter case only amounts are compared and the currency is ignored.
 
-When two `money!` values are compared with strict comparison (`==`), either they must have the same currencies or both of them should represent a generic currency.
-
-If specific currencies are not the same then an error is raised, regardless of the comparison type, with an exception of identity comparison described below.
-
-When two `money!` values are compared with identity comparison (`=?`), a `logic!` value is returned that denotes whether or not they are identical (strict equality of amounts and currencies).
+When two `money!` values are compared with strict comparison (`==`) or identity comparison (`=?`), either they must have the same currencies or both of them should represent a generic currency.
 
 Comparison of `money!` value with a value of `integer!` or `float!` datatype is the same as a comparison with a generic currency converted from a value of a given datatype, except for the cases where type and currency equalities are mandatory (`==`, `=?`).
+
+All forms of equality comparison described above return a `logic!` value as their result, differing only in a level of strictness; the remaining operations (`>`, `<`, `>=`, `&lt;=`) follow lax comparison rules, but result in an error if an attempt to compare two non-equal specific currencies is made.
+
+Search for `money!` values allows a degree of flexibility. If `find` is used with a `money!` value of a specific currency, then rules of strict comparison apply; if `find` is used with a `money!` value of a generic currency, then only amounts are compared.
 
 `money!` values of different currencies are sorted lexicographically by their currency codes; values of the same currency are sorted by their monetary amounts. Generic currency takes precedence in lexicographical comparison.
 
@@ -263,16 +263,22 @@ USD$123 = USD$123
 == true
 
 USD$123 == $123
-** not same denomination error
+== false
 
 USD$123 == USD$123
 == true
 
 USD$456 = EUR$456
-** not same denomination error
+== false
 
 USD$123 =? EUR$123
 == false
+
+-EUR$456 >= -$789
+== true
+
+USD$456 < EUR$789
+** not same denomination error
 
 $456 = "456"
 == false
@@ -282,6 +288,12 @@ max 12 $34
 
 min 56 $78
 == 56
+
+find [1.0 $0 USD$1 EUR$1] $1
+== [USD$1.00 EUR$1.00]
+
+find [1.0 $0 USD$1 EUR$1] EUR$1
+== [EUR$1.00]
 
 sort [$8 $23 $4 $42 $16 $15]
 == [$4.00 $8.00 $15.00 $16.00 $23.00 $42.00]
