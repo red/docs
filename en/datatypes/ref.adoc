@@ -24,7 +24,7 @@
 <name> : optional name of a referent
 ----
 
-* `<name>` is zero or more characters other than `# $ ' , = > @ ^`;
+* `<name>` is zero or more characters other than `# $ ' , = > @ \ ^`;
 * literal form is terminated by one of the `" ( ) ; < [ ] { }` or blank (space, tab, `CR`, `LF`) characters.
 
 *Examples*
@@ -33,7 +33,7 @@
 @
 @red_lang
 @dockimbel
-@ยง2.1
+@ง2.1
 ----
 
 === Runtime construction
