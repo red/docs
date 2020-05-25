@@ -6,10 +6,11 @@
 
 == Concept 
 
+The lexer is the part of the Red runtime library in charge of converting Red values from text representation to in-memory data structures, according to Red values syntactic rules. That process is called _loading_. 
+
+Note: the Red compiler also contains a temporary lexer implementation with limited capabilities compared to the runtime version. That lexer will be dropped once Red gets self-hosted.
 
 == Loading values
-
-=== `load`
 
 === `transcode`
 
@@ -44,9 +45,9 @@ Returns : recognized type (datatype!).
 
 *Description*
 
-Scans a string or binary buffer according to Red syntactic rules and stops after the first value is recognized and returns its datatype. No value is loaded, so no extra memory is allocated. If the scanned input is invalid, the `error!` type is returned, no exception occurs.
+Scans a string or binary buffer according to Red syntactic rules, stops after the first value is recognized and returns its datatype. No value is loaded, so no extra memory is allocated. If the scanned input is invalid, the `error!` type is returned, no exception occurs.
 
-The `/fast` refinement trades speed for accuracy. The scanning will return the most likely type (not doing any deep validation) using only the very fast internal prescanning engine. Very little error checking is done in such case. The guessed types are shown in the following table:
+The `/fast` refinement trades speed for accuracy. The scanning will return the _most likely_ type (not doing any deep validation) using only the fast internal prescanning engine. Very little error checking is done in such case. The guessed types are shown in the following table:
 
 [cols="1,1", options="header"]
 |===
@@ -60,7 +61,7 @@ lit-path! +
 get-path! +
 set-path!
 |integer! | integer! +
-float!
+float! (1)
 |word!	 | word! +
 lit-word! +
 get-word! + 
@@ -69,7 +70,7 @@ set-word!
 word! +
 lit-word! +
 get-word! +
-set-word!
+set-word! (2)
 |char!	 | char!
 |issue!	 | issue!
 |file!	 | file!
@@ -84,7 +85,13 @@ set-word!
 |tag!	 | tag!
 |url!	 | url!
 |email!	 | email!
+|money!	 | money!
+|ref!	 | ref!
 |===
+
+(1) Mostly because of integer! to float! promotion rules for out of range integers.
+
+(2) The possible words type are caused by single or multiple slash character sequences (ex: '/, /:, ://,...).
 
 Note: 
 
@@ -92,15 +99,69 @@ Note:
 
 * Scanning is much faster than loading and does not allocate any extra memory.
 
-* Scanning is slower than prescanning, as it requires extra code to do deep validation.
+* Scanning is slower than prescanning, as it requires extra processing to do deep validation.
 
 == Processing values using iteration
 
 === `load/next`
 
+*Syntax*
+
+----
+load/next <input> <var>
+
+<input> : series to load (binary! string!).
+<var>   : word to be set to the input after the first value (word!).
+
+Returns : the first loaded value.
+----
+
+*Description*
+
+Loads and returns the first Red value from an input text. The argument word is set to the remaining part of the input text after the loaded value.
+
+
 === `transcode/next`
 
+*Syntax*
+
+----
+transcode/next <input>
+
+<input> : series to load (binary! string!).
+
+Returns : a block with first loaded value and rest of the input.
+----
+
+*Description*
+
+Loads the first Red value from an input text. It returns a block containing:
+
+* the first loaded value from input (any-type!).
+
+* the remaining part of the input after the loaded value (binary! string!).
+
+
 === `scan/next`
+
+*Syntax*
+
+----
+scan/next <input>
+
+<input> : series to load (binary! string!).
+
+Returns : a block with the type of the first value and rest of the input.
+----
+
+*Description*
+
+Scans the first Red value from an input text. It returns a block containing:
+
+* the datatype of the first value from input (datatype!).
+
+* the remaining part of the input after the scanned value (binary! string!).
+
 
 == Instrumenting the lexer
 
@@ -117,6 +178,15 @@ PRESCAN token -> SCAN token -> LOAD value
                     \-> ERROR     \-> ERROR
 ----
 
+So the lexer events are: 
+
+* `prescan`
+* `scan`
+* `load`
+* `open`
+* `close`
+* `error`
+
 === `transcode/trace`
 
 *Syntax*
@@ -131,6 +201,8 @@ Returns    : a single value or a block of values.
 ----
 
 *Description*
+
+Converts an UTF-8 encoded input binary series into a Red value according to Red syntactic rules, calling a user-provided callback function for each lexer events. 
 
 Note: the body block can start with an optional filtering block, for indicating which events will be triggered. This allows to reduce the number of callback calls resulting in much better processing performance.
 
@@ -170,7 +242,7 @@ Possible values for `type` field (word!) in `scan` event:
 ----
 eof comment hex error! block! paren! string! map! path! word! refinement!
 issue! file! binary! char! percent! integer! float! tuple! date! pair! time!
-money! tag! url! email! lit-word! get-word! set-word!
+money! tag! url! email! ref! lit-word! get-word! set-word!
 ----
 
 Possible values for `type` field (datatype!) in `open` event:
@@ -191,7 +263,7 @@ Notes:
 
 * If `false` is returned on a `scan` event, the corresponding `load` event will be skipped.
 
-* If an `open` event is dropped, also drop the corresponding `close` event.
+* If an `open` event is dropped, the corresponding `close` event should also be dropped.
 
 
 == Values Literal Syntax
