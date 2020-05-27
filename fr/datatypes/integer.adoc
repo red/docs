@@ -4,9 +4,7 @@
 
 == Résumé
 
-Les valeurs de type Integer sont des nombres sans virgule, positifs ou négatifs, codés sur 32 bits.
-
-Integer s'étend sur l'intervalle de `-2147483648` à `2147483647`.
+Les valeurs de type Integer sont des nombres codés sur 32 bits positifs ou négatifs, sans virgule. Ils couvrent l'intervalle de `-2147483648` à `2147483647`.
 
 Par conception les `integer!` ne sont pas automatiquement convertis en `float!` en cas de dépassement.
 

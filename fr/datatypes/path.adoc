@@ -4,7 +4,7 @@
 
 == Résumé
 
-Les chemins (Path!) sont une série de valeurs délimitées par des slashs (`/`). C'est un type de `block!` limité dans les types de valeurs qu'il peut contenir. Les valeurs `Word!`, `integer!`, `get-word!`, et `paren!` sont acceptées. 
+Le type `path!` (chemin) représente une série de valeurs délimitées par des slashs (`/`). `Path!` est un type de `block!` limité dans les types de valeurs qu'il peut contenir. Les valeurs `Word!`, `integer!`, `get-word!`, et `paren!` sont acceptées. 
 
 `Path!` appartient aux ensembles de types suivants: `any-block!`, `any-path!`, `series!`
 
@@ -39,7 +39,7 @@ Vous pouvez créer un chemin vide d'une taille donnée en passant une valeur ent
 == 
 ```
 
-Conversion avec To:
+Conversion avec `To`:
 
 ```red
 >> to path! "foo bar baz"
@@ -101,6 +101,20 @@ Une erreur sera générée s'il n'existe pas de raffinement correspondant dans l
 *** Stack: 
 ```
 
+[NOTE]
+Les chemins sont un type actif et évalueront les fonctions définies. Les valeurs de type `Op!` ne sont actuellement pas évaluées.
+
+```red
+>> f: does [42]
+== func [][42]
+
+>> insert b: [] :f
+== []
+
+>> b/1
+== 42
+```
+
 * Si la valeur n'est pas une fonction, les règles suivantes s'appliquent:
 
 ** Si l'expression suivante dans le chemin est un mot, celui-ci est utilisé pour faire un `select` dans la valeur en tête du chemin. Cette valeur doit être d'un type qui permet l'action `select` (c'est-à-dire `block!`, `map!`, ou `object!`).
@@ -120,7 +134,7 @@ Si la sélection n'existe pas dans la valeur de tête du chemin, `select` renver
 == none
 ```
 
-* En dehors du premier, les Word! dans un chemin ne sont pas évalués. Si vous voulez les évaluer, utilisez `get-word!` ou `paren!` dans le chemin.
+* En dehors du premier, les `word!` dans un chemin ne sont pas évalués. Si vous voulez les évaluer, utilisez `get-word!` ou `paren!` dans le chemin.
 
 ```red
 >> selector: 'bar
@@ -163,7 +177,7 @@ Si l'entier tombe hors des limites de la valeur de tête du chemin, `pick` renvo
 
 == Test de valeurs
 
-Utilisez `path?` pour vérifier si une valeur est du type `Path!`.
+Utilisez `path?` pour vérifier si une valeur est du type `path!`.
 
 ```red
 >> path? 'foo/bar

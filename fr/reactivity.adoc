@@ -60,7 +60,7 @@ Cet exemple établit une relation réactive entre un curseur nommé `s` et une f
 
 *Exemple 2*
 
-    vec: make reactor! [x: 0 y: 10]
+    vec: reactor [x: 0 y: 10]
     box: object [length: is [square-root (vec/x ** 2) + (vec/y ** 2)]]
 
 Une autre forme de relation statique peut être définie en utilisant l'opérateur `is`, dans lequel le résultat de l'évaluation de la réaction est placé dans un mot (dans n'importe quel contexte).
@@ -69,13 +69,13 @@ Cet exemple n'est pas lié au système d'interface graphique. Il calcule la long
 
 *Exemple 3*
 
-	a: make reactor! [x: 1 y: 2 total: is [x + y]]
+	a: reactor [x: 1 y: 2 total: is [x + y]]
 	
 Le mot `total` ci-dessus prend la valeur de l'expression `x + y`. Chaque fois que l'une des valeurs `x` ou `y` change, `total` est immédiatement mis à jour. Remarquez que les chemins ne sont pas requis dans ce cas pour spécifier les sources réactives, parce-que `is` est utilisé directement à l'intérieur du corps du reacteur et connaît donc son contexte.
 
 *Exemple 4*
 
-	a: make reactor! [x: 1 y: 2]
+	a: reactor [x: 1 y: 2]
 	total: is [a/x + a/y]
 
 Cette variation de l'Exemple 3 mointre qu'un mot global peut être la cible d'une relation réactive (quoiqu'il ne puisse pas en être la source). Cette forme est la plus proche du modèle de formule dans un tableur (eg. Excel).
@@ -153,26 +153,36 @@ On supprime une réaction en utilisant le raffinement `unlink` avec l'un des él
 
 *Syntaxe*
 ----
-<word>: is <code>
+<word>: is [<body>]
+<word>: is [[<default>] <body>]
 
-<word> : mot qui doit prendre pour valeur le résultat de la réaction (set-word!).
-<code> : bloc de code contenant au moins une source réactive (block!).
+<word>    : mot qui doit prendre pour valeur le résultat de la réaction (set-word!).
+<body>    : bloc de code Red quelconque contenant au moins une source réactive.
+<default> : bloc de code Red quelconque qui renvoie une valeur utilisée initialement par défaut pour <word>.
 ----
 *Description*
 
-`is` crée un formule réactive dont le résultat sera assigné à un mot. Le bloc `<code>` peut contenir des références à la fois aux champs de l'objet encapsulant, s'il est utilisé dans le bloc de corps d'un réacteur, et à des champs de réacteurs externes.
+`is` crée un formule réactive dont le résultat sera assigné à un mot. Le bloc `<code>` peut contenir des références à la fois aux champs de l'objet encapsulant, s'il est utilisé dans le bloc de corps d'un réacteur, et à des champs de réacteurs externes. Pour spécifier une valeur par défaut, un bloc renvoyant cette valeur par défaut peut être renvoyé comme premier élément du bloc de la formule réactive. Ceci est particulièrement utile quand on utilise des références vers l'avant à des sources réactives qui ne sont pas définies (`unset`) au moment de l'évaluation de la formule.
 
 NOTE: Cet opérateur crée des formules réactives qui imitent étroitement le modèle des formules d'Excel.
 
-*Exemple*
+*Exemples*
 ----
-a: make reactor! [x: 1 y: 2 total: is [x + y]]
+a: reactor [x: 1 y: 2 total: is [x + y]]
 
 a/total
 == 3
 a/x: 100
 a/total
 == 102
+----
+----
+reactor [a: 1 b: is [[none] c] c: is [a < 4]]
+== make object! [
+    a: 1
+    b: true
+    c: true
+]
 ----
 === react? 
 
@@ -226,7 +236,7 @@ Renvoie : un objet réactif.
 ----
 *Description*
 
-Construit un nouvel objet réactif à partir du bloc corps. Dans l'objet renvoyé, donner une nouvelle valeur à un champ déclenchera les réactions définies pour ce champ.
+Construit un nouvel objet réactif à partir du bloc corps. Dans l'objet renvoyé, donner une nouvelle valeur à un champ déclenchera les réactions définies pour ce champ. La fonction `reactor` est un raccourci pratique pour ce type de constructeur.
 
 NOTE: Le corps peut contenir des expressions `is`.
 
@@ -242,7 +252,7 @@ Renvoie : un objet réactif.
 ----
 *Description*
 
-Construit un nouvel objet réactif à partir du bloc corps. Dans l'objet renvoyé, donner une nouvelle valeur à un champ ou changer une série à laquelle le champ fait référence, y compris des séries imbriquées, déclenchera les réaction définies pour ce champ.
+Construit un nouvel objet réactif à partir du bloc corps. Dans l'objet renvoyé, donner une nouvelle valeur à un champ ou changer une série à laquelle le champ fait référence, y compris des séries imbriquées, déclenchera les réaction définies pour ce champ. La fonction `deep-reactor` est un raccourci pratique pour ce type de constructeur.
 
 NOTE: Le corps peut contenir des expressions `is`.
 
@@ -252,7 +262,7 @@ Ceci montre comment le changement d'une série, même imbriquée, déclenche une
 
 NOTE: C'est actuellement à l'utilisateur de prévenir les bouclages. Par exemple, si un `deep-reactor!`  change les valeurs d'une série dans une formule de réacteur (e.g. `is`), cela peut créer des cycles de réaction sans fin.
 ----
-r: make deep-reactor! [
+r: deep-reactor [
     x: [1 2 3]
     y: [[a b] [c d]]
     total: is [append copy x copy y]

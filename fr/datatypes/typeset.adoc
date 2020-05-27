@@ -1,0 +1,105 @@
+= Le type Typeset!
+:toc:
+:numbered:
+
+== Résumé
+
+Une valeur de type `typeset!` représente un ensemble, ou une collection, de valeurs de `datatype!` prédéfinies.
+
+`Typeset!` appartient aux ensembles de types suivants: `default!`, `immediate!`
+
+== Création
+
+Les valeurs de type `typeset!` peuvent être créées en utilisant le constructeur `make` ou la conversion avec `to`.
+
+== Syntaxe littérale
+
+Par convention, la syntaxe littérale est une valeur de type `word!` se terminant par un point d'exclamation `!`.
+
+Exemples: `any-list!`, `number!`, `series!`
+
+=== Création lors de l'exécution
+
+```
+<typeset> ::= make typeset! [<typeset-element>*]
+<typeset-element> ::= <typeset-name> | <datatype-name>
+```
+
+*Exemples*
+
+```red
+>> number!: make typeset! [integer! float! percent!]
+== make typeset! [integer! float! percent!]
+
+>> collection!: make typeset! [block! paren! map!]
+== make typeset! [block! paren! map!]
+
+>> to typeset! [integer! float! percent!]
+== make typeset! [integer! float! percent!]
+```
+
+Les typesets vides sont autorisés.
+
+```red
+>> empty!: make typeset! []
+== make typeset! []
+```
+
+== Conversions
+
+Une valeur de type `typeset!` peut être convertie en n'importe quelle valeur du typeset `any-list!`
+
+```red
+>> to block! number!
+== [integer! float! percent!]
+
+>> to paren! number!
+== (integer! float! percent!)
+
+>> to hash! number!
+== make hash! [integer! float! percent!]
+```
+
+== Comparaisons
+
+Aucune comparaison n'est supportée pour `typeset!`.
+
+== Opérations sur les ensembles de données
+
+Les opérations sur les ensembles de données suivantes sont possibles avec les valeurs de type `typeset!` : 
+
+`difference`, `exclude`, `intersect`, `union`
+
+== Test de valeurs
+
+Utilisez `typeset?` pour vérifier si une valeur est du type `typeset!`.
+
+```red
+>> typeset? number!
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? number!
+== typeset!
+```
+
+== Mots prédéfinis
+
+=== Actions
+
+`and~`, `complement`, `find`, `or~`, `xor~`
+
+=== Fonctions
+
+`to-typeset`
+
+=== Natives
+
+`difference`, `exclude`, `intersect`, `union`
+
+=== Opérateurs
+
+`and`, `or`, `xor`

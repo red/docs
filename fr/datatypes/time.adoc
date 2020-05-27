@@ -236,7 +236,7 @@ Les valeurs de type `Integer!`, `float!` et `percent!` peuvent être converties 
 
 Tous les comparateurs peuvent être appliqués à `time!`: `=, ==, <>, >, <, >=, &lt;=, =?`. De plus, `min`, et `max` sont aussi supportés.
 
-== Arithmétique
+== Calculs
 
 Les opérations supportées sur les horaires comprennent:
 
@@ -329,7 +329,7 @@ Utilisez `type?` pour connaître le type d'une valeur donnée.
 
 `first`, `mod`, `modulo`, `second`, `third`, `time?`, `to-time`
 
-=== Natifs
+=== Natives
 
 `loop`, `negative?`, `now`, `positive?`, `remove-each`, `repeat`, `sign?`, `wait`, `zero?`
 

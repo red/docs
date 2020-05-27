@@ -38,13 +38,13 @@ Liste des facettes disponibles:
 |data| any-type!| non| tous| Données contenues par la figure.
 |enabled?| logic!| oui| tous| Active ou désactive le traitement des événements par la figure.
 |visible?| logic!|	oui| tous| Affiche ou cache la figure.
-|selected| integer!| non| certains| Pour les types liste, index de l'élément actuellement sélectionné. Pour les champs d'entrée de texte, le texte sélectionné. Pour les fenêtres, la figure qui a le focus.
+|selected| integer!, pair!, object!| non| certains| Pour les types liste, index de l'élément actuellement sélectionné. Pour les champs d'entrée de texte, le texte sélectionné. Pour les fenêtres, la figure qui a le focus.
 |flags| block!, word!| non|	certains| Liste de mot-clés spéciaux qui altèrent l'affichage ou le comportement de la figure.
 |options| block!| non| certains| Propriétés supplémentaires de la figure au format [name: value].
 |parent| object!| non| tous| Référence arrière vers la figure parent (s'il y en a une).
 |pane| block!| non| certains| Liste des figures enfant affichées dans la figure.
 |state| block| non| tous| Information d'état interne de la figure _(utilisé uniquement par le moteur View)_.
-|rate| integer!, time!| non| tous| Minuteur de la figure. Un entier définit une fréquence, un horaire définit une durée, `none` arrête le minuteur.
+|rate| integer!, time!| non| tous| Minuteur de la figure. Génère périodiquement des événements `time`. Un entier définit une fréquence, un horaire (`time`) définit un intervalle, `none` arrête le minuteur.
 |edge|	object!| non| tous| _(réservé pour un usage futur)_
 |para| object!| non| tous| Référence à un objet para pour le positionnement du texte.
 |font|	object!| non| tous| Référence à un objet font pour fixer les propriétés de la police de la facette texte.
@@ -188,7 +188,6 @@ Le type `base` est le type de figure le plus basique, mais aussi le plus versati
 
 _Ce type de face devrait être utilisé pour toute implémentation de composant graphique personnalisé._
 
-'''
 
 === Text (texte)
 
@@ -213,7 +212,6 @@ La facette `options` accepte les propriétés suivantes:
 
 * `default`: peut prendre n'importe quelle valeur, qui sera utilisée par la facette `data` si la conversion de `text` retourne `none`, comme dans le cas des chaînes de caractères ne pouvant être chargées par `load`.
 
-'''
 
 === Button (bouton)
 
@@ -246,8 +244,13 @@ Ce type représente une case à cocher, avec un texte de label optionnel, affich
 |`type`| `'check`
 |`text`| Texte du label.
 |`para`| Le champ `align` contrôle si le texte est affiché du côté gauche ou du côté droit.
-|`data`| `true`: coché; `false`: décoché (par défaut).
+|`data`| `true`: coché; `false`: décoché; `none`: décoché pour une case à cocher à 2 états, indéterminé pour une case à cocher à 3 états (par défaut);
+|`flags`| Active la fonctionnalité de case à cocher à 3 états (`word!`).
 |===
+
+*Drapeaux supportés:*
+
+* `tri-state`: active le troisième état, état indéterminé représenté par la valeur `none` dans la facette `data`.
 
 [cols="1, 1, 3", options="header"]
 |===
@@ -277,7 +280,6 @@ Ce type représente un bouton de radio, avec un texte de label optionnel, affich
 |===
 
 
-
 === Field (champ de saisie)
 
 Ce type représente un champ de saisie sur une seule ligne.
@@ -297,7 +299,9 @@ La facette `selected` contrôle le surlignage du texte (en lecture/écriture). U
 
 *Drapeaux supportés:*
 
-* `no-border`: supprime les décorations de bordure faites par le système sous-jacent d'interface graphique.
+* `no-border` : supprime les décorations de bordure faites par le système sous-jacent d'interface graphique.
+
+* `password` : au lieu des caractères tapés, des astérisques (\*) sont affichées.
 
 La facette `data` est synchronisée en temps réel avec la facette `text` en utilisant les règles de conversion suivantes:
 
@@ -317,7 +321,6 @@ La facette `options` accepte les propriétés suivantes:
 |`select`| `on-select`| Se produit chaque fois qu'un texte a été sélectionné en utilisant la souris ou le clavier.
 |`key`| `on-key`| Se produit chaque fois qu'une touche est pressée dans le champ de saisie.
 |===
-
 
 
 === Area (champ multiligne)
@@ -352,7 +355,6 @@ La facette `selected` contrôle le surlignage du texte (en lecture/écriture). U
 |`key`| `on-key`| Se produit chaque fois qu'une touche est pressée dans le champ multiligne.
 |===
 
-'''
 
 === Text-list (liste de textes)
 
@@ -398,7 +400,10 @@ La facette `data` accepte des valeurs arbitraires, mais seulement les valeurs de
 
 *Drapeaux supportés:*
 
+[NOTE, caption="Pas encore implémenté"]
+====
 * `scrollable`: active manuellement une barre de défilement verticale.
+====
 
 [cols="1, 1, 3", options="header"]
 |===
@@ -430,7 +435,10 @@ La facette `data` accepte des valeurs arbitraires, mais seulement les valeurs de
 
 *Drapeaux supportés:*
 
+[NOTE, caption="Pas encore implémenté"]
+====
 * `scrollable`: active manuellement une barre de défilement verticale.
+====
 
 [cols="1, 1, 3", options="header"]
 |===
@@ -443,6 +451,30 @@ La facette `data` accepte des valeurs arbitraires, mais seulement les valeurs de
 [NOTE]
 ====
 * Le nombre d'entrées visibles ne peut pas encore être défini par l'utilisateur.
+====
+
+
+=== Calendar
+
+Ce type représente un calendrier Grégorien mensuel couvrant l'intervalle du 1er janvier 1601 au 31 décembre 9999.
+
+[cols="1, 4", options="header"]
+|===
+|Facette| Description
+|`type`| `'calendar`
+|`data`| valeur de type `date!` qui représente le jour sélectionné.
+|===
+
+[cols="1, 1, 3", options="header"]
+|===
+|Type d'événement| Gestionnaire| Description
+|`change`| `on-change`| Se produit lorsqu'une date est sélectionnée dans le calendrier.
+|===
+
+[NOTE]
+====
+* By default, la facette `data` est initialisée à la date du jour.
+* Une valeur de `date!` inférieure ou supérieure aux limites spécifiées du calendrier sélectionnera respectivement la date minimale ou maximale supportée.
 ====
 
 
@@ -500,7 +532,6 @@ Ce type est utilisé pour afficher le flux d'une caméra vidéo.
 ====
 
 
-
 === Panel (panneau)
 
 Un panel est un conteneur pour d'autres figures.
@@ -546,7 +577,6 @@ Un tab-panel est une liste de panneaux dont un seul peut être visible à la foi
 * Si `pane` contient plus de panneaux que le nombre spécifié d'onglets, ils seront ignorés.
 * Lors de l'ajout/la suppression d'un onglet, le panneau correspondant doit être ajouté à/supprimé de la liste `pane`.
 ====
-
 
 
 === Window (fenêtre)

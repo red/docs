@@ -47,6 +47,6 @@ Utilisez `type?` pour renvoyer le type d'une valeur donnée.
 
 === Fonctions
 
-=== Natifs
+=== Natives
 
 === Opérateurs

@@ -23,7 +23,7 @@ Les mots ne stockent pas de valeurs, ils pointent vers des valeurs dans un conte
 
 == Création
 
-Les valeurs de type Word! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant la conversion `to` à partir des types de données: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, et `refinement!`.
+Les valeurs de type `word!` peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant la conversion `to` à partir des types de données: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, et `refinement!`.
 
 
 ```red

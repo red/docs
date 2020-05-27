@@ -352,7 +352,7 @@ Obtient ou fixe le champ jour d'une date. Les jours sout renvoyés sous forme d'
 *Exemples*
 
 ----
- d: 1-jan-2017
+d: 1-jan-2017
 == 1-Jan-2017
 d/day: 32
 == 32
@@ -527,6 +527,18 @@ d/zone: -4:00
 == 1-Mar-2017/5:30:00-04:00
 ----
 
+[NOTE]
+Fixer une valeur de `/zone` à une date qui n'a pas de valeur de `time` résultera en l'affectation de la valeur par défaut 0:0:0 à la valeur de `time`.
+
+*Exemples*
+
+----
+d: 28-Mar-2019
+== 28-Mar-2019
+
+d/zone: 1 d
+== 28-Mar-2019/0:00:00+01:00
+----
 
 === /timezone
 
@@ -874,7 +886,7 @@ sort [1/1/2017 5/10/1999 3-Jul-2017/5:41:40-2:00 1/1/1950 1/1/1980/2:2:2]
 ----
 
 
-== Arithmétique
+== Calculs
 
 Les opérations supportées sur les dates comprennent:
 

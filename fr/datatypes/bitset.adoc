@@ -24,7 +24,7 @@ Les valeurs de type Bitset! peuvent être créées en utilisant le constructeur 
 <bit-position> ::= <integer> | <char> | <string> | <char> - <char> | <integer> - <integer>
 ```
 
-=== Make
+* Make
 
 ```red
 >> make bitset! 50    ; crée un bitset vide avec des emplacements pour au moins 50 bits
@@ -57,7 +57,7 @@ Les intervalles sont définis en utilisant deux valeurs de `char!` ou d' `intege
 
 Les bitsets sont dimensionnés automatiquement pour correspondre aux spécifications de valeurs fournies. La taille est arrondie à la limite de l'octet supérieur.
 
-=== To
+* To
 
 La conversion d'une valeur à une valeur de type bitset en utilisant `to` est équivalente à l'utilisation de `make bitset!`, à l'exception que les valeurs de type `integer!` ne sont pas autorisées.
 
@@ -83,7 +83,7 @@ La conversion d'une valeur à une valeur de type bitset en utilisant `to` est é
 == make bitset! #{000000000000FFC0000000007FFFFFE0}
 ```
 
-=== Charset
+* Charset
 
 ```red
 >> source charset
@@ -115,10 +115,6 @@ charset: func ["Shortcut for `make bitset!`"
 
 == Complémentaires
 
-Afin de prendre en compte la vaste étendue des caractères Unicode, les bits extérieurs aux bitsets sont traités comme des bits virtuels qui peuvent ainsi être testés et assignés sans que cela ne provoque d'erreurs. La taille du bitset sera automatiquement étendue en fonction des besoins.
-
-Cela ne suffit toujours pas à gérer les grands intervalles tels qu'un bitset pour `tous les caractères Unicode à l'exception des chiffres`. Dans de tels cas, il est possible de définir un bitset complémentaire qui représente l'intervalle complémentaire des bits spécifiés. Cela rend possible d'avoir de grands bitsets tout en utilisant qu'une toute petite portion de la mémoire.
-
 Les bitsets complémentaires peuvent être créés en incluant le mot `not` dans un bloc de spécifications.
 
 ```red
@@ -126,30 +122,29 @@ charset [not "0123456789"]   ; tous les caractères à l'exception des chiffres
 == make bitset! [not #{000000000000FFC0}]
 ```
 
-On peut aussi utiliser `complement` pour créer des bitsets complémentaires.
+On peut aussi utiliser la valeur `complement` de type `action!` pour créer des bitsets complémentaires.
 
 ```red
->> b: make bitset! 42
+>> make bitset! 42
 == make bitset! #{000000000000}
 
->> complemented-b: complement b
-== make bitset! [not #{000000000000}]
-```
-
-```red
->> b: complement make bitset! 42
+>> complement make bitset! 42
 == make bitset! [not #{000000000000}]
 ```
 
 On peut utiliser `complement?` pour tester si un bitset a été défini comme complémentaire.
 
 ```red
->> complement? complemented-b
-== true
+>> b: complement make bitset! 42
+== make bitset! [not #{000000000000}]
 
->> complement? b: complement make bitset! 42
+>> complement? b
 == true
 ```
+
+[NOTE]
+Afin de prendre en compte la vaste étendue des caractères Unicode, les bits extérieurs aux bitsets sont traités comme des bits virtuels qui peuvent ainsi être testés et assignés sans erreurs. La taille du bitset sera automatiquement étendue en fonction des besoins.
+Cela ne suffit toujours pas à gérer les grands intervalles tels qu'un bitset pour `tous les caractères Unicode à l'exception des chiffres`. Dans de tels cas, il est possible de définir un bitset complémentaire qui représente l'intervalle complémentaire des bits spécifiés. Cela rend possible d'avoir de grands bitsets tout en n'utilisant qu'un tout petit espace mémoire.
 
 == Notation par chemin
 
@@ -237,7 +232,7 @@ Utilisez `type?` pour connaître le type d'une valeur donnée.
 
 `bitset?`, `charset`, `to-bitset`
 
-=== Natifs
+=== Natives
 
 `complement?`, `difference`, `exclude`, `intersect`, `union`
 

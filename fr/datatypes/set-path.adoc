@@ -5,9 +5,9 @@
 
 == Résumé
 
-Set-path! établit une "référence contextuelle" (mot dans un contexte, emplacement d'index dans une série, ou référence par clé dans une série ou une map).
+le type `set-path!` établit une "référence contextuelle" (mot dans un contexte, emplacement d'index dans une série, ou référence par clé dans une série ou une map).
 
-Set-path! appartient aux ensembles de types suivants: `any-block!`, `any-path!`, `series!`
+`Set-path!` appartient aux ensembles de types suivants: `any-block!`, `any-path!`, `series!`
 
 == Création
 

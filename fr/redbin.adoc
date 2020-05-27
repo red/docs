@@ -324,7 +324,7 @@ Compact: TBD
 header/type=23
 ----
 
-`symbol` représente le nom de l'action, du natif ou de la fonction (du contexte global seulement) utilisé(e) comme source pour cette valeur d' `op!`. 
+`symbol` représente le nom de l'action, de la native ou de la fonction (du contexte global seulement) utilisé(e) comme source pour cette valeur d' `op!`. 
 
 
 === Function! anchor:function[] 

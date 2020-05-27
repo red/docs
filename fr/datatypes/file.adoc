@@ -79,6 +79,6 @@ Utilisez `type?` pour connaître le type d'une valeur donnée.
 
 `cd`, `change-dir`, `clean-path`, `dir?`, `dirize`, `do-file`, `do-thru`, `exists-thru?`, `file?`, `flip-exe-flag`, `list-dir`, `load`, `load-thru`, `make-dir`, `normalize-dir`, `path-thru`, `read-thru`, `request-dir`, `request-file`, `save`, `split-path`, `suffix?`, `to-file`, `to-red-file` 
 
-=== Natifs
+=== Natives
 
 `browse`, `call`, `checksum`, `dehex`

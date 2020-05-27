@@ -1,0 +1,79 @@
+= Le type Datatype!
+:toc:
+:numbered:
+
+== Résumé
+
+Le type `Datatype!` représente tous les types valides qui sont prédéfinis en Red.
+
+`Datatype!` appartient aux ensembles de types suivants: `default!`, `immediate!`
+
+== Création
+
+Les valeurs de type `Datatype!` sont prédéfinies en Red et ne peuvent pas être créées.
+
+== Syntaxe littérale
+
+Par convention, la syntaxe littérale est une valeur de type `word!` terminée par un point d'exclamation `!`.
+
+Exemples: `bitset!`, `string!`, `time!`, `word!`.
+
+== Conversions
+
+Une valeur de type `datatype!` peut être convertie en toute valeur de l'ensemble de types `any-word!`, ainsi que dans les types de données `issue!`, `refinement!`.
+
+```red
+>> to word! string!
+== string!
+
+>> to set-word! string!
+== string!:
+
+>> to lit-word! string!
+== 'string!
+
+>> to get-word! string!
+== :string!
+
+>> to issue! string!
+== #string!
+
+>> to refinement! string!
+== /string!
+```
+
+== Comparaisons
+
+Aucune comparaison n'est supportée pour le type `datatype!`.
+
+== Test de valeurs
+
+Utilisez `datatype?` pour vérifier si une valeur est du type `datatype!`.
+
+```red
+>> datatype? string!
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? string!
+== datatype!
+```
+
+== Mots prédéfinis
+
+Le mot `datatype!` renvoie à tous les types de données prédéfinis. Les types de données prédéfinis peuvent être visualisés en tapant `help datatype!` dans la console Red.
+
+=== Actions
+
+`copy`
+
+=== Fonctions
+
+`to-get-word`, `to-issue`, `to-lit-word`, `to-refinement`, `to-set-word`, `to-word`
+
+=== Natives
+
+`as`

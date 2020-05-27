@@ -5,7 +5,7 @@
 
 == Résumé
 
-Les valeurs de type raffinement (`refinement!`) sont des valeurs symboliques qui sont utilisées pour modifier des fonction ou comme extensions pour des objets, des fichiers, des urls ou des chemins.
+Les valeurs de type `refinement!` (raffinement) sont des valeurs symboliques qui sont utilisées pour modifier des fonction ou comme extensions pour des objets, des fichiers, des urls ou des chemins.
 
 La fonction `repend` sans raffinement:
 ```red
@@ -81,6 +81,6 @@ Utilisez `type?` pour connaître le type d'une valeur donnée.
 
 `parse-func-spec`, `refinement?`, `to-refinement`
 
-=== Natifs
+=== Natives
 
 `function`

@@ -4,13 +4,13 @@
 
 == Résumé
 
-Les valeurs du type `Tag!` représentent des tags et éléments d'un langage de balisage (markup language).
+Les valeurs du type `tag!` représentent des tags et éléments d'un langage de balisage (markup language).
 
 `Tag!` appartient aux ensembles de types suivants: `any-string!`, `series!`
 
 == Création
 
-Les valeurs de type Tag! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
+Les valeurs de type `tag!` peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
 
 ```red
 >> make tag! "foo"

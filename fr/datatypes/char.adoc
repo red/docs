@@ -155,25 +155,61 @@ sort [#"c" #"b" #"d" #"a"]
 ----
 
 
-== Calcul
+== Calculs
 L'éventail complet des fonctions mathématiques peut être utilisé sur les valeurs de type `char!`. Une erreur `Math Error` est produite si le résultat du calcul sort de l'intervalle (hexadécimal) 00 - 10FFFF.
 
 *Exemples*
 
-----
-#"a" + 1
+```red
+>> #"a" + 1
 == #"b"
-#"a" - 32
+>> #"a" - 32
 == #"A"
-#"a" * 256
+>> #"a" * 256
 == #"愀"
 #"a" - 98
 *** Math Error: math ou number overflow
 *** Where: -
 *** Stack:  
+```
+
+[NOTE]
+Les résultats de calcul seront convertis au type du premier argument pour les valeurs  de type `char!`.
+
+```red
+>> #"a" + 1
+== #"b"
+
+>> 1 + #"a"
+== 98
+
+>> #"a" - 32
+>> #"a" - 32
+== #"A"
+
+>> 32 - #"a"
+== -65
+
+>> 256.00 * #"a"
+== 24832.0
+```
+
+== Mots prédéfinis
 
 ----
-
+null             #"^@"
+newline          #"^/"
+slash            #"/"
+dbl-quote        #"^""
+space            #" "
+lf               #"^/"
+tab              #"^-"
+CR               #"^M"
+dot              #"."
+escape           #"^["
+sp               #" "
+comma            #","
+----
 
 == Autres fonction concernant char!
 

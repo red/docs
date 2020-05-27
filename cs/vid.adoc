@@ -586,6 +586,32 @@ disabled
 
 Vypíná aktivitu piškotu (piškot nezpracovává žádnou událost).
 
+
+==== password
+
+*Syntaxe*
+
+----
+password
+----
+
+*Popis*
+
+Skryje vstup uživatele v textovém poli.
+
+
+==== tri-state
+
+*Syntaxe*
+
+----
+tri-state
+----
+
+*Popis*
+
+Umožní tří-stavový režim zatržítka (check box).
+
 ==== select
 
 *Syntaxe*
@@ -678,6 +704,7 @@ Kromě klíčových slov je možné zadat nastavení piškotů s použitím lite
 |*tuple!*|       Určuje barvu pozadí piškotu (kde je použitelné).
 |*issue!*|      Určuje barvu pozadí piškotu pomocí hexadecimálního zápisu (#rgb, #rrggbb, #rrggbbaa).
 |*string!*|     Určuje text, který má být piškotem zobrazen.
+|date!|		Nastavuje aspekt `data` (užitečné pro typ `calendar`).
 |*percent!*|    Nastavuje aspekt `data` piškotu (užitečné pro typy `progress` a `slider`).
 |*image!*|      Určuje obrázek pro pozadí piškotu(tam, kde je použitelné).
 |*url!*|        Načte zdroj, na nějž ukazuje URL a poté jej provede.

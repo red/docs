@@ -135,6 +135,6 @@ Utilisez `type?` pour connaître le type d'une valeur donnée.
 
 `average`, `hash?`, `path-thru`, `sum`, `to-hash`
 
-=== Natifs
+=== Natives
 
 `checksum`, `difference`, `exclude`, `extend`, `intersect`, `union`, `unique`
