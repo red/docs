@@ -13,6 +13,7 @@
 ### Other Docs
 
 . link:parse.adoc[Parse]
+. link:lexer.adoc[Lexer]
 . link:reactivity.adoc[Reactive Programming]
 . link:libred.adoc[LibRed API]
 . link:preprocessor.adoc[Preprocessor]

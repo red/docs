@@ -34,7 +34,8 @@ To use Red effectively, you should become familiar with all the datatypes availa
 |link:datatypes/lit-path.adoc[lit-path!]|`'foo/bar/baz`|Unevaluated (quoted) `path!` value.
 |link:datatypes/lit-word.adoc[lit-word!]|`'foo`|Unevaluated `word!` value.
 |link:datatypes/logic.adoc[logic!]|`true` `false`, `yes` `no`, `on` `off`|Boolean values.
-|link:datatypes/map.adoc[map!]|#( ), #(a: 1 b: 2)|Associative array of key/value pairs.
+|link:datatypes/map.adoc[map!]|`#( )`, `#(a: 1 b: 2)`|Associative array of key/value pairs.
+|link:datatypes/money.adoc[money!]` | `$123`, `-USD$1'234.56789` | Amount of a specific (or generic) currency.
 |link:datatypes/native.adoc[native!]|`-`|External functions written in Red/System.
 |link:datatypes/none.adoc[none!]|`-`|Value that does not belong to any other datatype. Analogous to nil or nothing.
 |link:datatypes/object.adoc[object!]|`-`|Named or unnamed contexts that contain `word: value` pairs.
@@ -43,7 +44,8 @@ To use Red effectively, you should become familiar with all the datatypes availa
 |link:datatypes/paren.adoc[paren!]|`(one 2 "three" 4:00:00)`|Immediately evaluated `block!`.
 |link:datatypes/path.adoc[path!]|`foo/bar/baz`|Series of values delimited by slashes `/`. Limited in the types of values that they can contain.
 |link:datatypes/percent.adoc[percent!]|`100%`, `0.76%`|Float values expressed as percentages.
-|link:datatypes/refinement.adoc[refinement!]|`/foo`|Symbolic values used as modifiers to functions or extensions to objects, files, urls, or paths.
+|link:datatypes/ref.adoc[ref!]| `@foo` | Denotes a reference by name.
+|link:datatypes/refinement.adoc[refinement!]|`/bar`|Symbolic values used as modifiers to functions or extensions to objects, files, urls, or paths.
 |link:datatypes/routine.adoc[routine!]|`-`|Function with a Red spec and Red/System body.
 |link:datatypes/set-path.adoc[set-path!]|`foo/bar/baz:`|Sets a "contextual reference" (word in a context, indexes slot in a series, or keyed reference in a series or map).
 |link:datatypes/set-word.adoc[set-word!]|`foo:`|Sets a reference to a value.

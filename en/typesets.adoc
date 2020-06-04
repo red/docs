@@ -38,7 +38,7 @@ See: link:datatypes/typeset.adoc[typeset!]
 
 === any-string!
 
-* make typeset! [link:datatypes/string.adoc[string!] link:datatypes/file.adoc[file!] link:datatypes/url.adoc[url!] link:datatypes/tag.adoc[tag!] link:datatypes/email.adoc[email!]]
+* make typeset! [link:datatypes/string.adoc[string!] link:datatypes/file.adoc[file!] link:datatypes/url.adoc[url!] link:datatypes/tag.adoc[tag!] link:datatypes/email.adoc[email!] link:datatypes/ref.adoc[ref!]]
 
 === any-type!
 
@@ -70,7 +70,7 @@ See: link:datatypes/typeset.adoc[typeset!]
 
 === scalar!
 
-* make typeset! [link:datatypes/char.adoc[char!] link:datatypes/integer.adoc[integer!] link:datatypes/float.adoc[float!] link:datatypes/pair.adoc[pair!] link:datatypes/percent.adoc[percent!] link:datatypes/tuple.adoc[tuple!] link:datatypes/time.adoc[time!] link:datatypes/date.adoc[date!]]
+* make typeset! [link:datatypes/char.adoc[char!] link:datatypes/integer.adoc[integer!] link:datatypes/float.adoc[float!] link:datatypes/pair.adoc[pair!] link:datatypes/percent.adoc[percent!] link:datatypes/tuple.adoc[tuple!] link:datatypes/time.adoc[time!] link:datatypes/date.adoc[date!] link:datatypes/money.doc[money!]]
 
 === series!
 

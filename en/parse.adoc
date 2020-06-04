@@ -90,10 +90,15 @@ The value referred by word is treated as a logical flag according to standard Re
 
 Depending on the type of input series, some Parse rules are not applicable or behave differently.
 
-* `any-block!`:
-    ** Matching by character set has no meaning and always fails;
-* `any-string!` and `binary!`:
-    ** Matching by datatype or type set is not supported.
+* `any-block!`: matching by character set has no meaning and always fails;
+* `any-string!`: matching by datatype or type set is not supported;
+* `binary!`: matching by datatype or type set is supported for UTF-8 encoded values; such match succeeds if matched portion of the input represents one of the datatype's literal forms.
+
+*Example*
+
+----
+parse to binary! "3 words: matching by datatype" [number! space set-word! to end]
+----
 
 == Parse rules
 

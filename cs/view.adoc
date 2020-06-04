@@ -116,7 +116,27 @@ Tento typ piškotu představuje jednoduché tlačítko.
 |*click*	| `on-click` | Spustí se při poklepu na tlačítko.
 |===
 
-'''
+=== Toggle
+
+Tento typ reprezentuje tlačítko, které si zachovává svůj stav i po stisknutí.
+This type represents a button that retains its state after being pushed.
+
+[cols="1,4", options="header"]
+|===
+|Facet| Description
+|`type`| `'toggle`
+|`text`| Text popisku pro toggle.
+|`para`| Řídí svislé a vodorovné přiřazení textu.
+|`data`| `true`: toggled; `false`: untoggled (default).
+|`image`| Uvnitř přepínacího tlačítka se zobrazí obrázek. Lze kombinovat s textem.
+|===
+
+[cols="1,1,3", options="header"]
+|===
+|Typ události| Ovladač| Popis
+|`change`| `on-change`| Spustí se při změně stavu přepínače aktivitou uživatele.
+|===
+
 
 === Check 
 
@@ -713,8 +733,8 @@ _Následující informace je uváděna jen pro úplnost, při normálním použ�
 
 [NOTE]
 ====
-* After a call to `show`, `changes` field is reset to 0 and `deferred` field block is cleared.
-* A `handle!` datatype will be used in the future for opaque OS handles.
+* Po zavolání `show` je pole `changes` nastaveno na 0 a pole bloku `deferred` je smazáno.
+* Datový typ `handle!` bude použit pro nejasné ovladače OS.
 
 ====
 	
@@ -735,7 +755,7 @@ Tato funkce se používá pro aktualizaci piškotu nebo seznamu piškotů na mon
 
 == Aktualizace zobrazení anchor:realtime-vs-deferred-updating[]
 
-View engine má dva různé režimy pro aktualizaci zobrazení po úpravě stromu piškotů: 
+`View engine` má dva různé režimy pro aktualizaci zobrazení po úpravě stromu piškotů: 
 
 * Aktualizace v reálném čase: jakákoli změna piškotu je okamžitě zobrazena v monitoru.
 
@@ -898,7 +918,7 @@ Následující názvy kláves mohou být vráceny polem `event/key` pouze pro sd
 
 === Aktéři 
 
-Aktéři (actors) jsou ovládací funkce pro události View engine. Jsou definovány v objektu, vytvořeném volnou formou (nemají prototyp) a odkazuje na ně facet `actors` . Všichni aktéři mají stejný blok specifikací.
+Aktéři (actors) jsou ovládací funkce pro události `View engine`. Jsou definovány v objektu, vytvořeném volnou formou (nemají prototyp) a odkazuje na ně facet `actors` . Všichni aktéři mají stejný blok specifikací.
 
 *Syntaxe*
 ----
