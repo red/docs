@@ -1,4 +1,4 @@
-= Datový typ integer!
+= Datový typ `integer!`
 :toc:
 :numbered:
 

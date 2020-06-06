@@ -1,4 +1,4 @@
-= Datový typ native!
+= Datový typ `native!`
 :toc:
 :numbered:
 

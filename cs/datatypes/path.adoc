@@ -1,4 +1,4 @@
-= Datový typ path!
+= Datový typ `path!`
 :toc:
 :numbered:
 
@@ -20,7 +20,7 @@ Typ `path!` je člen těchto typesetů: `any-block!`, `any-path!`, `series!`
 
 == Vytvoření
 
-Hodnoty typu path! mohou být vytvořeny literálovou syntaxí nebo při runtimu použitím konstruktoru `make` nebo konverzí `to`.
+Hodnoty typu path! mohou být vytvořeny literálovou syntaxí nebo při runtime použitím konstruktoru `make` nebo konverzí `to`.
 ```red
 >> 'foo/bar/baz 
 == foo/bar/baz
@@ -47,7 +47,7 @@ Konverze `to`:
 
 [NOTE, caption=Caution]
 
-It is possible to create `path!` values programmatically that do not conform to the lexical rules of a literal path. 
+Je možné programově vytvořit hodnotu `path!`. která však neodpovídá lexikálním pravidlům literálové cesty:
 
 ```red
 >> mold to path! [a #(b: 2) c 1.2 /z]
@@ -61,16 +61,18 @@ It is possible to create `path!` values programmatically that do not conform to 
 
 == Literálová skladba
 
+`BNF:`
 ```red
 <path-literal> ::= <path-head>/<selector>
 <path-head>    ::= <word-literal> | <path-literal>
 <selector>     ::= <integer> | <word-literal> | :<word-literal> | <paren>
 ```
+`Parse:`
+path: [word! some selector]
+selector: [#"/" [integer! | word! | get-word! | paren!]]
 
-Z výše uvedených definic vyplývá, že:
-
-* Datové typy pro path-head: link:word.adoc[word!] a `path!`
-* Datové typy selektorů: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!] a link:paren.adoc[paren!]
+* path-head: link:word.adoc[word!] a `path!`
+* selector: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!] a link:paren.adoc[paren!]
 
 
 == Postup vyhodnocení
@@ -150,7 +152,7 @@ Pokud v části path-head  zadaný selektor neexistuje, funkce `select` vrátí 
 == baz
 ```
 
-* Je-li selektorem celé číslo, použije se jako index pro vyzvednutí (`pick`) elementu z kolektoru path-head. Hodnota path-head musí být typem, který podporuje akci `pick` (např. `series!`, `tuple!` nebo `date!`).
+* Je-li selektorem celé číslo, použije se jako index pro vyjmutí (`pick`) elementu z kolektoru path-head. Hodnota path-head musí být typem, který podporuje akci `pick` (např. `series!`, `tuple!` nebo `date!`).
 
 ```red
 >> blk: [foo bar baz qux]

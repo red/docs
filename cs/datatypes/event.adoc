@@ -1,4 +1,4 @@
-= Datový typ event! 
+= Datový typ `event!` 
 :toc:
 :numbered:
 

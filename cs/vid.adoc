@@ -7,7 +7,7 @@
   
 == Úvod 
 
-VID (Visual Interface Dialect) je extenze Redu pro snadné vytváření grafickych uživatelských rozhranní nad jeho systémem link:view.html[View].
+VID (Visual Interface Dialect) je jednoduchý dialekt (DSL) pro popis grafického uživatelského rozhranní nad systémem link:view.html[View].
 
 
 VID umožňuje určení polohy každého grafického elementu a to třemi způsoby:

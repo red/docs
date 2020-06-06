@@ -1,4 +1,4 @@
-= Datový typ lit-word!
+= Datový typ `lit-word!`
 :toc:
 :numbered:
 

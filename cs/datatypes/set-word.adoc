@@ -1,4 +1,4 @@
-= Datový typ set-word!
+= Datový typ `set-word!`
 :toc:
 :numbered:
 
@@ -6,7 +6,7 @@
 
 Typ `set-word!` nastavuje odkaz na hodnotu.
 
-Je-li použit mimo hodnoty typu `object!` či `map!`, set-word nastaví odkaz v aktuálním kontextu na hodnotu výrazu, který následuje za set-word. 
+Je-li použit mimo hodnoty typu `object!` či `map!`, set-word nastaví odkaz v aktuálním kontextu na hodnotu výrazu, který následuje za `set-word`. 
 
 ```red
 foo: 2 * 21

@@ -1,4 +1,4 @@
-= Datový typ map!
+= Datový typ `map!`
 :toc:
 :numbered:
   

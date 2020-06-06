@@ -6,7 +6,7 @@
 
 == Záměry a cíle
 
-Systém Red/View (View engine) je grafický systém jazyka Red. Jeho cíle lze shrnout do těchto bodů:
+Systém View (View engine) je grafický systém jazyka Red. Jeho cíle lze shrnout do těchto bodů:
 
 * Minimální, datově orientované API
 * Virtuální strom objektů (strom piškotů) jako programovací rozhraní

@@ -1,4 +1,4 @@
-= Datový typ lit-path!
+= Datový typ `lit-path!`
 :toc:
 :numbered:
 

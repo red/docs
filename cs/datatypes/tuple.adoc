@@ -1,4 +1,4 @@
-= Datový typ tuple!
+= Datový typ `tuple!`
 :toc:
 :numbered:
 
@@ -6,7 +6,7 @@
 == Úvodem
 
 
-Datový typ `tuple!` (*entice*) se používá k prezentaci rgb a rgba hodnot pro barvy, ip adresy a čísla verzí.
+Datový typ `tuple!` (entice) se používá k prezentaci `rgb` a `rgba` hodnot pro barvy, ip adresy a čísla verzí.
 
 Entice (tuple) musí mít alespoň dvě desetinné tečky a obsahovat pozitivní hodnoty  v rozsahu `0 - 255`.
 

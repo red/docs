@@ -1,4 +1,4 @@
-= Datový typ time!
+= Datový typ `time!`
 :toc:
 :numbered:
 
@@ -12,8 +12,7 @@ Datový typ `time!` je člen těchto typesetů: `immediate!`, `scalar!`
 
 Hodnoty typu `time!` lze vytvořit s použitím literálové syntaxe nebo při runtime použitím konstruktoru `make` nebo konverzí `to`.
 
-== Literálová skladba
-BNF:
+=== Literálová skladba
 
 ```
 <time-literal> ::= <Red-time> | +<Red-time> | -<Red-time>
@@ -21,7 +20,7 @@ BNF:
                <minutes>:<seconds>.<decimals>
 ```
 
-== Vytvoření za běhu programu
+=== Konstruktor `make`
 
 ----
 make time! [<hour> <minute> <second>]
@@ -49,6 +48,7 @@ to time! <integer-literal> | <float-literal>
 >> make time! 300.45
 == 0:05:00.45
 ```
+=== Konverze `to`
 
 ```red
 >> to time! 60
@@ -61,13 +61,11 @@ to time! <integer-literal> | <float-literal>
 == 3:02:01
 ```
 
-== Path accessors
+== Přístup k polím
 
 Přístup ve formátu cesty (path accessor) je vhodný pro získání i zadání hodntot polí objektu typu `time!`.
 
 === /hour
-
-*Popis*
 
 Získá nebo nastaví hodinové pole času ve formátu `integer!`.
 
@@ -89,8 +87,6 @@ Získá nebo nastaví hodinové pole času ve formátu `integer!`.
 
 === /minute
 
-*Popis*
-
 Získá nebo nastaví minutové pole času ve formátu `integer!`.
 
 *Příklady*
@@ -111,8 +107,6 @@ Získá nebo nastaví minutové pole času ve formátu `integer!`.
 
 === /second
 
-*Popis*
-
 Získá nebo nastaví vteřinové pole času ve formátu `float!`.
 
 *Příklady*
@@ -131,7 +125,7 @@ Získá nebo nastaví vteřinové pole času ve formátu `float!`.
 == 3:02:58
 ```
 
-Pole času jsou také přístupná přes index cesty (path notation).
+Pole času jsou také přístupná přes `index cesty`:
 
 ```red
 >> t

@@ -1,4 +1,4 @@
-= Datový typ set-path!
+= Datový typ `set-path!`
 :toc:
 :numbered:
 
@@ -9,6 +9,29 @@ Hodnota typu set-path! nastavuje "kontextuální odkaz" (kontext slova, index sl
 
 Set-path! je subset těchto typesetů: `any-block!`, `any-path!`, `series!`
 
+== Literálová skladba
+
+*BNF:*
+
+```red
+<set-path-literal> ::= <path-literal>:
+
+<path-literal> ::= <path-head>/<selector>
+<path-head>    ::= <word-literal> | <path-literal>
+<selector>     ::= <integer> | <word-literal> | :<word-literal> | <paren>
+```
+*Parse:*
+
+```red
+set-path: [set-word! some selector]
+selector: [#"/" [integer! | word! | get-word! | paren!]]
+```
+
+Datové typy pro path-head: link:set-word.adoc[set-word!], link:set-path.adoc[set-path!]
+
+Datové typy selektoru: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
+
+
 == Vytvoření
 
 Hodnoty `set-path!` lze vytvořit při runtime konstruktorem `make` nebo konverzí `to`.
@@ -18,14 +41,14 @@ Hodnoty `set-path!` lze vytvořit při runtime konstruktorem `make` nebo konverz
 == foo/bar/baz:
 ```
 
-Lze vytvořit prázdný set-path zadané velikosti funkcí `make` a celým číslem jako argument:
+Lze vytvořit prázdný set-path o velikosti, zadané celým číslem jako argument:
 
 ```red
 >> make set-path! 10
 == :
 ```
 
-POZNÁMKA: Set-path se zde jeví jako název kontejneru. Hodnota integrálu není závazná:
+Set-path se zde jeví jako název kontejneru. Hodnota celočíselného argumentu není závazná:
 
 ```red
 sp: make set-path! 2
@@ -44,21 +67,6 @@ Konverze `to:
 >> to set-path! "foo bar baz"
 == foo/bar/baz:
 ```
-
-== Literálová skladba
-
-```red
-<set-path-literal> ::= <path-literal>:
-
-<path-literal> ::= <path-head>/<selector>
-<path-head>    ::= <word-literal> | <path-literal>
-<selector>     ::= <integer> | <word-literal> | :<word-literal> | <paren>
-```
-
-Datové typy path-head: link:set-word.adoc[set-word!], link:set-path.adoc[set-path!]
-
-Datové typy selektoru: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
-
 
 == Postup vyhodnocení
 

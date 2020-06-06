@@ -1,4 +1,4 @@
-= Datový typ pair!
+= Datový typ `pair!`
 :toc:
 :numbered:
 

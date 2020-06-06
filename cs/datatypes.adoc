@@ -7,7 +7,7 @@ Nicméně, abyste mohli používat Red efektivně, měli byste se se všemi dost
 
 == Přehled datových typů
 
-* `-` indikuje neexistenci literálové formy dané hodnoty. Tyto hodnoty musí být vytvořeney pomocí `make` nebo konstrukční skladbou (jíž je pro mnohé typy TBD).
+* `-` indikuje neexistenci literálové formy dané hodnoty. Tyto hodnoty musí být vytvořeney pomocí `make` nebo konstrukční skladbou (construction syntax or imperative code).
 
 
 [cols="20,60,90"]
@@ -29,7 +29,7 @@ Nicméně, abyste mohli používat Red efektivně, měli byste se se všemi dost
 |link:datatypes/function.adoc[function!]|`-`|Uživatelsky definované funkce.
 |link:datatypes/get-path.adoc[get-path!]|`:foo/bar/baz`|Nevyhodnocené hodnoty typu 'path!'.
 |link:datatypes/get-word.adoc[get-word!]|`:foo`|Nevyhodnocené hodnoty typu 'word!'.
-|link:datatypes/handle.adoc[handle!]|`-`|Opakní celá čísla, použitá pro interakci s operačním systémem.
+|link:datatypes/handle.adoc[handle!]|`-`|Neznámá (opakní) celá čísla, použitá pro interakci s operačním systémem.
 |link:datatypes/hash.adoc[hash!]|`-`|Bloku podobné rozhraní s rychlým vyhledáváním.
 |link:datatypes/image.adoc[image!]|`-`|Serie hodnot RGBA, které reprezentují pixely ve 2D zobrazeních.
 |link:datatypes/integer.adoc[integer!]|`1234`, `+1234`, `-1234`, `60'000'000`|32-bitová čísla bez desetinné tečky.
@@ -38,9 +38,9 @@ Nicméně, abyste mohli používat Red efektivně, měli byste se se všemi dost
 |link:datatypes/lit-word.adoc[lit-word!]|`'foo`|Nevyhodnocená hodnota `word!`.
 |link:datatypes/logic.adoc[logic!]|`true` `false`, `yes` `no`, `on` `off`|Booleovské hodnoty.
 |link:datatypes/map.adoc[map!]|`#( )`, `#(a: 1 b: 2)`|Asociativní řady (arrays) párů key/value.
-|link:datatypes/money.adoc[money!]` | `$123`, `-USD$1'234.56789` | Množství určité (nebo obecné) měny.
+|link:datatypes/money.adoc[money!]` | `$123`, `-USD$1'234.56789` | Množství určité (nebo generické) měny.
 |link:datatypes/native.adoc[native!]|`-`|Externí funkce, psané v Red/System.
-|link:datatypes/none.adoc[none!]|`-`|Hodnota, která nepatří k žádnému datovému typu. Analogicky k nula či nic.
+|link:datatypes/none.adoc[none!]|`-`|Hodnota, která nepatří k žádnému datovému typu. Analogicky k `nula` či `nic`.
 |link:datatypes/object.adoc[object!]|`-`|Pojmenované či nepojmenované kontexty, které obsahují páry `word: value`.
 |link:datatypes/op.adoc[op!]|`-`|Infixová funkce pro dva argumenty.
 |link:datatypes/pair.adoc[pair!]|`42x42`|Dvou dimenzionální souřadnice.
@@ -49,7 +49,7 @@ Nicméně, abyste mohli používat Red efektivně, měli byste se se všemi dost
 |link:datatypes/percent.adoc[percent!]|`100%`, `0.76%`|Hodnoty typu float!, vyjádřené jako procenta.
 |link:datatypes/ref.adoc[ref!]| `@foo` | Uvádí jméno odkazu.
 |link:datatypes/refinement.adoc[refinement!]|`/bar`|Symbolické hodnoty, použité jako modifikátory funkcí nebo extenzí objektů, souborů, URL či cest.
-|link:datatypes/routine.adoc[routine!]|`-`|Funkce s tělem, kompatibilním se specifikacemi Redu a Red/System.
+|link:datatypes/routine.adoc[routine!]|`-`|Funkce s tělem, kompatibilním se specifikacemi Red a Red/System.
 |link:datatypes/set-path.adoc[set-path!]|`foo/bar/baz:`|Nastaví "kontextuální referenci" (slovo v kontextu, indexový slot v řadě nebo klíčový odkaz v řadě či mapě).
 Sets a "contextual reference" (word in a context, indexes slot in a series, or keyed reference in a series or map).
 |link:datatypes/set-word.adoc[set-word!]|`foo:`|Nastaví odkaz k hodnotě.
@@ -58,7 +58,7 @@ Sets a "contextual reference" (word in a context, indexes slot in a series, or k
 |link:datatypes/time.adoc[time!]|`0:01:00`, `3:02:01`, `0:05:00.45`|Přímo vyjádřené hodnoty času. Hodiny, minuty, sekundy a milisekundy.
 |link:datatypes/tuple.adoc[tuple!]|`1.2.3`, `255.255.255.0`, `1.2.3.4.5.6.7.8.9.10.11.12`|Hodnoty RGB a RGBA barev, ip adresy a čísla verzí. 3-12 kladných celých čísel, oddělených desetinnou tečkou.
 |link:datatypes/typeset.adoc[typeset!]|`series!`, `number!`|Set, či kolekce předdefinovaných hodnot typu `datatype!` .
-|link:datatypes/unset.adoc[unset!]|`-`|Jednotlivá hodnota, reprezentující nepoužitelnou hodnotu.
+|link:datatypes/unset.adoc[unset!]|`-`|Typ jména, reprezentujícího nepoužitelnou (nepřiřazenou) hodnotu.
 |link:datatypes/url.adoc[url!]|\https://www.red-lang.org, \ftp://localhost|Přímo vyjádřené URL (Uniform Resource Locators).
 |link:datatypes/vector.adoc[vector!]|`-`|Uspořádaná sekvence hodnot stejného typu (`char!`, `integer!`, `percent!`, `float!`).
 |link:datatypes/word.adoc[word!]|`foo`|Symbolická hodnota, která může být použita jako proměnná. Identifikátor, jenž odkazuje na hodnotu v daném kontextu.

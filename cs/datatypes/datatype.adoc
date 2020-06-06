@@ -1,4 +1,4 @@
-= Datový typ datatype!
+= Datový typ `datatype!`
 :toc:
 :numbered:
 

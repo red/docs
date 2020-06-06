@@ -1,4 +1,4 @@
-= Datový typ action!
+= Datový typ `action!`
 :toc:
 :numbered:
 

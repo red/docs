@@ -1,4 +1,4 @@
-= Datový typ block!
+= Datový typ `block!`
 :toc:
 :numbered:
 

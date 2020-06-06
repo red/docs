@@ -1,57 +1,66 @@
-= Datový typ paren!
+= Datový typ `paren!`
 :toc:
 :numbered:
 
 == Úvodem
 
-Datový typ `paren!` je řada elementů libovolného typu, obklopená kulatými závorkami `(` a `)`. Obsah uvnitř závorek není, na rozdíl od obsahu běžných závorek, okamžitě vyhodnocován.
+Hodnota typu `paren!` je řada elementů libovolného typu, obklopená kulatými závorkami `(` ... `)`. Obsah uvnitř závorek je (bez dalšího) okamžitě vyhodnocován.
 
-Objekt paren lze vytvořit literálovou syntaxí nebo při runtime použitím konstruktoru `make`, konverzí `to` nebo funkcí `as`.
+Datový typ `paren` je subtypem typesetů `any-block!`, `any-list!` a `series!`.
 
-== Literálová skladba
+== Vytvoření
 
-Vyhodnocení obsahu mezi závorkami lze potlačit slovem `quote` před závorkou, což je nutné provést při deklaraci objektu nebo při introspekci `length?`, `type?`, `paren?`.
+Objekt typu paren! lze vytvořit literálovou syntaxí nebo při runtime použitím konstruktoru `make`, konverzí `to` nebo funkcí `as`.
+
+=== Literálová skladba
+
+Literálem hodnoty typu `paren!` je prostý zápis elementů, omezený kulatými závorkami. 
+Vyhodnocení obsahu mezi závorkami lze potlačit slovem `quote` před závorkou. Potlačené vyhodnocení také umožní deklarovat slovo bez přiřazené hodnoty: 
 
 ```red
->> pr: quote (2 + 3)
+>> (2 + 3)
+== 5
+>> quote (2 + 3)
 == (2 + 3)
 
->> par: quote (one 2 "three")
+>> quote (one 2 "three")
 == (one 2 "three")
+>> (one 2 "three")
+*** Script Error: `one` has no value
 
->> length? quote (one 2 "one")
-== 3
-
->> length? (1 2 "one")
-== 5
-```
-Bez příkazu `quote` tvoří závorka (paren) jakýsi `semi-paren`:
-
-```red
 >> type? (1 2 "one")
 == string!
-
-`Paren!` je členem typesetů: `any-list!`, `any-block!`, `series!`.
-
-Pareny lze rozepsat do více řádů a mohou obsahovat další pareny.
-
-```red
-quote (1
-2
-"three"
-)
-
-pp: quote (1 2 "three" (x foo 1.23))
-== (1 2 "three" (x foo 1.23))
+>> type? quote (1 2 "one")
+== paren!
 ```
 
-Řádky, mezery a tabulátory jsou dovoleny, pokud nerozdělují hodnoty.
+Hodnota typu `paren!` (případně i rozepsaná do více řádků) bez příkazu `quote` se redukuje na hodnotu posledního členu:.
 
-Ok:  `(print "foo")`
+```red
+>> pa: (1
+(    2
+(    "three"
+(    )
+>> pa
+== "three"
+```
 
-Not ok: `(pr   int "foo")`
+Automaticky nevyhodnocovaný objekt typu paren! můžeme vytvořit odkazem na počátek bloku: 
 
-== Konstruktorová skladba
+```red
+>> par: first [(1 + 2 * 3 / 4)]
+== (1 + 2 * 3 / 4)
+>> par
+== (1 + 2 * 3 / 4)
+>> do par
+== 2.25 
+```
+
+=== Konstruktor `make`
+
+```red
+>> make paren! [2 5 "a"]
+== (2 5 "a")
 
 Prázdný paren pro 10 elementů vytvoříme příkazem:
 
@@ -67,7 +76,7 @@ Paren s deseti elementy počáteční hodnoty `none`:
 == (none none none none none none none none none none)
 ```
 
-Použití konverze `to`:
+=== Konverze `to`, `as`
 
 ```red
 >> to paren! {one 2 "three" 4:00}
@@ -87,13 +96,7 @@ Použití `as`:
 == (1 2 3)
 ```
 
-Objekt typu paren! můžeme vytvořit odkazem na počátek bloku: 
 
-```red
->> par: first [(1 + 2 * 3 / 4)]
-== (1 + 2 * 3 / 4)
->> do par
-== 2 
 
 == Komparace
 
@@ -103,20 +106,9 @@ Lze použít všechny komparátory `=, ==, <>, >, <, >=, &lt;=, =?`, včetně fu
 Protože jsou hodnoty objektu typu `paren!` ihned vyhodnocovány, je vratnou hodnotou funkcí `min` nebo `max` hodnota posledního výrazu v parenu. Komparátory porovnávají poslední elementy porovnávaných parenů, není-li jejich vyhodnocení potlačeno.
 
 ```red
->> max (1 2 3) (4 5 6)    ; TO NENÍ PAREN!
+>> max (1 2 3) (4 5 6)    
 == 6
 
->> p1: quote (1 2 3)
-== (1 2 3)
->> p2: quote (4 5 6)
-== (4 5 6)
-
->> max p1 p2
-== (4 5 6)
-```
-
-
-```red
 >> (1 2 3) < (4 5 6)
 == true
 
@@ -135,24 +127,16 @@ Použijte funkci `paren?` k ověření, zda je posuzovaná hodnota typu  `paren!
 ```red
 >> paren? quote (42 print "foo")
 == true
-
-ALE !:
-
->> paren? (42 print "foo")    
-foo
-== false                         ; proč?
-
->> type? (42 print "foo")        ; protože
-foo
-== unset!
-
->> type? quote (42 print "foo")
-== paren!                     
 ```
+Ke zjištění typu také použijeme funkci `type?`:
+
+```red
+>> type? quote (42)
+== paren!
 
 [NOTE, caption=Poznámka]
 
-Neparafrázované (unquoted) hodnoty paren vrací typ poslední hodnoty
+Necitované (unquoted) hodnoty paren vrací typ poslední hodnoty
 
 ```red
 >> paren? (42)
@@ -171,22 +155,6 @@ Neparafrázované (unquoted) hodnoty paren vrací typ poslední hodnoty
 foo
 == unset!
 ```
-
-[NOTE]
-Není to tak, že máme neparafrázovaný paren
-
-```red
->> prn: (2 + 3)
-== 5
-```
-a parafrázovaný paren?
-
-```red
->> prp: quote (2 + 3)
-== (2 + 3)
-```
-Je-li to pravda, nutno upravit předchozí text.
-
 
 == Předdefinovaná slova
 

@@ -1,4 +1,4 @@
-= Datový typ object!
+= Datový typ `object!`
 :toc:
 :numbered:
 
