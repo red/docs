@@ -1,4 +1,4 @@
-= Datový typ file!
+= Datový typ `file!`
 :toc:
 :numbered:
 

@@ -1,4 +1,4 @@
-= Datový typ string!
+= Datový typ `string!`
 :toc:
 :numbered:
 
@@ -43,7 +43,7 @@ Rovněž je možné použít akce `form` a `mold` ke konverzi hodnoty na  "user-
 
 [NOTE, caption=Note]
 
-Pokus o převod hodnoty `none` konverzí `to` vyvolává chybové hlá?ení.
+Pokus o převod hodnoty `none` konverzí `to` vyvolává chybové hlášení.
 
 == Literálová skladba
 

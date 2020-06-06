@@ -10,7 +10,7 @@ Datové typy v typesetu mohou mít společné rysy nebo chování ale není to p
 
 Viz: link:datatypes/typeset.adoc[typeset!]
 
-== Aktuálně existující typesesty:
+== Aktuálně existující typesety:
 
 === all-word!
 

@@ -1,4 +1,4 @@
-= Datový typ none!
+= Datový typ `none!`
 :toc:
 :numbered:
 

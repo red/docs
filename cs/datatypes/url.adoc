@@ -1,17 +1,17 @@
-= Datový typ url!
+= Datový typ `url!`
 :toc:
 :numbered:
 
 
 == Úvodem
 
-Hodnota typu `url!` reprezentuje odkaz na zdroj ze sítě a umo??uje p?ímé vyjád?ení Uniform Resource Locators.
+Hodnota typu `url!` reprezentuje odkaz na zdroj ze sítě a umožňuje přímé vyjádření Uniform Resource Locators.
 
-Typ `url!` je subsetem typeset? `any-string!` a `series!`
+Typ `url!` je subsetem typeset: `any-string!` a `series!`
 
 == Vytvoření
 
-Hodnoty url! lze vytvo?it literálovou syntaxí neb p?i runtime pou?itím konstruktoru `make` nebo konverzí `to`.
+Hodnoty url! lze vytvořit literálovou syntaxí neb při runtime použitím konstruktoru `make` nebo konverzí `to`.
 
 ```red
 >> make url! [foo bar baz]
@@ -32,7 +32,7 @@ Jsou dovoleny kódovací převodníky Url, jako je %20 a %30.
 
 == Komparace
 
-Na typ `url!` lze aplikovat v?echny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
+Na typ `url!` lze aplikovat všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
 
 
 == Testování hodnot

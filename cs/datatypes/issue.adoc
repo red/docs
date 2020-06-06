@@ -1,4 +1,4 @@
-= Datový typ issue!
+= Datový typ `issue!`
 :toc:
 :numbered:
 

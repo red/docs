@@ -1,4 +1,4 @@
-= Datový typ float!
+= Datový typ `float!`
 :toc:
 :numbered:
 

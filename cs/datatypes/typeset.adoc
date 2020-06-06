@@ -1,4 +1,4 @@
-= Datový type typeset!
+= Datový type `typeset!`
 :toc:
 :numbered:
 
@@ -25,7 +25,7 @@ Například: `any-list!`, `number!`, `series!`
 <typeset-element> ::= <typeset-name> | <datatype-name>
 ```
 
-*Příkady*
+*Příklady*
 
 ```red
 >> number!: make typeset! [integer! float! percent!]

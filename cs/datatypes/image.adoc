@@ -1,4 +1,4 @@
-= Datový typ image! 
+= Datový typ `image!` 
 :toc:
 :numbered:
 

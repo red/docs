@@ -1,4 +1,4 @@
-= Datový typ get-word!
+= Datový typ `get-word!`
 :toc:
 :numbered:
 

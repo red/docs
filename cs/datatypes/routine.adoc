@@ -1,10 +1,10 @@
-= Datový typ routine!
+= Datový typ `routine!`
 :toc:
 :numbered:
 
 == Úvodem
 
-Hodnota `routine!` představuje funkci pro danou specifikaci a tělo Red/System.
+Hodnota `routine!` představuje funkci s danou specifikací a tělem z Red/System.
 
 Specifikace přijímá jako argument datový typ Redu a vrací hodnotu, jež automaticky konvertuje při volání na příslušné typy soustavy Red/System.
 
@@ -14,7 +14,7 @@ Typ `routine!` je člen typesetů `default!` a `any-function!`
 
 == Vytvoření
 
-Hodnoty routine! lze vytvořit s použitím funkce `routine`.
+Hodnoty routine! lze vytvořit s použitím vestavěné funkce `routine`.
 
 == Literálová skladba
 
