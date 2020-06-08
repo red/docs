@@ -1,11 +1,11 @@
-= Datový typ unset!
+= Datový typ `unset!`
 :toc:
 :numbered:
 
 
 == Úvodem
 
-Hodnota typu `unset!` reprezentuje nepoužitelnou hodnotu.
+Hodnota typu `unset!` reprezentuje nepoužitelnou, neznámou hodnotu.
 
 
 == Vytvoření

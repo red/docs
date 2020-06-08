@@ -1,4 +1,4 @@
-= Datový typ word! 
+= Datový typ `word!` 
 :toc:
 :numbered:
 

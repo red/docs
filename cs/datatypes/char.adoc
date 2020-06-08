@@ -1,4 +1,4 @@
-= Datový typ char! 
+= Datový typ `char!` 
 Version: Draft 3
 :toc:
 :numbered:

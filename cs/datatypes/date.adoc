@@ -1,4 +1,4 @@
-= Datový typ date!
+= Datový typ `date!`
 :toc:
 :numbered:
 

@@ -1,4 +1,4 @@
-= Datový typ hash! 
+= Datový typ `hash!` 
 :toc:
 :numbered:
 

@@ -97,10 +97,9 @@ Pravidlo `collect` přikazuje, aby `parse` vrátilo blok místo hodnoty `logic!`
 
 V závislosti na typu vstupních dat nejsou některá pravidla Parse uplatnitelná nebo se chovají odlišně.
 
-* `any-block!`:
-    ** Vyhledávání shody se sadou znaků nemá žádný význam a vždycky selže;
-* `any-string!` a `binary!`:
-    ** Porovnávání s datovým typem nebo se sadou typů není podporováno.
+* `any-block!`: porovnávání se sadou znaků nemá žádný význam a vždycky selže;
+* `any-string!`: porovnávání s datovým typem nebo sadou typů není podporováno.
+`binary!`: porovnávání s datovým typem nebo sadou typů je podporováno pro hodnoty s kódováním UTF-8; případná shoda je úspěšná, pokud porovnávané části vstupu reprezentují některou z literálových forem datového typu. 	
 
 == Pravidla dialektu Parse
 

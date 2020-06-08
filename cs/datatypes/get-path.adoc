@@ -1,4 +1,4 @@
-= Datový typ get-path!
+= Datový typ `get-path!`
 :toc:
 :numbered:
 

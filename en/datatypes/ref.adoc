@@ -33,7 +33,7 @@
 @
 @red_lang
 @dockimbel
-@§2.1
+@$2.1
 ----
 
 === Runtime construction

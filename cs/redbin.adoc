@@ -208,7 +208,7 @@ Compact: TBD
 
 header/type=12
 ---- 
-Volitelné výstelkové (padding) pole je přidáno kvůli zarovnání offsetu pole `value` s 64-bitovou hodnotou.
+Volitelné výstelkové (padding) pole je přidáno kvůli řádnému zarovnání offsetu pole `value` k 64-bitové hranici.
 
 === Context! anchor:context[] 
 
@@ -421,7 +421,7 @@ Compact: TBD
 
 header/type=38
 ---- 
-Procentní hodnota je uložena jako 64-bitový float. Volitelná výstelka (padding) doplňuje offset pole `value` na 64-bitovou hodnotu.
+Procentní hodnota je uložena jako 64-bitový float. Volitelné pole `padding` (výstelka) je přidáno pro řádné přisazení pole `value` k 64-bitové mezi.
 
 === Tuple! anchor:tuple[]   
 ----   
@@ -456,7 +456,7 @@ Compact: TBD
 
 header/type=43
 ---- 
-Časová hodota je uložena jako 64-bitový float. Volitelné pole výstelky je přidáno za účelem řádného zarovnání offsetu pole `value` k 64-bitové hodnotě.
+Časová hodota je uložena jako 64-bitový float. Volitelné pole výstelky (padding) je přidáno za účelem řádného přiřazení pole `value` k 64-bitové mezi.
 
 === Tag! anchor:tag[] 
 ----  
@@ -486,6 +486,30 @@ Compact: TBD
 header/type=47
 ----
 Datum je vložen do 32-bitové hodnoty typu integer! (stejně jako u`red-date!`). Časový údaj je uložen jako 64-bitový float.
+
+=== Money! anchor:money[] 
+
+----
+Default: header (4), currency (1), amount (11)
+Compact: TBD
+
+header/type=49
+header/sign=1|0 (bit 14)
+----
+
+TBTL: `amount` is a sequence of nibbles representing the money integral and decimal part (22 digits) in network byte order. If `sign` is set, the amount is interpreted as negative. `currency` is an integer value (0 for generic money, < 255 for existing currency code).
+
+=== Ref! anchor:ref[]
+
+----
+Default: header (4), head (4), length (4), data (unit*length)
+Compact: TBD
+
+header/type=50
+header/unit=1|2|4
+----
+
+Tatáž pravidla kódování jako pro `string!`.
 
 === Reference! anchor: reference[] 
 ---- 

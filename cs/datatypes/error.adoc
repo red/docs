@@ -1,4 +1,4 @@
-= Datový typ error!
+= Datový typ `error!`
 :numbered:
 
 == Úvodem

@@ -1,5 +1,5 @@
 = Visual Interface Dialect
-:imagesdir:: ../images
+:imagesdir: ../images
 :toc:
 :toclevels:3
 :numbered:
@@ -7,7 +7,7 @@
   
 == Úvod 
 
-VID (Visual Interface Dialect) je extenze Redu pro snadné vytváření grafickych uživatelských rozhranní nad jeho systémem link:view.html[View].
+VID (Visual Interface Dialect) je jednoduchý dialekt (DSL) pro popis grafického uživatelského rozhranní nad systémem link:view.html[View].
 
 
 VID umožňuje určení polohy každého grafického elementu a to třemi způsoby:
@@ -103,7 +103,7 @@ view layout [
 
 V této oblasti kódu je také možné definovat aktéry kontejneru - viz sekci <<Actors>>.
 
-== Rozvržení (layout) 
+== Rozvržení piškotů
 
 VID umisťuje piškoty do piškotu window podle jednoduchých pravidel:
 
@@ -706,6 +706,7 @@ Kromě klíčových slov je možné zadat nastavení piškotů s použitím lite
 |*string!*|     Určuje text, který má být piškotem zobrazen.
 |date!|		Nastavuje aspekt `data` (užitečné pro typ `calendar`).
 |*percent!*|    Nastavuje aspekt `data` piškotu (užitečné pro typy `progress` a `slider`).
+|logic!|	Nastavuje aspekt `data` piškotu (užitečné pro typy `toggle`, `check` a `radio`).
 |*image!*|      Určuje obrázek pro pozadí piškotu(tam, kde je použitelné).
 |*url!*|        Načte zdroj, na nějž ukazuje URL a poté jej provede.
 |*block!*|      Udává akci pro implicitní událost piškotu. U panelů určuje jejich obsah.

@@ -1,4 +1,4 @@
-= Datový typ logic!
+= Datový typ `logic!`
 :toc:
 :numbered:
 

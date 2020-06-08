@@ -1,4 +1,4 @@
-= Datový typ bitset!
+= Datový typ `bitset!`
 :toc:
 :numbered:
 

@@ -1,4 +1,4 @@
-= Datový typ tag!
+= Datový typ `tag!`
 :toc:
 :numbered:
 
@@ -58,7 +58,7 @@ Znak `<` je povolen až za první pozicí.
 
 [NOTE, caption=Poznámka]
 
-It is possible to create `tag!` values using `make` that are not affected by current lexer limitations. 
+Je možné vytvořit hodntoty typu `tag!` s použitím `make`, které nejsou ovlivněny aktuálními limitacemi lexeru. 
 
 ```red
 >> make tag! " foo"

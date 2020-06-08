@@ -1,4 +1,4 @@
-= Datový typ email!
+= Datový typ `email!`
 :toc:
 :numbered:
 
