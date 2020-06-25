@@ -81,7 +81,7 @@ Note:
 
 * Scanning is slower than prescanning, as it requires extra processing to do deep validation.
 
-== Processing values using iteration
+== Processing values incrementally
 
 === `load/next`
 
