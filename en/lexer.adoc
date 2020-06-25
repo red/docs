@@ -150,25 +150,18 @@ Scans the first Red value from an input text. It returns a block containing:
 The tokenization process is split in stages, triggering events where a user-provided callback function can be invoked. The different stages are:
 
 ----
-                             +-> ERROR
-                            /
-                      +-> CLOSE series
-                     /
-                    +-> OPEN series
-                   /
-PRESCAN token -> SCAN token -> LOAD value
-                   \             \
-                    +-> ERROR     +-> ERROR
+                +-> ERROR
+               /
+         +-> CLOSE series
+        /
+       +-> OPEN series
+      /
+-> PRESCAN token -> SCAN token -> LOAD value
+      \               \             \
+       +-> ERROR       +-> ERROR     +-> ERROR
 ----
 
-So the lexer events are: 
-
-* `prescan`
-* `scan`
-* `load`
-* `open`
-* `close`
-* `error`
+So the lexer events are: `prescan`, `scan`, `load`, `open`, `close`, `error`.
 
 === `transcode/trace`
 
