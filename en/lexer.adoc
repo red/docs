@@ -47,15 +47,11 @@ Returns : recognized type (datatype!).
 
 Scans a string or binary buffer according to Red syntactic rules, stops after the first value is recognized and returns its datatype. No value is loaded, so no extra memory is allocated. If the scanned input is invalid, the `error!` type is returned, no exception occurs.
 
-The `/fast` refinement trades speed for accuracy. The scanning will return the _most likely_ type (not doing any deep validation) using only the fast internal prescanning engine. Very little error checking is done in such case. The guessed types are shown in the following table:
+The `/fast` refinement trades speed for accuracy. The scanning will return the _most likely_ type (not doing any deep validation) using only the fast internal prescanning engine. Very little error checking is done in such case. Cases where the guessed type can differ from the real type are shown in the following table:
 
-[cols="1,1", options="header"]
+[cols="1,1", options="header", align="center"]
 |===
 |Guessed type | Real type
-|block!	 | block!
-|paren!	 | paren!
-|string!  | string!
-|map!	 | map!
 |path!	 | path! +
 lit-path! +
 get-path! +
@@ -71,22 +67,6 @@ word! +
 lit-word! +
 get-word! +
 set-word! (2)
-|char!	 | char!
-|issue!	 | issue!
-|file!	 | file!
-|binary! | binary!
-|percent! | percent!
-|float!	 | float!
-|tuple!	 | tuple!
-|date!	 | date!
-|pair!	 | pair!
-|time!	 | time!
-|money!	 | money!
-|tag!	 | tag!
-|url!	 | url!
-|email!	 | email!
-|money!	 | money!
-|ref!	 | ref!
 |===
 
 (1) Mostly because of integer! to float! promotion rules for out of range integers.
@@ -170,12 +150,15 @@ Scans the first Red value from an input text. It returns a block containing:
 The tokenization process is split in stages, triggering events where a user-provided callback function can be invoked. The different stages are:
 
 ----
-                     /-> CLOSE series
-                    /-> OPEN series
+                             +-> ERROR
+                            /
+                      +-> CLOSE series
+                     /
+                    +-> OPEN series
                    /
 PRESCAN token -> SCAN token -> LOAD value
                    \             \
-                    \-> ERROR     \-> ERROR
+                    +-> ERROR     +-> ERROR
 ----
 
 So the lexer events are: 
@@ -204,22 +187,29 @@ Returns    : a single value or a block of values.
 
 Converts an UTF-8 encoded input binary series into a Red value according to Red syntactic rules, calling a user-provided callback function for each lexer events. 
 
-Note: the body block can start with an optional filtering block, for indicating which events will be triggered. This allows to reduce the number of callback calls resulting in much better processing performance.
-
 Callback function specification block:
 
 ----
 func [
-    event [word!]                    ;-- current lexer state (see table below).
-    input [string! binary!]          ;-- reference to the input series at current loading position (can be changed).
-    type  [datatype! word! none!]    ;-- word or datatype describing the type of token or value currently processed.
-    line  [integer!]                 ;-- current input line number.
-    token                            ;-- current token as an input slice (pair!) or a loaded value.
+    event [word!]               ;-- current lexer state (see table below).
+    input [string! binary!]     ;-- reference to the input series at current loading position (can be changed).
+    type  [datatype! word!]     ;-- word or datatype describing the type of token or value currently processed.
+    line  [integer!]            ;-- current input line number.
+    token                       ;-- current token as an input slice (pair!) or a loaded value.
     return: [logic!]
+][
+    [events]                    ;-- optional restricted event names list
+    ...body...
 ]
 ----
 
-The meaning of some arguments and return value _depends_ on the event. The following table documents the possible combinations and effects:
+The offset of the `input` series argument is set where the lexer stopped after detection a token's end. That offset can be modified from within the callback function. If an `error` event is ignored, the input does not advance automatically, it's up to the callback function to set the `input` series to the right position for resuming the processing. Failure to do so can result in infinite loops.
+
+In `error` events, `type` argument contains the datatype name that was partially recognized. If the error happens on an isolated character, like on an unmatched closing delimiter `) ] }`, `type` is set to `error!` as no specific datatype is recognized in such cases.
+
+The body block can start with an optional filtering block, for indicating which events will be triggered. This allows to reduce the number of callback calls resulting in much better processing performance.
+
+The meaning of some arguments and return value __depends__ on the event. The following table documents the possible combinations and effects:
 
 [cols="1,1,1,1,2", options="header"]
 |===
@@ -238,7 +228,7 @@ The meaning of some arguments and return value _depends_ on the event. The follo
 `false`: ignore| When a syntax error occurs.
 |===
 
-Possible values for `type` field (word!) in `scan` event:
+Possible values for `type` field (word! or datatype!) in `scan` event:
 ----
 eof comment hex error! block! paren! string! map! path! word! refinement!
 issue! file! binary! char! percent! integer! float! tuple! date! pair! time!
@@ -265,6 +255,8 @@ Notes:
 
 * If an `open` event is dropped, the corresponding `close` event should also be dropped.
 
+
+See examples at https://github.com/red/code/tree/master/Scripts/lexer
 
 == Values Literal Syntax
 
