@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 = Red Programming Language Documentation
 
 == Česká verze
@@ -8,3 +9,15 @@ Více informací o programovacím jazyku Red lze číst na stránkách http://re
 
 Join the chat at https://gitter.im/red/docs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge[image:https://badges.gitter.im/red/docs.svg[https://gitter.im/red/docs]]
 
+=======
+= Red Programming Language Documentation
+
+== Česká verze
+
+_Tato dokumentace není dokončena._
+
+Více informací o programovacím jazyku Red lze číst na stránkách http://red-lang.org
+
+Join the chat at https://gitter.im/red/docs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge[image:https://badges.gitter.im/red/docs.svg[https://gitter.im/red/docs]]
+
+>>>>>>> c21820bef3ac019d5a0db3f1b488bdff96260aa5
