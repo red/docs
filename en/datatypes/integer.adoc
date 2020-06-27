@@ -1,0 +1,85 @@
+= Integer! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+`Integer!` values are 32-bit numbers with no decimal point. They span a range from `-2147483648` to `2147483647`.
+
+By design `integer!` does not auto convert to `float!` on overflow.
+
+`Integer!` is a member of the following typesets: `immediate!`, `number!`, `scalar!`
+
+== Literal syntax
+
+A sequence of digits with no decimal point.
+
+`1234`
+
+`+` or `-` immediately before the first digit indicates the positive or negative sign of the integer.
+
+`-1234`
+
+`+1234`
+
+Leading zeros are ignored.
+```red
+>> +001234
+== 1234
+```
+
+Single quote `'` is used as a place value separator for large values and can appear anywhere after the first digit.
+
+```red
+60'000'000
+```
+
+A trailing `'` after the last digit will raise an error:
+
+```red
+>> 60'000'000'
+*** Syntax Error: invalid integer! at "60'000'000'"
+*** Where: do
+*** Stack: load 
+```
+
+== Comparisons
+
+All comparators can be applied on `integer!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+
+
+== Conversion
+
+An integer value can be converted at runtime to a `float!` or `string!` by using a `to` conversion.
+
+```red
+>> to float! 42
+== 42.0
+
+>> to string! 42
+== "42"
+```
+
+If `integer!` and `float!` are combined in an expression, the result will be a `float!` value.
+
+```red
+>> 42 * 42.0
+== 1764.0
+```
+
+== Testing values
+
+Use `integer?` to check if a value is of the `integer!` datatype.
+
+```red
+>> integer? 42
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? 42
+== integer!
+```
+

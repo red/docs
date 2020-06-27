@@ -1,0 +1,151 @@
+= Le type Block!
+:toc:
+:numbered:
+
+== Résumé
+
+Les blocs sont utilisés pour représenter des collections de données ou de code qui peuvent être évaluées à n'importe quel moment. Ils sont un type de `series!` sans restriction sur les types des valeurs qui peuvent être référencées.
+
+Par défaut les valeurs et les expressions dans un bloc ne sont pas évaluées:
+
+----
+>> my-block: [print reverse "Hello" 2 * 2 42]
+== [print reverse "Hello" 2 * 2 42]
+
+>> my-block
+== [print reverse "Hello" 2 * 2 42]
+----
+
+Les valeurs `native!` `do` et `reduce` sont utilisées pour déclencher l'évaluation des expressions dans un bloc.
+
+* `do` évalue un bloc et renvoie le résultat de la dernière expression:
+
+----
+>> do my-block
+olleH
+== 42
+----
+
+* `reduce` renvoie une copie du bloc, après avoir évalué toutes les expressions:
+
+----
+>> reduce my-block
+olleH
+== [unset 4 42]
+----
+
+`block!` appartient aux ensembles de types suivants: `any-block!`, `any-list!`, `series!`
+
+== Création
+
+Les valeurs de type block! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution par le constructeur `make` ou par conversion avec `to`.
+
+== Syntaxe littérale
+
+Un ensemble, délimité par un crochet ouvrant et un crochet fermant, de valeurs séparées par des espaces.
+
+`[]`
+
+`[one 2 "three"]`
+
+`[print 1.23]`
+
+
+Les blocs peuvent s'étendre sur plusieurs lignes, et peuvent contenir d'autres blocs.
+
+----
+[one
+2
+"three"
+]
+
+[one 2 "three" [x foo 1.23]]
+----
+
+
+Des lignes, espaces et tabulations supplémentaires sont permis tant qu'ils n'interrompent pas des valeurs.
+
+Correct: `[42 print "foo"]`
+
+Incorrect: `[42 pr   int "foo"]`
+
+== Création lors de l'exécution
+
+* `Make`
+
+Pour créer un bloc vide pré-alloué pour 10 éléments:
+
+----
+>> make block! 10
+== []
+----
+
+Pour créer un bloc de 10 éléments dont les valeurs initiales sont toutes none:
+
+----
+>> append/dup make block! 10 none 10
+== [none none none none none none none none none none]
+----
+
+* `To`
+
+----
+>> to block! {one 2 "three" 4:00}
+== [one 2 "three" 4:00:00]
+
+>> to block! "foo 1.23 me@me.com"
+== [foo 1.23 me@me.com]
+
+>> to block! 42
+== [42]
+----
+
+== Accès aux éléments d'un bloc
+
+Un bloc peut être indexé avec la _notation par chemin_, en utilisant des valeurs d'index entières commençant à 1:
+
+----
+>> b: [12 [34 56]]
+== [12 [34 56]]
+
+>> b/1
+== 12
+>> b/2/2
+== 56
+----
+
+Un bloc (et toute valeur de type `any-list!` d'ailleurs) peut également être traité comme un ensemble de couples clé/valeur; auquel cas la première occurence de la valeur, fournie au chemin, sera recherchée, et la valeur qui la suit sera renvoyée.
+
+----
+>> b: [x 12 y [z 34]]
+== [x 12 y [z 34]]
+
+>> b/x
+== 12
+
+>> b/y
+== [z 34]
+>> b/y/z
+== 34
+----
+
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués au type block!: `=, ==, <>, >, <, >=, &lt;=, =?`. De plus, `min`, et `max` sont aussi supportés.
+
+== Test de valeurs
+
+Utilisez `block?` pour vérifier si une valeur est du type `block!`.
+
+----
+>> block? [42]
+== true
+----
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+----
+>> type? [42]
+== block!
+----

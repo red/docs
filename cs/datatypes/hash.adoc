@@ -1,0 +1,140 @@
+= Datový typ `hash!` 
+:toc:
+:numbered:
+
+// partly adapted from https://www.red-lang.org/search/label/hash
+
+== Úvodem
+
+Hodnota typu `hash!` poskytuje rozhraní ve formě bloku s rychlým vyhledáváním.
+
+Výchozí hešovací funkce je uživatelskou implementací algoritmu z linku: https://github.com/aappleby/smhasher[MurmurHash3]
+
+Typ `hash!` je člen těchto typesetů: `default!`, `series!`, `any-block!` a `any-list!`
+
+== Vytvoření
+
+Hodnota typu hash! nemá literálovou variantu a lze ji vyhodnotit pouze za běhu programu s použitím konstruktoru `make` nebo konverzí `to`:
+
+```red
+>> list: make hash! [a 123 "hello" b c 789]   
+nebo
+>> list: to hash! [a 123 "hello" b c 789]
+
+== make hash! [a 123 "hello" b c 789]
+```
+
+== Přístup k elementům objektu `hash!`
+
+=== Použitím notace `path!`
+
+Získání hodnoty s použitím `c` jako klíče:
+
+```red
+>> list/c
+== 789
+```
+
+Nastavení hodnoty s použitím `c` jako klíče:
+
+```red
+>> list/c: 42
+== 42
+
+>> list
+== make hash! [a 123 "hello" b c 42]
+```
+
+=== Použitím slova `find`
+
+```red
+>> find list 'b
+== make hash! [b c 42]
+```
+
+=== Použitím slova `select`
+
+```red
+>> dict: make hash! [a 123 b 456 c 789]
+== make hash! [a 123 b 456 c 789]
+
+>> select dict 'c
+== 789
+
+>> select dict 456
+== c
+
+>> dict: make hash! [2 123 4 456 6 2 8 789]
+== make hash! [2 123 4 456 6 2 8 789]
+
+>> select/skip dict 2 2
+== 123
+```
+
+== Operace se sadami dat
+
+S hešovými hodnotami jsou možné následující 'množinové' operace: `difference`, `exclude`, `intersect`, `union`, `unique`.
+
+```red
+>> dict1: make hash! [a 123 b 456 c 789]
+== make hash! [a 123 b 456 c 789]
+
+>> dict2: make hash! [2 123 4 456 6 2 8 789]
+== make hash! [2 123 4 456 6 2 8 789]
+```
+
+```red
+>> difference dict1 dict2
+== make hash! [a b c 2 4 6 8]
+```
+
+```red
+>> exclude dict1 dict2
+== make hash! [a b c]
+```
+
+```red
+>> intersect dict1 dict2
+== make hash! [123 456 789]
+```
+
+```red
+>> union dict1 dict2
+== make hash! [a 123 b 456 c 789 2 4 6 8]
+```
+
+```red
+>> unique dict2
+== make hash! [2 123 4 456 6 8 789]
+```
+
+== Komparace
+
+Na hodnotu `hash!` lze aplikovat všechny komparační operátory:
+`=, ==, <>, >, <, >=, &lt;=, =?`. Navíc je také podporována funkce `min` a `max`.
+
+== Testování hodnot
+
+Idiomem `hash?` ověříme, zda je hodnota typu `hash!`.
+
+```red
+>> hash? dict1
+== true
+```
+
+Typ dané hodnoty zjistíme dotazem `type?`:
+
+```red
+>> type? dict2
+== hash!
+```
+
+== Předdefinovaná slova
+
+=== Funkce
+
+`average`, `hash?`, `path-thru`, `sum`, `to-hash`
+
+=== Nativa
+
+`checksum`, `difference`, `exclude`, `extend`, `intersect`, `union`, `unique`

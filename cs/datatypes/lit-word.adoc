@@ -1,0 +1,78 @@
+= Datový typ `lit-word!`
+:toc:
+:numbered:
+
+== Úvodem
+
+Hodnota typu `lit-word!` je nevyhodnocená hodnota typu `word!`. Sama o sobě je literálovou hodnotou.
+
+Hodnota `lit-word!` se při vyhodnocení přemění na typ `word!`, jako např. při zadání do prostředí Red REPL.
+
+`Lit-word!` je členem těchto typesetů: `any-word!`, `all-word!`, `immediate!`
+
+
+== Vytvoření
+
+Hodnoty `lit-word!` lze vytvořit literálovou syntaxí nebo při runtime použitím konverze `to` z datových typů: `char!`, `logic!`, `string!`, `datatype!`, `issue!` a `refinement!`.
+
+```red
+>> 'test
+== test
+
+>> type? 'test
+== word!
+```
+
+```red
+>> to lit-word! #"X"
+== 'X
+
+>> to lit-word! true  
+== 'true
+
+>> to lit-word! "Hello"
+== 'Hello
+
+>> to lit-word! float!  
+== 'float!
+
+>> to lit-word! #A42
+== 'A42
+
+>> to lit-word! /only
+== 'only
+```
+
+== Literálová skladba
+
+Literálové slovo začíná apostrofem `'`, následovaným jedním čí více znaky sady Unicode, včetně interpunkčních znaků ze sady ASCII: `! & ' * + - . < = > ? _ | ~``
+
+Nepovolené jsou řídící znaky, znaky pro mezery a interpunkční znaky ze sady ASCII: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+
+Hodnota `lit-word!` nemůže začínat číslem.
+
+== Komparace
+
+Na typ `lit-word!` lze aplikovat všechny komparátory: `=, ==, <>, >, <, >=, <=, =?`. 
+
+== Testování hodnot
+
+K ověření, zda je hodnota typu `lit-word!` použijeme funkci `lit-word?` .
+
+```red
+>> lit-word? first ['foo bar baz]
+== true
+```
+
+Funkce `type?` Vrací typ zadané hodnoty.
+
+```red
+>> type? first ['foo bar baz]
+== lit-word!
+```
+
+== Předdefinovaná slova
+
+=== Funkce
+
+`to-lit-word`

@@ -1,0 +1,129 @@
+= Datový typ `vector!`
+:toc:
+:numbered:
+
+
+== Úvodem
+// Description taken from https://github.com/meijeru/red.specs-public/blob/master/specs.adoc#41-type-list
+
+Hodnota typu `vector!` je uspořádanou sekvencí identických typů  `char!`, `integer!`, `percent!` nebo `float!`.
+
+Datový typ `vector!` je členem typesetů `default!` a `series!`.
+
+== Vytvoření
+
+Hodnoty typu vector! lze vytvořit za běhu programu s použitím konstruktoru `make`.
+
+// grammar from https://github.com/meijeru/red.specs-public/blob/master/specs.adoc#code-vector-code
+
+```
+<vector>      ::= make vector! <vector-spec>
+
+<vector-spec> ::= <block> | [ <type-size> <block>]
+<type-size>   ::= char! 8 | char! 16 | char! 32 |
+                  integer! 8 | integer! 16 | integer! 32 |
+                  float! 32 | float! 64 | 
+				  percent! 32 | percent! 64
+```
+
+```red
+>> make vector! [integer! 32 [1 2 3 4 5]]
+== make vector! [1 2 3 4 5]
+
+>> make vector! [#"r" #"e" #"d"]
+== make vector! [#"r" #"e" #"d"]
+```
+
+Je-li argumentem konstruktoru `make` hodnota `N` typu `integer!` nebo `float!`, vytvoří se vektor o velikosti `N` s jednotlivými hodnotami nastavenými na `0`.
+
+```red
+>> make vector! 3
+== make vector! [0 0 0]
+
+>> make vector! 3.0
+== make vector! [0 0 0]
+```
+
+== Komparace
+
+Na hodnotu typu `vector!` lze aplikovat všechny komparační operátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
+
+== Aritmetika
+
+Aplikace operátorů `+ - * / // %` nebo funkcí `add`, `average`, `divide`, `mod`, `modulo`, `multiply`, `remainder`, `subtract` a `sum` na dva vektory vytváří nový vektor:
+
+```red
+>> x: make vector! [1 2 3 4]
+== make vector! [1 2 3 4]
+
+>> y: make vector! [5 6 7 8]
+== make vector! [5 6 7 8]
+
+>> x * y
+== make vector! [5 12 21 32]
+```
+
+Výchozí vektory se nemění:
+
+```red
+>> x
+== make vector! [1 2 3 4]
+
+>> y
+== make vector! [5 6 7 8]
+```
+
+Početní operace s jedním vektorem vede k modifikaci původního vektoru:
+
+```red
+>> x * 2
+== make vector! [2 4 6 8]
+
+>> x
+== make vector! [2 4 6 8]
+```
+
+Příkazem `copy` lze zabránit modifikaci původního vektoru:
+```red
+>> (copy x) * 2
+== make vector! [2 4 6 8]
+
+>> x
+== make vector! [1 2 3 4]
+
+>> 2 * copy x
+== make vector! [2 4 6 8]
+
+>> x
+== make vector! [1 2 3 4]
+```
+
+== Testování hodnot
+
+Idiomem `vector?` ověříme, zda je hodnota typu `vector!`.
+
+```red
+>> vector? x
+== true
+```
+
+Idiom `type?` vrací datový typ zadané hodnoty.
+
+```red
+>> type? y
+== vector!
+```
+
+== Předdefinovaná slova
+
+=== Akce
+
+`add`, `and~`, `divide`, `multiply`, `or~`, `remainder`, `subtract`, `xor~`
+
+=== Funkce
+
+`average`, `draw`, `mod`, `modulo`, `sum`, `vector?`
+
+=== Operátory
+
+`%`, `*`, `+`, `-`, `/`, `//` 

@@ -1,0 +1,76 @@
+= Datový typ `set-word!`
+:toc:
+:numbered:
+
+== Úvodem
+
+Typ `set-word!` nastavuje odkaz na hodnotu.
+
+Je-li použit mimo hodnoty typu `object!` či `map!`, set-word nastaví odkaz v aktuálním kontextu na hodnotu výrazu, který následuje za `set-word`. 
+
+```red
+foo: 2 * 21
+```
+
+`Set-word!` je člen těchto typesetů: `any-word!`, `all-word!`, `immediate!`
+
+
+== Vytvoření
+
+Hodnty set-word! lze vytvořit literálovou syntaxí nebo při runtime konverzí `to` z datových typů:  `char!`, `logic!`, `string!`, `datatype!`, `issue!`, `refinement!` a  `lit-word!`.
+
+```red
+>> to set-word! #"X"
+== X:
+
+>> to set-word! true
+== true:
+
+>> to set-word! "Hello"
+== Hello:
+
+>> to set-word! float!
+== float!:
+
+>> to set-word! #A42
+== A42:
+
+>> to set-word! /only
+== only:
+
+>> to set-word! 'foo
+== foo:
+```
+
+
+== Literálová skladba
+
+Jeden či více znaků z celé sady Unicode, včetně interpunkčních znaků ze sady ASCII: `! & ' * + - . < = > ? _ | ~`, to vše doplněné dvojtečkou `:`. 
+
+Neplatné jsou řídící znaky, znaky mezer a interpunkční znaky ze sady ASCII: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+
+Hodnota `set-word!` nemůže začínat číslem.
+
+
+== Testování hodnot
+
+Funkcí `set-word?` ověříme, zda je hodnota typu `set-word!`.
+
+```red
+>> set-word? first [foo: 'bar baz]
+== true
+```
+
+Funkce `type?` vrací datový typ dané hodnoty.
+
+```red
+>> type? first [foo: 'bar baz]
+== set-word!
+```
+
+
+== Předdefinovaná slova
+
+=== Funkce
+
+`to-set-word`

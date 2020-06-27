@@ -1,0 +1,151 @@
+= Datový typ `block!`
+:toc:
+:numbered:
+
+== Úvodem
+
+Bloky se používají k prezentaci kolekcí dat nebo kódu, jež mohou být kdykoli vyhodnoceny. Tyto kolekce patří do typesetu `series!` bez omezení typu odkazovaných hodnot.
+
+Hodnoty a výrazy v bloku se implicitně nevyhodnocují:
+
+----
+>> my-block: [print reverse "Hello" (2 + 3 42]
+== [print reverse "Hello" (2 + 3) 42]
+
+>> my-block
+== [print reverse "Hello" (2 + 3) 42]
+----
+
+`Nativní` příkazy `do` a `reduce` spouští vyhodnocení výrazu v bloku.
+
+Příkaz `do` vyhodnotí blok a vrátí výsledek posledního výrazu:
+
+----
+>> do my-block
+olleH
+== 42
+----
+
+Příkaz `reduce` vrací kopii bloku, s vyhodnocením všech výrazů:
+
+----
+>> reduce my-block
+olleH
+== [unset 5 42]
+----
+
+Typ `block!` je člen typesetů `series!`, `any-block!` a `any-list!`.
+
+== Vytvoření
+
+Hodnoty bloku lze vytvořit s použitím literálové syntaxe nebo při běhu programu s použitím konstruktoru `make` nebo konverzí `to`.
+
+== Literálová skladba
+
+Kolekce hodnot, vymezených hranatými závorkami a oddělených mezerami.
+
+`[]`
+
+`[one 2 "three"]`
+
+`[print 1.23]`
+
+
+Bloky mohou zabírat více řádků a mohou obsahovat jiné bloky.
+
+----
+[one
+2
+"three"
+]
+
+[one 2 "three" [x foo 1.23]]
+----
+
+
+Více řádků, mezer a tabulátorů je povoleno, pokud netrhají hodnoty.
+
+Správně: `[42 print "foo"]`
+
+Nesprávně: `[42 pr   int "foo"]`
+
+== Vytvoření při runtime
+
+=== `make`
+
+Vytvoření prázdného bloku předalokovaného pro 10 elementů:
+
+----
+>> make block! 10
+== []
+----
+
+Vytvoření bloku s 10 elementy s počátečními hodnotami `none`:
+
+----
+>> append/dup make block! 10 none 10
+== [none none none none none none none none none none]
+----
+
+=== `to`
+
+----
+>> to block! {one 2 "three" 4:00}
+== [one 2 "three" 4:00:00]
+
+>> to block! "foo 1.23 me@me.com"
+== [foo 1.23 me@me.com]
+
+>> to block! 42
+== [42]
+----
+
+== Přístup k prvkům bloku
+
+Elementy bloku jsou přístupné prostřednictvím lomítka s indexem elementu (_notace cesty_):
+
+----
+>> b: [12 [34 56]]
+== [12 34 56]
+
+>> b/1
+== 12
+
+>> b/2/2
+== 56
+----
+
+Blok (a rovněž každý objekt typesetu `any-list!`) lze rovněž používat jako uložiště dvojic key/value. V tom případě se hledání uskutečňuje pro první zadanou hodnotu dvojice:
+
+----
+>> b: [x 12 y [z 34]]
+== [x 12 y [z 34]]
+
+>> b/x
+== 12
+
+>> b/y
+== [z 34]
+
+>> b/y/z
+== 34
+----
+
+== Komparace
+
+Pro hodnotu typu `block!` lze použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
+
+== Testování hodnot
+
+K ověření, zda hodnota je typu `block!` používáme funkci `block?`.
+
+----
+>> block? [42]
+== true
+----
+
+Funkce `type?` vrací datový typ zadané hodnoty.
+----
+>> type? [42]
+== block!
+----

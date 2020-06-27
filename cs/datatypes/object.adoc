@@ -1,0 +1,151 @@
+= Datový typ `object!`
+:toc:
+:numbered:
+
+
+== Úvodem
+
+Datový typ `object!` vymezuje skladbu a chování *objektu* (kontejneru ve formě bloku), který obsahuje páry `word: value`. Typ `object!` je členem typesetů `any-object!` a  `default!`
+
+== Vytvoření
+
+Objekty se vytvářejí při runtime použitím konstruktoru `make` nebo použitím funkcí `context`, `object` a  `contruct`.
+
+Idiom `make object!` vytváří nový objekt, vyhodnocujíce blok specifikací.
+
+Funkce `context` a `object` invokují idiom `make object!`.
+
+Použití funkce *make:*
+
+```red
+>> foo: make object! [x: "bar" y: "baz"]
+== make object! [
+    x: "bar"
+    y: "baz"    ]
+
+>> foo: make object! [x: "bar" y: ()]   ; spec block is evaluated
+*** Script Error: y: needs a value
+*** Where: y
+*** Stack:  
+```
+
+Použití funkce *context:*
+
+```red
+>> foo: context [x: "bar" y: "baz"]
+== make object! [
+    x: "bar"
+    y: "baz"    ]
+
+>> foo: context [x: "bar" y: ()]   ; spec block is evaluated
+*** Script Error: y: needs a value
+*** Where: y
+*** Stack: context  
+```
+
+Použití funkce *object:*
+
+```red
+>> foo: object [x: "bar" y: "baz"] 
+== make object! [
+    x: "bar"
+    y: "baz"    ]
+
+>> foo: object [x: "bar" y: ()]   ; spec block is evaluated
+*** Script Error: y: needs a value
+*** Where: y
+*** Stack: object  
+```
+
+Je-li argumentem funkce make hodnota typu `object!`, vytvoří se nový objekt se zadaným argumentem coby prototypem.
+
+```red
+>> foo: make object! [x: "bar" y: "baz"]
+== make object! [
+    x: "bar"
+    y: "baz"
+]
+
+>> bar: make foo [z: 42]
+== make object! [
+    x: "bar"
+    y: "baz"
+    z: 42
+]
+```
+
+Funkce `construct` vytváří objekt bez vyhodnocení bloku specifikací:
+
+```red
+>> foo: construct [x: "bar" y: ()]
+== make object! [
+    x: "bar"
+    y: ()
+]
+```
+
+Je-li funkce `construct` použita s upřesněním `/with`, vytvoří se nový objekt který je rozšířením zadané hodnoty typu `object!`:
+
+```red
+>> zar: construct/with [z: 42] foo
+== make object! [
+    x: "bar"
+    y: ()
+    z: 42
+]
+```
+
+Tento objekt je totožný s objektem bar:
+```red
+bar == zar
+== true
+```
+
+
+== Literálové schema skladby
+
+Výše uvedené způsoby vytvoření objektu lze schematicky vyjádřit takto:
+
+```red
+<object> ::= make object! <object-spec> | object <object-spec> | context <object-spec> 
+             make <object> <object-spec>
+
+<object-spec> ::= <block>
+<object> ::= <název existujícího objektu>
+```
+
+== Komparace
+
+Na hodnotu typu `object!` lze aplikovat všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. 
+
+
+== Testování hodnot
+
+Funkcí `object?` ověříme, zda je zadaná hodnota typu `object!`.
+
+```red
+>> object? foo
+== true
+```
+
+Funkce `type?` vrací datový typ zadané hodnoty.
+
+```red
+>> type? foo
+== object!
+```
+
+
+== Předdefinovaná slova
+
+=== Akce
+
+`copy`, `find`, `put`, `select`
+
+=== Funkce
+
+`any-object?`, `class-of`, `context`, `distance?`, `dump-face`, `face?`, `fetch-help`, `foreach-face`, `get-scroller`, `help`, `help-string`, `layout`, `metrics?`, `object`, `object?`, `offset-to-caret`, `offset-to-char`, `overlap?`, `parse-func-spec`, `react`, `react?`, `request-font`, `rtd-layout`, `save`, `set-flag`, `set-focus`, `show`, `size-text`, `stop-reactor`, `unview`, `view`
+
+=== Natives
+
+`bind`, `context?`, `extend`, `in`, `set`

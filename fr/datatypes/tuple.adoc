@@ -1,0 +1,106 @@
+= Le type Tuple!
+:toc:
+:numbered:
+
+
+== Résumé
+
+
+Le type de données `tuple!` est utilisé pour représenter des valeurs de couleurs RGB et RGBA, des adresses IP, et des numéros de version.
+
+Un `tuple!` doit avoir au moins deux points décimaux et les nombres doivent être des entiers positifs de l'intervalle `0 - 255`.
+
+`Tuple!` appartient aux ensembles de types suivants: `immediate!`, `scalar!`
+
+== Syntaxe littérale
+
+
+Une séquence de trois à douze entiers positifs séparés par des points décimaux.
+
+
+`1.2.3`
+
+`255.255.255.0`
+
+`1.2.3.4.5.6.7.8.9.10.11.12`
+
+
+== Création
+
+
+Les valeurs de type `tuple!` peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
+
+```red
+>> make tuple! [1 2 3]
+== 1.2.3
+```
+
+```red
+>> to tuple! [42]
+== 42.0.0
+
+>> to tuple! [1 2 3]
+== 1.2.3
+```
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués à `Tuple!`: `=, ==, <>, >, <, >=, &lt;=, =?`. De plus, `min`, et `max` sont aussi supportés.
+
+Lorsqu'ils sont appliqués à deux `tuple!`, `min` et `max` requièrent des tuples de même dimension.
+
+```red
+>> min 1.2.3 4.5.6
+== 1.2.3
+
+>> max 1.2.3 4.5.6
+== 4.5.6
+```
+
+== Calculs
+
+`+`, `-`, `*`, `/`, `%`, `//`, `add`, `subtract`,  `multiply`, `divide`, `remainder`, et `mod` peuvent être utilisés sur des valeurs de `tuple!`. 
+
+Si le résultat du calcul tombe en dehors de l'intervalle `0 - 255`, le résultat sera écrêté à `0` ou `255`.
+
+```red
+>> gray
+== 128.128.128
+
+>> gray * 2
+== 255.255.255
+```
+
+== Test de valeurs
+
+Utilisez `tuple?` pour vérifier si une valeur est du type `Tuple!`.
+
+```red
+>> tuple? 1.2.3
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? 1.2.3
+== tuple!
+```
+
+== Mots prédéfinis
+
+=== Actions
+
+`add`, `subtract`, `multiply`, `divide`, `remainder`, `and~`, `or~`, `xor~`, `length?`, `pick`, `reverse`
+
+=== Fonctions
+
+`first`, `second`, `third`, `fourth`, `fifth`, `to-tuple`, `tuple?`, `mod`, `modulo`
+
+=== Natives
+
+`zero?`
+
+=== Opérateurs
+
+`+`, `-`, `*`, `/`, `%`, `and`, `or`, `xor`

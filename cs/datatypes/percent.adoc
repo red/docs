@@ -1,0 +1,85 @@
+= Datový typ `percent!`
+:toc:
+:numbered:
+
+
+== Úvodem
+
+Hodnoty typu `percent!` reprezentují hodnoty typu link:float.adoc[float!], vyjádřené jako procenta.
+
+Typ `percent!` je člen typesetů: `number!`, `scalar!`
+
+
+== Vytvoření
+
+Hodnoty typu percent! lze vytvořit s použitím literálové syntaxe nebo při běhu programu konstruktorem `make` nebo konverzí `to`.
+
+=== Literálová skladba
+
+```red
+<percent-literal> ::= <integer-literal>% | <float-literal>% 
+```
+
+```red
+>> 100%
+== 100%
+
+>> 12.2%
+== 12.2%
+
+>> .76%
+== 0.76%
+```
+
+=== Konstruktor `make`
+
+```red
+>> make percent! 1
+== 100%
+
+>> make percent! .1
+== 10%
+
+>> make percent! .01
+== 1%
+```
+
+=== Konverze `to`
+
+```red
+>> to percent! 1
+== 100%
+
+>> to percent! .1
+== 10%
+
+>> to percent! .01
+== 1%
+```
+
+== Komparace
+
+Na hodnoty typu `percent!` lze aplikovat všechny komparační operátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
+
+
+== Testování hodnot
+
+Použijte `percent?` k ověření, zda je hodnota typu `percent!`.
+
+```red
+>> percent? 42%
+== true
+```
+
+Použijte `type?` ke zjištění datového typu zadané hodnoty.
+
+```red
+>> type? 42%
+== percent!
+```
+
+== Předdefinovaná slova
+
+=== Functions
+
+`percent?`, `to-percent`

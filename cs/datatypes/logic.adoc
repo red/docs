@@ -1,0 +1,97 @@
+= Datový typ `logic!`
+:toc:
+:numbered:
+
+
+== Úvodem
+
+Datový typ `logic!` reprezentuje booleovské hodnoty `true` a `false`.
+
+`Logic!` je členem typesetu `immediate!`
+
+== Vytvoření
+
+Hodnoty typu logic! lze vytvořit literálovou syntaxí nebo při runtime konstruktorem `make` nebo konverzí `to`.
+
+
+Příkaz `to logic!` konvertuje na `true` všechny hodnoty kromě `false` a `none`.
+
+```red
+>> to logic! 'hi
+== true
+
+>> to logic! 5
+== true
+
+>> to logic! < -5 | 0 | on | yes > 
+== true
+
+>> to logic! none
+== false
+
+>> to logic! < off | no >
+== false
+```
+
+[NOTE, caption=Poznámka]
+Pro podporu booleovské logiky lze hodnoty `true` a `false` vytvořit z 1 a 0 s použitím `make`.
+
+```red
+>> make logic! 1
+== true
+
+>> make logic! 0
+== false
+
+>> make integer! true
+== 1
+
+>> make integer! false
+== 0
+```
+
+
+== Literálová skladba
+
+Předdefinovaná slova `true` a `false` nebo serializovaná skladba:
+
+```red
+true
+== true
+```
+
+```red
+#[true]
+== true
+
+#[false]
+== false
+```
+
+== Testování hodnot
+
+Funkce `logic?` ověří, zda je hodnota tyu `logic!`.
+
+```red
+>> logic? on
+== true
+```
+
+Funkce `type?` vrací typ zadané hodnoty
+
+```red
+>> type? false
+== logic!
+```
+
+
+== Předdefinovaná slova
+
+
+`true`, `yes`, `on`
+
+`false`, `no`, `off`
+
+=== Funkce
+
+`to-logic`

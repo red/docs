@@ -1,0 +1,145 @@
+= Paren! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+The `paren!` datatype is an immediately evaluated `block!`. It is a type of `series!` with no restriction on the type of values that can be referenced.
+
+Paren values are delimited by opening `(` and closing `)` parenthesis. 
+
+Evaluation can be suppressed by using `quote` before a paren value. `quote (print 42)`
+
+`Paren!` is a member of the following typesets: `any-block!`, `any-list!`, `series!`
+
+== Creation
+
+Paren values can be created using literal syntax, or at runtime using a `make` constructor, `to` conversion, or by using the `native!` value `as`.
+
+To create an empty paren pre-allocated for 10 elements:
+
+```red
+>> make paren! 10
+== ()
+```
+
+To create a paren of 10 elements with initial values set to none:
+
+```red
+>> append/dup make paren! 10 none 10
+== (none none none none none none none none none none)
+```
+
+Using a `to` conversion:
+
+```red
+>> to paren! {one 2 "three" 4:00}
+== (one 2 "three" 4:00:00)
+
+>> to paren! "foo 1.23 me@me.com"
+== (foo 1.23 me@me.com)
+
+>> to paren! 42
+== (42)
+```
+
+Using `as`:
+
+```red
+>> as paren! [1 2 3]
+== (1 2 3)
+```
+
+== Literal syntax
+
+A collection of values that are delimited by an opening and closing parenthesis, separated by spaces.
+ 
+`()`
+
+`quote (one 2 "three")` 
+
+`(print 1.23)`
+
+Parens can extend over multiple lines, and can contain other parens.
+```red
+(1
+2
+"three"
+)
+
+quote (1 2 "three" (x foo 1.23))
+```
+
+
+Extra lines, spaces, and tabs are allowed as long as they do not break up values.
+
+Ok:  `(print "foo")`
+
+Not ok: `(pr   int "foo")`
+
+
+== Comparisons
+
+All comparators can be applied on `paren!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+
+[NOTE]
+Since `paren!` values are immediately evaluated, the return value of `min` or `max` will be the value of the last expression in a `paren!`. Comparators will be comparing the last element in a paren if evaluation is not suppressed.
+
+```red
+>> max (1 2 3) (4 5 6)
+== 6
+```
+
+```red
+>> (1 2 3) < (4 5 6)
+== true
+
+>> (1 2 3) < (4 5 2)
+== false
+
+>> (quote (1 2 3)) < (quote (4 5 2))
+== true 
+```
+
+== Testing values
+
+Use `paren?` to check if a value is of the `paren!` datatype.
+```red
+>> paren? quote (42 print "foo")
+== true
+```
+
+
+Use `type?` to return the datatype of a given value.
+```red
+>> type? quote (42)
+== paren!
+```
+
+[NOTE, caption=Caution]
+
+Unquoted paren values will return the type of the last expression.
+
+```red
+>> paren? (42)
+== false
+
+>> any-list? (42)
+== false
+
+>> type? (42)
+== integer!
+
+>> type? ('a 2 + 2 "hello")
+== string!
+```
+
+== Predefined words
+
+=== Functions
+
+`expand-directives`, `paren?`, `series?`, `to-paren`
+
+=== Natives
+
+`as`, `compose`

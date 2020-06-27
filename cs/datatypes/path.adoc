@@ -1,0 +1,198 @@
+= Datový typ `path!`
+:toc:
+:numbered:
+
+== Úvodem
+
+Datový typ `path!` reprezentuje řadu hodnot, oddělených lomítky (`/`). Elementy této řady mohou být typu `word!`, `integer!`, `get-word!` a `paren!`.
+
+Typ `path!` je člen těchto typesetů: `any-block!`, `any-path!`, `series!`
+
+=== Varianty cest
+
+|========================================================================
+|*Syntax*|*Datatype*|*Testing Values*|*Conversion*
+|foo/bar|`path!`|`path?`|`to path!`
+|foo/bar:|link:set-path.adoc[set-path!]|`set-path?`|`to set-path!`
+|:foo/bar|link:get-path.adoc[get-path!]|`get-path?`|`to get-path!`
+|'foo/bar|link:lit-path.adoc[lit-path!]|`lit-path?`|`to lit-path!`
+|========================================================================
+
+== Vytvoření
+
+Hodnoty typu path! mohou být vytvořeny literálovou syntaxí nebo při runtime použitím konstruktoru `make` nebo konverzí `to`.
+```red
+>> 'foo/bar/baz 
+== foo/bar/baz
+```
+
+```red
+>> make path! [foo bar baz]
+== foo/bar/baz
+```
+
+Lze vytvořit prázdnou cestu dané velikosti dodáním celočíselného argumentu funkci `make`:
+
+```red
+>> make path! 10
+== 
+```
+
+Konverze `to`:
+
+```red
+>> to path! "foo bar baz"
+== foo/bar/baz
+```
+
+[NOTE, caption=Caution]
+
+Je možné programově vytvořit hodnotu `path!`. která však neodpovídá lexikálním pravidlům literálové cesty:
+
+```red
+>> mold to path! [a #(b: 2) c 1.2 /z]
+== "a/#(^/    b: 2^/)/c/1.2//z"
+
+>> load mold to path! [a #(b: 2) c 1.2 /z]
+*** Syntax Error: invalid path! at "a/#(    b: 2)/c/1.2//z"
+*** Where: do
+*** Stack: load  
+```
+
+== Literálová skladba
+
+`BNF:`
+```red
+<path-literal> ::= <path-head>/<selector>
+<path-head>    ::= <word-literal> | <path-literal>
+<selector>     ::= <integer> | <word-literal> | :<word-literal> | <paren>
+```
+`Parse:`
+path: [word! some selector]
+selector: [#"/" [integer! | word! | get-word! | paren!]]
+
+* path-head: link:word.adoc[word!] a `path!`
+* selector: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!] a link:paren.adoc[paren!]
+
+
+== Postup vyhodnocení
+
+Cesty (paths) vedou ke vnořené hodnotě nebo k více specifickému chování při evokaci funkce. Musejí začínat slovem a hodnota, na níž slovo odkazuje, rozhoduje o způsobu vyhodnocení cesty.
+
+* Je-li tato hodnota funkcí, musejí být následující výrazy v cestě hodnoty typu `word!`. Tato slova jsou považována za upřesnění (refinement) ve volání funkce.
+
+```red
+>> append/only [42][foo]
+== [42 [foo]]
+```
+
+* Pokud ve funkci neexistuje odpovídající refinement, je hlášena chyba:
+
+```red
+>> append/xyz [42][foo]
+*** Script Error: append has no refinement called xyz
+*** Where: append
+*** Stack: 
+```
+
+[NOTE]
+Cesty jsou aktivním typem a provádějí vyhodnocení uložených funkci. Hodnoty typu `op` se zatím nevyhodnocují.
+
+```red
+>> f: does [42]
+== func [][42]
+
+>> insert b: [] :f
+== []
+
+>> b/1
+== 42
+```
+
+* Není-li hodnota funkcí, platí následující pravidla:
+
+** Je-li dalším výrazem v cestě slovo, je použito  k výběru  z hodnoty path-head. Hodnota path-head musí být typem, který podporuje funkci  `select` (např. `block!`, `map!` nebo `object!`).
+
+Práci funkce `select` demonstruje tato ukázka:
+
+```red
+>> blk: [foo bar baz]
+== [foo bar baz]
+
+>> blk/bar
+== baz
+```
+
+Pokud v části path-head  zadaný selektor neexistuje, funkce `select` vrátí  `none`:
+
+```red
+>> blk/sheboygan
+== none
+```
+* Selektorem může být slovo nebo hodnota. Jeho konkretní interpretace závisí na datovém typu kořenové hodnoty. Slovo použité v selektoru je symbolické a nevyhodnocuje se. Pokud bychom výslovně stáli o hodnotu, kterou slovo případně reprezentuje, je nutné při evokaci použít formát `word!`, `get-word!` nebo `paren!`:
+
+```red
+>> my-block: [foo bar baz]
+== [foo bar baz]
+
+>> my-selector: 'bar         ; obezlička
+== bar
+
+```red
+>> my-block/bar              ; evokace typem word!
+== baz
+```
+
+>> my-block/:my-selector     ; evokace typem get-word!
+== baz
+```
+
+```red
+>> my-block/('bar)           ; evokace typem paren!    
+== baz
+```
+
+* Je-li selektorem celé číslo, použije se jako index pro vyjmutí (`pick`) elementu z kolektoru path-head. Hodnota path-head musí být typem, který podporuje akci `pick` (např. `series!`, `tuple!` nebo `date!`).
+
+```red
+>> blk: [foo bar baz qux]
+== [foo bar baz qux]
+
+>> blk/3                     ; vyjme třetí element kolektoru blk
+== baz
+```
+
+Pokud číselná hodnota selektoru padne mimo hranice kolektoru, vrací `pick` hodnotu `none`:
+
+```red
+>> length? blk
+== 4
+
+>> blk/7
+== none
+
+>> blk/-1
+== none
+```
+
+== Testování hodnot
+
+Funkci `path?` použijeme k ověření, zda je daná hodnota typu `path!`.
+
+```red
+>> path? 'foo/bar
+== true
+```
+
+Funkce `type?` vrací datový typ dané hodnoty.
+
+```red
+>> type? 'foo/bar
+== path!
+```
+
+== Předdefinovaná slova
+
+=== Funkce
+
+`any-block?`, `any-path?`, `path?`, `series?`, `to-path`

@@ -1,0 +1,70 @@
+= Datový typ `op!`
+:toc:
+:numbered:
+
+== Úvodem
+
+Hodnoty typu `op!` jsou infixové funkce (operátory pro dva argumenty), vytvořené z existujících prefixových funkcí typu `native!`, `action!`, `function!` nebo `routine!`.
+
+Funkce typu `op!` mají při vyhodnocení přednost před dalšími typy funkcí a před hodnotami typu `set-word!`. 
+
+Typ `op!` je člen typesetů `any-function!` a `default!`
+
+== Vytvoření
+
+Operátory typu op! lze vytvořit při běhu programu pomocí konstruktoru `make`.
+
+```
+<op> ::= make op! <prefix-function>
+```
+
+*Příklady*
+
+Logické operátory `or` a `and`.
+
+```red
+>> ||: make op! func [a b][any [a b]]  ; return the first value that is true
+== make op! [[a b]]
+
+>> 1 || 2
+== 1
+
+>> false || 2
+== 2
+
+>> &&: make op! func [a b][all [a b]]  ; if all values are true, return the last value; else return none
+== make op! [[a b]]
+
+>> 1 && 2
+== 2
+
+>> false && 2
+== none
+```
+
+== Konverze
+
+Pro hodnoty typu `op!` nejsou žádné konverze podporovány.
+
+== Komparace
+
+Hodnoty typu op! lze porovnávat z hlediska stejnosti a rovnosti pomocí dotazů `same?`, `==`, `equal?`, `strict-equal?`, `not-equal?`, `<>`.
+
+== Testování hodnot
+
+K ověření zda zda posuzovaná hodnota je typu `op!` použijeme dotaz `op?`.
+
+```red
+>> op? :&&
+== true
+```
+
+Typ hodnoty zjistíme dotazem `type?`.
+```red
+>> type? :||
+== op!
+```
+
+== Předdefinovaná slova
+
+Výpis předdefinovaných hodnot typu `op!` lze získat příkazem `help op!` v konzole.

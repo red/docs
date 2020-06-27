@@ -1,0 +1,315 @@
+= Image! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+`Image!` values contain a series! of RGBA values, which represent pixels in a 2D image. 2D is mapped to 1D space by taking first row of pixels from left to right, then second row, and so on.
+
+`Image!` is a member of the following typesets: `any-type!`, `default!`, `series!`
+
+== Creation
+
+Image values can be created at runtime by using a `make` constructor or `to` conversion.
+
+=== Runtime creation
+
+```
+<image> ::= make image! <image-spec>
+<image-spec> ::= <pair> | [<pair> <tuple>] | [<pair> <binary> <binary>°]
+```
+
+When <image-spec> is pair! or [pair!], the pair defines the image size, the RGB values are set to 255 and the Alpha value is set to 0. 
+
+```red
+>> make image! 1x1
+== make image! [1x1 #{FFFFFF}]
+```
+
+```red
+>> make image! [1x1]
+== make image! [1x1 #{FFFFFF}]
+```
+
+When <image-spec> is [pair! tuple!], the pair defines the image size, and the tuple defines the initial RGB color and opacity of all pixels. 
+
+[NOTE, caption=Note]
+
+Saving an image in .png format will preserve the opacity, e.g. `save/as %img.png img 'png`
+
+With RGB. Opacity defaults to fully opaque (0):
+
+```red
+>> img: make image! [1x1 255.210.0]
+== make image! [1x1 #{FFD200}]
+```
+
+With RGB and Alpha channel (RGBA):
+
+```red
+>> img: make image! [1x1 255.210.0.42]
+== make image! [1x1 #{FFD200} #{
+2A}]
+```
+
+When <image-spec> is [pair! binary! binary!], the pair defines the image size, the first binary value defines the initial RGB color of all pixels, and the second binary value defines the intial opacity of the image.
+
+```red
+>> img: make image! [1x1 #{FFD200} #{2A}]
+== make image! [1x1 #{FFD200} #{
+2A}]
+```
+
+[NOTE, caption=Note]
+
+When using binary! values, you must repeat the binary value to match the image size. For any image size of X by Y, multiply X by Y to determine the number of times that the binary value must be repeated.
+
+*Examples*
+
+```red
+>> make image! [2x2 #{FFD200FFD200FFD200FFD200} #{2A2A2A2A}]
+== make image! [2x2 #{FFD200FFD200FFD200FFD200} #{
+2A2A2A2A}]                                        ; RGB and A values in binary repeated 2 * 2 times
+```
+Binary values are padded with 00 if binary values are not repeated:
+
+```red
+>> make image! [2x2 #{FFD200} #{2A}]
+== make image! [2x2 #{FFD200000000000000000000} #{
+2A000000}]
+```
+
+```red
+>> make image! [2x2 255.210.0.42]                  
+== make image! [2x2 #{FFD200FFD200FFD200FFD200} #{ ; RGB and A values in binary repeated 2 * 2 times
+2A2A2A2A}]
+
+>> make image! [2x3 255.210.0.42]
+== make image! [2x3 #{FFD200FFD200FFD200FFD200FFD200FFD200} #{
+2A2A2A2A2A2A}]                                     ; RGB and A values in binary repeated 2 * 3 times
+```
+
+== Path accessors (Image components)
+
+=== /alpha
+
+Gets or sets the Alpha channel value of an image.
+
+*Examples*
+
+```red
+>> img/alpha
+== #{2A}
+```
+
+```red
+>> img/alpha: 210
+== 210
+
+>> img/alpha
+== #{D2}
+```
+
+=== /argb
+
+Gets or sets the Alpha and RGB values of an image.
+
+*Examples*
+
+```red
+>> img: make image! [1x1 255.210.0.120]
+== make image! [1x1 #{FFD200} #{
+78}]
+
+>> img/argb
+== #{00D2FF87}
+```
+
+```red
+>> img/argb: 255.255.210.0
+== 255.255.210.0
+
+>> img/argb
+== #{D2FFFFFF}
+```
+
+=== /rgb
+
+Gets or sets the RGB values of an image.
+
+*Examples*
+
+```red
+>> img: make image! [1x1 255.210.0.120]
+== make image! [1x1 #{FFD200} #{
+78}]
+
+>> img/rgb
+== #{FFD200}
+```
+
+```red
+>> img/rgb: 255.255.255
+== 255.255.255
+
+>> img/rgb
+== #{FFFFFF}
+```
+=== /size
+
+ Returns the size of an image as a pair value.
+
+*Examples*
+
+```red
+>> img/size
+== 1x1
+```
+
+== Manipulation
+
+`Image!` can be manipulated as `series!`:
+
+```red
+>> a: make image! [2x2 #{111111222222333333444444}]
+== make image! [2x2 #{111111222222333333444444}]
+
+>> copy/part a 1
+== make image! [1x1 #{111111}]
+
+>> copy/part a 2
+== make image! [2x1 #{111111222222}]
+```
+
+And sometimes `image!` can be interpreted as a 2D series:
+
+```red
+>> a: make image! [2x2 #{111111222222333333444444}]
+== make image! [2x2 #{111111222222333333444444}]
+
+>> copy/part a 1x2
+== make image! [1x2 #{111111333333}]
+
+>> copy/part a 2x1
+== make image! [2x1 #{111111222222}]
+```
+
+== Conversions
+
+`To image!` converts Red/View face! objects to image values.
+
+```red
+>> lay: layout [button "Hi there!"]
+== make object! [
+    type: 'window
+    offset: none
+    size: 83x45
+    text: none
+    image: none
+    color: none
+    menu: none
+    data:...
+
+>> view/no-wait lay
+== make object! [
+    type: 'window
+    offset: 644x386
+    size: 126x45
+    text: "Red: untitled"
+    image: none
+    color: none
+    menu:...
+
+>> to image! lay
+== make image! [132x73 #{
+    0000000000000000000000004D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D
+    4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4...
+```
+
+== Testing values
+
+Use `image?` to check if a value is of the `image!` datatype.
+
+```red
+>> image? img
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? img
+== image!
+```
+
+== Predefined words
+
+Many words are predefined to point to tuple values.
+
+```red
+>> help tuple!
+    Red              255.0.0
+    white            255.255.255
+    transparent      0.0.0.255
+    gray             128.128.128
+    aqua             40.100.130
+    beige            255.228.196
+    black            0.0.0
+    blue             0.0.255
+    brick            178.34.34
+    brown            139.69.19
+    coal             64.64.64
+    coffee           76.26.0
+    crimson          220.20.60
+    cyan             0.255.255
+    forest           0.48.0
+    gold             255.205.40
+    green            0.255.0
+    ivory            255.255.240
+    khaki            179.179.126
+    leaf             0.128.0
+    linen            250.240.230
+    magenta          255.0.255
+    maroon           128.0.0
+    mint             100.136.116
+    navy             0.0.128
+    oldrab           72.72.16
+    olive            128.128.0
+    orange           255.150.10
+    papaya           255.80.37
+    pewter           170.170.170
+    pink             255.164.200
+    purple           128.0.128
+    reblue           38.58.108
+    rebolor          142.128.110
+    sienna           160.82.45
+    silver           192.192.192
+    sky              164.200.255
+    snow             240.240.240
+    tanned           222.184.135
+    teal             0.128.128
+    violet           72.0.90
+    water            80.108.142
+    wheat            245.222.129
+    yello            255.240.120
+    yellow           255.255.0
+    glass            0.0.0.255
+```
+
+These words can be reduced and their values used in place of literal tuple values:
+
+```red
+>> img: make image! reduce [1x1 red]
+== make image! [1x1 #{FF0000}]
+```
+
+This is equivalent to using a literal tuple value:
+
+```red
+>> img: make image! [1x1 255.0.0]
+== make image! [1x1 #{FF0000}]
+```
+
+=== Functions
+
+`draw`, `image?`, `layout`, `series?`, `to-image`

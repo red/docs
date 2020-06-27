@@ -1,0 +1,330 @@
+= Datový typ `time!`
+:toc:
+:numbered:
+
+== Úvodem
+
+Hodnoty typu `time!` představují časový údaj, specifikovaný v hodinách, minutách a vteřinách. Mohou být interpretovány jako odstup od půlnoci v kontextu datumu nebo jako absolutní čas dne.
+
+Datový typ `time!` je člen těchto typesetů: `immediate!`, `scalar!`
+
+== Vytvoření
+
+Hodnoty typu `time!` lze vytvořit s použitím literálové syntaxe nebo při runtime použitím konstruktoru `make` nebo konverzí `to`.
+
+=== Literálová skladba
+
+```
+<time-literal> ::= <Red-time> | +<Red-time> | -<Red-time>
+<Red-time> ::= <hours>:<minutes> | <hours>:<minutes>:<seconds> | <hours>:<minutes>:<seconds>.<decimals> |
+               <minutes>:<seconds>.<decimals>
+```
+
+=== Konstruktor `make`
+
+----
+make time! [<hour> <minute> <second>]
+make time! <integer-literal> | <float-literal> 
+
+to time! [<hour> <minute> <second>]
+to time! <integer-literal> | <float-literal> 
+
+<hour>    : <integer-literal>
+<minute>  : <integer-literal>
+<second>  : <integer-literal> | <float-literal>
+----
+
+
+```red
+>> make time! 60
+== 0:01:00
+
+>> make time! 95'000
+== 26:23:20
+
+>> make time! [3 2 1]
+== 3:02:01
+
+>> make time! 300.45
+== 0:05:00.45
+```
+=== Konverze `to`
+
+```red
+>> to time! 60
+== 0:01:00
+
+>> to time! 95'000
+== 26:23:20
+
+>> to time! [3 2 1]
+== 3:02:01
+```
+
+== Přístup k polím
+
+Přístup ve formátu cesty (path accessor) je vhodný pro získání i zadání hodntot polí objektu typu `time!`.
+
+=== /hour
+
+Získá nebo nastaví hodinové pole času ve formátu `integer!`.
+
+*Příklady*
+
+```red
+>> t: make time! [3 2 1]
+== 3:02:01
+
+>> t/hour
+== 3
+
+>> t/hour: 6
+== 6
+
+>> t
+== 6:02:01
+```
+
+=== /minute
+
+Získá nebo nastaví minutové pole času ve formátu `integer!`.
+
+*Příklady*
+
+```red
+>> t: make time! [3 2 1]
+== 3:02:01
+
+>> t/minute
+== 2
+
+>> t/minute: 7
+== 7
+
+>> t
+== 3:07:01
+```
+
+=== /second
+
+Získá nebo nastaví vteřinové pole času ve formátu `float!`.
+
+*Příklady*
+
+```red
+>> t: make time! [3 2 1]
+== 3:02:01
+
+>> t/second
+== 1.0
+
+>> t/second: 58
+== 58
+
+>> t
+== 3:02:58
+```
+
+Pole času jsou také přístupná přes `index cesty`:
+
+```red
+>> t
+== 3:02:01
+
+>> t/1
+== 3
+
+>> t/2
+== 2
+
+>> t/3
+== 1.0
+```
+
+=== Přístup k polím prostřednictvím Pick
+
+Formát cesty interně používá funkce `pick`.
+
+*Syntaxe*
+
+----
+pick <time> <field>
+
+<time>  : a time! value
+<field> : an integer! value
+----
+
+*Příklady*
+
+```red
+>> t
+== 3:02:01
+
+>> pick t 1
+== 3
+
+>> pick t 2
+== 2
+
+>> pick t 3
+== 1.0
+```
+
+== Konverze
+
+----
+to integer! <time>
+
+<time>  : a time! value
+----
+
+```red
+>> t
+== 3:02:01
+
+>> to integer! t
+== 10921           ; počet vteřin
+```
+
+----
+to float! <time>
+
+<time>  : a time! value
+----
+
+```red
+>> t
+== 3:02:01
+
+>> to float! t
+== 10921.0
+```
+
+Hodnoty typu `integer!`, `float!` a `percent!` lze přeměnit na hodnoty typu `time`:
+
+```red
+>> i: to integer! t
+== 10921
+
+>> to time! i
+== 3:02:01
+```
+
+```red
+>> f: to float! t
+== 10921.0
+
+>> to time! f
+== 3:02:01
+```
+
+```red
+>> p: to percent! t
+== 1092100%
+
+>> to time! p
+== 3:02:01
+```
+
+== Komparace
+
+Na hodnoty typu `time!` lze aplikovat všechny komparační operátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
+
+== Aritmetika
+
+Podporované matematické operace s hodnotami typu `time!` jsou:
+
+* přičtení či odečtení hodnot z libovolného časového pole
+* přičtení či odečtení celého čísla a hodnoty typu `time!`
+* přičtení či odečtení hodnot typů `time!`.
+* násobení či dělení hodnot libovolného časového pole
+* násobení či dělení celého čísla a hodnoty typu `time!`
+
+*Příklady*
+
+```red
+>> t: 2:30:45
+== 2:30:45
+
+>> t/hour: t/hour + 5
+== 7
+
+>> t
+== 7:30:45
+
+>> t/minute: t/minute - 20
+== 10
+
+>> t
+== 7:10:45
+```
+
+```red
+
+>> 1:40:45 + 50
+== 1:41:35
+
+>> 1:40:45 - 100
+== 1:39:05
+```
+
+```red
+
+>> 3:02:01 + 1:45:30
+== 4:47:31
+
+>> 3:02:01 - 1:00:00
+== 2:02:01
+```
+
+```red
+t: 2:30:45
+
+>> t/second: t/second * 5
+== 225.0
+
+>> t
+== 2:33:45
+
+>> t/2 / 3
+== 11
+
+>> t/2 // 3
+== 0
+
+>> t/3 * 3
+== 135.0
+```
+
+== Testování hodnot
+
+Použijte `time?` k ověření, zda je zadaná hodnota typu `time!`.
+```red
+>> time? t
+== true
+```
+
+Použijte `type?` ke zjištění typu zadané hodnoty.
+```red
+>> type? t
+== time!
+>> 
+```
+
+== Předdefinovaná slova
+
+=== Actions
+
+`absolute`, `add`, `change`, `divide`, `even?`, `multiply`, `negate`, `odd?`, `pick`, `remainder`, `round`, `subtract`
+
+=== Functions
+
+`first`, `mod`, `modulo`, `second`, `third`, `time?`, `to-time`
+
+=== Natives
+
+`loop`, `negative?`, `now`, `positive?`, `remove-each`, `repeat`, `sign?`, `wait`, `zero?`
+
+=== Operators
+
+`%`, `*`, `+`, `-`, `/`, `//`

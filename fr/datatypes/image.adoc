@@ -1,0 +1,317 @@
+= Le type Image!
+:toc:
+:numbered:
+
+== Résumé
+
+Les valeurs de type `Image!` contiennent une série (series!) de valeurs RGBA, qui représentent les pixels d'une image 2D. La 2D est représentée dans l'espace 1D en prenant la première ligne de pixels de gauche à droite, puis la seconde ligne, etc.
+
+`Image!` appartient aux ensembles de types suivants: `any-type!`, `default!`, `series!`
+
+== Création
+
+Les valeurs de type Image! peuvent être créées à l'exécution en utilisant le constructeur `make` ou la conversion avec `to`.
+
+=== Création lors de l'exécution
+
+```
+<image> ::= make image! <image-spec>
+<image-spec> ::= <pair> | [<pair> <tuple>] | [<pair> <binary> <binary>°]
+```
+
+Lorsque <image-spec> est de type pair! ou [pair!], la paire définit la taille de l'image, les valeurs RGB sont fixées à 255 et la valeur Alpha est fixée à 0. 
+
+```red
+>> make image! 1x1
+== make image! [1x1 #{FFFFFF}]
+```
+
+```red
+>> make image! [1x1]
+== make image! [1x1 #{FFFFFF}]
+```
+
+Lorsque <image-spec> est de type [pair! tuple!], la paire définit la taille de l'image, et le tuple définit la couleur RGB initiale et la transparence de tous les pixels. 
+
+[NOTE, caption=Note]
+
+Enregistrer une image au format .png préservera la transparence, par exemple
+`save/as %img.png img 'png`
+
+Avec RGB, la transparence prend par défaut la valeur d'opacité complète (0):
+
+```red
+>> img: make image! [1x1 255.210.0]
+== make image! [1x1 #{FFD200}]
+```
+
+Avec RGB et un canal Alpha (RGBA):
+
+```red
+>> img: make image! [1x1 255.210.0.42]
+== make image! [1x1 #{FFD200} #{
+2A}]
+```
+
+Lorsque <image-spec> est de type [pair! binary! binary!], la paire définit la taille de l'image, la première valeur binaire définit la couleur RGB initiale et la transparence de tous les pixels, et la seconde valeur binaire définit la transparence initiale de l'image.
+
+```red
+>> img: make image! [1x1 #{FFD200} #{2A}]
+== make image! [1x1 #{FFD200} #{
+2A}]
+```
+
+[NOTE, caption=Note]
+
+Lorsque vous utilisez le format binaire, vous devez répéter la valeur binaire pour correspondre à la taille de l'image. Pour une taille d'image de X par Y, multipliez X par Y pour déterminer le nombre de fois que la valeur binaire doit être répétée.
+
+*Exemples*
+
+```red
+>> make image! [2x2 #{FFD200FFD200FFD200FFD200} #{2A2A2A2A}]
+== make image! [2x2 #{FFD200FFD200FFD200FFD200} #{
+2A2A2A2A}]                                        ; les valeurs binaires de RGB et A sont répétées 2 * 2 fois
+```
+Les valeurs binaires sont complétées avec des 00 si elles ne sont pas répétées:
+
+```red
+>> make image! [2x2 #{FFD200} #{2A}]
+== make image! [2x2 #{FFD200000000000000000000} #{
+2A000000}]
+```
+
+```red
+>> make image! [2x2 255.210.0.42]                  
+== make image! [2x2 #{FFD200FFD200FFD200FFD200} #{ ; valeurs binaires de RGB et A répétées 2 * 2 fois
+2A2A2A2A}]
+
+>> make image! [2x3 255.210.0.42]
+== make image! [2x3 #{FFD200FFD200FFD200FFD200FFD200FFD200} #{
+2A2A2A2A2A2A}]                                     ; valeurs binaires de RGB et A répétées 2 * 3 fois
+```
+
+== Accesseurs par chemin (composantes des images)
+
+=== /alpha
+
+Obtient ou fixe la valeur du canal Alpha d'une image.
+
+*Exemples*
+
+```red
+>> img/alpha
+== #{2A}
+```
+
+```red
+>> img/alpha: 210
+== 210
+
+>> img/alpha
+== #{D2}
+```
+
+=== /argb
+
+Obtient ou fixe les valeurs du canal Alpha et RGB d'une image.
+
+*Exemples*
+
+```red
+>> img: make image! [1x1 255.210.0.120]
+== make image! [1x1 #{FFD200} #{
+78}]
+
+>> img/argb
+== #{00D2FF87}
+```
+
+```red
+>> img/argb: 255.255.210.0
+== 255.255.210.0
+
+>> img/argb
+== #{D2FFFFFF}
+```
+
+=== /rgb
+
+Obtient ou fixe les valeurs RGB d'une image.
+
+*Exemples*
+
+```red
+>> img: make image! [1x1 255.210.0.120]
+== make image! [1x1 #{FFD200} #{
+78}]
+
+>> img/rgb
+== #{FFD200}
+```
+
+```red
+>> img/rgb: 255.255.255
+== 255.255.255
+
+>> img/rgb
+== #{FFFFFF}
+```
+=== /size
+
+Renvoie la taille d'une image sous forme d'une valeur de type pair!.
+
+*Exemples*
+
+```red
+>> img/size
+== 1x1
+```
+
+== Manipulation
+
+Une `Image!` peut être manipulée comme une `series!`:
+
+```red
+>> a: make image! [2x2 #{111111222222333333444444}]
+== make image! [2x2 #{111111222222333333444444}]
+
+>> copy/part a 1
+== make image! [1x1 #{111111}]
+
+>> copy/part a 2
+== make image! [2x1 #{111111222222}]
+```
+
+Et parfois `image!` peut être interprétée comme une série 2D:
+
+```red
+>> a: make image! [2x2 #{111111222222333333444444}]
+== make image! [2x2 #{111111222222333333444444}]
+
+>> copy/part a 1x2
+== make image! [1x2 #{111111333333}]
+
+>> copy/part a 2x1
+== make image! [2x1 #{111111222222}]
+```
+
+
+== Conversions
+
+`To image!` convertit des objets figure (face!) de Red/View en valeurs de type image.
+
+```red
+>> lay: layout [button "Coucou les potos!"]
+== make object! [
+    type: 'window
+    offset: none
+    size: 83x45
+    text: none
+    image: none
+    color: none
+    menu: none
+    data:...
+
+>> view/no-wait lay
+== make object! [
+    type: 'window
+    offset: 644x386
+    size: 126x45
+    text: "Red: untitled"
+    image: none
+    color: none
+    menu:...
+
+    >> to image! lay
+== make image! [132x73 #{
+    0000000000000000000000004D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D
+    4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4...
+```
+
+== Test de valeurs
+
+Utilisez `image?` pour vérifier si une valeur est du type `Image!`.
+
+```red
+>> image? img
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? img
+== image!
+```
+
+== Mots prédéfinis
+
+De nombreux mots prédéfinis pointent vers des valeurs de type tuple.
+
+```red
+>> help tuple!
+    Red              255.0.0
+    white            255.255.255
+    transparent      0.0.0.255
+    gray             128.128.128
+    aqua             40.100.130
+    beige            255.228.196
+    black            0.0.0
+    blue             0.0.255
+    brick            178.34.34
+    brown            139.69.19
+    coal             64.64.64
+    coffee           76.26.0
+    crimson          220.20.60
+    cyan             0.255.255
+    forest           0.48.0
+    gold             255.205.40
+    green            0.255.0
+    ivory            255.255.240
+    khaki            179.179.126
+    leaf             0.128.0
+    linen            250.240.230
+    magenta          255.0.255
+    maroon           128.0.0
+    mint             100.136.116
+    navy             0.0.128
+    oldrab           72.72.16
+    olive            128.128.0
+    orange           255.150.10
+    papaya           255.80.37
+    pewter           170.170.170
+    pink             255.164.200
+    purple           128.0.128
+    reblue           38.58.108
+    rebolor          142.128.110
+    sienna           160.82.45
+    silver           192.192.192
+    sky              164.200.255
+    snow             240.240.240
+    tanned           222.184.135
+    teal             0.128.128
+    violet           72.0.90
+    water            80.108.142
+    wheat            245.222.129
+    yello            255.240.120
+    yellow           255.255.0
+    glass            0.0.0.255
+```
+
+Ces mots peuvent être réduits (reduced) et leurs valeurs utilisées à la place de valeurs littérales de tuples:
+
+```red
+>> img: make image! reduce [1x1 red]
+== make image! [1x1 #{FF0000}]
+```
+
+Ceci est équivalent à l'utilisation d'une valeur littérale de tuple:
+
+```red
+>> img: make image! [1x1 255.0.0]
+== make image! [1x1 #{FF0000}]
+```
+
+=== Fonctions
+
+`draw`, `image?`, `layout`, `series?`, `to-image`

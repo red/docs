@@ -1,0 +1,65 @@
+= Datové typy
+
+Každá hodnota v Red je určitého datového typu. Hodnoty Redu jsou silně typované, proměnné (slova, odkazující na hodnoty) však nikoliv.  Hodnoty jsou základními stavebními bloky Redu. Zatímco většina jazyků má 6-8 základních datových typů, Red jich má téměř 50, mnohé z nich majíc jedinečnou literálovou formu. Jsou některé implementační detaily, o nichž se ve většině případů nepotřebujete zajímat. Například,  `[native! action! function! routine!]` jsou všechno typy funkcí, které můžete používat bez znalosti jejich typu.
+
+
+Nicméně, abyste mohli používat Red efektivně, měli byste se se všemi dostupnými datovými typy alespoň povšechně seznámit.
+
+== Přehled datových typů
+
+* `-` indikuje neexistenci literálové formy dané hodnoty. Tyto hodnoty musí být vytvořeney pomocí `make` nebo konstrukční skladbou (construction syntax or imperative code).
+
+
+[cols="20,60,90"]
+|========================================================================
+|*Type*|*Literal Form*|*Description*
+|link:datatypes/action.adoc[action!]|`-`|"Metody" datových typů v interním OO modelu Redu.
+|link:datatypes/binary.adoc[binary!]|`2#{11111111}`, `16#{2A}`, `64#{2AQQ}`|Serie bajtů.
+|link:datatypes/bitset.adoc[bitset!]|`-`|Array bitů, použitých k uložení booleovských hodnot.
+|link:datatypes/block.adoc[block!]|`[]`, `[one 2 "three"]`, `[print 1.23]`|Kdykoli vyhodnotitelné kolekce dat či kódu.
+|link:datatypes/char.adoc[char!]|#"z", #"^C", #"^(esc)"|Kódové body Unicode.
+|link:datatypes/datatype.adoc[datatype!]|`bitset!`, `string!`, `time!`, `word!`|Předdefinované datové typy.
+|link:datatypes/date.adoc[date!]|`1999-10-5`, `5/10/1999`, `5-October-1999`|Kalendářní data, vycházející z Gergoriánkského kalendáře.
+|link:datatypes/email.adoc[email!]|`adams@fourty-two.net`, `gregg@red-lang.org`|Přímo vyjádřné emailové adresy.
+|link:datatypes/error.adoc[error!]|`-`|Specializované hodnoty typu `object!`, používané pro chybové situace
+
+|link:datatypes/event.adoc[event!]|`-`|Objektu podobné hodnoty, které reprezentují externí aktivitu. Vesměs pouze pro čtení.
+|link:datatypes/file.adoc[file!]|`%foo`, `%alongfilename`, `%/C/`|Jména souborů nebo jména adresářů a cest.
+|link:datatypes/float.adoc[float!]|`+123.4`, `-123.4`, `0042.0`, `60'000'12'3.4`|64-bitové pozitivní či negativní číslo, obsahující desetinnou tečku.
+|link:datatypes/function.adoc[function!]|`-`|Uživatelsky definované funkce.
+|link:datatypes/get-path.adoc[get-path!]|`:foo/bar/baz`|Nevyhodnocené hodnoty typu 'path!'.
+|link:datatypes/get-word.adoc[get-word!]|`:foo`|Nevyhodnocené hodnoty typu 'word!'.
+|link:datatypes/handle.adoc[handle!]|`-`|Neznámá (opakní) celá čísla, použitá pro interakci s operačním systémem.
+|link:datatypes/hash.adoc[hash!]|`-`|Bloku podobné rozhraní s rychlým vyhledáváním.
+|link:datatypes/image.adoc[image!]|`-`|Serie hodnot RGBA, které reprezentují pixely ve 2D zobrazeních.
+|link:datatypes/integer.adoc[integer!]|`1234`, `+1234`, `-1234`, `60'000'000`|32-bitová čísla bez desetinné tečky.
+|link:datatypes/issue.adoc[issue!]|`#555-555-5555`, `#ABC-123-xyx`, `#ID`|Heštegy, klíčová slova a identifikátory, které neobsahují mezery.
+|link:datatypes/lit-path.adoc[lit-path!]|`'foo/bar/baz`|Nevyhodnocená (citovaná) hodnota `path!.
+|link:datatypes/lit-word.adoc[lit-word!]|`'foo`|Nevyhodnocená hodnota `word!`.
+|link:datatypes/logic.adoc[logic!]|`true` `false`, `yes` `no`, `on` `off`|Booleovské hodnoty.
+|link:datatypes/map.adoc[map!]|`#( )`, `#(a: 1 b: 2)`|Asociativní řady (arrays) párů key/value.
+|link:datatypes/money.adoc[money!]` | `$123`, `-USD$1'234.56789` | Množství určité (nebo generické) měny.
+|link:datatypes/native.adoc[native!]|`-`|Externí funkce, psané v Red/System.
+|link:datatypes/none.adoc[none!]|`-`|Hodnota, která nepatří k žádnému datovému typu. Analogicky k `nula` či `nic`.
+|link:datatypes/object.adoc[object!]|`-`|Pojmenované či nepojmenované kontexty, které obsahují páry `word: value`.
+|link:datatypes/op.adoc[op!]|`-`|Infixová funkce pro dva argumenty.
+|link:datatypes/pair.adoc[pair!]|`42x42`|Dvou dimenzionální souřadnice.
+|link:datatypes/paren.adoc[paren!]|`(one 2 "three" 4:00:00)`|Bezprostředně vyhodnocený `block!`.
+|link:datatypes/path.adoc[path!]|`foo/bar/baz`|Serie hodnot, oddělených lomítky `/`. Limitováno typem hodnot, které mohou obsahovat.
+|link:datatypes/percent.adoc[percent!]|`100%`, `0.76%`|Hodnoty typu float!, vyjádřené jako procenta.
+|link:datatypes/ref.adoc[ref!]| `@foo` | Uvádí jméno odkazu.
+|link:datatypes/refinement.adoc[refinement!]|`/bar`|Symbolické hodnoty, použité jako modifikátory funkcí nebo extenzí objektů, souborů, URL či cest.
+|link:datatypes/routine.adoc[routine!]|`-`|Funkce s tělem, kompatibilním se specifikacemi Red a Red/System.
+|link:datatypes/set-path.adoc[set-path!]|`foo/bar/baz:`|Nastaví "kontextuální referenci" (slovo v kontextu, indexový slot v řadě nebo klíčový odkaz v řadě či mapě).
+Sets a "contextual reference" (word in a context, indexes slot in a series, or keyed reference in a series or map).
+|link:datatypes/set-word.adoc[set-word!]|`foo:`|Nastaví odkaz k hodnotě.
+|link:datatypes/string.adoc[string!]|`"foo"`|Sekvence kódových bodů Unicode (hodnot `char!`) ohraničených apostrofy.
+|link:datatypes/tag.adoc[tag!]|`<foo>`|Tagy a elementy systému Markup.
+|link:datatypes/time.adoc[time!]|`0:01:00`, `3:02:01`, `0:05:00.45`|Přímo vyjádřené hodnoty času. Hodiny, minuty, sekundy a milisekundy.
+|link:datatypes/tuple.adoc[tuple!]|`1.2.3`, `255.255.255.0`, `1.2.3.4.5.6.7.8.9.10.11.12`|Hodnoty RGB a RGBA barev, ip adresy a čísla verzí. 3-12 kladných celých čísel, oddělených desetinnou tečkou.
+|link:datatypes/typeset.adoc[typeset!]|`series!`, `number!`|Set, či kolekce předdefinovaných hodnot typu `datatype!` .
+|link:datatypes/unset.adoc[unset!]|`-`|Typ jména, reprezentujícího nepoužitelnou (nepřiřazenou) hodnotu.
+|link:datatypes/url.adoc[url!]|\https://www.red-lang.org, \ftp://localhost|Přímo vyjádřené URL (Uniform Resource Locators).
+|link:datatypes/vector.adoc[vector!]|`-`|Uspořádaná sekvence hodnot stejného typu (`char!`, `integer!`, `percent!`, `float!`).
+|link:datatypes/word.adoc[word!]|`foo`|Symbolická hodnota, která může být použita jako proměnná. Identifikátor, jenž odkazuje na hodnotu v daném kontextu.
+|========================================================================

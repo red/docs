@@ -1,0 +1,92 @@
+= Set-path! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+The `set-path!` datatype sets a "contextual reference" (word in a context, indexes slot in a series, or keyed reference in a series or map).
+
+`Set-path!` is a member of the following typesets: `any-block!`, `any-path!`, `series!`
+
+== Creation
+
+Set-path values can be created at runtime by using a `make` constructor or `to` conversion.
+
+```red
+>> make set-path! [foo bar baz]
+== foo/bar/baz:
+```
+
+You can create an empty set-path of a given size by supplying an integer value as an argument to `make`:
+
+```red
+>> make set-path! 10
+== :
+==
+```
+
+`To` conversion:
+
+```red
+>> to set-path! "foo bar baz"
+== foo/bar/baz:
+```
+
+== Literal syntax
+
+BNF:
+
+```
+<set-path-literal> ::= <path-literal>:
+
+<path-literal> ::= <path-head>/<selector>
+<path-head>    ::= <word-literal> | <path-literal>
+<selector> ::= <integer> | <word-literal> | :<word-literal> | <paren>
+```
+
+Parse:
+
+```
+set-path: [set-word! some selector]
+selector: [#"/" [integer! | word! | get-word! | paren!]]
+```
+
+Path-head datatypes: link:set-word.adoc[set-word!], link:set-path.adoc[set-path!]
+
+Selector datatypes: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
+
+
+== Evaluation Steps
+
+A set-path! value follows the same evaluation rules as `path!` until the selector is reached, at which point the selector is set to the value of the expression that follows it.
+
+If there is no expression following the selector, or if the expression returns `unset`, an error is raised.
+
+== Testing values
+
+Use `set-path?` to check if a value is of the `set-path!` datatype.
+
+```red
+>> set-path? first [foo/bar:]
+== true
+
+>> set-path? quote foo/bar:
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? first [foo/bar:]
+== set-path!
+
+>> type? quote foo/bar:
+== set-path!
+```
+
+== Predefined words
+
+=== Functions
+
+`set-path?`, `to-set-path`

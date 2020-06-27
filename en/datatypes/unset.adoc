@@ -1,0 +1,55 @@
+= Unset! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+`Unset!` is a single value that represents no usable value.
+
+
+== Creation
+
+Unset values can be created at runtime using a `make` constructor or a `to` conversion.
+
+`make unset! <any-thing>`
+
+`to unset! <any-thing>`
+
+
+== Literal syntax
+
+There is no literal syntax for `unset!`. It is the result of evaluating `()`, `do []`, `print`, or `get/any <word>` when `<word>` has not been set.
+
+
+== Testing values
+
+Use `unset?` to check if a value is of the `unset!` datatype.
+
+----
+>> unset? 1
+== false
+
+>> unset? ()
+== true
+
+>> unset? unset 'x
+== true
+----
+
+Use `type?` to return the datatype of a given value.
+
+----
+>> type? unset 'x
+== unset!
+----
+
+== Predefined words
+
+=== Functions
+
+`to-unset`
+
+=== Natives
+
+`unset`

@@ -1,0 +1,42 @@
+= Architektura Red-GUI
+:imagesdir:: ../images
+:toc:
+:numbered:
+
+image::view-overview.png[Přehledné schema,align="center"]
+
+=== VID
+
+VID je zkratkou označení Visual Interface Dialect. Je to dialekt Redu, umožňující určovat grafické komponenty aplikace včetně jejich vlastností, rozmístění a dokonce i ovladačů událostí. Kód VIDu je při RT (runtime) kompilován do stromu piškotů (faces, alias widgets), vhodných pro zobrazení. 
+
+=== View 
+
+Kód grafického prostředí (GUI engine) se skládá z několika částí: 
+
+* Systém View pro správu piškotů, nezávislý na platformě
+* Události reaktivních akcí
+* Interpret dialogu Draw
+* Backendy pro různé platformy
+
+=== React
+
+Reaktivní akce mohou být definovány z dialektu VID nebo mohou být určeny použitím funkce REACT.
+
+=== Draw
+
+Draw je dialekt Redu pro vektorové kreslení ve 2D. Lze jej specifikovat různým způsobem:
+
+* v rozvrženích (layouts) VIDu
+* přímo ve vlastnosti `draw` libovolného piškotu
+* použitím funkce DRAW pro přímé kreslení do obrázku
+
+
+=== Backendy pro různé OS
+
+
+Interní API umožňuje implementaci vícero backendů (kombinací OS a grafického systému), takže lze View engine použít v různých prostředích. Pro kompletní podporu dialektu Draw je zapotřebí aby byl backend v široké míře schopen kreslit ve 2D.
+
+
+.Vyhrazení
+
+Původní koncepce aplikací VID, Draw a většiny View (kromě 'reaktivních' částí) byla vytvořena Carlem Sassenrathem a použita v jazyce Rebol. View Redu je kompletně nová, nezávislá implementace poskytující podobné vlastnosti s několika vylepšeními. Reaktivní akce budiž zářným příkladem.

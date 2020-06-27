@@ -1,0 +1,683 @@
+= LibRed API
+:imagesdir: ../images
+:toc:
+:toc-title: 目次
+:toclevels: 3
+:numbered:
+
+
+== 概要 
+
+
+LibRedはRedのインタプリタとランタイムライブラリの特別なバージョンです。libRedはRed以外の言語でソフトウェアを開発する場合に適しています。RedではないソフトウェアがRedとやりとりすることを可能にするために、libRedはこのドキュメントに記載されている専用のローレベルAPIを（CのcdeclかMicrosoftのstadcallで）公開します。サポートされる機能は以下の通りです。
+
+* グローバルまたはローカルなコンテキストのwordへの値の設定と取得
+* 最も一般的なRedのデータ型のコンストラクタへのショートカット
+* Cと互換のあるRedのデータ型に関する関数のコンバージョン
+* ホスト言語からのseriesの操作
+* Redがホスト言語の関数を呼び出し可能にするコールバック機能
+* コンソール向けのデバッグ関数
+
+用語： _ホスト_ という用語はホスト言語またはlibRedを組み込んだアプリケーションのことを指します。
+
+libRedを使用したサンプルは https://github.com/red/red/tree/master/tests/libRed[こちら] で確認することができます。
+
+== libRedのビルド
+
+自身のローカル環境にlibRedをビルドする方法はシンプルです。
+----
+red build libRed
+----
+または、RebolコンソールとRedのソースで
+----
+rc "build libRed"
+----
+これらのコマンドラインはC言語用（cdeclのABIを使用する）libRedをビルドします。
+もし（Microsoftアプリケーションとの互換のために）stdcall ABIが必要の場合、次のようにします。
+----
+red build libRed stdcall
+----
+
+== 値の参照
+
+libRedの関数呼び出しにより、Redの値が返されます。値は _不透明な_ 32ビットの参照で表現されます。これらの参照は短命で、別のlibRed関数の呼び出しに渡すなど、ローカルな使用に留めるべきです。ホストの変数にこれらの参照をセットすることは可能ですが、 *セットしたら直ちに* 使用すべきです。これらの参照は特別なメモリマネージャで管理され、約50回のAPI呼び出しの間しか生存しません。以下に例を記載します。
+----
+long a, blk;
+
+a = redSymbol("a");
+redSet(a, redBlock(0));                   // 返された参照は直後のこの箇所で使用されています。
+
+blk = redGet(a);
+redPrint(blk);                            // 安全な参照の使用
+
+for(i = 0; i < 100, i++) {
+    // redAppend(blk, redNone());	      // アンセーフな参照の使用です！
+    redAppend(redGet("a"), redNone());    // 安全なバージョン
+}
+----
+
+
+== C API
+
+C APIはC/C++のアプリケーションで使用することができます。また、その他のC互換 https://ja.wikipedia.org/wiki/Foreign_function_interface[FFI] を持つすべての言語とRedを統合することができます。
+
+=== ライブラリの管理
+
+libRedの _インスタンス_ は他の全てのAPIを使用するために必要です。
+
+NOTE: 現在のところ、１つのプロセス内で１つのlibRedセッションのみ許されます。複数インスタンスをサポートするように将来拡張される予定です。
+
+==== redOpen()
+----
+void redOpen(void)
+----
+新しいRedのランタイムライブラリセッションを初期化します。この関数は _他のすべてのAPI関数を呼び出す前に_ 呼び出しされる必要があります。
+
+NOTE: もしredOpenの実行前に他の関数が呼び出しされた場合、その関数の戻り値は「-2」になります。これは不適切なアクセスが試みられたことを示します。
+
+==== redClose()
+----
+void redClose(void)
+----
+現在のRedのランタイムライブラリセッションを終了し、確保されたリソースを開放します。
+
+=== Redのコードの実行
+
+ホストソフトウェアはRedのコードをダイレクトに実行できます。これにはいくつかの異なるコントロールレベルがあり、Redのコードの文字列を評価させたり、ホスト側で生成した引数をRedの関数に直接渡して呼び出しするといった方法があります。
+
+==== redDo()
+----
+red_value redDo(const char* source)
+----
+文字列として渡されたRedの式を評価し、最後のRedの値を戻り値として返します。
+
+.*例*
+----
+redDo("a: 123");
+
+redDo("view [text {hello}]");
+
+char *s = (char *) malloc(100);
+const char *caption = "Hello";
+redDo(sprintf(s, "view [text \"%s\"]", caption));
+----
+
+==== redDoFile()
+----
+red_value redDoFile(const char* filename)
+----
+_filename_ で指定されたRedのスクリプトをロード、評価し、最後の値を返します。 _filename_ はRedのOS非依存の規約（基本的にはUnixスタイルです）を使用してフォーマットされます。
+
+.*例*
+----
+redDoFile("hello.red");
+redDoFile("/c/dev/red/demo.red");
+----
+
+==== redDoBlock()
+----
+red_value redDoBlock(red_block code)
+----
+引数のブロックを評価し、最後の値を返します。
+
+.*例*
+----
+redDoBlock(redBlock(redWord("print"), redInteger(42)));
+----
+
+==== redCall()
+----
+red_value redCall(red_word name, ..., red_integer 0)
+----
+_name_ wordで指定されたRedの関数（any-function!型）を実行します。任意の数の（Redの値の）引数を渡すことができ、関数の最後の値を返します。引数の終わりを示すため、「null」か「0」で *終わらなければなりません。* 
+
+.*例*
+----
+redCall(redWord("random"), redInteger(6));     // 1から6の間のランダムなinteger!の値を返します。
+----
+
+=== コールバック関数の登録
+
+Redで発生したイベントにレスポンスしたり、Redの呼び出しを（たとえば「print」や「ask」を）リダイレクトしたりするには、Redの側からホストの関数へコールバックする必要があります。これは「redRoutine()」関数を使うことで実現できます。
+
+==== redRoutine()
+----
+red_value redRoutine(red_word name, const char* spec, void* func_ptr)
+----
+_name_ で指定された名前と、 _spec_ をスペックブロック、 _func-ptr_ で指定されたCの関数ポインタをボディとして、新しいRedのroutineを定義します。指定するCの関数は *Redの値を返さなければなりません*（戻り値が使われないことを示すために「redUnset()」を使うこともできます）。
+
+.*例*
+----
+#include "red.h"
+#include <stdio.h>
+
+red_integer add(red_integer a, red_integer b) {
+    return redInteger(redCInt32(a) + redCInt32(b));
+}
+
+int main(void) {
+    redRoutine(redWord("c-add"), "[a [integer!] b [integer!]]", (void*) &add);
+    printf(redCInt32(redDo("c-add 2 3")));
+    return 0;
+}
+----
+
+=== CからRedの値を作る
+
+libRed APIの多くの関数は（ _references_ として）Redの値を渡す必要があります。以下の関数は最もよく使われるデータ型のシンプルなコンストラクタです。
+
+==== redSymbol()
+----
+long redSymbol(const char* word)
+----
+（Cのstringとして与えられた）ロードされた _word_ に関連づけられたシンボルIDを返します。このIDはwordの値のの代わりにシンボルIDを必要とする他のlibRed API関数に渡すことができます。
+
+.*例*
+----
+long a = redSymbol("a");
+redSet(a, redInteger(42));
+printf("%l\n", redGet(a));
+----
+
+==== redUnset()
+----
+red_unset redUnset(void)
+----
+値 _unset!_ を返します。
+
+==== redNone()
+----
+red_none redNone(void)
+----
+値 _none!_ を返します。
+
+==== redLogic()
+----
+red_logic redLogic(long logic)
+----
+「logic!」型の値を返します。 _logic_ の値が「0」であれば「false」、それ以外であれば「true」が戻り値となります。
+
+==== redDatatype()
+----
+red_datatype redDatatype(long type)
+----
+_type_ で指定されたIDに対応する「datatype!」の値を返します。IDは「RedType」列挙体で定義されています。
+
+==== redInteger()
+----
+red_integer redInteger(long number)
+----
+_number_ で指定された値を元に「integer!」の値を返します。
+
+==== redFloat()
+----
+red_float redFloat(double number)
+----
+_number_ で指定された値をもとに「float!」の値を返します。
+
+==== redPair()
+----
+red_pair redPair(long x, long y)
+----
+２つのinteger値から「pair!」の値を返します。
+
+==== redTuple()
+----
+red_tuple redTuple(long r, long g, long b)
+----
+３つのinteger値（通常はRGBカラーを表現するために使われます）を元に「tuple!」の値を返します。渡された引数は8ビット値に切り捨てられます。
+
+==== redTuple4()
+----
+red_tuple redTuple4(long r, long g, long b, long a)
+----
+４つのinteger値（通常はRGBカラーを表現するために使われます）を元に「tuple!」の値を返します。渡された引数は8ビット値に切り捨てられます。
+
+==== redBinary()
+----
+red_binary redBinary(const char* buffer, long bytes)
+----
+指定されたメモリバッファのポインターとbytesで指定されたバッファの長さから `binary!` の値を返します。受け取ったバッファは内部的にコピーされます。
+
+==== redImage()
+----
+red_image redImage(long width, long height, const void* buffer, long format)
+----
+指定されたメモリバッファのポインターから `image!` の値を返します。イメージのサイズはピクセル単位の `width` と `height` で定義されます。受け取ったバッファは内部的にコピーされます。指定可能なバッファのフォーマットは以下です。
+
+* `RED_IMAGE_FORMAT_RGB`: 24BPP（24-bit per pixel）のフォーマット
+* `RED_IMAGE_FORMAT_ARGB`: 32BPP（32-bit per pixel）とアルファチャンネルのフォーマット
+
+==== redString()
+----
+red_string redString(const char* string)
+----
+_string_ のポインタから「string!」の値を返します。引数の文字列に対してデフォルトではUTF-8エンコーディングであることが期待されます。他のエンコーディングを定義する場合、「redSetEncoding()」関数を使うことで行えます。
+
+==== redWord()
+----
+red_word redWord(const char* word)
+----
+Cのstringから「word!」の値を返します。引数の文字列に対してデフォルトではUTF-8エンコーディングが期待されます。他のエンコーディングを定義する場合、「redSetEncoding()」関数を使うことで行えます。wordとしてロードできない文字列が渡された場合、値「error!」が返されます。
+
+==== redBlock()
+----
+red_block redBlock(red_value v,...)
+----
+
+引数のリストから新しいblock!のseriesを返します。リストは終わりを示すため、「null」か「0」で *終わらなければなりません。*
+
+.*例*
+----
+redBlock(0);                                  // 空のblockを生成
+redBlock(redInteger(42), redWord("hi"), 0);   // [42 hi] というblockを生成
+----
+
+==== redPath()
+----
+red_path redPath(red_value v, ...)
+----
+
+引数のリストから新しいpath!のseriesを返します。リストは終わりを示すため、「null」か「0」で *終わらなければなりません。*
+
+.*例*
+----
+redDo("a: [b 123]");
+long res = redDo(redPath(redWord("a"), redWord("b"), 0);
+printf("%l\n", redCInt32(res));    // 「123」が出力されます。
+----
+
+==== redLoadPath()
+----
+red_path redLoadPath(const char* path)
+----
+
+Cの文字列として表現されたパスからpath!のseriesを返します。これにより、ここの要素を個別に生成することなく、簡単にパスを生成できます。
+
+.*例*
+----
+redDo(redLoadPath("a/b"));    // a/bというpath!の値を生成して評価します。
+----
+
+==== redMakeSeries()
+----
+red_value redMakeSeries(unsigned long type, unsigned long slots)
+----
+
+_type_ で指定した型の新しいseries!を、 _slots_ で指定した数の要素が入るサイズで生成します。これはseriesを生成する包括的な関数です。typeは `RedType` 列挙体の値のいずれかである必要があります。
+
+.*例*
+----
+redMakeSeries(RED_TYPE_PAREN, 2);  // paren! seriesを生成します。
+
+long path = redMakeSeries(RED_TYPE_SET_PATH, 2); // set-path!を生成します。
+redAppend(path, redWord("a"));
+redAppend(path, redInteger(2));    // pathが `a/2:` に更新されます。
+----
+
+=== Cの値をRedから作成する
+
+Redの値をホストの側へ変換することは可能ですが、C言語のいくつかのデータ型に限られます。
+
+==== redCInt32()
+----
+long redCInt32(red_integer number)
+----
+
+Redのinteger!の値から32ビット符号付き整数を返します。
+
+==== redCDouble()
+----
+double redCDouble(red_float number)
+----
+
+Redのfloat!の値からCの倍精度浮動小数点数の値を返します。
+
+==== redCString()
+----
+const char* redCString(red_string string)
+----
+
+Redのstring!の値からUTF-8の文字列バッファポインタを返します。他のエンコーディングは `redSetEncoding` 関数で指定できます。
+
+==== redTypeOf()
+----
+long redTypeOf(red_value value)
+----
+
+Redの値の型IDを返します。型IDは `RedType` 列挙体で定義されています。link:libred.adoc#datatypes-definition[データ型] セクションを参照してください。
+
+=== Redのactionの呼び出し
+
+`redCall` を使用することですべてのRedの関数を呼び出しすることができます。ただし、最もよく使われるactionには利便性とパフォーマンスのためいくつかのショートカットが提供されています。
+
+==== redAppend()
+----
+red_value redAppend(red_series series, red_value value)
+----
+
+_value_ を _series_ に追加し、先頭位置をポイントするseriesを返します。
+
+==== redChange()
+----
+red_value redChange(red_series series, red_value value)
+----
+
+_series_ の値を _value_ で変更し、変更した箇所以降のseriesを返します。
+
+==== redClear()
+----
+red_value redClear(red_series series)
+----
+
+_series_ の値を現在のインデックスから末尾まで削除し、新しい末尾位置のseriesを返します。
+
+==== redCopy()
+----
+red_value redCopy(red_value value)
+----
+
+非スカラー型の値をコピーします。
+
+==== redFind()
+----
+red_value redFind(red_series series, red_value value)
+----
+
+_value_ が見つかった位置の _series_ を返すか、NONEを返します。
+
+==== redIndex()
+----
+red_value redIndex(red_series series)
+----
+
+先頭から見た_series_ のインデックスまたはコンテキスト中のwordのインデックスを返します。
+
+==== redLength()
+----
+red_value redLength(red_series series)
+----
+
+現在位置から末尾までの _series_ の中の値の数を返します。
+
+==== redMake()
+----
+red_value redMake(red_value proto, red_value spec)
+----
+
+_spec_ と _proto_ の型から、新しい値を作成して返します。
+
+==== redMold()
+----
+red_value redMold(red_value value)
+----
+
+値をRedのソースフォーマットで文字列化して返します。
+
+==== redPick()
+----
+red_value redPick(red_series series, red_value value)
+----
+
+_series_ の指定したインデックスの _value_ を返します。
+
+==== redPoke()
+----
+red_value redPoke(red_series series, red_value index, red_value value)
+----
+
+_series_ の指定したインデックスの _value_ を置き換え、新しい値を返します。
+
+==== redPut()
+----
+red_value redPut(red_series series, red_value index, red_value value)
+----
+
+_series_ の指定したキーに対応する値を置き換え、新しい値を返します。
+
+==== redRemove()
+----
+red_value redRemove(red_series series)
+----
+
+_series_ の現在のインデックスの値を削除し、削除後のseriesを返します。
+
+==== redSelect()
+----
+red_value redSelect(red_series series, red_value value)
+----
+
+_series_ の中の _value_ を探し、見つかればその次の値、見つからなければNONEを返します。
+
+==== redSkip()
+----
+red_value redSkip(red_series series, red_integer offset)
+----
+
+現在のインデックスから指定の数だけ移動した _series_ を返します。
+
+==== redTo()
+----
+red_value redTo(red_value proto, red_value spec)
+----
+
+_spec_ の値を _proto_ で指定されたデータ型に変換します。
+
+=== Redのwordへのアクセス
+
+RedのwordのセットやRedのwordからの値の取得はホストとRedのランタイム環境との間で値をやり取りする最も直接的な方法です。
+
+==== redSet()
+----
+red_value redSet(long id, red_value value)
+----
+
+_id_ シンボルで指定されたwordに _value_ の値をセットします。これによって作成されたwordはグローバルコンテキストに作成されます。 _value_ はこの関数によって返される値になります。
+
+==== redGet()
+----
+red_value redGet(long id)
+----
+
+_id_ シンボルで指定されたwordの値を返します。これによって作成されたwordはグローバルコンテキストに作成されます。
+
+=== Redのパスへのアクセス
+
+パスはRedのデータにアクセスできる非常にフレキシブルな方法です。そのため、libRedにおいて専用のアクセス方法があります。とりわけ、それはオブジェクトコンテキスト内のwordへのアクセスを可能にします。
+
+==== redSetPath()
+----
+red_value redSetPath(red_path path, red_value value)
+----
+
+_path_ に _value_ をセットし、その _value_ を返します。
+
+==== redGetPath()
+----
+red_value redGetPath(red_path path)
+----
+
+_path_ で参照される _value_ を返します。
+
+=== Redのオブジェクトフィールドへのアクセス
+
+オブジェクトのフィールドへの複数のセット／ゲットアクセスが必要な場合、パスを構築するよりもオブジェクトの値を直接使用する方がシンプルで木の間いいことがあります。以下の２つの関数はそのようなアクセスを可能にするために用意されています。
+
+NOTE: これらのアクセサは `object!` 型だけでなく、関連付けされた他の配列型にも機能します。従って `map!` の値に対して使うことも可能です。
+
+==== redSetField()
+----
+red_value redSetField(red_value object, long field, red_value value)
+----
+
+_object_ の _field_ に _value_ をセットし、その _value_ を返します。 _field_ 引数は `redSymbol()` によって作られたシンボルIDです。
+
+==== redGetField()
+----
+red_value redGetField(red_value obj, long field)
+----
+
+_object_ の _field_ に保持されている _value_ を返します。 _field_ 引数は `redSymbol()` によって作られたシンボルIDです。
+
+=== デバッギング
+
+いくつかの便利なデバッグ機能も提供されています。ほとんどは出力のためにシステムシェルウィンドウを必要としますが、ログウィンドウを強制的に開いたり、ファイルに出力をリダイレクトすることもできます。
+
+==== redPrint()
+----
+void redPrint(red_value value)
+----
+
+標準出力か、もし開かれている場合はデバッグコンソールに _value_ を出力します。
+
+==== redProbe()
+----
+red_value redProbe(red_value value)
+----
+
+標準出力化、もし開かれている場合はデバッグコンソールに _value_ をprobeした値を出力します。 _value_ はこの関数呼び出しの戻り値になります。
+
+==== redHasError()
+----
+red_value redHasError(void)
+----
+
+直前のAPI呼び出しでエラーが発生していれば error! の値を、エラーが起きていなければ `null` を返します。
+
+==== redFormError()
+----
+const char* redFormError(void)
+----
+
+エラーが起きていれば フォーマットされたエラーを含むUTF-8の文字列ポインタを、エラーが起きていなければ `null` を返します。
+
+==== redOpenLogWindow()
+----
+int redOpenLogWindow(void)
+----
+
+ログウィンドウを開き、全てのRedのprint出力をそのウィンドウにリダイレクトします。この機能はホストアプリケーションがデフォルトのprint出力先であるシステムシェルから起動されていない場合に役に立ちます。すでにログウィンドウが開いている場合、この関数を複数回読んでも、何も起こりません。戻り値は成功すれば「1」、失敗した場合は「0」です。
+
+NOTE: Windowsプラットフォームでのみ有効です。
+
+==== redCloseLogWindow()
+----
+int redCloseLogWindow(void)
+----
+
+ログウィンドウを閉じます。ログウィンドウがすでに閉じている状況でこの関数を呼んでも何も起こりません。戻り値は成功すれば「1」、失敗した場合は「0」です。
+
+NOTE: Windowsプラットフォームでのみ有効です。
+
+==== redOpenLogFile()
+----
+void redOpenLogFile(const string *name)
+----
+
+_name_ で指定されたファイルにRedのprint関数の出力をリダイレクトします。 _name_ にはOSに応じたパス形式で、相対パス、仮想パスを指定することができます。
+
+==== redCloseLogFile()
+----
+void redCloseLogFile(void)
+----
+
+`redOpenLogFile()` によって開かれたログファイルを閉じます。
+
+NOTE: 現在のところ、ログファイルは終了時には必ず閉じておく必要があります。ログファイルを閉じずに終了した場合、ロックが残ってしまい、MS Officeアプリケーションなどの一部のホストではフリーズやクラッシュが起きる可能性があります。
+
+[#datatypes-definition]
+=== データ型の定義
+
+libRed APIのいくつかの関数はRedのデータ型を参照します。具体的には `redTypeOf`、`redMakeSeries()`、`redDataType()`です。Redのデータ型はホストの側で`RedType`列挙体として表現され、次の命名規則で型を示します。
+----
+RED_TYPE_<DATATYPE>
+----
+
+網羅的なリストは https://github.com/red/red/blob/master/libRed/red.h#L120[ここ] で見つかります。
+
+== Visual Basic API
+
+VBとVBA（MS Office アプリケーション上）のためのVisual Basic APIが用意されています。これは基本的にはC APIと同等で、以下のセクションに記載の内容だけが異なります。差異のほとんどは可変長引数に関係するもので、以下の２つに分類できます。
+
+* `redBlock()`, `redPath()`, `redCall()` はRedの値だけを受け取ることができ、Cのバージョンのように `null` または `0` で終わることを必要としません。
+* `redBlockVB()`, `redPathVB()`, `redCallVB()` はVBの値だけを受け取ることができ、次に示すテーブルの内容で自動的に変換が行われます。
+
+[cols="1,4", options="header"]
+|===
+|VisualBasic | Red
+|`vbInteger`| `integer!`
+|`vbLong`| `integer!`
+|`vbSingle`| `float!`
+|`vbDouble`| `float!`
+|`vbString`| `string!`
+|===
+
+
+==== セットアップ
+
+VBおよびVBAでlibRedを使用するためには、　`stdcall` のABIでコンパイルされたlibRedのバイナリが必要です。コンパイルするには、以下のコマンドを実行します。
+----
+red build libRed stdcall
+----
+
+また、 https://github.com/red/red/blob/master/libRed/libRed.bas[`libRed.bas`] モジュールをプロジェクトにインポートする必要もあります。
+
+==== redLogic()
+----
+Function redLogic(bool As Boolean) As Long
+----
+VBの `boolean` の値から Redの `logic!` の値を生成して返します。
+
+==== redBlockVB()
+----
+Function redBlockVB(ParamArray args() As Variant) As Long
+----
+引数のリストから新しいblock!を生成して返します。引数の数は可変であり、VisualBasicの値だけで構成されている必要があります。
+
+.*例*
+----
+redProbe redBlockVB()              ' 空のブロックを生成します。
+redProbe redBlockVB(42, "hello")   ' [42 "hello"] というブロックを生成します。
+----
+
+==== redPathVB()
+----
+Function redPathVB(ParamArray args() As Variant) As Long
+----
+
+引数のリストから新しいpath!のseriesを返します。引数の数は可変であり、VisualBasicの値だけで構成されている必要があります。
+
+.*例*
+----
+redDo("a: [b 123]")
+res = redDo(redPathVB("a", "b"))
+Debug.print redCInt32(res))        ' 123を出力します。
+----
+
+==== redCallVB()
+----
+Function redCallVB(ParamArray args() As Variant) As Long
+----
+第一引数として渡された文字列で参照される `any-function!` 型のRedの関数に、任意の数の引数を渡して実行します。引数の数は可変であり、VisualBasicの値である必要があります。
+
+.*例*
+----
+redCallVB("random", 6);            ' 1から6までのランダムなinteger!の値を返します。
+----
+
+=== コールバック関数の登録
+
+
+Redの側から呼び出されることができるVisualBasicの関数を作る時は、C APIの場合と同様、 `redRoutine()` を呼び出します。その関数の最後の引数は関数のポインタです。VBではそのようなポインタは _module_ で定義された関数の場合のみ取得でき、 _UserForm_ では取得できません。
+
+以下はExcelの「Red Console」デモで使用されているコールバックです。
+----
+Sub RegisterConsoleCB()
+    redRoutine redWord("print"), "[msg [string!]]", AddressOf onConsolePrint
+End Sub
+
+Function onConsolePrint(ByVal msg As Long) As Long
+    If redTypeOf(msg) <> red_unset Then Sheet2.AppendOutput redCString(msg)
+    onConsolePrint = redUnset
+End Function
+----

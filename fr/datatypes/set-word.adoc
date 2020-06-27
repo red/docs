@@ -1,0 +1,75 @@
+= Le type Set-word!
+:toc:
+:numbered:
+
+== Résumé
+
+Le type `set-word!` établit une référence à une valeur.
+
+Lorsqu'il est utilisé en dehors d'une valeur de type `object!` ou `map!`, un set-word établira dans le contexte actuel une référence à la valeur de l'expression qui suit le set-word.
+
+```red
+foo: 2 * 21
+```
+
+`Set-word!` appartient aux ensembles de types suivants: `any-word!`, `all-word!`, `immediate!`
+
+== Création
+
+Les valeurs de type Set-word! peuvent être créées à l'aide de la syntaxe littérale, ou lors de l'exécution en utilisant la conversion `to` à partir des types de données: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, `refinement!`, et `lit-word!`.
+
+```red
+>> to set-word! #"X"
+== X:
+
+>> to set-word! true
+== true:
+
+>> to set-word! "Hello"
+== Hello:
+
+>> to set-word! float!
+== float!:
+
+>> to set-word! #A42
+== A42:
+
+>> to set-word! /only
+== only:
+
+>> to set-word! 'foo
+== foo:
+```
+
+
+== Syntaxe littérale
+
+Un ou plusieurs caractères de toute l'étendue d'Unicode, incluant les caractères de ponctuation du sous-ensemble ASCII suivant: `! & ' * + - . < = > ? _ | ~``, suivis par deux points `:`. 
+
+Les caractères interdits sont les caractères de contrôle, les caractères d'espace, et les caractères de ponctuation du sous-ensemble ASCII suivant: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+
+Une valeur de `set-word!` ne peut pas commencer par un nombre.
+
+
+== Test de valeurs
+
+Utilisez `set-word?` pour vérifier si une valeur est du type `Set-word!`.
+
+```red
+>> set-word? first [foo: 'bar baz]
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? first [foo: 'bar baz]
+== set-word!
+```
+
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`to-set-word`

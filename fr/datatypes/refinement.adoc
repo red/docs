@@ -1,0 +1,86 @@
+= Le type Refinement!
+:toc:
+:numbered:
+
+
+== Résumé
+
+Les valeurs de type `refinement!` (raffinement) sont des valeurs symboliques qui sont utilisées pour modifier des fonction ou comme extensions pour des objets, des fichiers, des urls ou des chemins.
+
+La fonction `repend` sans raffinement:
+```red
+>> repend ["foo"] [21 * 2]
+== ["foo" 42]
+```
+
+Avec le raffinement `/only`:
+
+```red
+>> repend/only ["foo"] [21 * 2]
+== ["foo" [42]]
+```
+
+`Refinement!` appartient aux ensembles de types suivants: `all-word!`, `immediate!`
+
+== Création
+
+Les valeurs de type Refinement! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
+
+```red
+>> /foo
+== /foo
+```
+```red
+>> make refinement! "bar"
+== /bar
+```
+```red
+>> to refinement! 'baz
+== /baz
+```
+
+== Syntaxe littérale
+
+Un slash `/` suivi par un ou plusieurs caractères de toute l'étendue d'Unicode, incluant les caractères de ponctuation du sous-ensemble ASCII suivant: `! & ' * + - . < = > ? _ | ~``
+
+Les caractères interdits sont les caractères de contrôle, les caractères d'espace, et les caractères de ponctuation du sous-ensemble ASCII suivant: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+
+[NOTE, caption=Note]
+
+L'utilisation de `@` ne générera pas d'erreur, mais provoquera le renvoi de la valeur du `refinement!` sous forme d'un `email!`.
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués à `refinement!`: `=, ==, <>, >, <, >=, &lt;=, =?`. 
+
+== Test de valeurs
+
+Utilisez `refinement?` pour vérifier si une valeur est du type `Refinement!`.
+
+```red
+>> refinement? /foo
+== true
+
+>> refinement? third [42 "Foo" /bar]
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? /foo
+== refinement!
+
+>> type? third [42 "Foo" /bar]
+== refinement!
+```
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`parse-func-spec`, `refinement?`, `to-refinement`
+
+=== Natives
+
+`function`

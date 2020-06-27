@@ -1,0 +1,98 @@
+= Word! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+A `word!` is a symbolic value that can be used like a variable, an identifier that refers to a value in a given context.
+
+Words do not store values, they point to values in a given context, and will default to the global context when no context is provided. 
+
+`Word!` is a member of the following typesets: `any-word!`, `all-word!`, `immediate!`
+
+=== Word Variations
+
+|========================================================================
+|*Syntax*|*Type*|*Description*
+|word|`word!`|Refers to a value in a given context.
+|word:|link:set-word.adoc[set-word!]|Sets a reference to a value.
+|:word|link:get-word.adoc[get-word!]|Gets a value without performing evalutaion.
+|'word|link:lit-word.adoc[lit-word!]|Suppresses evaluation. The literal value "word".
+|/word|link:refinement.adoc[refinement!]|Evaluates the word as a refinement.
+|========================================================================
+
+== Creation
+
+Word values can be created using literal syntax, or at runtime using a `to` conversion from the datatypes: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, and `refinement!`.
+
+
+```red
+>> to word! #"X"
+== X
+
+>> to word! true   ; returns a word representation of the value
+== true
+
+>> to word! "Hello"
+== Hello
+
+>> to word! float!  ; returns a word representation of the value
+== float!
+
+>> to word! #hi
+== hi
+
+>> to word! /deep
+== deep
+```
+
+[NOTE, caption=Note]
+
+Attempting to convert `none` raises an error.
+
+== Literal syntax
+
+One or more characters from the entire Unicode range, including punctuation characters from the ASCII subset: `! & ' * + - . < = > ? _ | ~``
+
+[NOTE, caption=Note]
+
+Words are case-insensitive. Changing any letter in the word into the corresponding upper-case or lower-case variant does not create a different word.
+
+Illegal characters are control characters, whitespace characters, and punctuation characters from the ASCII subset: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+
+A `word!` value cannot begin with a number.
+
+== Evaluation Steps
+
+* Find the context that the word is bound to. 
+
+* Get the value that is refered to in the context.
+
+* Check the type of the value:
+
+** If no value exists, the type is `unset!`, and an error is returned.
+
+** If the type of the value is in the `any-function!` typeset, call the function.
+
+** Otherwise, return the value.
+
+== Comparisons
+
+All comparators can be applied on `word!`: `=, ==, <>, >, <, >=, &lt;=, =?`.
+
+
+== Testing values
+
+Use `word?` to check if a value is of the `word!` datatype.
+
+```red
+>> word? first [let us code]
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? first [let us code]
+== word!
+```

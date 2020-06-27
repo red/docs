@@ -1,0 +1,25 @@
+= Event! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+`Event!` values are object-like values that represent external activity.
+
+`Event!` is a member of the following typesets: `default!`, `external!`
+
+== Creation
+
+Event values cannot be created with `make` or `to`, and they have no literal form. They are sourced from the operating system and are effectively read-only values.
+
+See link:https://doc.red-lang.org/en/view.html#_events[View documentation] for more information on events.
+
+== Testing values
+
+Use `event?` to check if a value is of the `event!` datatype.
+
+== Predefined words
+
+=== Functions
+
+`event?`

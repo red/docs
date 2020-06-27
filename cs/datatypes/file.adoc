@@ -1,0 +1,83 @@
+= Datový typ `file!`
+:toc:
+:numbered:
+
+== Úvod
+
+Hodnoty typu `file!` reprezentují názvy souborů nebo adresářů a cest.
+
+`File!` je členem těchto typesetů: `any-string!`, `series!`
+
+== Vytvoření
+
+Hodoty typu file! lze vytvořit literálovou syntaxi nebo při runtime s použitím konstruktoru `make` nebo konverzí `to`.
+
+```red
+>> %file-literal
+== %file-literal
+```
+
+```red
+>> make file! 'foo
+== %foo
+
+>> make file! "bar"
+== %bar
+
+>> make file! [a long file name]
+== %alongfilename
+```
+
+```red
+>> to file! "foo"
+== %foo
+
+>> to file! [foo bar baz]
+== %foobarbaz
+```
+
+== Literálová skladba
+
+Znak  procenta `%` následovaný jedním nebo více znaky (nikoliv whitespace) nebo žádným či více znaky uzavřenými v uvozovkách `" "`.
+'Whitespace characters' musí být předznamenány slovem `%<hex>`, pokud nejsou uzavřeny v `" "`.
+
+`%foo`
+
+`%foo%20bar`
+
+`%"foo bar baz"`
+
+== Komparace
+
+Lze použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporováy také funkce `min` a  `max`.
+
+== Testování hodnot
+
+Use `file?` to check if a value is of the `file!` datatype.
+
+```red
+>> file? %foo
+== true
+```
+
+Datový typ dané hodnoty lze zjistit funkcí `type?`.
+
+```red
+>> type? %bar
+== file!
+```
+
+
+== Předdefinovaná slova
+
+=== Akce
+
+`delete`, `modify`, `query`, `read`, `write`
+
+=== Funkce
+
+`cd`, `change-dir`, `clean-path`, `dir?`, `dirize`, `do-file`, `do-thru`, `exists-thru?`, `file?`, `flip-exe-flag`, `list-dir`, `load`, `load-thru`, `make-dir`, `normalize-dir`, `path-thru`, `read-thru`, `request-dir`, `request-file`, `save`, `split-path`, `suffix?`, `to-file`, `to-red-file` 
+
+=== Natives
+
+`browse`, `call`, `checksum`, `dehex`

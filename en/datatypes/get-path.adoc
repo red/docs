@@ -1,0 +1,89 @@
+= Get-path! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+A `get-path!` value returns the value of a `path!`, unevaluated.
+
+`Get-path!` is a member of the following typesets: `any-block!`, `any-path!`, `series!`
+
+== Creation
+
+Get-path! values can be created at runtime by using a `make` constructor or `to` conversion.
+
+```red
+>> make get-path! [foo bar baz]
+== :foo/bar/baz
+```
+
+You can create an empty get-path of a given size by supplying an integer value as an argument to `make`:
+
+```red
+>> make get-path! 10
+== :
+```
+
+`To` conversion:
+
+```red
+>> to get-path! "foo bar baz"
+== :foo/bar/baz
+```
+
+== Literal syntax
+
+BNF:
+
+```
+<get-path-literal>  ::= :<path-literal>
+
+<path-literal> ::= <path-head>/<selector>
+<path-head>    ::= <word-literal> | <path-literal>
+<selector> ::= <integer> | <word-literal> | :<word-literal> | <paren>
+```
+
+Parse:
+
+```
+get-path: [get-word! some selector]
+selector: [#"/" [integer! | word! | get-word! | paren!]]
+```
+
+Path-head datatypes: link:get-word.adoc[get-word!], `get-path!`
+
+Selector datatypes: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
+
+
+== Evaluation Steps
+
+A get-path! value follows the same evaluation rules as `path!` until the selector is reached, at which point the value referred to by the selector is returned without being evaluated.
+
+== Testing values
+
+Use `get-path?` to check if a value is of the `get-path!` datatype.
+
+```red
+>> get-path? first [:foo/bar]
+== true
+
+>> get-path? quote :foo/bar
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? first [:foo/bar]
+== get-path!
+
+>> type? quote :foo/bar
+== get-path!
+```
+
+== Predefined words
+
+=== Functions
+
+`get-path?`, `to-get-path`

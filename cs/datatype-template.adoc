@@ -1,0 +1,50 @@
+[[anchor-1]]
+
+= Datový typ X
+:toc:
+:numbered:
+
+
+== Úvodem
+
+== Vytvoření
+
+Hodnoty X lze vytvořit s použitím literálové syntaxe nebo při běhu programu konstruktorem `make` nebo konverzí `to`.
+
+
+== Literálová skladba
+
+
+== Komparace
+
+Pro hodnotu typu `float!` lze být použít všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Navíc jsou podporovány funkce `min` a `max`.
+
+
+
+== Konverze
+
+
+== Testování hodnot
+
+Use X to check if a value is of the X datatype.
+
+----
+
+----
+
+Funkce `type?` vrací datový typ zadané hodnoty.
+
+----
+
+----
+
+
+== Předdefinovaná slova
+
+=== Actions
+
+=== Functions
+
+=== Natives
+
+=== Operators

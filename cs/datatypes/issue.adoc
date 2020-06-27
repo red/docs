@@ -1,0 +1,79 @@
+= Datový typ `issue!`
+:toc:
+:numbered:
+
+== Úvodem
+
+Hodnotu typu `issue!` tvoří slovo, začínající znakem `#`. 
+
+Hodnoty `issue!` se používají k prezentování hashtagů, klíčových slov a identifikátorů (např. indexů u řad), to jest entit, které neobsahují mezery.
+
+Typ `issue!` je součástí typové sady `all-word!`.
+
+
+== Vytvoření
+
+Hodnoty typu `issue!` lze vytvořit s použitím literálové syntaxe nebo za běhu programu použitím konverze `to`.
+
+
+
+```red
+>> to issue! "123.42-xxx"
+== #123.42-xxx
+
+>> to issue! #pohanka
+== #pohanka
+```
+
+
+== Literálová skladba
+
+Znak `#`, následovný sekvencí alfanumerických znaků. Hodnoty typu `issue!` končí mezerou, středníkem nebo deliminátorem, označujícím začátek nové hodnoty (např. `[` začátek bloku).
+
+`#555-555-5555`
+
+`#CODE`1.2.3--42-8`
+
+`#ABC-123-xyx`
+
+
+== Komparace
+
+Pro hodnotu typu `issue!` lze použít všechny komparátory: `=, ==, <>, <, <=, >, >=, =?`. 
+
+
+== Testování hodnot
+
+K ověření, zda hodnota je typu `issue!` použijeme funkci `issue?`.
+
+```red
+>> issue? #ABC-123-xyx
+== true
+
+>> my-word: #X11'xyz
+== #X11'xyz
+
+>> issue? my-word
+== true
+```
+
+Funkce `type?` vrací datový typ zadané hodnoty.
+
+
+```red
+>> type? #ABC-123-xyx
+== issue!
+
+>> type? my-word
+== issue!
+```
+
+== Předdefinovaná slova
+
+=== Funkce
+
+`hex-to-rgb`, `issue?`, `to-issue`
+
+=== Nativa
+
+`to-hex`

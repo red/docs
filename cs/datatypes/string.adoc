@@ -1,0 +1,114 @@
+= Datový typ `string!`
+:toc:
+:numbered:
+
+
+== Úvodem
+
+Hodnota typu `string!` je sequence kódovacích bodů Unicode nebo hodnot typu link:char.adoc[char!].
+
+Typ `string!` je subtypem tqchto typesetů: `any-string!`, `default!`, `series!`
+
+== Vytvoření
+
+Hodnoty typu string! lze vytvořit literálovou syntaxí nebo při runtime konstruktorem `make` nebo konverzí `to`.
+
+```red
+>> s: make string! 100
+== ""
+```
+
+```red
+>> to string! 'foo
+== "foo"
+
+>> to string! [bar]
+== "bar"
+
+>> to string! 42
+== "42"
+```
+
+Rovněž je možné použít akce `form` a `mold` ke konverzi hodnoty na  "user-friendly string" či "source format string".
+
+```red
+>> form 'foo
+== "foo"
+```
+
+```red
+>> mold 'bar
+== "bar"
+```
+
+[NOTE, caption=Note]
+
+Pokus o převod hodnoty `none` konverzí `to` vyvolává chybové hlášení.
+
+== Literálová skladba
+
+*Jednořádkový řetězec*:
+
+(Žádný či více znaků uvnitř apostrofů.
+
+`"foo"`
+
+*Víceřádkový řetězec*:
+
+Žádný či více znaků uvnitř složených závorek.
+
+`{foo}` 
+
+Jednořádkový řetězec nemůže obsahovat neodcuknuté (unescaped) znaky pro nový řádek:
+
+```red
+>> cr
+== #"^M"
+
+>> lf
+== #"^/"
+
+>> crlf
+== "^M^/"
+```
+
+Víceřádkový řetězec můž obsahovat znaky nového řádku, uvozovky a páry závorek. Nespárované závorky musí být odcuknuty (escaped) předsazením znakem `^`, např. `{foo^{}`.
+
+== Komparace
+
+Na hodnotu typu `string!` lze aplikovat všechny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`. Rovněž jsou podporovány funkce `min` a `max`.
+
+
+== Testování hodnot
+
+Funkcí `string?` ověříme, zda posuzovaná hodnota je typu `string!`.
+
+```red
+>> string? "foo"
+== true
+```
+
+Funkce `type?` vrací typ dané hodnoty.
+
+```red
+>> type? "foo"
+== string!
+```
+
+== Předdefinovaná slova
+
+=== Akce
+
+`find`, `form`, `mold`, `pick`, `poke`, `put`, `read`, `select`, `trim`
+
+=== Funkce
+
+`a-an`, `any-string?`, `ask`, `charset`, `clean-path`, `dirize`, `ellipsize-at`, `help-string`, `input`, `load`, `pad`, `string?`, `to-string`
+
+=== Natives
+
+`as`, `call`, `checksum`, `debase`, `dehex`, `difference`, `do`, `enbase`, `exclude`, `get-env`, `intersect`, `lowercase`, `parse`, `set-env`, `to-local-file`, `union`, `unique`, `uppercase`
+
+=== Routines
+
+`set-current-dir`, `write-clipboard`, `write-stdout`

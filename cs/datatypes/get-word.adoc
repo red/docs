@@ -1,0 +1,76 @@
+= Datový typ `get-word!`
+:toc:
+:numbered:
+
+== Úvodem
+
+Hodnota typu `get-word!` vrací nevyhodnocené slovo z kontextu, ve kterém je vázané.
+
+`Get-word!` je člen následujících typesetů: `any-word!`, `all-word!`, `immediate!`
+
+== Vytvoření
+
+Hodnoty get-word! mohou být vytvořeny použitím literálové syntaxe nebo při runtimu konverzí `to` z těchto datových typů: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, `refinement!` a `lit-word!`.
+
+```red
+>> to get-word! #"X"
+== :X
+
+>> to get-word! true
+== :true
+
+>> to get-word! "Hello"
+== :Hello
+
+>> to get-word! float!
+== :float!
+
+>> to get-word! #A42
+== :A42
+
+>> to get-word! /only
+== :only
+
+>> to get-word! 'foo
+== :foo
+```
+
+== Literálová skladba
+
+Dvojtečka `:`, následovaná jedním nebo více znaky sady Unicode, včetně interpunkčních znaků ze sady ASCII: `! & ' * + - . < = > ? _ | ~``
+
+Nepovolené jsou řídící znaky, znaky pro mezery a tyto interpunkční znaky ze sady ASCII: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+
+Hodnota typu `get-word!` nemůže začínat číslem.
+
+
+== Postup při vyhodnocení
+
+* Vyhledat kontext, v němž se slovo nachází. 
+
+* Vrátit hodnotu, na níž je v tomto kontextu odkazováno.
+
+** Je-li hodnota typem z typesetu `any-function!`, nevolat funkci ale vrátit literálovou hodnotu funkce.
+
+
+== Testování hodnot
+
+Použijeme funkci `get-word?` pro ověření, zda je hodnota typu `get-word!`.
+
+```red
+>> get-word? first [:foo 'bar baz]
+== true
+```
+
+Datový typ dané hodnoty zjistíme funkcí `type?`.
+
+```red
+>> type? first [:foo 'bar baz]
+== get-word!
+```
+
+== Předdefinovaná slova
+
+=== Funkce
+
+`to-get-word`

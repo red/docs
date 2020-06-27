@@ -1,0 +1,89 @@
+= Datový typ `get-path!`
+:toc:
+:numbered:
+
+
+== Úvodem
+
+Typ `get-path!` vrací neredukovanou (nevyhodnocenou) hodnotu typu `path!`.
+
+Typ get-path! je členem těchto typesetů: `series!`, `any-block!`, `any-path!`.
+
+== Vytvoření
+
+Hodnoty typu `get-path!` mohou být vytvořeny při runtime použitím konstruktoru `make` nebo konverzí `to`.
+
+```red
+>> make get-path! [foo bar baz]
+== :foo/bar/baz
+```
+
+Prázdný objekt dané velikosti typu get-path lze vytvořit zadáním celočíselné hodnoty coby argument funkcí `make`:
+
+```red
+>> make get-path! 10
+== :                        
+```
+
+Konverze `to`:
+
+```red
+>> to get-path! "foo bar baz"
+== :foo/bar/baz
+```
+
+== Literálová skladba
+
+BNF:
+
+```
+<get-path-literal>  ::= :<path-literal>
+
+<path-literal> ::= <path-head>/<selector>
+<path-head>    ::= <word-literal> | <path-literal>
+<selector>     ::= <integer> | <word-literal> | :<word-literal> | <paren>
+```
+
+Parse:
+
+```
+get-path: [get-word! some selector]
+selector: [#"/" [integer! | word! | get-word! | paren!]]
+```
+
+Path-head datatypes: link:get-word.adoc[get-word!], `get-path!`
+
+Selector datatypes: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
+
+
+== Postup při vyhodnocení
+
+Hodnota get-path! se řídí stejnými pravidly jako `path!`, až k dosažení selektoru, kdy je selektorem odkazovaná hodnota vrácena bez vyhodnocení.
+
+== Testování hodnot
+
+Funkci `get-path?` použijeme při ověřování typu `get-path!`.
+
+```red
+>> get-path? first [:foo/bar]
+== true
+
+>> get-path? quote :foo/bar
+== true
+```
+
+Datový typ zjistíme funkcí `type?`.
+
+```red
+>> type? first [:foo/bar]
+== get-path!
+
+>> type? quote :foo/bar
+== get-path!
+```
+
+== Předdefinovaná slova
+
+=== Funkce
+
+`get-path?`, `to-get-path`

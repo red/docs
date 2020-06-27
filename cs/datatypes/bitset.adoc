@@ -1,0 +1,237 @@
+= Datový typ `bitset!`
+:toc:
+:numbered:
+
+// Adapted from https://www.red-lang.org/2013/11/041-introducing-parse.html
+
+== Úvodem
+
+Hodnota typu `bitset!` je array bitů, používaná k uložení booleovských hodnot.  0 (false) a 1 (true). Indexování bitsetu počíná nulou. 
+`Bitset!` je členem typesetu `default!`.
+
+== Vytvoření
+
+Hodnotu typu bitset! lze vytvořit konstruktorem `make`, konverzí `to` nebo funkcí `charset`.
+
+// from https://github.com/meijeru/red.specs-public
+
+```red
+<bitset>   ::= make bitset! <binary> | make bitset! <spec> |
+               to bitset! <spec> |
+	       charset < block! | integer! | char! | string! >
+			   
+<spec>     ::= <integer> | <char!> | <string!> |
+               [<bit-position>*] | not [<bit-position>*] 
+<bit-pos.> ::= <integer> | <char!> | <string!> |
+               <char> - <char> | <integer> - <integer>    
+```
+Výsledným formátem po kompilaci (ale před runtime) je:
+```red
+== make bitset! #{hex-number}   
+```
+
+=== Make, To
+
+Argument typu integer! pro konstruktor `make` vytváří prázdný bitset s vymezeným počtem míst.
+Konverze hodnoty na typ `bitset!` funkcí `to` je ekvivalentní funkci `make` s tou výjimkou, že hodnoty typu `integer!` nejsou povoleny.
+
+
+```red
+>> make bitset! 10      ; create a bitset with bit 10 set
+== make bitset! #{0000}
+```
+
+```red
+>> make bitset! #"A"    ; create a bitset with bit 65 set
+>>   to bitset! #"A"
+== make bitset! #{000000000000000040} 
+```
+
+```red
+>> make bitset! "hi"   ; a bitset with bits 104 and 105 set
+>>   to bitset! "hi"   
+== make bitset! #{00000000000000000000000000C0}
+```
+
+```red
+>> make bitset! [120 "hello" #"A"]   ; create and set bits using different value representations
+>>   to bitset! [120 "hello" #"A"]
+== make bitset! #{00000000000000004000000004890080}
+```
+
+*Použití rozsahů*:
+
+Rozsahy se vytvářejí dvěmi hodnotami typu `char!` nebo `integer!`, oddělenými pomlčkou s mezerami.
+
+```red
+>> make bitset! [#"0" - #"9" #"a" - #"z"]   
+>>   to bitset! [#"0" - #"9" #"a" - #"z"]
+== make bitset! #{000000000000FFC0000000007FFFFFE0}
+```
+
+Funkce `make bitset!` a `to-bitset` mohou mít také jako argument hodnotu typu `binary!`. 
+Idiomu `to bitset!` je ekvivalentní idiom `to-bitset`.
+
+```red
+>> tb: to-binary "Z"
+== #{5A}
+>> to-bitset tb
+== make bitset! #{5A}
+```
+Funkce `make`, `to` lze také použít k převodu skutečně binárního čísla na hexadecimální:
+
+```red
+>> to-bitset 2#{10000101}    ; binární formát
+== make bitset! #{85}        ; hexadecimální formát
+```
+
+Bitsety jsou tak dlouhé, jak je zapotřebí - automaticky expandují dle potřeby. Velikost se zaokrouhluje k horní bajtové hranici (byte bound).
+
+
+=== Charset
+
+`Charset` je náhrada příkazu `make bitset!`. Na rozdíl od konstruktorů `make` a `to` zde není přípustný argument typu `binary!.
+
+
+```red
+>> charset #{2A}
+*** Script Error: charset does not allow binary! for its spec argument
+```
+
+```red
+>> charset [120 "hello" #"A"]   ; vytvoří a nastaví bity pro různé typy hodnot
+== make bitset! #{00000000000000004000000004890080}
+```
+
+```red
+>> charset [#"0" - #"9" #"a" - #"z"]   ; vytvoří bitset z rozsahu hodnot
+== make bitset! #{000000000000FFC0000000007FFFFFE0}  
+```
+
+== Doplňky
+
+Komplementární bitsety lze vytvořit vložením slova `not` do specifikačního bloku.
+
+```red
+charset [not "0123456789"]   ; všechny znaky kromě číslic
+== make bitset! [not #{000000000000FFC0}]
+```
+
+K vytvoření komplementárních bitsetů lze rovněž použít příkaz `complement`:
+
+```red
+>> mb: make bitset! 42
+== make bitset! #{000000000000}
+
+>> complement mb
+== make bitset! [not #{000000000000}]
+```
+
+Dotazem `complement?` zjistíme, zda byl posuzovaný bitset komplementován:
+
+```red
+>> complement? mb
+== true
+```
+
+[NOTE]
+Aby bylo možné se vypořádat s obsáhlým rozsahem znaků Unicode, jsou bity mimo bitsety považovány za virtuální bity, takže je možné je ověřovat a zadávat bez vyvolání chybového hlášení. Velikost bitsetu se automaticky zvěší podle aktuální potřeby.
+ 
+To stále nestačí pro ošetření skutečně velkých rozsahů jako například u bitsetu pro `všechny znaky Unicode kromě číslic`. Pro takové případy je možné definovat komplementární (doplňkový) bitset, který reprezentuje doplňkový rozsah zadaných bitů. To umožňuje vytvoření velkých bitsetů s malým nárokem na obsazení paměti.
+
+== Zápis cesty
+
+Pro čtení a psaní jednotlivých bitů použijeme notaci cesty:
+
+```red
+bs: charset [#"a" - #"z"]
+bs/97             ; will return true
+bs/40             ; will return false
+bs/97: false
+bs/97             ; will return false
+```
+
+== Množinové operace
+
+Nativními funkcemi `difference`, `exclude`, `intersect` a `union` lze s bitsety provádět `množinové operace`:
+
+```red
+>> a: charset "abc"
+== make bitset! #{00000000000000000000000070}
+
+>> b: charset "ABC"
+== make bitset! #{000000000000000070}
+```
+
+```red
+>> difference a b
+== make bitset! #{00000000000000007000000070}
+```
+
+```red
+>> exclude a b
+== make bitset! #{00000000000000000000000070}
+```
+
+```red
+>> intersect a b
+== make bitset! #{00000000000000000000000000}
+```
+
+
+Příkazem `union` se vytvoří nový bitset sloučením dvou bitsetů zadaných:
+
+```
+digit: charset "0123456789"
+lower: charset [#"a" - #"z"]
+upper: charset [#"A" - #"Z"]
+
+letters:  union lower upper
+hexa:     union upper digit
+alphanum: union letters digit
+```
+
+== Komparace
+
+Na `bitset!` lze aplikovat všechny operátory: `=, ==, <>, >, <, >=, &lt;=, =?`.
+
+== Testování hodnot
+
+Dotazem `bitset?` ověříme, zda je posuzovaná hodnota typu `bitset!`.
+
+```red
+>> b: make bitset! 42            ; prázdný bitset se zadanou velikostí
+== make bitset! #{000000000000}  ; počet nul = (L / 8) * 2
+
+>> L: length? b
+== 48                            ; nejbližší násobek osmi
+
+>> bitset? b
+== true
+```
+
+Dotaz `type?` vrací datový typ posuzované hodnoty.
+
+```red
+>> type? b
+== bitset!
+```
+
+
+== Předdefinovaná slova
+
+=== Akce
+
+`and~`, `append`, `clear`, `complement`, `copy`, `find`, `insert`, `length?`, `negate`, `or~`, `pick`, `poke`, `remove`, `xor~`
+
+=== Funkce
+
+`bitset?`, `charset`, `to-bitset`
+
+=== Nativa
+
+`complement?`, `difference`, `exclude`, `intersect`, `union`
+
+=== Operátory
+
+`and`, `or`, `xor`

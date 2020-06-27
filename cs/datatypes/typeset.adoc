@@ -1,0 +1,105 @@
+= Datový type `typeset!`
+:toc:
+:numbered:
+
+== Úvodem
+
+Datový typ `typeset!` reprezentuje sadu či kolekci předdefinovaných hodnot typu `datatype!`.
+
+`Typeset!` je členem typesetů `default!` a `immediate!`
+
+== Vytvoření
+
+Hodnoty typu `typeset!` lze vytvořit konstruktorem `make` nebo konverzí `to`.
+
+== Literálová skladba
+
+Dle konvence tvoří název datového typu spojení slova s vykřičníkem.
+
+Například: `any-list!`, `number!`, `series!`
+
+=== Vytvoření za běhu programu
+
+```
+<typeset>         ::= make typeset! [<typeset-element>*]
+<typeset-element> ::= <typeset-name> | <datatype-name>
+```
+
+*Příklady*
+
+```red
+>> number!: make typeset! [integer! float! percent!]
+== make typeset! [integer! float! percent!]
+
+>> collection!: make typeset! [block! paren! map!]
+== make typeset! [block! paren! map!]
+
+>> to typeset! [integer! float! percent!]
+== make typeset! [integer! float! percent!]
+```
+
+Prázdné typesety jsou přípustné.
+
+```red
+>> empty!: make typeset! []
+== make typeset! []
+```
+
+== Konverze
+
+Hodnotu typu `typeset!` lze konvertovat na libovolný typ typesetu `any-list!`
+
+```red
+>> to block! number!
+== [integer! float! percent!]
+
+>> to paren! number!
+== (integer! float! percent!)
+
+>> to hash! number!
+== make hash! [integer! float! percent!]
+```
+
+== Komparace
+
+Pro `typeset!` nejsou komparace podporovány.
+
+== Operace s datovými sadami (množinami)
+
+S hodnotami typu `typeset!` lze provádět tyto množinové operace:
+
+`difference`, `exclude`, `intersect`, `union`
+
+== Testování hodnot
+
+K ověření typu `typeset!` se používá funkce `typeset?`.
+
+```red
+>> typeset? number!
+== true
+```
+
+Funkce `type?` vrací datový typ zadané hodnoty.
+
+```red
+>> type? number!
+== typeset!
+```
+
+== Předdefinovaná slova
+
+=== Akce
+
+`and~`, `complement`, `find`, `or~`, `xor~`
+
+=== Funkce
+
+`to-typeset`
+
+=== Nativní funkce
+
+`difference`, `exclude`, `intersect`, `union`
+
+=== Operátory
+
+`and`, `or`, `xor`

@@ -1,0 +1,167 @@
+= Datový typ `paren!`
+:toc:
+:numbered:
+
+== Úvodem
+
+Hodnota typu `paren!` je řada elementů libovolného typu, obklopená kulatými závorkami `(` ... `)`. Obsah uvnitř závorek je (bez dalšího) okamžitě vyhodnocován.
+
+Datový typ `paren` je subtypem typesetů `any-block!`, `any-list!` a `series!`.
+
+== Vytvoření
+
+Objekt typu paren! lze vytvořit literálovou syntaxí nebo při runtime použitím konstruktoru `make`, konverzí `to` nebo funkcí `as`.
+
+=== Literálová skladba
+
+Literálem hodnoty typu `paren!` je prostý zápis elementů, omezený kulatými závorkami. 
+Vyhodnocení obsahu mezi závorkami lze potlačit slovem `quote` před závorkou. Potlačené vyhodnocení také umožní deklarovat slovo bez přiřazené hodnoty: 
+
+```red
+>> (2 + 3)
+== 5
+>> quote (2 + 3)
+== (2 + 3)
+
+>> quote (one 2 "three")
+== (one 2 "three")
+>> (one 2 "three")
+*** Script Error: `one` has no value
+
+>> type? (1 2 "one")
+== string!
+>> type? quote (1 2 "one")
+== paren!
+```
+
+Hodnota typu `paren!` (případně i rozepsaná do více řádků) bez příkazu `quote` se redukuje na hodnotu posledního členu:.
+
+```red
+>> pa: (1
+(    2
+(    "three"
+(    )
+>> pa
+== "three"
+```
+
+Automaticky nevyhodnocovaný objekt typu paren! můžeme vytvořit odkazem na počátek bloku: 
+
+```red
+>> par: first [(1 + 2 * 3 / 4)]
+== (1 + 2 * 3 / 4)
+>> par
+== (1 + 2 * 3 / 4)
+>> do par
+== 2.25 
+```
+
+=== Konstruktor `make`
+
+```red
+>> make paren! [2 5 "a"]
+== (2 5 "a")
+
+Prázdný paren pro 10 elementů vytvoříme příkazem:
+
+```red
+>> make paren! 10
+== ()
+```
+
+Paren s deseti elementy počáteční hodnoty `none`:
+
+```red
+>> append/dup make paren! 10 none 10
+== (none none none none none none none none none none)
+```
+
+=== Konverze `to`, `as`
+
+```red
+>> to paren! {one 2 "three" 4:00}
+== (one 2 "three" 4:00:00)
+
+>> to paren! "foo 1.23 me@me.com"
+== (foo 1.23 me@me.com)
+
+>> to paren! 42
+== (42)
+```
+
+Použití `as`:
+
+```red
+>> as paren! [1 2 3]
+== (1 2 3)
+```
+
+
+
+== Komparace
+
+Lze použít všechny komparátory `=, ==, <>, >, <, >=, &lt;=, =?`, včetně funkcí `min` a `max`.
+
+[NOTE]
+Protože jsou hodnoty objektu typu `paren!` ihned vyhodnocovány, je vratnou hodnotou funkcí `min` nebo `max` hodnota posledního výrazu v parenu. Komparátory porovnávají poslední elementy porovnávaných parenů, není-li jejich vyhodnocení potlačeno.
+
+```red
+>> max (1 2 3) (4 5 6)    
+== 6
+
+>> (1 2 3) < (4 5 6)
+== true
+
+>> (1 2 3) < (4 5 2)
+== false
+
+>> (quote (1 2 3)) < (quote (4 5 2))
+== true
+```
+
+
+== Testování hodnot
+
+Použijte funkci `paren?` k ověření, zda je posuzovaná hodnota typu  `paren!`.
+
+```red
+>> paren? quote (42 print "foo")
+== true
+```
+Ke zjištění typu také použijeme funkci `type?`:
+
+```red
+>> type? quote (42)
+== paren!
+
+[NOTE, caption=Poznámka]
+
+Necitované (unquoted) hodnoty paren vrací typ poslední hodnoty
+
+```red
+>> paren? (42)
+== false
+
+>> any-list? (42)
+== false
+
+>> type? (42)
+== integer!
+
+>> type? ('a 2 + 2 "hello")
+== string!
+
+>> type? (42 print "foo")
+foo
+== unset!
+```
+
+== Předdefinovaná slova
+
+=== Funkce
+
+`expand-directives`, `paren?`, `series?`, `to-paren`
+
+=== Natives
+
+`as`, `compose`

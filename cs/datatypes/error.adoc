@@ -1,0 +1,182 @@
+= Datový typ `error!`
+:numbered:
+
+== Úvodem
+
+Hodnoty `error!` reprezentují specielní hodnoty entity `object!`, používané při výskytu chyby. Hodnoty typu error! obsahují pevný počet slov (polí), definovaných v  `system/standard/error`.
+
+```red
+SYSTEM/STANDARD/ERROR je kontejner typu object! s těmito slovy a hodnotami:
+     code   none!         none
+     type   none!         none
+     id     none!         none
+     arg1   none!         none
+     arg2   none!         none
+     arg3   none!         none
+     near   none!         none
+     where  none!         none
+     stack  none!         none
+```
+
+Typ `error!` je člen typesetů `any-object!` a `default!` Jeho hodnoty lze vytvořit při běhu programu funkcí `make` nebo `cause-error`.
+
+== Vytvoření při běhu programu
+
+```
+<error>      ::= make error! <error-spec>
+<error-spec> ::= <integer> | <block> | <string>
+```
+
+* `Make`
++
+Je-li zadaným argumentem funkce `make` hodnota typu `integer!`, je error vyhledán podle pole `code`. Chybové hlášení (error message) bude sestaveno z hodnoty `string!` prvního pole `id` v seznamu jmen `id`.
++
+```red
+SYSTEM/CATALOG/ERRORS/MATH je hodnota typu `object!` s následujícími slovy a hodnotami:
+     code         integer!      400
+     type         string!       "Math Error"
+     zero-divide  string!       "attempt to divide by zero"
+     overflow     string!       "math or number overflow"
+     positive     string!       "positive number required"
+
+>> make error! 400
+*** Math Error: attempt to divide by zero    ; id is the word zero-divide
+*** Where: ??? 
+```
++
+Přístup ke zbývajícím chybovým hlášení se  vytvoří inkrementálně zvětšenou hodnotou typu `code`. 
++
+```red
+>> make error! 401
+*** Math Error: math or number overflow
+*** Where: ??? 
+
+>> make error! 402
+*** Math Error: positive number required
+*** Where: ??? 
+```
++
+Přístup k neexistující pozici rezultuje v chybě  "value out of range".
++
+```red
+>> make error! 403
+*** Script Error: value out of range: 403
+*** Where: make
+*** Stack:  
+```
++
+Je-li argumentem zadaným funkci `make` hodota typu `block!`, musí tento blok obsahovat dvě slova, vážící se k polím `type` a `id`.
++
+Je-li argumentem zadaným funkci `make` hodnota typu `object!`, musí být požadovaná pole typu `type` a `id`. Volitelná pole jsou `arg1`, `arg2`, `arg3`, `near`, `where` a `stack`.
++
+Použijte následující slova pro hodnotu typu `type` v chybném objektu.: `throw`,`note`, `syntax`, `script`, `math`, `access`, `user`, `internal`
++
+Identifikaci dostupných typů chyb lze získat zadáním  `help system/catalog/errors/<error-type>` do konzoly Redu, kde `<error-type>` je jedno z výše uvedených slov.
++
+```red
+>> help system/catalog/errors/throw
+SYSTEM/CATALOG/ERRORS/THROW je hodnota typu `object!` s následujícími slovy a hodnotami:
+     code        integer!      0
+     type        string!       "Throw Error"
+     break       string!       "no loop to break"
+     return      string!       "return or exit not in function"
+     throw       block!        length: 2  ["no catch for throw:" :arg1]
+     continue    string!       "no loop to continue"
+     while-cond  string!       {BREAK/CONTINUE cannot be used in WHILE condition block}
+```
++
+Použití bloku se dvěmi slovy:
++
+```red
+>> make error! [throw type]    ; type is the word throw, id is the word type
+*** Throw Error: Throw Error
+*** Where: ??? 
+
+>> make error! [throw break]    ; type is the word throw, id is the word break
+*** Throw Error: no loop to break
+*** Where: ??? 
+
+>> make error! [throw while-cond]    ; type is the word throw, id is the word while-cond
+*** Throw Error: BREAK/CONTINUE cannot be used in WHILE condition block
+*** Where: ??? 
+```
++
+Použití těla objektu:
++
+```red
+>> make error! [type: throw Id: throw arg1: "foo"]
+*** Throw Error: no catch for throw: "foo"
+*** Where: throw
+*** Stack:  
+```
++
+```red
+>> make error! [type: 'script id: 'move-bad arg1: "foo" arg2: "bar" where: 'somewhere?]
+*** Script Error: Cannot MOVE elements from "foo" to "bar"
+*** Where: somewhere? 
+```
++
+Použití hodnoty `string!`:
++
+Je-li argumentem funkce `make` hodnota typu `string!` value, typem chyby bude `User Error`.
+
+```red
+>> foo: make error! "oops"
+*** User Error: "oops"
+*** Where: ??? 
+```
+
+* `Cause-error`
++
+Funkce `cause-error` volá `make error!` s `type`, `id` a blokem hodnot pro `arg1`, `arg2` a `arg3`. Neobsahuje-li chybové hlášení žádné hodnoty `arg`, dosadí se prázdný blok.
++
+```red
+>> cause-error 'throw 'break []
+*** Throw Error: no loop to break
+*** Where: do
+*** Stack: cause-error  
+```
++
+Hodnoty argumentů ve bloku jsou redukovány.
++
+```red
+>> cause-error 'syntax 'missing ['foo 'bar]
+*** Syntax Error: missing foo at bar
+*** Where: do
+*** Stack: cause-error  
+
+>> cause-error 'syntax 'missing ["foo" "bar"]
+*** Syntax Error: missing "foo" at "bar"
+*** Where: do
+*** Stack: cause-error  
+```
+
+== Testování hodnot
+
+Použijte `error?` k ověření, zda je hodnota typu `error!`.
+
+```red
+>> error? foo
+== true
+```
+
+Použijte `type?` ke zjištění datového typu zadané hodnoty.
+
+```red
+>> type? foo
+== error!
+```
+
+== Předdefinovaná slova
+
+=== Actions
+
+`put`, `select`
+
+=== Functions
+
+`attempt`, `cause-error`
+
+=== Natives
+
+`in`, `try`

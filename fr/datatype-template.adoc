@@ -1,0 +1,52 @@
+= Type de données X
+:toc:
+:numbered:
+
+
+== Résumé
+
+
+X appartient aux ensembles de types suivants: 
+
+== Création
+
+Les valeurs de type X peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution par le constructeur `make` ou par conversion avec `to`.
+
+
+== Syntaxe littérale
+
+=== Création lors de l'exécution
+
+*Exemples*
+
+== Conversions
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués à X: `=, ==, <>, >, <, >=, &lt;=, =?`. De plus, `min`, et `max` sont aussi supportés.
+
+
+== Test de valeurs
+
+Utilisez X pour vérifier si une valeur est du type X.
+
+```red
+
+```
+
+Utilisez `type?` pour renvoyer le type d'une valeur donnée.
+
+```red
+
+```
+
+
+== Mots prédéfinis
+
+=== Actions
+
+=== Fonctions
+
+=== Natives
+
+=== Opérateurs

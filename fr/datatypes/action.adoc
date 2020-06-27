@@ -1,0 +1,44 @@
+= Le type Action!
+:toc:
+:numbered:
+
+
+== Résumé
+
+Les valeurs de type `action!` représentent des "méthodes" dans le système orienté objet interne de Red. Elles sont écrites en Red/System et définissent une interface fixe pour laquelle chaque type de données peut offrir ou non une implémentation. Tous les types de données ne supportent pas toutes les actions, mais tous partagent le même ensemble d'actions possibles.
+
+Les actions sont utilisées comme des valeurs de fonctions habituelles.
+
+`Action!` appartient aux ensembles de types suivants: `any-function!`, `default!`
+
+== Création
+
+Les valeurs de type Action! ne peuvent pas être créées à l'exécution.
+
+== Conversions
+
+Aucune conversion n'est supportée pour les valeurs de type `action!`.
+
+== Comparaisons
+
+L'identité et l'égalité des valeurs de type `action!` peuvent être testées avec `same?`, `==`, `equal?`, `strict-equal?`, `not-equal?`, `<>`.
+
+== Test de valeurs
+
+Utilisez `action?` pour vérifier si une valeur est du type `action!`.
+
+```red
+>> action? :to
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? :to
+== action!
+```
+
+== Mots prédéfinis
+
+Les valeurs prédéfinies de type `action!` peuvent être consultées en tapant `help action!` dans la console Red.

@@ -1,0 +1,42 @@
+= Datový typ `action!`
+:toc:
+:numbered:
+
+== Úvodem
+
+Hodnoty typu `action!` reprezentují metody interního OO modelu. Jsou psány v Red/System a definují fixní rozhranní, které každý datový typ může nebo nemusí umět použít. Ne všechny datové typy podporují všechny akce avšak všechny sdílejí stejnou sadu možných akcí.
+
+Akce se používají jako normální funkce.
+
+Typ `action!` je členem typesetů `any-function!` a `default!`.
+
+== Vytvoření
+
+Akci nelze v runtime vytvořit
+
+== Konverze
+
+Pro hodnoty typu `action!` nejsou konverze podporovány.
+
+== Komparace
+
+Akce lze porovnávat z hlediska stejnosti a rovnosti funkcemi `same?`,`equal?`, `strict-equal?`, `not-equal?` a operátory  `==`, `<>`.
+
+== Testování hodnot
+
+K určení, zda je hodnota typu `action!` použijeme funkci  `action?`:
+
+```red
+>> action? :to
+== true
+```
+
+K určení typu hodnoty použijeme funkci `type?`:
+
+```red
+>> type? :to
+== action!
+```
+
+== Předdefinovaná slova
+Výpis hodnot typu `action!` v konzole získáme souslovím `help action!`.

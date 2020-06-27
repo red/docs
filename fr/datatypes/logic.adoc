@@ -1,0 +1,90 @@
+= Le type Logic!
+:toc:
+:numbered:
+
+
+== Résumé
+
+Le type de donnée `logic!` représente les valeurs booléennes `true` (vrai) et `false` (faux).
+
+`Logic!` appartient aux ensembles de types suivants: `immediate!`
+
+== Création
+
+Les valeurs de type Logic! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make`, ou la conversion `to`.
+
+
+`to logic!` convertit en `true` toute valeur à l'exception de `false` et `none`.
+
+```red
+>> to logic! 'hi
+== true
+
+>> to logic! 1
+== true
+
+>> to logic! 0
+== true
+
+>> to logic! none
+== false
+
+>> to logic! false
+== false
+```
+
+[NOTE]
+Pour les besoins de la logique booléenne, les valeurs `true` et `false` peuvent être construites à partir de 1 et 0 en utilisant `make`.
+
+```red
+>> make logic! 1
+== true
+
+>> make logic! 0
+== false
+
+>> make integer! true
+== 1
+
+>> make integer! false
+== 0
+```
+
+
+
+== Syntaxe littérale
+
+Les mots prédéfinis `true` et `false`, ou la syntaxe sérialisée:
+
+```red
+#[true]
+
+#[false]
+```
+
+== Test de valeurs
+
+Utilisez `logic?` pour vérifier si une valeur est du type `Logic!`.
+
+```red
+>> logic? on
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? false
+== logic!
+```
+
+
+== Mots prédéfinis
+
+`true`, `yes`, `on`
+
+`false`, `no`, `off`
+
+=== Fonctions
+
+`to-logic`

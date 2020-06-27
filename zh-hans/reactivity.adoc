@@ -1,0 +1,309 @@
+= 响应式编程
+:imagesdir: ../images
+:toc:
+:toc-title: 目录
+:numbered:
+
+== 概念
+
+Red 在 0.6.0 版本引入 "`响应式编程`"，以帮助减少 Red 程序的大小和复杂度。Red 响应模型依赖于数据流和对象事件，以构造一个有向图并在传播对象的变化。它使用一种"`推送`"模型，更准确地说，Red 实现了link:https://en.wikipedia.org/wiki/Reactive_programming#Object-oriented[对象响应式编程]模型，仅对象的字段是变化的来源。
+
+尽管描述很抽象，但响应式 API 及其用途是简单而实用的。下面是一些能帮助你具象化响应关系的图表。
+
+image::react-simple.png[react-simple,align="center"]
+
+__图 A & B 展示了一个或多个响应器（作为一个响应源的对象）之间的简单关系。__
+
+image::react-graphs.png[react-graph,align="center"]
+
+__图 C, D & E 展示了链式响应，其中某些目标自身就是响应器，这些目标建立起任意形状的关系链。__
+
+当源中字段的值变化时，响应是异步工作的。响应关系会被维护到使用 `react/unlink` 或 `clear-reactions` 显式销毁响应为止。
+
+在响应表达式中，仅源对象需要为响应器。目标可以是一个简单对象。若目标也是一个响应器，则响应会被链接起来，隐式地构造一个关系图。
+
+[NOTE]
+====
+* Red 的响应式将来可能会被扩展以支持“拉取”模型。
+* 这并不是link:https://en.wikipedia.org/wiki/Functional_reactive_programming[函数响应式编程]框架，虽然将来可能会支持事件流。
+* Red/View GUI 引擎依靠 `face!` 对象来操作图形对象。元件都是响应器，它们可以被用来建立与元件之间或与非响应器对象之间的响应关系。
+====
+
+=== 术语
+
+[cols="1,2", options="header"]
+|===
+|表达      |  定义
+|响应式编程|  一种编程范式，数据流编程的一个子集，基于事件"`推送`"变化。
+|响应      |  包含一个或多个响应表达式的一个代码区块。
+|响应表达式|  至少有引用一个响应源的表达式。
+|响应关系  |  在两个或多个对象之间用响应表达式实现的一个关系。
+|响应源    |  指向一个响应对象中某一字段的一个 `path!` 值。
+|响应公式  |  求值时返回最后一个表达式结果的一个响应。
+|响应对象  |  其字段可被用作响应源的一个对象。
+|响应器    |  "`响应对象`" 的别名。
+|===
+
+=== 静态关系
+
+响应的最简单的形式是创建于多个__命名__对象之间的 "`静态关系`"。它静态地链接对象，所以是__静态__的。它单一地作用于它的源响应器，并不能重用于其它对象。
+
+*例 1*
+
+[source, red]
+----
+view [
+    s: slider return
+    b: base react [b/color/1: to integer! 255 * s/data]
+]
+----
+
+这个例子在命名为 `s` 的一个滑块与命名为 `b` 的一个基元件之间建立响应关系。当该滑块被移动时，该基元件背景颜色的红色分量会对应地变化。该响应表达式不能被重用于其他元件集合。这是 Red/View 中图形对象的响应行为的最简单形式。
+
+*例 2*
+
+[source, red]
+    vec: make reactor! [x: 0 y: 10]
+    box: object [length: is [square-root (vec/x ** 2) + (vec/y ** 2)]]
+
+静态关系的另一种形式可以用 `is` 操作符定义，它把该响应求得的值设置给一个（在任意语境中的）单词。
+
+这个例子与 GUI 系统没有关联。它用一个响应表达式计算由 `vec/x` 与 `vec/y` 定义的向量的长度。这次，表达式中源对象也是由其名称（`vec`）静态地指定的。
+
+*例 3*
+
+[source, red]
+    a: make reactor! [x: 1 y: 2 total: is [x + y]]
+
+上面的单词 `total` 的值设置为表达式 `x + y`。每当 `x` 或 `y` 的值有变化，`total` 会立即被更新。注意，这种情况下不需要用路径来指定响应源，因为 `is` 是直接用在响应器内部的，所以它会知道它的语境。
+
+*例 4*
+
+    a: make reactor! [x: 1 y: 2]
+    total: is [a/x + a/y]
+
+这个例 3 的变形说明一个全局单词也可以是一个响应关系的目标（虽然它并不能为源）。这种形式是最接近于电子表格（如 Excel）的公式模型。
+
+[NOTE, caption=注意]
+====
+由于全局语境的大小原因，使它响应化（如上述的 `total`）可能会造成显著的性能开销，虽然将来可能会克服它。
+====
+
+=== 动态关系
+
+虽然静态关系容易指定，但是如果你需要提供同一个响应给多个响应器，或着响应器是匿名的（提醒：所有对象默认都是匿名的），它们的扩展性就欠佳。在这种情况下，响应应当以一个**函数**与 `react/link` 来指定。
+
+*例*
+
+[source, red]
+----
+;-- 用鼠标上下拖动红色小球，观察其他球会如何响应。
+
+win: layout [
+    size 400x500
+    across
+    style ball: base 30x30 transparent draw [fill-pen blue circle 15x15 14]
+    ball ball ball ball ball ball ball b: ball loose
+    do [b/draw/2: red]
+]
+
+follow: func [left right][left/offset/y: to integer! right/offset/y * 108%]
+
+faces: win/pane
+while [not tail? next faces][
+    react/link :follow [faces/1 faces/2]
+    faces: next faces
+]
+view win
+----
+
+在这个例子中，该响应是一个应用于成对的小球元件的函数（`follow`），这创建了连接起所有小球的一连串的关系。响应中的项是参数，所以它们可以被用于不同的对象（有别于静态关系）。
+
+== API
+
+=== `react`
+
+*语法*
+
+[source, red]
+----
+react <code>
+react/unlink <code> <source>
+
+react/link <func> <objects>
+react/unlink <func> <source>
+
+react/later <code>
+
+<code>    : 包含至少一个响应源的代码区块 (block!)。
+<func>    : 包含至少一个响应源的函数 (function!)。
+<objects> : 用作一个响应函数参数的内含对象的列表 (内含 object! 值的 block!)。
+<source>  : 原字 'all，或一个对象，或一个内含对象的列表 (word! object! block!)。
+
+Returns   : 在之后用来引用的 <code> 或 <func> 。
+----
+
+*描述*
+
+`react` 从代码块（设置 "`静态关系`"）或函数（设置 "`动态关系`" 且需要 `/link` 修饰词）设置一个新的响应关系，它至少包含有一个响应源。在两种情况下代码都会被静态分析以确定指向响应器字段的响应源（以 `path!` 值的形式）。
+
+默认情况下，在 `react` 函数返回之前新形成的响应会**在创建时被调用一次**。这在某些情况下并不是我们想要的，它可以使用 `/later` 选项避免。
+
+响应包含任意 Red 代码，一个或多个响应源，及一个或多个响应表达式，取决于用户决定最适合于他们需求的关系集合。
+
+`/link` 选项接收一个函数作为响应，还有一个内含参数对象的列表用于对该响应进行求值。这是另一种形式，它允许动态响应，其响应代码可重用于不同的对象集合（基本的 `react` 只能用于静态__命名__对象）。
+
+使用 `/unlink` 修饰词并用以下之一作为一个 `<source>` 参数来删除一个响应：
+
+* `'all` 单词，会删除所有该响应创建的响应关系。
+* 一个对象值，仅会删除以该对象为响应源的关系。
+* 一个对象列表，仅会删除以这些对象为响应源的关系。
+
+`/unlink` 接收一个响应区块或函数作为参数，所以只有由**该**响应创建的关系会被移除。
+
+=== `is`
+
+*语法*
+
+[source, red]
+----
+<word>: is <code>
+
+<word> : 要设置为响应的结果的单词 (set-word!)。
+<code> : 包含至少一个响应源的代码区块 (block!)。
+----
+
+*描述*
+
+`is` 创建一个响应公式，其结果将被设置给一个单词。`<code>` 代码区块可以包含外部响应器的字段，如果在响应器的主体区块中使用，还可以包含对包装对象的字段的引用。
+
+[NOTE, caption=注意]
+====
+这个运算符创建的是近似模仿于 Excel 公式模型的响应公式。
+====
+
+*例*
+
+[source, red]
+----
+a: make reactor! [x: 1 y: 2 total: is [x + y]]
+
+a/total
+== 3
+a/x: 100
+a/total
+== 102
+----
+
+=== `react?`
+
+*语法*
+
+[source, red]
+----
+react? <obj> <field>
+react?/target <obj> <field>
+
+<obj>   : 要检查的对象 (object!)。
+<field> : 对象的要检查的字段 (word!)。
+
+Returns : 一个响应 (block! function!) 或者一个 none! 值。
+----
+
+*描述*
+
+`react?` 检查一个对象的字段是否为一个响应源。如果它是，将返回第一个找到的在该对象中作为源存在的字段，否则返回 `none`。`/target` 修饰词检查该字段是否是一个目标而不是一个源，然后会返回第一个找到的以该字段为目标的响应，否则如果没有匹配到的响应，就返回 `none`。
+
+=== `clear-reactions`
+
+*语法*
+
+[source, red]
+----
+clear-reactions
+----
+
+*描述*
+
+无条件地删除所有定义过的响应。
+
+=== `dump-reactions`
+
+*语法*
+
+[source, red]
+----
+dump-reactions
+----
+
+*描述*
+
+输出已注册的响应的列表以用于调试。
+
+== 响应对象
+
+Red 中的平凡对象不会展现出响应式的行为。为了让一个对象成为一个响应源，它需要由以下响应器原型构造。
+
+=== `reactor!`
+
+*语法*
+
+[source, red]
+----
+make reactor! <body>
+
+<body> : 该对象的主体区块 (block!)。
+
+Returns : 一个响应对象。
+----
+
+*描述*
+
+从主体区块构造一个新的响应对象。将返回的对象中的一个字段设为新值会触发为该字段定义的响应。
+
+[NOTE, caption=注意]
+====
+该主体可以包含 `is` 表达式。
+====
+
+=== `deep-reactor!`
+
+*语法*
+
+[source, red]
+----
+make deep-reactor! <body>
+
+<body> : 该对象的主体区块 (block!)。
+
+Returns : 一个响应对象。
+----
+
+*描述*
+
+从主体区块构造一个新的响应对象。将返回的对象中的一个字段设为新值或修改该字段指向的序列（包括嵌套的序列）会触发为该字段定义的响应。
+
+[NOTE, caption=注意]
+====
+该主体可以包含 `is` 表达式。
+====
+
+*例*
+
+这里说明了对一个序列，甚至对一个嵌套的序列的修改会如何触发一个响应。
+
+[NOTE, caption=注意]
+====
+现在循环的防止是取决于用户的。比如如果一个 `deep-reactor!` 修改了在一个响应表达式中的序列值（如 `is`），它可能会造成永不停止的响应循环。
+====
+
+[source, red]
+----
+r: make deep-reactor! [
+    x: [1 2 3]
+    y: [[a b] [c d]]
+    total: is [append copy x copy y]
+]
+append r/y/2 'e
+print mold r/total
+----

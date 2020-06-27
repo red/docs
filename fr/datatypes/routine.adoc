@@ -1,0 +1,83 @@
+= Le type Routine!
+:toc:
+:numbered:
+
+== Résumé
+
+Une valeur du type `routine!` représente une fonction avec une spécification Red et un corps Red/System donnés.
+
+La spécification de la routine prend des types de données Red comme arguments et valeur de retour, et les convertit automatiquement aux types Red/System appropriés lorsqu'elle est appelée.
+
+La documentation de Red/System peut être trouvée ici: https://static.red-lang.org/red-system-specs.html
+
+`Routine!` appartient aux ensembles de types suivants: `default!`, `any-function!`
+
+== Création
+
+Les valeurs de type `routine!` peuvent être créées en utilisant la fonction intégrée `routine`.
+
+== Syntaxe littérale
+
+```
+<routine> ::= routine <routine-spec> <routine-body>
+<routine-spec> ::= [<docstring>° <routine-argument>* <locals>° <routine-return>°]
+<routine-argument> ::= <word> <argument doc>° | <word> [<type-literal>] <argument-doc>°
+<locals> ::= /local <routine-argument>*
+<routine-return> ::= return: [<type-literal>]
+<type-literal> ::= any-type! | <type-name>
+<routine-body> ::= <block>
+```
+
+=== Création lors de l'exécution
+
+Les valeurs de type `routine!` ne sont pas autorisées dans l'interpréteur. Elles doivent être précédées d'un set-word puis compilées.
+
+```red
+Red []
+
+increment: routine [
+    n       [integer!]
+    return: [integer!]
+][
+    n + 1
+]
+```
+
+
+Les types d'arguments pour les routines sont restreints aux seuls mots `any-type!`, `integer!`, `float!`, `logic!`, ou à un type qui a dans Red/System un alias `struct!` défini ici: https://github.com/red/red/blob/master/runtime/datatypes/structures.reds
+
+`Integer!`, `float!`, and `logic!` ne sont pas traduits en un équivalent Red/System.
+
+*Exemple*
+
+`block!` est traduit dans l'équivalent Red/System:
+
+```red
+red-block!: alias struct! [
+	header 	[integer!]								;-- en-tête de cellule
+	head	[integer!]								;-- index de la tête du bloc (commence à zéro)
+	node	[node!]									;-- pointeur de noeud de série
+	extra	[integer!]								;-- (réservé pour les types dérivés des blocs)
+]
+```
+
+== Test de valeurs
+
+Utilisez `routine?` pour vérifier si une valeur est du type `Routine!`.
+
+```red
+routine? :increment
+```
+
+Utilisez `type?` to pour connaître le type d'une valeur donnée.
+
+```red
+type? :increment
+```
+
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`routine`, `routine?`

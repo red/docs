@@ -1,0 +1,98 @@
+= Datový typ `word!` 
+:toc:
+:numbered:
+
+== Úvodem
+
+Entita typu  `word!` je slovo, které lze použít jako proměnnou, neboli identifikátor, který v daném kontextu odkazuje na přiřazenou hodnotu.
+
+Slova neobsahují hodnoty, pouze na ně v daném kontextu ukazují a mají globální kontext, není-li jim žádný kontext přisouzen.
+
+Typ `word!` je subtypem těchto typesetů: `any-word!`, `all-word!`, `immediate!`
+
+*Variace slova `word`*
+
+|========================================================================
+|*Syntax*|*Type*|*Description*
+|word|`word!`|Refers to a value in a given context.
+|word:|link:set-word.adoc[set-word!]|Sets a reference to a value.
+|:word|link:get-word.adoc[get-word!]|Gets a value without performing evalutaion.
+|'word|link:lit-word.adoc[lit-word!]|Suppresses evaluation. The literal value "word".
+|/word|link:refinement.adoc[refinement!]|Evaluates the word as a refinement.
+|========================================================================
+
+== Vytvoření
+
+Hodnoty typu word! lze vytvořit literálovou syntaxí nebo při runtimu konverzí  `to` z datových typů: `char!`, `logic!`, `string!`, `datatype!`, `issue!` a `refinement!`.
+
+
+```red
+>> to word! #"X"
+== X
+
+>> to word! true   ; returns a word representation of the value
+== true
+
+>> to word! "Hello"
+== Hello
+
+>> to word! float!  ; returns a word representation of the value
+== float!
+
+>> to word! #hi
+== hi
+
+>> to word! /deep
+== deep
+```
+
+[NOTE, caption=Note]
+
+Pokus o konvertování hodnoty `none` vyvolá chybové hlášení.
+
+== Literálová skladba
+
+Lze použít jeden či více znaků z celé sady Unicode, včetně interpunkčních znaků ze sady ASCIII:  `! & ' * + - . < = > ? _ | ~``
+
+[NOTE, caption=Note]
+
+Slova jsou case-insensitive. Změna velikosti písmene ve ve slovu nevytvoří jiné slovo.
+
+Nepovolené jsou řídící znaky, znaky mezer a punktuační znaky: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+
+Hodnota `word!` nemůže začínat číslem.
+
+== Průběh vyhodnocení
+
+* Nalezení kontextu, k němuž je slovo vázáno. 
+
+* Získání hodnoty v kontextu zmiňované.
+
+* Ověření typu hodnoty:
+
+** Pokud žádná hodnota neexistuje, typem je `unset!` a vrací se chybové hlášení.
+
+** Pokud typ hodnoty patří do typesetu `any-function!`, volá se funkce.
+
+** V ostatních případech se vrací ověřovaná hodnota.
+
+== Komparace
+
+Na hodnotu typu `word!` lze aplikovat v?echny komparátory: `=, ==, <>, >, <, >=, &lt;=, =?`.
+
+
+== Testování hodnot
+
+Funkcí `word?` ověříme, zda je hodnota typu `word!`.
+
+```red
+>> word? first [let us code]
+== true
+```
+
+Funkce `type?` vrací datový typ dané hodnoty.
+
+```red
+>> type? first [let us code]
+== word!
+```

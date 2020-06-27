@@ -1,0 +1,105 @@
+= Le type Tag!
+:toc:
+:numbered:
+
+== Résumé
+
+Les valeurs du type `tag!` représentent des tags et éléments d'un langage de balisage (markup language).
+
+`Tag!` appartient aux ensembles de types suivants: `any-string!`, `series!`
+
+== Création
+
+Les valeurs de type `tag!` peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
+
+```red
+>> make tag! "foo"
+== <foo>
+```
+
+```red
+>> to tag! 'bar
+== <bar>
+```
+
+== Syntaxe littérale
+
+Un ou plusieurs caractères placés entre le signe `<` et le signe `>`.
+
+Le premier caractère qui suit le signe ouvrant `<` ne peut être `<`, `>`, ou `=` , ou un espace blanc littéral.
+
+```red
+>> <<foo>
+*** Script Error: < operator is missing an argument
+*** Where: catch
+*** Stack:  
+
+>> <>foo>
+*** Script Error: <> operator is missing an argument
+*** Where: catch
+*** Stack:
+
+>> <=foo>
+*** Syntax Error: invalid value at "<=foo>"
+*** Where: do
+*** Stack: load
+
+>> < foo>
+*** Script Error: < operator is missing an argument
+*** Where: catch
+*** Stack:
+```
+
+`<` est autorisé après la première position.
+
+```red
+>> type? <f<oo>
+== tag!
+```
+
+[NOTE, caption=Note]
+
+Il est possible de créer des valeurs de type `tag!` en utilisant `make` , qui ne sont pas affectées par ces limitations d'analyseur syntaxique.
+
+```red
+>> make tag! " foo"
+== < foo>
+
+>> make tag! "<foo"
+== <<foo>
+
+>> make tag! ">foo"
+== <>foo>
+
+>> make tag! "=foo"
+== <=foo>
+
+>> make tag! " foo"
+== < foo>
+```
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués à `Tag!`: `=, ==, <>, >, <, >=, &lt;=, =?`. De plus, `min`, et `max` sont aussi supportés.
+
+== Test de valeurs
+
+Utilisez `tag?` pour vérifier si une valeur est du type `Tag!`.
+
+```red
+>> tag? <foo>
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? <foo>
+== tag!
+```
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`tag?`, `to-tag`

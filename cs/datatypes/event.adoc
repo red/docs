@@ -1,0 +1,25 @@
+= Datový typ `event!` 
+:toc:
+:numbered:
+
+== Úvodem
+
+Hodnoty typu `event!` jsou objekty, které reprezentují externí aktivity (piškotů).
+
+Datový typ `event!` je členem typesetů `default!` a `external!`.
+
+== Vytvoření
+
+Hodnoty typu `event!` nemají literálovou formu a nelze je vytvořit konstruktorem `make` či konverzí `to`. Jsou čerpány z operačního systému a jsou to vpodstatě hodnoty jen pro čtení.
+
+See link:https://doc.red-lang.org/en/view.html#_events[View documentation] for more information on events.
+
+== Testování hodnot
+
+Idiomem `event?` ověříme, zda je hodnota typu `event!`.
+
+== Předdefinovaná slova
+
+=== Funkce
+
+`event?`

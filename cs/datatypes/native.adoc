@@ -1,0 +1,41 @@
+= Datový typ `native!`
+:toc:
+:numbered:
+
+== Úvodem
+
+Hodnoty typu `native!` reprezentují externí funkce, psané kvůli rychlosti a/nebo snadnosti přístupu k API operačního systému v kódu Red/System. Nativní funkce (nativa) se používají stejně jako normální funkce.
+
+Datový typ `native!` je člen typesetů `any-function!` a `default!`
+
+== Vytvoření
+
+Nativní hodnoty nelze v runtime výtvořit.
+
+== Konverze
+
+Pro hodnoty `native!` nejsou konverze podporovány.
+
+== Komparace
+
+Nativní hodnoty lze porovnávat z hlediska stejnosti a rovnosti funkcemi `same?`,`equal?`, `strict-equal?`, `not-equal?` a operátory  `==`, `<>`.
+
+== Testování hodnot
+
+K určení, zda je hodnota typu `native!` použijeme funkci  `native?`:
+
+```red
+>> native? :do
+== true
+```
+
+K určení typu hodnoty použijeme funkci `type?`:
+
+```red
+>> type? :do
+== native!
+```
+
+== Předdefinovaná slova
+
+Výpis funkcí typu `native!` v konzole získáme souslovím `help native!`.

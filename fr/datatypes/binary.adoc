@@ -1,0 +1,210 @@
+= Le type Binary!
+:toc:
+:numbered:
+
+
+== Résumé
+
+Une valeur de type `binary!` (représentation binaire) représente une série d'octets.
+
+`Binary!` appartient aux ensembles de types suivants: `default!`, `series!`
+
+== Création
+
+Les valeurs de type Binary! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion avec `to`.
+
+== Syntaxe littérale
+
+```
+<binary-literal> ::= 2#{<base2-byte>*} | 16#{<hex-byte>*} | 64#{<base64-char>*} | #{<hex-byte>*}
+```
+
+=== Création lors de l'exécution
+
+***
+
+En utilisant la syntaxe littérale.
+
+La représentation en base 2 doit consister en des groupes de 8 caractères de l'espace de caractères `0-1`.
+```red
+>> 2#{11111111}
+== #{FF}
+
+>> 2#{1111000000001111}
+== #{F00F}
+```
+
+La base 16 est la base binaire par défaut, et les représentations doivent consister en deux caractères ou en groupes de deux caractères  de l'espace de caractères `0-9 A-F a-f`.
+
+```red
+>> 16#{2A}
+== #{2A}
+
+>> 16#{2AFF}
+== #{2AFF}
+```
+
+Un nombre impair de caractères causera une erreur.
+
+```red
+>> 16#{2AF}
+*** Syntax Error: invalid binary! at "#{2AF}"
+*** Where: do
+*** Stack: load 
+```
+
+Les représentations dans la base binaire par défaut (16) peuvent s'écrire sans l'indicateur de base.
+
+```red
+>> #{2A}
+== #{2A}
+```
+
+Les représentations en base 64 doivent consister en quatre caractères ou en groupes de quatre caractères de l'espace de caractères `0-9 A-Z a-z +/`. 
+
+```red
+>> 64#{2AQQ}
+== #{D80410}
+
+>> 64#{2A+/}
+== #{D80FBF}
+```
+
+Moins de quatre caractères, ou un nombre inégal de caractères causera une erreur.
+
+```red
+>> 64#{2A}
+*** Syntax Error: invalid binary! at "64#{2A}"
+*** Where: do
+*** Stack: load 
+
+>> 64#{2A2}
+*** Syntax Error: invalid binary! at "64#{2A2}"
+*** Where: do
+*** Stack: load 
+```
+
+Le caractère de remplissage `=` peut aussi être utilisé à des fins d'encodage et de décodage.
+
+*Exemple d'encodage*
+
+`I` s'encode en `SQ`, avec des caractères de remplissage pour compléter le résultat jusquà quatre caractères.
+
+```red
+>> enbase/base "I" 64
+== "SQ=="
+```
+
+***
+
+Utilisation de `make`.
+
+```red
+>> make binary! [42]
+== #{2A}
+```
+
+Utilisation de la conversion avec `to`.
+
+```red
+>> to binary! 42
+== #{0000002A}
+```
+
+== Fonctions concernant les représentations binaires
+
+* enbase
+
+```red
+>> help enbase
+USAGE:
+     ENBASE value
+
+DESCRIPTION: 
+     Encodes a string into a binary-coded string (BASE-64 default). 
+     ENBASE is a native! value.
+
+ARGUMENTS:
+     value        [binary! string!] "If string, will be UTF8 encoded."
+
+REFINEMENTS:
+     /base        => Binary base to use.
+        base-value   [integer!] "The base to convert from: 64, 58, 16, or 2."
+```
+
+*Exemple avec enbase*
+
+```red
+>> enbase/base "I" 64
+== "SQ=="
+```
+
+* debase
+
+```red
+>> help debase
+USAGE:
+     DEBASE value
+
+DESCRIPTION: 
+     Decodes binary-coded string (BASE-64 default) to binary value. 
+     DEBASE is a native! value.
+
+ARGUMENTS:
+     value        [string!] "The string to decode."
+
+REFINEMENTS:
+     /base        => Binary base to use.
+        base-value   [integer!] "The base to convert from: 64, 58, 16, or 2."
+
+```
+
+*Exemple avec debase*
+
+```red
+>> debase/base "SQ==" 64
+== #{49}
+
+>> to string! debase/base "SQ==" 64
+== "I"
+```
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués à `Binary!`: `=, ==, <>, >, <, >=, &lt;=, =?`. De plus, `min`, et `max` sont aussi supportés.
+
+
+== Test de valeurs
+
+Utilisez `binary?` pour vérifier si une valeur est du type `Binary!`.
+
+```red
+>> binary? #{2A} 
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? #{2A}
+== binary!
+```
+
+
+== Mots prédéfinis
+
+=== Actions
+
+`complement`, `or~`, `put`, `read`, `trim`, `write`, `xor~`
+
+=== Fonctions
+
+`binary?`, `load`, `read-thru`, `save`, `to-binary`
+
+=== Natives
+
+`call`, `checksum`, `debase`, `decompress`, `enbase`, `parse`
+
+=== Opérateurs
+
+`and`, `or`, `xor`
