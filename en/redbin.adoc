@@ -64,16 +64,72 @@ After the Symbol Table, Red values are stored as records in sequence with no spe
 
 Each records starts with a 32-bit `header` field defined as:
 
-****
- * bit31    : new-line flag
- * bit30    : no-values flag (for contexts)
- * bit29    : stack? flag    (for contexts)
- * bit28    : self? flag     (for contexts)
- * bit27    : set? flag      (for words)
- * bit26-16 : <reserved>
- * bit15-8  : unit (used for encoding elements size in a series buffer)
- * bit7-0   : type
-****
+.Header flags.
+[options="header" cols="1,3,2"]
+|===
+| Bits | Description | Relevant datatypes
+
+| 31
+| `new-line` flag; if set, indicates the presence of new-line flag in value slot.
+| All.
+
+| 30
+| `no-values` flag; if set, indicates that `context!` record does not contain value records.
+| `context!`
+
+| 29
+| `stack?` flag; if set, indicates that values of a decoded `context!` are allocated on data stack.
+| `context!`
+
+| 28
+| `self?` flag; if set, indicates that decoded `context!` is capable of self-referencing via `self` word.
+| `context!`
+
+| 27-26
+| Context type.
+| `context!`
+
+| 25
+| `set?` flag; if set, indicates that `any-word!` records is followed by value record to which decoded `any-word!` needs to be set. _TBD In current implementation this is disabled, and flag instead indicates that word is bound to a global context._
+| `any-word!`
+
+| 24
+| `owner?` flag; if set, indicates that decoded `object!` owns one or more values.
+| `object!`
+
+| 23
+| `native?` flag; if set, indicates that decoded `op!` value is derived from `native!`, else from `action!`.
+| `op!`
+
+| 22
+| `body?` flag; if set, indicates that `op!` values is derived from either `function!` or `routine!` and has a body block.
+| `op!`
+
+| 21
+| `complement?` flag; if set, indicates that decoded `bitset!` value is complemented.
+| `bitset!`
+
+| 20
+| `sign` flag; if set, indicates that decoded `money!` value has a negative sign.
+| `money!`
+
+| 19
+| Redbin record contains a reference __TBD link to section__.
+| __TBD list datatypes__ `series!`, `any-function!`..?
+
+| 18-16
+| Reserved for future use.
+| --
+
+| 15-8
+| Unit type, encoded element size in a series buffer.
+| `series!`
+
+| 7-0
+| Value type.
+| All.
+
+|===
 
 Here follows the description of each individual record:
 
