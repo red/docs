@@ -2,15 +2,11 @@
 :toc:
 :numbered:
 
-_Specification version 1_
+_Specification version 2_
 
 Redbin is a binary format that accurately represents Red values stored in memory, while enabling fast loading (avoiding the parsing and validation stage of the text representation format). Redbin format is largely inspired by http://www.rebol.com/article/0044.html[REBin]. Redbin can encode binding information for words and can handle cycles in `any-block!` values.
 
-The user interface for Redbin format access will be provided by `load/binary` and `mold/binary`. Underlying implementation _could_ use the codec sub-system, once available.
-
-Implementation constraints:
-
-* Base address in memory of Redbin data about to be loaded, needs to be 64-bit aligned.
+The user interface for Redbin format access is provided via codec sub-system. See <<Redbin codec>> section for details _TBD_.
 
 == Encoding format
 
@@ -572,3 +568,7 @@ header/type=255
 ----
 
 This special record type stores a reference to an already loaded value of type `any-block!` or `object!`. This makes it possible to store cycles in Redbin. The reference is created from a path into the loaded values (assuming that the root values are stored in a block). Each `index` field points to the series or object value to go into, until the last one is reached, pointing to the value to refer to. The `count` field indicates the number of indexes to go through. If one of the indexes has to be applied to an object, it refers to the corresponding object's field (0 => 1st field, 1 => 2nd field,...). All indexes are zero-based.
+
+== Redbin codec
+
+_TBD_
