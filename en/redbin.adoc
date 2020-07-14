@@ -1,12 +1,28 @@
 = Redbin format
 :toc:
+:toclevels: 3
 :numbered:
 
-_Specification version 2_
+NOTE: Specification version 2.
 
-Redbin is a binary format that accurately represents Red values stored in memory, while enabling fast loading (avoiding the parsing and validation stage of the text representation format). Redbin format is largely inspired by http://www.rebol.com/article/0044.html[REBin]. Redbin can encode binding information for words and can handle cycles in `any-block!` values.
+Redbin is a binary format that accurately represents Red values stored in memory while enabling fast loading (avoiding the parsing and validation stage of the text representation format). Redbin format is largely inspired by http://www.rebol.com/article/0044.html[REBin]; it can encode binding information for `any-word!` values, references to shared buffers for `series!` values, and can handle arbitrary cycles for `any-block!` values.
 
-The user interface for Redbin format access is provided via codec sub-system. See <<Redbin codec>> section for details _TBD_.
+The user interface for Redbin format access is provided via codec sub-system. See <<Redbin codec>> section for more details.
+
+== Lexical conventions
+
+NOTE: TBD.
+
+A number of lexical conventions are used throughout this document to describe the Redbin encoding format:
+
+* ()
+* =
+* []
+* ...
+* |
+* x * y
+* Path notation.
+* Signed/unsigned sizes and such. Decimal numbers.
 
 == Encoding format
 
@@ -701,7 +717,7 @@ Default: header (4), currency (1), amount (11)
 Compact: TBD
 
 header/type=49
-header/sign=1|0 (bit 14)
+header/sign=0|1
 ----
 
 `amount` is a sequence of nibbles representing the money integral and decimal part (22 digits) in network byte order. If `sign` is set, the amount is interpreted as negative. `currency` is an integer value (0 for generic money, < 255 for existing currency code).
@@ -717,17 +733,6 @@ header/unit=1|2|4
 ----
 
 Same encoding rules as `string!`.
-
-=== Reference! anchor:reference[] 
-
-----
-Default: header (4), count (4), index1 (4), index2 (4), ...
-Compact: TBD
-
-header/type=255
-----
-
-This special record type stores a reference to an already loaded value of type `any-block!` or `object!`. This makes it possible to store cycles in Redbin. The reference is created from a path into the loaded values (assuming that the root values are stored in a block). Each `index` field points to the series or object value to go into, until the last one is reached, pointing to the value to refer to. The `count` field indicates the number of indexes to go through. If one of the indexes has to be applied to an object, it refers to the corresponding object's field (0 => 1st field, 1 => 2nd field,...). All indexes are zero-based.
 
 == Redbin codec
 
