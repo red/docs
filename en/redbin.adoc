@@ -12,60 +12,79 @@ The user interface for Redbin format access is provided via codec sub-system. Se
 
 The _default_ encoding format is optimized for decoding speed, while the _compact_ format requires a smaller storage space (at the expense of much slower decoding).
 
-Values are stored in little-endian format.
+NOTE: Specification of the compact encoding format is not yet defined.
 
-Lexical conventions:
+The general layout of Redbin data is described below. Each definition links to a respective section in this document.
 
-. _Numbers in parentheses indicate the byte size of the field._
+<<Header, Redbin header>>:: Holds information about the rest of the Redbin data.
+<<Symbol table, Symbol table>>:: Optional; if present, contains interned strings used by records of symbolic datatypes.
+<<Records definitions, Payload>>:: Stores Redbin records that encode Red values.
 
-. _Field names followed by a datatype name in a block are place-holders for a value of that datatype._
-
-. _Field names followed by equal sign have a fixed value._
-
+Data in these sections is stored in a little-endian format.
 
 == Header
 
-----
-magic="REDBIN" (6), version=1 (1), flags (1), length (4), size (4)
+Redbin data starts with a header having the following format:
 
-flags (option is enabled if bit is set):
-    bit0: compact mode
-    bit1: compressed
-    bit2: symbol table
-    bit3-7: <reserved>
+----
+magic="REDBIN" (6), version=1|2 (1), flags (1), length (4), size (4)
 
 length : number of root records to load.
 size   : size of records payload in bytes.
 ----
 
-If compression is applied, the data following the header is the payload to be compressed. Compression algorithm choice is implementation-dependent.
+Layout of `flags` field is described in the table below.
 
-== Symbol Table
+.Redbin header flags.
+[options="header" cols="1,9"]
+|===
+| Bits | Description 
 
-The symbol table immediately follows the header data. It is optional and should only be used if words are present in the rest of the Redbin payload. The symbol table has two sections:
+| 7-3
+| Reserved for future use.
 
-* a table of offsets to string representation of each symbol
-* strings buffers, NUL-terminated and concatenated to each other
+| 2
+| If set, indicates that Redbin data contains a <<Symbol table, symbol table>>.
 
-The position of a symbol in the table is its _index_ (zero-based), and it is used as reference for a symbol in contexts and words. The strings buffers section contains UTF-8 encoded strings with an optional padding at end to ensure 64-bit alignment. The offsets in the table are offsets in bytes from beginning of the strings buffers section to the referred string buffer.
+| 1
+| If set, indicates that data immidiately following `flags` field is compressed. Compression algorithm is implementation-dependent.
 
-Table encoding:
+| 0
+| If set, indicates that records section is encoded using the compact format.
 
- Default: length (4), size (4), offset1 (4), offset2 (4),...
- Compact: TBD
+|===
 
-`length` field contains the number of entries in the table. `size` field indicates the size of the string buffer in bytes (including optional tail padding bytes).
+Header is the only mandatory section in Redbin format encoding; both <<Symbol table, symbol table>> and <<Records definitions, payload>> can be ommitted, provided that relevant flags and fields a properly specified.
 
-During the decoding process, these symbols are merged within Red's own symbol table and the offsets are replaced by the symbol ID value from Red table. That is, the symbol references in the Redbin records are an indirect reference to Red's internal symbol table entries used only during the loading process.
+== Symbol table
 
-After the Symbol Table, Red values are stored as records in sequence with no special delimiter or end marker. The loaded values from root level are usually stored in a `block!` series.
+The symbol table immediately follows the header data. It is optional and should only be used if `any-word!` values are present in the <<Records definitions, Redbin payload>>. The symbol table has two sections:
+
+Offsets table:: A list of offsets to string representation of each symbol inside the strings buffer;
+
+Strings buffer:: Immidiately follows offsets table; contains UTF-8 encoded, NUL-terminated strings concatenated to each other, with an optional 64-bit boundary padding at the end of each string.
+
+The position of an offset in the table is its _index_ (zero-based), which is used as a reference by symbols in `context!` and  `any-word!` records. The offsets in the table are offsets in bytes from the beginning of the strings buffers section to the referred string.
+
+Table of offsets encoding is described below:
+
+----
+Default: length (4), size (4), offset (4) * length
+Compact: TBD
+----
+
+`length` field contains the number of entries in the table. `size` field indicates the size of the strings buffer in bytes (including optional padding).
+
+During the runtime booting process, these symbols are merged within Red's own symbol table and the offsets are replaced by the symbol ID values from that table. <<Redbin codec, Runtime codec>> omits this merging stage and instantiates symbols in-place for each relevant decoded record.
+
+After the symbol table, Red values are stored as a sequence of records, with no special delimiters or end markers. The loaded values from the root level are stored in a `block!` series.
 
 == Records definitions
 
-Each records starts with a 32-bit `header` field defined as:
+Each record in Redbin payload starts with a 32-bit `header` field defined as:
 
-.Header flags.
-[options="header" cols="1,3,2"]
+.Layout of Redbin record header.
+[options="header" cols="1,9,9"]
 |===
 | Bits | Description | Relevant datatypes
 
@@ -86,7 +105,7 @@ Each records starts with a 32-bit `header` field defined as:
 | `context!`
 
 | 27-26
-| Context type.
+| `kind` field; encodes `context!` type.
 | `context!`
 
 | 25
@@ -114,7 +133,7 @@ Each records starts with a 32-bit `header` field defined as:
 | `money!`
 
 | 19
-| Redbin record contains a reference __TBD link to section__.
+| `reference?` flag; if set, indicates that Redbin record contains a reference __TBD link to section__.
 | __TBD list datatypes__ `series!`, `any-function!`..?
 
 | 18-16
@@ -122,11 +141,11 @@ Each records starts with a 32-bit `header` field defined as:
 | --
 
 | 15-8
-| Unit type, encoded element size in a series buffer.
+| `unit` field; encodes element size (i.e. unit) in a series buffer.
 | `series!`
 
 | 7-0
-| Value type.
+| `type` field; encodes value type.
 | All.
 
 |===
