@@ -232,7 +232,9 @@ Compact: TBD
 header/type=1
 ----
 
-=== Unset! anchor:unset[] 
+`value` field contains datatype ID represented as a 32-bit integer.
+
+==== `unset!` anchor:unset[] 
 
 ----
 Default: header (4)
@@ -241,7 +243,9 @@ Compact: TBD
 header/type=2
 ----
 
-=== None! anchor:none[] 
+`unset!` is a singleton value and can be encoded as a `header` field with datatype ID.
+
+==== `none!` anchor:none[] 
 
 ----
 Default: header (4)
@@ -250,7 +254,9 @@ Compact: TBD
 header/type=3
 ----
 
-=== Logic! anchor:logic[] 
+`none!` is a singleton value and can be encoded as a `header` field with datatype ID.
+
+==== `logic!` anchor:logic[] 
 
 ----
 Default: header (4), value=0|1 (4)
@@ -259,64 +265,77 @@ Compact: TBD
 header/type=4
 ----
 
-=== Block! anchor:block[] 
+`value` content of `0` encodes a `false` value. Non-zero `value` content encodes a `true` value.
+
+==== `block!` anchor:block[] 
 
 ----
-Default: header (4), head (4), length (4), ...
-Compact: TBD
+Default:  header (4), head (4), length (4), ... * length
+Referral: header (4), head (4), [reference]
+Compact:  TBD
 
 header/type=5
+header/reference?=0|1
 ----
 
-The `head` field indicates the offset of the block reference, using a zero-based integer. The `length` field contains the number of values to be stored in the block. The block values simply follow the block definition, no separator or end delimiter is required.
+The `head` field indicates a zero-based offset of the index position from block's head. The `length` field contains the number of values to be stored in the block. The block values' records then follow the `length` field.
 
-=== Paren! anchor:paren[] 
+==== `paren!` anchor:paren[] 
 
 ----
-Default: header (4), head (4), length (4), ...
-Compact: TBD
+Default:  header (4), head (4), length (4), ... * length
+Referral: header (4), head (4), [reference]
+Compact:  TBD
 
 header/type=6
+header/reference?=0|1
 ----
 
-Same encoding rules as `block!`.
+Same encoding rules as <<block, `block!`>>.
 
-=== String! anchor:string[] 
+==== `string!` anchor:string[] 
 
 ----
-Default: header (4), head (4), length (4), data (unit*length) [, padding (1-3)]
-Compact: TBD
+Default:  header (4), head (4), length (4), data (header/unit * length), [padding] (1-3)
+Referral: header (4), head (4), [reference]
+Compact:  TBD
 
 header/type=7
 header/unit=1|2|4
+header/reference?=0|1
 ----
 
-`head` field has same meaning as for blocks. The `unit` sub-field indicates the encoding format of the string, only values of 1, 2 and 4 are valid. The `length` field contains the number of codepoints to be stored in the string, up to 16777215 codepoints (2^24 - 1) are supported. The string is encoded in UCS-1, UCS-2 or UCS-4 format. No NUL character is present, nor accounted for in the `length` field. An optional tail padding of 1 to 3 NUL bytes can be present to align the end of the `string!` record with a 32-bit boundary.
+The `head` field has same meaning as for other series values. The `unit` field indicates the encoding format of the string, only values of 1, 2 and 4 are valid. The `length` field contains the number of codepoints to be stored in the string, up to 16777215 codepoints (2^24^ - 1) are supported. The string is encoded in either UCS-1, UCS-2 or UCS-4 format, depending on the maximum width of contained codepoints. No NUL-terminating character is present in `data`, nor accounted for in the `length` field. An optional tail padding of 1 to 3 NUL bytes can be present to align the end of the `string!` record with the 32-bit boundary.
 
-=== File! anchor:file[] 
+==== `file!` anchor:file[] 
 
 ----
-Default: header (4), head (4), length (4), data (unit*length)
-Compact: TBD
+Default:  header (4), head (4), length (4), data (header/unit * length), [padding] (1-3)
+Referral: header (4), head (4), [reference]
+Compact:  TBD
 
 header/type=8
 header/unit=1|2|4
+header/reference?=0|1
 ----
 
-Same encoding rules as `string!`.
+Same encoding rules as <<string, `string!`>>.
 
-=== Url! anchor:url[] 
+==== `url!` anchor:url[] 
 
 ----
-Default: header (4), head (4), length (4), data (unit*length)
-Compact: TBD
+Default:  header (4), head (4), length (4), data (header/unit * length), [padding] (1-3)
+Referral: header (4), head (4), [reference]
+Compact:  TBD
 
 header/type=9
+header/unit=1|2|4
+header/reference?=0|1
 ----
 
-Same encoding rules as `string!`.
+Same encoding rules as <<string, `string!`>>.
 
-=== Char! anchor:char[] 
+==== `char!` anchor:char[] 
 
 ----
 Default: header (4), value (4)
@@ -325,7 +344,9 @@ Compact: TBD
 header/type=10
 ----
 
-=== Integer! anchor:integer[] 
+`value` field contains a UCS-4 codepoint stored as a 32-bit integer.
+
+==== `integer!` anchor:integer[] 
 
 ----
 Default: header (4), value (4)
@@ -333,6 +354,10 @@ Compact: TBD
 
 header/type=11
 ----
+
+`value` field contains a signed 32-bit integer that encoded Red value represents.
+
+= TBD
 
 === Float! anchor:float[] 
 
