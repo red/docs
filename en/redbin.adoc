@@ -150,20 +150,80 @@ Each record in Redbin payload starts with a 32-bit `header` field defined as:
 
 |===
 
-Here follows the description of each individual record:
+Here follows individual descriptions of each type of record.
 
-=== Padding anchor:padding[] 
+=== Special
+
+Some types of Redbin records do not correspond to any Red value datatype and are described in this section.
+
+==== Padding
 
 ----
 Default: header (4)
-Compact: n/a
+Compact: N/A
 
 header/type=0
 ----
 
-This empty type slot is used to properly align 64-bit values.
+This empty record is used to properly align 64-bit values.
 
-=== Datatype! anchor:datatype[] 
+==== Reference
+
+----
+Default: header (4), length (4), offset (4) * length
+Compact: TBD
+
+header/type=255
+----
+
+Reference records are used to encode various relations between Red values, such as `any-word!` bindings and shared `series!` buffers.
+
+`length` field specifies the number of `offset` fields contained inside a reference record; each `offset` field specifies a zero-based offset to an already loaded Red value thru its parent, starting from the root block. A list of such offsets effectively forms a path to a referenced value.
+
+Red value that is used as a parent to calculate offset into is called a _waypoint_; Red value to which the path is formed by a reference is called an _apex_. Reference records are usually used by other value records in order to obtain datatype-specific parts that they share with the apex. Red value record that contains a reference is called a _referral_. In all record definitions that follow, referral format is used to describe such form of encoding, which is used only when `reference?` header flag of a respective value record is set.
+
+Redbin records that can act as referrals are: `series!`, `map!`, `bitset!`, `any-word!`, `refinement!`, `object!`, `native!`, `action!`, `function!`.
+
+Only a selected number of datatypes can be a waypoint or an apex, and rules of offset calculation and referencing for each of them are described in the table below.
+
+.Datatypes thru which reference paths can be formed.
+[options="header" cols="1,2,2"]
+|===
+| Datatypes | Waypoint | Apex
+
+| `any-block!`, `map!`
+| An offset from the series' head. `map!` is treated as a linear block.
+| Buffer is reused.
+
+| `object!`
+| An offset from the head of the values block.
+| Binding information is reused.
+
+| `any-word!`, `refinement!`
+| An offset into a context to which value is bound, which is represented as either `object!` or `function!` value.
+| Binding information is reused.
+
+| `action!`, `native!`
+| Offset from the head of the spec block.
+| Spec buffer is reused.
+
+| `function!`
+| Offset of value `0` selects a spec block, offset of value `1` selects a body block. Other offset values are forbidden.
+| Binding information is reused.
+
+| `op!`
+| Offset of value `0` selects a spec block. Other offset values are forbidden.
+| Binding information of `function!` value from which `op!` is derived is reused.
+
+|===
+
+Referral can reference its own parent, in such case a cycle is formed.
+
+=== Datatypes
+
+This section describes the encoding of Redbin records that correspond to Red value datatypes.
+
+==== `datatype!` anchor:datatype[] 
 
 ----
 Default: header (4), value (4)
