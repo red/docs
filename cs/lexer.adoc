@@ -51,7 +51,7 @@ Upřesnění `/fast` poskytuje rychlost na úkor přesnosti. Skenování vrací 
 
 [cols="1,1", options="header", align="center"]
 |===
-|Guessed type | Real type
+|Odhadovaný typ | Skutečný typ
 |path!	 | path! +
 lit-path! +
 get-path! +
@@ -212,14 +212,14 @@ Význam některých argumentů a zpětných hodnot __závisí__ na typu událost
 |`load`| datatype!| <value>| `true`: store +
 `false`: drop| Byl-li token konvertován na hodnotu Redu.
 |`open`| datatype!| pair!| `true`: open +
-`false`: drop| Byl-li otevřen nový block!, paren!, path!, map! or multiline string!.
+`false`: drop| Byl-li otevřen nový block!, paren!, path!, map! nebo víceřádkový řetězec.
 |`close`| datatype!| pair!| `true`: close + 
-`false`: drop| Byl-li zavřen nový block!, paren!, path!, map! or multiline string! is closed.
+`false`: drop| Byl-li zavřen nový block!, paren!, path!, map! nebo víceřádkový řetězec.
 |`error`| datatype!| pair!| `true`: throw +
 `false`: ignore| Při výskytu syntaktické chyby.
 |===
 
-Možné hodnoty pole `type` (word! or datatype!) v události `scan`:
+Možné hodnoty pole `type` (word! nebo datatype!) v události `scan`:
 ----
 eof comment hex error! block! paren! string! map! path! word! refinement!
 issue! file! binary! char! percent! integer! float! tuple! date! pair! time!
