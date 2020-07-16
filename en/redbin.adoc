@@ -11,18 +11,15 @@ The user interface for Redbin format access is provided via codec sub-system. Se
 
 == Lexical conventions
 
-NOTE: TBD.
+A number of semi-formal lexical conventions are used throughout this document to describe the Redbin encoding format:
 
-A number of lexical conventions are used throughout this document to describe the Redbin encoding format:
-
-* ()
-* =
-* []
-* ...
-* |
-* x * y
-* Path notation.
-* Signed/unsigned sizes and such. Decimal numbers.
+* Numbers in parentheses indicate field's size;
+* Field followed by an equal sign has a fixed content;
+* Field followed by a name of a record type enclosed in square brackets indicates an encoded Redbin record of that type; 
+* Ellipsis stands for a generic Redbin value record of any datatype;
+* Pipe symbol indicates a choice between alternatives;
+* Multiplication sign indicates a repetition;
+* Path notation is used to refer to record's header flags.
 
 == Encoding format
 
