@@ -198,7 +198,7 @@ Reference records are used to encode various relations between Red values, such 
 
 Red value that is used as a parent to calculate offset into is called a _waypoint_; Red value to which the path is formed by a reference is called an _target_. Reference records are usually used by other value records in order to obtain datatype-specific parts that they share with the target. Red value record that contains a reference is called a _referral_. In all record definitions that follow, referral format is used to describe such form of encoding, which is used only when `reference?` header flag of a respective value record is set.
 
-Redbin records that can act as referrals are: `series!`, `map!`, `bitset!`, `any-word!`, `refinement!`, `object!`, `native!`, `action!`, `function!`.
+Redbin records that can act as referrals are: `series!`, `map!`, `bitset!`, `any-word!`, `refinement!`, `object!`, `function!`.
 
 Only a selected number of datatypes can be a waypoint or a target, and rules of offset calculation and referencing for each of them are described in the table below.
 
@@ -233,7 +233,15 @@ Only a selected number of datatypes can be a waypoint or a target, and rules of 
 
 |===
 
+NOTE: TBD the rest of datatypes that can be only targets... or just limit the description to waypoints only and generally state which parts in targets of what datatype are reused (either binding, buffers of spec/body blocks).
+
 Referral can reference its own parent, in such case a cycle is formed.
+
+=== Unsupported
+
+NOTE: TBD.
+
+`routine!`, `ops!` derived from `routine!`, `handle!`, `event!`...
 
 === Datatypes
 
@@ -489,12 +497,10 @@ header/type=20
 ==== `native!` anchor:native[] 
 
 ----
-Default:  header (4), ID (4), spec [block!]
-Referral: header (4), ID (4), spec [reference]
-Compact:  TBD
+Default: header (4), ID (4), spec [block!]
+Compact: TBD
 
 header/type=21
-header/reference?=0|1
 ----
 
 `ID` field is an offset into the internal `natives/table` jump table, followed by a `block!` record encoding native's spec.
@@ -502,12 +508,10 @@ header/reference?=0|1
 ==== `action!` anchor:action[] 
 
 ----
-Default:  header (4), ID (4), spec [block!]
-Referral: header (4), ID (4), spec [reference]
-Compact:  TBD
+Default: header (4), ID (4), spec [block!]
+Compact: TBD
 
 header/type=22
-header/reference?=0|1
 ----
 
 `ID` field is an offset into the internal `actions/table` jump table, followed by a `block!` record encoding action's spec.
@@ -607,8 +611,6 @@ header/complement?=0|1
 
 If `complement?` flag is set, it indicates that bitset is complemented. The `length` field encodes the number of bytes stored. `data` is a memory dump of `bitset!` series buffer, byte order is preserved. `data` field needs to be padded with enough NUL bytes to keep the next record aligned at 32-bit boundary.
 
-= TBD
-
 ==== `object!` anchor:object[] 
 
 ----
@@ -621,7 +623,7 @@ header/owner?=0|1
 header/reference?=0|1
 ----
 
-`on-set` and `arity` are optional.
+`class` field stores object's class ID. `on-set` field is a pair of 16-bit integers, each of which encodes an offset to `on-change*` and `on-deep-change*` function in object's values block. `arity` field has the same format as `on-set`, but encodes arities of the respective functions. These two fields are optional and are encoded only if `owner?` flags is set in record's header.
 
 ==== `typeset!` anchor:typeset[] 
 
@@ -632,6 +634,8 @@ Compact: TBD
 header/type=33
 ----
 
+`array1`, `array2` and `array3` fields form a a bitset where index of each `1` bit indicates a datatype ID contained inside a typeset.
+
 ==== `error!` anchor:error[] 
 
 ----
@@ -641,7 +645,7 @@ Compact: TBD
 header/type=34
 ----
 
-`arg1 arg2 arg3 near where stack`
+`code` field encodes error's identifier and is followed by 6 value records for error's fields: `arg1`, `arg2`, `arg3`, `near`, `where`, `stack`.
 
 ==== `vector!` anchor:vector[] 
 
@@ -654,7 +658,25 @@ header/type=35
 header/unit=1|2|4|8
 ----
 
-`unit` indicates the size of the vector element type size: 1, 2, 4 or 8 bytes. The `data` field holds the list of values. Needs to be padded with NUL bytes to align the next record to a 32-bit boundary (if `unit` is equal to 1 or 2).
+`type` field contain datatype ID of vector's element. `unit` field indicates the size of the vector element's type size in bytes. Only the following combinations of `type` and `unit` values are supported:
+
+.Combinations of `vector!` fields.
+[options="header" cols="1,1"]
+|===
+| Type | Unit 
+
+| `char!`, `integer!`
+| 1, 2, 4
+
+| `float!`
+| 4, 8
+
+| `percent!`
+| 8
+
+|===
+
+The `data` field holds the list of values. If `unit` is equal to 1 or 2, `data` needs to be padded with NUL bytes up to a 32-bit boundary.
 
 ==== `pair!` anchor:pair[] 
 
@@ -664,6 +686,8 @@ Compact: TBD
 
 header/type=37
 ----
+
+`x` and `y` fields encode the respective pair's elements as 32-bit integers.
 
 ==== `percent!` anchor:percent[] 
 
@@ -683,7 +707,10 @@ Default: header (4), array1 (4), array2 (4), array3 (4)
 Compact: TBD
 
 header/type=39
+header/unit=3-12
 ----
+
+`unit` field encodes tuple's size in bytes; only values from `3` to `12` are allowed. `array1`, `array2` and `array3` fields together form a memory dump of tuple's slot payload.
 
 ==== `map!` anchor:map[] 
 
@@ -696,7 +723,7 @@ header/type=40
 header/reference?=0|1
 ----
 
-The `length` field contains the number of elements (keys + values) to be stored in the map. The map elements simply follow the length definition, no separator or end delimiter is required.
+The `length` field contains the number of elements (both keys and values) encoded.
 
 ==== `binary!` anchor:binary[] 
 
@@ -708,6 +735,8 @@ Compact:  TBD
 header/type=41
 header/reference?=0|1
 ----
+
+`data` field contains memory dump of binary's series buffer, byte order is preserved.
 
 ==== `time!` anchor:time[] 
 
@@ -757,7 +786,13 @@ Compact: TBD
 header/type=47
 ----
 
-Date is packed into a 32-bit integer (same as in `red-date!`). Time value is stored as a 64-bit float.
+`date` field contains date value packed into a 32-bit integer. The following format is used (field sizes are in bits):
+
+----
+year (15), time? (1), month (4), day (5), timezone (7)
+----
+
+`year` and `timezone` sub-fields contain signed values. `time` field stores time value as a 64-bit float.
 
 ==== `money!` anchor:money[] 
 
@@ -769,7 +804,7 @@ header/type=49
 header/sign=0|1
 ----
 
-`amount` is a sequence of nibbles representing the money integral and decimal part (22 digits) in network byte order. If `sign` is set, the amount is interpreted as negative. `currency` is an integer value (0 for generic money, < 255 for existing currency code).
+`amount` field is a sequence of nibbles representing the base (17) and subunit (5) of money value, byte order is preserved. If `sign` flag is set, the amount is interpreted as negative. `currency` field is an integer value representing currency ID (0 for generic money, &le; 255 for existing currency code).
 
 ==== `ref!` anchor:ref[]
 
@@ -788,13 +823,15 @@ Same encoding rules as <<string, `string!`>>.
 ==== `image!` anchor:image[]
 
 ----
-Default:  header (4), head (4), length (4), rgba (4 * length)
+Default:  header (4), head (4), length (4), rgba (4 * width * height)
 Referral: header (4), head (4), buffer [reference]
 Compact:  TBD
 
 header/type=51
 header/reference?=0|1
 ----
+
+`length` field is a pair of 16-bit integers encoding width and height of an image. `rgba` field contains RGBA content of an image (4 bytes per pixel) with preserved byte order.
 
 == Redbin codec
 
