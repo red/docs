@@ -206,7 +206,15 @@ Only a selected number of datatypes can be a waypoint or a target, and rules of 
 
 | `any-block!`, `map!`
 | An offset from the series' head. `map!` is treated as a linear block.
-| Buffer is reused.
+| Series buffer is reused.
+
+| `any-string!`, `binary!`, `bitset!`, `vector!`, `image!`
+| --
+| Series buffer is reused.
+
+| `action!`, `native!`
+| Offset from the head of the spec block.
+| Spec buffer is reused.
 
 | `object!`
 | An offset from the head of the values block.
@@ -215,10 +223,6 @@ Only a selected number of datatypes can be a waypoint or a target, and rules of 
 | `any-word!`, `refinement!`
 | An offset into a context to which value is bound, which is represented as either `object!` or `function!` value.
 | Binding information is reused.
-
-| `action!`, `native!`
-| Offset from the head of the spec block.
-| Spec buffer is reused.
 
 | `function!`
 | Offset of value `0` selects a spec block, offset of value `1` selects a body block. Other offset values are forbidden.
@@ -229,8 +233,6 @@ Only a selected number of datatypes can be a waypoint or a target, and rules of 
 | Binding information of `function!` value from which `op!` is derived is reused.
 
 |===
-
-NOTE: TBD the rest of datatypes that can be only targets... or just limit the description to waypoints only and generally state which parts in targets of what datatype are reused (either binding, buffers of spec/body blocks).
 
 Referral can reference its own parent, in such case a cycle is formed.
 
