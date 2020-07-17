@@ -848,6 +848,29 @@ header/reference?=0|1
 
 == Redbin codec
 
-NOTE: T.K.
+Redbin format enables use-cases typically associated with data serialization, such as:
 
-Interface, use-cases (on-disk serialization, sending programs over the wire ala RPC), `%.redbin` extension.
+* Persistent state and image-based environments;
+* Remote procedure calls;
+* Sharing data and programs over the network with other systems;
+* Detecting changes in time-varying data.
+
+To make these use-cases possible, an interface to Redbin format is provided via codec sub-system. Redbin codec can be acessed with `save` and `load` functions as described below.
+
+*Syntax*
+----
+save/as <where> <value> 'redbin
+save <file> <value>
+
+load/as <data> 'redbin
+load <file>
+
+<data>  : Redbin-encoded binary! value
+<value> : value of any supported datatype
+<where> : saving destination for encoded data; file!, url!, string!, binary!, none!
+<file>  : file! with .redbin extension
+----
+
+NOTE: Redbin codec cannot encode or decode <<Unsupported, unsupported>> values or values that contain them.
+
+WARNING: Attempt to `load` a Redbin data with malformed payload will likely lead to unexpected results or a runtime crash.
