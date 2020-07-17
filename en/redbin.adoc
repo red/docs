@@ -38,7 +38,7 @@ WARNING: Attempt to `load` Redbin data with malformed payload will likely lead t
 
 == Lexical conventions
 
-A number of semi-formal lexical conventions are used throughout this document to describe the Redbin encoding format:
+Several semi-formal lexical conventions are used throughout this document to describe the Redbin encoding format:
 
 * Numbers in parentheses indicate field's size;
 * Field followed by an equal sign has a fixed content;
@@ -70,10 +70,10 @@ Redbin data starts with a header having the following format:
 magic="REDBIN" (6), version=1|2 (1), flags (1), length (4), size (4)
 
 length : number of root records to load.
-size   : size of records payload in bytes.
+size   : the size of records payload in bytes.
 ----
 
-Layout of `flags` field is described in the table below.
+The layout of `flags` field is described in the table below.
 
 .Redbin header flags.
 [options="header" cols="1,9"]
@@ -87,22 +87,22 @@ Layout of `flags` field is described in the table below.
 | If set, indicates that Redbin data contains a <<Symbol table, symbol table>>.
 
 | 1
-| If set, indicates that data immidiately following `flags` field is compressed. Compression algorithm is implementation-dependent.
+| If set, indicates that data immediately following the `flags` field is compressed. The compression algorithm is implementation-dependent.
 
 | 0
-| If set, indicates that records section is encoded using the compact format.
+| If set, indicates that the records section is encoded using the compact format.
 
 |===
 
-Header is the only mandatory section in Redbin format encoding; both <<Symbol table, symbol table>> and <<Records definitions, payload>> can be ommitted, provided that relevant flags and fields a properly specified.
+The header is the only mandatory section in Redbin format encoding; both <<Symbol table, symbol table>> and <<Records definitions, payload>> can be omitted, provided that relevant flags and fields a properly specified.
 
 == Symbol table
 
 The symbol table immediately follows the header data. It is optional and should only be used if `any-word!` values are present in the <<Records definitions, Redbin payload>>. The symbol table has two sections:
 
-Offsets table:: A list of offsets to string representation of each symbol inside the strings buffer;
+Offsets table:: A list of offsets to a string representation of each symbol inside the strings buffer;
 
-Strings buffer:: Immidiately follows offsets table; contains UTF-8 encoded, NUL-terminated strings concatenated to each other, with an optional 64-bit boundary padding at the end of each string.
+Strings buffer:: Immediately follows offsets table; contains UTF-8 encoded, NUL-terminated strings concatenated to each other, with an optional 64-bit boundary padding at the end of each string.
 
 The position of an offset in the table is its _index_ (zero-based), which is used as a reference by symbols in `context!` and  `any-word!` records. The offsets in the table are offsets in bytes from the beginning of the strings buffers section to the referred string.
 
@@ -115,7 +115,7 @@ Compact: TBD
 
 `length` field contains the number of entries in the table. `size` field indicates the size of the strings buffer in bytes (including optional padding).
 
-During the runtime booting process, these symbols are merged within Red's own symbol table and the offsets are replaced by the symbol ID values from that table. <<Redbin codec, Runtime codec>> omits this merging stage and instantiates symbols in-place for each relevant decoded record.
+During the runtime booting process, these symbols are merged with Red's symbol table and the offsets are replaced by the symbol ID values from that table. <<Redbin codec, Runtime codec>> omits this merging stage and instantiates symbols in-place for each relevant decoded record.
 
 After the symbol table, Red values are stored as a sequence of records, with no special delimiters or end markers. The loaded values from the root level are stored in a `block!` series.
 
@@ -129,7 +129,7 @@ Each record in Redbin payload starts with a 32-bit `header` field defined as:
 | Bits | Description | Relevant datatypes
 
 | 31
-| `new-line` flag; if set, indicates the presence of new-line flag in value slot.
+| `new-line` flag; if set, indicates the presence of a new-line flag in value slot.
 | All.
 
 | 30
@@ -149,7 +149,7 @@ Each record in Redbin payload starts with a 32-bit `header` field defined as:
 | `context!`
 
 | 25
-| `set?` flag; if set, indicates that `any-word!` records is followed by value record to which decoded `any-word!` needs to be set.
+| `set?` flag; if set, indicates that `any-word!` record is followed by value record to which decoded `any-word!` needs to be set.
 | `any-word!`
 
 | 24
@@ -161,7 +161,7 @@ Each record in Redbin payload starts with a 32-bit `header` field defined as:
 | `op!`
 
 | 22
-| `body?` flag; if set, indicates that `op!` values is derived from either `function!` or `routine!` and has a body block.
+| `body?` flag; if set, indicates that `op!` value is derived from either `function!` or `routine!` and has a body block.
 | `op!`
 
 | 21
@@ -190,7 +190,7 @@ Each record in Redbin payload starts with a 32-bit `header` field defined as:
 
 |===
 
-Here follows individual descriptions of each type of record.
+Here follow individual descriptions of each type of record.
 
 === Special
 
@@ -220,13 +220,13 @@ Reference records are used to encode various relations between Red values, such 
 
 `length` field specifies the number of `offset` fields contained inside a reference record; each `offset` field specifies a zero-based offset to an already loaded Red value thru its parent, starting from the root block. A list of such offsets effectively forms a path to a referenced value.
 
-Red value that is used as a parent to calculate offset into is called a _waypoint_; Red value to which the path is formed by a reference is called an _target_. Reference records are usually used by other value records in order to obtain datatype-specific parts that they share with the target. Red value record that contains a reference is called a _referral_. In all record definitions that follow, referral format is used to describe such form of encoding, which is used only when `reference?` header flag of a respective value record is set.
+Red value that is used as a parent to calculate offset into is called a _waypoint_; Red value to which the path is formed by a reference is called a _target_. Reference records are usually used by other value records to obtain datatype-specific parts that they share with the target. Red value record that contains a reference is called a _referral_. In all record definitions that follow, referral format is used to describe such a form of encoding, which is used only when `reference?` header flag of a respective value record is set.
 
 Redbin records that can act as referrals are: `series!`, `map!`, `bitset!`, `any-word!`, `refinement!`, `object!`, `function!`.
 
 Only a selected number of datatypes can be a waypoint or a target, and rules of offset calculation and referencing for each of them are described in the table below.
 
-.Datatypes thru which reference paths can be formed.
+.Datatypes thru and to which reference paths can be formed.
 [options="header" cols="1,2,2"]
 |===
 | Datatypes | Waypoint | Target
@@ -261,11 +261,11 @@ Only a selected number of datatypes can be a waypoint or a target, and rules of 
 
 |===
 
-Referral can target its own parent, in such case a cycle is formed.
+A referral can target its parent, in such case a cycle is formed.
 
 === Unsupported
 
-A number of Red value datatypes listed below are not supported by Redbin format.
+Some Red value datatypes (listed below) are not supported by Redbin format.
 
 .Red datatypes not supported by Redbin format.
 [options="header" cols="1,3"]
@@ -342,7 +342,7 @@ header/type=5
 header/reference?=0|1
 ----
 
-The `head` field indicates a zero-based offset of the index position from block's head. The `length` field contains the number of values to be stored in the block. The block values' records then follow the `length` field.
+The `head` field indicates a zero-based offset of the index position from the block's head. The `length` field contains the number of values to be stored in the block. The block values' records then follow the `length` field.
 
 ==== `paren!` anchor:paren[] 
 
@@ -369,7 +369,7 @@ header/unit=1|2|4
 header/reference?=0|1
 ----
 
-The `head` field has same meaning as for other series values. The `unit` field indicates the encoding format of the string, only values of 1, 2 and 4 are valid. The `length` field contains the number of codepoints to be stored in the string, up to 16777215 codepoints (2^24^ - 1) are supported. The string is encoded in either UCS-1, UCS-2 or UCS-4 format, depending on the maximum width of contained codepoints. No NUL-terminating character is present in `data`, nor accounted for in the `length` field. An optional tail padding of 1 to 3 NUL bytes can be present to align the end of the `string!` record with the 32-bit boundary.
+The `head` field has the same meaning as in other series records. The `unit` field indicates the encoding format of the string, only values of 1, 2, and 4 are valid. The `length` field contains the number of codepoints to be stored in the string, up to 16777215 codepoints (2^24^ - 1) are supported. The string is encoded in either UCS-1, UCS-2 or UCS-4 format, depending on the maximum width of contained codepoints. No NUL-terminating character is present in `data`, nor accounted for in the `length` field. An optional tail padding of 1 to 3 NUL bytes can be present to align the end of the `string!` record with a 32-bit boundary.
 
 ==== `file!` anchor:file[] 
 
@@ -430,7 +430,7 @@ Compact: TBD
 header/type=12
 ----
 
-An optional `padding` field is added to properly align the `value` field at 64-bit boundary. `value` field itself contains a 64-bit https://en.wikipedia.org/wiki/IEEE_754[IEEE 754] floating-point numeral.
+An optional `padding` field is added to properly align the `value` field at a 64-bit boundary. `value` field itself contains a 64-bit https://en.wikipedia.org/wiki/IEEE_754[IEEE 754] floating-point numeral.
 
 ==== `context!` anchor:context[] 
 
@@ -447,9 +447,9 @@ header/self?=0|1
 
 Contexts are Red values used internally by some datatypes like `function!`, `object!` and derivative types. A context record contains two consecutive lists, the first one is a list of word entries in the context represented as `symbol` references, the second one is the associated value records for each of the symbols in the first list.
 
-`kind` field in record's header encodes context's type: `0` for global context, `1` for context of a function, and `2` for context of an object. Global context is never encoded explicitly, which means that only values of `1` and `2` are used. `length` field indicates the number of entries in the context.
+`kind` field in record's header encodes context's type: `0` for global context, `1` for the context of a function, and `2` for the context of an object. The global context is never encoded explicitly, which means that only values of `1` and `2` are used. `length` field indicates the number of entries in the context.
 
-If `no-values` flag is set, it means that there are no value records following the symbols (empty context). If `stack?` flag is set, then the values are allocated on the stack instead of the heap memory. The `self?` flag is used to indicate that the context is able to handle a self-referencing word (`self` in objects).
+If `no-values` flag is set, it means that there are no value records following the symbols (empty context). If `stack?` flag is set, then the values are allocated on the stack instead of the heap memory. The `self?` flag is used to indicate that the context can handle a self-referencing word (`self` in objects).
 
 ==== `word!` anchor:word[] 
 
@@ -463,9 +463,9 @@ header/set?=0|1
 header/reference?=0|1
 ----
 
-`symbol` field is an index in Redbin <<Symbol table, symbol table>>. `index` is word's index in the context to which it is bound. If `set?` flag is set, then word is bound to a global context and `index` field is followed by a value record to which word needs to be set; otherwise `index` field is followed by either `object!` or `function!` record that contain context to which word needs to be bound.
+`symbol` field is an index in Redbin <<Symbol table, symbol table>>. `index` is word's index in the context to which it is bound. If `set?` flag is set, then word is bound to a global context and `index` field is followed by a value record to which word needs to be set; otherwise `index` field is followed by either `object!` or `function!` record that contains context to which word needs to be bound.
 
-NOTE: In current implementation, enabled `set?` flag indicates that word is bound to a global context, but value record is omitted.
+NOTE: In the current implementation, enabled `set?` flag indicates that word is bound to a global context, but value record is omitted.
 
 ==== `set-word!` anchor:set-word[] 
 
@@ -569,7 +569,7 @@ neader/native?=0|1
 
 If `body?` flag is set, it indicates that `op!` is derived from a `function!`;  if `body?` flag is not set, then `op!` is derived from either `action!` or `native!` -- the choice between the two is indicated by `native?` flag.
 
-If `body?` flag is set, then `header` field is followed by a `function!` record that encodes `op!` value's parent. Otherwise it is followed by a `block!` record encoding `op!` value's spec, and then by an `ID` of either `action!` or `native!` value.
+If `body?` flag is set, then `header` field is followed by a `function!` record that encodes `op!` value's parent. Otherwise, it is followed by a `block!` record encoding `op!` value's spec, and then by an `ID` of either `action!` or `native!` value.
 
 ==== `function!` anchor:function[] 
 
@@ -582,9 +582,9 @@ header/type=24
 header/reference?=0|1
 ----
 
-`spec-size` and `body-size` speicfy sizes of `spec` and `body` blocks, respectively, and are used for pre-allocation by decoder.
+`spec-size` and `body-size` specify sizes of `spec` and `body` blocks, respectively, and are used for pre-allocation by the decoder.
 
-Target of the reference is either `function!`, `op!`, or `any-word!`; `function!` value (loaded value, parent of `op!`, or context of `any-word!`) is copied over verbatim, which means that referral shares with it not only binding information, but also spec and body blocks.
+The target of the reference is either `function!`, `op!`, or `any-word!`; `function!` value (loaded value, parent of `op!`, or context of `any-word!`) is copied over verbatim, which means that referral shares with it not only binding information, but also spec and body blocks.
 
 ==== `path!` anchor:path[] 
 
@@ -649,7 +649,7 @@ header/type=30
 header/complement?=0|1
 ----
 
-If `complement?` flag is set, it indicates that bitset is complemented. The `length` field encodes the number of bytes stored. `data` is a memory dump of `bitset!` series buffer, byte order is preserved. `data` field needs to be padded with enough NUL bytes to keep the next record aligned at 32-bit boundary.
+If `complement?` flag is set, it indicates that bitset is complemented. The `length` field encodes the number of bytes stored. `data` is a memory dump of `bitset!` series buffer, byte order is preserved. `data` field needs to be padded with enough NUL bytes to keep the next record aligned at a 32-bit boundary.
 
 ==== `object!` anchor:object[] 
 
@@ -663,7 +663,7 @@ header/owner?=0|1
 header/reference?=0|1
 ----
 
-`class` field stores object's class ID. `on-set` field is a pair of 16-bit integers, each of which encodes an offset to `on-change*` and `on-deep-change*` function in object's values block. `arity` field has the same format as `on-set`, but encodes arities of the respective functions. These two fields are optional and are encoded only if `owner?` flags is set in record's header.
+`class` field stores object's class ID. `on-set` field is a pair of 16-bit integers, each of which encodes an offset to `on-change*` and `on-deep-change*` function in object's values block. `arity` field has the same format as `on-set`, but encodes arities of the respective functions. These two fields are optional and are encoded only if `owner?` flag is set in record's header.
 
 ==== `typeset!` anchor:typeset[] 
 
@@ -674,7 +674,7 @@ Compact: TBD
 header/type=33
 ----
 
-`array1`, `array2` and `array3` fields form a a bitset where index of each `1` bit indicates a datatype ID contained inside a typeset.
+`array1`, `array2`, and `array3` fields form a bitset where an index of each `1` bit indicates a datatype ID contained inside a typeset.
 
 ==== `error!` anchor:error[] 
 
@@ -698,7 +698,7 @@ header/type=35
 header/unit=1|2|4|8
 ----
 
-`type` field contain datatype ID of vector's element. `unit` field indicates the size of the vector element's type size in bytes. Only the following combinations of `type` and `unit` values are supported:
+`type` field contains datatype ID of vector's element. `unit` field indicates the size of the vector element's type size in bytes. Only the following combinations of `type` and `unit` values are supported:
 
 .Combinations of `vector!` fields.
 [options="header" cols="1,1"]
@@ -716,7 +716,7 @@ header/unit=1|2|4|8
 
 |===
 
-The `data` field holds the list of values. If `unit` is equal to 1 or 2, `data` needs to be padded with NUL bytes up to a 32-bit boundary.
+The `data` field holds a list of values. If `unit` is equal to 1 or 2, `data` needs to be padded with NUL bytes up to a 32-bit boundary.
 
 ==== `pair!` anchor:pair[] 
 
@@ -750,7 +750,7 @@ header/type=39
 header/unit=3-12
 ----
 
-`unit` field encodes tuple's size in bytes; only values from `3` to `12` are allowed. `array1`, `array2` and `array3` fields together form a memory dump of tuple's slot payload.
+`unit` field encodes tuple's size in bytes; only values from `3` to `12` are allowed. `array1`, `array2`, and `array3` fields together form a memory dump of tuple's slot payload.
 
 ==== `map!` anchor:map[] 
 
@@ -872,32 +872,3 @@ header/reference?=0|1
 ----
 
 `length` field is a pair of 16-bit integers encoding width and height of an image. `rgba` field contains RGBA content of an image (4 bytes per pixel) with preserved byte order.
-
-== Redbin codec
-
-Redbin format enables use-cases typically associated with data serialization, such as:
-
-* Persistent state and image-based environments;
-* Remote procedure calls;
-* Sharing data and programs over the network with other systems;
-* Detecting changes in time-varying data.
-
-To make these use-cases possible, an interface to Redbin format is provided via codec sub-system. Redbin codec can be acessed with `save` and `load` functions as described below.
-
-*Syntax*
-----
-save/as <where> <value> 'redbin
-save <file> <value>
-
-load/as <data> 'redbin
-load <file>
-
-<data>  : Redbin-encoded binary! value
-<value> : value of any supported datatype
-<where> : saving destination for encoded data; file!, url!, string!, binary!, none!
-<file>  : file! with .redbin extension
-----
-
-NOTE: Redbin codec cannot encode or decode <<Unsupported, unsupported>> values or values that contain them.
-
-WARNING: Attempt to `load` a Redbin data with malformed payload will likely lead to unexpected results or a runtime crash.
