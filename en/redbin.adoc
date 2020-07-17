@@ -7,7 +7,34 @@ NOTE: Specification version 2.
 
 Redbin is a binary format that accurately represents Red values stored in memory while enabling fast loading (avoiding the parsing and validation stage of the text representation format). Redbin format is largely inspired by http://www.rebol.com/article/0044.html[REBin]; it can encode binding information for `any-word!` values, references to shared buffers for `series!` values, and can handle arbitrary cycles for `any-block!` values.
 
-The user interface for Redbin format access is provided via codec sub-system. See <<Redbin codec>> section for more details.
+== Redbin codec
+
+Redbin format enables use-cases typically associated with data serialization, such as:
+
+* Persistent state and image-based environments;
+* Remote procedure calls;
+* Sharing data and programs over the network with other systems;
+* Detecting changes in time-varying data.
+
+To make writing applications based on these ideas and methods possible, an interface to Redbin format is provided via the codec sub-system. Redbin codec can be accessed with `save` and `load` functions as described below.
+
+*Syntax*
+----
+save/as <where> <value> 'redbin
+save <file> <value>
+
+load/as <data> 'redbin
+load <file>
+
+<data>  : Redbin-encoded binary! value
+<value> : value of any supported datatype
+<where> : saving destination for encoded data; file!, url!, string!, binary!, none!
+<file>  : file! with .redbin extension
+----
+
+NOTE: Redbin codec cannot encode or decode <<Unsupported, unsupported>> values or, by extension, values that contain them.
+
+WARNING: Attempt to `load` Redbin data with malformed payload will likely lead to unexpected results or a runtime crash.
 
 == Lexical conventions
 
