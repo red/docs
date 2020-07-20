@@ -60,7 +60,7 @@ The general layout of Redbin data is described below. Each definition links to a
 <<Symbol table, Symbol table>>:: Optional; if present, contains interned strings used by records of symbolic datatypes.
 <<Records definitions, Payload>>:: Stores Redbin records that encode Red values.
 
-Data in these sections is stored in a little-endian format.
+Data in these sections is stored in a little-endian format. All integer fields represent non-negative values, but since Red runtime interprets them as signed, they have an upper limit of 2^31^-1.
 
 == Header
 
