@@ -283,6 +283,11 @@ Some Red value datatypes (listed below) are not supported by Redbin format.
 
 |===
 
+A list of additional limitations follows below:
+
+* Pre-compiled functions can be encoded, but on decoding start to behave as interpreted;
+* Object's `self` keyword cannot be encoded in some cases.
+
 === Datatypes
 
 This section describes the encoding of Redbin records that correspond to Red value datatypes.
