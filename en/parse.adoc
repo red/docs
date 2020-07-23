@@ -355,7 +355,7 @@ Match by datatype succeeds and advances the input if the input value is of a giv
 parse [#a 'bird /is :the word][issue! lit-word! refinement! get-word! word!]
 ----
 
-NOTE: Matching by datatype is not supported for `binary!` and `any-string!` input.
+NOTE: Matching by datatype is not supported for `any-string!` input; for `binary!` input, rules are described in <<Types of input>> section.
 
 ==== Type set
 
@@ -376,8 +376,7 @@ banner: [
 parse banner [default! series! any-block! any-list! all-word! any-word! any-type! any-string!]
 ----
 
-NOTE: Matching by typeset is not supported for `binary!` and `any-string!` input.
-
+NOTE: Matching by typeset is not supported for `any-string!` input; for `binary!` input, rules are described in <<Types of input>> section.
 ==== Character set
 
 If the input series is of type `any-string!` or `binary!` and input value represents a Unicode Code Point (UCP) that belongs to a given character set, match succeeds and advances the input. In all other cases match fails.
@@ -899,7 +898,7 @@ keep pick <expression>
 
 [[keep-options]]
 * If matched rule did not advance the input, `keep` does not keep anything.
-* If rule matched a single value, this value is kept.
+* If rule matched a single value, this value is kept; if `keep` is followed by a `copy` rule, then matched value is enclosed into a series of the same type as input.
 * If rule matched multiple values, they are grouped into a series of the same type as input; with `pick` option, values are not grouped but kept one-by-one.
 * If `keep` is used with `paren!` expression, result of its evaluation is kept as-is.
 

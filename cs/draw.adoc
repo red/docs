@@ -9,7 +9,7 @@
 
 Draw je dialekt jazyka (DSL) Red, který poskytuje jednoduchý deklarativní způsob kreslení rovinných útvarů. Operace kreslení jsou vyjádřeny jako seznamy uspořádaných příkazů (používajících bloky hodnot), které je snadné sestavovat a měnit při běhu programu.
 
-Bloky dialektu Draw lze vykreslovat přímo do obrázku s použitím funkce `draw` nebo uvnitř piškotu View s použitím aspektu `draw` (viz dokumentace View).
+Bloky dialektu Draw lze vykreslovat přímo do obrázku s použitím funkce `draw` nebo uvnitř piškotu View s použitím aspektu `draw` (viz link:view.adoc[dokumentace View]).
 
 == Příkazy
 
