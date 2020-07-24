@@ -88,7 +88,7 @@ Datový typ `ref!` podporuje řadu typových konverzí, platných pro typeset `a
 | Zakázáno.
 
 | Other
-| Stejně jako u `any-list`.
+| Podobně jako u `form`.
 
 |===
 
@@ -137,7 +137,7 @@ Více podrobností o podporovaných literálových formách lze nalézt v přís
 | `char!`
 | První znak, pokud přítomen, je extrahován.
 
-| Other
+| Ostatní
 | Zakázáno.
 
 |===
@@ -218,5 +218,9 @@ Funkce, souvisící s datovým typem `ref!` avšak v předchozím textu neuveden
 
 * predikát `ref?` vrací `true`, je-li daná hodnota typu `ref!`;
 * velikost písma: `uppercase` and `lowercase`;
-* conversion of URL-style percent-encoded content: `dehex`.
+* konverze URL v hexadecimálním vyjádření (%xx) na textový řetězec: `dehex` 
+----
+dehex {URL_k%C3%B3dov%C3%A1n%C3%AD}
+== "URL_kódování"
+----
 
