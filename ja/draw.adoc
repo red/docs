@@ -546,18 +546,6 @@ matrix [a b c d e f]
 |0 0 1|
 ----
 
-=== Matrix-order
-
-.*構文*
-----
-matrix-order <mode>
-
-<mode> : 'append または 'prepend (word!)
-----
-*説明*
-
-後続の行列処理において、新しい行列が現在の行列に対して前方乗算（prepend）で処理されるか、後方乗算（append、デフォルトのモードです）で処理されるかを設定します。
-
 === Reset-matrix 
 
 *構文*
