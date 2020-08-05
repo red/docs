@@ -944,7 +944,7 @@ parse [remove me <and me also> "but leave me be"][some [remove word!] mark: to s
 
 ==== `insert`
 
-Inserts literal value or result of expression evaluation at the current position. Always succeeds and advances the input past the insertion.
+Inserts literal value or result of expression evaluation, either at the current position or at the marked one. Always succeeds. Advances the input past the insertion if it was made at the current position, otherwise input position is retained.
 
 *Syntax*
 
@@ -952,9 +952,15 @@ Inserts literal value or result of expression evaluation at the current position
 insert <value>
 insert <expression>
 
+insert <word> <value>
+insert <word> <expression>
+
 insert only <value>
 insert only <expression>
+insert only <word> <value>
+insert only <word> <expression>
 
+<word>       : input position
 <value>      : literal value
 <expression> : paren! expression
 ----
@@ -964,7 +970,17 @@ If literal value is a `word!`, value referred by it will be used. `only` option 
 *Example*
 
 ----
-parse [assembly][insert [some] skip insert (load "required") insert only [🏗️ 🧰👷]]
+ikea: [assembly]
+here: tail ikea
+
+parse ikea [
+	insert only here [🏗️ 🧰👷]
+	insert only (load "[manual]")
+	word!
+	insert ikea [some]
+	block!
+	insert [required]
+]
 ----
 
 ==== `change`
