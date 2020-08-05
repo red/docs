@@ -922,7 +922,7 @@ Parse can modify its input series by inserting new values and removing/changing 
 
 ==== `remove`
 
-Either removes a portion of the input matched by a given rule or removes input between the current position and the marked one; after that, it succeeds and retains the input position after removal.
+Either removes a portion of the input matched by a given rule or removes input between the current position and the marked one; after that, it succeeds and retains the current input position.
 
 NOTE: Removal of values is a forward-consuming operation. In other words, it counts as a match, despite the absence of input advancement.
 
@@ -985,7 +985,7 @@ parse ikea [
 
 ==== `change`
 
-Changes matched portion on the input to a literal value or a result of expression evaluation. In addition to that, it can change a portion of the input between the current position and the marked one. After the change, it succeeds and advances the input past the modified portion.
+Changes matched portion on the input to a literal value or a result of expression evaluation. In addition to that, it can change a portion of the input between the current position and the marked one. If the change was made at the current position, it succeeds and advances the input past the modified portion, otherwise input position is retained.
 
 *Syntax*
 
