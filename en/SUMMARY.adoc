@@ -47,6 +47,7 @@
 .. link:datatypes/lit-word.adoc[lit-word!]
 .. link:datatypes/logic.adoc[logic!]
 .. link:datatypes/map.adoc[map!]
+.. link:datatypes/money.adoc[money!]
 .. link:datatypes/native.adoc[native!] 
 .. link:datatypes/none.adoc[none!]
 .. link:datatypes/object.adoc[object!]
