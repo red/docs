@@ -35,7 +35,7 @@ To use Red effectively, you should become familiar with all the datatypes availa
 |link:datatypes/lit-word.adoc[lit-word!]|`'foo`|Unevaluated `word!` value.
 |link:datatypes/logic.adoc[logic!]|`true` `false`, `yes` `no`, `on` `off`|Boolean values.
 |link:datatypes/map.adoc[map!]|`#( )`, `#(a: 1 b: 2)`|Associative array of key/value pairs.
-|link:datatypes/money.adoc[money!]` | `$123`, `-USD$1'234.56789` | Amount of a specific (or generic) currency.
+|link:datatypes/money.adoc[money!] | `$123`, `-USD$1'234.56789` | Amount of a specific (or generic) currency.
 |link:datatypes/native.adoc[native!]|`-`|External functions written in Red/System.
 |link:datatypes/none.adoc[none!]|`-`|Value that does not belong to any other datatype. Analogous to nil or nothing.
 |link:datatypes/object.adoc[object!]|`-`|Named or unnamed contexts that contain `word: value` pairs.
