@@ -582,19 +582,6 @@ Hodnoty bloku jsou interně použity pro vytvoření následující transformač
 Při použití literálových slov (lit-words) `'pen` nebo `'fill-pen` se násobení aplikuje na aktuální pen nebo fill-pen.
 
 
-=== Matrix-order
-
-*Syntaxe*
-----
-matrix-order <mode>
-
-<mode> : 'append or 'prepend (word!).
-----
-
-*Popis*
-
-Definuje, zda nové matice v následných operacích jsou pre-multiplied (`prepend` - default mode) nebo post-multiplied (`append`) ke stávající matici.
-
 === Reset-matrix 
 
 *Syntaxe*

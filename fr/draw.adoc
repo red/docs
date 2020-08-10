@@ -614,20 +614,6 @@ Les valeurs du bloc sont utilisées en interne pour construire la matrice de tra
 
 Lorsque les lit-words `'pen` ou `'fill-pen` sont utilisés, la multiplication est appliquée respectivement au trait courant ou au remplissage courant.
 
-=== Matrix-order (ordre des matrices)
-
-*Syntaxe*
-
-----
-matrix-order <mode>
-
-<mode> : 'append ou 'prepend (word!).
-----
-
-*Description*
-
-Définit si les nouvelles matrices dans les opérations matricielles subséquentes, sont pré-multipliées (`prepend`, mode par défaut) ou post-multipliées (`append`) avec la matrice courante.
-
 === Reset-matrix (réinitialise la matrice)
 
 *Syntaxe*
