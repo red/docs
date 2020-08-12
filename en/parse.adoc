@@ -92,12 +92,12 @@ Depending on the type of input series, some Parse rules are not applicable or be
 
 * `any-block!`: matching by character set has no meaning and always fails;
 * `any-string!`: matching by datatype or type set is not supported;
-* `binary!`: matching by datatype or type set is supported for UTF-8 encoded values; such match succeeds if matched portion of the input represents one of the datatype's literal forms.
+* `binary!`: matching by datatype or type set is supported for UTF-8 encoded values; such match succeeds if matched portion of the input represents one of the datatype's literal forms. Blank characters before tokens are automatically skipped.
 
 *Example*
 
 ----
-parse to binary! "3 words: matching by datatype" [number! space set-word! to end]
+parse to binary! "3 words: matching by datatype" [number! set-word! 3 word!]
 ----
 
 == Parse rules
@@ -377,6 +377,7 @@ parse banner [default! series! any-block! any-list! all-word! any-word! any-type
 ----
 
 NOTE: Matching by typeset is not supported for `any-string!` input; for `binary!` input, rules are described in <<Types of input>> section.
+
 ==== Character set
 
 If the input series is of type `any-string!` or `binary!` and input value represents a Unicode Code Point (UCP) that belongs to a given character set, match succeeds and advances the input. In all other cases match fails.

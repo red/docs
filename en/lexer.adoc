@@ -52,10 +52,6 @@ The `/fast` refinement trades speed for accuracy. The scanning will return the _
 [cols="1,1", options="header", align="center"]
 |===
 |Guessed type | Real type
-|path!	 | path! +
-lit-path! +
-get-path! +
-set-path!
 |integer! | integer! +
 float! (1)
 |word!	 | word! +

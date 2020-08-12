@@ -659,21 +659,6 @@ matrix [a b c d e f]
 
 当 `'pen` 或 `'fill-pen` 原词被使用时，乘法分别会应用到当前画笔或当前填充笔上。
 
-=== `matrix-order`
-
-*语法*
-
-[source, red]
-----
-matrix-order <mode>
-
-<mode> : 'append 或 'prepend (word!)。
-----
-
-*描述*
-
-定义后续矩阵操作中的新矩阵是对当前矩阵前乘（`prepend`，默认模式）还是后乘（`append`）的。
-
 === `reset-matrix`
 
 *语法*

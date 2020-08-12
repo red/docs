@@ -613,20 +613,6 @@ The block values are used internally for building following transformation matri
 
 When the `'pen` or `'fill-pen` lit-words are used, the multiplication is applied respectively to the current pen or current fill-pen.
 
-=== Matrix-order
-
-*Syntax*
-
-----
-matrix-order <mode>
-
-<mode> : 'append or 'prepend (word!).
-----
-
-*Description*
-
-Defines if new matrices in subsequent matrix operations, are pre-multiplied (`prepend`, default mode) or post-multiplied (`append`) to the current matrix.
-
 === Reset-matrix 
 
 *Syntax*
