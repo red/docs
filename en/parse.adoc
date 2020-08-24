@@ -70,7 +70,7 @@ Parse offers a degree of flexibility by supporting different modes of operation.
 
 === Case-sensitivity
 
-By default, Parse follows Red semantics and is case-insensitive. Case-sensitivity can be enabled with `/case` refinement or turned on/off with `case` keyword.
+By default, Parse follows Red semantics and is case-insensitive. Case-sensitivity can be enabled with `/case` refinement and selectively turned on/off with `case` keyword. `case` changes comparison mode only for the rule that follows it and then restores it back, regardless of the rule's success or failure.
 
 *Syntax*
 
