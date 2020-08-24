@@ -1,6 +1,7 @@
 = Dialekt Parse
 :imagesdir: ../images
 :toc:
+:toc-title:
 :toclevels: 3
 :numbered:
 
@@ -99,7 +100,13 @@ V závislosti na typu vstupních dat nejsou některá pravidla Parse uplatniteln
 
 * `any-block!`: porovnávání se sadou znaků nemá žádný význam a vždycky selže;
 * `any-string!`: porovnávání s datovým typem nebo sadou typů není podporováno.
-`binary!`: porovnávání s datovým typem nebo sadou typů je podporováno pro hodnoty s kódováním UTF-8; případná shoda je úspěšná, pokud porovnávané části vstupu reprezentují některou z literálových forem datového typu. 	
+* `binary!`: porovnávání s datovým typem nebo sadou typů je podporováno pro hodnoty s kódováním UTF-8; případná shoda je úspěšná, pokud porovnávané části vstupu reprezentují některou z literálových forem datového typu. Prázdné znaky před tokeny jsou automaticky přeskočeny.
+
+*Příklad*
+
+----
+parse to binary! "3 words: matching by datatype" [number! set-word! 3 word!]
+---- 	
 
 == Pravidla dialektu Parse
 

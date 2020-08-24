@@ -1,6 +1,7 @@
 = Lexer
 :imagesdir: ../images
 :toc:
+:toc-title:
 :toclevels: 3
 :numbered:
 
@@ -52,10 +53,6 @@ Upřesnění `/fast` poskytuje rychlost na úkor přesnosti. Skenování vrací 
 [cols="1,1", options="header", align="center"]
 |===
 |Odhadovaný typ | Skutečný typ
-|path!	 | path! +
-lit-path! +
-get-path! +
-set-path!
 |integer! | integer! +
 float! (1)
 |word!	 | word! +
