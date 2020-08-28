@@ -1,36 +1,36 @@
-== Red GUI Architecture ==
+== Red GUI Arkitektur ==
 
 image::../images/view-overview.png[Overview,align="center"]
 
 === VID 
 
-VID stands for Visual Interface Dialect. It is a dialect of Red, providing the simplest possible way to specify graphic components with their properties, layouts and even event handlers. VID code is compiled at runtime to a tree of faces suitable for displaying.
+VID (Visual Interface Dialect) er en Red-dialekt, som tilbyr en enkel måte å spesifisere grafiske komponenter (inkl. komponentens egenskaper), layouts, og hendelsesbehandlere, på. VID er kompilert ved run-time til et "tre av fjes".
 
 === View
- 
-The GUI code engine contains several parts:
 
-* Platform-independent faces management engine
-* Reactive actions events
-* Draw dialect interpreter
-* Platform-specific backends
+GUI-kodemotoren inneholder flere deler:
+
+* En plattformuavhengig fjes management motor
+* Reaktive actionhendelser
+* Draw dialekt interpreter
+* Plattformspesifikke backends
 
 === React
 
-Reactive actions can be defined from VID dialect or specified directly using the REACT function.
+Reaktive actions kan defineres fra VID dialekten eller spesifiseres direkte med REACT funksjonen.
 
 === Draw
 
-Draw is a Red dialect for 2D vector drawing. It can be specified in different ways:
+Draw er en Red-dialekt for 2D-vektortegning, som kan spesifiseres på forskjellige måter:
 
-* in VID layouts
-* directly in the `draw` property of any face object
-* using the DRAW function to draw directly onto an image
+* i VID layouts
+* direkte i `draw` egenskapen til et hvilket som helst fjes objekt
+* ved å bruke DRAW funksjonen til å direkte tegne over et bilde
 
-=== Platform-specific backends
+=== Plattformspesifikke backends
 
-An internal API allows multiple backends (OS/graphic system combinations) so that the View engine can be implemented in different environments. Each backend must be capable of extensive 2D drawing for complete support of Draw dialect.
+En intern API som tillater flere backends (OS/grafikksystem kombinasjoner), slik at View motoren kan implementeres i forskjellige miljøer. Hver backend må være i stand til omfattende 2D-tegning for fullstendig støtte av Draw-dialekten.
 
 .Disclaimer
 
-The initial designs of VID, Draw and most of View (except for the reactive parts) were created by Carl Sassenrath and implemented in Rebol. Red View is a completely new, independent implementation providing similar features with some desirable improvements. Reactive actions being a prime example.
+De første designene av VID, Draw og store deler av View (utenom de reaktive delene) ble implementert i Rebol av Carl Sassenrath. Red View er en helt ny og uavhengig implementasjon som tilbyr lignende, men forbedret funksjonalitet. Reaktive actions er et prakteksempel.
