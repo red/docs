@@ -3,50 +3,50 @@
 :numbered:
 
 
-== Abstract
+== Abstrakt
 
 
-X is a member of the following typesets: 
+X er medlem av følgende typesett: 
 
-== Creation
+== Opprettelse
 
-X values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
-
-
-== Literal syntax
-
-=== Runtime creation
-
-*Examples*
-
-== Conversions
-
-== Comparisons
-
-All comparators can be applied on X: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+X verdier kan opprettes med literal syntakse, konstrueres ved runtime med `make` eller konverteres med `to`.
 
 
-== Testing values
+== Literal syntakse
 
-Use X to check if a value is of the X datatype.
+=== Opprettelse ved runtime
 
-```red
+*Eksempler*
 
-```
+== Konvertering
 
-Use `type?` to return the datatype of a given value.
+== Sammenligning
+
+Alle komparatorer kan anvendes på X: `=, ==, <>, >, <, >=, &lt;=, =?`. I tillegg støttes `min` og `max`.
+
+
+== Testing av verdier
+
+Bruk X til å sjekke om en verdi er av datatypen X.
 
 ```red
 
 ```
 
+Bruk `type?` til å returnere datatypen til en verdi.
 
-== Predefined words
+```red
+
+```
+
+
+== Forhåndsdefinerte ord
 
 === Actions
 
-=== Functions
+=== Funksjoner
 
 === Natives
 
-=== Operators
+=== Operatorer
