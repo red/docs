@@ -1,0 +1,24 @@
+= Handle! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+`Handle!` values represent opaque integers that are used for interacting with the operating system.
+
+`Handle!` is a member of the following typesets: `default!`, `immediate!`
+
+== Creation
+
+Handle values cannot be created. They are used to communicate with the operating system and can only be represented by words that are arguments to functions handling this communication.
+
+== Testing values
+
+Use `handle?` to check if a value is of the `handle!` datatype.
+
+
+== Predefined words
+
+=== Functions
+
+`handle?`

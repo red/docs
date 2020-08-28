@@ -1,0 +1,75 @@
+= Set-word! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+The `set-word!` datatype sets a reference to a value.
+
+If used outside of an `object!` or `map!` value, a set-word will set a reference in the current context to the value of the expression that follows the set-word.
+
+```red
+foo: 2 * 21
+```
+
+`Set-word!` is a member of the following typesets: `any-word!`, `all-word!`, `immediate!`
+
+== Creation
+
+Set-word! values can be created using literal syntax, or at runtime using a `to` conversion from the datatypes: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, `refinement!`, and `lit-word!`.
+
+```red
+>> to set-word! #"X"
+== X:
+
+>> to set-word! true
+== true:
+
+>> to set-word! "Hello"
+== Hello:
+
+>> to set-word! float!
+== float!:
+
+>> to set-word! #A42
+== A42:
+
+>> to set-word! /only
+== only:
+
+>> to set-word! 'foo
+== foo:
+```
+
+
+== Literal syntax
+
+One or more characters from the entire Unicode range, including punctuation characters from the ASCII subset: `! & ' * + - . < = > ? _ | ~``, followed by a colon `:`. 
+
+Illegal characters are control characters, whitespace characters, and punctuation characters from the ASCII subset: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+
+A `set-word!` value cannot begin with a number.
+
+
+== Testing values
+
+Use `set-word?` to check if a value is of the `set-word!` datatype.
+
+```red
+>> set-word? first [foo: 'bar baz]
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? first [foo: 'bar baz]
+== set-word!
+```
+
+
+== Predefined words
+
+=== Functions
+
+`to-set-word`

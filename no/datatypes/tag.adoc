@@ -1,0 +1,105 @@
+= Tag! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+`Tag!` values represent markup language tags and elements.
+
+`Tag!` is a member of the following typesets: `any-string!`, `series!`
+
+== Creation
+
+Tag values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+
+```red
+>> make tag! "foo"
+== <foo>
+```
+
+```red
+>> to tag! 'bar
+== <bar>
+```
+
+== Literal syntax
+
+One or more characters enclosed by a open angle bracket `<` and closing angle bracket `>`.
+
+The first position after the opening angle bracket cannot contain `<`, `>`, `=`, or literal whitespace.
+
+```red
+>> <<foo>
+*** Script Error: < operator is missing an argument
+*** Where: catch
+*** Stack:  
+
+>> <>foo>
+*** Script Error: <> operator is missing an argument
+*** Where: catch
+*** Stack:  
+
+>> <=foo>
+*** Syntax Error: invalid value at "<=foo>"
+*** Where: do
+*** Stack: load 
+
+>> < foo>
+*** Script Error: < operator is missing an argument
+*** Where: catch
+*** Stack: 
+```
+
+`<` is allowed after the first position.
+
+```red
+>> type? <f<oo>
+== tag!
+```
+
+[NOTE, caption=Note]
+
+It is possible to create `tag!` values using `make` that are not affected by current lexer limitations. 
+
+```red
+>> make tag! " foo"
+== < foo>
+
+>> make tag! "<foo"
+== <<foo>
+
+>> make tag! ">foo"
+== <>foo>
+
+>> make tag! "=foo"
+== <=foo>
+
+>> make tag! " foo"
+== < foo>
+```
+
+== Comparisons
+
+All comparators can be applied on `tag!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+
+== Testing values
+
+Use `tag?` to check if a value is of the `tag!` datatype.
+
+```red
+>> tag? <foo>
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? <foo>
+== tag!
+```
+
+== Predefined words
+
+=== Functions
+
+`tag?`, `to-tag`

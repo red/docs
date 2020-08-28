@@ -1,0 +1,110 @@
+= Email! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+`Email!` values allow for directly expressing email addresses, e.g. `foo@bar.net`
+
+`Email!` is a member of the following typesets: `any-string!`, `series!`
+
+== Creation
+
+Email values can be created using literal syntax, or at runtime using a `make` constructor or a `to` conversion.
+
+== Literal syntax
+
+One or more characters, followed by the `@` symbol, followed by zero or more additional characters.
+
+*Examples*
+
+```
+foo@bar.net
+gregg@red-lang.org
+g@
+```
+
+*Invalid characters* 
+
+`%` `(` `)` `:` `"`
+
+== Runtime creation
+
+* `Make`
++
+```red
+>> f: make email! "foo"
+== foo
+
+>> type? f
+== email!
+```
+
+* `To`
++
+```red
+>> b: to email! 'bar
+== bar
+
+>> type? b
+== email!
+```
+
+== Path accessors
+
+Path accessors provide a convenient way for getting or setting the user name or host name of an email value.
+
+=== /user
+
+```red
+>> e: me@me.net
+== me@me.net
+
+>> e/user
+== "me"
+
+>> e/user: "you"
+== "you"
+
+>> e
+== you@me.net
+```
+
+=== /host
+
+```red
+>> e/host
+== "me.net"
+
+>> e/host: "red-lang.org"
+== "red-lang.org"
+
+>> e
+== you@red-lang.org
+```
+
+== Comparisons
+
+All comparators can be applied on `email!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+
+== Testing values
+
+Use `email?` to check if a value is of the `email!` datatype.
+
+```red
+>> email? foo@bar.net
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? foo@bar.net
+== email!
+```
+
+== Predefined words
+
+=== Functions
+
+`email?`, `suffix?`, `to-email`

@@ -1,0 +1,66 @@
+= Url! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+An `url!` value represents a reference to a network resource and allows for directly expressing Uniform Resource Locators.
+
+`Url!` is a member of the following typesets: `any-string!`, `series!`
+
+== Creation
+
+Url values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+
+```red
+>> make url! [foo bar baz]
+== foo://bar/baz
+```
+
+```red
+>> to url! [ftp localhost]
+== ftp://localhost
+```
+
+== Literal syntax
+
+One or more characters followed by a colon `:`, followed by one or more characters.
+
+Url Encoding converts, such as %20 and %30, are allowed.
+
+
+== Comparisons
+
+All comparators can be applied on `url!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+
+
+== Testing values
+
+Use `url?` to check if a value is of the `url!` datatype.
+
+```red
+>> url? https://www.foo.org
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> url? http://bar.net
+== true
+```
+
+== Predefined words
+
+=== Actions
+
+`read`, `write`
+
+=== Functions
+
+`clean-path`, `dir?`, `dirize`, `do-file`, `do-thru`, `exists-thru?`, `load`, `load-thru`, `path-thru`, `read-thru`, `save`, `split-path`, `suffix?`, `to-url`, `url?`
+
+=== Natives
+
+`browse`, `dehex`
