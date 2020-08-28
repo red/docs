@@ -10,5 +10,5 @@ Check also link:https://github.com/red/REP/blob/master/REPs/rep-0003.adoc[Red Do
 * link:https://gitter.im/red/Spanish[Spanish]
 * link:https://gitter.im/red/Russian[Russian]
 * link:https://gitter.im/red/red/Chinese[Chinese]
-* link:https://gitter.im/red/red/France[France]
+* link:https://gitter.im/red/red/France[French]
 
