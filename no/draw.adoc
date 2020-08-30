@@ -1,15 +1,15 @@
-= Draw dialect
+= Draw-dialekten
 :imagesdir: ../images
 :toc:
 :toclevels: 3
 :numbered:
 
 
-== Abstract 
+== Abstrakt 
 
-Draw is a dialect (DSL) of Red language that provides a simple declarative way to specify 2D drawing operations. Such operations are expressed as lists of ordered commands (using blocks of values), which can be freely constructed and changed at run-time.
+Draw er en Red-dialekt for å spesifisere 2D-tegneoperasjoner på en enkel, deklarativ måte. Operasjonene er uttrykt som kommandolister (ved å bruke verdiblokker), og kan både konstrueres og forandres fritt ved run-time.
 
-Draw blocks can be rendered directly on top of an image using the `draw` function, or inside a View face using the `draw` facet (see link:view.adoc[View documentation]).
+Draw-blokker kan tegnes direkte over et bilde med `draw` funksjonen, eller inne i et Viewfjes ved hjelp av `draw` fasettet (se link:view.adoc[View documentation]).
 
 == Draw commands
 
