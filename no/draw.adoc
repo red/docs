@@ -11,16 +11,16 @@ Draw er en Red-dialekt for å spesifisere 2D-tegneoperasjoner på en enkel, dekl
 
 Draw-blokker kan tegnes direkte over et bilde med `draw` funksjonen, eller inne i et Viewfjes ved hjelp av `draw` fasettet (se link:view.adoc[View documentation]).
 
-== Draw commands
+== Draw-kommandoer
 
-Commands can either be drawing instructions or settings for the drawing instructions. When a mode is set, it will affect all subsequent operations in the current Draw session (or until changed).
+Kommandoer kan enten være tegneinstruksjoner eller egenskaper av tegneinstruksjoner. Når er modus er satt, vil alle senere operasjoner i den nåværende Draw-sesjonen bli påvirket (eller inntil forandret).
 
-Most Draw commands require coordinates to be specified. The 2D coordinate system used is:
+Draw-kommandoer krever som regel at koordinater er angitt. 2D-koordinatsystemet som blir brukt er:
 
-* x axis: increasing from left to right of the display.
-* y axis: increasing from top to bottom of the display.
+* x-akseverdier: øker venstre-til-høyre (øker når man går mot høyre på displayet).
+* y-akseverdier: øker topp-til-bunn (øker når man går nedover på displayet).
 
-Some drawing commands require lengths to be specified. The length required is number of pixels.
+Noen tegnekommandoer krever at lengder er angitt. Lengden er antall piksler.
 
 image::../images/coord-system.png[Coord-system,align="center"]
 
