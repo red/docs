@@ -25,19 +25,19 @@ Noen tegnekommandoer krever at lengder er angitt. Lengden er antall piksler.
 image::../images/coord-system.png[Coord-system,align="center"]
 
 
-=== Line 
+=== Linje 
 
-*Syntax*
+*Syntakse*
 
 ----
 line <point> <point> ...
 
-<point> : coordinates of a point (pair!).
+<point> : koordinatene til et punkt (pair!).
 ----
 
-*Description*
+*Beskrivelse*
 
-Draws a line between two points. If more points are specified, additional lines are drawn, connecting each point in the provided order.
+Tegner en linje mellom to punkter. Dersom flere enn to punkter er angitt, vil ytterlige linjer tegnes og forbinde punktene i den gitte rekkefølge.
 
 === Triangle 
 
