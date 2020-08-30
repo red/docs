@@ -53,22 +53,22 @@ triangle <point> <point> <point>
 
 Tegner en trekant utifra de tre angitte hjørnene.
 
-=== Box 
+=== Boks
 
-*Syntax*
+*Syntakse*
 
 ----
 box <top-left> <bottom-right>
 box <top-left> <bottom-right> <corner>
 
-<top-left>     : coordinates of the top-left of the box (pair!).
-<bottom-right> : coordinates of the bottom-right of the box (pair!).
-<corner>       : (optional) radius of the arc used to draw a round corner (integer!).
+<top-left>     : boksens koordinater øverst-til-venstre (pair!).
+<bottom-right> : boksens koordinater nederst-til-høyre (pair!).
+<corner>       : (valgfritt) bueradien for runde hjørner (integer!).
 ----
 
-*Description*
+*Beskrivelse*
 
-Draws a box using the top-left (first argument) and bottom-right (second argument) vertices. An optional radius can be provided for making round corners.
+Tegner en boks fra koordinatene øverst-til-venstre (første argument) til nederst-til-høyre (andre argument). En valgfri bueradius kan spesifiseres for runde hjørner.
 
 === Polygon 
 
