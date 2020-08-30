@@ -39,21 +39,19 @@ line <point> <point> ...
 
 Tegner en linje mellom to punkter. Dersom flere enn to punkter er angitt, vil ytterlige linjer tegnes og forbinde punktene i den gitte rekkefølge.
 
-=== Triangle 
+=== Trekant 
 
-*Syntax*
+*Syntakse*
 
 ----
 triangle <point> <point> <point>
 
-<point> : coordinates of a vertex of the triangle (pair!).
+<point> : koordinatene til et hjørne i en trekant (pair!).
 ----
 
-NOTE: A vertex is the point at which two lines meet. They are points where edges join.
+*Beskrivelse*
 
-*Description*
-
-Draws a triangle with edges between the supplied vertices.
+Tegner en trekant utifra de tre angitte hjørnene.
 
 === Box 
 
