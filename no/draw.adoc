@@ -84,23 +84,23 @@ polygon <point> <point> ...
 
 Tegner et polygon utifra de angitte hjørnepunktene. Det siste punktet trenger ikke å være startpunktet, fordi det vil uansett trekkes en linje for å fullføre polygonet. Minste antall punkter er tre.
 
-=== Circle
+=== Sirkel
  
-*Syntax*
+*Syntakse*
 
 ----
 circle <center> <radius>
 circle <center> <radius-x> <radius-y>
 
-<center>   : coordinates of the circle's center (pair!).
-<radius>   : radius of the circle (integer! float!).
-<radius-x> : (ellipse mode) radius of the circle along X axis (integer! float!).
-<radius-y> : (ellipse mode) radius of the circle along Y axis (integer! float!).
+<center>   : sirkelens senterkoordinater (pair!).
+<radius>   : sirkelens radius (integer! float!).
+<radius-x> : (ellipsemodus) sirkelradien langs X-aksen (integer! float!).
+<radius-y> : (ellipsemodus) sirkelradien langs Y-aksen (integer! float!).
 ----
 
-*Description*
+*Beskrivelse*
 
-Draws a circle from the provided center and radius values. The circle can be distorted to form an ellipse by adding an optional integer indicating the radius along Y axis (the other radius argument then becomes the radius along X).
+Tegner en sirkel utifra angitt senter- og radiusverdi. Sirkelen kan forvrenges til å danne en ellipse ved å angi et valgfritt heltall som indikerer radiusen langs Y-aksen (det andre radiusargumentet blir da radien langs X).
 
 === Ellipse 
 
