@@ -72,17 +72,17 @@ Tegner en boks fra koordinatene øverst-til-venstre (første argument) til neder
 
 === Polygon 
 
-*Syntax*
+*Syntakse*
 
 ----
 polygon <point> <point> ...
 
-<point> : coordinates of a vertex (pair!).
+<point> : koordinatene til et hjørne i et polygon (pair!).
 ----
 
-*Description*
+*Beskrivelse*
 
-Draws a polygon using the provided vertices. The last point does not need to be the starting point, an extra line will be drawn anyway to close the polygon. Minimal number of points to be provided is 3.
+Tegner et polygon utifra de angitte hjørnepunktene. Det siste punktet trenger ikke å være startpunktet, fordi det vil uansett trekkes en linje for å fullføre polygonet. Minste antall punkter er tre.
 
 === Circle
  
