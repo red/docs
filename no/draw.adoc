@@ -119,23 +119,23 @@ Tegner en ellipse utifra angitt begrensningsboks. `size` argumentet angir ellips
 
 NOTE: `ellipse` er en mer kompakt, boksorientert måte å spesifisere en sirkel/ellipse på, sammenlignet med `circle` kommandoen.
 
-=== Arc 
+=== Bue
 
-*Syntax*
+*Syntakse*
 
 ----
 arc <center> <radius> <begin> <sweep>
 arc <center> <radius> <begin> <sweep> closed
 
-<center> : coordinates of the circle's center (pair!).
-<radius> : radius of the circle (pair!).
-<begin>  : starting angle in degrees (integer!).
-<sweep>  : angle between the starting and ending points of the arc in degrees (integer!).
+<center> : sirkelens senterkoordinater (pair!).
+<radius> : sirkelens radius (integer! float!).
+<begin>  : startvinkel i grader (integer!).
+<sweep>  : buevinkelen mellom start- og sluttpunkt i grader (integer!).
 ----
 
-*Description*
+*Beskrivelse*
 
-Draws the arc of a circle from the provided center and radius values. The arc is defined by two angles values. An optional `closed` keyword can be used to draw a closed arc using two lines coming from the center point.
+Tegner en sirkelbue utifra sirkelets senter og radius (de to første argumentene), og buens start- og størrelsesvinkel (de to siste argumentene). Et valgfritt `closed` nøkkelord kan brukes til å "lukke" buen med to linjer fra sirkelets senter til buens start- og sluttpunkt (tenk pizzastykke).
 
 === Curve 
 
