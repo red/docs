@@ -102,22 +102,22 @@ circle <center> <radius-x> <radius-y>
 
 Tegner en sirkel utifra angitt senter- og radiusverdi. Sirkelen kan forvrenges til å danne en ellipse ved å angi et valgfritt heltall som indikerer radiusen langs Y-aksen (det andre radiusargumentet blir da radien langs X).
 
-=== Ellipse 
+=== Ellipse
 
-*Syntax*
+*Syntakse*
 
 ----
 ellipse <top-left> <size>
 
-<top-left> : coordinates of the ellipse's bounding box top-left point (pair!).
-<size>     : size of the bounding box (pair!).
+<top-left> : ellipsens begrensningsbokskoordinater øverst-til-venstre (pair!).
+<size>     : størrelse på begrensningsboks (pair!).
 ----
 
-*Description*
+*Beskrivelse*
 
-Draws an ellipse from the specified bounding box. The `size` argument represents the X and Y diameters of the ellipse.
+Tegner en ellipse utifra angitt begrensningsboks. `size` argumentet angir ellipsens X- og Y-diameter.
 
-NOTE: `ellipse` provide a more compact and box-oriented way to specify a circle/ellipse compared to `circle` command.
+NOTE: `ellipse` er en mer kompakt, boksorientert måte å spesifisere en sirkel/ellipse på, sammenlignet med `circle` kommandoen.
 
 === Arc 
 
