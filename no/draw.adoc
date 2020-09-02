@@ -137,28 +137,28 @@ arc <center> <radius> <begin> <sweep> closed
 
 Tegner en sirkelbue utifra sirkelets senter og radius (de to første argumentene), og buens start- og størrelsesvinkel (de to siste argumentene). Et valgfritt `closed` nøkkelord kan brukes til å "lukke" buen med to linjer fra sirkelets senter til buens start- og sluttpunkt (tenk pizzastykke).
 
-=== Curve 
+=== Kurve
 
-*Syntax*
+*Syntakse*
 
 ----
 curve <end-A> <control-A> <end-B>
 curve <end-A> <control-A> <control-B> <end-B>
 
-<end-A>     : end point A (pair!).
-<control-A> : control point A (pair!).
-<control-B> : control point B (pair!).
-<end-B>     : end point B (pair!).
+<end-A>     : sluttpunkt A (pair!).
+<control-A> : kontrollpunkt A (pair!).
+<control-B> : kontrollpunkt B (pair!).
+<end-B>     : sluttpunkt B (pair!).
 ----
 
-*Description*
+*Beskrivelse*
 
-Draws a Bezier curve from 3 or 4 points:
+Tegner en Bezier-kurve utifra tre eller fire punkter:
 
-* 3 points: 2 end points, 1 control point.
-* 4 points: 2 end points, 2 control points.
+* 3 punkter: 2 sluttpunkt, 1 kontrollpunkt.
+* 4 punkter: 2 sluttpunkt, 2 kontrollpunkt.
 
-Four points allow more complex curves to be created.
+Fire punkter tillater at det opprettes mer komplekse kurver.
 
 === Spline 
 
