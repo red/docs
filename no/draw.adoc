@@ -162,20 +162,20 @@ Fire punkter tillater at det opprettes mer komplekse kurver.
 
 === Spline 
 
-*Syntax*
+*Syntakse*
 
 ----
 spline <point> <point> ...
 spline <point> <point> ... closed
 
-<point> : a control point (pair!).
+<point> : kontrollpunkt (pair!).
 ----
 
-*Description*
+*Beskrivelse*
 
-Draws a B-Spline curve from a sequence of points. At least 3 points are required to produce a spline. The optional `closed` keyword will draw an extra segment from the end point to the start point, in order to close the spline.
+Tegner en B-Spline utifra de angitte punktene. Minst 3 punkter kreves for å lage en spline. Et valgfritt `closed` nøkkelord kan brukes til å tegne et ekstra segment fra sluttpunktet til startpunktet.
 
-NOTE: 2 points are accepted, but they will produce only a straight line.
+NOTE: 2 punkter aksepteres, men dette gir bare en rett linje.
 
 === Image 
 
