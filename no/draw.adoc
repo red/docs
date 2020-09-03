@@ -177,9 +177,9 @@ Tegner en B-Spline utifra de angitte punktene. Minst 3 punkter kreves for å lag
 
 NOTE: 2 punkter aksepteres, men dette gir bare en rett linje.
 
-=== Image 
+=== Bilde
 
-*Syntax*
+*Syntakse*
 
 ----
 image <image>
@@ -190,25 +190,25 @@ image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color>
 image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color> border
 image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color> crop <offset> <size>
 
-<image>        : image to display (image! word!).
-<top-left>     : (optional) coordinate of top left edge of the image (pair!).
-<top-right>    : (optional) coordinate of top right edge of the image (pair!).
-<bottom-left>  : (optional) coordinate of bottom left edge of the image (pair!).
-<bottom-right> : (optional) coordinate of bottom right edge of the image (pair!).
-<color>        : (optional) key color to be made transparent (tuple! word!).
-<offset>       : (optional) position for starting cropping (pair!).
-<size>         : (optional) size of cropping (pair!).
+<image>        : bildet som skal vises (image! word!).
+<top-left>     : (valgfritt) bildets hjørnekoordinater øverst-til-venstre (pair!).
+<top-right>    : (valgfritt) bildets hjørnekoordinater øverst-til-høyre (pair!).
+<bottom-left>  : (valgfritt) bildets hjørnekoordinater nederst-til-venstre (pair!).
+<bottom-right> : (valgfritt) bildets hjørnekoordinater nederst-til-høyre (pair!).
+<color>        : (valgfritt) nøkkelfarge som skal usynliggjøres (tuple! word!).
+<offset>       : (valgfritt) startposisjon for beskjæring (pair!).
+<size>         : (valgfritt) størrelse for beskjæring (pair!).
 ----
 
-*Description*
+*Beskrivelse*
 
-Paints an image using the provided information for position and width. If the image has no positioning information provided, then the image is painted at 0x0 coordinates. A color value can be optionally provided, it will be used for transparency. 
+Tegner et bilde ved hjelp av angitt posisjon og bredde. Hvis det ikke er angitt en posisjon, vil bildet tegnes i koordinatene 0x00. En valgfri fargeverdi kan spesifiseres for gjennomsiktighet.
 
 [NOTE]
 ====
-* Four points mode is not yet implemented. It will allow to stretch the image using 4 arbitrary-positioned edges.
-* `border` optional mode is not yet implemented.It is unlikely that this feature will be supported:
-* You can't use paths to specify images. Processing paths is expensive, so it's a bad fit for the `draw` dialect that's optimized for performance. Use selective evaluation (`compose`) instead.
+* Firepunktsmodus (for å strekke bildet) er ikke implementert.
+* En valgfri `border` modus er ikke implementert.
+* Det er ikke mulig å spesifisere bilder med stier; å prosessere stier er ressurskrevende og passer seg dårlig for `draw` dialekten som er optimalisert for høy ytelse, bruk selektiv evaluering (`compose`) i stedet.
 ====
 
 === Text 
