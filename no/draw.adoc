@@ -211,22 +211,22 @@ Tegner et bilde ved hjelp av angitt posisjon og bredde. Hvis det ikke er angitt 
 * Det er ikke mulig å spesifisere bilder med stier; å prosessere stier er ressurskrevende og passer seg dårlig for `draw` dialekten som er optimalisert for høy ytelse, bruk selektiv evaluering (`compose`) i stedet.
 ====
 
-=== Text 
+=== Tekst
 
-*Syntax*
+*Syntakse*
 
 ----
 text <position> <string>
 
-<position> : coordinates where the string is printed (pair!).
-<string>   : text to print (string!).
+<position> : tekstens koordinater (pair!).
+<string>   : tekst som skal skrives ut (string!).
 ----
 
-*Description*
+*Beskrivelse*
 
-Prints a text string at the provided coordinates using the current font. 
+Skriver ut en tekststreng på de angitte koordinatene, i nåværende skrift.
 
-NOTE: If no font is selected or if the font color is set to `none`, then the pen color is used instead.
+NOTE: Hvis det ikke er valgt skrift eller om tekstfargen er satt til `none`, brukes pennens farge istedet.
 
 === Font 
 
