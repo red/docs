@@ -228,19 +228,19 @@ Skriver ut en tekststreng på de angitte koordinatene, i nåværende skrift.
 
 NOTE: Hvis det ikke er valgt skrift eller om tekstfargen er satt til `none`, brukes pennens farge istedet.
 
-=== Font 
+=== Skrift
 
-*Syntax*
+*Syntakse*
 
 ----
 font <font>
 
-<font> : new font object to use (object! word!).
+<font> : nytt skriftobjekt (object! word!).
 ----
 
-*Description*
+*Beskrivelse*
 
-Selects the font to be used for text printing. The font object is a clone of `font!`.
+Velger skriften som skal brukes til tekstprinting. Skriftobjektet er en klone av `font!`.
 
 === Pen 
 
