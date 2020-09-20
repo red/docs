@@ -242,9 +242,9 @@ font <font>
 
 Velger skriften som skal brukes til tekstprinting. Skriftobjektet er en klone av `font!`.
 
-=== Pen 
+=== Penn
 
-This command defines the outlines drawing mode for other commands. Many different options are available from a simple color, to nested custom shapes and gradients.
+Denne kommandoen definerer en tegningsmoduskontur for andre kommandoer. Det finnes mange alternativer: fra enkle farger til nestede, tilpassede former.
 
 ==== Color pen
 
