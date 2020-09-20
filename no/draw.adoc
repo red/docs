@@ -260,26 +260,25 @@ pen <color>
 
 Velger fargen for tegneoperasjoner. Alle former vil da tegnes i den valgte fargen til pennen er satt til `off`.
 
-==== Linear gradient pen
+==== Lineær gradientpenn
 
-*Syntax*
+*Syntakse*
 
 ----
 pen linear <color1> <offset> ... <colorN> <offset> <start> <end> <spread>
 
-<color1/N> : list of colors for the gradient (tuple! word!).
-<offset>   : (optional) offset of gradient color (float!).
-<start>    : (optional) starting point (pair!). 
-<end>      : (optional unless <start>) ending point (pair!).
-<spread>   : (optional) spread method (word!).
+<color1/N> : liste over farger for gradienten (tuple! word!).
+<offset>   : (optional) forskyvning av gradientfargen (float!).
+<start>    : (valgfritt) startpunkt (pair!). 
+<end>      : (valgfritt om ikke <start>) sluttpunkt (pair!).
+<spread>   : (valgfritt) spredningsområde (word!).
 ----
 
-*Description*
+*Beskrivelse*
 
-Sets a linear gradient to be used for drawing operations. The following values are accepted for the spread method: `pad`, `repeat`, `reflect` (currently `pad` is same as `repeat` for Windows platform).
+Setter en lineær gradient som brukes til tegneoperasjonene. Følgende verdier aksepteres for spredningsmetoden: `pad`, `repeat`, `reflect` (for øyeblikket er `pad` the samme som `repeat` på Windows-plattformen).
 
-When used, the start/end points define a line where the gradient paints along. If they are not used,
-the gradient will be paint along a horizontal line inside the shape currently drawing.
+Hvis start og sluttpunkt er angitt, definerer de en linje som gradienten tegnes langs. Hvis ikke, tegnes gradienten langs en horisontal linje inne i formen som tegnes.
 
 ==== Radial gradient pen
 
