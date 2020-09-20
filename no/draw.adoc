@@ -246,19 +246,19 @@ Velger skriften som skal brukes til tekstprinting. Skriftobjektet er en klone av
 
 Denne kommandoen definerer en tegningsmoduskontur for andre kommandoer. Det finnes mange alternativer: fra enkle farger til nestede, tilpassede former.
 
-==== Color pen
+==== Fargepenn
 
-*Syntax*
+*Syntakse*
 
 ----
 pen <color>
 
-<color> : new color to use for drawing (tuple! word!).
+<color> : ny farge (tuple! word!).
 ----
 
-*Description*
+*Beskrivelse*
 
-Selects the color to be used for drawing operations. All shapes will be drawn by the selected color until the pen is set to `off`.
+Velger fargen for tegneoperasjoner. Alle former vil da tegnes i den valgte fargen til pennen er satt til `off`.
 
 ==== Linear gradient pen
 
