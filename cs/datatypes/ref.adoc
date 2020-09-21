@@ -1,0 +1,225 @@
+= Datový typ `ref!`
+:toc:
+:numbered: 
+
+== Úvodem
+
+Hodnotami typu `ref!` jsou pojmenované odkazy, jako jsou názvy účtů u sociálních medií nebo identifikátory s implikovaným názvem domény.
+
+Datový typ `ref!` patři do typesetu `any-string!`, přičemž je konceptuálně blízký datovému typu `issue!`, od něhož se liší v implementaci (string-like vs. symbol-like) a v poskytované sadě kompromisů.
+
+== Vytvoření
+
+Hodnoty typu `ref!` lze vytvořit s použitím literálové syntaxe při načítání skriptu nebo při runtime konstruktorem `make` či konverzí `to`.
+
+=== Literálová skladba
+
+*Syntaxe*
+
+----
+<ref> format : @<name>
+
+<name> : volitelný název odkazu
+----
+
+* `<name>` nula či více znaků jiných než: `# $ ' , = > @ \ ^`;
+* literálová forma je ukončena jedním z těchto způsobů: `" ( ) ; < [ ] { }` nebo mezerou (space, tab, `CR`, `LF`) .
+
+*Příklady*
+
+----
+@
+@red_lang
+@dockimbel
+@§2.1
+----
+
+=== Konstruktor `make`
+
+Při použití konstruktoru `make` nutno respektovat tato pravidla:
+
+* specifikace `float!` a `integer!` označují počet před-alokovaných bajtů (`float!` is truncated);
+* konstrukce z každé jiné specifikace je ekvivalentní <<Konverze `to`, konverzi>> `to`.
+
+*Příklady*
+
+----
+make ref! 9.2
+== @
+
+make ref! 14
+== @
+
+make ref! <ref>
+== @ref
+
+make ref! [red (_lang)]
+== @red_lang
+
+make ref! #{76616C7565}
+== @value
+
+make ref! none
+** cannot make error
+
+make ref! #datatype
+== @datatype
+----
+
+=== Konverze `to`
+
+Datový typ `ref!` podporuje řadu typových konverzí, platných pro typeset `any-string!`. Při konverzi dané hodnoty na `ref!` jsou použity níže popsané transformace - s předsazením znaku `@`.
+
+.Datové typy, konvertovatelné na `ref!`
+[options="header" cols="1,5"]
+|===
+| Datatype | Description
+
+| `any-string!`
+| Obsah je kopírován doslovně.
+
+| `any-list!`
+| Prezentace obsažených hodnot, evokované funkcí `form`, jsou zřetězeny (concatenated) a vnější vymezení je odvrženo.
+
+| `binary!`
+| Je konvertováno na řetězec, obsahuje-li platné kódování v UTF-8.
+
+| `none!`
+| Zakázáno.
+
+| `Ostatní`
+| Podobně jako u `form`.
+
+|===
+
+*Příklady*
+
+----
+to-ref [f /o #o]
+== @foo
+
+to-ref #{626172}
+== @bar
+
+to-ref <qux>
+== @qux
+
+to-ref none
+** cannot MAKE/TO string from: none
+----
+Jsouce částí typesetu `any-string!`, podporují hodnoty `ref!` konverzi na mnoho typů:
+
+.Datové typy, konvertovatelné z `ref!`
+[options="header" cols="3,9"]
+|===
+| Datatype | Description
+
+| `any-list!`
+| Ekvivalentní k uzavření hodnoty `ref!` do kontejneru daného typu.
+
+| `any-string!`
+| Obsah je kopírován doslovně.
+
+| `number!`, `money!`, `time!`, `tuple!`
+| Obecně ekvivalentní ke konverzi na `load`, pokud `ref!` reprezentuje dobře formovaný literál daného typu..
+
+Více podrobností o podporovaných literálových formách lze nalézt v příslušné literatuře.
+
+| `none!`, `unset!`
+| Vrací se hodnota daného datového typu (singleton).
+
+| `logic!`
+| Vrací se logická hodnota `true`, odpovídající sémantice jazyka.
+
+| `binary!`
+| Jako výsledek se vrací binární prezentace v kódování UTF-8.
+
+| `char!`
+| První znak, pokud přítomen, je extrahován.
+
+| `Ostatní`
+| Zakázáno.
+
+|===
+
+*Příklady*
+
+----
+to-paren @ABC
+== (@ABC)
+
+to-tag @tag
+== <tag>
+
+to-float @+88.7
+== 88.7
+
+to-tuple @1.3.3.7
+== 1.3.3.7
+
+to-none @whatever
+== none
+
+to-logic @this-ref-is-false
+== true
+
+to-binary @matrix
+== #{6D6174726978}
+
+to-char @
+** cannot MAKE/TO char from:
+
+to-char @.:
+== #"."
+----
+
+== Operace
+
+Hodnota typu `ref!` podporuje všechny akce pro řady (kromě `put`, `sort`, `trim`) a všechny komparace spou s `min` a `max`.
+
+*Příklady*
+
+----
+reverse @alucard
+== @dracula
+
+find @haystack "needle"
+== none
+
+find @haystack 'stack
+== @stack
+
+skip @stackoverflow 5
+== @overflow
+
+@this = "this"
+== true
+
+@this = @that
+== false
+
+@that == @that
+== true
+
+min @A @Z
+== @A
+
+form @content
+== "content"
+
+mold/part @catastrophy 4
+== "@cat"
+----
+NOTE: Příkaz `form`, aplikovaný na hodnotu `ref!`, zavrhne  znak `@`.
+
+== Jiné funkce
+
+Funkce, souvisící s datovým typem `ref!` avšak v předchozím textu neuvedené, jsou vypsány níže:
+
+* predikát `ref?` vrací `true`, je-li daná hodnota typu `ref!`;
+* velikost písma: `uppercase` a `lowercase`;
+* konverze URL v hexadecimálním vyjádření (%xx) na textový řetězec: `dehex` 
+----
+dehex {URL_k%C3%B3dov%C3%A1n%C3%AD}
+== "URL_kódování"
+----

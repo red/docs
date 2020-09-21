@@ -1,6 +1,7 @@
 = Dialekt Parse
 :imagesdir: ../images
 :toc:
+:toc-title:
 :toclevels: 3
 :numbered:
 
@@ -99,7 +100,13 @@ V závislosti na typu vstupních dat nejsou některá pravidla Parse uplatniteln
 
 * `any-block!`: porovnávání se sadou znaků nemá žádný význam a vždycky selže;
 * `any-string!`: porovnávání s datovým typem nebo sadou typů není podporováno.
-`binary!`: porovnávání s datovým typem nebo sadou typů je podporováno pro hodnoty s kódováním UTF-8; případná shoda je úspěšná, pokud porovnávané části vstupu reprezentují některou z literálových forem datového typu. 	
+* `binary!`: porovnávání s datovým typem nebo sadou typů je podporováno pro hodnoty s kódováním UTF-8; případná shoda je úspěšná, pokud porovnávané části vstupu reprezentují některou z literálových forem datového typu. Prázdné znaky před tokeny jsou automaticky přeskočeny.
+
+*Příklad*
+
+----
+parse to binary! "3 words: matching by datatype" [number! set-word! 3 word!]
+---- 	
 
 == Pravidla dialektu Parse
 
@@ -357,7 +364,7 @@ Ověření shody podle datového typu (datatype) je úspěšné a vede k pokroč
 parse [#a 'bird /is :the word][issue! lit-word! refinement! get-word! word!]
 ----
 
-POZN: Ověření shody podle datového typu není podporováno pro vstup typu `binary!` a `any-string!`.
+POZN: Ověření shody podle datového typu není podporováno pro vstup typu `binary!` a typy typesetu `any-string!`. Pravidla jsou popsána v sekci <<Typy vstupu>>. 
 
 ==== Typová sada
 
@@ -378,7 +385,8 @@ banner: [
 parse banner [default! series! any-block! any-list! all-word! any-word! any-type! any-string!]
 ----
 
-POZN: Ověření shody podle typové sady není podporováno pro vstup typu `binary!` a `any-string!`.
+POZN: Ověření shody podle typové sady není podporováno pro vstup typu `binary!` a typy typesetu `any-string!`. Pravidla jsou popsána v sekci <<Typy vstupu>>.
+
 
 ==== Znaková sada
 
@@ -905,7 +913,7 @@ keep pick <expression>
 
 [[keep-options]]
 * Jestliže porovnávané pravidlo nepokročilo vstupem, příkaz `keep` nic nezadrží.
-* Jestliže pravidlo vyčlenilo jedinou hodnotu - tato je zadržena (is kept).
+* Jestliže pravidlo vyčlenilo jedinou hodnotu - tato je zadržena (is kept).  Je-li `keep` následováno pravidlem `copy`, potom je posuzovaná hodnota přiřazena stejnému typu z typesetu `series` jako vstup.
 * Jestliže pravidlo vyčlenilo více hodnot, jsou tyto seskupeny do objektu stejného typu jako vstup; při volbě `pick` nejsou hodnoty seskupeny ale uchovány odděleně.
 * Je-li příkaz `keep` použit s výrazem typu `paren!`, je výsledek jeho vyhodnocení uchován tak, jak je.
 

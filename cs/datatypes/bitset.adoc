@@ -6,7 +6,7 @@
 
 == Úvodem
 
-Hodnota typu `bitset!` je array bitů, používaná k uložení booleovských hodnot 0 (false) a 1 (true). Indexování bitsetu počíná nulou. 
+Hodnota typu `bitset!` je array bitů, používaná k uložení booleovských hodnot.  0 (false) a 1 (true). Indexování bitsetu počíná nulou. 
 `Bitset!` je členem typesetu `default!`.
 
 == Vytvoření

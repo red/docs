@@ -1,6 +1,7 @@
 = Dialekt Draw
 :imagesdir: ../images
 :toc:
+:toc-title:
 :toclevels: 3
 :numbered:
 
@@ -9,7 +10,7 @@
 
 Draw je dialekt jazyka (DSL) Red, který poskytuje jednoduchý deklarativní způsob kreslení rovinných útvarů. Operace kreslení jsou vyjádřeny jako seznamy uspořádaných příkazů (používajících bloky hodnot), které je snadné sestavovat a měnit při běhu programu.
 
-Bloky dialektu Draw lze vykreslovat přímo do obrázku s použitím funkce `draw` nebo uvnitř piškotu View s použitím aspektu `draw` (viz dokumentace View).
+Bloky dialektu Draw lze vykreslovat přímo do obrázku s použitím funkce `draw` nebo uvnitř piškotu View s použitím aspektu `draw` (viz link:view.adoc[dokumentace View]).
 
 == Příkazy
 
@@ -942,23 +943,21 @@ Totéž jako v dialektu Draw.
 Totéž jako v dialektu Draw.
 
 
-
-
 == Implicitní hodnoty
 
 Při spouštění nové seance Draw jsou použity následující počáteční hodnoty:
 
 [cols="2,3", options="header"]
 |===
-|*Property* | Value
-|*background*	| `white`
-|*pen color*	| `black`
-|*filling*	| `off`
-|*anti-alias*	| `on`
-|*font*		| `none`
-|*line width*	| `1`
-|*line join*	| `miter`
-|*line cap*	| `flat`
+|Property | Value
+|background	| `white`
+|pen color	| `black`
+|filling	| `off`
+|anti-alias	| `on`
+|font		| `none`
+|line width	| `1`
+|line join	| `miter`
+|line cap	| `flat`
 |===
 
 == Sub bloky 
@@ -1026,7 +1025,7 @@ fill-pen diamond <grad-offset> <grad-focal> <grad-radius>
 
 Nastaví barvu gradientu pro plnící operace. Pro typ gradientu jsou akceptované tyto hodnoty: `linear`, `radial`, `diamond`.
 
-For example:
+Na příklad:
 
 	fill-pen linear 0x100 0 400 red green blue box 0x100 400x300
 
@@ -1114,3 +1113,4 @@ save %grad-pen-more.png draw 600x400 [
 	fill-pen blue box 200x200 400x400 fill-pen diamond 300x300 0 100 30 255.0.0 0.255.0 0.0.255 box 200x200 400x400
 	fill-pen diamond 500x300 0 100 30 3.0 1.5 255.0.0 0.255.0 0.0.255 box 400x200 600x400
 ]
+----

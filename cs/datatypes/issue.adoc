@@ -4,7 +4,9 @@
 
 == Úvodem
 
-Hodnoty typu `issue!` (*emise*) se používají k prezentování hashtagů, klíčových slov a identifikátorů (např. indexů u řad), to jest entit, které neobsahují mezery.
+Hodnotu typu `issue!` tvoří slovo, začínající znakem `#`. 
+
+Hodnoty `issue!` se používají k prezentování hashtagů, klíčových slov a identifikátorů (např. indexů u řad), to jest entit, které neobsahují mezery.
 
 Typ `issue!` je součástí typové sady `all-word!`.
 
@@ -13,12 +15,14 @@ Typ `issue!` je součástí typové sady `all-word!`.
 
 Hodnoty typu `issue!` lze vytvořit s použitím literálové syntaxe nebo za běhu programu použitím konverze `to`.
 
+
+
 ```red
 >> to issue! "123.42-xxx"
 == #123.42-xxx
 
->> to issue! #"R"
-== #R
+>> to issue! #pohanka
+== #pohanka
 ```
 
 

@@ -17,7 +17,7 @@ Nicméně, abyste mohli používat Red efektivně, měli byste se se všemi dost
 |link:datatypes/binary.adoc[binary!]|`2#{11111111}`, `16#{2A}`, `64#{2AQQ}`|Serie bajtů.
 |link:datatypes/bitset.adoc[bitset!]|`-`|Array bitů, použitých k uložení booleovských hodnot.
 |link:datatypes/block.adoc[block!]|`[]`, `[one 2 "three"]`, `[print 1.23]`|Kdykoli vyhodnotitelné kolekce dat či kódu.
-|link:datatypes/char.adoc[char!]|#"z", #"^C", #"^(esc)"|Kódové body Unicode.
+|link:datatypes/char.adoc[char!]|`#"z"`, `#"^C"`, `#"^(esc)`"|Kódové body Unicode.
 |link:datatypes/datatype.adoc[datatype!]|`bitset!`, `string!`, `time!`, `word!`|Předdefinované datové typy.
 |link:datatypes/date.adoc[date!]|`1999-10-5`, `5/10/1999`, `5-October-1999`|Kalendářní data, vycházející z Gergoriánkského kalendáře.
 |link:datatypes/email.adoc[email!]|`adams@fourty-two.net`, `gregg@red-lang.org`|Přímo vyjádřné emailové adresy.
@@ -38,7 +38,7 @@ Nicméně, abyste mohli používat Red efektivně, měli byste se se všemi dost
 |link:datatypes/lit-word.adoc[lit-word!]|`'foo`|Nevyhodnocená hodnota `word!`.
 |link:datatypes/logic.adoc[logic!]|`true` `false`, `yes` `no`, `on` `off`|Booleovské hodnoty.
 |link:datatypes/map.adoc[map!]|`#( )`, `#(a: 1 b: 2)`|Asociativní řady (arrays) párů key/value.
-|link:datatypes/money.adoc[money!]` | `$123`, `-USD$1'234.56789` | Množství určité (nebo generické) měny.
+|link:datatypes/money.adoc[money!] | `$123`, `-USD$1'234.56789` | Množství určité (nebo generické) měny.
 |link:datatypes/native.adoc[native!]|`-`|Externí funkce, psané v Red/System.
 |link:datatypes/none.adoc[none!]|`-`|Hodnota, která nepatří k žádnému datovému typu. Analogicky k `nula` či `nic`.
 |link:datatypes/object.adoc[object!]|`-`|Pojmenované či nepojmenované kontexty, které obsahují páry `word: value`.
@@ -47,7 +47,7 @@ Nicméně, abyste mohli používat Red efektivně, měli byste se se všemi dost
 |link:datatypes/paren.adoc[paren!]|`(one 2 "three" 4:00:00)`|Bezprostředně vyhodnocený `block!`.
 |link:datatypes/path.adoc[path!]|`foo/bar/baz`|Serie hodnot, oddělených lomítky `/`. Limitováno typem hodnot, které mohou obsahovat.
 |link:datatypes/percent.adoc[percent!]|`100%`, `0.76%`|Hodnoty typu float!, vyjádřené jako procenta.
-|link:datatypes/ref.adoc[ref!]| `@foo` | Uvádí jméno odkazu.
+|link:datatypes/ref.adoc[ref!]|`@foo` | Uvádí jméno odkazu.
 |link:datatypes/refinement.adoc[refinement!]|`/bar`|Symbolické hodnoty, použité jako modifikátory funkcí nebo extenzí objektů, souborů, URL či cest.
 |link:datatypes/routine.adoc[routine!]|`-`|Funkce s tělem, kompatibilním se specifikacemi Red a Red/System.
 |link:datatypes/set-path.adoc[set-path!]|`foo/bar/baz:`|Nastaví "kontextuální referenci" (slovo v kontextu, indexový slot v řadě nebo klíčový odkaz v řadě či mapě).
