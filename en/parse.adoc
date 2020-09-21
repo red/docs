@@ -923,7 +923,7 @@ Parse can modify its input series by inserting new values and removing/changing 
 
 ==== `remove`
 
-Either removes a portion of the input matched by a given rule or removes input between the current position and the marked one; after that, it succeeds and retains the input position after removal.
+Either removes a portion of the input matched by a given rule or removes input between the current position and the marked one; after that, it succeeds and retains the current input position.
 
 NOTE: Removal of values is a forward-consuming operation. In other words, it counts as a match, despite the absence of input advancement.
 
@@ -945,7 +945,7 @@ parse [remove me <and me also> "but leave me be"][some [remove word!] mark: to s
 
 ==== `insert`
 
-Inserts literal value or result of expression evaluation at the current position. Always succeeds and advances the input past the insertion.
+Inserts literal value or result of expression evaluation, either at the current position or at the marked one. Always succeeds. Advances the input past the insertion if it was made at the current position, otherwise input position is retained.
 
 *Syntax*
 
@@ -953,9 +953,15 @@ Inserts literal value or result of expression evaluation at the current position
 insert <value>
 insert <expression>
 
+insert <word> <value>
+insert <word> <expression>
+
 insert only <value>
 insert only <expression>
+insert only <word> <value>
+insert only <word> <expression>
 
+<word>       : input position
 <value>      : literal value
 <expression> : paren! expression
 ----
@@ -965,12 +971,22 @@ If literal value is a `word!`, value referred by it will be used. `only` option 
 *Example*
 
 ----
-parse [assembly][insert [some] skip insert (load "required") insert only [🏗️ 🧰👷]]
+ikea: [assembly]
+here: tail ikea
+
+parse ikea [
+	insert only here [🏗️ 🧰👷]
+	insert only (load "[manual]")
+	word!
+	insert ikea [some]
+	block!
+	insert [required]
+]
 ----
 
 ==== `change`
 
-Changes matched portion on the input to a literal value or a result of expression evaluation. In addition to that, it can change a portion of the input between the current position and the marked one. After the change, it succeeds and advances the input past the modified portion.
+Changes matched portion on the input to a literal value or a result of expression evaluation. In addition to that, it can change a portion of the input between the current position and the marked one. If the change was made at the current position, it succeeds and advances the input past the modified portion, otherwise input position is retained.
 
 *Syntax*
 
