@@ -1137,37 +1137,17 @@ Pending bugs and design inconsistencies relevant to Parse are listed below.
 |===
 | Affected rules | Description | Tickets
 
-| `change <position> <expression>`
-| `word!` values are not used literally.
-| https://github.com/red/red/issues/4200[#4200]
-
 | `remove <position>`
 | The case where position comes after the current one is not handled.
 | https://github.com/red/red/issues/4199[#4199]
-
-| `keep pick <expression>`
-| Semantics is undefined.
-| https://github.com/red/red/issues/4198[#4198]
-
-| `collect into`
-| Incorrect handling of series buffer.
-| https://github.com/red/red/issues/4197[#4197]
-
-| `into`
-| It is possible to match series not supported by Parse.
-| https://github.com/red/red/issues/4194[#4194]
 
 | `break`, `reject`
 | Preemptive break of <<Repetition>> rules.
 | https://github.com/red/red/issues/4193[#4193]
 
-| `insert <word>`
-| The rule is not handled properly.
-| https://github.com/red/red/issues/4153[#4153]
-
-| `path!`, `remove`, `insert`, `change`
-| Usage of `path!` literal value inside rules is forbidden, `path!` values are handled inconsistently by <<Modification>> rules. 
-| https://github.com/red/red/issues/4101[#4101], https://github.com/red/red/issues/3528[#3528]
+| `path!`
+| Usage of `path!` literal values inside rules is forbidden.
+| https://github.com/red/red/issues/3528[#3528]
 
 | `fail`, `break`, `reject`
 | Design of some <<Control flow>> rules is not finalized.
