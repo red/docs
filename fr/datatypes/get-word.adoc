@@ -1,0 +1,76 @@
+= Le type Get-word!
+:toc:
+:numbered:
+
+== Résumé
+
+Une valeur de type `get-word!` renvoie la valeur non évaluée d'un mot dans le contexte auquel il est lié.
+
+`Get-word!` appartient aux ensembles de types suivants: `any-word!`, `all-word!`, `immediate!`
+
+== Création
+
+Les valeurs de type `get-word!` peuvent être créées à l'aide de la syntaxe littérale, ou lors de l'exécution en utilisant la conversion `to` à partir des types: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, `refinement!`, et `lit-word!`.
+
+```red
+>> to get-word! #"X"
+== :X
+
+>> to get-word! true
+== :true
+
+>> to get-word! "Hello"
+== :Hello
+
+>> to get-word! float!
+== :float!
+
+>> to get-word! #A42
+== :A42
+
+>> to get-word! /only
+== :only
+
+>> to get-word! 'foo
+== :foo
+```
+
+== Syntaxe littérale
+
+Deux points `:` suivis par un ou plusieurs caractères de toute l'étendue d'Unicode, incluant les caractères de ponctuation du sous-ensemble ASCII suivant: `! & ' * + - . < = > ? _ | ~``
+
+Les caractères interdits sont les caractères de contrôle, les caractères d'espace, et les caractères de ponctuation du sous-ensemble ASCII suivant: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+
+Une valeur de type `get-word!` ne peut pas commencer par un nombre.
+
+
+== Etapes de l'évaluation
+
+* Le contexte auquel le mot est lié est trouvé.
+
+* La valeur référencée par ce mot dans ce contexte est renvoyée.
+
+** Si la valeur est dans un type de l'ensemble `any-function!` la fonction n'est pas exécutée. La valeur littérale de la fonction est renvoyée.
+
+
+== Test de valeurs
+
+Utilisez `get-word?` pour vérifier si une valeur est du type `Get-word!`.
+
+```red
+>> get-word? first [:foo 'bar baz]
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? first [:foo 'bar baz]
+== get-word!
+```
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`to-get-word`

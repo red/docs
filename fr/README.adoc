@@ -1,0 +1,67 @@
+= Documentation du langage de programmation Red
+
+== Version française
+
+_Ceci est un travail en cours, quelques parties seulement sont disponibles comme documentation de référence._
+
+[NOTE]
+====
+Dans cette traduction française, les noms de fonctions ne sont jamais traduits. Les noms de types de données ne sont pas traduits lorsqu'ils sont au format `mot-clé` dans la documentation originale en Anglais, ou lorsqu'ils se terminent par '!'. 
+Cependant, lorsqu'ils sont utilisés comme noms communs et que le contexte est assez explicite, ils sont parfois traduits en français pour la fluidité de lecture. On a ainsi traduit le plus souvent "a block" par "un bloc" bien que cela fasse référence au type de données `block!`.
+
+Les traductions utilisées sont présentées dans la table ci-dessous.
+====
+
+.Traductions de mots clés du langage Red
+[cols="3*"]
+|===
+
+|_Anglais_
+|_Français_
+|_Commentaire_
+
+|block
+|bloc
+|valeur du type `block!`
+
+|object
+|objet
+|valeur du type `object!`
+
+|path
+|chemin
+|valeur du type `path!`
+
+|time
+|horaire
+|valeur du type `time!` ; le mot "heure" traduisant "hour", l'heure seule.
+
+|timezone
+|fuseau horaire
+|association d'un horaire et d'une zone géographique, de type `time!` ; le mot "zone" traduisant "zone", la zone géographique seule.
+
+|word
+|mot
+|valeur du type `word!` 
+
+|face
+|figure
+|objet de l'interface graphique, du type `face!` (texte, champ de saisie, bouton...)
+
+|facet
+|facette
+|champ d'un objet figure
+
+|layout
+|agencement
+|disposition des figures; `layout` est également une fonction de création d'un arbre de figures dans le dialecte VID
+
+|panel
+|panneau
+|objet figure de type `panel`, conteneur pour d'autres figures
+
+|===
+
+Pour plus d'information sur le langage Red, vous pouvez visiter http://red-lang.org
+
+Rejoignez les conversations sur  https://gitter.im/red/docs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge[image:https://badges.gitter.im/red/docs.svg[https://gitter.im/red/docs]]

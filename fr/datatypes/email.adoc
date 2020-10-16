@@ -1,0 +1,108 @@
+= Le type Email!
+:toc:
+:numbered:
+
+== Résumé
+
+Les valeurs de type `email!` permettent d'exprimer directement des adresses de courriel, par exemple `foo@bar.net`
+
+`email!` appartient aux ensembles de types suivants: `any-string!`, `series!`
+
+== Création
+
+Les valeurs de type `email!` peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution par le constructeur `make` ou par conversion avec `to`.
+
+== Syntaxe littérale
+
+Un ou plusieurs caractères, suivis du symbole `@`, puis de zéro à plusieurs caractères additionnels.
+
+*Exemples*
+```
+foo@bar.net
+gregg@red-lang.org
+g@
+```
+
+*Caractères invalides*
+
+`%` `(` `)` `:` `"`
+
+== Création lors de l'exécution
+
+* `Make`
+
+```red
+>> f: make email! "foo"
+== foo
+
+>> type? f
+== email!
+```
+
+* `To`
+
+```red
+>> b: to email! 'bar
+== bar
+
+>> type? b
+== email!
+```
+
+== Les accesseurs par chemin
+
+Les accesseurs par chemin offrent un moyen pratique d'obtenir et de fixer le nom d'utilisateur ou le nom d'hôte d'une valeur de type email.
+
+=== /user
+```red
+>> e: me@me.net
+== me@me.net
+
+>> e/user
+== "me"
+
+>> e/user: "you"
+== "you"
+
+>> e
+== you@me.net
+```
+
+=== /host
+
+```red
+>> e/host
+== "me.net"
+
+>> e/host: "red-lang.org"
+== "red-lang.org"
+
+>> e
+== you@red-lang.org
+```
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués à `email!`: `=, ==, <>, >, <, >=, &lt;=, =?`. De plus, `min`, et `max` sont aussi supportés.
+
+== Test de valeurs
+
+Utilisez `email?` pour vérifier si une valeur est du type `email!`.
+
+```red
+>> email? foo@bar.net
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? foo@bar.net
+== email!
+```
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`email?`, `suffix?`, `to-email`

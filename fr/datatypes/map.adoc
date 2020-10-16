@@ -1,0 +1,298 @@
+= Le type Map!
+:toc:
+:numbered:
+
+== Résumé
+
+Une map représente un tableau associatif de paires clé/valeur. Ce type permet un accès rapide en lecture (utilisant une table de hachage en interne) et une syntaxe dédiée commode. Contrairement au type `hash!`, une map n'est pas une série, et n'intègre donc pas le concept de distance ou de position. Conceptuellement, le type de données `map!` se trouve entre les types `hash!` et `object!`.
+
+
+== Syntaxe littérale
+
+----
+#(<key> <value>...)
+
+<key>   : une clé hachée; les types autorisés sont: scalar!, all-word!, any-string!
+<value> : une valeur de type any-type!
+----
+
+
+== Syntaxe de création 
+
+----
+make map! <spec>
+
+<spec> : bloc de paires key/value, ou une valeur entière
+----
+
+Si l'argument _spec_ est un entier, une `map!` vide est créée avec un nombre pré-alloué d'emplacements (habituellement afin de peupler la map de manière dynamique).
+
+[NOTE]
+====
+* Le corps de la map ou le bloc _spec_ doivent contenir un nombre *pair* d'éléments, faute de quoi une erreur sera générée. 
+* les valeurs ne sont pas *réduites*, donc une syntaxe de construction est requise pour certaines valeurs spéciales, comme `logic!`.
+====
+
+Exemples:
+
+----
+#(a: 1 b: 2)
+== #(
+    a: 1
+    b: 2
+)
+
+make map! [a 1 'b 2 "c" 3]
+== #(
+    a: 1
+    b: 2
+    "c" 3
+)
+----
+
+Si la clé est d'un type *any-word!*, cette clé doit être convertie en *set-word!* dans la map, afin que le contenu de la map ressemble plus à des paires d'une clé et d'une valeur assignée. Cependant, pour accéder aux clés qui sont des words, il n'est pas requis de fournir un set-word; pour des raisons pratiques (construction plus facile, en particulier dans les chemins), de simple words peuvent être utilisés. De manière similaire, le réflecteur `keys-of` (décrit dans la section Réflexion ci-dessous) renverra des words plutôt que des set-words, car cela simplifie les traitements ultérieurs (en particulier les opérations d'assortiment sont plus faciles avec des words qu'avec des set-words).
+
+[NOTE]
+====
+* De même que `hash!` et `block!`, par défaut `map!` **conserve la casse**, et **n'est pas sensible à la casse dans les recherches**.
+* Toutes les clés font l'objet d'une copie récursive à la création de la map.
+* Les valeurs de type Series! ne sont pas copiées à la création de la map, le choix est laissé à l'utilisateur (cela optimise les ressources dans le cas d'usage courant).
+====
+
+Une autre manière de créer une map est d'employer l'action `copy` sur une map existante.
+
+
+== Recherche de valeurs
+
+En utilisant les chemins:
+
+----
+<map>/<key>
+get '<map>/<key>
+
+<map> : mot référençant une valeur de type map! 
+<key> : mot clé
+----
+
+En utilisant l'action select:
+
+---- 
+select <map> <key>
+
+<map> : une valeur de type map!
+<key> : n'importe-quel type de clé valide
+----
+
+Tous ces accès en lecture sont insensibles à la casse. Pour obtenir une recherche sensible à la casse, le raffinement `/case` doit être utilisé lorsqu'il est disponible:
+
+----
+get/case '<map>/<key>
+select/case <map> <key>
+----
+
+Une tentative d'accéder à une clé non définie dans une map:
+
+* produira une erreur si la syntaxe par chemin est utilisée.
+* renverra la valeur `none` si `select` est utilisé.
+
+Exemples:
+
+----
+m: #(Ab: 2 aB: 5 ab: 10)
+m/ab
+== 2
+select m 'aB
+== 2
+get/case 'm/aB
+== 5
+select/case m 'ab
+== 10
+select m 'x
+== none
+----
+
+
+== Changement de clés et de valeurs
+
+En utilisant des chemins:
+
+----
+<map>/<key>: <value>
+set '<map>/<key> <value>
+
+<map>   : mot faisant référence à une valeur de map!
+<key>   : mot clé pour sélectionner une valeur dans la map.
+<value> : valeur quelconque
+----
+
+En utilisant une action de modification:
+
+---- 
+put <map> <key> <value>
+
+<map> : une valeur de map
+<key> : n'importe-quel type de clé valide pour sélectionner une valeur dans la map.
+----
+
+Changements groupés:
+
+----
+extend <map> <spec>
+
+<map>  : une valeur de map
+<spec> : bloc de (une ou plusieurs) paires clé/valeur
+----
+
+Tous ces accès en écriture sont insensibles à la casse. Pour obtenir une recherche sensible à la casse, le raffinement `/case` doit être utilisé quand il est disponible:
+
+----
+set/case '<map>/<key> <value>
+put/case <map> <key> <value>
+extend/case <map> <spec>
+----
+
+La native `extend` peut accepter plusieurs clés en même temps, ce qui le rend commode pour les changements groupés.
+
+[NOTE]
+====
+* assigner une clé qui n'existait pas encore dans une map, **créera simplement cette clé**.
+* ajouter une clé déjà existante changera la valeur associée à cette clé et n'en créera pas de nouvelle (par défaut la comparaison est insensible à la casse).
+====
+
+Exemples:
+
+----
+m: #(Ab: 2 aB: 5 ab: 10)
+m/ab: 3
+m
+== #(
+    Ab: 3
+    aB: 5
+    ab: 10
+)
+
+put m 'aB "hello"
+m
+== #(
+    Ab: "hello"
+    aB: 5
+    ab: 10
+)
+
+set/case 'm/aB 0
+m
+== #(
+    Ab: "hello"
+    aB: 0
+    ab: 10
+)
+set/case 'm/ab 192.168.0.1
+== #(
+    Ab: "hello"
+    aB: 0
+    ab: 192.168.0.1
+)
+
+m: #(%cities.red 10)
+extend m [%cities.red 99 %countries.red 7 %states.red 27]
+m
+== #(
+    %cities.red 99
+    %countries.red 7
+    %states.red 27
+)
+----
+
+
+== Suppression de clés
+
+Utilisez `remove/key` pour supprimer une paire clé/valeur d'une map, et récupérer la valeur. La recherche de la clé est toujours sensible à la casse.
+
+Exemple:
+
+----
+m: #(a: 1 b 2 "c" 3 d: 99)
+m
+== #(
+    a: 1
+    b: 2
+    "c" 3
+    d: 99
+)
+remove/key m 'b
+== #(
+    a: 1
+	"c" 3
+	d: 99
+)
+----
+
+Il est aussi possible de supprimer toutes les clés d'un seul coup en utilisant l'action `clear`:
+
+----
+clear #(a 1 b 2 c 3)
+== #()
+----
+
+
+== Réflexion
+
+* `find` vérifie si une clé est définie dans une map et renvoie la première clé trouvée, ou `none` dans le cas contraire. Utilisez `/case` pour une recherche sensible à la casse.
+
+ find #(a 123 b 456) 'b
+ == b
+
+ find #(a 123 A 456) 'A
+ == a
+
+ find/case #(a 123 A 456) 'A
+ == A
+
+* `length?` renvoie le nombre de paires clé/valeur dans une map.
+
+ length? #(a 123 b 456)
+ == 2
+
+* `keys-of` renvoie dans un bloc la liste des clés d'une map (les set-words sont convertis en words).
+
+ keys-of #(a: 123 b: 456)
+ == [a b]
+
+* `values-of` renvoie dans un bloc la liste des valeurs d'une map.
+
+ values-of #(a: 123 b: 456)
+ == [123 456]
+
+* `body-of` renvoie dans un bloc toutes les paires clé/valeur d'une map.
+
+ body-of #(a: 123 b: 456)
+ == [a: 123 b: 456]
+
+== Itération
+
+
+* Usage de `keys-of` avec `foreach`
++
+
+```red
+>> foreach k keys-of #(a: 123 b: 456) [print k]
+a
+b
+```
+
+* Usage de `values-of` avec `foreach`
++
+
+```red
+>> foreach v values-of #(a: 123 b: 456) [print v]
+123
+456
+```
+
+* Un bloc de deux mots doit être fourni lorsqu'on utilise `foreach` sans `keys-of` ou `values-of`
++
+
+```red
+>> foreach [k v] #(a: 123 b: 456) [print [k v]]
+a 123
+b 456

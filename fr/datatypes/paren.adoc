@@ -1,0 +1,147 @@
+= Le type Paren!
+:toc:
+:numbered:
+
+== Résumé
+
+Le type de données `paren!` est un `block!` immédiatement évalué. C'est un type de `series!` sans restriction sur les types des valeurs qui peuvent être référencées.
+
+Les valeurs de type Paren sont délimitées par des parenthèses ouvrante `(` et fermante `)`.
+
+L'évaluation peut être supprimée en utilisant `quote` devant une valeur de type paren: `quote (print 42)`
+
+`Paren!` appartient aux ensembles de types suivants: `any-block!`, `any-list!`, `series!`
+
+== Création
+
+Les valeurs de type Paren peuvent être créées à l'aide de la syntaxe littérale, ou lors de l'exécution avec le constructeur `make`, la conversion `to`, ou en utilisant la valeur native `as`.
+
+Pour créer une paren vide pré-allouée pour 10 éléments:
+
+```red
+>> make paren! 10
+== ()
+```
+
+Pour créer une paren de 10 éléments dont les valeurs initiales sont fixées à none:
+
+```red
+>> append/dup make paren! 10 none 10
+== (none none none none none none none none none none)
+```
+
+En utilisant la conversion `to`:
+
+```red
+>> to paren! {one 2 "three" 4:00}
+== (one 2 "three" 4:00:00)
+
+>> to paren! "foo 1.23 me@me.com"
+== (foo 1.23 me@me.com)
+
+>> to paren! 42
+== (42)
+```
+
+En utilisant `as`:
+```red
+>> as paren! [1 2 3]
+== (1 2 3)
+```
+
+
+== Syntaxe littérale
+
+Une collection, délimitée par des parenthèses ouvrante et fermante, de valeurs séparées par des espaces.
+ 
+`()`
+
+`quote (one 2 "three")` 
+
+`(print 1.23)`
+
+Les `paren` peuvent s'étendre sur plusieurs lignes, et peuvent contenir d'autre `paren`.
+```red
+(1
+2
+"three"
+)
+
+quote (1 2 "three" (x foo 1.23))
+```
+
+
+Les lignes, espaces ou tabulation supplémentaires sont permis tant qu'ils n'interrompent pas des valeurs.
+
+Ok:  `(print "foo")`
+
+Not ok: `(pr   int "foo")`
+
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués à `paren!`: `=, ==, <>, >, <, >=, &lt;=, =?`. De plus, `min`, et `max` sont aussi supportés.
+
+[NOTE]
+Puisque les valeurs de `paren!` sont évaluées immédiatement, la valeur prise en compte par `min` ou `max` sera la valeur de la dernière expression d'une `paren!`. Les comparateurs compareront le dernier élément d'une paren si l'évaluation n'est pas supprimée.
+
+```red
+>> max (1 2 3) (4 5 6)
+== 6
+```
+
+```red
+>> (1 2 3) < (4 5 6)
+== true
+
+>> (1 2 3) < (4 5 2)
+== false
+
+>> (quote (1 2 3)) < (quote (4 5 2))
+== true 
+```
+
+
+== Test de valeurs
+
+Utilisez `paren?` pour vérifier si une valeur est du type `paren!`.
+```red
+>> paren? quote (42 print "foo")
+== true
+```
+
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+```red
+>> type? quote (42)
+== paren!
+```
+
+[NOTE, caption=Caution]
+
+Les valeurs de `paren` non précédées de `quote` renverront le type de la dernière expression.
+
+```red
+>> paren? (42)
+== false
+
+>> any-list? (42)
+== false
+
+>> type? (42)
+== integer!
+
+>> type? ('a 2 + 2 "hello")
+== string!
+```
+
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`expand-directives`, `paren?`, `series?`, `to-paren`
+
+=== Natives
+
+`as`, `compose`

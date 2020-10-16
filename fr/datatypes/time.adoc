@@ -1,0 +1,338 @@
+= Le type Time!
+:toc:
+:numbered:
+
+== Résumé
+
+Les valeurs de type horaire (`time!`) représentent une quantité de temps, spécifiée en heures, minutes et secondes. Elles peuvent être interprétées comme un délai à partir de minuit, dans le contexte des dates, ou comme de simples heures de la journée.
+
+`time!` appartient aux ensembles de types suivants: `immediate!`, `scalar!`
+
+== Création
+
+Les valeurs de type `time!` peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
+
+== Syntaxe littérale
+
+BNF:
+
+```
+<time-literal> ::= <Red-time> | +<Red-time> | -<Red-time>
+<Red-time> ::= <hours>:<minutes> | <hours>:<minutes>:<seconds> | <hours>:<minutes>:<seconds>.<decimals> | <minutes>:<seconds>.<decimals>
+```
+
+== Création lors de l'exécution
+
+----
+make time! [<hour> <minute> <second>]
+make time! <integer-literal> | <float-literal> 
+
+to time! [<hour> <minute> <second>]
+to time! <integer-literal> | <float-literal> 
+
+<hour>    : <integer-literal>
+<minute>  : <integer-literal>
+<second>  : <integer-literal> | <float-literal>
+----
+
+
+```red
+>> make time! 60
+== 0:01:00
+
+>> make time! 95'000
+== 26:23:20
+
+>> make time! [3 2 1]
+== 3:02:01
+
+>> make time! 300.45
+== 0:05:00.45
+```
+
+```red
+>> to time! 60
+== 0:01:00
+
+>> to time! 95'000
+== 26:23:20
+
+>> to time! [3 2 1]
+== 3:02:01
+```
+
+== Les accesseurs par chemin
+
+Les accesseurs par chemin offrent un moyen pratique d'obtenir et de fixer tous les champs d'une valeur de `time!`.
+
+=== /hour
+
+*Description*
+
+Obtient ou fixe le champ heure d'un horaire. L'heure est renvoyée comme une valeur de type `integer!`.
+
+*Exemples*
+
+```red
+>> t: make time! [3 2 1]
+== 3:02:01
+
+>> t/hour
+== 3
+
+>> t/hour: 6
+== 6
+
+>> t
+== 6:02:01
+```
+
+=== /minute
+
+*Description*
+
+Obtient ou fixe le champ minute d'un horaire. Les minutes sont renvoyées comme une valeur de type `integer!`.
+
+*Exemples*
+
+```red
+>> t: make time! [3 2 1]
+== 3:02:01
+
+>> t/minute
+== 2
+
+>> t/minute: 7
+== 7
+
+>> t
+== 3:07:01
+```
+
+=== /second
+
+*Description*
+
+Obtient ou fixe le champ second d'un horaire. Les secondes sont renvoyées comme une valeur de type `float!`.
+
+*Exemples*
+
+```red
+>> t: make time! [3 2 1]
+== 3:02:01
+
+>> t/second
+== 1.0
+
+>> t/second: 58
+== 58
+
+>> t
+== 3:02:58
+```
+
+Les champs d'un horaire sont également accessibles par index en utilisant la notation par chemin:
+
+```red
+>> t
+== 3:02:01
+
+>> t/1
+== 3
+
+>> t/2
+== 2
+
+>> t/3
+== 1.0
+```
+
+=== Accès aux champs d'un horaire en utilisant Pick
+
+Il est possible d'accéder aux champs d'un horaire sans utiliser de chemin, ce qui peut être plus pratique dans certains cas. `pick` peut ainsi être utilisé sur les horaires.
+
+*Syntaxe*
+
+----
+pick <time> <field>
+
+<time>  : une valeur de type time! 
+<field> : une valeur de type integer! 
+----
+
+*Exemples*
+
+```red
+>> t
+== 3:02:01
+
+>> pick t 1
+== 3
+
+>> pick t 2
+== 2
+
+>> pick t 3
+== 1.0
+```
+
+== Conversions
+
+----
+to integer! <time>
+
+<time>  : une valeur de type time! 
+----
+
+```red
+>> t
+== 3:02:01
+
+>> to integer! t
+== 10921
+```
+
+----
+to float! <time>
+
+<time>  : une valeur de type time! 
+----
+
+```red
+>> t
+== 3:02:01
+
+>> to float! t
+== 10921.0
+```
+
+Les valeurs de type `Integer!`, `float!` et `percent!` peuvent être converties en horaire.
+
+```red
+>> i: to integer! t
+== 10921
+
+>> to time! i
+== 3:02:01
+```
+
+```red
+>> f: to float! t
+== 10921.0
+
+>> to time! f
+== 3:02:01
+```
+
+```red
+>> p: to percent! t
+== 1092100%
+
+>> to time! p
+== 3:02:01
+```
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués à `time!`: `=, ==, <>, >, <, >=, &lt;=, =?`. De plus, `min`, et `max` sont aussi supportés.
+
+== Calculs
+
+Les opérations supportées sur les horaires comprennent:
+
+* addition ou soustraction de valeurs de n'importe quel champ de l'horaire.
+* addition ou soustraction d'une valeur entière à une valeur horaire.
+* addition ou soustraction d'une valeur horaire à une valeur horaire.
+* multiplication ou division de valeurs de n'importe quel champ de l'horaire.
+* multiplication ou division entre un entier et une valeur horaire.
+
+*Exemples*
+
+```red
+>> t: 2:30:45
+== 2:30:45
+
+>> t/hour: t/hour + 5
+== 7
+
+>> t
+== 7:30:45
+
+>> t/minute: t/minute - 20
+== 10
+
+>> t
+== 7:10:45
+```
+
+```red
+
+>> 1:40:45 + 50
+== 1:41:35
+
+>> 1:40:45 - 100
+== 1:39:05
+```
+
+```red
+
+>> 3:02:01 + 1:45:30
+== 4:47:31
+
+>> 3:02:01 - 1:00:00
+== 2:02:01
+```
+
+```red
+t: 2:30:45
+
+>> t/second: t/second * 5
+== 225.0
+
+>> t
+== 2:33:45
+
+>> t/2 / 3
+== 11
+
+>> t/2 // 3
+== 0
+
+>> t/3 * 3
+== 135.0
+```
+
+== Test de valeurs
+
+Utilisez `time?` pour vérifier si une valeur est du type `time!`.
+
+```red
+>> time? t
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? t
+== time!
+>> 
+```
+
+== Mots prédéfinis
+
+=== Actions
+
+`absolute`, `add`, `change`, `divide`, `even?`, `multiply`, `negate`, `odd?`, `pick`, `remainder`, `round`, `subtract`
+
+=== Fonctions
+
+`first`, `mod`, `modulo`, `second`, `third`, `time?`, `to-time`
+
+=== Natives
+
+`loop`, `negative?`, `now`, `positive?`, `remove-each`, `repeat`, `sign?`, `wait`, `zero?`
+
+=== Opérateurs
+
+`%`, `*`, `+`, `-`, `/`, `//`

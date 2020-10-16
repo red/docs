@@ -1,0 +1,114 @@
+= Le type String!
+:toc:
+:numbered:
+
+
+== Résumé
+
+Une valeur de type chaîne (`string!`) est une séquence de caractères Unicode, c'est-à-dire de valeurs de type link:char.adoc[char!].
+
+`String!` appartient aux ensembles de types suivants: `any-string!`, `default!`, `series!`
+
+== Création
+
+Les valeurs de type `string!` peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
+
+```red
+>> s: make string! 100
+== ""
+```
+
+```red
+>> to string! 'foo
+== "foo"
+
+>> to string! [bar]
+== "bar"
+
+>> to string! 42
+== "42"
+```
+
+Les valeurs natives `form` et `mold` peuvent aussi être utilisées pour convertir une valeur respectivement en une chaîne facile à lire ou à une chaîne formatée comme du code.
+
+```red
+>> form 'foo
+== "foo"
+```
+
+```red
+>> mold 'bar
+== "bar"
+```
+
+[NOTE, caption=Note]
+
+Essayer de convertir `none` par la conversion `to` suscitera une erreur.
+
+== Syntaxe littérale
+
+Chaîne sur une seule ligne:
+
+Un ou plusieurs caractères entourés de doubles guillemets.
+
+`"foo"`
+
+Chaîne sur plusieurs lignes:
+
+Un ou plusieurs caractères entourés d'accolades ouvrante et fermante.
+
+`{foo}` 
+
+Une chaîne sur une seule ligne ne peut pas contenir de caractères de retour à la ligne sans séquence d'échappement.
+
+```red
+>> cr
+== #"^M"
+
+>> lf
+== #"^/"
+
+>> crlf
+== "^M^/"
+```
+
+Une chaîne sur plusieurs lignes peut contenir de caractères de retour à la ligne, des guillemets, et des accolades appariées. Les accolades non appariées doivent être précédées par le caractère d'échappement `^`, par exemple `{foo^{}`.
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués à `String!`: `=, ==, <>, >, <, >=, &lt;=, =?`. De plus, `min`, et `max` sont aussi supportés.
+
+
+== Test de valeurs
+
+Utilisez `string?` pour vérifier si une valeur est du type `String!`.
+
+```red
+>> string? "foo"
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? "foo"
+== string!
+```
+
+== Mots prédéfinis
+
+=== Actions
+
+`find`, `form`, `mold`, `pick`, `poke`, `put`, `read`, `select`, `trim`
+
+=== Fonctions
+
+`a-an`, `any-string?`, `ask`, `charset`, `clean-path`, `dirize`, `ellipsize-at`, `help-string`, `input`, `load`, `pad`, `string?`, `to-string`
+
+=== Natives
+
+`as`, `call`, `checksum`, `debase`, `dehex`, `difference`, `do`, `enbase`, `exclude`, `get-env`, `intersect`, `lowercase`, `parse`, `set-env`, `to-local-file`, `union`, `unique`, `uppercase`
+
+=== Routines
+
+`set-current-dir`, `write-clipboard`, `write-stdout`

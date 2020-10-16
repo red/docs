@@ -1,0 +1,218 @@
+= Le type Char!
+Version: Draft 3
+:toc:
+:numbered:
+
+== Résumé
+
+Les valeurs de type `char!` représentent un caractère Unicode. Ce sont des nombres entiers dans l'intervalle allant de l'hexadecimal 00 à l'hexadecimal 10FFFF (de 0 à 1,114,111 en décimal.) 
+
+`char!` appartient aux ensembles de types suivants: `immediate!`, `scalar!`
+
+== Caractéristiques
+
+les valeurs de type `char!` sont 'directes', 'atomiques' and 'passives'.
+
+NOTE: Cela suppose que les caractéristiques de types ont été définies plus tôt dans le document.
+
+== Création
+
+Les valeurs de type `char!` peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution par le constructeur `make` ou par conversion avec `to` ou en utilisant l'une des nombreuses fonctions qui extraient une valeur `char!` à partir d'une valeur `string!`.
+
+=== Syntaxe littérale
+
+Le format littéral de base pour les valeurs de type `char!` est:
+
+----
+#"<character>"
+<character> : un caractère Unicode unique (habituellement saisi au clavier)
+----
+
+La syntaxe littérale permet aussi les séquences d'échappement pour les caractères de contrôle et les caractères qui ne sont pas faciles à saisir.
+
+Le caractère d'échappement en Red est '^' - valeur Unicode U+005E. Par conséquent, le caractère ^ lui-même doit être précédé d'un ^. La chaîne littérale pour sa valeur est #"^^" et non pas #"^". De fait, #"^" n'est pas valide.
+
+Il y a trois formes d'écriture littérale des caractères spéciaux en Red, l'une numérique, une autre pour les caractères nommés et la dernière pour les caractères "de contrôle".
+
+La forme numérique est:
+
+----
+#"^(<codepoint>)"
+<codepoint> : une valeur hexadécimale valide, par exemple 00, ABCD, 10FFFFF
+----
+
+La forme des caractères "de contrôle" est:
+
+----
+#"^<cc>"
+<cc> : Un caractère unique parmi les suivants: - A-Z, [, \, ], _
+----
+
+.Séquence d'échappement pour les caractères de contrôle
+[cols="2*"]
+|===
+
+|Séquence d'échappement
+|Valeur Unicode
+
+|#"^A" - #"^Z"
+|U+0001 - U+001A.
+
+|#"^["
+|U+001B
+
+|#"^\"
+|U+001C
+
+|#"^]"
+|U+001D
+
+|#"^_"
+|U+001F
+
+|===
+
+La forme "nommée" des caractères est:
+
+----
+#"^(<name>)" ou #"^<symbol>" 
+<name> : un nom de la table des Caractères Spéciaux Nommés
+<symbol> : un symbole de la table des Caractères Spéciaux Nommés
+----
+
+.Caractères Spéciaux Nommés
+[cols="4*"]
+|===
+
+|nom
+|symbole
+|caractère
+|valeur Unicode
+
+|#"^(null)    
+|#"^@"    
+|null                
+|U+0000
+
+|#"^(back)"   
+|
+|retour arrière           
+|U+0008
+
+|#"^(tab)"    
+|#"^-" 
+|tabulation horizontale     
+|U+0009
+
+|#"^(line)"    
+|#"^/"   
+|saut de ligne          
+|U+000A 
+
+|#"^(page)"   
+|
+|saut de page           
+|U+000C
+
+|#"^(esc)"    
+|
+|échappement              
+|U+001B
+
+|#"^(del)"    
+|#"^~"   
+|suppression              
+|U+007F
+
+|
+|#"^""                      
+|" - guillemets doubles    
+|U+0022
+
+|
+|#"^^"
+|^ - curseur           
+|U+005E
+
+|===
+
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués aux valeurs de type 'char!': `=, ==, <>, >, <, >=, &lt;=, =?`. De plus, `min`, et `max` sont aussi supportés. La comparaison des 'char!' est sensible à la casse.
+
+*Exemples*
+
+----
+#"a" = #"A"
+== false
+#"a" =? #"a"
+== true
+max #"a" #"A"
+== #"a"
+sort [#"c" #"b" #"d" #"a"]
+== [#"a" #"b" #"c" #"d"]
+----
+
+
+== Calculs
+L'éventail complet des fonctions mathématiques peut être utilisé sur les valeurs de type `char!`. Une erreur `Math Error` est produite si le résultat du calcul sort de l'intervalle (hexadécimal) 00 - 10FFFF.
+
+*Exemples*
+
+```red
+>> #"a" + 1
+== #"b"
+>> #"a" - 32
+== #"A"
+>> #"a" * 256
+== #"愀"
+#"a" - 98
+*** Math Error: math ou number overflow
+*** Where: -
+*** Stack:  
+```
+
+[NOTE]
+Les résultats de calcul seront convertis au type du premier argument pour les valeurs  de type `char!`.
+
+```red
+>> #"a" + 1
+== #"b"
+
+>> 1 + #"a"
+== 98
+
+>> #"a" - 32
+>> #"a" - 32
+== #"A"
+
+>> 32 - #"a"
+== -65
+
+>> 256.00 * #"a"
+== 24832.0
+```
+
+== Mots prédéfinis
+
+----
+null             #"^@"
+newline          #"^/"
+slash            #"/"
+dbl-quote        #"^""
+space            #" "
+lf               #"^/"
+tab              #"^-"
+CR               #"^M"
+dot              #"."
+escape           #"^["
+sp               #" "
+comma            #","
+----
+
+== Autres fonction concernant char!
+
+Lowercase, Uppercase
+
+
