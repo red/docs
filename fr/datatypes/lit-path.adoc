@@ -1,0 +1,100 @@
+= Le type Lit-path!
+:toc:
+:numbered:
+
+
+== Résumé
+
+Un `lit-path!` est un path! non évalué (cité avec `quote`).
+
+Une valeur de `lit-path!` se réduira à une valeur de type path! à l'évaluation, comme par exemple si elle est entrée dans la console Red.
+
+Lit-path! appartient aux ensembles de types suivants: `any-block!`, `any-path!`, `series!`
+
+== Création
+
+Les valeurs de type `lit-path!` peuvent être créées en utilisant `quote` et la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
+
+```red
+>> 'foo/bar/baz
+== foo/bar/baz
+
+>> type? 'foo/bar/baz
+== path!
+```
+
+```red
+>> quote 'foo/bar/baz
+== 'foo/bar/baz
+
+>> type? quote 'foo/bar/baz
+== lit-path!
+```
+
+```red
+>> make lit-path! [foo bar baz]
+== 'foo/bar/baz
+```
+
+```red
+>> to lit-path! "foo bar baz"
+== 'foo/bar/baz
+```
+
+Vous pouvez créer un lit-path vide d'une taille donnée en passant une valeur entière en argument à `make`:
+
+```red
+>> make lit-path! 10
+== '
+```
+
+== Syntaxe littérale
+
+BNF:
+
+```
+<lit-path-literal> ::= '<path-literal>
+
+<path-literal> ::= <path-head>/<selector>
+<path-head>    ::= <word-literal> | <path-literal>
+<selector> ::= <integer> | <word-literal> | :<word-literal> | <paren>
+```
+
+Parse:
+```
+lit-path: [lit-word! some selector]
+selector: [#"/" [integer! | word! | get-word! | paren!]]
+```
+
+Path-head datatypes: link:lit-word.adoc[lit-word!], link:lit-path.adoc[lit-path!]
+
+Selector datatypes: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
+
+
+== Test de valeurs
+
+Utilisez `lit-path?` pour vérifier si une valeur est du type `lit-path!`.
+
+```red
+>> lit-path? first ['foo/bar]
+== true
+
+>> lit-path? quote 'foo/bar
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? first ['foo/bar]
+== lit-path!
+
+>> type? quote 'foo/bar
+== lit-path!
+```
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`lit-path?`, `to-lit-path`

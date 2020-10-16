@@ -1,0 +1,75 @@
+= Le type Issue!
+:toc:
+:numbered:
+
+== Résumé
+
+Les valeurs du type `Issue!` sont utilisées pour représenter des hashtags, des mots-clés, et des identifiants (comme des numéros de série) qui ne contiennent pas d'espaces.
+
+`Issue!` appartient aux ensembles de types suivants: `all-word!`, `immediate!`
+
+
+== Création
+
+Les valeurs du type `Issue!` peuvent être créées au cours de l'exécution en utilisant la conversion `to`.
+
+----
+>> to issue! "123.42-xxx"
+== #123.42-xxx
+
+>> to issue! #"R"
+== #R
+----
+
+
+== Syntaxe littérale
+
+Un signe dièse `#` suivi d'une séquence de caractères. Les valeurs de type `Issue!` se terminent par un espace, un point-virgule, ou un délimiteur marquant le début d'une nouvelle valeur (par exemple `[` qui ouvre un bloc).
+
+`#555-555-5555`
+
+`#CODE`1.2.3--42-8`
+
+`#ABC-123-xyx`
+
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués aux issues: `=, ==, <>, >, <, >=, &lt;=, =?`. 
+
+
+== Test de valeurs
+
+Utilisez `issue?` pour vérifier si une valeur est du type `Issue!`.
+
+----
+>> issue? #ABC-123-xyx
+== true
+
+>> my-word: #X11'xyz
+== #X11'xyz
+
+>> issue? my-word
+== true
+----
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+----
+>> type? #ABC-123-xyx
+== issue!
+
+>> type? my-word
+== issue!
+----
+
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`hex-to-rgb`, `issue?`, `to-issue`
+
+=== Natives
+
+`to-hex`

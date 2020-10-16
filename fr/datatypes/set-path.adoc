@@ -1,0 +1,92 @@
+= Le type Set-path!
+:toc:
+:numbered:
+
+
+== Résumé
+
+le type `set-path!` établit une "référence contextuelle" (mot dans un contexte, emplacement d'index dans une série, ou référence par clé dans une série ou une map).
+
+`Set-path!` appartient aux ensembles de types suivants: `any-block!`, `any-path!`, `series!`
+
+== Création
+
+Les valeurs de type `Set-path!` peuvent être créées à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
+
+```red
+>> make set-path! [foo bar baz]
+== foo/bar/baz:
+```
+
+Vous pouvez créer un set-path vide d'une taille donnée en passant une valeur entière en argument à `make`:
+
+```red
+>> make set-path! 10
+== :
+==
+```
+
+Conversion avec `To`:
+
+```red
+>> to set-path! "foo bar baz"
+== foo/bar/baz:
+```
+
+== Syntaxe littérale
+
+BNF:
+
+```
+<set-path-literal> ::= <path-literal>:
+
+<path-literal> ::= <path-head>/<selector>
+<path-head>    ::= <word-literal> | <path-literal>
+<selector> ::= <integer> | <word-literal> | :<word-literal> | <paren>
+```
+
+Parse:
+
+```
+set-path: [set-word! some selector]
+selector: [#"/" [integer! | word! | get-word! | paren!]]
+```
+
+Types de données pour la tête du chemin (Path-head): link:set-word.adoc[set-word!], link:set-path.adoc[set-path!]
+
+Types de données pour le sélecteur (selector): link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
+
+
+== Etapes d'évaluation
+
+Une valeur de set-path! suit les mêmes règles d'évaluation qu'un `path!` jusqu'à ce que le sélecteur soit atteint, auquel moment le sélecteur prend la valeur de l'expression qui le suit.
+
+Si aucune expression ne suit le sélecteur, ou si cette expression renvoie `unset`, une erreur est générée.
+
+== Test de valeurs
+
+Utilisez `set-path?` pour vérifier si une valeur est du type `Set-path!`.
+
+```red
+>> set-path? first [foo/bar:]
+== true
+
+>> set-path? quote foo/bar:
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? first [foo/bar:]
+== set-path!
+
+>> type? quote foo/bar:
+== set-path!
+```
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`set-path?`, `to-set-path`

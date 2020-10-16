@@ -1,0 +1,1038 @@
+= Draw ダイアレクト
+:toc:
+:toc-title: 目次
+:toclevels: 3
+:numbered:
+
+
+== 概要 
+
+DrawはRedにおけるダイアレクト（DSL）の１つです。Drawを使用することで、宣言的な方法で二次元の描画処理を実現できます。描画内容はblockを用いた連続したコマンドのリストとして表現され、自由に組み合わせたり、実行時に変更したりすることができます。
+
+Drawに渡されたブロックは `draw` 関数によってイメージの最前面に直接描画されるか、もしくは `draw` ファセット（ link:View.html[Viewのドキュメント] を参照してください）によって、Viewフェイスの中に描画されます。
+
+== Drawコマンド 
+
+コマンドは描画に関する指示や設定です。モードがセットされた場合、現在のDrawセッションが終了するか、再度モードが変更されるまで、全ての後続の処理に影響します。
+ほとんどのDrawコマンドは座標の指定を必要とします。座標系の始点は以下の方式を採ります。
+
+* X座標：ディスプレイの左から右に行くに従って増加します。
+* Y座標：ディスプレイの上から下に行くに従って増加します。
+
+いくつかの描画コマンドは長さの指定を必要とします。長さはピクセル単位で指定します。
+
+image::../images/coord-system.png[Coord-system,align="center"]
+
+
+=== Line 
+
+*構文*
+
+----
+line <point> <point> ...
+
+<point> : 点の座標 (pair!).
+----
+*説明*
+
+２つの点の間に線を描画します。もし３つ以上の点が指定された場合、各点を結ぶように線が描画されます。
+
+=== Triangle 
+
+.*構文*
+----
+triangle <point> <point> <point>
+
+<point> : 三角形の頂点の座標 (pair!)
+----
+NOTE:頂点は２つの線が交わる点です。
+
+*説明*
+
+指定された３点を頂点とする三角形を描画します。
+
+=== Box 
+
+.*構文*
+----
+box <top-left> <bottom-right>
+box <top-left> <bottom-right> <corner>
+
+<top-left>     : boxの左上の座標 (pair!)
+<bottom-right> : boxの右下の座標 (pair!)
+<corner>       : (省略可能) 角を丸く描画する場合の、角の弧になる部分の半径 (integer!)
+----
+*説明*
+
+指定されたtop-left（第1引数）、bottom-right（第2引数）を元に矩形を描画します。
+角を丸く描画したい場合は、radiusで弧の半径を指定することができます。
+
+=== Polygon 
+
+.*構文*
+----
+polygon <point> <point> ...
+
+<point> : 頂点の座標 (pair!)
+----
+*説明*
+
+指定された頂点を元に多角形を描画します。最後に指定された点から開始点へ自動的に線が引かれるため、
+開始点を最後の点として指定する必要はありません。
+従って、最低限指定する必要がある点は３つになります。
+
+=== Circle
+ 
+.*構文*
+----
+circle <center> <radius>
+circle <center> <radius-x> <radius-y>
+
+<center>   : 円の中心の座標 (pair!)
+<radius>   : 円の半径 (integer! float!)
+<radius-x> : (楕円モード) X軸に対する円の半径 (integer! float!)
+<radius-y> : (楕円モード) Y軸に対する円の半径 (integer! float!)
+----
+*説明*
+
+指定されたcenter（中心点）とradius（半径）を元に円を描画します。
+引数が３つの場合、円を歪ませて楕円にすることができます。第2引数と第3引数がそれぞれX軸、Y軸に対する半径の長さになり、それに合うように楕円が描かれます。
+
+=== Ellipse 
+
+.*構文*
+----
+ellipse <top-left> <size>
+
+<top-left> : 楕円の収まる矩形の左上の座標(pair!)
+<size>     : 楕円の収まる矩形のサイズ (pair!)
+----
+*説明*
+
+指定された矩形の中に納まるように楕円を描画します。 `size` 引数はX軸とY軸に対する楕円の直径を指定します。
+NOTE: `ellipse` は `circle` の楕円モードに比べ、矩形を基準として簡潔な方法を提供します。
+
+=== Arc 
+
+.*構文*
+----
+arc <center> <radius> <begin> <sweep>
+arc <center> <radius> <begin> <sweep> closed
+
+<center> : 円の中心の座標 (pair!)
+<radius> : 円の半径 (pair!)
+<begin>  : 描画を開始する円の角度 (integer!)
+<sweep>  : 描画を終了する円の角度 (integer!)
+----
+*説明*
+
+指定されたcenterとradiusの値で円弧を描画します。弧は２つの角度で定義されます。最後に `closed` キーワードを指定すると、中心点から2本の線を引いて、閉じた弧にすることができます。
+
+=== Curve 
+
+.*構文*
+----
+curve <end-A> <control-A> <end-B>
+curve <end-A> <control-A> <control-B> <end-B>
+
+<end-A>     : 終点A (pair!)
+<control-A> : 制御点A (pair!)
+<control-B> : 制御点B (pair!)
+<end-B>     : 終点B (pair!)
+----
+*説明*
+
+３つまたは４つの点からベジェ曲線を描画します。
+
+* 3点の場合：2つの終点、1つの制御点で描画します。
+* 4点の場合：２つの終点、２つの制御点で描画します。
+
+4点を使用した場合、より複雑な曲線を作ることができます。
+
+=== Spline 
+
+.*構文*
+----
+spline <point> <point> ...
+spline <point> <point> ... closed
+
+<point> : 制御点 (pair!)
+----
+*説明*
+
+一連の点を元にB-スプライン曲線を描画します。曲線を描くためには少なくとも3点が必要になります。最後に `closed` キーワードを指定すると、終点と始点が結ばれ、閉じた曲線になります。
+NOTE: 点を2つにすることは許容されますが、その場合描画結果は直線になります。
+
+=== Image 
+
+.*構文*
+----
+image <image>
+image <image> <top-left>
+image <image> <top-left> <bottom-right>
+image <image> <top-left> <top-right> <bottom-left> <bottom-right>
+image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color>
+image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color> border
+image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color> crop <offset> <size>
+
+<image>        : 表示するイメージ (image! word!)
+<top-left>     : （省略可能）イメージの左上の座標 (pair!)
+<top-right>    : （省略可能）イメージの右上の座標 (pair!)
+<bottom-left>  : （省略可能）イメージの左下の座標 (pair!)
+<bottom-right> : （省略可能）イメージの右下の座標 (pair!)
+<color>        : （省略可能）透明化のための色 (tuple! word!)
+<offset>       : （省略可能）切り出しを開始する位置(pair!)
+<size>         : （省略可能）切り出しするサイズ (pair!)
+----
+*説明*
+
+指定された位置、幅の情報を元にイメージを描画します。この場合イメージは座標 0x0 を基準に描画されます。
+colorを指定した場合、透過処理に使用されます。
+
+NOTE:
+
+* 4点を指定するモードは未実装です。実装された際には、任意の4点を元に画像をストレッチさせられるようになります。
+* `border` を指定するモードは未実装です。
+
+=== Text 
+
+.*構文*
+----
+text <position> <string>
+
+<position> : テキストが描画される座標 (pair!)
+<string>   : 描画する文字列 (string!)
+----
+*説明*
+現在のフォントを使用して指定された座標にテキストを描画します。
+
+NOTE: フォントが未選択または `none` が指定されている場合、代わりにpen colorが使用されます。
+
+=== Font 
+
+.*構文*
+----
+font <font>
+
+<font> : 新しく使用するフォントオブジェクト (object! word!)
+----
+*説明*
+
+テキストの描画のために使用するフォントを選択します。フォントオブジェクトは `font!` データ型のクローンです。
+
+=== Pen 
+
+このコマンドは他のコマンドの線の描画モードを定義します。多くの異なるオプションが指定可能で、シンプルに色で指定したり、ネストしたカスタムのシェイプやグラデーションを指定することもできます。
+
+==== Color pen
+
+.*構文*
+----
+pen <color>
+
+<color> : 描画のために使う新しい色 (tuple! word!)
+----
+*説明*
+
+描画処理に使用される色を選択します。すべてのシェイプはpenが「off」にセットされるまで、このコマンドで選択された色で描画されるようになります。
+
+==== Linear gradient pen
+
+.*構文*
+----
+pen linear <color1> <offset> ... <colorN> <offset> <start> <end> <spread>
+
+<color1/N> : グラデーションのための色のリスト (tuple! word!)
+<offset>   : （省略可能）グラデーションカラーのオフセット (float!)
+<start>    : （省略可能）開始点 (pair!)
+<end>      : （<start>がない場合は省略可能）終点 (pair!)
+<spread>   : （省略可能）スプレッドモード (word!)
+----
+*説明*
+
+描画処理で使用されるリニアグラデーションを設定します。スプレッド方式として次の値を指定可能です。「pad」、「repeat」、「reflect」（現在のところWindows上では「pad」と「repeat」は同じになります）
+
+startとendが指定された場合、グラデーションのペイントされるラインが定義されます。指定されなかった場合、現在描画しているシェイプ内に水平方向のラインでグラデーションがペイントされます。
+
+==== Radial gradient pen
+
+.*構文*
+----
+pen radial <color1> <offset> ... <colorN> <offset> <center> <radius> <focal> <spread>
+
+<color1/N> : グラデーションのための色のリスト (tuple! word!)
+<offset>   : （省略可能）グラデーションカラーのオフセット (float!)
+<center>   : （省略可能）中心点 (pair!)
+<radius>   : （<center>がない場合は省略可能） ペインティングを行う円の半径 (integer! float!)
+<focal>    : （省略可能）焦点 (pair!)
+<spread>   : （省略可能）塗りつぶし方式 (word!)
+----
+*説明*
+
+描画処理に使用されるラジアルグラデーションを設定します。塗りつぶし方式（spread）には次の値を使用することができます。「pad」「repeat」「reflect」（現在のところWindows上では「pad」は「repeat」と同じになります）。
+
+ラジアルグラデーションは焦点（focal）から、円（center）と半径（raius）によって定義される円の境界に向かって塗りつぶされます。最初の色は焦点で使われ、最後の色は円の境界部分で使われます。
+
+==== Diamond gradient pen
+
+.*構文*
+----
+pen diamond <color1> <offset> ... <colorN> <offset> <upper> <lower> <focal> <spread>
+
+<color1/N> : グラデーションのための色のリスト (tuple! word!)
+<offset>   : （省略可能）グラデーションカラーのオフセット (float!)
+<upper>    : （省略可能）矩形の上の角 (pair!) 
+<lower>    : （<upper>がない場合は省略可能） 矩形の下の角 (pair!)
+<focal>    : （省略可能）焦点 (pair!)
+<spread>   : （省略可能）塗りつぶし方式 (word!)
+----
+*説明*
+
+描画処理に使用されるダイアモンド型のグラデーションを設定します。塗りつぶし方式（spread）には次の値を使用できます。「pad」「repeat」「reflect」（現在のところWindows情では「pad」は「repeat」と同じになります）。
+
+ダイアモンドグラデーションは焦点（focal）から上角（upper）と下角（lower）で定義された矩形の境界に向かって塗りつぶされます。最初の色は焦点で使われ、最後の色は矩形の境界部分で使われます。
+
+==== Pattern pen
+
+.*構文*
+----
+pen pattern <size> <start> <end> <mode> [<commands>]
+
+<size>     : <command>が描画されるイメージ領域のサイズ (pair!)
+<start>    : （省略可能）イメージ領域内の切り出しを行う上側の角 (pair!)
+<end>      : （省略可能）イメージ領域内の切り出しを行う下側の角 (pair!)
+<mode>     : （省略可能）タイルモード (word!)
+<commands> : パターンを定義するDrawコマンドのブロック
+----
+*説明*
+
+描画処理でパターンとして使うための独自のShapeを設定します。タイルモード（mode）には次の値を使用することができます。「tile（デフォルト値）」「flip-x」「flip-y」「flip-xy」「clamp」
+
+startのデフォルト値は 0x0 、endのデフォルト値は <size> の値です。
+
+==== Bitmap pen
+
+.*構文*
+----
+pen bitmap  <image> <start> <end> <mode>
+
+<image> : タイリングに使用するイメージ (image!)
+<start> : （省略可能）イメージ内の切り出し領域の上側の角 (pair!)
+<end>   : （省略可能）イメージ内の切り出し領域の下側の角 (pair!)
+<mode>  : （省略可能）タイルモード (word!)
+----
+*説明*
+
+描画処理でパターンとして使うためのイメージを設定します。タイルモード（mode）には次の値を使用することができます。「tile（デフォルト値）」「flip-x」「flip-y」「flip-xy」「clamp」
+
+startのデフォルト値は 0x0 、endのデフォルト値はイメージのサイズです。
+
+==== Turning off the pen
+
+.*構文*
+----
+pen off
+----
+
+*説明*
+
+後続のコマンドにおける外周の描画を停止します。
+
+=== Fill-pen
+
+このコマンドは（閉じた形状のShapeにおける）塗りつぶし処理が必要な他のコマンドのために塗りつぶしモードを定義します。シンプルな色の指定から、ネストしたカスタムシェイプやグラデーションまで様々なオプションを使用できます。
+
+==== Color fill 
+
+.*構文*
+----
+fill-pen <color>
+
+<color>          : 塗りつぶしに使用する色 (tuple! word!).
+----
+*説明*
+
+塗りつぶし処理に使用される色を選択します。すべての閉じた図形はfill-penが「off」に設定されるまで選択された色で塗りつぶしされます。
+
+==== Linear gradient fill
+
+.*構文*
+----
+fill-pen linear <color1> <offset> ... <colorN> <offset> <start> <end> <spread>
+
+<color1/N> : グラデーションに使用する色のリスト (tuple! word!)
+<offset>   : （省略可能）グラデーションカラーのオフセット (float!)
+<start>    : （省略可能）開始点 (pair!) 
+<end>      : （<start>が指定されていない場合は省略可能）終点 (pair!)
+<spread>   : （省略可能）塗りつぶし方式 (word!)
+----
+*説明*
+
+塗りつぶし処理に使用されるリニアグラデーションを設定します。塗りつぶし方式（spread）には次の値を使用できます。「pad」「repeat」「reflect」（現在のところWindows情では「pad」は「repeat」と同じになります）。
+
+startとendが指定された場合、グラデーションのペイントされるラインが定義されます。指定されなかった場合、現在描画しているシェイプ内に水平方向のラインでグラデーションがペイントされます。
+
+==== Radial gradient fill
+
+.*構文*
+----
+fill-pen radial <color1> <offset> ... <colorN> <offset> <center> <radius> <focal> <spread>
+
+<color1/N> : グラデーションで使用する色のリスト (tuple! word!)
+<offset>   : （省略可能）グラデーションカラーのオフセット (float!)
+<center>   : （省略可能）中心点 (pair!)
+<radius>   : （<center>が指定されない限り省略可能）塗りつぶしする円の半径 (integer! float!)
+<focal>    : （省略可能）焦点 (pair!)
+<spread>   : （省略可能）塗りつぶし方式 (word!)
+----
+*説明*
+
+塗りつぶし処理のためのラジアルグラデーションを設定します。塗りつぶし方式（spread）には次の値を使用できます。「pad」「repeat」「reflect」（現在のところWindows情では「pad」は「repeat」と同じになります）。
+
+ラジアルグラデーションは焦点（focal）から、円（center）と半径（raius）によって定義される円の境界に向かって塗りつぶされます。最初の色は焦点で使われ、最後の色は円の境界部分で使われます。
+
+==== Diamond gradient fill
+
+.*構文*
+----
+fill-pen diamond <color1> <offset> ... <colorN> <offset> <upper> <lower> <focal> <spread>
+
+<color1/N> : list of colors for the gradient (tuple! word!)
+<offset>   : （省略可能）グラデーションのオフセット (float!)
+<upper>    : （省略可能）矩形の上側の角 (pair!) 
+<lower>    : （<upper> がない場合は省略可能）矩形の下側の角 (pair!)
+<focal>    : （省略可能）焦点 (pair!)
+<spread>   : （省略可能）塗りつぶし方式 (word!)
+----
+*説明*
+
+塗りつぶし処理で使用するダイアモンド型のグラデーションを設定します。塗りつぶし方式（spread）には次の値を使用できます。「pad」「repeat」「reflect」（現在のところWindows情では「pad」は「repeat」と同じになります）。
+
+ダイアモンドグラデーションは焦点（focal）から上角（upper）と下角（lower）で定義された矩形の境界に向かって塗りつぶされます。最初の色は焦点で使われ、最後の色は矩形の境界部分で使われます。
+
+==== Pattern fill
+
+.*構文*
+----
+fill-pen pattern <size> <start> <end> <mode> [<commands>]
+
+<size>     : <commands>が描画されるイメージ領域のサイズ (pair!)
+<start>    : （省略可能）イメージ領域内の切り出しを行う上側の角 (pair!)
+<end>      : （省略可能）イメージ領域内の切り出しを行う下側の角 (pair!)
+<mode>     : （省略可能）タイルモード (word!)
+<commands> : パターンを定義するDrawコマンドのブロック
+----
+*説明*
+
+塗りつぶし処理でパターンとして使用するカスタムシェイプを設定します。タイルモード（mode）には次の値を使用することができます。「tile（デフォルト値）」「flip-x」「flip-y」「flip-xy」「clamp」
+
+startのデフォルト値は 0x0 、endのデフォルト値は <size> です。
+
+==== Bitmap fill
+
+.*構文*
+----
+fill-pen bitmap  <image> <start> <end> <mode>
+
+<image> : タイリングに使用するイメージ (image!)
+<start> : （省略可能）イメージ内の切り出し領域の上側の角 (pair!)
+<end>   : （省略可能）イメージ内の切り出し領域の下側の角 (pair!)
+<mode>  : （省略可能）タイルモード (word!)
+----
+*説明*
+
+塗りつぶし処理でパターンとして使用するイメージを設定します。タイルモード（mode）には次の値を使用することができます。「tile（デフォルト値）」「flip-x」「flip-y」「flip-xy」「clamp」
+
+startのデフォルト値は 0x0 、endのデフォルト値はイメージのサイズです。
+
+==== Turning off the filling
+
+.*構文*
+----
+fill-pen off
+----
+*説明*
+
+後続のコマンドにおける塗りつぶし処理を停止します。
+
+=== Line-width 
+
+.*構文*
+----
+line-width <value>
+
+<value> : 新しいラインのピクセル幅 (integer!)
+----
+*説明*
+
+ラインの描画における幅を新しく指定します。
+
+=== Line-join 
+
+.*構文*
+----
+line-join <mode>
+
+<mode> : 新しく指定されるラインの連結モード (word!)
+----
+*説明*
+
+ラインの連結モードを新たに指定します。以下の値を指定できます。
+
+* `miter` （デフォルト）
+* `round`
+* `bevel`
+* `miter-bevel`
+
+image::../images/line-join.png[Line-join,align="center"]
+
+NOTE: `miter-bevel` モードの場合、マイター長（詳細は https://msdn.microsoft.com/en-us/library/windows/desktop/ms534148%28v=vs.85%29.aspx[このサイト] を参照してください）によって `miter` か `bevel` が自動で選択されます。
+
+=== Line-cap 
+
+.*構文*
+----
+line-cap <mode>
+
+<mode> : 新しいラインキャップモード (word!).
+----
+*説明*
+
+ラインの描画の際の終端のキャップモードを新しく指定します。以下の値が指定できます。
+
+* `flat` （デフォルト）
+* `square`
+* `round`
+
+image::../images/line-cap.png[Line-cap,align="center"]
+
+=== Anti-alias 
+
+.*構文*
+----
+anti-alias <mode>
+
+<mode> : 有効かする場合 `on` 、無効かする場合 `off` 
+
+----
+*説明*
+
+後続のDrawコマンドにおけるアンチエイリアスモードのオン、オフを切り替えます。
+NOTE: アンチエイリアスを使用するとより綺麗に描画が行えますが、パフォーマンスは劣化します。
+
+=== Matrix 
+
+.*構文*
+----
+matrix <matrix-setup>
+matrix 'pen <matrix-setup>
+matrix 'fill-pen <matrix-setup>
+
+<matrix-setup> : 現在の行列に前乗算または後乗算（pre/post-multiplied）される行列 (block!)
+----
+*説明*
+
+行列の乗算を実行します。現在の変換行列は渡された行列によって先乗算（pre-multiplied）されたものになります。
+
+`matrix-setup` ブロックは6つの数字（number!）を含んでいる必要があります。
+
+----
+matrix [a b c d e f]
+----
+ブロックの値は内部的に以下の変換マトリックスを構築するために使用されます。
+----
+|a c e|
+|b d f|
+|0 0 1|
+----
+
+=== Reset-matrix 
+
+*構文*
+
+----
+reset-matrix
+----
+
+*説明*
+
+現在の変換行列を単位行列にリセットします。
+
+----
+|1 0 0|
+|0 1 0|
+|0 0 1|
+----
+
+=== Invert-matrix 
+
+*構文*
+
+----
+invert-matrix
+----
+
+*説明*
+
+現在の変換行列に代数的行列反転を適用します。
+
+=== Push 
+
+.*構文*
+----
+push <draw-block>
+
+<draw-block> : Drawコマンドのブロック (block!).
+----
+*説明*
+
+現在の状態（変換、領域の切り出し、ペンの設定）をスタックに保存します。これにより、PUSHコマンドブロック内で現在の変換行列、ペンなどを変更することが可能になります。PUSHコマンドブロックが終わると、スタックから現在の状態を復元されます。PUSHコマンドはネストさせることができます。
+
+=== Rotate 
+
+.*構文*
+----
+rotate <angle> <center> [<commands>]
+rotate pen <angle>
+rotate fill-pen <angle>
+
+<angle>    : 回転角度 (integer! float!)
+<center>   :（省略可能） 回転の中心 (pair!)
+<commands> :（省略可能）Drawダイアレクトコマンド
+----
+*説明*
+
+指定された位置、角度で時計回りに回転を行います。もし `center` が指定されていない場合、現在の座標系の起点を元に回転が行われます。マイナス値を指定した場合、反時計回りの回転になります。ブロックが最後の引数として渡された場合、回転はブロックで渡されたコマンドにだけ適用されます。
+
+「pen」または「fill-pen」wordが使用された場合、回転は現在のpenやfill-penそれぞれに対して適用されます。
+
+=== Scale 
+
+.*構文*
+----
+scale <scale-x> <scale-y> [<commands>]
+scale pen <scale-x> <scale-y>
+scale fill-pen <scale-x> <scale-y>
+
+<scale-x>  : X軸方向のスケール量 (number!)
+<scale-y>  : Y軸方向のスケール量 (number!)
+<commands> :（省略可能）Drawダイアレクトコマンド
+----
+*説明*
+
+スケールする量をセットします。値は掛け算されるため、スケールを増加させる場合は1以上、減少させる場合は1未満の値を指定してください。ブロックが最後の引数として渡された場合、スケーリングはブロックで渡されたコマンドにだけ適用されます。
+
+「pen」または「fill-pen」wordが使用された場合、スケーリングは現在のpenやfill-penそれぞれに対して適用されます。
+
+=== Translate 
+
+.*構文*
+----
+translate <offset> [<commands>]
+translate pen <offset>
+translate fill-pen <offset>
+
+<offset> : 移動量 (pair!)
+<commands> :（省略可能）Drawダイアレクトコマンド
+----
+*説明*
+
+描画コマンドの起点をセットします。複数回使用すると、効果は累積します。ブロックが最後の引数として渡された場合、移動はブロックで渡されたコマンドにだけ適用されます。
+
+「pen」または「fill-pen」wordが使用された場合、スケーリングは現在のpenやfill-penそれぞれに対して適用されます。
+
+=== Skew 
+
+.*構文*
+----
+skew <skew-x> <skew-y> [<commands>]
+skew pen <skew-x> <skew-y>
+skew fill-pen <skew-x> <skew-y>
+
+<skew-x>   : X軸に対して傾ける角度 (integer! float!)
+<skew-y>   :（省略可能） Y軸に対して傾ける角度 (integer! float!)
+<commands> :（省略可能）Drawダイアレクトコマンド
+----
+*説明*
+
+座標系を指定された角度傾けます。もし `<skew-y>` が指定されていない場合、０として扱われます。ブロックが最後の引数として渡された場合、傾きはブロックで渡されたコマンドにだけ適用されます。
+
+「pen」または「fill-pen」wordが使用された場合、スケーリングは現在のpenやfill-penそれぞれに対して適用されます。
+
+=== Transform 
+
+.*構文*
+----
+transform <angle> <center> <scale-x> <scale-y> <translation> [<commands>]
+
+<angle>       : 回転させる角度 (integer! float!)
+<center>      : （省略可能） 回転の中心 (pair!)
+<scale-x>     : X軸方向のスケール量 (number!)
+<scale-y>     : Y軸方向のスケール量 (number!)
+<translation> : 移動量 (pair!)
+<commands>    :（省略可能）Drawダイアレクトコマンド
+----
+*説明*
+
+移動、スケーリング、回転といった画像変換を行います。ブロックが最後の引数として渡された場合、画像変換はブロックで渡されたコマンドにだけ適用されます。
+
+=== Clip
+
+.*構文*
+----
+clip <start> <end> <mode> [<commands>]
+clip [<shape>] <mode> [<commands>]
+
+<start>    : クリッピング領域の左上の座標 (pair!)
+<end>      : クリッピング領域の右下の座標 (pair!)
+<mode>     :（省略可能）切り取った領域のマージモード（word!）
+<commands> :（省略可能）Drawダイアレクトコマンド
+<shape>    : Shapeダイアレクトコマンド
+----
+*説明*
+
+２つの点（startとend）で定義される矩形の切り取り領域か、Shapeコマンドのブロックによって定義される任意の形の領域を定義します。この切り取りは後続のすべてのDrawコマンドに適用されます。ブロックが最後の引数として渡された場合、切り取りはブロックで渡されたコマンドにだけ適用されます。
+
+また、新しい切り取り領域と前の領域を合成するモードとして、次の値のいずれかを設定できます。
+
+* `replace` （デフォルト）
+* `intersect`
+* `union`
+* `xor`
+* `exclude`
+
+== Shapeコマンド
+
+.*構文*
+----
+shape [<commands>]
+
+<commands> : shapeダイアレクトコマンド
+----
+*説明*
+
+「shape」キーワードはDrawコマンドのサブダイアレクトであるShapeダイアレクトへのアクセスを提供します。この描画用のダイアレクトの具体的な機能は以下です。
+
+* 描画時のペンの位置を描画処理とは独立して移動させることができます。
+* 各々の描画コマンドは現在のペン位置からスタートします。
+* シェイプは自動的に閉じた形になります（最初の位置へ戻る最後の線を指定する必要はありません）。
+* 生成されたシェイプは「fill-pen」によってシンプルな塗りつぶしや、もっと凝った塗りつぶしを行うことができます。
+* 座標は（Drawのように）絶対座標を使用するか、最後のペン位置に対する相対座標を使用することもできます。
+
+NOTE: 全ての描画コマンドはデフォルトでは絶対座標を使います。lit-wordでコマンドを指定すると、相対座標で動作するコマンドに切り替わります。
+
+=== Move
+
+.*構文*
+----
+ move <position>            （絶対座標）
+'move <position>            （相対座標）
+
+<position> : 新しいペンの位置 (pair!)
+----
+*説明*
+
+ペンの位置を新しい位置に移動させます。描画は行われません。
+
+=== Line
+
+.*構文*
+----
+ line <point> <point> ...   （絶対座標）
+'line <point> <point> ...   （相対座標）
+
+<point> : 点の座標 (pair!)
+----
+*説明*
+
+２つの点の間に線を描画します。もし３つ以上の点が指定された場合、各点を結ぶように線が描画されます。
+
+=== Arc
+
+.*構文*
+----
+ arc <end> <radius-x> <radius-y> <angle> sweep closed      （絶対座標）
+'arc <end> <radius-x> <radius-y> <angle> sweep closed      （相対座標）
+
+<end>      : 弧の終点 (pair!)
+<radius-x> : X軸に対する円の半径 (integer! float!)
+<radius-y> : 円の半径のX座標 (integer! float!)
+<angle>    : 弧の開始点と終点の角度 (integer! float!)
+sweep      : （省略可能）弧を正の角の方向で描画します。
+large      : （省略可能）膨張させた弧を描画します。（'sweepオプションとともに使用します）
+
+----
+*説明*
+
+現在のペンの位置と終点の間で半径（radius）の値を使って円弧を描画します。弧は１つの角度（angle）の値で定義されます。
+
+=== Curve
+
+.*構文*
+----
+ curve <point> <point> <point> ...   （絶対座標）
+'curve <point> <point> <point> ...   （相対座標）
+
+<point> : 点の座標 (pair!)
+----
+*説明*
+
+連続した点から3次ベジエ曲線を描画します。描画は現在のペン位置から開始されます。曲線を描くには最低３つの点が必要です（最初の点は開始点が自動的に使われます）。
+
+=== Curv
+
+.*構文*
+----
+ curv <point> <point> ...   （絶対座標）
+'curv <point> <point> ...   （相対座標）
+
+<point> : 点の座標 (pair!)
+----
+*説明*
+
+連続した点から滑かな3次ベジエ曲線を描画します。描画は現在のペン位置から開始されます。曲線を描くには最低２つの点が必要です（最初の点は開始点が自動的に選ばれます）。
+
+NOTE: http://www.w3.org/TR/SVG11/paths.html より
+
+「第一制御点は前の命令の第二制御点の現在の点に対する鏡像（点対称）の地点とみなされる（もし前の命令が無い場合、第一制御点は現在の点と同一のものとみなされる）」
+
+=== Qcurve
+
+.*構文*
+----
+ qcurve <point> <point> ...   （絶対座標）
+'qcurve <point> <point> ...   （相対座標）
+
+<point> : 点の座標 (pair!)
+----
+*説明*
+
+連続した点から滑かな2次ベジエ曲線を描画します。描画は現在のペン位置から開始されます。曲線を描くには最低２つの点が必要です（最初の点は開始点が暗黙的に選ばれます）。
+
+=== Qcurv
+
+.*構文*
+----
+ qcurv <point>   （絶対座標）
+'qcurv <point>   （相対座標）
+
+<point> : 終点の座標 (pair!)
+----
+*説明*
+
+現在のペン位置から指定された点までの、滑かな2次ベジエ曲線を描画します。
+
+NOTE: 右記のリンクを参照してください： http://www.w3.org/TR/SVG11/paths.html
+
+=== Hline
+
+.*構文*
+----
+ hline <end-x>   （絶対座標）
+'hline <length>  （相対座標）
+
+<end-x>  : X軸方向の終点 (integer! float!)
+<length> : 直線の長さ (integer! float!)
+----
+*構文*
+
+現在のペン位置から水平線を描画します。
+
+=== Vline
+
+.*構文*
+----
+ vline <end-y>   （絶対座標）
+'vline <length>  （相対座標）
+
+<end-y>  : Y軸方向の終点 (integer! float!)
+<length> : 直線の長さ (integer! float!)
+----
+*説明*
+
+現在のペン位置から垂直線を描画します。
+
+=== Line-width
+
+Drawダイアレクトと同じです。
+
+=== Line-join
+
+Drawダイアレクトと同じです。
+
+=== Line-cap
+
+Drawダイアレクトと同じです。
+
+=== Pen
+
+Drawダイアレクトと同じです。
+
+=== Fill-pen
+
+Drawダイアレクトと同じです。
+
+== デフォルト値 
+
+新しいDrawセッションが開始した場合、以下のデフォルト値が使用されます。
+
+[cols="2,3", options="header"]
+|===
+|Property | Value
+
+|background | `white`
+|pen color |  `black`
+|filling|    `off`
+|anti-alias|	 `on`
+|font|	 `none`
+|line width|	 `1`
+|line join|	 `miter`
+|line cap| `flat`
+|===
+
+== サブブロック 
+
+Drawコードの中で、ブロックを使用することでコマンドを任意にグルーピングすることができます。サブブロック内でもセマンティクスに違いはありません。これは現在のところコマンド（特に抽出、挿入、削除操作）のグルーピングを用意にするためのシンタックスシュガーでしかありません。空のブロックは許容されます。
+
+== ソース位置 
+
+Set-wordは *各コマンドの間のDrawコードの中で* 行うことができ、Drawブロックの現在の位置を記録し、後でアクセスすることを可能にします。
+
+NOTE: set-wordに先行するDrawブロックの長さが変わった場合、元々の位置は更新されません。そのためset-wordが同じものを参照していない可能性があります。
+
+== Draw関数 
+
+`draw` 関数によってDrawブロックを直接イメージとして描画することも可能です。
+
+.*構文*
+----
+draw <size> <spec>
+draw <image> <spec>
+
+<size>  : 新しいイメージのサイズ (pair!).
+<image> : キャンバスとして使用するイメージ (image!).
+<spec>  : Drawコマンドのブロック (block!).
+----
+*説明*
+
+指定されたDrawコマンドの内容でイメージに描画を行います。戻り値としてイメージが返されます。
+
+== 非推奨API
+
+Fill-penはRebol/Drawとの互換性のためだけに存在する非推奨APIもサポートしています。このAPIは新しいRedのスクリプトでは使用しないでください。
+
+.*構文*
+----
+fill-pen linear <grad-offset> <grad-start-rng> <grad-stop-rng>
+         <grad-angle> <grad-scale-x> <grad-scale-y> <grad-color> <offset>
+         <grad-color> <offset> ...
+
+fill-pen radial <grad-offset> <grad-focal> <grad-radius>
+         <grad-angle> <grad-scale-x> <grad-scale-y> <grad-color> <offset>
+         <grad-color> <offset> ...
+
+fill-pen diamond <grad-offset> <grad-focal> <grad-radius>
+         <grad-angle> <grad-scale-x> <grad-scale-y> <grad-color> <offset>
+         <grad-color> <offset> ...
+
+<grad-type>      : グラデーションタイプ (word!)
+<grad-offset>    : グラデーションがどこからレンダリングされるかのオフセット (pair!)
+<grad-start-rng> : グラデーションレンジの開始位置 (integer!)
+<grad-stop-rng>  : グラデーションレンジの終了位置 (integer!)
+<grad-focal>     : グラデーションの焦点 (pair!)
+<grad-radius>    : グラデーションの半径 (integer!)
+<grad-angle>     : （省略可能）グラデーションの回転角度 (integer! float!)
+<grad-scale-x>   : （省略可能）X要素のスケール (integer! float!)
+<grad-scale-y>   : （省略可能）Y要素のsケール (integer! float!)
+<grad-color>     : グラデーションの塗りつぶしに使う色 (tuple! word!)
+----
+*説明*
+
+塗りつぶし処理に使用されるグラデーションカラーをセットします。グラデーションタイプには次の値を使用できます。「lenear」、「radial」、「diamond」。
+
+例：
+
+	fill-pen linear 0x100 0 400 red green blue box 0x100 400x300
+
+image::../images/grad-pen.png[Grad-pen,align="center"]
+
+NOTE: グラデーションで使用できるのは256色までです。
+
+== グラフィックスソースコード 
+
+このドキュメントで使用されているグラフィックスはRedとDrawダイアレクトで作成されています。そのソースコードが以下です。（Redコンソールにコピーペーストすることで試したり、遊んだり、改善したりしてみてください。）
+----
+Red [
+	Title:	"Graphics generator for Draw documentation"
+	Author: "Nenad Rakocevic"
+	File:   %draw-graphics.red
+	Needs:	View
+]
+
+Arial: make font! [name: "Consolas" style: 'bold]
+small: make font! [size: 9 name: "Consolas" style: 'bold]
+
+save %line-cap.png draw 240x240 [
+	font Arial
+	text 20x220  "Flat"
+	text 90x220  "Square"
+	text 180x220 "Round"
+
+	line-width 20 pen gray
+	line-cap flat	line 40x40  40x200
+	line-cap square line 120x40 120x200
+	line-cap round	line 200x40 200x200
+
+	line-width 1 pen black
+	line 20x40  220x40
+	line 20x200 220x200
+]
+
+save %line-join.png draw 500x100 [
+	font Arial
+	text 10x20  "Miter"
+	text 170x20 "Round"
+	text 330x20 "Bevel"
+
+	line-width 20 pen gray
+	line-join miter line 140x20 40x80  140x80
+	line-join round line 300x20 200x80 300x80
+	line-join bevel line 460x20 360x80 460x80
+
+	line-join miter
+	line-width 1 pen black
+	line 140x20 40x80  140x80
+	line 300x20 200x80 300x80
+	line 460x20 360x80 460x80
+]
+
+save %coord-system.png draw 240x240 [
+	font small
+	text 5x5 "0x0"
+	line-width 2
+	line 20x20 200x20 195x16
+	line 200x20 195x24
+
+	line 20x20 20x200 16x195
+	line 20x200 24x195
+
+	font Arial
+	text 205x12 "X"
+	text 12x205 "Y"
+]
+
+save %grad-pen.png draw 400x400 [
+	pen off
+	fill-pen linear 0x100 0 400 red green blue box 0x100 400x300
+]
+
+save %grad-pen-more.png draw 600x400 [
+	pen off
+	fill-pen linear 0x0 0 200 red green blue box 0x0 200x200
+	fill-pen linear 200x0 0 200 255.0.0 255.255.0 0.255.0 0.255.255 0.0.255 box 200x0 400x200
+	fill-pen linear 400x0 0 200 255.0.0 0.1 255.255.0 0.2 0.255.0 0.4 0.255.255 0.8 0.0.255 .9 255.0.255 1.0 box 400x0 600x200
+	fill-pen blue box 0x200 200x400 fill-pen radial 100x300 0 100 255.0.0 0.255.0 0.0.255 box 0x200 200x400
+	fill-pen blue box 200x200 400x400 fill-pen diamond 300x300 0 100 30 255.0.0 0.255.0 0.0.255 box 200x200 400x400
+	fill-pen diamond 500x300 0 100 30 3.0 1.5 255.0.0 0.255.0 0.0.255 box 400x200 600x400
+]
+----

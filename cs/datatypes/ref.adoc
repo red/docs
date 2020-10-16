@@ -1,6 +1,5 @@
 = Datový typ `ref!`
 :toc:
-:toc-title:
 :numbered: 
 
 == Úvodem
@@ -89,6 +88,8 @@ Datový typ `ref!` podporuje řadu typových konverzí, platných pro typeset `a
 | Zakázáno.
 
 | ostatní
+=======
+| `Ostatní`
 | Podobně jako u `form`.
 
 |===
@@ -106,7 +107,7 @@ to-ref <qux>
 == @qux
 
 to-ref none
-** cannot MAKE/TO string from: none
+** cannot make error
 ----
 Jsouce částí typesetu `any-string!`, podporují hodnoty `ref!` konverzi na mnoho typů:
 
@@ -139,6 +140,8 @@ Více podrobností o podporovaných literálových formách lze nalézt v přís
 | První znak, pokud přítomen, je extrahován.
 
 | ostatní
+=======
+| `Ostatní`
 | Zakázáno.
 
 |===
@@ -168,7 +171,7 @@ to-binary @matrix
 == #{6D6174726978}
 
 to-char @
-** cannot MAKE/TO char from:
+** cannot make error
 
 to-char @.:
 == #"."
@@ -180,6 +183,7 @@ Hodnota typu `ref!` podporuje všechny akce pro řady (kromě `put`, `sort`, `tr
 
 NOTE: Příkaz `form`, aplikovaný na hodnotu `ref!`, zavrhne znak `@`, zatímco `mold` jej zachová.
 
+=======
 *Příklady*
 
 ----
@@ -221,8 +225,4 @@ Funkce, souvisící s datovým typem `ref!` avšak v předchozím textu neuveden
 
 * predikát `ref?` vrací `true`, je-li daná hodnota typu `ref!`;
 * velikost písma: `uppercase` a `lowercase`;
-* konverze URL v hexadecimálním vyjádření (%xx) na textový řetězec: `dehex` 
-----
-dehex {URL_k%C3%B3dov%C3%A1n%C3%AD}
-== "URL_kódování"
-----
+* konverze URL v hexadecimálním vyjádření (%xx) na textový řetězec: `dehex`

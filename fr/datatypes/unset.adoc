@@ -1,0 +1,55 @@
+= Le type Unset!
+:toc:
+:numbered:
+
+
+== Résumé
+
+`Unset!` est une valeur unique qui représente l'absence d'une valeur utilisable.
+
+
+== Création
+
+Les valeurs de type `unset!` peuvent être créées à l'exécution par le constructeur `make` ou la conversion `to`.
+
+`make unset! <any-thing>`
+
+`to unset! <any-thing>`
+
+
+== Syntaxe littérale
+
+Il n'y a pas de syntaxe littérale pour `unset!`. C'est le résultat de l'évaluation de `()`, `do []`, `print`, ou `get/any <word>` lorsque `<word>` n'a pas été défini.
+
+
+== Test de valeurs
+
+Utilisez `unset?` pour vérifier si une valeur est du type `Unset!`.
+
+----
+>> unset? 1
+== false
+
+>> unset? ()
+== true
+
+>> unset? unset 'x
+== true
+----
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+----
+>> type? unset 'x
+== unset!
+----
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`to-unset`
+
+=== Natives
+
+`unset`

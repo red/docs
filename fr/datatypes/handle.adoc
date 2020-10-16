@@ -1,0 +1,25 @@
+= Le type Handle!
+:toc:
+:numbered:
+
+
+== Résumé
+
+Les valeurs du type `Handle!` représentent des entiers qui sont utilisés pour interagir avec le système d'exploitation.
+
+`Handle!` appartient aux ensembles de types suivants: `default!`, `immediate!`
+
+== Création
+
+Les valeurs du type `Handle!` ne peuvent pas être créées. Elles sont utilisés pour communiquer avec le système d'exploitation et peuvent être représentées uniquement par des mots qui sont des arguments des fonctions gérant cette communication.
+
+== Test de valeurs
+
+Utilisez `handle?` pour vérifier si une valeur est du type `Handle!`.
+
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`handle?`

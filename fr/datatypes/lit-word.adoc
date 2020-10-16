@@ -1,0 +1,77 @@
+= Le type Lit-word!
+:toc:
+:numbered:
+
+== Résumé
+
+Une valeur de type `lit-word!` est une valeur de `word!` non évaluée. Elle a comme valeur littérale elle-même.
+
+Une valeur de type `lit-word!` sera réduite à un `word!` à l'évaluation, par exemple si elle est saisie dans la console Red.
+
+`Lit-word!` appartient aux ensembles de types suivants: `any-word!`, `all-word!`, `immediate!`
+
+== Création
+
+Les valeurs de type Lit-word! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant la conversion `to` à partir des types de données: `char!`, `logic!`, `string!`, `datatype!`, `issue!` et `refinement!`.
+
+```red
+>> 'test
+== test
+
+>> type? 'test
+== word!
+```
+
+```red
+>> to lit-word! #"X"
+== 'X
+
+>> to lit-word! true  
+== 'true
+
+>> to lit-word! "Hello"
+== 'Hello
+
+>> to lit-word! float!  
+== 'float!
+
+>> to lit-word! #A42
+== 'A42
+
+>> to lit-word! /only
+== 'only
+```
+
+== Syntaxe littérale
+
+Une apostrophe `'` suivie par un ou plusieurs caractères de toute l'étendue d'Unicode, incluant les caractères de ponctuation du sous-ensemble ASCII suivant: `! & ' * + - . < = > ? _ | ~``
+
+Les caractères interdits sont les caractères de contrôle, les caractères d'espace, et les caractères de ponctuation du sous-ensemble ASCII suivant: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+
+Une valeur de `lit-word!` ne peut pas commencer par un nombre.
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués à `lit-word!`: `=, ==, <>, >, <, >=, &lt;=, =?`. 
+
+== Test de valeurs
+
+Utilisez `lit-word?` pour vérifier si une valeur est du type `Lit-word!`.
+
+```red
+>> lit-word? first ['foo bar baz]
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? first ['foo bar baz]
+== lit-word!
+```
+
+== Mots prédéfinis
+
+=== Fonctions
+
+`to-lit-word`

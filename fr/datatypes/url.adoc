@@ -1,0 +1,66 @@
+= Le type Url!
+:toc:
+:numbered:
+
+
+== Résumé
+
+Une valeur de type `url!` représente une référence à une ressource réseau et permet d'exprimer directement des addresses de ressources (Uniform Resource Locators).
+
+`Url!` appartient aux ensembles de types suivants: `any-string!`, `series!`
+
+== Création
+
+Les valeurs de type `url!` peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make` ou la conversion `to`.
+
+```red
+>> make url! [foo bar baz]
+== foo://bar/baz
+```
+
+```red
+>> to url! [ftp localhost]
+== ftp://localhost
+```
+
+== Syntaxe littérale
+
+Un ou plusieurs caractères suivis par deux points `:`, suivis par un ou plusieurs caractères.
+
+Les codes de conversion URL, tels que %20 et %30, sont autorisés.
+
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués à `Url!`: `=, ==, <>, >, <, >=, &lt;=, =?`. De plus, `min`, et `max` sont aussi supportés.
+
+
+== Test de valeurs
+
+Utilisez `url?` pour vérifier si une valeur est du type `Url!`.
+
+```red
+>> url? https://www.foo.org
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> url? http://bar.net
+== true
+```
+
+== Mots prédéfinis
+
+=== Actions
+
+`read`, `write`
+
+=== Fonctions
+
+`clean-path`, `dir?`, `dirize`, `do-file`, `do-thru`, `exists-thru?`, `load`, `load-thru`, `path-thru`, `read-thru`, `save`, `split-path`, `suffix?`, `to-url`, `url?`
+
+=== Natives
+
+`browse`, `dehex`

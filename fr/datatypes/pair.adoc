@@ -1,0 +1,141 @@
+= Le type Pair!
+:toc:
+:numbered:
+
+
+== Résumé
+
+Le type de données `pair!` est utilisé pour représenter des coordonnées bidimensionnelles.
+
+`Pair!` appartient aux ensembles de types suivants: `immediate!`, `scalar!`
+
+== Syntaxe littérale
+
+Une paire s'écrit comme deux entiers séparés par un `x`.
+
+
+`1024×768`
+
+`-42x42`
+
+
+== Création
+
+Les valeurs de type Pair! peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant le constructeur `make`, `to` conversion, ou la native `as-pair`.
+
+```red
+>> make pair! [20 30]
+== 20x30
+
+>> make pair! 42
+== 42x42
+```
+
+
+```red
+>> to pair! [20 30]
+== 20x30
+
+>> to pair! 42
+== 42x42
+
+>> to pair! "42x42"
+== 42x42
+```
+
+`as-pair` prend deux arguments `x` et `y` de type `integer!` ou `float!`. Les valeurs de Float seront tronquées.
+
+```red
+>> as-pair 20 30
+== 20x30
+
+>> as-pair 1.23 42
+== 1x42
+```
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués à `Pair!`: `=, ==, <>, >, <, >=, &lt;=, =?`. De plus, `min`, et `max` sont aussi supportés.
+
+Lorsque deux valeurs `pair!` sont comparées, leurs secondes parties `/y` sont comparée, et en cas d'égalité, leurs premières parties `/x` sont comparées. Si les deux parties sont identiques, les `pair!` sont égales. Par exemple:
+
+```red
+>> 5x3 = 5x3
+== true
+
+>> 0x0 < 1x1
+== true
+
+>> 999x999 < 1x1
+== false
+
+>> 999x0 < 1x1
+== true
+
+>> sort [0x1 1x0 0x2 2x0 1x1 2x2]
+== [1x0 2x0 0x1 1x1 0x2 2x2]
+```
+
+== Calculs
+
+`+`, `-`, `*`, `/`, `%`, `//`, `add`, `subtract`,  `multiply`, `divide`, `remainder`, et `mod` peuvent être utilisés avec les valeurs de type `pair!`.
+
+
+== Raffinements
+
+Les paires permettent l'usage des raffinements `/x` et `/y` pour la visualisation et la modification des coordonnées.
+
+```red
+>> my-pair: 1024x768
+== 1024x768
+
+>> my-pair/x
+== 1024
+
+>> my-pair/y
+== 768
+
+>> my-pair/y: 42
+== 42
+
+>> my-pair
+== 1024x42
+```
+
+== Test de valeurs
+
+Utilisez `pair?` pour vérifier si une valeur est du type `Pair!`.
+
+```red
+>> pair? 42x42
+== true
+
+>> pair? 42
+== false
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? 42x42
+== pair!
+```
+
+== Mots prédéfinis
+
+=== Actions
+
+`absolute`, `add`, `and~`, `at`, `copy`, `divide`, `multiply`, `negate`, `or~`, `pick`, `remainder`, `reverse`, `round`, `skip`, `subtract`, `xor~`
+
+=== Fonctions
+
+`caret-to-offset`, `draw`, `first`, `make-face`, `metrics?`, `mod`, `modulo`, `offset-to-caret`, `offset-to-char`, `pair?`, `second`, `size-text`, `to-pair`, `within?`
+
+=== Natives
+
+`as-pair`, `case`, `extend`, `zero?`
+
+
+=== Opérateurs
+
+`%`, `*`, `+`, `-`, `/`, `//`, `and`, `or`, `xor`

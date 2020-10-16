@@ -1,0 +1,98 @@
+= Le type Word!
+:toc:
+:numbered:
+
+== Résumé
+
+Un mot (`word!`) est une valeur symbolique qui peut être utilisée comme une variable, un identifiant qui fait référence à une valeur dans un contexte donné.
+
+Les mots ne stockent pas de valeurs, ils pointent vers des valeurs dans un contexte donné, qui sera par défaut le contexte global quand aucun contexte n'est fourni. 
+
+`Word!` appartient aux ensembles de types suivants: `any-word!`, `all-word!`, `immediate!`
+
+=== Formes dérivées de Word
+
+|========================================================================
+|*Syntaxe*|*Type*|*Description*
+|word|`word!`|Fait référence à une valeur dans un contexte donné.
+|word:|link:set-word.adoc[set-word!]|Définit une référence à une valeur.
+|:word|link:get-word.adoc[get-word!]|Renvoie une valeur sans opérer d'évaluation.
+|'word|link:lit-word.adoc[lit-word!]|Supprime l'évaluation. La valeur littérale "word".
+|/word|link:refinement.adoc[refinement!]|Evalue le mot en tant que raffinement.
+|========================================================================
+
+== Création
+
+Les valeurs de type `word!` peuvent être créées à l'aide de la syntaxe littérale, ou à l'exécution en utilisant la conversion `to` à partir des types de données: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, et `refinement!`.
+
+
+```red
+>> to word! #"X"
+== X
+
+>> to word! true   ; renvoie une représentation de la valeur sous forme de mot.
+== true
+
+>> to word! "Hello"
+== Hello
+
+>> to word! float!  ; renvoie une représentation de la valeur sous forme de mot.
+== float!
+
+>> to word! #hi
+== hi
+
+>> to word! /deep
+== deep
+```
+
+[NOTE, caption=Note]
+
+Essayer de convertir `none` suscitera une erreur.
+
+== Syntaxe littérale
+
+Un ou plusieurs caractères de toute l'étendue d'Unicode, incluant les caractères de ponctuation du sous-ensemble ASCII suivant: `! & ' * + - . < = > ? _ | ~``
+
+[NOTE, caption=Note]
+
+les Words ne sont pas sensibles à la casse. Le changement d'une lettre quelconque en sa version minuscule ou majuscule ne crée pas un mot différent.
+
+Les caractères interdits sont les caractères de contrôle, les caractères d'espace, et les caractères de ponctuation du sous-ensemble ASCII suivant: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+
+Une valeur de type `word!` ne peut pas commencer par un nombre.
+
+== Etapes d'évaluation
+
+* Le contexte auquel le mot est lié est trouvé.
+
+* La valeur référencée par ce mot dans ce contexte est récupérée.
+
+* Suivant le type de cette valeur:
+
+** Si aucune valeur n'existe, le type est `unset!`, et une erreur est renvoyée.
+
+** Si le type de la valeur appartient à l'ensemble de types `any-function!`, la fonction est appelée.
+
+** Sinon, la valeur est renvoyée.
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués à `word!`: `=, ==, <>, >, <, >=, &lt;=, =?`.
+
+
+== Test de valeurs
+
+Utilisez `word?` pour vérifier si une valeur est du type `Word!`.
+
+```red
+>> word? first [let us code]
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? first [let us code]
+== word!
+```

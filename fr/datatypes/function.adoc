@@ -1,0 +1,140 @@
+= Le type Function!
+:toc:
+:numbered:
+
+== Résumé
+
+Les valeurs du type `function!` représentent des fonctions définies par l'utilisateur.
+
+`Function!` appartient aux ensembles de types suivants: `any-function!`, `default!`
+
+== Création
+
+Les valeurs de fonctions peuvent être créées à l'exécution en utilisant `make` ou en utilisant l'un des mots prédéfinis `func`, `has`, `does`, ou `function`.
+
+=== Création lors de l'exécution
+// grammaire à partir de https://github.com/meijeru/red.specs-public/blob/master/specs.adoc#538-function
+
+* syntaxe BNF:
++
+```
+<function> ::= make function! [<function-spec> <function-body>] | func <function-spec> <function-body> |
+               has [<argument>*] <function-body> | does <function-body> | function <function-spec> <function-body>
+
+<function-spec> ::= [<docstring>° <argument-spec> <return-spec>°]
+
+<docstring> ::= <string>
+
+<argument-spec> ::= <argument>* <optional-arguments>*
+
+<argument> ::= <argument-name> <argument-doc>° | <argument-name> [<typeset-element>*] <argument-doc>°
+
+<argument-name> ::= <word-literal> | '<word-literal> | :<word-literal>
+
+<argument-doc> ::= <string>
+
+<optional-arguments> ::= <function-refinement> <argument-doc>° <argument>*
+
+<function-refinement> ::= /<word-literal>
+
+<return-spec> ::= return: [<typeset-element>*] <return-doc>°
+
+<return-doc> ::= <string>
+
+<function-body> ::= <block>
+```
+***
+
+*Exemples*
+
+* `Make`
++
+```red
+>> double: make function! [[n [number!]] [n * 2]]
+== func [n [number!]][n * 2]
+```
+
+* `Func` est équivalent à `make function!`. 
++
+```red
+>> double: func [n [number!]][n * 2]
+== func [n [number!]][n * 2]
+```
++
+Les mots qui suivent le raffinement optionnel `/local` seront considérés comme locaux au corps de la fonction.
+
+* `Has` est équivalent à `func` avec le raffinement `/local`. 
++
+```red
+>> fourty-two: has [value][value: 42 print value]
+== func [/local value][value: 42 print value]
+```
+
+* `Does` est équivalent à `func` sans arguments. 
++
+```red
+>> h: does [print "Hi"]
+== func [][print "Hi"]
+```
+
+* `Function` est équivalent à `func`, mais considérera toutes les valeurs de type `set-word!` et les mots de `foreach`, `remove-each`, et `repeat` comme locaux au corps de la fonction.
+
++
+```red
+>> double: function [n [number!]][val: "Result is" print [val n * 2]]
+== func [n [number!] /local val][val: "Result is" print [val n * 2]]
+
+>> double 9
+Result is 18
+```
++
+Le mot `val` reste local à la fonction et n'est pas accessible depuis le contexte par défaut `system/words`.
++
+```red
+>> val
+*** Script Error: val has no value
+*** Where: catch
+*** Stack:
+```
+
++
+Les mots qui suivent le raffinement optionnel `/extern` seront accessibles depuis le contexte par défaut `system/words`.
++
+```red
+>> double: function [n [number!] /extern val][val: "Result is" print [val n * 2]
+== func [n [number!]][val: "Result is" print [val n * 2]]
+
+>> double 9
+Result is 18
+
+>> val
+== "Result is"
+```
+
+== Conversions
+
+Aucune conversion n'est supportée pour les valeurs de type `function!`.
+
+== Comparaisons
+
+Les valeurs de fonctions peuvent être comparées pour tester leur similitude et leur égalité avec `same?`, `==`, `equal?`, `strict-equal?`, `not-equal?`, `<>`.
+
+== Test de valeurs
+
+Utilisez `function?` pour vérifier si une valeur est du type `function!`.
+
+```red
+>> function? :double
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? :double
+== function!
+```
+
+== Mots prédéfinis
+
+Les valeurs prédéfinies de type `function!` peuvent être visualisées en tapant `help function!` dans la console Red.

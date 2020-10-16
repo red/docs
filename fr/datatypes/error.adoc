@@ -1,0 +1,188 @@
+= Le type Error!
+:toc:
+:numbered:
+
+== Résumé
+
+Les valeurs de type `error!` représentent des valeurs d' `object!` spécialisées utilisées en cas d'erreur. Les valeurs de type `error!` comprennent un nombre fixé de mots (champs) qui sont définis dans `system/standard/error`.
+
+```red
+SYSTEM/STANDARD/ERROR est un object! avec les mots et valeurs suivants:
+     code   none!         none
+     type   none!         none
+     id     none!         none
+     arg1   none!         none
+     arg2   none!         none
+     arg3   none!         none
+     near   none!         none
+     where  none!         none
+     stack  none!         none
+```
+
+`error!` appartient aux ensembles de types suivants: `any-object!`, `default!`
+
+== Création
+
+Les valeurs de type `error!` peuvent être créées au cours de l'exécution en utilisant `make` ou `cause-error`.
+
+== Création lors de l'exécution
+
+```
+<error>      ::= make error! <error-spec>
+<error-spec> ::= <integer> | <block> | <string>
+```
+
+* `Make`
++
+Si l'argument fourni à `make` est une valeur de type `integer!`, le type d'erreur est identifié par le champ `code`. Le message d'erreur sera la valeur de type `string!` du premier champ `id` dans la liste des noms `id`.
++
+```red
+SYSTEM/CATALOG/ERRORS/MATH est un object! avec les mots et valeurs suivants:
+    code         integer!      400
+    type         string!       "Math Error"
+    zero-divide  string!       "attempt to divide by zero"
+    overflow     string!       "math ou number overflow"
+    positive     string!       "positive number required"
+
+>> make error! 400
+*** Math Error: attempt to divide by zero    ; id est le mot zero-divide
+*** Where: ??? 
+```
++
+Pour accéder à l'un des messages d'erreur suivants, incrémentez de un le type d'erreur `code`. 
++
+```red
+>> make error! 401
+*** Math Error: math ou number overflow
+*** Where: ??? 
+
+>> make error! 402
+*** Math Error: positive number required
+*** Where: ??? 
+```
++
+L'accès à une position de message d'erreur qui n'existe pas résulte en une erreur "value out of range".
++
+```red
+>> make error! 403
+*** Script Error: value out of range: 403
+*** Where: make
+*** Stack:  
+```
++
+Si l'argument passé à `make` est une valeur de type `block!`, ce bloc doit contenir deux mots qui correspondent au `type` et à l' `id` de l'erreur.
++
+Si l'argument passé à `make` est le corps d'un `object!`, les champs requis sont `type` et `id`. Les champs optionnels sont `arg1`, `arg2`, `arg3`, `near`, `where`, et `stack`.
++
+
+Utilisez les mots suivants pour la valeur du `type` dans un objet erreur: `throw`,`note`, `syntax`, `script`, `math`, `access`, `user`, `internal`.
++
+Vous pouvez trouver les `id` s des types d'erreur disponibles en saisissant `help system/catalog/errors/<error-type>` dans la console Red, `<error-type>` étant l'un des mots susmentionnés.
++
+```red
+>> help system/catalog/errors/throw
+SYSTEM/CATALOG/ERRORS/THROW is an object! with the following words and values:
+    code        integer!      0
+    type        string!       "Throw Error"
+    break       string!       "no loop to break"
+    return      string!       "return ou exit not in function"
+    throw       block!        length: 2  ["no catch for throw:" :arg1]
+    continue    string!       "no loop to continue"
+    while-cond  string!       {BREAK/CONTINUE cannot be used in WHILE condition block}
+```
++
+Usage d'une valeur de bloc avec deux mots:
++
+```red
+>> make error! [throw type]    ; type est le mot throw, id est le mot type
+*** Throw Error: Throw Error
+*** Where: ??? 
+
+>> make error! [throw break]    ; type est le mot throw, id est le mot break
+*** Throw Error: no loop to break
+*** Where: ??? 
+
+>> make error! [throw while-cond]    ; type est le mot throw, id est le mot while-cond
+*** Throw Error: BREAK/CONTINUE cannot be used in WHILE condition block
+*** Where: ??? 
+```
++
+Usage du corps d'un objet:
++
+```red
+>> make error! [type: throw Id: throw arg1: "foo"]
+*** Throw Error: no catch for throw: "foo"
+*** Where: throw
+*** Stack:  
+```
++
+```red
+>> make error! [type: 'script id: 'move-bad arg1: "foo" arg2: "bar" where: 'somewhere?]
+*** Script Error: Cannot MOVE elements from "foo" to "bar"
+*** Where: somewhere? 
+```
++
+Usage d'une valeur de type `string!`:
++
+Si l'argument passé à `make` est une valeur de type `string!`, le type d'erreur sera `User Error`.
++
+```red
+>> foo: make error! "oops"
+*** User Error: "oops"
+*** Where: ??? 
+```
+ 
+* `Cause-error`
++
+`Cause-error` appelle `make error!` avec `type`, `id`, et un bloc de valeurs pour `arg1`, `arg2`, and `arg3`. Si un message d'erreur ne contient pas de valeurs d'arguments (arg), passez un bloc vide.
++
+```red
+>> cause-error 'throw 'break []
+*** Throw Error: no loop to break
+*** Where: do
+*** Stack: cause-error  
+```
++
+Les valeurs d'arguments (arg) dans le bloc sont réduites (évaluées).
++
+```red
+>> cause-error 'syntax 'missing ['foo 'bar]
+*** Syntax Error: missing foo at bar
+*** Where: do
+*** Stack: cause-error   
+
+>> cause-error 'syntax 'missing ["foo" "bar"]
+*** Syntax Error: missing "foo" at "bar"
+*** Where: do
+*** Stack: cause-error  
+```
+
+== Test de valeurs
+
+Utilisez error? pour vérifier si une valeur est du type `error!`.
+
+```red
+>> error? foo
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? foo
+== error!
+```
+
+== Mots prédéfinis
+
+=== Actions
+
+`put`, `select`
+
+=== Fonctions
+
+`attempt`, `cause-error`
+
+=== Natives
+
+`in`, `try`

@@ -1,0 +1,146 @@
+= Le type Object!
+:toc:
+:numbered:
+
+
+== Résumé
+
+Les valeurs de type `Object!` représentent des contextes nommés ou non qui contiennent des paires `word: value`.
+
+`Object!` appartient aux ensembles de types suivants: `any-object!`, `default!`
+
+== Création
+
+Les valeurs de type Object peuvent être créées à l'exécution en utilisant le constructeur `make`, ou en utilisant les fonctions `context`, `object` et `contruct`.
+
+`Make object!` crée un nouvel objet, évaluant le bloc de spécifications.
+
+Les fonctions `context` et `object` invoquent `make object!`.
+
+*En utilisant make:*
+
+```red
+>> foo: make object! [x: "bar" y: "baz"]
+== make object! [
+    x: "bar"
+    y: "baz"
+]
+
+>> foo: make object! [x: "bar" y: ()]   ; le bloc de spécifications est évalué
+*** Script Error: y: needs a value
+*** Where: y
+*** Stack:  
+```
+
+*En utilisant context:*
+
+```red
+>> foo: context [x: "bar" y: "baz"]
+== make object! [
+    x: "bar"
+    y: "baz"
+]
+
+>> foo: context [x: "bar" y: ()]   ; le bloc de spécifications est évalué
+*** Script Error: y: needs a value
+*** Where: y
+*** Stack: context  
+```
+
+*En utilisant object:*
+
+```red
+>> foo: object [x: "bar" y: "baz"] 
+== make object! [
+    x: "bar"
+    y: "baz"
+]
+
+>> foo: object [x: "bar" y: ()]   ; le bloc de spécifications est évalué
+*** Script Error: y: needs a value
+*** Where: y
+*** Stack: object  
+```
+
+Si l'argument passé à make est une valeur de type `object!`, un nouvel objet sera créé en utilisant l'argument comme prototype:
+
+```red
+>> foo: make object! [x: "bar" y: "baz"]
+== make object! [
+    x: "bar"
+    y: "baz"
+]
+
+>> bar: make foo [z: 42]
+== make object! [
+    x: "bar"
+    y: "baz"
+    z: 42
+]
+```
+
+La fonction `construct` crée un objet sans évaluer le bloc de spécifications:
+
+```red
+>> foo: construct [x: "bar" y: ()]
+== make object! [
+    x: "bar"
+    y: ()
+]
+```
+
+Si le raffinement `/with` est utilisé avec `construct`, un nouvel objet sera créé qui sera une extension de la valeur `object!` fournie:
+
+```red
+>> bar: construct/with [a: 42] foo
+== make object! [
+    x: "bar"
+    y: ()
+    a: 42
+]
+```
+
+== Syntaxe littérale
+
+```
+<object> ::= make object! <object-spec> | object <object-spec> | context <object-spec> |
+             make <object> <object-spec>
+
+<object-spec> ::= <block>
+```
+
+== Comparaisons
+
+Tous les comparateurs peuvent être appliqués à `object!`: `=, ==, <>, >, <, >=, &lt;=, =?`. 
+
+
+== Test de valeurs
+
+Utilisez `object?` pour vérifier si une valeur est du type `Object!`.
+
+```red
+>> object? foo
+== true
+```
+
+Utilisez `type?` pour connaître le type d'une valeur donnée.
+
+```red
+>> type? foo
+== object!
+```
+
+
+== Mots prédéfinis
+
+=== Actions
+
+`copy`, `find`, `put`, `select`
+
+=== Fonctions
+
+`any-object?`, `class-of`, `context`, `distance?`, `dump-face`, `face?`, `fetch-help`, `foreach-face`, `get-scroller`, `help`, `help-string`, `layout`, `metrics?`, `object`, `object?`, `offset-to-caret`, `offset-to-char`, `overlap?`, `parse-func-spec`, `react`, `react?`, `request-font`, `rtd-layout`, `save`, `set-flag`, `set-focus`, `show`, `size-text`, `stop-reactor`, `unview`, `view`
+
+=== Natives
+
+`bind`, `context?`, `extend`, `in`, `set`
