@@ -181,7 +181,7 @@ to-char @.:
 
 `ref!` supports all series actions (except for `put`, `sort` and `trim`) and all types of comparison in addition to `min` and `max`.
 
-NOTE: `form` applied to `ref!` value discards a `@` character, while `@` preserves it.
+NOTE: `form` applied to `ref!` value discards a `@` character, while `mold` preserves it.
 
 *Examples*
 

@@ -70,7 +70,7 @@ Parse offers a degree of flexibility by supporting different modes of operation.
 
 === Case-sensitivity
 
-By default, Parse follows Red semantics and is case-insensitive. Case-sensitivity can be enabled with `/case` refinement or turned on/off with `case` keyword.
+By default, Parse follows Red semantics and is case-insensitive. Case-sensitivity can be enabled with `/case` refinement and selectively turned on/off with `case` keyword. `case` changes comparison mode only for the rule that follows it and then restores it back, regardless of the rule's success or failure.
 
 *Syntax*
 
@@ -923,7 +923,7 @@ Parse can modify its input series by inserting new values and removing/changing 
 
 ==== `remove`
 
-Either removes a portion of the input matched by a given rule or removes input between the current position and the marked one; after that, it succeeds and retains the input position after removal.
+Either removes a portion of the input matched by a given rule or removes input between the current position and the marked one; after that, it succeeds and retains the current input position.
 
 NOTE: Removal of values is a forward-consuming operation. In other words, it counts as a match, despite the absence of input advancement.
 
@@ -945,7 +945,7 @@ parse [remove me <and me also> "but leave me be"][some [remove word!] mark: to s
 
 ==== `insert`
 
-Inserts literal value or result of expression evaluation at the current position. Always succeeds and advances the input past the insertion.
+Inserts literal value or result of expression evaluation, either at the current position or at the marked one. Always succeeds. Advances the input past the insertion if it was made at the current position, otherwise input position is retained.
 
 *Syntax*
 
@@ -953,9 +953,15 @@ Inserts literal value or result of expression evaluation at the current position
 insert <value>
 insert <expression>
 
+insert <word> <value>
+insert <word> <expression>
+
 insert only <value>
 insert only <expression>
+insert only <word> <value>
+insert only <word> <expression>
 
+<word>       : input position
 <value>      : literal value
 <expression> : paren! expression
 ----
@@ -965,12 +971,22 @@ If literal value is a `word!`, value referred by it will be used. `only` option 
 *Example*
 
 ----
-parse [assembly][insert [some] skip insert (load "required") insert only [🏗️ 🧰👷]]
+ikea: [assembly]
+here: tail ikea
+
+parse ikea [
+	insert only here [🏗️ 🧰👷]
+	insert only (load "[manual]")
+	word!
+	insert ikea [some]
+	block!
+	insert [required]
+]
 ----
 
 ==== `change`
 
-Changes matched portion on the input to a literal value or a result of expression evaluation. In addition to that, it can change a portion of the input between the current position and the marked one. After the change, it succeeds and advances the input past the modified portion.
+Changes matched portion on the input to a literal value or a result of expression evaluation. In addition to that, it can change a portion of the input between the current position and the marked one. If the change was made at the current position, it succeeds and advances the input past the modified portion, otherwise input position is retained.
 
 *Syntax*
 
@@ -1121,37 +1137,17 @@ Pending bugs and design inconsistencies relevant to Parse are listed below.
 |===
 | Affected rules | Description | Tickets
 
-| `change <position> <expression>`
-| `word!` values are not used literally.
-| https://github.com/red/red/issues/4200[#4200]
-
 | `remove <position>`
 | The case where position comes after the current one is not handled.
 | https://github.com/red/red/issues/4199[#4199]
-
-| `keep pick <expression>`
-| Semantics is undefined.
-| https://github.com/red/red/issues/4198[#4198]
-
-| `collect into`
-| Incorrect handling of series buffer.
-| https://github.com/red/red/issues/4197[#4197]
-
-| `into`
-| It is possible to match series not supported by Parse.
-| https://github.com/red/red/issues/4194[#4194]
 
 | `break`, `reject`
 | Preemptive break of <<Repetition>> rules.
 | https://github.com/red/red/issues/4193[#4193]
 
-| `insert <word>`
-| The rule is not handled properly.
-| https://github.com/red/red/issues/4153[#4153]
-
-| `path!`, `remove`, `insert`, `change`
-| Usage of `path!` literal value inside rules is forbidden, `path!` values are handled inconsistently by <<Modification>> rules. 
-| https://github.com/red/red/issues/4101[#4101], https://github.com/red/red/issues/3528[#3528]
+| `path!`
+| Usage of `path!` literal values inside rules is forbidden.
+| https://github.com/red/red/issues/3528[#3528]
 
 | `fail`, `break`, `reject`
 | Design of some <<Control flow>> rules is not finalized.

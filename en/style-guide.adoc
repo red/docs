@@ -10,15 +10,15 @@ This document describes the _official coding style used in the Red source code_,
 
 As Red/System is a dialect of Red, it shares the same syntax and coding style rules. Specific Red/System rules are marked as such.
 
-The objectives of the following rules are to maximise readability, including keeping an optimum number of lines of code visible on-screen while minimizing the need for comments.
+The purpose of the following rules is to maximise readability by keeping an optimal number of lines of code visible on-screen while minimizing the need for comments.
 
 == Line of code length 
 
-There is no strictly-defined maximum number of columns for a single line of code, as it can vary according to the type of the font used (size, proportional vs fixed-width) or highlighting effects. It should be possible to read a full line of code (excluding comments) in an editor occupying at maximum, half of a 1080p monitor width. On the displays we use for Red codebase coding, it is about 100 columns. In the description below, _excessive size_ or _too long_ expressions will refer to line of code sizes which do not fit the aforementioned criteria.
+There is no strictly-defined maximum number of columns for a single line of code, as it can vary according to the type of the font used (size, proportional vs fixed-width) or highlighting effects. It should be possible to read a full line of code (excluding comments) in an editor occupying at maximum, half of a 1080p monitor width. On the displays we use for Red codebase coding, it is about 100 columns. In the description below, _excessive size_ or _too long_ expressions will refer to lines of code that do not satisfy the aforementioned criteria.
 
 == Indentation 
 
-Red codebase uses tabulations with size of *4* columns to indent the source code. This gives a good trade-off between too small values (like 2 columns) and too big ones (like 8 columns). Using tabs also means that you can adjust it to your personal preference in your editor, while respecting the rule (just pay attention to right alignments using tabs then).
+The Red codebase uses tabulations with size of *4* columns to indent the source code. This gives a good trade-off between too small values (like 2 columns) and too big values (like 8 columns). Using tabs also means that you can adjust it to your personal preference in your editor, while respecting the rule (just pay attention to right alignments using tabs then).
 
 All the contributed Red files to `red/red` repo should contain the following field in their header:
 
@@ -60,7 +60,7 @@ Empty blocks do not contain any whitespace:
  
  a: []
  
-Contiguous blocks do not require a whitespace between the end of one and start of another:
+Contiguous blocks do not require whitespace between the end of one and the start of another:
  
  [][]
  []()
@@ -122,9 +122,9 @@ If the first block is small enough and can fit on the same line, then only the s
 
 == Naming conventions 
 
-*Variable names* should be single-word *nouns*. Choose words which are short and capturing the meaning as best as possible. Common words should be used first (_especially if they are already used in existing Red source code in the same context_). If needed, use a http://www.thesaurus.com/browse/synonym[synonyms dictionary] to find the best word for the usage. Single-letter or abbreviated words (unless the abbreviated word is in common usage) should be avoided as much as possible.
+*Variable names* should be single-word *nouns*. Choose words that are short and capture the meaning as best as possible. Common words should be used first (_especially if they are already used in existing Red source code in the same context_). If needed, use a http://www.thesaurus.com/browse/synonym[synonyms dictionary] to find the best word for the usage. Single-letter or abbreviated words (unless the abbreviated word is in common usage) should be avoided as much as possible.
 
-Names made of multiple words are separated with a dash `-` character. Use a two-words name only when a fitting single-word cannot be found or would be too confusing with already used ones. Variable names made of more than two words should only be used in rare cases. Using single-words as much as possible makes the code horizontally much more compact, improving readability greatly. Avoid useless verbosity.
+Names made of multiple words are separated with a dash `-` character. Use a two-words name only when a fitting single-word cannot be found or would be too confusing with already used ones. Word names with more than two hyphenated parts should only be used in rare cases. Consistent usage of single-word names reduces the horizontal code size and improves readability. Avoid useless verbosity.
 
 *Correct*
 
@@ -147,7 +147,7 @@ Incorrect
  unless tail? list-of-books [author-property: select list-of-books selected-index]
 ----
 
-*Function names* should strive to be single-word _verbs_, in order to express an action, though two or three words names are often necessary. More than three words should be avoided as much as possible. Variable naming conventions also apply to function names. A noun or an adjective followed by a question mark is also accepted. Often, it denotes that the return value is of `logic!` type, but this is not a strict rule, as it is handy to form single-word action names for retrieving a property (e.g. `length?`, `index?`). When forming function names with two or more words, always put the verb in the first position. If names are picked carefully for variables and function names, the code becomes almost self-documented, often reducing the need for comments.
+When naming a function, strive to use single-word _verbs_, in order to express an action, though two or three words names are often necessary. More than three words should be avoided as much as possible. A noun or an adjective followed by a question mark is also accepted. Often, it denotes that the return value is of `logic!` type, but this is not a strict rule, as it is handy to form single-word action names for retrieving a property (e.g. `length?`, `index?`). When forming function names with two or more words, always start with the verb. If your words are named carefully, the code becomes almost self-documented, reducing the need for comments.
 
 *Correct*
 
@@ -167,7 +167,7 @@ Incorrect
  blue-fill: func [...		;-- should be fill-blue
 ----
 
-There is an exception to those naming rules which applies to OS or non-Red third-party API names. In order to make API-specific function and structures field names easily recognizable, their original name should be used. It visually helps distinguish such imported names from regular Red or Red/System code. For example:
+There is an exception for described naming conventions, which applies only to OS imports and third-party libraries not written in Red: to make API-specific functions and structure fields easy to recognize, their original names should be used. This helps to visually distinguish imported names from regular Red or Red/System code. For example:
 
 ----
  tagMSG: alias struct! [
@@ -210,13 +210,13 @@ All variable and function names should be lowercase by default, unless there is 
 
 == Macros (Red/System) anchor:macros-redsystem[]
 
-Apply the same naming conventions for picking up Red/System macros names. Macros generally use uppercase for names, as a way to visually distinguish them easily from the rest of the code (unless the intention is explicit to make it look like regular code, like pseudo-custom datatype definitions). When multiple words are used, they are separated by an underscore `_` character to increase even more the difference with regular code.
+Apply the same naming conventions when choosing Red/System macros names. Names of macros are generally written in uppercase, to visually distinguish them from the rest of the code (unless the intention is to make the macros look like regular code, like pseudo-datatype definitions). When multiple words are used, they are separated by an underscore `_` character to emphasize macro's differences from regular code.
 
 _(TBD: extract all single-word names used in the Red codebase as examples)_
 
 == Function definitions 
 
-The general rule is to keep the spec block on a single line. The body block can be on the same line or over several lines. In case of Red/System, as the spec blocks tend to be longer, most functions spec blocks are wrapped over several lines, so, for sake of visual consistency, often even small spec block are wrapped.
+The general rule is to keep the spec block on a single line. The body block can be on the same line or over several lines. As Red/System spec blocks tend to be longer, most functions spec blocks are wrapped over several lines, so, for sake of visual consistency, small spec blocks are often wrapped as well.
 
 *Correct*
 
@@ -297,7 +297,7 @@ Incorrect
 ]
 ----
 
-For docstrings, the main one (describing the function) should be on its own line if the spec block is wrapped. The argument and refinement docstrings should be on the same line as the item they are describing. Docstrings start with a capital letter and do not require an ending dot (it's added automatically when printed on screen by `help` function).
+The main docstring (describing the function) should be on its own line if the spec block is wrapped. The argument and refinement docstrings should be on the same line as the item they are describing. Docstrings start with a capital letter and do not require an ending dot (it's added automatically when printed on screen by `help` function).
 
 *Correct*
 
@@ -379,7 +379,7 @@ Incorrect
                      argument5
 ----
 
-For long expressions with many nested parts, spotting the bounds of each expression can be sometimes difficult. Using parenthesis for grouping a nested call with its arguments is acceptable (but not mandatory).
+For long expressions with many nested parts, spotting the bounds of each expression can sometimes be difficult. Using parenthesis for grouping a nested call with its arguments is acceptable (but not mandatory).
 
 ----
  head insert (copy/part [1 2 3 4] 2) (length? mold (2 + index? find "Hello" #"o"))
