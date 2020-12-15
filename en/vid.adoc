@@ -469,7 +469,7 @@ font <spec>
 
 *Description*
 
-Sets the face's `font` facet to a new `font!` object. Font! object is described link:view.adoc#_font_object[here].
+Sets the face's `font` facet to a new `font!` object. Font! object is described link:view.adoc#font-object[here].
 
 NOTE: It's possible to use `font` along with other font-related settings, VID will merge them together, giving priority to the last one specified.
 
@@ -486,7 +486,7 @@ para <spec>
 
 *Description*
 
-Sets the face's `para` facet to a new `para!` object. Para! object is described link:view.adoc#_para_object[here].
+Sets the face's `para` facet to a new `para!` object. Para! object is described link:view.adoc#para-object[here].
 
 NOTE: It possible to use `para` along with other para-related settings, VID will merge them together, giving priority to the last one specified.
 
@@ -792,7 +792,7 @@ The created actor function full specification is:
 func [face [object!] event [event! none!]][...body...]
 ----
 
-The valid list of event names can be found link:view.adoc#_actors[here].
+The valid list of event names can be found link:view.adoc#event-names[here].
 
 When a block or a get-word is passed without any actor name prefix, the default actor for the face type is created according to the definitions https://github.com/red/red/blob/master/modules/view/styles.red[here].
 
