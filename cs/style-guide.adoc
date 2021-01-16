@@ -10,16 +10,16 @@ Tento dokument popisuje _oficiální kódovací styl, použitý ve zdrojovém k�
 
 Protože Red/System je dialekt Redu, sdílí stejná pravidla skladby a kódovacího stylu. Specifická pravidla pro Red/System jsou označena.
 
-Účelem následujících pravidel je maximalizace čitelnosti dodržováním optimálního počtu řádků, viditelných v displeji editoru, jakož i minimalizací potřeby komentářů.
+Účelem následujících pravidel je maximalizace čitelnosti, včetně dodržování optimálního počtu řádků, viditelných v displeji editoru, jakož i minimalizace potřeby komentářů.
 
 == Délka řádku 
 
-Neexistuje striktně definovaný maximální počet sloupců pro řádek kódu, neboť ten může záviset na typu použitého fontu (velikost, proporcionální versus fixní šířka) nebo na zvýrazňovacích efektech. Mělo by být možné číst celý řádek kódu (vyjímaje komentáře) v editoru, zabírajícího maximálně polovinu monitoru šířky 1080 p. Na displejích, které používáme pro kódování základního kódu Redu, to je asi 100 sloupců. V následujícím popise se výraz _nadměrná velikost_ nebo _příliš dlouhý výraz_ vztahovat na ty řádky kódu, které jsou nekonformní s výše uvedenými kriterii. 
+Neexistuje striktně definovaný maximální počet sloupců pro řádek kódu, neboť ten může záviset na typu použitého fontu (velikost, proporcionální versus fixní šířka) nebo na zvýrazňovacích efektech. Mělo by být možné číst celý řádek kódu (vyjímaje komentáře) v editoru, zabírajícím maximálně polovinu monitoru šířky 1080 p. Na displejích, které používáme pro kódování základního kódu Redu, to je asi 100 sloupců. V následujícím popise se bude výraz _nadměrná velikost_ nebo _příliš dlouhý_ vztahovat na kód, nekonformní s výše uvedenými kriterii. 
 
 
 == Odsazení 
 
-Zdrojové kódy Redu používají odsazení o velikosti *4* mezer. To poskytuje dobrý kompromis mezi příliš malým (např. 2 mezer) nebo příliš velkým (např. 8 mezer) odsazením. Použití tabulátoru umožňuje přizpůsobení osobní preference daným pravidlům.
+Základní kód (codebase) Redu používá pro odsazení kódu tabulaci o velikosti *4*. To poskytuje dobrý kompromis mezi příliš malým (např. 2 sloupce) nebo příliš velkým (např. 8 slopců) odsazením. Použití tabulátoru umožňuje akomodaci osobní preference uživatele daným pravidlům.
 
 Všechny přispívající zdrojové soubory do repozitáře `red/red` by měly ve svém záhlaví obsahovat následující pole:
 
@@ -119,7 +119,7 @@ while [not tail? series][
 
 *Jména proměnných* by měla být jednoslovná _podstatná jména_. Vybírejte slova krátká a výstižná. Přednost mají obecná slova (zejména pokud jsou již použita ve stejném kontextu v existujícím zdrojovém kódu Redu.) V případě potřeby je vhodné vyhledat nejlepší termín ve slovníku http://www.thesaurus.com/browse/synonym[synonym]. Jednopísmenová slova nebo zkratky nejsou pro označení vhodná.
 
-Slova víceslovných názvů se oddělují pomlčkou `-`. Dvouslovné názvy se použijí v případě, že neexistuje jednoslovná varianta, nebo je jednoslovný název zaměnitelný s již existujícím. Názvy složené z více než dvou slov by se měly používat jen ve výjimečných případech. Konzistentní používání jednoslovných názvů číní kód kompaktnější v horizontálním směru a tudíž mnohem čitelnější.
+Slova víceslovných názvů se oddělují pomlčkou `-`. Dvouslovné názvy se použijí v případě, že neexistuje jednoslovná varianta, nebo je jednoslovný název zaměnitelný s již existujícím. Názvy proměnných, složené z více než dvou slov, by se měly používat jen ve výjimečných případech. Používání jednoslovných názvů číní kód kompaktnější v horizontálním směru a tudíž mnohem čitelnější.
 
 *Správně*
 ----
@@ -140,7 +140,7 @@ lostItems: []
 unless tail? list-of-books [author-property: select list-of-books selected-index]
 ----
 
-Jména funkcí by měla být jednoslovnými _slovesy_, naznačujícími zamýšlenou akci, byť dvou- nebo tříslovné názvy jsou často také nezbytné. Názvoslovná konvence se také vztahuje na na názvy funkcí. Zde je přípustné podstatné či přídavné jméno, doplněné otazníkem.  Ten často naznačuje, že zpětná hodnota je typu `logic!`, což však není striktní pravidlo, protože je vhodné vytvářet jednoslovné názvy akcí pro zjištění vlastnosti (např. `length?`, `index?`). Při určování víceslovného názvu funkce se vždy dává sloveso na první místo. Jsou-li názvy proměnných a funkcí vybrány pečlivě, stává se kód téměř samodokumentační s malou potřebou komentářů.
+*Názvy funkcí* by měly být jednoslovnými _slovesy_, naznačujícími zamýšlenou akci, byť dvou- nebo tříslovné názvy jsou často také nezbytné. Názvoslovná konvence se také vztahuje na na názvy funkcí. Zde je přípustné podstatné či přídavné jméno, doplněné otazníkem.  Ten často naznačuje, že zpětná hodnota je typu `logic!`, což však není striktní pravidlo, protože je vhodné vytvářet jednoslovné názvy akcí pro zjištění vlastnosti (např. `length?`, `index?`). Při určování víceslovného názvu funkce se vždy dává slovo na první místo. Jsou-li názvy proměnných a funkcí vybrány pečlivě, stává se kód téměř samodokumentační s malou potřebou komentářů.
 
 *Správně*
 ----
@@ -200,13 +200,13 @@ Všechny názvy proměnných a funkcí se píší malými písmeny, pokud není 
 
 == Makra (Red/System) anchor:macros-redsystem[] 
 
-Pro názvy maker se obvykle používají velká písmena kvůli vizuálnímu odlišení od zbytku kódu (pokud není přímo záměrem aby se nelišily od normálního kódu, 'like pseudo-datatype definitions'). Slova víceslovných názvů v Red/System se oddělují podtržítkem `_` pro zdůraznění jeho odlišnosti od normálního kódu.
+Pro názvy maker se obvykle používají velká písmena kvůli odlišení od zbytku kódu (pokud není přímo záměrem aby se nelišily od normálního kódu, 'like pseudo-custom datatype definitions'). Slova víceslovných názvů se oddělují podtržítkem `_`.
 
 _(TBD: extract all single-word names used in the Red codebase as examples)_
 
 == Definice funkcí 
 
-Obecné pravidlo je udržet specifikaci bloku na jednom řádku. Tělo bloku může být na jednom či více řádcích. V případě Red/System, kde mají specifikace bloků tendenci být delší, je většina specifikací zabalena (wrapped) do několika řádků a tak kvůli vizuální konzistenci jsou malé specifikace bloků zabaleny rovněž.
+Obecné pravidlo je udržet specifikaci bloku na jednom řádku. Tělo bloku může být na jednom či více řádcích. V případě Red/System, kde mají specifikace bloků tendenci být delší, je většina specifikací rozbalena (wrapped) do několika řádků a tak kvůli vizuální konzistenci jsou malé specifikace bloků rozbaleny.
 
 *Správně*
 ----
@@ -281,7 +281,7 @@ make-world: func [
 ]
 ----
 
-Hlavní dokumentační řetězec (popisující funkci) má mít svůj vlastní řádek, je-li specifikační blok zabalen (wrapped). Dokumentační řetězce argumentů a upřesnění by měly být na stejném řádku jako položka, kterou popisují. Dokumentační řetězce začínají velkým písmenem a nemusí být ukončeny tečkou (jež se přidává automaticky po volání funkce `help` v konzole).
+Hlavní dokumentační řetězec (popisující funkci) má mít svůj vlastní řádek, je-li specifikační blok zalomen. Dokumentační řetězce argumentů a upřesnění by měly být na stejném řádku jako objekt, který popisují. Dokumentační řetězce začínají velkým písmenem a nemusí být ukončeny tečkou (jež se přidává automaticky po volání funkce `help` v konzole).
 
 *Správně*
 ----
@@ -356,7 +356,7 @@ process-many
 				argument5
 ----
 
-U dlouhých výrazů s mnoha vloženými částmi, může být rozlišení jejich hranic někdy obtížné. Používání závorek pro seskupení vloženého volání s příslušnými argumenty je přijatelné (nikoliv povinné).
+U dlouhých výrazů s mnoha vloženými částmi, může být rozlišení hranic někdy obtížné. Používání závorek pro seskupení vložených volání s příslušnými argumenty je přijatelné (nikoliv povinné).
 ----				
 head insert (copy/part [1 2 3 4] 2) (length? mold (2 + index? find "Hello" #"o"))
 
@@ -384,6 +384,6 @@ je vyhražena pro víceřádkové řetězce. Dodržování tohoto pravidla zaji�
 
 Výjimku z tohoto pravidla vytváří situace, když jednořádkový řetězec obsahuje znak `"`. V tom případě je lepší i pro jednořádkový řetězec použít formu `{}`, která je čitelnější než případné použití "escaping" znaků `^"`.
 
-== New line usage 
+== New line usage anchor:new-line-usage[] 
 
 TBD
