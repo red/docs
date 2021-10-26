@@ -1,0 +1,58 @@
+= Interpreter Events
+:imagesdir: ../images
+:toc:
+:toclevels: 3
+:numbered:
+
+== Concept 
+
+TBD
+
+== Events
+
+
+* PROLOG: when entering a function.
+* EPILOG: when exiting a function.
+* ENTER: when a block is about to be evaluated.
+* EXIT: when current evaluated block's end has been reached.
+* OPEN: when a new function (any-function!) call is pushed on stack and a new stack frame is opened.
+* RETURN: when a function call has returned and its stack frame has been closed.
+* FETCH: a value is read from the input block to be evaluated.
+* PUSH: a value has been pushed on the stack.
+* SET: a set-word is set to a value.
+* CALL: a function with all arguments fetched on the stack gets called.
+* ERROR: when an error occurs and is about to be thrown up in the stack.
+
+
+== Predefined Handlers
+
+=== `debug`
+
+Debugger commands:
+
+* `next` or `n` or just ENTER: evaluate next value.
+* `continue` or `c`: exit debugging console and continue evaluation.
+* `stack` or `s`: display the current calls and expression stack.
+* `parents` or `p`: display the parents call stack.
+* `:word`: outputs the value of `word`. If it is a `function!`, dump the local context.
+* `:a/b/c`: outputs the value of `a/b/c` path.
+* `watch <word1> <word2>...`: watch one or more words. `w` can be used as shortcut for `watch`.
+* `-watch <word1> <word2>...`: stop watching one or more words. `-w` can be used as shortcut for `-watch`.
+* `+stack`: outputs expression stack on each new event. `+s` can be used as a shortcut.
+* `-stack`: do not output expression stack on each new event. `-s` can be used as a shortcut.
+* `+locals`: output local context for each entry in the callstack. `+l` can be used as a shortcut.
+* `-locals`: do not output local context for each entry in the callstack. `-l` can be used as a shortcut.
+* `+indent`: indent the output of the expression stack. Shortcut: `+i`.
+* `-indent`: do not indent the output of the expression stack. Shortcut: `-i`.
+
+=== `profile`
+
+TBD
+
+=== `trace`
+
+TBD
+
+=== Dumping raw events
+
+TBD
