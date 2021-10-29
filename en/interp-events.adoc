@@ -6,25 +6,58 @@
 
 == Concept 
 
-TBD
+In order to support writing debuggers, profilers, analyzers and other useful tools that are needed for efficient programming, the interpreter is offering a generic event-oriented low-level API on top of which all these tools can be written. It is similar to the `parse/trace` and `lexer/trace` instrumentation approach.
+
+== Interpreter instrumentation
+
+In order to access internal interpreter states, the interpreter is generating events at key points of his internal code evaluation process. Those events can be captured using a user-provided callback function. Events are emitted only if a _tracing_ mode is enabled in the interpreter using `/trace` refinement on `do`.
+
+----
+do/trace <code> <callback>
+
+<code>     : a block of code to evaluate in tracing mode.
+<callback> : a callback function, triggered on each interpreter event.
+----
+
+*Examples*
 
 == Events
 
+[cols="1,1,1,1,2", options="header"]
+|===
+|Event | Code | Value | Ref | Description
+|`enter`| - | - | - | when a block is about to be evaluated.
+|`exit`| - | - | - | when current evaluated block's end has been reached.
+|`open`| - | - | - | when a new function (any-function!) call is pushed on stack and a new stack frame is opened.
+|`return`| - | - | - | when a function call has returned and its stack frame has been closed.
+|`prolog`| - | - | - | when entering a function.
+|`epilog`| - | - | - | when exiting a function.
+|`fetch`| - | - | - | a value is read from the input block to be evaluated.
+|`push`| - | - | - | a value has been pushed on the stack.
+|`set`| - | - | - | a set-word is set to a value.
+|`call`| - | - | - | a function with all arguments fetched on the stack gets called.
+|`error`| - | - | - | when an error occurs and is about to be thrown up in the stack.
+|`throw`| - | - | - | when a value is thrown using `throw` native.
+|`catch`| - | - | - | when a value is caught using `catch` native.
+|===
 
-* PROLOG: when entering a function.
-* EPILOG: when exiting a function.
-* ENTER: when a block is about to be evaluated.
-* EXIT: when current evaluated block's end has been reached.
-* OPEN: when a new function (any-function!) call is pushed on stack and a new stack frame is opened.
-* RETURN: when a function call has returned and its stack frame has been closed.
-* FETCH: a value is read from the input block to be evaluated.
-* PUSH: a value has been pushed on the stack.
-* SET: a set-word is set to a value.
-* CALL: a function with all arguments fetched on the stack gets called.
-* ERROR: when an error occurs and is about to be thrown up in the stack.
+== Event handler
+
+----
+func [
+    event [word!]
+    code  [block! paren! none!]
+    value [any-type!]
+    ref   [any-type!]
+    frame [pair!]
+][
+    [events]                    ;-- optional restricted event names list
+    ...body...
+]
+----
 
 
-== Predefined Handlers
+== Predefined tools
 
 === `debug`
 
@@ -56,3 +89,5 @@ TBD
 === Dumping raw events
 
 TBD
+
+== Implementation notes
