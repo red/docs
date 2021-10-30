@@ -25,20 +25,20 @@ do/trace <code> <callback>
 
 [cols="1,1,1,1,2", options="header"]
 |===
-|Event | Code | Value | Ref | Description
-|`enter`| - | - | - | when a block is about to be evaluated.
-|`exit`| - | - | - | when current evaluated block's end has been reached.
-|`open`| - | - | - | when a new function (any-function!) call is pushed on stack and a new stack frame is opened.
-|`return`| - | - | - | when a function call has returned and its stack frame has been closed.
-|`prolog`| - | - | - | when entering a function.
-|`epilog`| - | - | - | when exiting a function.
-|`fetch`| - | - | - | a value is read from the input block to be evaluated.
-|`push`| - | - | - | a value has been pushed on the stack.
-|`set`| - | - | - | a set-word is set to a value.
-|`call`| - | - | - | a function with all arguments fetched on the stack gets called.
-|`error`| - | - | - | when an error occurs and is about to be thrown up in the stack.
-|`throw`| - | - | - | when a value is thrown using `throw` native.
-|`catch`| - | - | - | when a value is caught using `catch` native.
+|Event   | Code     | Value   | Ref     | Description
+|*`ENTER`* | `block!` | `unset` | `none` | when a block is about to be evaluated.
+|*`EXIT`*  | `block!` | `unset` | `none` | when current evaluated block's end has been reached.
+|*`OPEN`*  | `block!` | `any-function!` | `word!` or `path!` | when a new function (any-function!) call is pushed on stack and a new stack frame is opened.
+|*`RETURN`*| `block!` | returned value | `word!` or `path!` | when a function call has returned and its stack frame has been closed.
+|*`PROLOG`*| `none`   | -       | -       | when entering a function.
+|*`EPILOG`*| -        | -       | -       | when exiting a function.
+|*`FETCH`* | -        | -       | -       | a value is read from the input block to be evaluated.
+|*`PUSH`*  | -        | -       | -       | a value has been pushed on the stack.
+|*`SET`*   | -        | -       | -       | a set-word is set to a value.
+|*`CALL`*  | -        | -       | -       | a function with all arguments fetched on the stack gets called.
+|*`ERROR`* | -        | -       | -       | when an error occurs and is about to be thrown up in the stack.
+|*`THROW`* | -        | -       | -       | when a value is thrown using `throw` native.
+|*`CATCH`* | -        | -       | -       | when a value is caught using `catch` native.
 |===
 
 == Event handler
