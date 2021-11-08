@@ -71,12 +71,12 @@ Debugger commands:
 * `:a/b/c`: outputs the value of `a/b/c` path.
 * `watch <word1> <word2>...`: watch one or more words. `w` can be used as shortcut for `watch`.
 * `-watch <word1> <word2>...`: stop watching one or more words. `-w` can be used as shortcut for `-watch`.
-* `+stack`: outputs expression stack on each new event. `+s` can be used as a shortcut.
-* `-stack`: do not output expression stack on each new event. `-s` can be used as a shortcut.
-* `+locals`: output local context for each entry in the callstack. `+l` can be used as a shortcut.
-* `-locals`: do not output local context for each entry in the callstack. `-l` can be used as a shortcut.
-* `+indent`: indent the output of the expression stack. Shortcut: `+i`.
-* `-indent`: do not indent the output of the expression stack. Shortcut: `-i`.
+* `+stack`  or `+s`: outputs expression stack on each new event.
+* `-stack`  or `-s`: do not output expression stack on each new event.
+* `+locals` or `+l`: output local context for each entry in the callstack.
+* `-locals` or `-l`: do not output local context for each entry in the callstack.
+* `+indent` or `+i`: indent the output of the expression stack.
+* `-indent` or `-i`: do not indent the output of the expression stack.
 
 === `profile`
 
