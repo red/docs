@@ -23,23 +23,44 @@ do/trace <code> <callback>
 
 == Events
 
+When the tracing mode is active, the interpreter will trigger events described below. Events can be grouped into the following categories:
+
+* Global events: *`INIT`*, *`END`*
+* Evaluating a block/paren of code: *`ENTER`*, *`EXIT`*
+* Calling any type of function: *`OPEN`*, *`CALL`*, *`RETURN`*
+* Evaluating a function body block: *`PROLOG`*, *`EPILOG`*
+* Expression evaluation: *`FETCH`*, *`PUSH`* , *`SET`*, *`ERROR`*
+* Exceptions handling: *`THROW`*, *`CATCH`*
+
+Detailed description:
+
 [cols="1,1,1,1,2", options="header"]
 |===
-|Event   | Code     | Value   | Ref     | Description
-|*`ENTER`* | `block!` | `unset` | `none` | when a block is about to be evaluated.
-|*`EXIT`*  | `block!` | `unset` | `none` | when current evaluated block's end has been reached.
-|*`OPEN`*  | `block!` | `any-function!` | `word!` or `path!` | when a new function (any-function!) call is pushed on stack and a new stack frame is opened.
-|*`RETURN`*| `block!` | returned value | `word!` or `path!` | when a function call has returned and its stack frame has been closed.
-|*`PROLOG`*| `none`   | -       | -       | when entering a function.
-|*`EPILOG`*| -        | -       | -       | when exiting a function.
-|*`FETCH`* | -        | -       | -       | a value is read from the input block to be evaluated.
-|*`PUSH`*  | -        | -       | -       | a value has been pushed on the stack.
-|*`SET`*   | -        | -       | -       | a set-word is set to a value.
-|*`CALL`*  | -        | -       | -       | a function with all arguments fetched on the stack gets called.
-|*`ERROR`* | -        | -       | -       | when an error occurs and is about to be thrown up in the stack.
-|*`THROW`* | -        | -       | -       | when a value is thrown using `throw` native.
-|*`CATCH`* | -        | -       | -       | when a value is caught using `catch` native.
+|Event     | Code     | Value   | Ref    | Description
+|*`INIT`*  | `none`   | `none`  | `none` | when the tracing mode is initiated (`do/trace` call).
+|*`END`*   | `none`   | `none`  | `none` | when the tracing mode is ended (`do/trace` call exiting`).
+|*`ENTER`* | `block!`, `paren!` | `unset` | `none` | when a block is about to be evaluated.
+|*`EXIT`*  | `block!`, `paren!` | `unset` | `none` | when current evaluated block's tail has been reached.
+|*`OPEN`*  | `block!`, `paren!` | `any-function!`  | `word!`, `path!` | when a new function (any-function!) call is initiated and a new stack frame is opened.
+|*`CALL`*  | `block!`, `paren!` | `any-function!` to call | `word!`, `path!`, `any-function!` | a function with all arguments fetched on the stack gets called.
+|*`RETURN`*| `block!`, `paren!` | returned `any-type!` value | `word!`, `path!` | when a function call has returned and its stack frame has been closed.
+|*`PROLOG`*| `block!`, `paren!` | called `function!` value | `word!`, `path!` | when entering a function.
+|*`EPILOG`*| `block!`, `paren!` | called `function!` value | `word!`, `path!` | when exiting a function.
+|*`FETCH`* | `block!`, `paren!` | fetched `any-type!` value | `none` | a value is read from the input block to be evaluated.
+|*`PUSH`*  | `block!`, `paren!` | pushed `any-type!` value | `none` | a value has been pushed on the stack.
+|*`SET`*   | `block!`, `paren!` | `any-type!` | `set-word!`, `set-path!` | a set-word or set-path is set to a value.
+|*`ERROR`* | `none`   | `error!` value | `none` | when an error occurs and is about to be thrown up in the stack.
+|*`THROW`* | `none`   | thrown `any-type!` value | `none` | when a value is thrown using `throw` native.
+|*`CATCH`* | `none`   | thrown `any-type!` value | `none` | when a value is caught using `catch` native.
 |===
+
+Events come with extra information:
+
+* `code`: when available, it provides the input `block!` or `paren!` series currently interpreted. The series offset is the position of the value currently processed.
+
+* `value`: when available, the value that is the object of the current processing.
+
+* `ref`: when available, references the word or path which evaluation produced the current event/value.
 
 == Event handler
 
@@ -67,7 +88,7 @@ Debugger commands:
 * `continue` or `c`: exit debugging console and continue evaluation.
 * `stack` or `s`: display the current calls and expression stack.
 * `parents` or `p`: display the parents call stack.
-* `:word`: outputs the value of `word`. If it is a `function!`, dump the local context.
+* `:word`: outputs the value of `word`. If it is a `function!`, outputs the local context.
 * `:a/b/c`: outputs the value of `a/b/c` path.
 * `watch <word1> <word2>...`: watch one or more words. `w` can be used as shortcut for `watch`.
 * `-watch <word1> <word2>...`: stop watching one or more words. `-w` can be used as shortcut for `-watch`.
