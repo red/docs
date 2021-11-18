@@ -34,31 +34,33 @@ When the tracing mode is active, the interpreter will trigger events described b
 
 Detailed description:
 
-[cols="1,1,1,1,2", options="header"]
+[cols="1,1,1,1,1,2", options="header"]
 |===
-|Event     | Code     | Value   | Ref    | Description
-|*`INIT`*  | `none`   | `none`  | `none` | when the tracing mode is initiated (`do/trace` call).
-|*`END`*   | `none`   | `none`  | `none` | when the tracing mode is ended (`do/trace` call exiting`).
-|*`ENTER`* | `block!`, `paren!` | `unset` | `none` | when a block is about to be evaluated.
-|*`EXIT`*  | `block!`, `paren!` | `unset` | `none` | when current evaluated block's tail has been reached.
-|*`OPEN`*  | `block!`, `paren!` | `any-function!`  | `word!`, `path!` | when a new function (any-function!) call is initiated and a new stack frame is opened.
-|*`CALL`*  | `block!`, `paren!` | `any-function!` to call | `word!`, `path!`, `any-function!` | a function with all arguments fetched on the stack gets called.
-|*`RETURN`*| `block!`, `paren!` | returned `any-type!` value | `word!`, `path!` | when a function call has returned and its stack frame has been closed.
-|*`PROLOG`*| `block!`, `paren!` | called `function!` value | `word!`, `path!` | when entering a function.
-|*`EPILOG`*| `block!`, `paren!` | called `function!` value | `word!`, `path!` | when exiting a function.
-|*`FETCH`* | `block!`, `paren!` | fetched `any-type!` value | `none` | a value is read from the input block to be evaluated.
-|*`PUSH`*  | `block!`, `paren!` | pushed `any-type!` value | `none` | a value has been pushed on the stack.
-|*`SET`*   | `block!`, `paren!` | `any-type!` | `set-word!`, `set-path!` | a set-word or set-path is set to a value.
-|*`ERROR`* | `none`   | `error!` value | `none` | when an error occurs and is about to be thrown up in the stack.
-|*`THROW`* | `none`   | thrown `any-type!` value | `none` | when a value is thrown using `throw` native.
-|*`CATCH`* | `none`   | thrown `any-type!` value | `none` | when a value is caught using `catch` native.
+|Event     | Code     | Offset | Value   | Ref    | Description
+|*`INIT`*  | `none`   | -1     | n/a (`none`)  | n/a (`none`) | when the tracing mode is initiated (`do/trace` call).
+|*`END`*   | `none`   | -1     |  n/a (`none`)  | n/a (`none`) | when the tracing mode is ended (`do/trace` call exiting).
+|*`ENTER`* | `block!`, `paren!` | -1     |  n/a (`none`) | n/a (`none`) | when a block is about to be evaluated.
+|*`EXIT`*  | `block!`, `paren!` | -1     |  n/a (`none`) | n/a (`none`) | when current evaluated block's tail has been reached.
+|*`OPEN`*  | `block!`, `paren!` | `integer!` |  `any-function!`  | `word!`, `path!` | when a new function (any-function!) call is initiated and a new stack frame is opened.
+|*`CALL`*  | `block!`, `paren!` | `integer!` |  `any-function!` to call | `word!`, `path!`, `any-function!` | a function with all arguments fetched on the stack gets called.
+|*`RETURN`*| `block!`, `paren!` | `integer!` |  returned `any-type!` value | `word!`, `path!` | when a function call has returned and its stack frame has been closed.
+|*`PROLOG`*| `block!`, `paren!` | -1     |  called `function!` value | `word!`, `path!` | when entering a function.
+|*`EPILOG`*| `block!`, `paren!` | -1     |  called `function!` value | `word!`, `path!` | when exiting a function.
+|*`FETCH`* | `block!`, `paren!` | `integer!` |  fetched `any-type!` value | n/a (`none`) | a value is read from the input block to be evaluated.
+|*`PUSH`*  | `block!`, `paren!` | `integer!` |  pushed `any-type!` value | n/a (`none`) | a value has been pushed on the stack.
+|*`SET`*   | `block!`, `paren!` | `integer!` |  `any-type!` | `set-word!`, `set-path!` | a set-word or set-path is set to a value.
+|*`ERROR`* | `none`   | -1     |  `error!` value | n/a (`none`) | when an error occurs and is about to be thrown up in the stack.
+|*`THROW`* | `none`   | -1     |  thrown `any-type!` value | n/a (`none`) | when a value is thrown using `throw` native.
+|*`CATCH`* | `none`   | -1     |  thrown `any-type!` value | n/a (`none`) | when a value is caught using `catch` native.
 |===
 
 Events come with extra information:
 
-* `code`: when available, it provides the input `block!` or `paren!` series currently interpreted. The series offset is the position of the value currently processed.
+* `code`: when available, it provides the input `block!` or `paren!` series currently interpreted.
 
-* `value`: when available, the value that is the object of the current processing.
+* `offset`: when different from `-1`, indicates the input series offset at the event moment.
+
+* `value`: when available, the currently processed value.
 
 * `ref`: when available, references the word or path which evaluation produced the current event/value.
 
