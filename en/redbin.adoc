@@ -176,7 +176,10 @@ Each record in Redbin payload starts with a 32-bit `header` field defined as:
 | `reference?` flag; if set, indicates that Redbin record contains a reference.
 | See <<Reference>> section.
 
-| 18-16
+| 18
+| `v4?` flag; if set, indicates that a IPv6 address contains a IPv4 address embedded.
+
+| 17-16
 | Reserved for future use.
 | --
 
@@ -877,3 +880,15 @@ header/reference?=0|1
 ----
 
 `length` field is a pair of 16-bit integers encoding width and height of an image. `rgba` field contains RGBA content of an image (4 bytes per pixel) with preserved byte order.
+
+==== `IPv6!` anchor:ipv6[] 
+
+----
+Default:  header (4), data (16)
+Compact:  TBD
+
+header/type=52
+header/unit=2
+----
+
+The IPv6 address is encoded in network order in `data` field on 128-bit.
