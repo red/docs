@@ -23,7 +23,7 @@ Typ `word!` je subtypem těchto typesetů: `any-word!`, `all-word!`, `immediate!
 
 == Vytvoření
 
-Hodnoty typu word! lze vytvořit literálovou syntaxí nebo při runtimu konverzí  `to` z datových typů: `char!`, `logic!`, `string!`, `datatype!`, `issue!` a `refinement!`.
+Hodnoty typu word! lze vytvořit literálovou syntaxí nebo při běhu programu (runtime) konverzí  `to` z datových typů: `char!`, `logic!`, `string!`, `datatype!`, `issue!` a `refinement!`.
 
 
 ```red
