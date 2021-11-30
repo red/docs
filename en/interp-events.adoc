@@ -6,7 +6,7 @@
 
 == Concept 
 
-In order to support writing debuggers, profilers, analyzers and other useful tools that are needed for efficient programming, the interpreter is offering a generic event-oriented low-level API on top of which all these tools can be written. It is similar to the `parse/trace` and `lexer/trace` instrumentation approach.
+In order to support writing debuggers, profilers, analyzers and other useful tools that are needed for efficient programming, the interpreter is offering a generic event-oriented low-level API on top of which all these tools can be built. It is similar to the `parse/trace` and `lexer/trace` instrumentation approach.
 
 == Interpreter instrumentation
 
@@ -19,7 +19,41 @@ do/trace <code> <callback>
 <callback> : a callback function, triggered on each interpreter event.
 ----
 
-*Examples*
+*Example*
+----
+logger: function [
+    event  [word!]                      ;-- Event name
+    code   [block! paren! none!]        ;-- Currently evaluated block
+    offset [integer!]                   ;-- Offset in evaluated block
+    value  [any-type!]                  ;-- Value currently processed
+    ref	   [any-type!]                  ;-- Reference of current call
+    frame  [pair!]                      ;-- Stack frame start/top positions
+][
+    print [pad uppercase form event 8 mold/part/flat :value 20]
+]
+
+do/trace [print 1 + 2] :logger
+----
+will output:
+----
+INIT    none                    ;-- Initializing tracing mode
+ENTER   none                    ;-- Entering block to evaluate
+FETCH   print                   ;-- Fetching and evaluating `print` value
+OPEN    print                   ;-- Results in opening a new call stack frame
+FETCH   +                       ;-- Fetching and evaluating `+` infix operator
+OPEN    +                       ;-- Results in opening a new call stack frame
+FETCH   1                       ;-- Fetching left operand `1`
+PUSH    1                       ;-- Pushing integer! value `1` on stack
+FETCH   2                       ;-- Fetching and evaluating right operand
+PUSH    2                       ;-- Pushing integer! value `2`
+CALL    make op! [              ;-- Calling `+` operator
+RETURN  3                       ;-- Returning the resulting value
+CALL    make native! [["Outp    ;-- Calling `print`
+3                               ;-- Outputting 3
+RETURN  unset                   ;-- Returning the resulting value
+EXIT    none                    ;-- Exiting evaluated block
+END     none                    ;-- Ending tracing mode
+----
 
 == Events
 
@@ -44,8 +78,8 @@ Detailed description:
 |*`OPEN`*  | `block!`, `paren!` | `integer!` |  `any-function!`  | `word!`, `path!` | when a new function (any-function!) call is initiated and a new stack frame is opened.
 |*`CALL`*  | `block!`, `paren!` | `integer!` |  `any-function!` to call | `word!`, `path!`, `any-function!` | a function with all arguments fetched on the stack gets called.
 |*`RETURN`*| `block!`, `paren!` | `integer!` |  returned `any-type!` value | `word!`, `path!` | when a function call has returned and its stack frame has been closed.
-|*`PROLOG`*| `block!`, `paren!` | -1     |  called `function!` value | `word!`, `path!` | when entering a function.
-|*`EPILOG`*| `block!`, `paren!` | -1     |  called `function!` value | `word!`, `path!` | when exiting a function.
+|*`PROLOG`*| `block!`, `paren!` | -1     |  called `function!` value | `word!`, `path!` | when entering a function! body.
+|*`EPILOG`*| `block!`, `paren!` | -1     |  called `function!` value | `word!`, `path!` | when exiting a function! body.
 |*`FETCH`* | `block!`, `paren!` | `integer!` |  fetched `any-type!` value | n/a (`none`) | a value is read from the input block to be evaluated.
 |*`PUSH`*  | `block!`, `paren!` | `integer!` |  pushed `any-type!` value | n/a (`none`) | a value has been pushed on the stack.
 |*`SET`*   | `block!`, `paren!` | `integer!` |  `any-type!` | `set-word!`, `set-path!` | a set-word or set-path is set to a value.
@@ -62,23 +96,38 @@ Events come with extra information:
 
 * `value`: when available, the currently processed value.
 
-* `ref`: when available, references the word or path which evaluation produced the current event/value.
+* `ref`: when available, references the word or path from which evaluation produced the current event/value.
 
 == Event handler
 
+Prototype:
 ----
 func [
-    event [word!]
-    code  [block! paren! none!]
-    value [any-type!]
-    ref   [any-type!]
-    frame [pair!]
+    event  [word!]
+    code   [block! paren! none!]
+    offset [integer!]
+    value  [any-type!]
+    ref    [any-type!]
+    frame  [pair!]
 ][
     [events]                    ;-- optional restricted event names list
     ...body...
 ]
 ----
 
+[cols="1,1,1,1,1,2", options="header"]
+|===
+|Argument   | Description
+|*`event`*  | Event name 
+|*`code`*   | Block of code currently evaluated. 
+|*`offset`* | 
+|*`value`*  |
+|*`ref`*    |
+|*`frame`*  |
+|===
+
+
+The body block can start with an optional filtering block, for indicating which events will be triggered. This allows to reduce the number of callback calls resulting in much better processing performance.
 
 == Predefined tools
 
