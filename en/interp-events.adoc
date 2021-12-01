@@ -32,14 +32,12 @@ logger: function [
     print [pad uppercase form event 8 mold/part/flat :value 20]
 ]
 
-do/trace [print 1 + 2] :logger
+do/trace [1 + 2] :logger
 ----
 will output:
 ----
 INIT    none                    ;-- Initializing tracing mode
 ENTER   none                    ;-- Entering block to evaluate
-FETCH   print                   ;-- Fetching and evaluating `print` value
-OPEN    print                   ;-- Results in opening a new call stack frame
 FETCH   +                       ;-- Fetching and evaluating `+` infix operator
 OPEN    +                       ;-- Results in opening a new call stack frame
 FETCH   1                       ;-- Fetching left operand `1`
@@ -48,11 +46,9 @@ FETCH   2                       ;-- Fetching and evaluating right operand
 PUSH    2                       ;-- Pushing integer! value `2`
 CALL    make op! [              ;-- Calling `+` operator
 RETURN  3                       ;-- Returning the resulting value
-CALL    make native! [["Outp    ;-- Calling `print`
-3                               ;-- Outputting 3
-RETURN  unset                   ;-- Returning the resulting value
 EXIT    none                    ;-- Exiting evaluated block
 END     none                    ;-- Ending tracing mode
+== 3
 ----
 
 == Events
@@ -137,7 +133,8 @@ The body block can start with an optional filtering block, for indicating which 
 Debugger commands:
 
 * `next` or `n` or just ENTER: evaluate next value.
-* `continue` or `c`: exit debugging console and continue evaluation.
+* `continue` or `c`: exit debugging console but continue evaluation.
+* `quit` or `q`: exit debugger and stop evaluation.
 * `stack` or `s`: display the current calls and expression stack.
 * `parents` or `p`: display the parents call stack.
 * `:word`: outputs the value of `word`. If it is a `function!`, outputs the local context.
