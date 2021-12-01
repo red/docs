@@ -100,7 +100,7 @@ Events come with extra information:
 
 == Event handler
 
-Prototype:
+Here is the prototype of event handlers suitable to be passed as argument to `do/trace`:
 ----
 func [
     event  [word!]
@@ -115,17 +115,18 @@ func [
 ]
 ----
 
-[cols="1,1,1,1,1,2", options="header"]
+[cols="1,2", options="header"]
 |===
 |Argument   | Description
-|*`event`*  | Event name 
-|*`code`*   | Block of code currently evaluated. 
-|*`offset`* | 
-|*`value`*  |
-|*`ref`*    |
-|*`frame`*  |
+|*`event`*  | Event name.
+|*`code`*   | Block of code currently evaluated.
+|*`offset`* | Offset in block currently evaluated.
+|*`value`*  | Value currently processed in the event.
+|*`ref`*    | Reference of the call (word or path) associated to the event.
+|*`frame`*  | Pair of indexes in the Red internal stack denoting the beginning and end of the call frame. +++ <sup>(1)</sup> +++
 |===
 
++++ <sup>(1)</sup> +++ Note that the `frame` index range is for the internal Red stack, not the one used in the debugger (which is managed by the debugger itself).
 
 The body block can start with an optional filtering block, for indicating which events will be triggered. This allows to reduce the number of callback calls resulting in much better processing performance.
 
