@@ -26,29 +26,36 @@ logger: function [
     code   [block! paren! none!]        ;-- Currently evaluated block
     offset [integer!]                   ;-- Offset in evaluated block
     value  [any-type!]                  ;-- Value currently processed
-    ref	   [any-type!]                  ;-- Reference of current call
+    ref	   [any-type!]                  ;-- Reference of current call (usually word or path)
     frame  [pair!]                      ;-- Stack frame start/top positions
 ][
-    print [pad uppercase form event 8 mold/part/flat :value 20]
+    print [
+        pad uppercase form event 8
+        mold/part/flat either any-function? :value [:ref][:value] 20
+    ]
 ]
 
-do/trace [1 + 2] :logger
+do/trace [print 1 + 2] :logger
 ----
 will output:
 ----
 INIT    none                    ;-- Initializing tracing mode
 ENTER   none                    ;-- Entering block to evaluate
+FETCH   print                   ;-- Fetching and evaluating `print` value
+OPEN    print                   ;-- Results in opening a new call stack frame
 FETCH   +                       ;-- Fetching and evaluating `+` infix operator
 OPEN    +                       ;-- Results in opening a new call stack frame
 FETCH   1                       ;-- Fetching left operand `1`
 PUSH    1                       ;-- Pushing integer! value `1` on stack
 FETCH   2                       ;-- Fetching and evaluating right operand
 PUSH    2                       ;-- Pushing integer! value `2`
-CALL    make op! [              ;-- Calling `+` operator
+CALL    +                       ;-- Calling `+` operator
 RETURN  3                       ;-- Returning the resulting value
+CALL    print                   ;-- Calling `print`
+3                               ;-- Outputting 3
+RETURN  unset                   ;-- Returning the resulting value
 EXIT    none                    ;-- Exiting evaluated block
 END     none                    ;-- Ending tracing mode
-== 3
 ----
 
 == Events
