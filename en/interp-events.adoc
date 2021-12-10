@@ -139,6 +139,7 @@ The body block can start with an optional filtering block, for indicating which 
 
 Debugger commands:
 
+* `help` or `?`: prints a list of debugger's commands.
 * `next` or `n` or just ENTER: evaluate next value.
 * `continue` or `c`: exit debugging console but continue evaluation.
 * `quit` or `q`: exit debugger and stop evaluation.
