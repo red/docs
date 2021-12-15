@@ -133,6 +133,14 @@ func [
 
 The body block can start with an optional filtering block, for indicating which events will be triggered. This allows to reduce the number of callback calls resulting in much better processing performance.
 
+== Function attributs
+
+=== trace
+
+
+=== no-trace
+
+
 == Predefined tools
 
 === `debug`
