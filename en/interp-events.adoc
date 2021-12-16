@@ -23,7 +23,7 @@ do/trace <code> <callback>
 ----
 logger: function [
     event  [word!]                      ;-- Event name
-    code   [block! paren! none!]        ;-- Currently evaluated block
+    code   [any-block! none!]           ;-- Currently evaluated block
     offset [integer!]                   ;-- Offset in evaluated block
     value  [any-type!]                  ;-- Value currently processed
     ref	   [any-type!]                  ;-- Reference of current call (usually word or path)
@@ -73,22 +73,22 @@ Detailed description:
 
 [cols="1,1,1,1,1,2", options="header"]
 |===
-|Event     | Code     | Offset | Value   | Ref    | Description
-|*`INIT`*  | `none`   | -1     | n/a (`none`)  | n/a (`none`) | when the tracing mode is initiated (`do/trace` call).
-|*`END`*   | `none`   | -1     |  n/a (`none`)  | n/a (`none`) | when the tracing mode is ended (`do/trace` call exiting).
-|*`ENTER`* | `block!`, `paren!` | -1     |  n/a (`none`) | n/a (`none`) | when a block is about to be evaluated.
-|*`EXIT`*  | `block!`, `paren!` | -1     |  n/a (`none`) | n/a (`none`) | when current evaluated block's tail has been reached.
-|*`OPEN`*  | `block!`, `paren!` | `integer!` |  `any-function!`  | `word!`, `path!` | when a new function (any-function!) call is initiated and a new stack frame is opened.
-|*`CALL`*  | `block!`, `paren!` | `integer!` |  `any-function!` to call | `word!`, `path!`, `any-function!` | a function with all arguments fetched on the stack gets called.
-|*`RETURN`*| `block!`, `paren!` | `integer!` |  returned `any-type!` value | `word!`, `path!` | when a function call has returned and its stack frame has been closed.
-|*`PROLOG`*| `block!`, `paren!` | -1     |  called `function!` value | `word!`, `path!` | when entering a function! body.
-|*`EPILOG`*| `block!`, `paren!` | -1     |  called `function!` value | `word!`, `path!` | when exiting a function! body.
-|*`FETCH`* | `block!`, `paren!` | `integer!` |  fetched `any-type!` value | n/a (`none`) | a value is read from the input block to be evaluated.
-|*`PUSH`*  | `block!`, `paren!` | `integer!` |  pushed `any-type!` value | n/a (`none`) | a value has been pushed on the stack.
-|*`SET`*   | `block!`, `paren!` | `integer!` |  `any-type!` | `set-word!`, `set-path!` | a set-word or set-path is set to a value.
-|*`ERROR`* | `none`   | -1     |  `error!` value | n/a (`none`) | when an error occurs and is about to be thrown up in the stack.
-|*`THROW`* | `none`   | -1     |  thrown `any-type!` value | n/a (`none`) | when a value is thrown using `throw` native.
-|*`CATCH`* | `none`   | -1     |  thrown `any-type!` value | n/a (`none`) | when a value is caught using `catch` native.
+|Event     | Code          | Offset | Value   | Ref    | Description
+|*`INIT`*  | `none`        | -1     | n/a (`none`)  | n/a (`none`) | when the tracing mode is initiated (`do/trace` call).
+|*`END`*   | `none`        | -1     |  n/a (`none`)  | n/a (`none`) | when the tracing mode is ended (`do/trace` call exiting).
+|*`ENTER`* | `any-block!`  | -1     |  n/a (`none`) | n/a (`none`) | when a block is about to be evaluated.
+|*`EXIT`*  | `any-block!`  | -1     |  n/a (`none`) | n/a (`none`) | when current evaluated block's tail has been reached.
+|*`OPEN`*  | `any-block!`  | `integer!` |  `any-function!`  | `word!`, `path!` | when a new function (any-function!) call is initiated and a new stack frame is opened.
+|*`CALL`*  | `any-block!`  | `integer!` |  `any-function!` to call | `word!`, `path!`, `any-function!` | a function with all arguments fetched on the stack gets called.
+|*`RETURN`*| `any-block!`  | `integer!` |  returned `any-type!` value | `word!`, `path!` | when a function call has returned and its stack frame has been closed.
+|*`PROLOG`*| `any-block!`  | -1     |  called `function!` value | `word!`, `path!` | when entering a function! body.
+|*`EPILOG`*| `any-block!`  | -1     |  called `function!` value | `word!`, `path!` | when exiting a function! body.
+|*`FETCH`* | `any-block!`  | `integer!` |  fetched `any-type!` value | n/a (`none`) | a value is read from the input block to be evaluated.
+|*`PUSH`*  | `any-block!`  | `integer!` |  pushed `any-type!` value | n/a (`none`) | a value has been pushed on the stack.
+|*`SET`*   | `any-block!`  | `integer!` |  `any-type!` | `set-word!`, `set-path!` | a set-word or set-path is set to a value.
+|*`ERROR`* | `none`        | -1     |  `error!` value | n/a (`none`) | when an error occurs and is about to be thrown up in the stack.
+|*`THROW`* | `none`        | -1     |  thrown `any-type!` value | n/a (`none`) | when a value is thrown using `throw` native.
+|*`CATCH`* | `none`        | -1     |  thrown `any-type!` value | n/a (`none`) | when a value is caught using `catch` native.
 |===
 
 Events come with extra information:
