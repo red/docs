@@ -63,7 +63,7 @@ END     none                    ;-- Ending tracing mode
 When the tracing mode is active, the interpreter will trigger events described below. Events can be grouped into the following categories:
 
 * Global events: *`INIT`*, *`END`*
-* Evaluating a block/paren of code: *`ENTER`*, *`EXIT`*
+* Evaluating a block/paren/path of code: *`ENTER`*, *`EXIT`*
 * Calling any type of function: *`OPEN`*, *`CALL`*, *`RETURN`*
 * Evaluating a function body block: *`PROLOG`*, *`EPILOG`*
 * Expression evaluation: *`FETCH`*, *`PUSH`* , *`SET`*, *`ERROR`*
@@ -76,8 +76,8 @@ Detailed description:
 |Event     | Code          | Offset | Value   | Ref    | Description
 |*`INIT`*  | `none`        | -1     | n/a (`none`)  | n/a (`none`) | when the tracing mode is initiated (`do/trace` call).
 |*`END`*   | `none`        | -1     |  n/a (`none`)  | n/a (`none`) | when the tracing mode is ended (`do/trace` call exiting).
-|*`ENTER`* | `any-block!`  | -1     |  n/a (`none`) | n/a (`none`) | when a block is about to be evaluated.
-|*`EXIT`*  | `any-block!`  | -1     |  n/a (`none`) | n/a (`none`) | when current evaluated block's tail has been reached.
+|*`ENTER`* +++ <sup>(1)</sup> +++ | `any-block!`  | -1     |  n/a (`none`) | n/a (`none`) | when a block is about to be evaluated.
+|*`EXIT`*  +++ <sup>(1)</sup> +++ | `any-block!`  | -1     |  last `any-type!` evaluated value  | n/a (`none`) | when current evaluated block's or path's tail has been reached.
 |*`OPEN`*  | `any-block!`  | `integer!` |  `any-function!`  | `word!`, `path!` | when a new function (any-function!) call is initiated and a new stack frame is opened.
 |*`CALL`*  | `any-block!`  | `integer!` |  `any-function!` to call | `word!`, `path!`, `any-function!` | a function with all arguments fetched on the stack gets called.
 |*`RETURN`*| `any-block!`  | `integer!` |  returned `any-type!` value | `word!`, `path!` | when a function call has returned and its stack frame has been closed.
@@ -90,6 +90,8 @@ Detailed description:
 |*`THROW`* | `none`        | -1     |  thrown `any-type!` value | n/a (`none`) | when a value is thrown using `throw` native.
 |*`CATCH`* | `none`        | -1     |  thrown `any-type!` value | n/a (`none`) | when a value is caught using `catch` native.
 |===
+
++++ <sup>(1)</sup> +++ Note that a pair of `enter` and `exit` events are generated for any path evaluation (like for other block datatypes).
 
 Events come with extra information:
 
@@ -107,7 +109,7 @@ Here is the prototype of event handlers suitable to be passed as argument to `do
 ----
 func [
     event  [word!]
-    code   [block! paren! none!]
+    code   [any-block! none!]
     offset [integer!]
     value  [any-type!]
     ref    [any-type!]
@@ -133,13 +135,154 @@ func [
 
 The body block can start with an optional filtering block, for indicating which events will be triggered. This allows to reduce the number of callback calls resulting in much better processing performance.
 
-== Function attributs
+== Tracing control
 
-=== trace
+=== `trace` function
+
+*Syntax*
+----
+    trace <mode>
+
+    <mode>: new event generation mode (logic!)
+----
+*Description*
+
+`trace` allows to turn on/off event generation during a traced evaluation (inside code evaluated with `do/trace`). Using `trace` in such way outside of a traced evaluation has no effect. `trace` function has also another usage described in "Predefined tools" section.
+
+_Example_
+----
+do/trace [
+	print "before"
+	trace off
+	print "between"
+	trace on
+	print "after"
+] :logger
+----
+will output
+----
+INIT     none
+ENTER    none
+FETCH    print
+OPEN     print
+FETCH    "before"
+PUSH     "before"
+CALL     print
+before
+RETURN   unset
+FETCH    trace
+OPEN     trace
+FETCH    off
+PUSH     false
+CALL     trace                  ;-- calling `trace off`
+between                         ;-- only `print` output but no related events
+RETURN   true                   ;-- next event is the return of `trace on`
+FETCH    print
+OPEN     print
+FETCH    "after"
+PUSH     "after"
+CALL     print
+after
+RETURN   unset
+EXIT     unset
+END      none
+----
 
 
-=== no-trace
+=== Function attributs
 
+Any function called during a traced evaluation can be set to either avoid generating any event or be forced to generate events while event generation is disabled. This can be achieved using specific function attributs.
+
+==== trace
+
+*Syntax*
+----
+    func [[trace]...][...]
+----
+*Description*
+
+When this attribut is used, the function will be forced to generate events during a traced evaluation. This propagates to nested calls also (unless they explicitly disable event generation). Note that it is still possible to locally turn event generation on/off using `trace`.
+
+_Example_
+----
+foo: func [[trace]][1 + 2]
+do/trace [
+	trace off
+	print "before"
+	foo
+	print "after"
+	trace on
+] :logger
+----
+will output
+----
+INIT     none
+ENTER    none
+FETCH    trace
+OPEN     trace
+FETCH    off
+PUSH     false
+CALL     trace
+before                          ;-- no related events for `print "before"`
+PROLOG   foo                    ;-- events enabled from beginning of `foo` body evaluation
+ENTER    none
+FETCH    +
+OPEN     +
+FETCH    1
+PUSH     1
+FETCH    2
+PUSH     2
+CALL     +
+RETURN   3
+EXIT     3
+EPILOG   foo                    ;-- event generation stopped again when `foo` exits
+after                           ;-- no related events for `print "after"`
+RETURN   true                   ;-- next event is the return of `trace on`
+EXIT     true
+END      none
+----
+
+==== no-trace
+
+*Syntax*
+----
+    func [[no-trace]...][...]
+----
+*Description*
+
+When this attribut is used, the function will be blocked from generating events during a traced evaluation. This propagates to nested calls also (unless they explicitly disable event generation). Note that it is still possible to locally turn event generation on/off using `trace`.
+
+_Example_
+----
+foo: func [[no-trace]][print 1 + 2]
+do/trace [print "before" foo print "after"] :logger
+----
+will output
+----
+INIT     none
+ENTER    none
+FETCH    print
+OPEN     print
+FETCH    "before"
+PUSH     "before"
+CALL     print
+before
+RETURN   unset
+FETCH    foo
+OPEN     foo
+CALL     foo                    ;-- last event before entering `foo`
+3                               ;-- no event generated from inside `foo`
+RETURN   unset                  ;-- next event is the return from `foo`
+FETCH    print
+OPEN     print
+FETCH    "after"
+PUSH     "after"
+CALL     print
+after
+RETURN   unset
+EXIT     unset
+END      none
+----
 
 == Predefined tools
 
@@ -172,8 +315,5 @@ TBD
 
 TBD
 
-=== Dumping raw events
-
-TBD
 
 == Implementation notes
