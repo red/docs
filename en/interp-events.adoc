@@ -149,14 +149,14 @@ The body block can start with an optional filtering block, for indicating which 
 
 `trace` allows to turn on/off event generation during a traced evaluation (inside code evaluated with `do/trace`). Using `trace` in such way outside of a traced evaluation has no effect. `trace` function has also another usage described in "Predefined tools" section.
 
-_Example_
+*Example*
 ----
 do/trace [
-	print "before"
-	trace off
-	print "between"
-	trace on
-	print "after"
+    print "before"
+    trace off
+    print "between"
+    trace on
+    print "after"
 ] :logger
 ----
 will output
@@ -203,15 +203,15 @@ Any function called during a traced evaluation can be set to either avoid genera
 
 When this attribut is used, the function will be forced to generate events during a traced evaluation. This propagates to nested calls also (unless they explicitly disable event generation). Note that it is still possible to locally turn event generation on/off using `trace`.
 
-_Example_
+*Example*
 ----
 foo: func [[trace]][1 + 2]
 do/trace [
-	trace off
-	print "before"
-	foo
-	print "after"
-	trace on
+    trace off
+    print "before"
+    foo
+    print "after"
+    trace on
 ] :logger
 ----
 will output
