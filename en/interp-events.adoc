@@ -319,7 +319,7 @@ Debugger commands:
 ----
 *Description*
 
-Profiles the provided code, counting function invocations and duration. Once the code evaluation returns, a report is printed. The default sorting is per invocation. Alternative sorting can be used through the `/by` refinement. `profile` accepts the same arguments as `do`.
+Profiles the provided code, counting function invocations and measuring duration. Once the code evaluation returns, a report is printed. The default sorting is per invocation count. Alternative sorting can be used through the `/by` refinement. `profile` accepts the same arguments as `do`.
 
 Notes:
 
