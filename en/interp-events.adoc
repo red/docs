@@ -309,7 +309,84 @@ Debugger commands:
 
 === `profile`
 
-TBD
+*Syntax*
+----
+    profile <code>
+    profile/by <code> <category>
+    
+    <code>     : code to profile (any-type!)
+    <category> : sort by a specific category: 'name, 'count, 'time (word!)
+----
+*Description*
+
+Profiles the provided code, counting function invocations and duration. Once the code evaluation returns, a report is printed. The default sorting is per invocation. Alternative sorting can be used through the `/by` refinement. `profile` accepts the same arguments as `do`.
+
+Notes:
+
+* Timing is currently not very accurate for durations less than 20ms on Windows platform (default timer accuracy). This will be improved in the future with better timers and functions prolog/epilog more accurate exclusions.
+* Nested functions duration are currently added to their parent timing. Proper function timing (excluding nested calls) will be added in the future.
+* Function calls with refinement are counted separately as specfic function instances (same refinements in different order will be counted separately too currently).
+
+*Options*
+
+By default, `profile` will account for any type of functions (`any-function!` typeset). It is possible to restrict to a sub-group by directly modifying the option `system/tools/options/profile/types`, setting it to a different typeset. 
+
+_Examples_
+----
+profile [print 1 + 2 + 3 * 5]
+
+30
+#1   +                | 2          | 0:00:00
+#2   *                | 1          | 0:00:00
+#3   print            | 1          | 0:00:00.001
+----
+----
+profile https://raw.githubusercontent.com/red/red/master/tests/demo.red
+
+		RedRed              d
+		d     d             e
+		e     e             R
+		R     R   edR    dR d
+		d     d  d   R  R  Re
+		edRedR   e   d  d   R
+		R   e    RedR   e   d
+		d    e   d      R   e
+		e    R   e   d  d  dR
+		R     R   edR    dR d
+#1   if               | 420        | 0:00:00
+#2   <=               | 391        | 0:00:00
+#3   prin             | 241        | 0:00:00.240773
+#4   +                | 220        | 0:00:00
+#5   either           | 210        | 0:00:00
+#6   all              | 210        | 0:00:00.0028192
+#7   >                | 210        | 0:00:00.0020021
+#8   =                | 210        | 0:00:00.0010021
+#9   tail?            | 37         | 0:00:00
+#10  unless           | 37         | 0:00:00
+#11  skip             | 37         | 0:00:00
+#12  repeat           | 10         | 0:00:00.212984
+#13  next             | 10         | 0:00:00
+#14  foreach          | 1          | 0:00:00.251109
+----
+----
+system/tools/options/profile/types: make typeset! [op!]
+profile https://raw.githubusercontent.com/red/red/master/tests/demo.red
+
+		RedRed              d
+		d     d             e
+		e     e             R
+		R     R   edR    dR d
+		d     d  d   R  R  Re
+		edRedR   e   d  d   R
+		R   e    RedR   e   d
+		d    e   d      R   e
+		e    R   e   d  d  dR
+		R     R   edR    dR d
+#1   <=               | 391        | 0:00:00.0000038
+#2   +                | 220        | 0:00:00   
+#3   >                | 210        | 0:00:00   
+#4   =                | 210        | 0:00:00.0010005
+----
 
 === `trace`
 
