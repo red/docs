@@ -329,7 +329,7 @@ Notes:
 
 *Options*
 
-By default, `profile` will account for any type of functions (`any-function!` typeset). It is possible to restrict to a sub-group by directly modifying the option `system/tools/options/profile/types`, setting it to a different typeset. 
+By default, `profile` will account for any type of functions (`any-function!` typeset). It is possible to restrict to a sub-group by directly modifying the option `system/tools/options/profile/types`, setting it to a different typeset.
 
 _Examples_
 ----
@@ -340,6 +340,7 @@ profile [print 1 + 2 + 3 * 5]
 #2   *                | 1          | 0:00:00
 #3   print            | 1          | 0:00:00.001
 ----
+Files and URLs can be passed directly as argument:
 ----
 profile https://raw.githubusercontent.com/red/red/master/tests/demo.red
 
@@ -368,6 +369,7 @@ profile https://raw.githubusercontent.com/red/red/master/tests/demo.red
 #13  next             | 10         | 0:00:00
 #14  foreach          | 1          | 0:00:00.251109
 ----
+Options can be modified ahead of time to change the set of function types processed:
 ----
 system/tools/options/profile/types: make typeset! [op!]
 profile https://raw.githubusercontent.com/red/red/master/tests/demo.red
@@ -390,7 +392,90 @@ profile https://raw.githubusercontent.com/red/red/master/tests/demo.red
 
 === `trace`
 
-TBD
+*Syntax*
+----
+    trace <code>
+    trace <mode>
+    trace/raw <code>
+    
+    <code> : code to trace (any-type!)
+    <mode> : turn tracing on/off (logic!)
+----
+*Description*
 
+This function will generate a simple trace of the argument evaluation steps. Only the following subset of all the possible interpreter events will be shown: `open push call prolog epilog set return error catch throw`. In order to display a lower level trace with all the events, a `/raw` refinement is provided. The output then just dumps the following information for each event: event name, offset, reference, value, frame range (basically the event handler arguments, except for the `code` argument).
+
+When a `logic!` value is passed as argument to `trace`, it will just switch the tracing on/off, allowing a tigher control from within a traced code evaluation.
+
+
+*Options*
+
+By default, the output trace will be indented on nested calls. It is possible to make the trace "flat" by setting the option `system/tools/options/trace/indent?` to `false`.
+
+_Examples_
+----
+trace [a: 1 + 2]
+----
+will output
+----
+-> PUSH a:
+-> OPEN +
+->  PUSH 1
+->  PUSH 2
+->  CALL op!  (+)
+-> RETURN 3  (+)
+-> SET 3  (a)
+== 3
+----
+Using the `/raw` refinement:
+----
+trace/raw [a: 1 + 2]
+----
+will output
+----
+INIT -1 none none 36x38
+ENTER 0 none none 38x38
+FETCH 0 none a: 38x38
+PUSH 0 none a: 38x39
+FETCH 1 none + 38x39
+OPEN 1 none + 38x39
+FETCH 1 none 1 39x39
+PUSH 1 none 1 39x40
+FETCH 3 none 2 39x40
+PUSH 3 none 2 39x41
+CALL 4 + make op! [["Returns the sum of 39x41
+RETURN 4 + 3 39x41
+SET 4 a: 3 38x40
+EXPR 4 none 3 38x39
+EXIT 4 none 3 38x39
+END -1 none none 36x39
+== 3
+----
+
+=== `tracing?`
+
+*Syntax*
+----
+    <state>: tracing?
+    
+    <state> : returns the current event generation mode (logic!)
+----
+*Description*
+
+This function reports the state of the current interpreter event generation.
+
+_Example_
+----
+foo: func [[no-trace]][probe tracing? print 1 + 2]
+no-log: func [e c o v r f][]
+do/trace [probe tracing? foo probe tracing?] :no-log
+----
+will output
+----
+true
+false
+3
+true
+----
 
 == Implementation notes
