@@ -317,8 +317,8 @@ Debugger command list:
 | `parents`  | `p`      | Display the parents call stack.
 | `:word`    | n/a      | Outputs the value of `word`. If it is a `function!`, outputs the local context.
 | `:a/b/c`   | n/a      | Outputs the value of `a/b/c` path.
-| `watch <word1> <word2>...`  | n/a | Watch one or more words. `w` can be used as shortcut for `watch`.
-| `-watch <word1> <word2>...` | n/a | Stop watching one or more words. `-w` can be used as shortcut for `-watch`.
+| `watch <word1> <word2>...`  | `w ...` | Watch one or more words.
+| `-watch <word1> <word2>...` | `-w ...` | Stop watching one or more words.
 | `+stack`   | `+s` | Outputs expression stack on each new event.
 | `-stack`   | `-s` | Do not output expression stack on each new event.
 | `+locals`  | `+l` | Output local context for each entry in the call stack.
@@ -342,6 +342,7 @@ Stack: <                  ;-- stack top
 ----
 
 That stack is referred to as the "expression stack" to contrast it with the "parents stack" which refers to the call stack above the point when the debugger was called. When the expression stack is empty, an `-empty stack-` label is displayed under the `Input:` line.
+
 
 === `profile`
 
