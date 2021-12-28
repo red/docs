@@ -296,11 +296,11 @@ Several handlers are always available in the Red runtime library in order to hel
     debug <code>
     debug/later <code>
     
-    <code>     : code to profile (any-type!)
+    <code> : code to evaluate through the debugger (any-type!)
 ----
 *Description*
 
-Starts an interactive debugging session, allowing to evaluate the `code` argument in a controlled way. A debugging console is presented using the `debug>` prompt, waiting for user commands (see the list below).
+Starts an interactive debugging session, allowing to evaluate the `code` argument in a controlled way. A debugging console is presented using the `debug>_` prompt, waiting for user commands (see the list below).
 
 The `/later` refinement will let the evaluation run uninterrupted until a `@stop` value is encountered, entering the debugging console. The normal evaluation can be resumed when encountering the `@go` value (in addition to the `continue` debug command). The `@stop` value acts effectively as a breakpoint. Using the `@stop`  and `@go` values allows to selectively enter the step by step evaluation, only on chosen code pieces. 
 
