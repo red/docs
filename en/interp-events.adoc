@@ -286,7 +286,22 @@ END      none
 
 == Predefined tools
 
+Several handlers are always available in the Red runtime library in order to help users better analyze and debug Red programs.
+
 === `debug`
+
+*Syntax*
+----
+    debug <code>
+    debug/later <code>
+    
+    <code>     : code to profile (any-type!)
+----
+*Description*
+
+Starts an interactive debugging session, allowing to evaluate the `code` argument in a controlled way. A debugging console is presented using the `debug>` prompt, waiting for user commands (see the list below).
+
+The `/later` refinement will let the evaluation run uninterrupted until a `@stop` value is encountered, entering the debugging console. The normal evaluation can be resumed when encountering the `@go` value (in addition to the `continue` debug command). The `@stop` value acts effectively as a breakpoint. Using the `@stop`  and `@go` values allows to selectively enter the step by step evaluation, only on chosen code pieces. 
 
 Debugger commands:
 
@@ -403,7 +418,7 @@ profile https://raw.githubusercontent.com/red/red/master/tests/demo.red
 ----
 *Description*
 
-This function will generate a simple trace of the argument evaluation steps. Only the following subset of all the possible interpreter events will be shown: `open push call prolog epilog set return error catch throw`. In order to display a lower level trace with all the events, a `/raw` refinement is provided. The output then just dumps the following information for each event: event name, offset, reference, value, frame range (basically the event handler arguments, except for the `code` argument).
+Generates a simple trace of the argument evaluation steps. Only the following subset of all the possible interpreter events will be shown: `open push call prolog epilog set return error catch throw`. In order to display a lower level trace with all the events, a `/raw` refinement is provided. The output then just dumps the following information for each event: event name, offset, reference, value, frame range (basically the event handler arguments, except for the `code` argument).
 
 When a `logic!` value is passed as argument to `trace`, it will just switch the tracing on/off, allowing a tigher control from within a traced code evaluation.
 
@@ -462,7 +477,7 @@ END -1 none none 36x39
 ----
 *Description*
 
-This function reports the state of the current interpreter event generation.
+Reports the state of the current interpreter event generation (`true` or `false`).
 
 _Example_
 ----
