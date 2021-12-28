@@ -62,34 +62,34 @@ END     none                    ;-- Ending tracing mode
 
 When the tracing mode is active, the interpreter will trigger events described below. Events can be grouped into the following categories:
 
-* Global events: *`INIT`*, *`END`*
-* Evaluating a block/paren/path of code: *`ENTER`*, *`EXIT`*
-* Calling any type of function: *`OPEN`*, *`CALL`*, *`RETURN`*
-* Evaluating a function body block: *`PROLOG`*, *`EPILOG`*
-* Expression evaluation: *`FETCH`*, *`PUSH`* , *`SET`*, *`EXPR`*, *`ERROR`*
-* Exceptions handling: *`THROW`*, *`CATCH`*
+* Global events: `INIT`, `END`
+* Evaluating a block/paren/path of code: `ENTER`, `EXIT`
+* Calling any type of function: `OPEN`, `CALL`, `RETURN`
+* Evaluating a function body block: `PROLOG`, `EPILOG`
+* Expression evaluation: `FETCH`, `PUSH` , `SET`, `EXPR`, `ERROR`
+* Exceptions handling: `THROW`, `CATCH`
 
 Detailed description:
 
 [cols="1,1,1,1,1,2", options="header"]
 |===
-|Event     | Code          | Offset | Value   | Ref    | Description
-|*`INIT`*  | `none`        | -1     | n/a (`none`)  | n/a (`none`) | when the tracing mode is initiated (`do/trace` call).
-|*`END`*   | `none`        | -1     |  n/a (`none`)  | n/a (`none`) | when the tracing mode is ended (`do/trace` call exiting).
-|*`ENTER`* +++ <sup>(1)</sup> +++ | `any-block!`  | -1     |  n/a (`none`) | n/a (`none`) | when a block is about to be evaluated.
-|*`EXIT`*  +++ <sup>(1)</sup> +++ | `any-block!`  | -1     |  last `any-type!` evaluated value  | n/a (`none`) | when current evaluated block's or path's tail has been reached.
-|*`OPEN`*  | `any-block!`  | `integer!` |  `any-function!`  | `word!`, `path!` | when a new function (any-function!) call is initiated and a new stack frame is opened.
-|*`CALL`*  | `any-block!`  | `integer!` |  `any-function!` to call | `word!`, `path!`, `any-function!` | a function with all arguments fetched on the stack gets called.
-|*`RETURN`*| `any-block!`  | `integer!` |  returned `any-type!` value | `word!`, `path!` | when a function call has returned and its stack frame has been closed.
-|*`EXPR`*  | `any-block!`  | `integer!` | expression `any-type!` result | n/a (`none`) | when a top-level expression has been evaluated.
-|*`PROLOG`*| `any-block!`  | -1     |  called `function!` value | `word!`, `path!` | when entering a function! body.
-|*`EPILOG`*| `any-block!`  | -1     |  called `function!` value | `word!`, `path!` | when exiting a function! body.
-|*`FETCH`* | `any-block!`  | `integer!` |  fetched `any-type!` value | n/a (`none`) | a value is read from the input block to be evaluated.
-|*`PUSH`*  | `any-block!`  | `integer!` |  pushed `any-type!` value | n/a (`none`) | a value has been pushed on the stack.
-|*`SET`*   | `any-block!`  | `integer!` |  `any-type!` | `set-word!`, `set-path!` | a set-word or set-path is set to a value.
-|*`ERROR`* | `none`        | -1     |  `error!` value | n/a (`none`) | when an error occurs and is about to be thrown up in the stack.
-|*`THROW`* | `none`        | -1     |  thrown `any-type!` value | n/a (`none`) | when a value is thrown using `throw` native.
-|*`CATCH`* | `none`        | -1     |  thrown `any-type!` value | n/a (`none`) | when a value is caught using `catch` native.
+|Event    | Code          | Offset | Value   | Ref    | Description
+|`INIT`   | `none`        | -1     | n/a (`none`)  | n/a (`none`) | when the tracing mode is initiated (`do/trace` call).
+|`END`    | `none`        | -1     |  n/a (`none`)  | n/a (`none`) | when the tracing mode is ended (`do/trace` call exiting).
+|`ENTER` +++ <sup>(1)</sup> +++ | `any-block!`  | -1     |  n/a (`none`) | n/a (`none`) | when a block is about to be evaluated.
+|`EXIT`  +++ <sup>(1)</sup> +++ | `any-block!`  | -1     |  last `any-type!` evaluated value  | n/a (`none`) | when current evaluated block's or path's tail has been reached.
+|`OPEN`  | `any-block!`  | `integer!` |  `any-function!`  | `word!`, `path!` | when a new function (any-function!) call is initiated and a new stack frame is opened.
+|`CALL`  | `any-block!`  | `integer!` |  `any-function!` to call | `word!`, `path!`, `any-function!` | a function with all arguments fetched on the stack gets called.
+|`RETURN`| `any-block!`  | `integer!` |  returned `any-type!` value | `word!`, `path!` | when a function call has returned and its stack frame has been closed.
+|`EXPR`  | `any-block!`  | `integer!` | expression `any-type!` result | n/a (`none`) | when a top-level expression has been evaluated.
+|`PROLOG`| `any-block!`  | -1     |  called `function!` value | `word!`, `path!` | when entering a function! body.
+|`EPILOG`| `any-block!`  | -1     |  called `function!` value | `word!`, `path!` | when exiting a function! body.
+|`FETCH` | `any-block!`  | `integer!` |  fetched `any-type!` value | n/a (`none`) | a value is read from the input block to be evaluated.
+|`PUSH`  | `any-block!`  | `integer!` |  pushed `any-type!` value | n/a (`none`) | a value has been pushed on the stack.
+|`SET`   | `any-block!`  | `integer!` |  `any-type!` | `set-word!`, `set-path!` | a set-word or set-path is set to a value.
+|`ERROR` | `none`        | -1     |  `error!` value | n/a (`none`) | when an error occurs and is about to be thrown up in the stack.
+|`THROW` | `none`        | -1     |  thrown `any-type!` value | n/a (`none`) | when a value is thrown using `throw` native.
+|`CATCH` | `none`        | -1     |  thrown `any-type!` value | n/a (`none`) | when a value is caught using `catch` native.
 |===
 
 +++ <sup>(1)</sup> +++ Note that a pair of `enter` and `exit` events are generated for any path evaluation (like for other block datatypes).
@@ -123,13 +123,13 @@ func [
 
 [cols="1,2", options="header"]
 |===
-|Argument   | Description
-|*`event`*  | Event name.
-|*`code`*   | Block of code currently evaluated.
-|*`offset`* | Offset in block currently evaluated.
-|*`value`*  | Value currently processed in the event.
-|*`ref`*    | Reference of the call (word or path) associated to the event.
-|*`frame`*  | Pair of indexes in the Red internal stack denoting the beginning and end of the call frame. +++ <sup>(1)</sup> +++
+|Argument  | Description
+|`event`   | Event name.
+|`code`    | Block of code currently evaluated.
+|`offset`  | Offset in block currently evaluated.
+|`value`   | Value currently processed in the event.
+|`ref`     | Reference of the call (word or path) associated to the event.
+|`frame`   | Pair of indexes in the Red internal stack denoting the beginning and end of the call frame. +++ <sup>(1)</sup> +++
 |===
 
 +++ <sup>(1)</sup> +++ Note that the `frame` index range is for the internal Red stack, not the one used in the debugger (which is managed by the debugger itself).
@@ -304,24 +304,44 @@ Starts an interactive debugging session, allowing to evaluate the `code` argumen
 
 The `/later` refinement will let the evaluation run uninterrupted until a `@stop` value is encountered, entering the debugging console. The normal evaluation can be resumed when encountering the `@go` value (in addition to the `continue` debug command). The `@stop` value acts effectively as a breakpoint. Using the `@stop`  and `@go` values allows to selectively enter the step by step evaluation, only on chosen code pieces. 
 
-Debugger commands:
+Debugger command list:
 
-* `help` or `?`: prints a list of debugger's commands.
-* `next` or `n` or just ENTER: evaluate next value.
-* `continue` or `c`: exit debugging console but continue evaluation.
-* `quit` or `q`: exit debugger and stop evaluation.
-* `stack` or `s`: display the current calls and expression stack.
-* `parents` or `p`: display the parents call stack.
-* `:word`: outputs the value of `word`. If it is a `function!`, outputs the local context.
-* `:a/b/c`: outputs the value of `a/b/c` path.
-* `watch <word1> <word2>...`: watch one or more words. `w` can be used as shortcut for `watch`.
-* `-watch <word1> <word2>...`: stop watching one or more words. `-w` can be used as shortcut for `-watch`.
-* `+stack`  or `+s`: outputs expression stack on each new event.
-* `-stack`  or `-s`: do not output expression stack on each new event.
-* `+locals` or `+l`: output local context for each entry in the callstack.
-* `-locals` or `-l`: do not output local context for each entry in the callstack.
-* `+indent` or `+i`: indent the output of the expression stack.
-* `-indent` or `-i`: do not indent the output of the expression stack.
+[cols="1,1,2", options="header"]
+|===
+|Command     | Shortcut | Description
+| `help`     | `?`      | Print a list of debugger's commands.
+| `next`     | `n` or ENTER key| Next evaluation step.
+| `continue` | `c`      | Exit debugging console but continue evaluation.
+| `quit`     | `q`      | Exit debugging console and stop evaluation.
+| `stack`    | `s`      | Display the current local calls and expression stack.
+| `parents`  | `p`      | Display the parents call stack.
+| `:word`    | n/a      | Outputs the value of `word`. If it is a `function!`, outputs the local context.
+| `:a/b/c`   | n/a      | Outputs the value of `a/b/c` path.
+| `watch <word1> <word2>...`  | n/a | Watch one or more words. `w` can be used as shortcut for `watch`.
+| `-watch <word1> <word2>...` | n/a | Stop watching one or more words. `-w` can be used as shortcut for `-watch`.
+| `+stack`   | `+s` | Outputs expression stack on each new event.
+| `-stack`   | `-s` | Do not output expression stack on each new event.
+| `+locals`  | `+l` | Output local context for each entry in the call stack.
+| `-locals`  | `-l` | Do not output local context for each entry in the call stack.
+| `+indent`  | `+i` | Indent the output of the expression stack.
+| `-indent`  | `-i` | Do not indent the output of the expression stack.
+|===
+
+When the interactive mode is entered, the debugger console will output a set of contextual information on every step. Here is a short description:
+
+Typical output:
+----
+debug> n                  ;-- last debug command (`next`)
+-----> EVAL n             ;-- the next step: fetching and evaluating `n`
+Input: n < 1              ;-- the currently evaluated code
+Stack: print              ;-- the current (local) call stack bottom
+Stack: fibo               ;-- both function calls and their arguments are shown on stack
+Stack: 4
+Stack: either
+Stack: <                  ;-- stack top
+----
+
+That stack is referred to as the "expression stack" to contrast it with the "parents stack" which refers to the call stack above the point when the debugger was called. When the expression stack is empty, an `-empty stack-` label is displayed under the `Input:` line.
 
 === `profile`
 
