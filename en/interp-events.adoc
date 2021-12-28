@@ -192,7 +192,7 @@ END      none
 
 === Function attributes
 
-Any function called during a traced evaluation can be set to either avoid generating any event or be forced to generate events while event generation is disabled. This can be achieved using specific function attributes.
+Any function called during a traced evaluation can be set to either avoid generating any event or be forced to generate events while event generation is disabled. This can be achieved using the following function attributes.
 
 ==== trace
 
