@@ -81,6 +81,7 @@ Detailed description:
 |*`OPEN`*  | `any-block!`  | `integer!` |  `any-function!`  | `word!`, `path!` | when a new function (any-function!) call is initiated and a new stack frame is opened.
 |*`CALL`*  | `any-block!`  | `integer!` |  `any-function!` to call | `word!`, `path!`, `any-function!` | a function with all arguments fetched on the stack gets called.
 |*`RETURN`*| `any-block!`  | `integer!` |  returned `any-type!` value | `word!`, `path!` | when a function call has returned and its stack frame has been closed.
+|*`EXPR`*  | `any-block!`  | `integer!` | expression `any-type!` result | n/a (`none`) | when a top-level expression has been evaluated.
 |*`PROLOG`*| `any-block!`  | -1     |  called `function!` value | `word!`, `path!` | when entering a function! body.
 |*`EPILOG`*| `any-block!`  | -1     |  called `function!` value | `word!`, `path!` | when exiting a function! body.
 |*`FETCH`* | `any-block!`  | `integer!` |  fetched `any-type!` value | n/a (`none`) | a value is read from the input block to be evaluated.
