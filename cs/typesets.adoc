@@ -4,7 +4,7 @@
 
 == Úvodem
 
-Typesety jsou sady hodnot typu `datatype!`, uložených v kompaktní řadě (array) bitů (max 96 bitů), umožňujících podporu vysokorychlostní kontroly typů při runtime.
+Typesety jsou sady hodnot typu `datatype!`, uložených v kompaktní řadě (array) bitů (max 96), umožňujících vysokorychlostní kontrolu typů při runtime.
 
 Datové typy v typesetu mohou mít společné rysy nebo chování ale není to podmínkou. Typeset lze vytvořit v závislosti na kriteriích, vyhovujících potřebám uživatele.
 
@@ -108,6 +108,6 @@ Slovo `series` má v prostředí jazyka Red dva významy. Jednak to je (s vykři
 == "ello world"
 ```
 
-// Typ prvků v řadě je závislý na datovém typu řady, např. řada typu `block!` může obsahovat dle definice bloku (link:datatypes/block.adoc[block!]) hodnoty libovolného typu. Řada typu `string` - opět podle definice řetězce (link:datatypes/string.adoc[string!]) může obsahovat pouze hodnoty typu `char`.
+Typ prvků v řadě (series) je závislý na jejím datovém typu, např. řada typu `block` může obsahovat dle definice (link:datatypes/block.adoc[block!]) hodnoty libovolného typu. Řada typu `string`(link:datatypes/string.adoc[string!]) může obsahovat pouze hodnoty typu `char`.
 
 

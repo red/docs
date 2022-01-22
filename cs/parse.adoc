@@ -22,7 +22,7 @@ Ošetřením jsou zde míněny tyto procesy:
 
 === Použití
 
-Proces parsování se invokuje *funkcí parse* s použitím jednoduché skladby (podrobněji viz sekce <<Extra funkce>>):
+Proces parsování se invokuje funkcí *parse* s použitím jednoduché skladby (podrobněji viz sekce <<Extra funkce>>):
 
 ----
 parse <input> <rules>
@@ -31,8 +31,7 @@ parse <input> <rules>
 <rules> : hodnota typu block!, obsahující platný dialekt Parse (top-level rule)
 ----
 
-Funkce `parse` provádí postupné vyhodnocení jednotlivých částí vstupu z hlediska zadaného bloku pravidel.
-Celkové vyhodnocení vrací hodnotu typu `logic!` jako sdělení, zda zadaná gramatická pravidla byla či nebyla v úplné shodě se zadanými částmi vstupu.
+Funkce `parse` vrací hodnotu typu `logic!` jako sdělení, zda zadaná gramatická pravidla byla či nebyla v úplné shodě se zadanými částmi vstupu.
 
 
 === Základní principy
@@ -78,7 +77,7 @@ Procedura _parse_ nabízí určitou flexibilitu provedení podporou různých re
 
 === Rozlišení malých a velkých písmen
 
-Implicitně má Parse shodnou sémantiku jako Red a je _case-insensitive_. Rozlišení velkých písmen lze zapnout upřesněním `/case` nebo vypnout/zapnout klíčovým slovem `case`.
+Implicitně má Parse shodnou sémantiku jako Red a je _case-insensitive_. Rozlišení velkých písmen lze zapnout upřesněním `/case` a zapnout či vypnout klíčovým slovem `case`. Slovo `case` mění režim srovnávání jenom pro následující pravidlo a poté jej vrací zpět nezávisle na úspěch či neúspěch (failure) pravidla.
 
 *Syntaxe*
 
@@ -92,7 +91,7 @@ S hodnotou, na níž odkazuje word se zachází jako s logickým praporkem (flag
 
 === Sběrný režim
 
-Pravidlo `collect` přikazuje, aby `parse` vrátilo blok místo hodnoty `logic!`. Detaily lze nalézt v sekci <<Vyjmutí>> section.
+Pravidlo `collect` přikazuje, aby `parse` vrátilo blok místo hodnoty `logic!`. Detaily lze nalézt v sekci <<Vyjmutí>>.
 
 === Typy vstupu
 
@@ -100,7 +99,7 @@ V závislosti na typu vstupních dat nejsou některá pravidla Parse uplatniteln
 
 * `any-block!`: porovnávání se sadou znaků nemá žádný význam a vždycky selže;
 * `any-string!`: porovnávání s datovým typem nebo sadou typů není podporováno.
-* `binary!`: porovnávání s datovým typem nebo sadou typů je podporováno pro hodnoty s kódováním UTF-8; případná shoda je úspěšná, pokud porovnávané části vstupu reprezentují některou z literálových forem datového typu. Prázdné znaky před tokeny jsou automaticky přeskočeny.
+* `binary!`: porovnávání s datovým typem nebo sadou typů je podporováno pro hodnoty s kódováním UTF-8; takové porovnáníá je úspěšné, pokud porovnávané části vstupu reprezentují některou z literálových forem datového typu. Prázdné znaky před tokeny jsou automaticky přeskočeny.
 
 *Příklad*
 
@@ -937,7 +936,7 @@ Akce parse může modifikovat své vstupy vložením nových hodnot a odebrat č
 
 ==== `remove`
 
-Buď odebere část vstupu, konformní s daným pravidlem nebo odebere vstup mezi aktuální a zadanou pozicí; zachová pozici na vstupu po jeho redukci.
+Buď odebere část vstupu, konformní s daným pravidlem nebo odebere vstup mezi aktuální a zadanou pozicí; poté zachová aktuální vstupní pozici.
 
 POZN: Odebírání hodnot je "forward-consuming" operace. Jinými slovy, počítá se jako shoda, přesto že nedojde k pokročení vstupem.
 
@@ -959,7 +958,7 @@ parse [remove me <and me also> "but leave me be"][some [remove word!] mark: to s
 
 ==== `insert`
 
-Vloží literálovou hodnotu nebo výsledek vyhodnocení výrazu do aktuální pozice. Akce je vždy úspěšná a pokročí vstupem za místo vložení.
+Vloží literálovou hodnotu nebo výsledek vyhodnocení výrazu  buď do aktuální nebo zadané (marked) pozice. Akce je vždy úspěšná a pokročí vstupem za místo vložení, pokud byla provedena v aktuální pozici, jinak je zachována vstupní pozice.
 
 *Syntaxe*
 
@@ -967,9 +966,16 @@ Vloží literálovou hodnotu nebo výsledek vyhodnocení výrazu do aktuální p
 insert <value>
 insert <expression>
 
+insert <word> <value>
+insert <word> <expression>
+
 insert only <value>
 insert only <expression>
 
+insert only <word> <value>
+insert only <word> <expression>
+
+<word>       : input position
 <value>      : literal value
 <expression> : paren! expression
 ----
@@ -979,12 +985,22 @@ Je-li literálová hodnota typu `word!`, použije se hodnota, na níž slovo odk
 *Příklad*
 
 ----
-parse [assembly][insert [some] skip insert (load "required") insert only [🏗️ 🧰👷]]
+ikea: [assembly]
+here: tail ikea
+
+parse ikea [
+	insert only here [🏗️ 🧰👷]
+	insert only (load "[manual]")
+	word!
+	insert ikea [some]
+	block!
+	insert [required]
+]
 ----
 
 ==== `change`
 
-Mění konformní (matched) část vstupu na literálovou hodnotu nebo na výsledek vyhodnocení výrazu. Navíc, může změnit část vstupu mezi aktuální a označenou pozicí. Po provedené změně je akce považována za úspěšnou a pokročí vstupem za měněnou část.
+Mění konformní (matched) část vstupu na literálovou hodnotu nebo na výsledek vyhodnocení výrazu. Navíc, může změnit část vstupu mezi aktuální a označenou pozicí. Byla-li změna provedena v aktuální pozici, je úspěšná a posune vstup za upravovanou část; v opačném případě je vstupní pozice zachována.
 
 *Syntaxe*
 
@@ -1136,37 +1152,13 @@ Nevyřešené chyby a inkozistence návrhu, související s dialektem Parse jsou
 |===
 | Affected rules | Description | Tickets
 
-| `change <position> <expression>`
-| `word!` values are not used literally.
-| https://github.com/red/red/issues/4200[#4200]
-
 | `remove <position>`
 | The case where position comes after the current one is not handled.
 | https://github.com/red/red/issues/4199[#4199]
 
-| `keep pick <expression>`
-| Semantics is undefined.
-| https://github.com/red/red/issues/4198[#4198]
-
-| `collect into`
-| Incorrect handling of series buffer.
-| https://github.com/red/red/issues/4197[#4197]
-
-| `into`
-| It is possible to match series not supported by Parse.
-| https://github.com/red/red/issues/4194[#4194]
-
 | `break`, `reject`
 | Preemptive break of <<Repetition>> rules.
 | https://github.com/red/red/issues/4193[#4193]
-
-| `insert <word>`
-| The rule is not handled properly.
-| https://github.com/red/red/issues/4153[#4153]
-
-| `path!`, `remove`, `insert`, `change`
-| Usage of `path!` literal value inside rules is forbidden, `path!` values are handled inconsistently by <<Modification>> rules. 
-| https://github.com/red/red/issues/4101[#4101], https://github.com/red/red/issues/3528[#3528]
 
 | `fail`, `break`, `reject`
 | Design of some <<Control flow>> rules is not finalized.
@@ -1184,5 +1176,5 @@ Kromě anglických i obecně cizích slov jsou v překladu použity jisté rádo
 
 * series! - řada - vstup - vstupní objekt, náležející do typové sady series! případně název pravidla Parse
 * matched - konformní - shodující se s pravidlem
-* top-level-rule ? - řídící pravidlo?
+* top-level-rule ? - řídící pravidlo
 
