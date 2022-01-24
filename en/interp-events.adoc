@@ -516,3 +516,14 @@ true
 ----
 
 == Implementation notes
+
+
+=== General notes
+
+minimal code
+
+=== Profiler improvements
+
+=== Stack access
+
+
