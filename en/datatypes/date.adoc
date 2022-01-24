@@ -627,7 +627,7 @@ d
 
 *Description*
 
-Gets the week day number, ranging from 1 for Monday, to 7 for Sunday. When used for setting the day of the week, the date is recalculated to match that day in the current week. Out of range argument values will result in a normalized date.
+Gets the week day number, ranging from 1 for Monday, to 7 for Sunday (ISO-8601 international format). When used for setting the day of the week, the date is recalculated to match that day in the current week. Out of range argument values will result in a normalized date.
 
 *Examples*
 
