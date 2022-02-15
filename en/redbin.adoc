@@ -7,6 +7,8 @@ NOTE: Specification version 2.
 
 Redbin is a binary format that accurately represents Red values stored in memory while enabling fast loading (avoiding the parsing and validation stage of the text representation format). Redbin format is largely inspired by http://www.rebol.com/article/0044.html[REBin]; it can encode binding information for `any-word!` values, references to shared buffers for `series!` values, and can handle arbitrary cycles for `any-block!` values.
 
+NOTE: Redbin's primary goal is fast loading, not minimum size. Contrary to many other binary formats, redbin content may be larger than its textual counterpart.
+
 == Redbin codec
 
 Redbin format enables use-cases typically associated with data serialization, such as:
