@@ -9,9 +9,7 @@
 == Úvod
 
 
-*Dialekt Parse* je jazyk specifické domény (domain-specific language - DSL) programovacího jazyka Red, který umožňuje stručné a přesné *ošetření* vstupu (input) podle zadaných gramatických pravidel (rules). 
-
-Ošetřením jsou zde míněny tyto procesy:
+Dialekt Parse je vnořený DSL (domain-specific language) programovacího jazyka Red, který umožňuje stručné a přesné porovnání vstupních řad se zadanými gramatickými pravidly. Obecná pravidla tohoto dialektu jsou:
 
 * *Hledání* - lokalizace zadaných vzorů
 * *Validace* - ověření shody vstupu s určitou specifikací
@@ -46,7 +44,10 @@ Hodnocení vstupu (parsing) je stále se opakující aplikace tohoto základníh
 * Neúspěšná aplikace pravidla: `parse` vrací `false`, signalizujíce neshodu
 * Úplná shoda pravidla s porovnávaným vstupem a vyčerpání vstupu (to jest dosažení konce zkoumaného vstupu): `parse` vrací `true`, signalizujíce shodu.
 
-POZOR: Nejsou-li splněny ukončovací podmínky, může vstoupit Parse do nekonečné smyčky.
+[CAUTION]
+==== 
+Nejsou-li splněny ukončovací podmínky, může vstoupit Parse do nekonečné smyčky.
+====
 
 
 === Glosář
@@ -60,16 +61,16 @@ Postupování::
     Procházení (advancing) vstupní řadou postupným ověřováním shody jednotlivého elementu s gramatickými pravidly - až ke konci řady nebo k výskytu neshody.
 
 Vyhledání::
-    Hledání následného pravidla, k uplatnění za úspěšnou shodou (fetching).
+    Hledání následně použitelného pravidla pro uplatnění za úspěšnou shodou (fetching).
 
 Alternace (v PEG popsáno jako uspořádaný výběr)::
-    V případě výskytu neshody s pravidlem se postupně pokoušet o shodu s následujícími alternativními pravidly v témže bloku za znakem `|` ("pipe", "bar", "nebo").
+    V případě neshody s pravidlem se postupně pokoušet o shodu s alternativními pravidly v témže bloku za znakem `|` ("pipe", "bar", "or else").
 
-Navrácení::
-    Vrácení vstupu a pravidel na pozici před selháním pravidla (backtracking). Ostatní změny (vedlejší účinky a úpravy vstupu či pravidel) zůstávají.
+Navrácení (backtracking)::
+    Obnovení vstupu a pravidel na pozici před selháním pravidla. Ostatní změny (vedlejší účinky a úpravy vstupu či pravidel) zůstávají.
 
-Kumulativní chování::
-    Parsovací pravidla (zejména <<Opakování>>) se vždycky snaží posoudit co nejvíce vstupních dat (possessive matching).
+Possesive matching::
+    Parsovací pravidla (zejména <<Opakování>>) se vždycky snaží posoudit co nejvíce vstupních dat.
 
 == Režimy parsování
 
@@ -125,7 +126,10 @@ Gramatická pravidla v dialektu Parse mohou mít několik forem a obvykle mají 
     ** `paren!` - hodnota, která působí jako <<Vyhodnocení výrazu, únikový mechanizmus>> dialektu vyhodnocením obsaženého výrazu Red a pokračováním v parsování vstupu; některá klíčová slova Parse používají vrácené hodnoty z výrazu ve shodě se svou vlastní sémantikou;
 * Jakákoliv jiná literálová hodnota výše nezmíněná, jež se používá _tak jak je_ pro přímé porovnávání se vstupem.
 
-POZN: Parse je konsistentní s Redem v používání <<Volné přirovnání, volného přirovnání>> pro porovnávání s literálovými hodnotami.
+[NOTE]
+==== 
+Parse je konsistentní s Redem v používání <<Volné přirovnání, volného přirovnání>> pro porovnávání s literálovými hodnotami.
+====
 
 Každé pravidlo (rule) je charakterizováno podmínkami, při kterých parsování pokročí vstupem a uspěje. Přehled pravidel (jak vyhražená, tak klíčová slova) je tabelárně uveden níže.
 
@@ -321,7 +325,10 @@ Každé pravidlo (rule) je charakterizováno podmínkami, při kterých parsová
 
 |===
 
-POZN: Všechna pravidla v dále uvedených odstavcích se plně shodují se svými vstupy.
+[TIP]
+====
+Všechna pravidla v dále uvedených odstavcích se plně shodují se svými vstupy.
+====
 
 === Skladba
 
@@ -341,7 +348,10 @@ Pravidla, popsaná v této části, přímo posuzují shodu vstupnch dat a slou�
 
 Posouzení shody literálové hodnoty je úspěšné a vede k pokročení zadaným vstupem, je-li posuzovaná literálová hodnota totožná s hodnotou na aktuální pozici.
 
-POZN: Parse používá _volnou komparaci_ pro ověření rovnosti. <<Rozlišení malých a velkých písmen, Case-sensitivní režim>> vynucuje porovnání s rozlišením malých a velkých písmen.
+[NOTE] 
+====
+Parse používá _volnou komparaci_ pro ověření rovnosti. <<Rozlišení malých a velkých písmen, Case-sensitivní režim>> vynucuje porovnání s rozlišením malých a velkých písmen.
+====
 
 *Příklad*
 
@@ -351,7 +361,10 @@ parse [today is 5-September-2012 #"," 20.3 degrees/celsius][
 ]
 ----
 
-POZN: Pro porovnávání literálových hodnot, vymezených v dialektu Parse, se jako únikový mechanizmus používá klíčové slovo `quote`.
+[NOTE]
+====
+Pro porovnávání literálových hodnot, vymezených v dialektu Parse, se jako únikový mechanizmus používá klíčové slovo `quote`.
+====
 
 ==== Datový typ
 
@@ -363,7 +376,10 @@ Ověření shody podle datového typu (datatype) je úspěšné a vede k pokroč
 parse [#a 'bird /is :the word][issue! lit-word! refinement! get-word! word!]
 ----
 
-POZN: Ověření shody podle datového typu není podporováno pro vstup typu `binary!` a typy typesetu `any-string!`. Pravidla jsou popsána v sekci <<Typy vstupu>>. 
+[NOTE]
+==== 
+Ověření shody podle datového typu není podporováno pro vstup typu `binary!` a typy typesetu `any-string!`. Pravidla jsou popsána v sekci <<Typy vstupu>>.
+==== 
 
 ==== Typová sada
 
@@ -384,7 +400,10 @@ banner: [
 parse banner [default! series! any-block! any-list! all-word! any-word! any-type! any-string!]
 ----
 
-POZN: Ověření shody podle typové sady není podporováno pro vstup typu `binary!` a typy typesetu `any-string!`. Pravidla jsou popsána v sekci <<Typy vstupu>>.
+[NOTE]
+==== 
+Ověření shody podle typové sady není podporováno pro vstup typu `binary!` a typy typesetu `any-string!`. Pravidla jsou popsána v sekci <<Typy vstupu>>.
+====
 
 
 ==== Znaková sada
@@ -404,9 +423,15 @@ follow: charset "🚶👣🚸"
 parse "👣 the white 🐇" [follow " the white " animal]
 ----
 
-POZN: Varianty _lowercase/uppercase_ téhož písmena mají různá UCP. Z toho vyplývá, že ověřování shody podle znakové sady je _case-sensitive_ bez ohledu na <<Režimy parsování, režim parsování>>.
+[NOTE]
+==== 
+Varianty _lowercase/uppercase_ téhož písmena mají různá UCP. Z toho vyplývá, že ověřování shody podle znakové sady je _case-sensitive_ bez ohledu na <<Režimy parsování, režim parsování>>.
+====
 
-POZN: Pro vstup typu `binary!` mají význam pouze hodnoty UCP menší než `255`, protože parsování v tomto režimu je _byte-granular_.
+[NOTE]
+==== 
+Pro vstup typu `binary!` mají význam pouze hodnoty UCP menší než `255`, protože parsování v tomto režimu je _byte-granular_.
+====
 
 ==== `quote`
 
@@ -458,7 +483,7 @@ parse [(＊◕ᴗ◕＊)][end | skip [skip | end]]
 
 === Předstih
 
-Pravidla s _předstihem_ (look-ahead) nabízejí podrobnější nastavení pro ověřování shody, couvání (backtracking) a posun vstupem.
+Pravidla s _předstihem_ (look-ahead) nabízejí podrobnější nastavení pro ověřování shody, couvání (backtracking) a posun vstupu.
 
 ==== `opt`
 
@@ -561,13 +586,19 @@ end: tail phrase
 parse phrase [again: "and" :again ['it | :goes] "until the" | :end]
 ----
 
-POZN: Přemístění pozice do jiné řady než vstupní není dovoleno.
+[NOTE]
+==== 
+Přemístění pozice do jiné řady než vstupní není dovoleno.
+====
 
 === Opakování
 
 Pravidla níže popsaná působí při posouzení shody jako smyčky nebo iterátory buď určeným počtem opakování nebo až do dosažení neshody.
 
-POZN: Opakovací pravidla mají vlastnické chování a posoudí shodu co možná nejrozsáhlejšího vstupu.
+[NOTE]
+==== 
+Opakovací pravidla mají vlastnické chování a posoudí shodu co možná nejrozsáhlejšího vstupu.
+====
 
 ==== Počet iterací
 
@@ -583,7 +614,10 @@ Provede posouzení shody s daným pravidlem zadaným počtem opakování. Je-li 
 <rule>  : Parse rule to match a specified number of times
 ----
 
-POZN: Při použití skladby range musí být první celé číslo (spodní mez) menší nebo roven druhému celému číslu (horní mez).
+[NOTE]
+==== 
+Při použití skladby range musí být první celé číslo (spodní mez) menší nebo roven druhému celému číslu (horní mez).
+====
 
 *Příklad*
 
@@ -819,9 +853,16 @@ Vyjímací (extraction) pravidla kopírují shodné hodnoty ze vstupních řad.
 
 Přiřadí dané slovo první hodnotě v konformní části vstupu.
 
-POZN: Slovu je přiřazena hodnota `none`, pokud porovnávané pravidlo neposunulo pozici vstupu.
+[NOTE]
+==== 
+Slovu je přiřazena hodnota `none`, pokud porovnávané pravidlo neposunulo pozici vstupu.
+====
 
-POZN: Pro vstup typu `binary!` je slovo nastaveno na hodnotu typu `integer!` mezi `0` a `255`.
+[NOTE]
+==== 
+Pro vstup typu `binary!` je slovo nastaveno na hodnotu typu `integer!` mezi `0` a `255`.
+[NOTE]
+====
 
 *Syntaxe*
 
@@ -866,7 +907,10 @@ Shromáždí konformní hodnoty, které jsou označeny klíčovým slovem `keep`
 
 Pravidlo `keep` uspěje, uspěje-li poskytnuté pravidlo - vkládajíc konformní hodnoty do bloku, vymezeného pravidlem `collect`.
 
-POZN: Použití klíčového slova `keep` bez souvislosti s pravidlem `collect` je zapovězeno.
+[NOTE]
+==== 
+Použití klíčového slova `keep` bez souvislosti s pravidlem `collect` je zapovězeno.
+====
 
 *Syntaxe*
 
@@ -938,7 +982,10 @@ Akce parse může modifikovat své vstupy vložením nových hodnot a odebrat č
 
 Buď odebere část vstupu, konformní s daným pravidlem nebo odebere vstup mezi aktuální a zadanou pozicí; poté zachová aktuální vstupní pozici.
 
-POZN: Odebírání hodnot je "forward-consuming" operace. Jinými slovy, počítá se jako shoda, přesto že nedojde k pokročení vstupem.
+[NOTE]
+==== 
+Odebírání hodnot je "forward-consuming" operace. Jinými slovy, počítá se jako shoda, přesto že nedojde k pokročení vstupem.
+====
 
 *Syntaxe*
 
@@ -1034,14 +1081,14 @@ parse [some things never change][
 
 == Události procesu parse
 
-Dialekt Parse je implementován jako pushdown automaton (PDA), využívající paměti typu stack. Při každé změně stavu emituje _událost_ (event, hodnota typu `word!`), která informuje uživatele o parsovacím procesu. Interakce mezi událostmi a interním stavem aktivity parse je dosaženo upřesněním `/trace` a "callback" funkcí (viz <<Extra funkce, další odstavec>>).
+Dialekt Parse je implementován jako "pushdown automaton" (PDA), využívající paměti typu stack. Při každé změně stavu emituje _událost_ (event, hodnota typu `word!`), která informuje uživatele o parsovacím procesu. Interakce mezi událostmi a interním stavem aktivity parse je dosaženo upřesněním `/trace` a "callback" funkcí (viz <<Extra funkce, další odstavec>>).
 
 Níže je uveden seznam všech událostí s podmínkami, které je vyvolávají (štos = stack):
 
 .Seznam událostí Parse.
 [options="header" cols="1,4"]
 |===
-| Event | Description
+| Událost | Popis
 
 | `push`
 | Poté co je pravidlo vloženo na štos.

@@ -1,7 +1,7 @@
 = Visual Interface Dialect
 :imagesdir: ../images
 :toc:
-:toclevels:3
+:toclevels: 3
 :numbered:
 
   
@@ -18,12 +18,16 @@ VID umožňuje určení polohy každého grafického elementu a to třemi způso
 
 VID automaticky vytvoří kontejnerový piškot pro umístění zadaných piškotů. Implicitně je kontejnerový piškot typu `window`.
 
+[TIP]
+==== 
+* Původní termín `face` je v tomto textu překládán jako `piškot` (piškot = face).
+====
+
 Kód VIDu je vyhodnocen funkcí `layout` (jež je interně volána funkcí `view`). Kód je poté kompilován do stromu piškotů, vhodného pro přímé zobrazení.
 
 [NOTE]
 ==== 
 * Použijte `help view` a `help layout` v konzole Redu k získání přehledné informace.
-* Typy piškotů nepatří mezi datové typy!
 ====
 
 == Struktura kódu 
@@ -236,27 +240,27 @@ Vyhodnotí blok regulérního kódu Redu pro následné "last-minute" inicializa
 
 == Dodatečné styly
 
-View engine poskytuje mnoho vestavěných piškotů. Dialekt VID je rozšiřuje definováním dalších obecně používaných stylů s přiřazenými klíčovými slovy. Lze je použít se stejnými volbami jako jejich výchozí typ piškotu. Mohou byt také redefinovány použitím příkazu `style`.
+*View engine* poskytuje mnoho vestavěných piškotů. Dialekt VID je rozšiřuje definováním dalších obecně používaných stylů s přiřazenými klíčovými slovy. Lze je použít se stejnými volbami jako jejich výchozí typ piškotu. Mohou byt také redefinovány použitím příkazu `style`.
 	
-=== h1
+=== H1
 
-Styl `H1` je typu `text` s velikostí fontu 32.
+Styl `h1` je typu `text` s velikostí fontu 32.
 
-=== h2
+=== H2
 
-Styl `H2` je typu `text` s velikostí fontu 26.
+Styl `h2` je typu `text` s velikostí fontu 26.
 
-=== h3
+=== H3
 
-Styl `H3` je typu `text` s velikostí fontu 22.
+Styl `h3` je typu `text` s velikostí fontu 22.
 
-=== h4
+=== H4
 
-Styl `H4` je typu `text` s velikostí fontu 17.
+Styl `h4` je typu `text` s velikostí fontu 17.
 
-=== h5
+=== H5
 
-Styl `H5` je typu `text` s velikostí fontu 13.
+Styl `h5` je typu `text` s velikostí fontu 13.
 
 === box
 
@@ -269,7 +273,7 @@ Styl `image` je typu `base` s implicitní velikostí 100x100.
 
 == Definice piškotů 
 
-Piškot lze vložit do aktuální pozice rozvržení (layout) jednoduše uvedením jména existujícího typu piškotu nebo dostupného stylu.
+Piškot (face) lze vložit do aktuální pozice rozvržení (layout) jednoduše uvedením jména existujícího typu piškotu nebo dostupného stylu.
 
 *Syntaxe*
 ----
@@ -704,9 +708,9 @@ Kromě klíčových slov je možné zadat nastavení piškotů s použitím lite
 |*tuple!*|       Určuje barvu pozadí piškotu (kde je použitelné).
 |*issue!*|      Určuje barvu pozadí piškotu pomocí hexadecimálního zápisu (#rgb, #rrggbb, #rrggbbaa).
 |*string!*|     Určuje text, který má být piškotem zobrazen.
-|date!|		Nastavuje aspekt `data` (užitečné pro typ `calendar`).
+|*date!*|		Nastavuje aspekt `data` (užitečné pro typ `calendar`).
 |*percent!*|    Nastavuje aspekt `data` piškotu (užitečné pro typy `progress` a `slider`).
-|logic!|	Nastavuje aspekt `data` piškotu (užitečné pro typy `toggle`, `check` a `radio`).
+|*logic!*|	Nastavuje aspekt `data` piškotu (užitečné pro typy `toggle`, `check` a `radio`).
 |*image!*|      Určuje obrázek pro pozadí piškotu(tam, kde je použitelné).
 |*url!*|        Načte zdroj, na nějž ukazuje URL a poté jej provede.
 |*block!*|      Udává akci pro implicitní událost piškotu. U panelů určuje jejich obsah.
@@ -852,9 +856,9 @@ Jednoduchý příklad, který využívá pravidla pro uspořádání tlačítek 
 
 Všimněte si textu a uspořádání tlačítek u zobrazení v macOS a ve Windows.
 
-[.left]
+
 image:mac-OS-buttons.png[mac]
-[.left]
+
 image:win-OS-buttons.png[windows]
 
 ***

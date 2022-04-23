@@ -11,7 +11,7 @@ LibRed je specielní verze knihovny 'runtime' a interpreta Redu , vhodná pro in
 
 * Schopnost set/get hodnotu slova v globálním nebo lokálním kontextu.
 * Zkrácené konstruktory pro většinu obvyklých datových typů Redu.
-* Konverzní funkce pro datové typy Redu, kompatibilní s C.
+* Konverzní funkce pro datové typy Redu, kompatibilní s hostitelským jazykem (většinou C).
 * Manipulaci s řadami z hostitelského jazyka.
 * Callbacky, umožňující Redu volat funkce hostitelského jazyk.
 * Ladící funkce, orientované na konzolu (terminál).
@@ -64,7 +64,10 @@ C API lze použít pro aplikace C/C++  ale také pro integraci Redu do libovoln�
 
 Aby bylo možné použít funkci z API, je nutné vytvořit _instanci_ libRed.
 
-NOTE: Aktuálně je povolena pouze jedna seance libRed per proces. Toto bude v budoucnosti rozšířeno na podporu více instancí.
+[NOTE]
+====
+Aktuálně je povolena pouze jedna seance libRed v jednom procesu. Toto bude v budoucnosti rozšířeno na podporu více instancí.
+====
 
 ==== redOpen()
 ----
@@ -507,7 +510,10 @@ Vrací _hodnotu_ označenou cestou (_path_).
 
 Je-li zapotřebí vícero přístupů `setting/getting` k polím objektu, doporučuje se použít přímo hodnotu objektu místo vytváření cesy. K tomu účelu slouží dvě následující funkce.
 
-Note: Tyto accesory akceptují jakýkéli další asociované typy kolektorů (arrays), nikoliv pouze objekty typu `object!`. Zadání objektu typu `map!` je tedy také dovoleno.
+[NOTE] 
+====
+Tyto accesory akceptují jakýkéli další asociované typy kolektorů (arrays), nikoliv pouze objekty typu `object!`. Zadání objektu typu `map!` je tedy také dovoleno.
+====
 
 ==== redSetField()
 ----

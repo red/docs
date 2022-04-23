@@ -1,8 +1,7 @@
 = Předdefinované hodnoty action!
 
-Poznámka překladatele:
-
-Tuto kapitolu prozatím nepřekládám, neboť v ní převládají nepřeložitelné termíny programovacího jazyka.
+*Poznámka překladatele*:
+Obtížně přeložitelný text, ponechávám nepřeložené.
 
 == Bitwise actions
 

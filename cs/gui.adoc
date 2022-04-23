@@ -1,9 +1,9 @@
 = Architektura Red-GUI
-:imagesdir:: ../images
+//   :imagesdir:: ../images
 :toc:
 :numbered:
 
-image::view-overview.png[Přehledné schema,align="center"]
+image::../images/view-overview.png[Přehledné schema,align="center"]
 
 === VID
 
@@ -13,7 +13,7 @@ VID je zkratkou označení Visual Interface Dialect. Je to dialekt Redu, umožň
 
 Kód grafického prostředí (GUI engine) se skládá z několika částí: 
 
-* Systém View pro správu piškotů, nezávislý na platformě
+* Systém View pro správu piškotů (faces), nezávislý na platformě
 * Události reaktivních akcí
 * Interpret dialogu Draw
 * Backendy pro různé platformy
@@ -24,7 +24,7 @@ Reaktivní akce mohou být definovány z dialektu VID nebo mohou být určeny po
 
 === Draw
 
-Draw je dialekt Redu pro vektorové kreslení ve 2D. Lze jej specifikovat různým způsobem:
+Draw je dialekt Redu pro vektorové kreslení ve 2D. Toto kreslení lze specifikovat různým způsobem:
 
 * v rozvrženích (layouts) VIDu
 * přímo ve vlastnosti `draw` libovolného piškotu

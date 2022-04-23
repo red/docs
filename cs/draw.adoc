@@ -8,11 +8,11 @@
 
 == Anotace
 
-Draw je dialekt jazyka (DSL) Red, který poskytuje jednoduchý deklarativní způsob kreslení rovinných útvarů. Operace kreslení jsou vyjádřeny jako seznamy uspořádaných příkazů (používajících bloky hodnot), které je snadné sestavovat a měnit při běhu programu.
+*Draw* je dialekt jazyka (Domain Specific Languge) Red, který poskytuje jednoduchý deklarativní způsob kreslení rovinných útvarů. Operace kreslení jsou vyjádřeny jako seznamy uspořádaných příkazů (používajících bloky hodnot), které je snadné sestavovat a měnit při běhu programu.
 
-Bloky dialektu Draw lze vykreslovat přímo do obrázku s použitím funkce `draw` nebo uvnitř piškotu View s použitím aspektu `draw` (viz link:view.adoc[dokumentace View]).
+Bloky dialektu Draw lze vykreslovat přímo do obrázku s použitím funkce `draw` nebo uvnitř piškotu (face) View s použitím aspektu `draw` (viz link:view.adoc[dokumentace View]).
 
-== Příkazy
+== Příkazy 'draw'
 
 Příkazy mohou být kreslící instrukce nebo nastavení kreslících instrukcí. Je-li nastaven určitý režim, platí pro všechny následující operace aktuální seance Draw.
 
@@ -31,7 +31,7 @@ image::../images/coord-system.png[Coord-system,align="center"]
 *Syntaxe*
 
 ----
-line <point> <point> ...
+line <point1> <point2> ...
     
 <point> : souřadnice bodu (pair!).
 ----
@@ -44,7 +44,7 @@ Příkaz nakreslí přímku (line) mezi dvěma body. Je-li zadáno více bodů, 
 
 *Syntaxe*
 ----
-triangle <point> <point> <point>
+triangle <point1> <point2> <point3>
     
 <point> : souřadnice vrcholu trojúhelníku (pair!).
 ----
@@ -758,7 +758,7 @@ Způsob spojení nového výřezu se stávajícím může být zadán jako jeden
 * `exclude`
 
 
-== Shape commands
+== Příkazy 'Shape'
 
 *Syntaxe*
 ----

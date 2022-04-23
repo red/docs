@@ -4,9 +4,17 @@
 :toclevels: 3
 :numbered:
 
-Poznámka: Specifikace verze 2
+[NOTE]
+==== 
+Specifikace verze 2
+====
 
 Redbin je binární formát, který přesně reprezentuje hodnoty Redu, uložené v paměti, přičemž umožňuje rychlé načítání (vyhýbaje se parsovací a ověřovací fázi prezentace textového formátu). Formát Redbin je převážně inspirován formátem http://www.rebol.com/article/0044.html[REBin]. Redbin umí zakódovat závaznou informaci pro hodnoty `any-word!`, realizovat odkazy na sdílené buffery pro hodnoty `series!` a řídit cykly pro hodnoty typu `any-block!`.
+
+[NOTE]
+====
+Primárním cílem Redbinu je rychlé načítání, nikoliv minimální velikost. Na rozdíl od mnoha jiných binárních formátů může být obsah formátu *redbin* větší než jeho textový protějšek
+====
 
 == Kodek Redbinu 
 
@@ -35,7 +43,7 @@ load <file>
 
 NOTE: Codec Redbinu neumí kódovat či dekódovat <<Nepodporované, nepodporované>> hodnoty, potažmo hodnoty, které je obsahují.
 
-WARNING: Attempt to `load` Redbin data with malformed payload will likely lead to unexpected results or a runtime crash.
+WARNING: _Attempt to `load` Redbin data with malformed payload will likely lead to unexpected results or a runtime crash._
 
 == Lexikální konvence
 
@@ -54,7 +62,7 @@ V celém tomto dokumentu jsou při popisu kódovacího formátu Redbinu použív
 
 _Implicitní_ formát kódování je optimalizován pro rychlost dekódování, zatímco _kompaktní_ formát vyžaduje menší úložný prostor (za cenu mnohem pomalejšího dekódování).
 
-NOTE: Specification of the compact encoding format is not yet defined.
+NOTE: _Specification of the compact encoding format is not yet defined._
 
 Obecné rozložení dat v Redbinu je popsáno níže. Každá definice odkazuje na příslušnou část této dokumentace.
 
@@ -269,7 +277,7 @@ Referral může cílit na svého rodiče, v kterémžto případě se tvoří cy
 
 Některé datové typy hodnot (uvedených níže) nejsou formátem Redbinu podporovány.
 
-.Red datatypes not supported by Redbin format.
+.Datové typy Redu, nepodporované formátem Redbin
 [options="header" cols="1,3"]
 |===
 | Datatypes | Reason
@@ -304,6 +312,8 @@ header/type=1
 ----
 
 Pole `value` obsahuje ID datového typu, reprezentovaného jako 32-bitový integer.
+
+
 ==== `unset!` anchor:unset[] 
 
 ----
@@ -882,6 +892,18 @@ header/reference?=0|1
 ----
 
 Pole `length` je dvojice 16-bitových celých čísel, kódujících šířku a výšku zobrazení. Pole `rgba` obsahuje RGBA obsah obrázku (4 bytes per pixel) se zachovaným pořadím bajtů.
+
+==== `IPv6!` anchor:ipv6[] 
+
+----
+Default:  header (4), data (16)
+Compact:  TBD
+
+header/type=52
+header/unit=2
+----
+
+_The IPv6 address is encoded in network order in `data` field on 128-bit._
 
 
 

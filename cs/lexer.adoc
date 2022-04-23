@@ -266,3 +266,4 @@ Formát hrubého (raw) řetězce umožňuje vložit literálové řetězce bez j
 ----
 
 K vymezení řetězce lze použít libovolný počet párovaných znaků  `%`. Není li počet znaků na začátku shodný s počtem znaků na konci, dojde při načítání k chybovému hlášení.
+

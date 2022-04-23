@@ -15,7 +15,7 @@ Programovací rozhraní (API) pro RT má tři úrovně, od nejjednodušší k ne
 * Vícero RT odstavců v jediném piškotu (pro složitější uspořádání).
 
 
-== High-level RT dialekt
+== 'High-level' dialekt RT
 
 *Gramatika* 
 
@@ -101,7 +101,7 @@ view compose [rich-text 200x100 data [i/b/u/red ["Hello" font 32 " Red " /font b
 view compose [rich-text 200x100 data [i/blue ["Hello " b/u/red [font [32 "Arial"] "Red " /font] "World!"]]]
 ```
 
-== Low-level RT dialekt
+== 'Low-level' dialekt RT
 
 Tento dialekt popisuje seznam stylů, použitelných na řetězec, uváděný v aspektu `/text` piškotu `rich-text`. Účelem tohoto dialektu je poskytnout co nejrychlejší řešení pro dynamické změny a evokaci (querying) informací. Dialekt je v dobré shodě s přítomnými hardwarově urychlovanými API (ve Windows se opírá o Direct2D).
 
@@ -139,11 +139,11 @@ Jsou podporovány tyto styly:
 Barva textu nemá následovat bezprostředně za dekorátorem `strike` nebo `underline`. Modifikace barvy a typu za uvedenými pokyny by se vztahovala na úpravu čáry a nikoli textu. Poněvadž tyto dekorátory nejsou ještě zavedeny, nemá určení barvy nebo typu za těmto klíčovými slovy žádný účinek.
 ====
 
-== Face rich-text
+== Piškot 'rich-text'
 
 Nový nativní piškot (face) *rich-text* podporuje vlastnosti bohatého textu s hardwarovým urychlením. Tento piškot má dva režimy zobrazení bohatého textu.
 
-=== Single-box mode
+=== Režim 'single-box'
 
 Pro zobrazení bohatého textu je použita celá plocha piškotu, počínajíc v levém horním rohu s použitím následujících aspektů (facets):
 
@@ -167,7 +167,7 @@ view [
 ]
 ```
 
-=== Multi-box mode
+=== Režim 'multi-box'
 
 V tomto režimu lze uvnitř téhož RT piškotu zobrazit libovolné množstí RT oblastí. Za tím účelem je v dialektu Draw každá RT oblast označena klíčovým slovem.
 
