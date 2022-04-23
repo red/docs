@@ -4,7 +4,7 @@
 
 == Úvodem
 
-Hodnoty typu`integer!` jsou 32-bitová pozitivní a negativní čísla bez desetinné čárky.
+Hodnoty typu`integer!` jsou celá, 32-bitová čísla v rozsahu od `-2147483648` do `147483648`.
 
 Při přetečení nekonvertuje `integer!` automaticky na `float!`.
 
@@ -26,7 +26,7 @@ Znak `+` nebo `-` bezprostředně před první číslicí označuje pozitivní n
 Předcházející nuly jsou ignorovány.
 
 ----
->> +001234
+>> 001234
 == 1234
 ----
 

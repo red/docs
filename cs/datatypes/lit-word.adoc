@@ -6,7 +6,7 @@
 
 Hodnota typu `lit-word!` je nevyhodnocená hodnota typu `word!`. Sama o sobě je literálovou hodnotou.
 
-Hodnota `lit-word!` se při vyhodnocení přemění na typ `word!`, jako např. při zadání do prostředí Red REPL.
+Hodnota `lit-word!` se při vyhodnocení přemění na typ `word!`, jako např. při použití v konzole Red.
 
 `Lit-word!` je členem těchto typesetů: `any-word!`, `all-word!`, `immediate!`
 

@@ -5,7 +5,7 @@
 
 == Úvodem
 
-Hodnota typu `url!` reprezentuje odkaz na zdroj ze sítě a umožňuje přímé vyjádření Uniform Resource Locators.
+Hodnota typu `url!` reprezentuje odkaz na zdroj ze sítě a umožňuje přímé vyjádření URL (Uniform Resource Locator).
 
 Typ `url!` je subsetem typeset: `any-string!` a `series!`
 

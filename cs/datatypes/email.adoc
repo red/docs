@@ -53,7 +53,7 @@ g@
 
 == Path accessors
 
-Přístupy k cestě poskytují vhodný způsob získání či zadání jména uživatele nebo hostitele v emailové adrese.
+Přístupy formou cesty poskytují vhodný způsob získání či zadání jména uživatele nebo hostitele v emailové adrese.
 
 === /user
 

@@ -11,9 +11,11 @@ Typ `binary!` je člen typesetů `default!` a `series!`
 
 == Vytvoření
 
-Hodnoty typu binary lze vytvořit s použitím literálové syntaxe nebo při runtime s použitím konstruktoru `make` nebo konverzí `to`.
+Hodnoty typu binary lze vytvořit s použitím `literálové syntaxe` nebo při runtime s použitím konstruktoru `make` nebo konverzí `to`.
 
-== Literálová skladba
+=== Literálová skladba
+
+Obecné schema deklarace:
 
 ```
 <binary-literal> ::=  2#{<base2-char>*} | 
@@ -31,7 +33,7 @@ Hodnota *base2* se skládá z jedné či více skupin osmi číslic `0-1`. Skupi
 == #{F00F}
 ```
 
-Hodnota *base16* je hexadecimální formát čísla a skládá se z jedné či více skupin dvou znaků `0-9 A-F a-f`
+Hodnota *base16* je hexadecimální formát čísla a skládá se ze dvou znaků či skupin dvou znaků `0-9 A-F a-f`
 ```red
 >> 16#{2A}
 == #{2A}
@@ -40,14 +42,14 @@ Hodnota *base16* je hexadecimální formát čísla a skládá se z jedné či v
 == #{2AFF}
 ```
 
-Tento formát je implicitní a lze jej psát i bez označení báze.
+Tento formát je implicitní a lze jej psát i bez označení báze. 
 
 ```red
 >> #{2A}
 == #{2A}
 ```
 
-Lichý počet znaků vyvolá chybu.
+Lichý počet znaků vyvolá chybu:
 
 ```red
 >> 16#{2AF}
@@ -56,7 +58,7 @@ Lichý počet znaků vyvolá chybu.
 *** Stack: load 
 ```
 
-Hodnota *base64* se musí skládat ze čtyř znaků nebo ze skupin čtyř znaků z množiny `0-9 A-Z a-z +/`. 
+Hodnota *base64* se skládá ze čtyř znaků nebo ze skupin čtyř znaků z množiny `0-9 A-Z a-z +/`. 
 
 ```red
 >> 64#{2AQQ}
@@ -81,23 +83,28 @@ Méně než čtyři znaky nebo lichý počet znaků vyvolá chybu. Potřebnou d�
 == #{0FBE6ADF}
 ```
 
-== Deklarace pro runtime
+=== Vytvoření v režimu runtime
 
-*Použití* `make`:
+***
+
+Použití `make`:
 
 ```red
 >> make binary! [42]
 == #{2A}
 ```
 
-*Konverze* `to`:
+Konverze `to`:
 
 ```red
 >> to binary! 42
 == #{0000002A}
 
->> to binary! [42]
-== #{2A}
+>> to-binary "I"
+== #{49}
+
+>> to string! #{49}
+== "I"
 ```
 
 == Související funkce
@@ -122,19 +129,14 @@ REFINEMENTS:
         base-value   [integer!] "The base to convert from: 64, 58, 16, or 2."
 ```
 
-*Příklad*
-
 ```red
->> enbase #{0FBE6ADF}
-== "D75q3w=="              ; báze 64 je pro funkci enbase implicitní
+>> enbase/base "I" 64
+== "SQ=="
 
->> enbase/base #{0FBE6ADF} 2
-== "00001111101111100110101011011111"
-
->> enbase "I"
-== "SQ=="         
+>> enbase "I"             ; báze 64 je pro funkci enbase implicitní
+== "SQ=="
 ```
-
+       
 === debase
 
 ```red
@@ -153,32 +155,18 @@ ARGUMENTS:
 REFINEMENTS:
      /base        => Binary base to use.
         base-value   [integer!] "The base to convert from: 64, 58, 16, or 2."
-
 ```
-
-*Příklad převodů tam a zpět:*
 
 ```red
->> enbase "I"
-== "SQ==" 
-
->> enbase/base "I" 64
-== "SQ=="
-
 >> debase "SQ=="
 == #{49}
-
->> to string! debase "SQ=="  
-== "I"
-
-Případně:
-
->> to-binary "I"
+>> debase/base "SQ==" 64
 == #{49}
 
->> to string! #{49}
+>> to string! debase/base "SQ==" 64
 == "I"
 ```
+
 
 == Komparace
 

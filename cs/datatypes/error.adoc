@@ -1,4 +1,5 @@
 = Datový typ `error!`
+:toc:
 :numbered:
 
 == Úvodem
@@ -21,6 +22,8 @@ SYSTEM/STANDARD/ERROR je kontejner typu object! s těmito slovy a hodnotami:
 Typ `error!` je člen typesetů `any-object!` a `default!` Jeho hodnoty lze vytvořit při běhu programu funkcí `make` nebo `cause-error`.
 
 == Vytvoření při běhu programu
+
+Hodnoty `error` lze vytvořit při běhu programu použitím funkce `make` nebo `cause-error`.
 
 ```
 <error>      ::= make error! <error-spec>

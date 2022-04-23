@@ -10,7 +10,7 @@ Hodnota `date!` představuje datum, vycházející z Gregoriánského kalendář
 ====
 * `date!` používá https://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar[proleptický Gregoriánský kalendář], s rozšířenou platností před rok svého vzniku, t.j. rok 1582. Je třeba se mít na pozoru při používání tohoto datového typu pro vyjadřování před gregoriánských datumů.
 
-* Podporované jsou datumy od `1/Jan/-16383` do `31/Dec/16383`, zahrnujíce rozšiřující matematické operace (s přechody u matematických operací, způsobujících překročení mezí). Pro vstup je tento rozsah z praktických důvodů omezen na úsek od `1/Jan/-9999` do `31/Dec/9999`.
+* Podporované jsou datumy od `1/Jan/-16383` do `31/Dec/16383`, zahrnujíce rozšiřující matematické operace (wrapping around on overflowing math operations). Pro vstup je tento rozsah z praktických důvodů omezen na úsek od `1/Jan/-9999` do `31/Dec/9999`.
 
 ====
 
@@ -20,7 +20,7 @@ Hodnoty typu `date!` lze vytvořit s použitím literálové syntaxe nebo s pou�
 
 === Literálová skladba
 
-Jsou podporovány mnohé literálové formáty, včetně formátů Rebolu a většiny datumových standardů ISO.
+Jsou podporovány mnohé literálové formáty, včetně datumových formátů Rebolu a většiny datumových standardů ISO.
 
 ----
 <date>/<time>
@@ -92,7 +92,6 @@ Jsou akceptovány mnohé vstupní formáty pro literálové datumy. Hodnoty mimo
 <dd>-<mon>-<yyyy>
 <dd>-<mon>-<yyyy>/<hour>:<min>:<sec>
 <dd>-<mon>-<yyyy>/<hour>:<min>:<sec><sign><hour>:<min15>
-<sec><sign><hour>:<min15>
 ----
 
 
@@ -194,15 +193,25 @@ make date! [1978 2 3 5 20 30 -4]
 make date! [100 12 31]
 == 31-Dec-0100
 
-;; 32 není platný den:
+; 32 není platný den:
 make date! [100 12 32]
 *** Script Error: cannot MAKE/TO date! from: [100 12 32]
 *** Where: make
 
-;; první pole je < 100, není tedy považováno za vyjádření roku:
+; první pole je < 100, není tedy považováno za vyjádření roku:
 make date! [99 12 31]
 *** Script Error: cannot MAKE/TO date! from: [99 12 31]
 *** Where: make
+----
+
+* Using a `to` conversion (see 4.1 <<_epoch_time>>).
+
+----
+to-integer <date>
+to-date <epoch>
+
+<date>  : a date! value
+<epoch> : celočíselná hodnota, reprezentující epochu
 ----
 
 == Přístup ve formátu cesty
@@ -257,14 +266,22 @@ Vrací nebo zadá pole s rokem datumu. Roky se vrací jako celá čísla. Argume
 ----
 d:  now
 == 10-Jul-2017/22:46:22-06:00
-d/year: 10000
-== 10000
+d/year: 16383
+== 16383
 d
-== 10-Jul-10000/22:46:22-06:00
+== 10-Jul-16383/22:46:22-06:00
+d/year: 16384
+== 16384
+d
+== 10/Jul/-16384/22:46:22-06:00     ; note wrap on overflow past year 16384
+d/year: 32767
+== 32767
+d
+== 10/Jul/-1/22:46:22-06:00
 d/year: 32768
 == 32768
 d
-== 10/Jul/-0000/22:46:22-06:00     ; hle přechod při přetečení
+== 10-Jul-0000/22:46:22-06:00
 ----
 
 === /month
@@ -470,6 +487,17 @@ Je-li časové pásmo zadáno celým číslem, vztahuje se na hodiny, zatímco m
 
 Minuty časového pásma se uvádějí v násobcích čísla 15; jiné hodnoty se zaokrouhlují na nejbližší násobek patnácti dolů.
 
+*Příklady*
+
+----
+d: 1/3/2017/5:30:0
+d/zone: 8
+== 1-Mar-2017/5:30:00+08:00
+
+d/zone: -4:00
+== 1-Mar-2017/5:30:00-04:00
+----
+
 [NOTE]
 Přidání hodnoty `/zone` k datumu bez hodnoty `time` má za následek nastavení implicitní hodnoty času 0:0:0. 
 
@@ -613,7 +641,7 @@ d
 
 *Popis*
 
-Vrací číslo týdne nahodile (casual) definovaného (týden začíná v neděli, první týden začíná prvního ledna) od 1 do 53. Zadání pořadového čísla týdne způsobí příslušné přepočítání datumové hodnoty. Argumenty mimo rozsah způsobí vytvoření normalizovaného datumu.
+Vrací číslo týdne nahodile definovaného (týden začíná v neděli, první týden začíná prvního ledna) od 1 do 53. Zadání pořadového čísla týdne způsobí příslušné přepočítání datumové hodnoty. Argumenty mimo rozsah způsobí vytvoření normalizovaného datumu.
 
 [NOTE]
 ====
@@ -796,14 +824,13 @@ to date! <spec>
 
 <spec> : blok hodnot pro pole datumu
 ----
-Blok s argumenty je konvertován na hodnotu typu `date!` podle stejné skladby jako jsme viděli v odstavci 2.2 Konstruktorová skladba. Argumenty mimo rozsah způsobí vytvoření normalizovaného datumu.
+
+Argumentační blok bude konvertován na hodnotu typu `date!` podle stejné syntaxe jako pro `make` (viz 2.2 <<runtime-creation>>). Hodnoty argumentu, které jsou mimo požadovaný rozsah, vyústí v normalizovaná data. Pro striktní konverzi hodnot z bloku, která místo normalizovaná data vyústi v chybové hlášení, použijte `make`.
 
 ---- 
 to-date [1978 2 3]
 == 3-Feb-1978
 ----
-
-Argumentační blok bude konvertován na hodnotu typu `date!` podle stejné syntaxe jako pro `make` (viz 2.2 <<runtime-creation>>). Hodnoty argumentu, které jsou mimo požadovaný rozsah, vyústí v normalizovaná data. Pro striktní konverzi hodnot z bloku, která místo normalizovaná data vyústi v chybové hlášení, použijte `make`.
 
 == Komparace
 

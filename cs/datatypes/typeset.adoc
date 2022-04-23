@@ -64,7 +64,7 @@ Hodnotu typu `typeset!` lze konvertovat na libovolný typ typesetu `any-list!`
 
 Pro `typeset!` nejsou komparace podporovány.
 
-== Operace s datovými sadami (množinami)
+== Operace s datovými sadami
 
 S hodnotami typu `typeset!` lze provádět tyto množinové operace:
 

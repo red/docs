@@ -68,11 +68,14 @@ Je možné programově vytvořit hodnotu `path!`. která však neodpovídá lexi
 <selector>     ::= <integer> | <word-literal> | :<word-literal> | <paren>
 ```
 `Parse:`
+
+```red
 path: [word! some selector]
 selector: [#"/" [integer! | word! | get-word! | paren!]]
+```
+Datové typy pro path-head: link:word.adoc[word!] a `path!`
 
-* path-head: link:word.adoc[word!] a `path!`
-* selector: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!] a link:paren.adoc[paren!]
+Datové typy pro selector: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!] a link:paren.adoc[paren!]
 
 
 == Postup vyhodnocení
@@ -135,19 +138,15 @@ Pokud v části path-head  zadaný selektor neexistuje, funkce `select` vrátí 
 >> my-block: [foo bar baz]
 == [foo bar baz]
 
->> my-selector: 'bar         ; obezlička
+>> my-selector: 'bar         ; vybírá následující člen bloku
 == bar
 
-```red
 >> my-block/bar              ; evokace typem word!
 == baz
-```
 
 >> my-block/:my-selector     ; evokace typem get-word!
 == baz
-```
 
-```red
 >> my-block/('bar)           ; evokace typem paren!    
 == baz
 ```

@@ -5,7 +5,7 @@
 
 == Úvodem
 
-Hodnoty typu`float!` jsou 64-bitové pozitivní nebo negativní čísla, která obsahují desetinnou čárku.
+Hodnoty typu `float!` jsou 64-bitové pozitivní nebo negativní čísla, která obsahují desetinnou čárku.
 
 Mají rozsah od `-1.7E+308` do `+1.7E+308` a při přetečení vracejí `#INF`.
 Dělení nulou vrací `1.#NaN`
@@ -25,7 +25,7 @@ Hodnoty float! lze vytvořit literálovou syntaxí nebo při runtime  použitím
 
 [NOTE, caption=Poznámka]
 
-Formátovaná hodnota normalizuje desetinnou čárku na desetinnou tečku coby označení desetinného čísla.
+Vytvářená hodnota normalizuje desetinnou čárku na desetinnou tečku coby označení desetinného čísla.
 
 Znak `+` nebo `-` bezprostředně před první číslicí označuje pozitivní nebo negativní hodnotu typu `float!`.
 

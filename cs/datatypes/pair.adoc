@@ -9,7 +9,7 @@ Datový typ `pair!` (*pár*) se používá k prezentaci dvourozměrových souřa
 
 == Literálová skladba
 
-Pár se zapisuje jako součin dvou celých čísel.
+Pár se zapisuje jako součin dvou celých čísel (bez mezer).
 
 
 `1024×768`

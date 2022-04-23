@@ -8,13 +8,13 @@
 
 Hodnota typu `hash!` poskytuje rozhraní ve formě bloku s rychlým vyhledáváním.
 
-Výchozí hešovací funkce je uživatelskou implementací algoritmu z linku: https://github.com/aappleby/smhasher[MurmurHash3]
+Výchozí hešovací funkce je uživatelskou implementací algoritmu https://github.com/aappleby/smhasher[MurmurHash3]
 
 Typ `hash!` je člen těchto typesetů: `default!`, `series!`, `any-block!` a `any-list!`
 
 == Vytvoření
 
-Hodnota typu hash! nemá literálovou variantu a lze ji vyhodnotit pouze za běhu programu s použitím konstruktoru `make` nebo konverzí `to`:
+Hodnoty typu hash! lze vytvořit pouze za běhu programu s použitím konstruktoru `make` nebo konverzí `to`:
 
 ```red
 >> list: make hash! [a 123 "hello" b c 789]   

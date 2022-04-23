@@ -4,21 +4,19 @@
 
 == Úvodem
 
-Bloky se používají k prezentaci kolekcí dat nebo kódu, jež mohou být kdykoli vyhodnoceny. Tyto kolekce patří do typesetu `series!` bez omezení typu odkazovaných hodnot.
+Bloky se používají k prezentaci kolekce dat nebo kódu, jenž může být kdykoli vyhodnocen. Tyto datový typ patří do typesetů `any-block!`, `any-list!` a `series!`.
 
 Hodnoty a výrazy v bloku se implicitně nevyhodnocují:
 
-----
+```red
 >> my-block: [print reverse "Hello" (2 + 3 42]
 == [print reverse "Hello" (2 + 3) 42]
 
 >> my-block
 == [print reverse "Hello" (2 + 3) 42]
-----
+```
 
-`Nativní` příkazy `do` a `reduce` spouští vyhodnocení výrazu v bloku.
-
-Příkaz `do` vyhodnotí blok a vrátí výsledek posledního výrazu:
+* `Nativní` příkaz `do` vrací výsledek posledního výrazu v bloku:
 
 ----
 >> do my-block
@@ -26,7 +24,7 @@ olleH
 == 42
 ----
 
-Příkaz `reduce` vrací kopii bloku, s vyhodnocením všech výrazů:
+* Příkaz `reduce` vrací kopii bloku, s vyhodnocením všech výrazů:
 
 ----
 >> reduce my-block
@@ -34,7 +32,6 @@ olleH
 == [unset 5 42]
 ----
 
-Typ `block!` je člen typesetů `series!`, `any-block!` a `any-list!`.
 
 == Vytvoření
 
@@ -67,11 +64,11 @@ Více řádků, mezer a tabulátorů je povoleno, pokud netrhají hodnoty.
 
 Správně: `[42 print "foo"]`
 
-Nesprávně: `[42 pr   int "foo"]`
+Nesprávně: `[42 pr int "foo"]`       ; jde o jiný blok
 
 == Vytvoření při runtime
 
-=== `make`
+*`make`
 
 Vytvoření prázdného bloku předalokovaného pro 10 elementů:
 
@@ -87,7 +84,7 @@ Vytvoření bloku s 10 elementy s počátečními hodnotami `none`:
 == [none none none none none none none none none none]
 ----
 
-=== `to`
+*`to`
 
 ----
 >> to block! {one 2 "three" 4:00}
@@ -102,11 +99,11 @@ Vytvoření bloku s 10 elementy s počátečními hodnotami `none`:
 
 == Přístup k prvkům bloku
 
-Elementy bloku jsou přístupné prostřednictvím lomítka s indexem elementu (_notace cesty_):
+Elementy bloku jsou přístupné prostřednictvím lomítka s indexem elementu:
 
 ----
 >> b: [12 [34 56]]
-== [12 34 56]
+== [12 [34 56]]
 
 >> b/1
 == 12
