@@ -24,16 +24,6 @@ S upřesněním `/only`:
 Datový typ `refinement!` je subtypem typesetů `all-word!` a `immediate!`.
 
 
-== Syntaxe
-
-Lomíko `/`, následované jedním či více znaky sady Unicode, včetně interpunkčních znaků ze sady ASCII:  `! & ' * + - . < = > ? _ | ~``
-
-Nepovolenými znaky jsou řídící znaky, znaky mezer a interpunkční znaky ze sady ASCII: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
-
-[NOTE, caption=Note]
-
-Použití znaku `@` nevyvolá chybu, ale způsobí, že se hodnota `refinement!` vrátí jako `email!`.
-
 == Vytvoření
 
 Hodnoty typu refinement! lze vytvořit použitím `literálové skladby` při načítání skriptu nebo při runtime konstruktorem `make` či konverzí `to`.
@@ -51,6 +41,19 @@ Hodnoty typu refinement! lze vytvořit použitím `literálové skladby` při na
 >> to refinement! 'baz
 == /baz
 ```
+
+
+== Literálová skladba
+
+Lomíko `/`, následované jedním či více znaky sady Unicode, včetně interpunkčních znaků ze sady ASCII:  `! & ' * + - . < = > ? _ | ~``
+
+Nepovolenými znaky jsou řídící znaky, znaky mezer a interpunkční znaky ze sady ASCII: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+
+[NOTE, caption=Note]
+
+Použití znaku `@` nevyvolá chybu, ale způsobí, že se hodnota `refinement!` vrátí jako `email!`.
+
+
 
 == Komparace
 

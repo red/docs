@@ -1,6 +1,7 @@
 = Reaktivní programování
 :imagesdir: ../images
 :toc:
+:toclevels: 3
 :numbered:
 
 == Koncept 
@@ -167,10 +168,13 @@ Funkce `/unlink` přijímá reaktivní blok nebo funkci jako argument, takže js
 Operátor `is` vytváří reaktivní formuli, jejíž výsledek bude přiřazen ke slovu. Blok `<code>` může obsahovat odkazy jak na pole obalujícího (wrapping) objektu (pokud je použit v těle bloku reaktoru), tak na pole externího reaktoru.
 Jako první element reaktivní formule bloku může být vložen blok s implicitní hodnotou. To je zejména důležité při použití dopředného odkazu pro reaktivní zdroje, které nejsou zadány v okamžiku vyhodnocení formule.
 
-Poznámka: Tento operátor vytváří reaktivní formule, napodobující formule modelu Excel.
+[NOTE]
+==== 
+Tento operátor vytváří reaktivní formule, napodobující formule modelu Excel.
+====
 
 *Příklady*
-----------
+----
 a: reactor [x: 1 y: 2 total: is [x + y]]
     
 a/total
@@ -235,6 +239,7 @@ Obyčejné objekty v Redu nevykazují reaktivní chování. Aby se objekt stal r
 === reactor! 
 
 *Syntaxe*
+
 ----
 make reactor! <body>
     
@@ -264,13 +269,20 @@ Vrací  : reaktivní objekt.
 
 Vytvoří nový reaktivní objekt z těla bloku. Nastavení pole vráceného objektu na novou hodnotu nebo změna řady (series), na kterou pole odkazuje (včetně vnořených řad), spustí reakce pro toto pole definované.
 
-NOTE: Tělo může obsahovat výrazy s `is`.
+[NOTE]
+==== 
+Tělo může obsahovat výrazy s `is`.
+====
 
 *Příklad*
 
 Ukazuje, jak změna řady, dokonce i vnořené, spustí reakci.
 
-NOTE: Je na uživateli aby v tomto případě zabránil cyklování. Když například `deep-reactor!` mění ve formuli reaktoru (e.g. `is` hodnoty řad, může vytvořit nekonečné reaktivní cyckly.
+[NOTE]
+==== 
+Je na uživateli aby v tomto případě zabránil cyklování. Když například `deep-reactor!` mění ve formuli reaktoru (e.g. `is` hodnoty řad, může vytvořit nekonečné reaktivní cyckly.
+====
+
 ----
 r: deep-reactor [
     x: [1 2 3]

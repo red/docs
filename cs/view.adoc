@@ -18,7 +18,8 @@ Systém View (View engine) je grafický systém jazyka Red. Jeho cíle lze shrno
 
 Virtuální strom se skládá z piškotů. Každý piškot koresponduje s příslušnou zobrazenou grafickou komponentou dvojcestným propojením.
 
-== Piškoty
+== Piškoty - faces
+
 
 Piškoty (tvář neboli face - od slova interface), jsou základní stavební kameny grafického rozhraní.  Interní součástí každého piškotu je sada 23 aspektů (facets), jimiž jsou určovány jednotlivé parametry piškotu. Těmito parametry je určován nejen vzhed piškotů, ale i jejich odezva na různé události a souvislost s jinými piškoty.
 
@@ -28,22 +29,6 @@ Nový piškot (face) se vytvoří klonováním prototypu `face!` a zadáním  al
 ```
 	
 Dalšími deklarovanými prototypy v systému View jsou _font!,  para!, reactor! a deep-reactor!_. Datovým typem prototypů je object!. 
-
-== Strom piškotů 
-
-Piškoty jsou organizovány do stromu, který vyjadřuje hierarchii jejich vztahů v zobrazení. Vztahy u stromu jsou odvozeny z:
-
-* facetu `pane`: výpis jednoho či více dětí piškotu v bloku.
-* facetu `parent`: odkaz na rodičovský piškot.
-
-Pořadí piškotů v bloku `pane` je důležité - odvozuje se z něj zetové uspořádání grafických objektů (piškot v čele seznamu `pane` je zobrazen jako poslední, piškot na konci seznamu je zobrazen nad všemi ostatními).
-
-Kořenem stromu piškotů je piškot `screen`. Piškot `screen` může zobrazit pouze piškoty window z bloku ve svém poli `pane`.
-
-Aby mohl být kterýkoli piškot zobrazen na obrazovce, musí být spojen s piškotem screen přímo (pro okna) nebo nepřímo (přes piškot `window` pro jiné typy piškotů).
-
-
-image::face-tree.png[Face tree,align="center"]
 
 
 == Typy piškotů 
@@ -553,8 +538,23 @@ Group-box je kontejner pro jiné piškoty s viditelným rámečkem. _Tento doča
 ====
 * Souřadnice odsazení (offset) dětí jsou relativní k levému hornímu rohu group-boxu.
 * Dětské piškoty jsou připojeny do rámečku group-boxu.
-
 ====
+
+== Strom piškotů 
+
+Piškoty jsou organizovány do stromu, který vyjadřuje hierarchii jejich vztahů v zobrazení. Vztahy u stromu jsou odvozeny z:
+
+* facetu `pane`: výpis jednoho či více dětí piškotu v bloku.
+* facetu `parent`: odkaz na rodičovský piškot.
+
+Pořadí piškotů v bloku `pane` je důležité - odvozuje se z něj zetové uspořádání grafických objektů (piškot v čele seznamu `pane` je zobrazen jako poslední, piškot na konci seznamu je zobrazen nad všemi ostatními).
+
+Kořenem stromu piškotů je piškot `screen`. Piškot `screen` může zobrazit pouze piškoty window z bloku ve svém poli `pane`.
+
+Aby mohl být kterýkoli piškot zobrazen na obrazovce, musí být spojen s piškotem screen přímo (pro okna) nebo nepřímo (přes piškot `window` pro jiné typy piškotů).
+
+
+image::face-tree.png[Face tree,align="center"]
 
 
 == Životní cyklus piškotu 
@@ -632,6 +632,7 @@ Ostatní specifické flagy piškotů jsou dokumentovány v příslušných sekc�
 
 === Objekt font
 
+Objekt *font* je klonem šablony
 Objekt *font* je instance prototypu `font!`. Instance prototypu se vytvoří příkazem:
 
 ```red

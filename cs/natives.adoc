@@ -1,4 +1,4 @@
-== Předdefinovné hodnoty native!
+== Předdefinované hodnoty native!
 
 Poznámka překladatele:
 
@@ -7,17 +7,6 @@ Tuto kapitolu prozatím nepřekládám, neboť v ní převládají nepřeložite
 === all
 [source, red]
 ----
-USAGE:
-     ALL conds
-
-DESCRIPTION: 
-     Evaluates and returns the last value if all are truthy; else NONE. 
-     ALL is a native! value.
-
-ARGUMENTS:
-     conds        [block!] 
-
->> help all
 USAGE:
      ALL conds
 
@@ -1830,20 +1819,6 @@ ARGUMENTS:
      body         [block!] "Block to evaluate on each iteration."
 ----
 
-=== while
-[source, red]
-----
-USAGE:
-     WHILE cond body
-
-DESCRIPTION: 
-     Evaluates body as long as condition block evaluates to truthy value. 
-     WHILE is a native! value.
-
-ARGUMENTS:
-     cond         [block!] "Condition block to evaluate on each iteration."
-     body         [block!] "Block to evaluate on each iteration."
-----
 
 === zero?
 [source, red]

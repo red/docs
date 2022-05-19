@@ -7,11 +7,40 @@
 
 Hodnota typu `string!` je sequence kódovacích bodů Unicode nebo hodnot typu link:char.adoc[char!].
 
-Typ `string!` je subtypem tqchto typesetů: `any-string!`, `default!`, `series!`
+Typ `string!` je subtypem těchto typesetů: `any-string!`, `default!`, `series!`
 
-== Vytvoření
+== Literálová skladba
 
-Hodnoty typu string! lze vytvořit literálovou syntaxí nebo při runtime konstruktorem `make` nebo konverzí `to`.
+*Jednořádkový řetězec*:
+
+(Žádný či více znaků uvnitř apostrofů.
+
+`"foo"`
+
+*Víceřádkový řetězec*:
+
+Žádný či více znaků uvnitř složených závorek.
+
+`{foo}` 
+
+Jednořádkový řetězec musí obsahovat `únikové`(escaped) znaky pro nový řádek:
+
+```red
+>> cr
+== #"^M"
+
+>> lf
+== #"^/"
+
+>> crlf
+== "^M^/"
+```
+
+Víceřádkový řetězec může obsahovat znaky nového řádku, uvozovky a páry závorek. Nespárované závorky musí být 'escaped' předsazením znakem `^`, např. `{foo^{}`.
+
+== Vytvoření při runtype
+
+Hodnoty typu string! lze vytvořit také při runtime konstruktorem `make` nebo konverzí `to`.
 
 ```red
 >> s: make string! 100
@@ -29,7 +58,7 @@ Hodnoty typu string! lze vytvořit literálovou syntaxí nebo při runtime konst
 == "42"
 ```
 
-Rovněž je možné použít akce `form` a `mold` ke konverzi hodnoty na  "user-friendly string" či "source format string".
+Rovněž je možné použít funkce `form` a `mold` ke konverzi hodnoty na  "user-friendly" řetězec".
 
 ```red
 >> form 'foo
@@ -45,34 +74,7 @@ Rovněž je možné použít akce `form` a `mold` ke konverzi hodnoty na  "user-
 
 Pokus o převod hodnoty `none` konverzí `to` vyvolává chybové hlášení.
 
-== Literálová skladba
 
-*Jednořádkový řetězec*:
-
-(Žádný či více znaků uvnitř apostrofů.
-
-`"foo"`
-
-*Víceřádkový řetězec*:
-
-Žádný či více znaků uvnitř složených závorek.
-
-`{foo}` 
-
-Jednořádkový řetězec nemůže obsahovat neodcuknuté (unescaped) znaky pro nový řádek:
-
-```red
->> cr
-== #"^M"
-
->> lf
-== #"^/"
-
->> crlf
-== "^M^/"
-```
-
-Víceřádkový řetězec můž obsahovat znaky nového řádku, uvozovky a páry závorek. Nespárované závorky musí být odcuknuty (escaped) předsazením znakem `^`, např. `{foo^{}`.
 
 == Komparace
 

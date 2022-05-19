@@ -74,13 +74,13 @@ Hodnota typu `money!` může být vytvořena z hodnot typu `word!` nebo `block!`
 ----
 make money! <spec>
 
-formát <spec> :
+formáty <spec> :
     <word>
     <block>
 
-formát <word> spec : <currency>
+formát <word> : <currency>
 
-formát <block> spec :
+formáty <block> :
     [<amount>]
     [<base> <subunit>]
     [<currency> <amount>]
@@ -148,10 +148,10 @@ Níže jsou uvedeny datové typy, které mohou konvertovány *na* nebo *z* datov
 | Datový typ | Popis
 
 | `money!`
-|
+| 
 
 | `integer!`
-| Konverze na tento datový typ může ústit v přetečení datového typu, pokud celočíselná část má více než 10 číslic. Desetinná část je odvržena.
+| Konverze na tento datový typ může ústit v přetečení datového typu, pokud celočíselná část má více než 17 číslic. Desetinná část je odvržena.
 
 | `float!`
 | Konverze z tohoto datového typu přijímá pouze hodnoty s ne více než 5 desetinnými číslicemi.
@@ -173,10 +173,10 @@ Konverze z kteréhokoliv typu tohoto typesetu přijímá pouze hodnoty, které j
 
 ----
 to-money $56.78
-== $56.78000
+== $56.78
 
 to-money 123
-== $123.00000
+== $123.00
 
 to-integer -$2147483648.12345
 == -2147483648
@@ -188,7 +188,7 @@ to-money 78.9
 == $78.90000
 
 to-money 1e-5
-== $0.00001
+== $0.00
 
 to-money 1e-6
 ** cannot make money
@@ -206,13 +206,13 @@ to-tag -EUR$1234.56789
 == <-EUR$1'234.56789>
 
 to-money "456"
-== $456.00000
+== $456.00
 
 to-money "-123.45"
-== -$123.45000
+== -$123.45
 
 to-money "+USD$00000000000000678.9"
-== USD$678.90000
+== USD$678.90
 
 to-money "EUR$0.123456"
 ** cannot make money
@@ -222,7 +222,9 @@ to-money "EUR$0.123456"
 
 Pro hodnotu typu `money!` lze použít všechny komparační operátory (`=`, `==`, `<>`, `>`, `<`, `>=`, `&lt;=`, `=?`). Funkce `min`, `max`, `find` a `sort` jsou rovněž podporovány.
 
-Při porovnávání hodnot typu `money!` laxními operátory (`=`, `<>`) nebo striktním operátorem (`==`) či operátorem identity (`=?`), musí jít o stejnou měnu nebo jeden z operandů musí reprezentovat generickou měnu; v tomto případě jsou porovnávány pouze částky.
+Při porovnávání hodnot typu `money!` laxními operátory (`=`, `<>`)  musí jít o stejnou měnu nebo jeden z operandů musí reprezentovat generickou měnu; v tomto případě jsou porovnávány pouze částky.
+
+Při porovnávání hodnot typu `money!` striktním operátorem (==) nebo porovnávacím operátorem (=?) musí mít oba operandy stejnou měnu nebo musí oba reprezentovat generickou měnu.
 
 Porovnání hodnoty typu `money!` s hodnotou typu `integer!` či `float!` je stejné jako porovnání s generickou měnou, konvertovanou z daného datového typu, kromě případů, kdy rovnost typu a měny jsou povinné (`==`, `=?`).
 
@@ -419,7 +421,7 @@ jsou povolena jak pořadová čísla typu `integer!`, tak označení typu `word!
 
 *Příklady*
 
-Budiž `money: -USD$123.45`:
+Budiž `money: -USD$123.45`
 
 ----
 pick money 2
@@ -450,8 +452,8 @@ Následující příkaz vrací seznam zavedeného označení měn:
 ---- 
 
 * zavedené označení měn je uvedeno v  https://en.wikipedia.org/wiki/ISO_4217[ISO 4217] (vyjma označení `ETH`, `BTC` a `RED`)
-* seznam měn je typu `append-only` a může být rozšířen o měnu definovanou uživatelem.
-Hodnotu typu `money!`, jejíž specifická měna není v seznamu uvedena, nelze vytvořit či konvertovat z jiných hodnot.
+* seznam měn je typu `append-only` a může být rozšířen o měnu definovanou uživatelem, reprezentovanou slovem o třech malých písmenách.
+* Hodnotu typu `money!`, jejíž specifická měna není v seznamu uvedena, nelze vytvořit či konvertovat z jiných hodnot.
 * Seznam uživatelských měn může být také uveden v záhlaví skriptu v poli `Currencies`. To umožňuje použít uživatelskou měnu v každém souboru, interpretovaném ze skriptu příkazem `do`.
 
 NOTE: Limitní počet jedinečných názvů měn (currency codes) je `255`.
@@ -461,34 +463,18 @@ NOTE: Limitní počet jedinečných názvů měn (currency codes) je `255`.
 Formátování hodnot typu `money!` lze provést různým způsobem:
 
 * příkaz `form` a konverze na `any-string!` způsobí dekoraci hodnoty oddělovači tisíců; příkaz `mold` to nedělá
-* příkaz `system/options/money-digits: n` určí počet desetinných míst pro výstup `form` nebo `mold`. Možná hodnota `n` je v rozsahu `[0, 5]`
+* příkaz `system/options/money-digits: n` určí počet desetinných míst pro výstup `form` nebo `mold`. Smysluplná hodnota `n` je v rozsahu `[0, 5]`
 * příkaz `mold/all` zobrazí všechna desetinná místa hodnoty typu `money!`, bez ohledu na nastavení `system/options/money-digits`.
 
 == Další funkce
 
 Příklady funkcí, souvisejících s typem `money!` a neuvedených v předchozích odstavcích, jsou vypsány níže:
-----
->> mony: -USD$123.45
 
->> print [sign? mony negative? mony positive? mony zero? mony]
--1 true false false
-
->> print [even? mony odd? mony]
-false true
-
->> random mony
-== -USD$6.02
-
->> round mony
-== -USD$123.00
-
->> money? mony
-== true
-----
-Vytvoření hodnoty typu `money!` ze zadané měny a peněžní částky:
-----
->> as-money TBD
-...
-----
+ * Ověření signatury: `sign?`, `negative?`, `zero` a `positive?`;
+ * Ověření parity: `even?`, a `odd?`;
+ * Náhodné číslo: `random`;
+ * Zaokrouhlení: `round`;
+ * Predikát `money?` vrací `true`, je-li daná hodnota typu `money!`
+ * Konstrukci hodnoty typu `money!` ze zadané měny a peněžního objemu lze provést příkazem `as-money`.
 
 

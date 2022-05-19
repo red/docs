@@ -139,4 +139,4 @@ Typ hodnoty zjistíme dotazem `type?`.
 
 == Předdefinovaná slova
 
-Výpis předdefinovaných hodnot typu `function!` lze získat příkazem `help function!` v konzole.
+Výpis předdefinovaných hodnot typu `function!` lze získat příkazem `help function!` v konzole Redu.

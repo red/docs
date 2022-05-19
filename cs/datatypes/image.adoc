@@ -168,7 +168,7 @@ Vrací velikost zobrazení jako hodnotu typu pair!
 
 == Manipulace
 
-`Image!` lze manipulovat jako typeset `series!`:
+Hodnotou typu `image!` lze manipulovat jako typeseten `series!`:
 
 ```red
 >> a: make image! [2x2 #{111111222222333333444444}]

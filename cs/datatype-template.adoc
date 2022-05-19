@@ -1,11 +1,13 @@
 [[anchor-1]]
 
-= Datový typ X
+= Datový typ X - torzo
 :toc:
 :numbered:
 
 
 == Úvodem
+
+X is a member of the following typesets:
 
 == Vytvoření
 

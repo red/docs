@@ -10,14 +10,15 @@ Je-li použit mimo hodnoty typu `object!` či `map!`, set-word nastaví odkaz v 
 
 ```red
 foo: 2 * 21
+== 42
 ```
 
 `Set-word!` je člen těchto typesetů: `any-word!`, `all-word!`, `immediate!`
 
 
-== Vytvoření
+== Vytvoření při runtype
 
-Hodnty set-word! lze vytvořit literálovou syntaxí nebo při runtime konverzí `to` z datových typů:  `char!`, `logic!`, `string!`, `datatype!`, `issue!`, `refinement!` a  `lit-word!`.
+Hodnty typu set-word! lze vytvořit při runtime konverzí `to` z datových typů:  `char!`, `logic!`, `string!`, `datatype!`, `issue!`, `refinement!` a  `lit-word!`.
 
 ```red
 >> to set-word! #"X"
@@ -45,7 +46,7 @@ Hodnty set-word! lze vytvořit literálovou syntaxí nebo při runtime konverzí
 
 == Literálová skladba
 
-Jeden či více znaků z celé sady Unicode, včetně interpunkčních znaků ze sady ASCII: `! & ' * + - . < = > ? _ | ~`, to vše doplněné dvojtečkou `:`. 
+Hodnty typu set-word! lze vytvořit jedním či vícerem znaků z celé sady Unicode, včetně interpunkčních znaků ze sady ASCII: `! & ' * + - . < = > ? _ | ~`, to vše doplněné dvojtečkou `:`. 
 
 Neplatné jsou řídící znaky, znaky mezer a interpunkční znaky ze sady ASCII: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
 
@@ -71,6 +72,4 @@ Funkce `type?` vrací datový typ dané hodnoty.
 
 == Předdefinovaná slova
 
-=== Funkce
-
-`to-set-word`
+Funkce `to-set-word`.

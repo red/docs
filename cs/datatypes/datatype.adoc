@@ -18,7 +18,7 @@ Dle konvence je součástí názvu datového typu vykřičník, například: `bi
 
 == Konverze
 
-Hodnotu typu `datatype!` lze konvertovat na jakýkoli typ  typesetu any-word! a na datové typy `issue!` a `refinement!`.
+Hodnotu typu `datatype!` lze konvertovat na jakýkoli typ  typesetu `any-word!` a na datové typy `issue!` a `refinement!`.
 
 ```red
 >> to word! string!
@@ -49,7 +49,7 @@ Pro datový typ `datatype!` nejsou žádné komparace podporovány.
 K ověření, zda hodnota je typu `datatype!`, lze použít funkci `datatype?`.
 
 ```red
->> datatype? datatype!
+>> datatype? string!
 == true
 ```
 
@@ -62,7 +62,7 @@ Funkce `type?` vrací datový typ zadané hodnoty.
 
 == Předdefinovaná slova
 
-Slovo `datatype!` se vztahuje na všechny předdefinované datové typy. Výpis datových typů lze v konzole získat idiomem `help datatype!`.
+Slovo `datatype!` se vztahuje na všechny předdefinované datové typy. Výpis datových typů lze v konzole Redu získat idiomem `help datatype!`.
 
 === Akce
 

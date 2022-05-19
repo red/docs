@@ -1,4 +1,4 @@
-= Glossary
+= Glossary - torzo
 Version: Draft 1
 
 [glossary]

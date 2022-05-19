@@ -16,14 +16,12 @@ Hodnotu typu bitset! lze vytvořit konstruktorem `make`, konverzí `to` nebo fun
 // from https://github.com/meijeru/red.specs-public
 
 ```red
-<bitset>   ::= make bitset! <binary> | make bitset! <spec> |
-               to bitset! <spec> |
-	       charset < block! | integer! | char! | string! >
-			   
-<spec>     ::= <integer> | <char!> | <string!> |
-               [<bit-position>*] | not [<bit-position>*] 
-<bit-pos.> ::= <integer> | <char!> | <string!> |
-               <char> - <char> | <integer> - <integer>    
+<bitset>       ::= make bitset! <binary> | make bitset! <bit-spec> |
+                   to bitset! <bit-spec> | charset < bit-spec >
+<bit-spec>     ::= <integer> | <char!> | <string!> |
+                   [<bit-position>*] | not [<bit-position>*] 
+<bit-position> ::= <integer> | <char!> | <string!> |
+                   <char> - <char> | <integer> - <integer>    
 ```
 Výsledným formátem po kompilaci (ale před runtime) je:
 ```red
@@ -37,25 +35,25 @@ Konverze hodnoty na typ `bitset!` funkcí `to` je ekvivalentní funkci `make` s 
 
 
 ```red
->> make bitset! 10      ; create a bitset with bit 10 set
-== make bitset! #{0000}
+>> make bitset! 50      ; create an empty bitset with places for at least 50 bits
+== make bitset! #{00000000000000}
 ```
 
 ```red
 >> make bitset! #"A"    ; create a bitset with bit 65 set
->>   to bitset! #"A"
+>>   to bitset! #"A"    ; dtto
 == make bitset! #{000000000000000040} 
 ```
 
 ```red
 >> make bitset! "hi"   ; a bitset with bits 104 and 105 set
->>   to bitset! "hi"   
+>>   to bitset! "hi"   ; dtto
 == make bitset! #{00000000000000000000000000C0}
 ```
 
 ```red
 >> make bitset! [120 "hello" #"A"]   ; create and set bits using different value representations
->>   to bitset! [120 "hello" #"A"]
+>>   to bitset! [120 "hello" #"A"]   ; dtto
 == make bitset! #{00000000000000004000000004890080}
 ```
 
@@ -77,14 +75,20 @@ Idiomu `to bitset!` je ekvivalentní idiom `to-bitset`.
 == #{5A}
 >> to-bitset tb
 == make bitset! #{5A}
+>> to bitset! tb
+== make bitset! #{5A}
 ```
-Funkce `make`, `to` lze také použít k převodu skutečně binárního čísla na hexadecimální:
+Funkce `make`, `to` lze také použít k převodu skutečně binárního čísla na hexadecimální. Argumenty typu `integer!` nejsou povoleny:
 
 ```red
 >> to-bitset 2#{10000101}    ; binární formát
 == make bitset! #{85}        ; hexadecimální formát
-```
 
+>> to bitset! 42
+*** Script Error: cannot MAKE/TO bitset! from: 42
+*** Where: to
+*** Stack:
+```
 Bitsety jsou tak dlouhé, jak je zapotřebí - automaticky expandují dle potřeby. Velikost se zaokrouhluje k horní bajtové hranici (byte bound).
 
 
@@ -106,6 +110,17 @@ Bitsety jsou tak dlouhé, jak je zapotřebí - automaticky expandují dle potře
 ```red
 >> charset [#"0" - #"9" #"a" - #"z"]   ; vytvoří bitset z rozsahu hodnot
 == make bitset! #{000000000000FFC0000000007FFFFFE0}  
+```
+
+Skladba funkce `charset`:
+
+```red
+>> source charset
+charset: func ["Shortcut for `make bitset!`"
+    spec [block! integer! char! string!]
+][
+    make bitset! spec
+]
 ```
 
 == Doplňky
@@ -130,13 +145,12 @@ K vytvoření komplementárních bitsetů lze rovněž použít příkaz `comple
 Dotazem `complement?` zjistíme, zda byl posuzovaný bitset komplementován:
 
 ```red
->> complement? mb
+>> complement? complement mb
 == true
 ```
 
 [NOTE]
 Aby bylo možné se vypořádat s obsáhlým rozsahem znaků Unicode, jsou bity mimo bitsety považovány za virtuální bity, takže je možné je ověřovat a zadávat bez vyvolání chybového hlášení. Velikost bitsetu se automaticky zvěší podle aktuální potřeby.
- 
 To stále nestačí pro ošetření skutečně velkých rozsahů jako například u bitsetu pro `všechny znaky Unicode kromě číslic`. Pro takové případy je možné definovat komplementární (doplňkový) bitset, který reprezentuje doplňkový rozsah zadaných bitů. To umožňuje vytvoření velkých bitsetů s malým nárokem na obsazení paměti.
 
 == Zápis cesty
@@ -193,7 +207,7 @@ alphanum: union letters digit
 
 == Komparace
 
-Na `bitset!` lze aplikovat všechny operátory: `=, ==, <>, >, <, >=, &lt;=, =?`.
+Na hodnotu typu `bitset!` lze aplikovat všechny operátory: `=, ==, <>, >, <, >=, &lt;=, =?`.
 
 == Testování hodnot
 

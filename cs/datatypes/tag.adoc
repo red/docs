@@ -8,9 +8,9 @@ Hodnoty `tag!` reprezentují tagy a elementy značkovacího (markup) jazyka.
 
 Typ `tag!` je subtyp typesetů `any-string!` a `series!`
 
-== Vytvoření
+== Vytvoření při runtime
 
-Hodnoty typu tag! lze vytvořit literálovou syntaxí nebo při runtime použitím konstruktoru `make` a konverzí `to`.
+Hodnoty typu tag! lze vytvořit při runtime použitím konstruktoru `make` a konverzí `to`.
 ```red
 >> make tag! "foo"
 == <foo>
@@ -21,9 +21,28 @@ Hodnoty typu tag! lze vytvořit literálovou syntaxí nebo při runtime použit�
 == <bar>
 ```
 
+Je možné vytvořit hodntoty typu `tag!` s použitím `make`, které nejsou ovlivněny aktuálními limitacemi lexeru. 
+
+```red
+>> make tag! " foo"
+== < foo>
+
+>> make tag! "<foo"
+== <<foo>
+
+>> make tag! ">foo"
+== <>foo>
+
+>> make tag! "=foo"
+== <=foo>
+
+>> make tag! " foo"
+== < foo>
+```
+
 == Literálová skladba
 
-Jeden či více znaků uvnitř  `<` lomených závorek `>`.
+Literálový zápis tvoři jeden či více znaků uvnitř  `<` lomených závorek `>`.
 
 Na první pozici za úvodní závorkou (`<`) nemohou být znaky  `<`, `>`, `=` nebo mezera.
 
@@ -56,26 +75,7 @@ Znak `<` je povolen až za první pozicí.
 == tag!
 ```
 
-[NOTE, caption=Poznámka]
 
-Je možné vytvořit hodntoty typu `tag!` s použitím `make`, které nejsou ovlivněny aktuálními limitacemi lexeru. 
-
-```red
->> make tag! " foo"
-== < foo>
-
->> make tag! "<foo"
-== <<foo>
-
->> make tag! ">foo"
-== <>foo>
-
->> make tag! "=foo"
-== <=foo>
-
->> make tag! " foo"
-== < foo>
-```
 
 == Komparace
 
@@ -99,6 +99,4 @@ Funkce `type?` vrací datový typ dané hodnoty.
 
 == Předdefinovaná slova
 
-=== Funkce
-
-`tag?`, `to-tag`
+Funkce `tag?`, `to-tag`.

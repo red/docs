@@ -108,6 +108,8 @@ Slovo `series` má v prostředí jazyka Red dva významy. Jednak to je (s vykři
 == "ello world"
 ```
 
-Typ prvků v řadě (series) je závislý na jejím datovém typu, např. řada typu `block` může obsahovat dle definice (link:datatypes/block.adoc[block!]) hodnoty libovolného typu. Řada typu `string`(link:datatypes/string.adoc[string!]) může obsahovat pouze hodnoty typu `char`.
+Typ prvků v řadě (series) je závislý na jejích datovém typu, např. řada typu `block` může obsahovat dle definice (link:datatypes/block.adoc[block!]) hodnoty libovolného typu. Řada typu `string`(link:datatypes/string.adoc[string!]) může obsahovat pouze hodnoty typu `char`.
+
+Typeset `series!` disponuje proměnným indexem, který může být využit všemi hodnotami typu  link:datatypes/action.adoc[action!].
 
 

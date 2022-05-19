@@ -5,7 +5,7 @@
 
 == Úvod
 
-Struktura typu `map!` reprezentuje asociativní array dvojic key/value. Poskytuje rychlý přístup pro čtení s interním použitím hashtable. Na rozdíl od datového typu `hash!` nepatří `map!` do skupiny `series!`, tudíž nezná koncept pozic (nemá interní iterátor). Koncepčně leží typ `map!` mezi datovými typy `hash!` a `object!`. Uživatelsky připomíná  slovník.
+Struktura typu `map!` reprezentuje asociativní výčet (array) dvojic key/value. Poskytuje rychlý přístup pro čtení s interním použitím hashtable. Na rozdíl od datového typu `hash!` nepatří `map!` do skupiny `series!`, tudíž nezná koncept pozic (nemá interní iterátor). Koncepčně leží typ `map!` mezi datovými typy `hash!` a `object!`. Uživatelsky připomíná  slovník.
 
 == Literálová skladba
 
@@ -57,7 +57,7 @@ make map! [a 1 'b 2 "c" 3]
 )	    
 ----
 
-Je-li klíč typu *any-word* (zde a, e), je v mapě kvůli lepší přehlednosti konvertován na typ *set-word*. Nicméně 
+Je-li klíč typu *any-word*, je v mapě kvůli lepší přehlednosti konvertován na typ *set-word*. Nicméně 
 lze pro klíč z praktických důvodů (jednodušší zápis, zejména u cest) použít prostý tvar slova místo typu `set-word!`.
 
 Podobně reflektor `keys-of` (popsaný v sekci *Reflexe* níže) vrací `words` místo `set-words`, jelikož to zjednodušuje další zpracování - zejména srovnávací (matching) operace jsou snadnější se slovy než se set-words.

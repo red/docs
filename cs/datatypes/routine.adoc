@@ -4,9 +4,9 @@
 
 == Úvodem
 
-Hodnota `routine!` představuje funkci s danou specifikací a tělem z Red/System.
+Hodnotou typu `routine!` je nativní funkce (func) z oboru Red/System, která se volá v programu Red.
 
-Specifikace přijímá jako argument datový typ Redu a vrací hodnotu, jež automaticky konvertuje při volání na příslušné typy soustavy Red/System.
+Specifikace přijímá jako argumenty a vratné hodnoty datové typy Redu, jež automaticky při volání konvertuje na příslušné typy soustavy Red/System.
 
 Dokumentaci pro Red/System lze nalézti zde: https://static.red-lang.org/red-system-specs.html
 
@@ -14,11 +14,11 @@ Typ `routine!` je člen typesetů `default!` a `any-function!`
 
 == Vytvoření
 
-Hodnoty routine! lze vytvořit s použitím vestavěné funkce `routine`.
+Hodnoty typu routine! lze vytvořit s použitím vestavěné funkce `routine`.
 
 == Literálová skladba
 
-```
+```red
 <routine> ::= routine <routine-spec> <routine-body>
 <routine-spec> ::= [<docstring>° <routine-argument>* <locals>° <routine-return>°]
 <routine-argument> ::= <word> <argument doc>° | <word> [<type-literal>] <argument-doc>°
@@ -28,7 +28,7 @@ Hodnoty routine! lze vytvořit s použitím vestavěné funkce `routine`.
 <routine-body> ::= <block>
 ```
 
-=== Vytvoření při runtime
+== Vytvoření při runtime
 
 Hodnoty routine! nejsou pro interpreter povoleny. Musejí být uvedeny typem `set-word` a následně kompilovány.
 
@@ -43,18 +43,20 @@ increment: routine [
 ]
 ```
 
-Argumenty rutin tvoří jedno slovo typu `any-type!` nebo aliasem struct! ze soustavy Red/System, definovaným zde: https://github.com/red/red/blob/master/runtime/datatypes/structures.reds.
+Argumenty rutin jsou vymezeny jediným slovem typu `any-type!`, `integer!`, `float!` a `logic!` nebo aliasem struct! ze soustavy Red/System, definovaným zde: https://github.com/red/red/blob/master/runtime/datatypes/structures.reds.
+
+Datové typy `integer!`, `float!` a `logic!` se na ekvivalent soustavy Red/System nepřekládají.
 
 *Příklad*
 
-`integer!` je přeložan na ekvivalent soustavy Red/System:
+`block!` je přeložen na ekvivalent soustavy Red/System:
 
 ```red
-red-integer!: alias struct! [
-	header 	[integer!]								;-- cell header
-	padding	[integer!]								;-- align value on 64-bit boundary
-	value	[integer!]								;-- 32-bit signed integer value
-	_pad	[integer!]	
+red-block!: alias struct! [
+	header 	[integer!]
+    head    [integer!]
+	node    [node!]
+	extra   [integer!]
 ]
 ```
 
@@ -64,17 +66,17 @@ K ověření, zda hodnota je typu `routine`, použijeme funkce `routine?`.
 
 ```red
 routine? :increment
+== false
 ```
 
 Datový typ zadané hodnoty získáme dotazem `type?`.
 
 ```red
 type? :increment
+== unset!
 ```
 
 
 == Předdefinovaná slova
-
-=== Funkce
 
 `routine`, `routine?`

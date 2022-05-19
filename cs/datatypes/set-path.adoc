@@ -32,7 +32,7 @@ Datové typy pro path-head: link:set-word.adoc[set-word!], link:set-path.adoc[se
 Datové typy selektoru: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
 
 
-== Vytvoření
+== Vytvoření při runtime
 
 Hodnoty `set-path!` lze vytvořit při runtime konstruktorem `make` nebo konverzí `to`.
 
@@ -98,6 +98,4 @@ Funkce `type?` vrací datový typ zadané hodnoty.
 
 == Předdefinovaná slova
 
-=== Funkce
-
-`set-path?`, `to-set-path`
+Funkce: `set-path?`, `to-set-path`.

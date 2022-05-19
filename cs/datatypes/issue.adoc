@@ -21,7 +21,7 @@ Hodnoty typu `issue!` lze vytvořit s použitím literálové syntaxe nebo za b�
 >> to issue! "123.42-xxx"
 == #123.42-xxx
 
->> to issue! #pohanka
+>> to issue! "pohanka"
 == #pohanka
 ```
 

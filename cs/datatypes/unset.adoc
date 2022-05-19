@@ -8,7 +8,7 @@
 Hodnota typu `unset!` reprezentuje nepoužitelnou, neznámou hodnotu.
 
 
-== Vytvoření
+== Vytvoření při runtype
 
 Hodnoty typu `unset!` lze vytvořit za běhu programu konstruktorem
 `make` nebo konverzí `to`.

@@ -14,15 +14,13 @@ Hodnoty typu `ref!` lze vytvořit s použitím literálové syntaxe při načít
 
 === Literálová skladba
 
-*Syntaxe*
-
 ----
 <ref> format : @<name>
 
 <name> : volitelný název odkazu
 ----
 
-* `<name>` nula či více znaků jiných než: `# $ ' , = > @ \ ^`;
+* `<name>` je nula či více znaků jiných než: `# $ ' , = > @ \ ^`;
 * literálová forma je ukončena jedním z těchto způsobů: `" ( ) ; < [ ] { }` nebo mezerou (space, tab, `CR`, `LF`) .
 
 *Příklady*
@@ -38,7 +36,7 @@ Hodnoty typu `ref!` lze vytvořit s použitím literálové syntaxe při načít
 
 Při použití konstruktoru `make` nutno respektovat tato pravidla:
 
-* specifikace `float!` a `integer!` označují počet před-alokovaných bajtů (`float!` is truncated);
+* specifikace typu `float!` a `integer!` označují počet před-alokovaných bajtů (`float!` is truncated);
 * konstrukce z každé jiné specifikace je ekvivalentní <<Konverze `to`, konverzi>> `to`.
 
 *Příklady*
@@ -79,7 +77,7 @@ Datový typ `ref!` podporuje řadu typových konverzí, platných pro typeset `a
 | Obsah je kopírován doslovně.
 
 | `any-list!`
-| Prezentace obsažených hodnot, evokované funkcí `form`, jsou zřetězeny (concatenated) a vnější vymezení je odvrženo.
+| Prezentace obsažených hodnot jsou zřetězeny (concatenated) a vnější vymezení je odvrženo.
 
 | `binary!`
 | Je konvertováno na řetězec, obsahuje-li platné kódování v UTF-8.
@@ -177,6 +175,8 @@ to-char @.:
 
 Hodnota typu `ref!` podporuje všechny akce pro řady (kromě `put`, `sort`, `trim`) a všechny komparace spou s `min` a `max`.
 
+Příkaz `form` aplikovaný na hodnotu typu `ref!` ruší znak `@`, zatímco `mold` jej zachovává .
+
 *Příklady*
 
 ----
@@ -210,7 +210,7 @@ form @content
 mold/part @catastrophy 4
 == "@cat"
 ----
-NOTE: Příkaz `form`, aplikovaný na hodnotu `ref!`, zavrhne  znak `@`.
+
 
 == Jiné funkce
 

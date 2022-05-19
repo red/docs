@@ -1,7 +1,5 @@
 == Ownership
  
-# image:../images/view-overview.png[Přehledné schema]
-
 Vlasnění objektu
 
 Systém vlastnických práv objektů je rozšíření podpory událostí objektů. Nyní může objekt vlastnit série, na něž odkazuje, dokonce i série vnořené. Mění-li se vlastněná série, je uvědoměn vastnící objekt a je případně volána jeho funkce `on-deep-change*`, umožňující jeho příslušnou reakci.
@@ -73,8 +71,8 @@ Zde je jednoduchý příklad použití vlastnictví objektu. Níže uvedený kó
 
 Vlastnictví objektu se hojně používá v Red/View za účelem vytvoření vazby mezi objekty `face` a widgety na obrazovce, jakož i pro zajištění automatické synchronizace bez potřeby volat `show`.
 
-Práce v této oblasti není ukončená. Očekává se, že bude zavedeno více událostí, s možností objektů vlastnit více datových typů.
-In the future, its use will be extending to other frameworks and interfaces. Such "reactive objects" will be called "live objects" in Red's jargon.
+Práce v této oblasti není ukončená. Očekává se, že bude zavedeno více událostí, s možností objektů vlastnit více datových typů. _More documentation will be provided once the work on that is finished.
+In the future, its use will be extending to other frameworks and interfaces. Such "reactive objects" will be called "live objects" in Red's jargon._
 
 
 

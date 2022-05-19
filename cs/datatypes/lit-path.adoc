@@ -7,7 +7,7 @@
 
 Hodnota typu `lit-path!` je nevyhodnocená (citovaná) hodnota typu path!.
 
-Hodnota typu `lit-path!` se při vyhodnocení přemění na hodnotu typu path!, např. při zadání do prostředí Red REPL.
+Hodnota typu `lit-path!` se při vyhodnocení přemění na hodnotu typu path!, např. při zadání v konzole Red.
 
 Typ lit-path! je členem těchto typesetů: `series!`, `any-block!`, `any-path!`. 
 
@@ -47,13 +47,6 @@ Prázdný lit-path se vytvoří celočíselným argumentem pro `make`:
 ```red
 >> make lit-path! 10
 == '
-```
-
-Konverze `to`:
-
-```red
->> to lit-path! "foo bar baz"
-== 'foo/bar/baz
 ```
 
 == Literálová skladba
