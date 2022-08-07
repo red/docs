@@ -212,6 +212,7 @@ The `text` type is a static label to be displayed.
 `options` facet accepts following properties:
 
 * `default`: can be set to any value, it will be used by the `data` facet if converting `text` returns `none`, like for non-loadable strings.
+* `sync`: can be set to a typeset!, `none` or `false` value. It controls which datatypes will trigger the auto-conversion from `text` facet to `data` facet. If set to `none` or `false`, the auto-conversion is turned off.
 
 
 === Button 
@@ -331,6 +332,7 @@ The `selected` facet controls the text highlighting (read/write). A pair value i
 `options` facet accepts following properties:
 
 * `default`: can be set to any value, it will be used by the `data` facet if converting `text` returns `none`, like for non-loadable strings.
+* `sync`: can be set to a typeset!, `none` or `false` value. It controls which datatypes will trigger the auto-conversion from `text` facet to `data` facet. If set to `none` or `false`, the auto-conversion is turned off.
 
 [cols="1, 1, 3", options="header"]
 |===
