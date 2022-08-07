@@ -5,7 +5,7 @@
 
 == Concept
 
-The Red preprocessor is a dialect of Red, enabling transformation of Red source code using a specific layer on top of regular Red language. Transformations are achieved by inlining preprocessor keywords (called `directives`) inside Red source code. These directives will be processed:
+The Red preprocessor enables the transformation of Red source code using a specific layer on top of regular Red language, prior of the source code evaluation. Transformations are achieved by inlining preprocessor keywords (called `directives`) inside Red source code. These directives will be processed:
 
 * when the Red source code is compiled
 * when the Red source code is runned by `do` function with a file argument
