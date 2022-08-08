@@ -232,14 +232,14 @@ size-text: function [
 From the rich-text context:
 
 ```red
-line-height?: function [
+rich-text/line-height?: function [
     "Given a text position, returns the corresponding line's height"
     face    [object!]
     pos     [integer!]
     return: [integer!]
 ]
 
-line-count?: function [
+rich-text/line-count?: function [
     "number of lines (> 1 if line wrapped)"
     face    [object!]
     return: [integer!]
