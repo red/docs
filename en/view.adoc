@@ -851,6 +851,8 @@ Here is the list of special keys returned as words by `event/key`:
 
 * `page-up`
 * `page-down`
+* `page-left`
+* `page-right`
 * `end`
 * `home`
 * `left`
@@ -871,6 +873,9 @@ Here is the list of special keys returned as words by `event/key`:
 * `F10`
 * `F11`
 * `F12`
+* `caps-lock`
+* `num-lock`
+* `pause`
 
 The following extra key names can be returned by `event/key` only for `key-down` and `key-up` messages:
 
@@ -880,7 +885,10 @@ The following extra key names can be returned by `event/key` only for `key-down`
 * `right-shift`
 * `left-menu`
 * `right-menu`
-
+* `left-alt`
+* `right-alt`
+* `left-command`
+* `right-command`
 
 === Actors 
 
