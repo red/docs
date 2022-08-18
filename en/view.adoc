@@ -86,6 +86,7 @@ Options facet holds optional facets which are used for specific behaviors:
 |===
 |Option| Description
 |*drag-on*| Can be one of: `'down`, `'mid-down`, `'alt-down`, `'aux-down`. Used for enabling a drag'n drop operation.
+|*bounds*| Defines a bounding box for restricting the dragging movements: `object [min: pair! max: pair!]`, `min` refers to the top-left corner, `max` to the bottom-right corner.
 |===
 
 	
@@ -707,7 +708,7 @@ _The following information is provided only for reference, in normal operation, 
 |1 (handle)|	OS-specific handle for the graphic object (`integer!`).
 |2 (changes)| Bit flags array marking which facet has been changed since last call to `show` (`integer!`).
 |3 (deferred)| List of deferred changes since last call to `show`; when realtime updates are turned off (`block!` `none!`).
-|4 (drag-offset)| Stores the starting mouse cursor offset position when entering face dragging mode (`pair!` `none!`).
+|4 (drag-info)| Stores the starting mouse cursor offset position when entering face dragging mode and an eventual bounding box. (`block!` `none!`).
 |===
 
 [NOTE]
