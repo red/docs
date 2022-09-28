@@ -161,7 +161,7 @@ A reaction is removed using the `/unlink` refinement and with one of the followi
 ----
 *Description*
 
-`is` creates a reactive formula whose result will be assigned to a word. The `<code>` block can contain references to both the wrapping object's fields, if used in a reactor's body block, and to external reactor's fields. For specifying a default value, a block returning the default value can be inserted as the first element of the reactive formula block. This is especially useful when using forward reference(s) for reactive source(s) that are unset at the time of the formula's evaluation.
+`is` creates a reactive formula whose result will be assigned to a word. The `<body>` block can contain references to both the wrapping object's fields, if used in a reactor's body block, and to external reactor's fields. For specifying a default value, a block returning the default value can be inserted as the first element of the reactive formula block. This is especially useful when using forward reference(s) for reactive source(s) that are unset at the time of the formula's evaluation.
 
 NOTE: This operator creates reactive formulas which closely mimic Excel's formula model.
 
