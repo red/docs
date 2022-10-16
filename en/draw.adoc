@@ -763,7 +763,7 @@ transform 'fill-pen <center> <angle> <scale-x> <scale-y> <translation>
 
 *Description*
 
-Sets a transformation such as translation, scaling, and rotation. When a block is provided as last argument, the transformation will be applied only to the commands in that block.
+Sets a transformation such as translation, scaling, and rotation. When a block is provided as last argument, the transformation will be applied only to the commands in that block. It applies `rotate`, `scale` and `translate` commands in order.
 
 When the `'pen` or `'fill-pen` lit-words are used, the transformation is applied respectively to the current pen or current fill-pen.
 
