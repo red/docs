@@ -879,7 +879,7 @@ By default, values are inserted at the tail of a block. This behavior can be cha
 | `into`
 | Inserts collected values into a series referred by a word, resets series' index to the head.
 | `after`
-| Inserts collected values into a series referred by a word, moves series' index past the insertion.
+| Appends collected values into a series referred by a word, preserves series' index.
 |===
 
 * If `collect` is used without `into` or `after` option in any of the rules, `parse` function will return a block of collected values (see <<Parsing modes>>); if top-level `collect` is used with `set` option, `parse` will return `logic!` value as usual.
