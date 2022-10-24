@@ -877,7 +877,7 @@ By default, values are inserted at the tail of a block. This behavior can be cha
 | `set`
 | Sets a given word to a block of collected values.
 | `into`
-| Inserts collected values into a series referred by a word, resets series' index to the head.
+| Inserts collected values into a series referred by a word, preserves series' index.
 | `after`
 | Appends collected values into a series referred by a word, preserves series' index.
 |===
