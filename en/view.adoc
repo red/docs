@@ -38,7 +38,7 @@ List of available facets:
 |data| any-type!| no| all| Content data of the face.
 |enabled?| logic!| yes| all| Enable or disable input events on the face.
 |visible?| logic!|	yes| all| Display or hide the face.
-|selected| integer!, pair!, object!| no| some| For lists types, index of currently selected element. For text inputs, selected text. For windows, focused face.
+|selected| integer!, pair!, object!, none!| no| some| For lists types, index of currently selected element. For text inputs, selected text. For windows, focused face.
 |flags| block!, word!| no|	some| List of special keywords altering the display or behavior of the face.
 |options| block!| no| some| Extra face properties in a [name: value] format.
 |parent| object!| no| all|	Back-reference to parent face (if any).
