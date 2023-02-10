@@ -80,8 +80,13 @@ Once a face created, the `type` field is not allowed to be changed.
 
 === Options facet 
 
-Options facet holds optional facets which are used for specific behaviors:
+Options facet holds optional facets which are used for specific behaviors. Options are defined in a block and must be specified using a name/value pair, where the name is a `set-word!` and the value can be of any type:
 
+----
+options: [<name:> <value> ...]
+----
+
+Built-in options:
 [cols="1,4" options="header"]
 |===
 |Option| Description
