@@ -5,7 +5,7 @@
 
 == Abstract
 
-The `none!` datatype represents a value that does not belong to any other datatype. It is analogous to nil or nothing in other programming languages.
+None represents "no useful value" or "no result". It's used a sentinel/placeholder/dummy value, for three-valued logic, and as a function result to indicate failure.
 
 `None!` is a member of the following typesets: `immediate!`
 
