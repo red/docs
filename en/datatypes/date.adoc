@@ -165,7 +165,7 @@ make date! [<day> <month> <year> <hour> <minute> <second> <zone>]
 ====
 * Out of range argument values will result in an error. For a normalized result, use the `to` action instead of `make`.
 
-* `year` and `day` fields are interchangeable, but only for low year values. 
+* `year` and `day` fields are interchangeable, but only for higher year values (>= 100).
 ====
 
 Using `make`, the year can be used in first position *only* if its value is >= 100. 
