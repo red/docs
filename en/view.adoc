@@ -921,7 +921,7 @@ In addition to the GUI events, it is possible to define an `on-create` actor whi
 
 Other returned values have no effect.
 
-See also: [Container's actors](https://github.com/red/docs/blob/master/en/vid.adoc#actors-definition)
+See also: link:vid.html#actors-definition[Container's actors]
 
 === Event flow 
 
