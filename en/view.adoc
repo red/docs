@@ -921,6 +921,8 @@ In addition to the GUI events, it is possible to define an `on-create` actor whi
 
 Other returned values have no effect.
 
+See also: [Container's actors](https://github.com/red/docs/blob/master/en/vid.adoc#actors-definition)
+
 === Event flow 
 
 Events are usually generated at a specific screen position and assigned to the closest front face. However, the event is travelling from one face to another in the ancestors hierarchy in two directions commonly known as:
