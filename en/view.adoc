@@ -1,8 +1,8 @@
 = Red/View Graphic Engine
 :imagesdir: ../images
-:toc:
+:toc: left
 :toclevels: 3
-:numbered:
+:sectnums: all
 
 == Design goals 
 
