@@ -870,6 +870,17 @@ header/reference?=0|1
 
 Same encoding rules as <<string, `string!`>>.
 
+==== `point2D/3D/4D!` anchor:pair[] 
+
+----
+Default: header (4), size (4), x (4), y (4) [, z (4) [, a (4)]]
+Compact: TBD
+
+header/type=51
+----
+
+`x`, `y`, `z` and `a` fields encode the respective point's elements as 32-bit float numbers.
+
 ==== `image!` anchor:image[]
 
 ----
@@ -877,7 +888,7 @@ Default:  header (4), head (4), length (4), rgba (4 * width * height)
 Referral: header (4), head (4), buffer [reference]
 Compact:  TBD
 
-header/type=51
+header/type=53
 header/reference?=0|1
 ----
 
