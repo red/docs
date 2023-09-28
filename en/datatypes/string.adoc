@@ -74,6 +74,21 @@ A single-line string cannot contain unescaped new-line characters.
 
 A multi-line string can contain new-line characters, quotation marks, and paired braces. Unpaired braces must be escaped by preceding the character with `^`, e.g. `{foo^{}`.
 
+Raw string:
+
+This syntax allows to input literal strings without the need to escape any of its characters. `^` and curly braces are treated as regular characters.
+
+`%{...}%`
+
+`%%{...}%%`
+
+`%%%{...}%%%`
+
+and so on...
+
+Any number of `%` character can be used in order to make the ending sequence not collide with string's content. The leading count of `%` must match the trailing count, otherwise a syntax error will occur on loading.
+
+
 == Comparisons
 
 All comparators can be applied on `string!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.

@@ -246,22 +246,3 @@ Notes:
 
 
 See examples at https://github.com/red/code/tree/master/Scripts/lexer
-
-== Values Literal Syntax
-
-=== Raw Strings
-
-Strings in Red have special rules for some characters, like using `^` character as escaping mechanism or bracketed strings having to balance nested curly brackets. Raw strings format provides a way to input literal strings without any special treatment of its content.
-
-*Syntax*
-
-----
-%{...}%
-%%{...}%%
-%%%{...}%%%
-...
-----
-
-Any number of `%` character can be used in order to make the ending sequence not collide with string's content. The leading count of `%` must match the trailing count, otherwise a syntax error will occur on loading.
-
-`^` is processed as a regular character. Curly braces can be used without any escaping or balancing constraint.
