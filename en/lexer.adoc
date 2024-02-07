@@ -148,9 +148,9 @@ The tokenization process is split in stages, triggering events where a user-prov
 ----
                 +-> ERROR
                /
-         +-> CLOSE series
+         +-> CLOSE container(*)
         /
-       +-> OPEN series
+       +-> OPEN container(*)
       /
 -> PRESCAN token -> SCAN token -> LOAD value
       \               \             \
@@ -158,6 +158,11 @@ The tokenization process is split in stages, triggering events where a user-prov
 ----
 
 So the lexer events are: `prescan`, `scan`, `load`, `open`, `close`, `error`.
+
+(*) Those events are only emitted for the following datatypes:
+
+* (value containers) block!, paren!, map!, any-path!
+* strings using curly brackets (useful to record line numbers of a multiline string beginning/ending)
 
 === `transcode/trace`
 
