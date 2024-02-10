@@ -51,10 +51,10 @@ Conversion avec `To`:
 Il est possible de créer par programmation des valeurs de type `path!` qui ne respectent pas les règles lexicales d'un chemin littéral. 
 
 ```red
->> mold to path! [a #(b: 2) c 1.2 /z]
+>> mold to path! [a #[b: 2] c 1.2 /z]
 == "a/#(^/    b: 2^/)/c/1.2//z"
 
->> load mold to path! [a #(b: 2) c 1.2 /z]
+>> load mold to path! [a #[b: 2] c 1.2 /z]
 *** Syntax Error: invalid path! at "a/#(    b: 2)/c/1.2//z"
 *** Where: do
 *** Stack: load  

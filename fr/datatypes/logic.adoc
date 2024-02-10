@@ -57,9 +57,9 @@ Pour les besoins de la logique booléenne, les valeurs `true` et `false` peuvent
 Les mots prédéfinis `true` et `false`, ou la syntaxe sérialisée:
 
 ```red
-#[true]
+#(true)
 
-#[false]
+#(false)
 ```
 
 == Test de valeurs

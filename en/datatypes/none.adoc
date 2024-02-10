@@ -25,7 +25,7 @@ None values can be created using literal syntax, or at runtime using a `make` co
 
 The predefined word `none` or the serialized syntax:
 ----
-#[none]
+#(none)
 ----
 
 == Testing values

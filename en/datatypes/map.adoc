@@ -10,7 +10,7 @@ A map represents an associative array of key/value pairs. It provides a fast rea
 == Literal syntax
 
 ----
-#(<key> <value>...)
+#[<key> <value>...]
 
 <key>   : hashed key, accepted types are: scalar!, all-word!, any-string!
 <value> : any-type! value
@@ -36,18 +36,18 @@ If the _spec_ argument is an integer, an empty `map!` is created with a pre-allo
 Examples:
 
 ----
-#(a: 1 b: 2)
-== #(
+#[a: 1 b: 2]
+== #[
     a: 1
     b: 2
-)
+]
 
 make map! [a 1 'b 2 "c" 3]
-== #(
+== #[
     a: 1
     b: 2
     "c" 3
-)
+]
 ----
 
 If the key is of *any-word!* type, the key type is converted to *set-word!* in the map, in order to make the map content look more like pairs of keys with value assigned. Though, in order to access word keys, there is no requirement to provide a set-word, for practical reasons (easier construction, especially in paths), simple words can be used. Similarly, `keys-of` reflector (described in Reflection section below), will return words instead of set-words, as it simplifies further processing (especially matching operations are easier with words rather than set-words).
@@ -98,7 +98,7 @@ Trying to access a key not defined in a map will:
 Examples:
 
 ----
-m: #(Ab: 2 aB: 5 ab: 10)
+m: #[Ab: 2 aB: 5 ab: 10]
 m/ab
 == 2
 select m 'aB
@@ -162,45 +162,45 @@ extend/case <map> <spec>
 Examples:
 
 ----
-m: #(Ab: 2 aB: 5 ab: 10)
+m: #[Ab: 2 aB: 5 ab: 10]
 m/ab: 3
 m
-== #(
+== #[
     Ab: 3
     aB: 5
     ab: 10
-)
+]
 
 put m 'aB "hello"
 m
-== #(
+== #[
     Ab: "hello"
     aB: 5
     ab: 10
-)
+]
 
 set/case 'm/aB 0
 m
-== #(
+== #[
     Ab: "hello"
     aB: 0
     ab: 10
-)
+]
 set/case 'm/ab 192.168.0.1
-== #(
+== #[
     Ab: "hello"
     aB: 0
     ab: 192.168.0.1
-)
+]
 
-m: #(%cities.red 10)
+m: #[%cities.red 10]
 extend m [%cities.red 99 %countries.red 7 %states.red 27]
 m
-== #(
+== #[
     %cities.red 99
     %countries.red 7
     %states.red 27
-)
+]
 ----
 
 == Removing keys
@@ -210,27 +210,27 @@ Use `remove/key` to remove a key/value pair from a map, returning the map value.
 Example:
 
 ----
-m: #(a: 1 b 2 "c" 3 d: 99)
+m: #[a: 1 b 2 "c" 3 d: 99]
 m
-== #(
+== #[
     a: 1
     b: 2
     "c" 3
     d: 99
-)
+]
 remove/key m 'b
-== #(
+== #[
     a: 1
     "c" 3
     d: 99
-)
+]
 ----
 
 It is also possible to remove all keys at same time using `clear` action:
 
 ----
-clear #(a 1 b 2 c 3)
-== #()
+clear #[a 1 b 2 c 3]
+== #[]
 ----
 
 
@@ -238,33 +238,33 @@ clear #(a 1 b 2 c 3)
 
 * `find` checks if a key is defined in a map and returns the first matched key, or else `none`. Use `/case` for case-sensitive matching.
 
- find #(a 123 b 456) 'b
+ find #[a 123 b 456] 'b
  == b
  
- find #(a 123 A 456) 'A
+ find #[a 123 A 456] 'A
  == a
  
- find/case #(a 123 A 456) 'A
+ find/case #[a 123 A 456] 'A
  == A
 
 * `length?` returns the number of a key/value pairs in a map.
 
- length? #(a 123 b 456)
+ length? #[a 123 b 456]
  == 2
 
 * `keys-of` returns the list of keys from a map in a block (set-words are converted to words).
 
- keys-of #(a: 123 b: 456)
+ keys-of #[a: 123 b: 456]
  == [a b]
 
 * `values-of` returns the list of values from a map in a block.
 
- values-of #(a: 123 b: 456)
+ values-of #[a: 123 b: 456]
  == [123 456]
 
 * `body-of` returns all the key/value pairs from a map in a block.
 
- body-of #(a: 123 b: 456)
+ body-of #[a: 123 b: 456]
  == [a: 123 b: 456]
 
  
@@ -275,7 +275,7 @@ clear #(a 1 b 2 c 3)
 +
 
 ```red
->> foreach k keys-of #(a: 123 b: 456) [print k]
+>> foreach k keys-of #[a: 123 b: 456] [print k]
 a
 b
 ```
@@ -284,7 +284,7 @@ b
 +
 
 ```red
->> foreach v values-of #(a: 123 b: 456) [print v]
+>> foreach v values-of #[a: 123 b: 456] [print v]
 123
 456
 ```
@@ -293,7 +293,7 @@ b
 +
 
 ```red
->> foreach [k v] #(a: 123 b: 456) [print [k v]]
+>> foreach [k v] #[a: 123 b: 456] [print [k v]]
 a 123
 b 456
 ```

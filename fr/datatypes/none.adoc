@@ -25,7 +25,7 @@ Les valeurs de type `none!` peuvent être créées à l'aide de la syntaxe litt�
 
 Le mot préféfini `none` ou la syntaxe littérale:
 ----
-#[none]
+#(none)
 ----
 
 == Test de valeurs

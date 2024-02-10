@@ -37,7 +37,7 @@ Označení `*--*` indikuje neexistenci literálové formy dané hodnoty. Tyto ho
 |link:datatypes/lit-path.adoc[lit-path!]|`'foo/bar/baz`|Nevyhodnocená (citovaná) hodnota `path!.
 |link:datatypes/lit-word.adoc[lit-word!]|`'foo`|Nevyhodnocená hodnota `word!`.
 |link:datatypes/logic.adoc[logic!]|`true` `false`, `yes` `no`, `on` `off`|Booleovské hodnoty.
-|link:datatypes/map.adoc[map!]|`#( )`, `#(a: 1 b: 2)`|Asociativní řady (arrays) párů key/value.
+|link:datatypes/map.adoc[map!]|`#[ ]`, `#[a: 1 b: 2]`|Asociativní řady (arrays) párů key/value.
 |link:datatypes/money.adoc[money!] | `$123`, `-USD$1'234.56789` | Množství určité (nebo generické) měny.
 |link:datatypes/native.adoc[native!]|*--*|Externí funkce, psané v Red/System.
 |link:datatypes/none.adoc[none!]|*--*|Hodnota, která nepatří k žádnému datovému typu. Analogicky k `nula` či `nic`.

@@ -34,7 +34,7 @@ Pour utiliser Red efficacement, vous devriez devenir familier avec tous les type
 |link:datatypes/lit-path.adoc[lit-path!]|`'foo/bar/baz`|Valeurs de type `path!` précédées d'une apostrophe, non évaluées.
 |link:datatypes/lit-word.adoc[lit-word!]|`'foo`|Valeurs de type `word!` précédées d'une apostrophe, non évaluées.
 |link:datatypes/logic.adoc[logic!]|`true` `false`, `yes` `no`, `on` `off`|Valeurs booléennes.
-|link:datatypes/map.adoc[map!]|#( ), #(a: 1 b: 2)|Tableau associatif de paires clé/valeur.
+|link:datatypes/map.adoc[map!]|#[ ], #[a: 1 b: 2]|Tableau associatif de paires clé/valeur.
 |link:datatypes/native.adoc[native!]|`-`|Fonctions externes écrites en Red/System.
 |link:datatypes/none.adoc[none!]|`-`|Valeurs qui n'appartiennent à aucun autre type de données. Analogue à nil ou nothing.
 |link:datatypes/object.adoc[object!]|`-`|Contextes nommés ou non, qui contiennent des paires mot: valeur (`word: value`).
