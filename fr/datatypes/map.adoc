@@ -10,7 +10,7 @@ Une map représente un tableau associatif de paires clé/valeur. Ce type permet 
 == Syntaxe littérale
 
 ----
-#(<key> <value>...)
+#[<key> <value>...]
 
 <key>   : une clé hachée; les types autorisés sont: scalar!, all-word!, any-string!
 <value> : une valeur de type any-type!
@@ -36,18 +36,18 @@ Si l'argument _spec_ est un entier, une `map!` vide est créée avec un nombre p
 Exemples:
 
 ----
-#(a: 1 b: 2)
-== #(
+#[a: 1 b: 2]
+== #[
     a: 1
     b: 2
-)
+]
 
 make map! [a 1 'b 2 "c" 3]
-== #(
+== #[
     a: 1
     b: 2
     "c" 3
-)
+]
 ----
 
 Si la clé est d'un type *any-word!*, cette clé doit être convertie en *set-word!* dans la map, afin que le contenu de la map ressemble plus à des paires d'une clé et d'une valeur assignée. Cependant, pour accéder aux clés qui sont des words, il n'est pas requis de fournir un set-word; pour des raisons pratiques (construction plus facile, en particulier dans les chemins), de simple words peuvent être utilisés. De manière similaire, le réflecteur `keys-of` (décrit dans la section Réflexion ci-dessous) renverra des words plutôt que des set-words, car cela simplifie les traitements ultérieurs (en particulier les opérations d'assortiment sont plus faciles avec des words qu'avec des set-words).
@@ -98,7 +98,7 @@ Une tentative d'accéder à une clé non définie dans une map:
 Exemples:
 
 ----
-m: #(Ab: 2 aB: 5 ab: 10)
+m: #[Ab: 2 aB: 5 ab: 10]
 m/ab
 == 2
 select m 'aB
@@ -162,45 +162,45 @@ La native `extend` peut accepter plusieurs clés en même temps, ce qui le rend 
 Exemples:
 
 ----
-m: #(Ab: 2 aB: 5 ab: 10)
+m: #[Ab: 2 aB: 5 ab: 10]
 m/ab: 3
 m
-== #(
+== #[
     Ab: 3
     aB: 5
     ab: 10
-)
+]
 
 put m 'aB "hello"
 m
-== #(
+== #[
     Ab: "hello"
     aB: 5
     ab: 10
-)
+]
 
 set/case 'm/aB 0
 m
-== #(
+== #[
     Ab: "hello"
     aB: 0
     ab: 10
-)
+]
 set/case 'm/ab 192.168.0.1
-== #(
+== #[
     Ab: "hello"
     aB: 0
     ab: 192.168.0.1
-)
+]
 
-m: #(%cities.red 10)
+m: #[%cities.red 10]
 extend m [%cities.red 99 %countries.red 7 %states.red 27]
 m
-== #(
+== #[
     %cities.red 99
     %countries.red 7
     %states.red 27
-)
+]
 ----
 
 
@@ -211,27 +211,27 @@ Utilisez `remove/key` pour supprimer une paire clé/valeur d'une map, et récup�
 Exemple:
 
 ----
-m: #(a: 1 b 2 "c" 3 d: 99)
+m: #[a: 1 b 2 "c" 3 d: 99]
 m
-== #(
+== #[
     a: 1
     b: 2
     "c" 3
     d: 99
-)
+]
 remove/key m 'b
-== #(
+== #[
     a: 1
 	"c" 3
 	d: 99
-)
+]
 ----
 
 Il est aussi possible de supprimer toutes les clés d'un seul coup en utilisant l'action `clear`:
 
 ----
-clear #(a 1 b 2 c 3)
-== #()
+clear #[a 1 b 2 c 3]
+== #[]
 ----
 
 
@@ -239,33 +239,33 @@ clear #(a 1 b 2 c 3)
 
 * `find` vérifie si une clé est définie dans une map et renvoie la première clé trouvée, ou `none` dans le cas contraire. Utilisez `/case` pour une recherche sensible à la casse.
 
- find #(a 123 b 456) 'b
+ find #[a 123 b 456] 'b
  == b
 
- find #(a 123 A 456) 'A
+ find #[a 123 A 456] 'A
  == a
 
- find/case #(a 123 A 456) 'A
+ find/case #[a 123 A 456] 'A
  == A
 
 * `length?` renvoie le nombre de paires clé/valeur dans une map.
 
- length? #(a 123 b 456)
+ length? #[a 123 b 456]
  == 2
 
 * `keys-of` renvoie dans un bloc la liste des clés d'une map (les set-words sont convertis en words).
 
- keys-of #(a: 123 b: 456)
+ keys-of #[a: 123 b: 456]
  == [a b]
 
 * `values-of` renvoie dans un bloc la liste des valeurs d'une map.
 
- values-of #(a: 123 b: 456)
+ values-of #[a: 123 b: 456]
  == [123 456]
 
 * `body-of` renvoie dans un bloc toutes les paires clé/valeur d'une map.
 
- body-of #(a: 123 b: 456)
+ body-of #[a: 123 b: 456]
  == [a: 123 b: 456]
 
 == Itération
@@ -275,7 +275,7 @@ clear #(a 1 b 2 c 3)
 +
 
 ```red
->> foreach k keys-of #(a: 123 b: 456) [print k]
+>> foreach k keys-of #[a: 123 b: 456] [print k]
 a
 b
 ```
@@ -284,7 +284,7 @@ b
 +
 
 ```red
->> foreach v values-of #(a: 123 b: 456) [print v]
+>> foreach v values-of #[a: 123 b: 456] [print v]
 123
 456
 ```
@@ -293,6 +293,6 @@ b
 +
 
 ```red
->> foreach [k v] #(a: 123 b: 456) [print [k v]]
+>> foreach [k v] #[a: 123 b: 456] [print [k v]]
 a 123
 b 456

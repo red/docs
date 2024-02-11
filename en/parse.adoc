@@ -432,7 +432,7 @@ No-op or catch-all rule, always matches and never advances the input.
 *Example*
 
 ----
-parse reduce [none none][none #[none] ['none | none] none! none]
+parse reduce [none none][none #(none) ['none | none] none! none]
 ----
 
 ==== `end`

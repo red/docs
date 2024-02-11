@@ -51,10 +51,10 @@ You can create an empty path of a given size by supplying an integer value as an
 It is possible to create `path!` values programmatically that do not conform to the lexical rules of a literal path. 
 
 ```red
->> mold to path! [a #(b: 2) c 1.2 /z]
+>> mold to path! [a #[b: 2] c 1.2 /z]
 == "a/#(^/    b: 2^/)/c/1.2//z"
 
->> load mold to path! [a #(b: 2) c 1.2 /z]
+>> load mold to path! [a #[b: 2] c 1.2 /z]
 *** Syntax Error: invalid path! at "a/#(    b: 2)/c/1.2//z"
 *** Where: do
 *** Stack: load  

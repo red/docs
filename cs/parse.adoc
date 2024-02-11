@@ -468,7 +468,7 @@ Pravidlo _no-op_ nebo _catch-all_, vždy se shoduje a nikdy nevede k postupu vst
 *Příklad*
 
 ----
-parse reduce [none none][none #[none] ['none | none] none! none]
+parse reduce [none none][none #(none) ['none | none] none! none]
 ----
 
 ==== `end`

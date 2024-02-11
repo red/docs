@@ -9,7 +9,7 @@ mapはkeyとvalueのペアで関連付けされた配列です。mapは高速な
 
 == リテラルシンタックス
 ----
-#(<key> <value>...)
+#[<key> <value>...]
 
 <key>   : ハッシュのキー, 次のデータ型の値が使えます: scalar!,all-word!, any-string!
 <value> : any-type!の値
@@ -29,18 +29,18 @@ make map! <spec>
 
 例：
 ----
-#(a: 1 b: 2)
-== #(
+#[a: 1 b: 2]
+== #[
     a: 1
     b: 2
-)
+]
 
 make map! [a 1 'b 2 "c" 3]
-== #(
+== #[
     a: 1
     b: 2
     "c" 3
-)
+]
 ----
 もしkeyが *any-word!* 型だった場合、mapにセットされたkeyは *set-word!* に変換されます。これはmapの中身がkeyとvalueの組み合わせに見えるようにするためです。しかし、取り扱いやすさの観点から、wordのkeyにアクセスする時には、set-wordでkeyを指定する必要はなく、シンプルにwordを指定できます（map生成時も、中身にアクセスする時も同様です）。同様に、 `keys-of` リフレクタ（後述のリフレクションのセクションで説明します）は、set-wordではなくwordを返します。これも、後続の処理を簡単にするためです（特にマッチング処理はset-wordよりもwordの方が簡単になります）。
 
@@ -81,7 +81,7 @@ select/case <map> <key>
 例：
 
 ----
-m: #(Ab: 2 aB: 5 ab: 10)
+m: #[Ab: 2 aB: 5 ab: 10]
 m/ab
 == 2
 select m 'aB
@@ -136,45 +136,45 @@ NOTE:
 
 例：
 ----
-m: #(Ab: 2 aB: 5 ab: 10)
+m: #[Ab: 2 aB: 5 ab: 10]
 m/ab: 3
 m
-== #(
+== #[
     Ab: 3
     aB: 5
     ab: 10
-)
+]
 
 put m 'aB "hello"
 m
-== #(
+== #[
     Ab: "hello"
     aB: 5
     ab: 10
-)
+]
 
 set/case 'm/aB 0
 m
-== #(
+== #[
     Ab: "hello"
     aB: 0
     ab: 10
-)
+]
 set/case 'm/ab 192.168.0.1
-== #(
+== #[
     Ab: "hello"
     aB: 0
     ab: 192.168.0.1
-)
+]
 
-m: #(%cities.red 10)
+m: #[%cities.red 10]
 extend m [%cities.red 99 %countries.red 7 %states.red 27]
 m
-== #(
+== #[
     %cities.red 99
     %countries.red 7
     %states.red 27
-)
+]
 ----
 
 == keyの削除
@@ -183,54 +183,54 @@ mapからkey/valueのペアを削除したい場合、前述のいずれかの�
 
 例：
 ----
-m: #(a: 1 b 2 "c" 3 d: 99)
+m: #[a: 1 b 2 "c" 3 d: 99]
 m
-== #(
+== #[
     a: 1
     b: 2
     "c" 3
     d: 99
-)
+]
 m/b: none
 put m "c" none
-extend m [d #[none]]
+extend m [d #(none)]
 m
-== #(
+== #[
     a: 1
-)
+]
 ----
 
 NOTE: 上記の例における初期化シンタックスは、 `none!` が `word!` として扱われてしまわないようにするためにこのような記述になっています。このやり方は必要なspec引数のblockを作る一例です。
 
 また、 `clear` アクションを使用することで一度に全てのkeyを削除することもできます。 
 ----
-clear #(a 1 b 2 c 3)
-== #()
+clear #[a 1 b 2 c 3]
+== #[]
 ----
 
 == リフレクション
 
 * `find` はkeyがmapの中にあれば `true` 、なければ `none` を返します。
 
- find #(a 123 b 456) 'b
+ find #[a 123 b 456] 'b
  == true
 
 * `length?` はmapの中のkey/valueのペアの数を返します。
 
- length? #(a 123 b 456)
+ length? #[a 123 b 456]
  == 2
 
 * `keys-of` はmapの中のkeyのリストをblockで返します（set-wordはwordに変換されます）。
 
- keys-of #(a: 123 b: 456)
+ keys-of #[a: 123 b: 456]
  == [a b]
 
 * `values-of` はmapの中のvalueのリストをblockで返します。
 
- values-of #(a: 123 b: 456)
+ values-of #[a: 123 b: 456]
  == [123 456]
 
 * `body-of` はmapの中の全てのkey/valueのペアをblockで返します。
 
- body-of #(a: 123 b: 456)
+ body-of #[a: 123 b: 456]
  == [a: 123 b: 456]

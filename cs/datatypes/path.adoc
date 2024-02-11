@@ -50,10 +50,10 @@ Konverze `to`:
 Je možné programově vytvořit hodnotu `path!`. která však neodpovídá lexikálním pravidlům literálové cesty:
 
 ```red
->> mold to path! [a #(b: 2) c 1.2 /z]
+>> mold to path! [a #[b: 2] c 1.2 /z]
 == "a/#(^/    b: 2^/)/c/1.2//z"
 
->> load mold to path! [a #(b: 2) c 1.2 /z]
+>> load mold to path! [a #[b: 2] c 1.2 /z]
 *** Syntax Error: invalid path! at "a/#(    b: 2)/c/1.2//z"
 *** Where: do
 *** Stack: load  

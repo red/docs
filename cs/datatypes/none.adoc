@@ -24,7 +24,7 @@ Hodnoty none! mohou být vytvořeny literálovou syntaxí nebo při runtimu kons
 
 Lze použít přímo předdefinované slovo `none` nebo serializovanou skladbu:
 ```red
-#[none]
+#(none)
 ```
 
 == Testování hodnot

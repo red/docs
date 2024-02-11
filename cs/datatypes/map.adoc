@@ -10,7 +10,7 @@ Struktura typu `map!` reprezentuje asociativní výčet (array) dvojic key/value
 == Literálová skladba
 
 ----
-#(<key> <value>...)
+#[<key> <value>...]
 
 <key>   : hashovaný klíč, akceptované typy jsou: scalar!, all-word!, any-string!
 <value> : hodnota typu any-type!
@@ -19,10 +19,10 @@ Struktura typu `map!` reprezentuje asociativní výčet (array) dvojic key/value
 Příklad:
 
 ----
-#(a: 1 b: 2)
-== #(
+#[a: 1 b: 2]
+== #[
     a: 1
-    b: 2   )
+    b: 2   ]
 ----
 
 == Konstruktorová skladba
@@ -37,7 +37,7 @@ Je-li argumentem _spec_ celé číslo, vytvoří se prázdný objekt `map!` s p�
 
 ----
 make map! 10
-== #()
+== #[]
 ----
 
 [NOTE]
@@ -50,11 +50,11 @@ Příklad:
 
 ----
 make map! [a 1 'b 2 "c" 3]
-== #(
+== #[
     a: 1
     b: 2
 	"c" 3
-)	    
+]	    
 ----
 
 Je-li klíč typu *any-word*, je v mapě kvůli lepší přehlednosti konvertován na typ *set-word*. Nicméně 
@@ -105,7 +105,7 @@ Pokus o přístup k nedefinovanému klíči způsobí:
 Příklady:
 
 ----
-m: #(Ab: 2 aB: 5 ab: 10)
+m: #[Ab: 2 aB: 5 ab: 10]
 m/ab
 == 2
 select m 'aB
@@ -161,13 +161,13 @@ Nativní funkce `extend` může přijmout více klíčů najednou, takže je vho
 
 ----
 m: make map! 5           
-== #()
+== #[]
 
 extend m [a: 5 b: none!]
-== #(
+== #[
     a: 5             ; type integer!
     b: none!         ; type word!
-)
+]
 ----
 
 
@@ -181,48 +181,48 @@ extend m [a: 5 b: none!]
 Příklady:
 
 ----
-m: #(Ab: 2 aB: 5 ab: 10)
+m: #[Ab: 2 aB: 5 ab: 10]
 m/ab: 3
 == 3
 
 m
-== #(
+== #[
     Ab: 3
     aB: 5
     ab: 10
-)
+]
 
 put m 'aB "hello"
 m
-== #(
+== #[
     Ab: "hello"
     aB: 5
     ab: 10
-)
+]
 
 set/case 'm/aB 0
 m
-== #(
+== #[
     Ab: "hello"
     aB: 0
     ab: 10
-)
+]
 set/case 'm/ab 192.168.0.1
 m
-== #(
+== #[
     Ab: "hello"
     aB: 0
     ab: 192.168.0.1
-)
+]
 
-m: #(%cities.red 10)
+m: #[%cities.red 10]
 extend m [%cities.red 99 %countries.red 7 %states.red 27]
 m
-== #(
+== #[
     %cities.red 99
     %countries.red 7
     %states.red 27
-)
+]
 ----
 
 
@@ -233,23 +233,23 @@ Dvojici key/value jednoduše z mapy vymažeme příkazem `remove/key`. Smažou s
 Příklad:
 
 ----
-m: #(a: 1 b 2 "c" 3 d: 99)
-== #(
+m: #[a: 1 b 2 "c" 3 d: 99]
+== #[
     a: 1
     b: 2
     "c" 3
     d: 99
-)
+]
 
 remove/key m 'b
-== #(a: 1 "c" 3 d: 99)
+== #[a: 1 "c" 3 d: 99]
 ----
 
 Je rovněž možné smazat všechny klíče najednou akcí `clear`:
 
 ----
-clear #(a 1 b 2 c 3)
-== #()
+clear #[a 1 b 2 c 3]
+== #[]
 ----
 
 
@@ -259,33 +259,33 @@ Pro práci s mapou (slovníkem) se s výhodou použijí další pomocné funkce:
 
 * `find` ověří přítomnost klíče v mapě a vrátí `true`, byl-li nalezen, v opačném případě vrátí `none`. Pro case-sensitive srovnávání použijte upřesnění `/case`.
 
- find #(a 123 b 456) 'b
+ find #[a 123 b 456] 'b
  == b
  
- find #(a 123 A 456) 'A
+ find #[a 123 A 456] 'A
  == a
  
- find/case #(a 123 A 456) 'A
+ find/case #[a 123 A 456] 'A
  == A
 
 * `length?` vrací počet dvojic `key/value` v mapě.
 
- length? #(a 123 b 456)
+ length? #[a 123 b 456]
  == 2
 
 * `keys-of` vrací seznam klíčů v mapě formou bloku (set-words are converted to words).
 
- keys-of #(a: 123 b: 456)
+ keys-of #[a: 123 b: 456]
  == [a b]
 
 * `values-of` vrací seznam hodnot v mapě.
 
- values-of #(a: 123 b: 456)
+ values-of #[a: 123 b: 456]
  == [123 456]
 
 * `body-of` vrací všechny dvojice key/value v mapě.
 
- body-of #(a: 123 b: 456)
+ body-of #[a: 123 b: 456]
  == [a: 123 b: 456]
  
 
@@ -296,7 +296,7 @@ Pro práci s mapou (slovníkem) se s výhodou použijí další pomocné funkce:
 +
 
 ```red
->> foreach k keys-of #(a: 123 b: 456) [print k]
+>> foreach k keys-of #[a: 123 b: 456] [print k]
 a
 b
 ```
@@ -305,7 +305,7 @@ b
 +
 
 ```red
->> foreach v values-of #(a: 123 b: 456) [print v]
+>> foreach v values-of #[a: 123 b: 456] [print v]
 123
 456
 ```
@@ -314,7 +314,7 @@ b
 +
 
 ```red
->> foreach [k v] #(a: 123 b: 456) [print [k v]]
+>> foreach [k v] #[a: 123 b: 456] [print [k v]]
 a 123
 b 456
 ```

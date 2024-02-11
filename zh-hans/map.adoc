@@ -11,7 +11,7 @@
 
 [source, red]
 ----
-#(<key> <value>...)
+#[<key> <value>...]
 
 <key>   : 散列键，接受的类型为：scalar! , all-word! , any-string!
 <value> : any-type! 值
@@ -38,18 +38,18 @@ make map! <spec>
 
 [source, red]
 ----
-#(a: 1 b: 2)
-== #(
+#[a: 1 b: 2]
+== #[
     a: 1
     b: 2
-)
+]
 
 make map! [a 1 'b 2 "c" 3]
-== #(
+== #[
     a: 1
     b: 2
     "c" 3
-)
+]
 ----
 
 如果键是 `any-word!` 类型，映射中的键的类型会被转换为 `set-word!`，这是为了使映射的内容看起来更像一组设置了值的键。不过，要访问单词键并不需要提供设词，出于实践性的考虑，你可以使用朴素的单词。类型的，`keys-of` 反射器（在下面的反射小节有描述）不会返回设词而会返回单词，因为这能简化之后的处理（尤其对于匹配操作，用单词比用设词简单）。
@@ -101,7 +101,7 @@ select/case <map> <key>
 
 [source, red]
 ----
-m: #(Ab: 2 aB: 5 ab: 10)
+m: #[Ab: 2 aB: 5 ab: 10]
 m/ab
 == 2
 select m 'aB
@@ -167,45 +167,45 @@ extend/case <map> <spec>
 
 [source, red]
 ----
-m: #(Ab: 2 aB: 5 ab: 10)
+m: #[Ab: 2 aB: 5 ab: 10]
 m/ab: 3
 m
-== #(
+== #[
     Ab: 3
     aB: 5
     ab: 10
-)
+]
 
 put m 'aB "hello"
 m
-== #(
+== #[
     Ab: "hello"
     aB: 5
     ab: 10
-)
+]
 
 set/case 'm/aB 0
 m
-== #(
+== #[
     Ab: "hello"
     aB: 0
     ab: 10
-)
+]
 set/case 'm/ab 192.168.0.1
-== #(
+== #[
     Ab: "hello"
     aB: 0
     ab: 192.168.0.1
-)
+]
 
-m: #(%cities.red 10)
+m: #[%cities.red 10]
 extend m [%cities.red 99 %countries.red 7 %states.red 27]
 m
-== #(
+== #[
     %cities.red 99
     %countries.red 7
     %states.red 27
-)
+]
 ----
 
 == 删除键
@@ -216,21 +216,21 @@ m
 
 [source, red]
 ----
-m: #(a: 1 b 2 "c" 3 d: 99)
+m: #[a: 1 b 2 "c" 3 d: 99]
 m
-== #(
+== #[
     a: 1
     b: 2
     "c" 3
     d: 99
-)
+]
 m/b: none
 put m "c" none
-extend m [d #[none]]
+extend m [d #(none)]
 m
-== #(
+== #[
     a: 1
-)
+]
 ----
 
 [NOTE, caption=注意]
@@ -242,8 +242,8 @@ m
 
 [source, red]
 ----
-clear #(a 1 b 2 c 3)
-== #()
+clear #[a 1 b 2 c 3]
+== #[]
 ----
 
 == 反射
@@ -251,29 +251,29 @@ clear #(a 1 b 2 c 3)
 * `find` 检查一个键是否有定义在映射中，如果找到则返回 `true`，否则返回 `none`。
 
 [source, red]
-find #(a 123 b 456) 'b
+find #[a 123 b 456] 'b
 == true
 
 * `length?` 返回映射中键值对的个数。
 
 [source, red]
-length? #(a 123 b 456)
+length? #[a 123 b 456]
 == 2
 
 * `keys-of` 以区块形式返回映射中的键的列表（设词会被转换为单词）。
 
 [source, red]
-keys-of #(a: 123 b: 456)
+keys-of #[a: 123 b: 456]
 == [a b]
 
 * `values-of` 以区块形式返回映射中的值的列表。
 
 [source, red]
-values-of #(a: 123 b: 456)
+values-of #[a: 123 b: 456]
 == [123 456]
 
 * `body-of` 以区块形式返回映射中的所有键值对。
 
 [source, red]
-body-of #(a: 123 b: 456)
+body-of #[a: 123 b: 456]
 == [a: 123 b: 456]
