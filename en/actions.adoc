@@ -1,4 +1,5 @@
 = Predefined action! values
+:toc: left
 
 == Bitwise actions
 
