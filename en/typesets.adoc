@@ -1,5 +1,5 @@
 = Typesets
-:toc:
+:toc: left
 :numbered:
 
 == Abstract

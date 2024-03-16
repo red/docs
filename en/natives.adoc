@@ -1,6 +1,7 @@
-== Predefined native! values
+= Predefined native! values
+:toc: left
 
-=== all
+== all
 [source, red]
 ----
 USAGE:
@@ -25,7 +26,7 @@ ARGUMENTS:
      conds        [block!] 
 ----
 
-=== any
+== any
 [source, red]
 ----
 USAGE:
@@ -39,7 +40,7 @@ ARGUMENTS:
      conds        [block!] 
 ----
 
-=== arccosine
+== arccosine
 [source, red]
 ----
 USAGE:
@@ -59,7 +60,7 @@ RETURNS:
      [float!]
 ----
 
-=== arcsine
+== arcsine
 [source, red]
 ----
 USAGE:
@@ -79,7 +80,7 @@ RETURNS:
      [float!]
 ----
 
-=== arctangent
+== arctangent
 [source, red]
 ----
 USAGE:
@@ -99,7 +100,7 @@ RETURNS:
      [float!]
 ----
 
-=== arctangent2
+== arctangent2
 [source, red]
 ----
 USAGE:
@@ -120,7 +121,7 @@ RETURNS:
      [float!]
 ----
 
-=== as
+== as
 [source, red]
 ----
 USAGE:
@@ -135,7 +136,7 @@ ARGUMENTS:
      spec         [block! paren! any-path! any-string!] "The series to coerce."
 ----
 
-=== as-money
+== as-money
 [source, red]
 ----
 USAGE:
@@ -153,7 +154,7 @@ RETURNS:
      [money!]
 ----
 
-=== as-pair
+== as-pair
 [source, red]
 ----
 USAGE:
@@ -168,7 +169,7 @@ ARGUMENTS:
      y            [integer! float!] 
 ----
 
-=== bind
+== bind
 [source, red]
 ----
 USAGE:
@@ -189,7 +190,7 @@ RETURNS:
      [block! any-word!]
 ----
 
-=== break
+== break
 [source, red]
 ----
 USAGE:
@@ -204,7 +205,7 @@ REFINEMENTS:
         value        [any-type!] 
 ----
 
-=== browse
+== browse
 [source, red]
 ----
 USAGE:
@@ -218,7 +219,7 @@ ARGUMENTS:
      url          [url! file!] 
 ----
 
-=== call
+== call
 [source, red]
 ----
 USAGE:
@@ -248,7 +249,7 @@ RETURNS:
      [integer!]
 ----
 
-=== case
+== case
 [source, red]
 ----
 USAGE:
@@ -265,7 +266,7 @@ REFINEMENTS:
      /all         => Test all conditions, evaluating the block following each truthy condition.
 ----
 
-=== catch
+== catch
 [source, red]
 ----
 USAGE:
@@ -283,7 +284,7 @@ REFINEMENTS:
         word         [word! block!] "One or more names."
 ----
 
-=== checksum
+== checksum
 [source, red]
 ----
 USAGE:
@@ -305,7 +306,7 @@ RETURNS:
      [integer! binary!]
 ----
 
-=== compliment?
+== compliment?
 [source, red]
 ----
 USAGE:
@@ -319,7 +320,7 @@ ARGUMENTS:
      bits         [bitset!] 
 ----
 
-=== compose
+== compose
 [source, red]
 ----
 USAGE:
@@ -339,7 +340,7 @@ REFINEMENTS:
         out          [any-block!] "Target block for results, when /into is used."
 ----
 
-=== compress
+== compress
 [source, red]
 ----
 USAGE:
@@ -357,7 +358,7 @@ REFINEMENTS:
      /deflate     => Return DEFLATE format (RFC 1951).
 ----
 
-=== construct
+== construct
 [source, red]
 ----
 USAGE:
@@ -376,7 +377,7 @@ REFINEMENTS:
      /only        => Don't evaluate standard logic words.
 ----
 
-=== context?
+== context?
 [source, red]
 ----
 USAGE:
@@ -393,7 +394,7 @@ RETURNS:
      [object! function! none!]
 ----
 
-=== continue
+== continue
 [source, red]
 ----
 USAGE:
@@ -404,7 +405,7 @@ DESCRIPTION:
      CONTINUE is a native! value.
 ----
 
-=== cosine
+== cosine
 [source, red]
 ----
 USAGE:
@@ -424,7 +425,7 @@ RETURNS:
      [float!]
 ----
 
-=== debase
+== debase
 [source, red]
 ----
 USAGE:
@@ -442,7 +443,7 @@ REFINEMENTS:
         base-value   [integer!] "The base to convert from: 64, 58, 16, or 2."
 ----
 
-=== decompress
+== decompress
 [source, red]
 ----
 USAGE:
@@ -462,7 +463,7 @@ REFINEMENTS:
         size         [integer!] "Uncompressed data size. Use 0 if don't know."
 ----
 
-=== dehex
+== dehex
 [source, red]
 ----
 USAGE:
@@ -480,7 +481,7 @@ RETURNS:
      [string!]
 ----
 
-=== difference
+== difference
 [source, red]
 ----
 USAGE:
@@ -503,7 +504,7 @@ RETURNS:
      [block! hash! string! bitset! typeset! time!]
 ----
 
-=== do
+== do
 [source, red]
 ----
 USAGE:
@@ -525,7 +526,7 @@ REFINEMENTS:
 
 ----
 
-=== does
+== does
 [source, red]
 ----
 USAGE:
@@ -539,7 +540,7 @@ ARGUMENTS:
      body         [block!] 
 ----
 
-=== either
+== either
 [source, red]
 ----
 USAGE:
@@ -555,7 +556,7 @@ ARGUMENTS:
      false-blk    [block!] 
 ----
 
-=== enbase
+== enbase
 [source, red]
 ----
 USAGE:
@@ -573,7 +574,7 @@ REFINEMENTS:
         base-value   [integer!] "The base to convert from: 64, 58, 16, or 2."
 ----
 
-=== enhex
+== enhex
 [source, red]
 ----
 USAGE:
@@ -591,7 +592,7 @@ RETURNS:
      [string!]
 ----
 
-=== equal?
+== equal?
 [source, red]
 ----
 USAGE:
@@ -606,7 +607,7 @@ ARGUMENTS:
      value2       [any-type!] 
 ----
 
-=== exclude
+== exclude
 [source, red]
 ----
 USAGE:
@@ -629,7 +630,7 @@ RETURNS:
      [block! hash! string! bitset! typeset!]
 ----
 
-=== exit
+== exit
 [source, red]
 ----
 USAGE:
@@ -640,7 +641,7 @@ DESCRIPTION:
      EXIT is a native! value.
 ----
 
-=== exp
+== exp
 [source, red]
 ----
 USAGE:
@@ -657,7 +658,7 @@ RETURNS:
      [float!]
 ----
 
-=== extend
+== extend
 [source, red]
 ----
 USAGE:
@@ -675,7 +676,7 @@ REFINEMENTS:
      /case        => Use case-sensitive comparison.
 ----
 
-=== forall
+== forall
 [source, red]
 ----
 USAGE:
@@ -690,7 +691,7 @@ ARGUMENTS:
      body         [block!] 
 ----
 
-=== foreach
+== foreach
 [source, red]
 ----
 USAGE:
@@ -706,7 +707,7 @@ ARGUMENTS:
      body         [block!] 
 ----
 
-=== forever
+== forever
 [source, red]
 ----
 USAGE:
@@ -720,7 +721,7 @@ ARGUMENTS:
      body         [block!] 
 ----
 
-=== func
+== func
 [source, red]
 ----
 USAGE:
@@ -735,7 +736,7 @@ ARGUMENTS:
      body         [block!] 
 ----
 
-=== function
+== function
 [source, red]
 ----
 USAGE:
@@ -753,7 +754,7 @@ REFINEMENTS:
      /extern      => Exclude words that follow this refinement.
 ----
 
-=== get
+== get
 [source, red]
 ----
 USAGE:
@@ -774,7 +775,7 @@ RETURNS:
      [any-type!]
 ----
 
-=== get-env
+== get-env
 [source, red]
 ----
 USAGE:
@@ -791,7 +792,7 @@ RETURNS:
      [string! none!]
 ----
 
-=== greater-or-equal?
+== greater-or-equal?
 [source, red]
 ----
 USAGE:
@@ -806,7 +807,7 @@ ARGUMENTS:
      value2       [any-type!] 
 ----
 
-=== greater
+== greater
 [source, red]
 ----
 USAGE:
@@ -821,7 +822,7 @@ ARGUMENTS:
      value2       [any-type!] 
 ----
 
-=== has
+== has
 [source, red]
 ----
 USAGE:
@@ -836,7 +837,7 @@ ARGUMENTS:
      body         [block!] 
 ----
 
-=== if
+== if
 [source, red]
 ----
 USAGE:
@@ -851,7 +852,7 @@ ARGUMENTS:
      then-blk     [block!] 
 ----
 
-=== in
+== in
 [source, red]
 ----
 USAGE:
@@ -866,7 +867,7 @@ ARGUMENTS:
      word         [any-word!] 
 ----
 
-=== intersect
+== intersect
 [source, red]
 ----
 USAGE:
@@ -889,7 +890,7 @@ RETURNS:
      [block! hash! string! bitset! typeset!]
 ----
 
-=== lesser-or-equal?
+== lesser-or-equal?
 [source, red]
 ----
 USAGE:
@@ -904,7 +905,7 @@ ARGUMENTS:
      value2       [any-type!] 
 ----
 
-=== lesser?
+== lesser?
 [source, red]
 ----
 USAGE:
@@ -919,7 +920,7 @@ ARGUMENTS:
      value2       [any-type!] 
 ----
 
-=== list-env
+== list-env
 [source, red]
 ----
 USAGE:
@@ -933,7 +934,7 @@ RETURNS:
      [map!]
 ----
 
-=== log-10
+== log-10
 [source, red]
 ----
 USAGE:
@@ -950,7 +951,7 @@ RETURNS:
      [float!]
 ----
 
-=== log-2
+== log-2
 [source, red]
 ----
 USAGE:
@@ -967,7 +968,7 @@ RETURNS:
      [float!]
 ----
 
-=== log-e
+== log-e
 [source, red]
 ----
 USAGE:
@@ -984,7 +985,7 @@ RETURNS:
      [float!]
 ----
 
-=== loop
+== loop
 [source, red]
 ----
 USAGE:
@@ -999,7 +1000,7 @@ ARGUMENTS:
      body         [block!] 
 ----
 
-=== lowercase
+== lowercase
 [source, red]
 ----
 USAGE:
@@ -1020,7 +1021,7 @@ RETURNS:
      [any-string! char!]
 ----
 
-=== max
+== max
 [source, red]
 ----
 USAGE:
@@ -1035,7 +1036,7 @@ ARGUMENTS:
      value2       [scalar! series!] 
 ----
 
-=== min
+== min
 [source, red]
 ----
 USAGE:
@@ -1050,7 +1051,7 @@ ARGUMENTS:
      value2       [scalar! series!] 
 ----
 
-=== NaN?
+== NaN?
 [source, red]
 ----
 USAGE:
@@ -1067,7 +1068,7 @@ RETURNS:
      [logic!]
 ----
 
-=== negative?
+== negative?
 [source, red]
 ----
 USAGE:
@@ -1084,7 +1085,7 @@ RETURNS:
      [logic!]
 ----
 
-=== new-line
+== new-line
 [source, red]
 ----
 USAGE:
@@ -1107,7 +1108,7 @@ RETURNS:
      [any-list!]
 ----
 
-=== new-line?
+== new-line?
 [source, red]
 ----
 USAGE:
@@ -1124,7 +1125,7 @@ RETURNS:
      [any-list!]
 ----
 
-=== not
+== not
 [source, red]
 ----
 USAGE:
@@ -1138,7 +1139,7 @@ ARGUMENTS:
      value        [any-type!] 
 ----
 
-=== not-equal?
+== not-equal?
 [source, red]
 ----
 USAGE:
@@ -1153,7 +1154,7 @@ ARGUMENTS:
      value2       [any-type!] 
 ----
 
-=== now
+== now
 [source, red]
 ----
 USAGE:
@@ -1179,7 +1180,7 @@ RETURNS:
      [date! time! integer!]
 ----
 
-=== parse
+== parse
 [source, red]
 ----
 USAGE:
@@ -1204,7 +1205,7 @@ RETURNS:
      [logic! block!]
 ----
 
-=== positive?
+== positive?
 [source, red]
 ----
 USAGE:
@@ -1221,7 +1222,7 @@ RETURNS:
      [logic!]
 ----
 
-=== prin
+== prin
 [source, red]
 ----
 USAGE:
@@ -1235,7 +1236,7 @@ ARGUMENTS:
      value        [any-type!] 
 ----
 
-=== print
+== print
 [source, red]
 ----
 USAGE:
@@ -1249,7 +1250,7 @@ ARGUMENTS:
      value        [any-type!] 
 ----
 
-=== recycle
+== recycle
 [source, red]
 ----
 USAGE:
@@ -1264,7 +1265,7 @@ REFINEMENTS:
      /off         => Turns off garbage collector.
 ----
 
-=== reduce
+== reduce
 [source, red]
 ----
 USAGE:
@@ -1282,7 +1283,7 @@ REFINEMENTS:
         out          [any-block!] "Target block for results, when /into is used."
 ----
 
-=== remove-each
+== remove-each
 [source, red]
 ----
 USAGE:
@@ -1298,7 +1299,7 @@ ARGUMENTS:
      body         [block!] {Block to evaluate (return truthy value to remove).}
 ----
 
-=== repeat
+== repeat
 ----
 USAGE:
      REPEAT 'word value body
@@ -1313,7 +1314,7 @@ ARGUMENTS:
      body         [block!] 
 ----
 
-=== return
+== return
 [source, red]
 ----
 USAGE:
@@ -1327,7 +1328,7 @@ ARGUMENTS:
      value        [any-type!] 
 ----
 
-=== same?
+== same?
 [source, red]
 ----
 USAGE:
@@ -1342,7 +1343,7 @@ ARGUMENTS:
      value2       [any-type!] 
 ----
 
-=== set
+== set
 [source, red]
 ----
 USAGE:
@@ -1366,7 +1367,7 @@ RETURNS:
      [any-type!]
 ----
 
-=== set-env
+== set-env
 [source, red]
 ----
 USAGE:
@@ -1381,7 +1382,7 @@ ARGUMENTS:
      value        [string! none!] "Value to set, or NONE to unset it."
 ----
 
-=== shift
+== shift
 [source, red]
 ----
 USAGE:
@@ -1403,7 +1404,7 @@ RETURNS:
      [integer!]
 ----
 
-=== sign?
+== sign?
 [source, red]
 ----
 USAGE:
@@ -1420,7 +1421,7 @@ RETURNS:
      [integer!]
 ----
 
-=== sine
+== sine
 [source, red]
 ----
 USAGE:
@@ -1440,7 +1441,7 @@ RETURNS:
      [float!]
 ----
 
-=== size?
+== size?
 [source, red]
 ----
 USAGE:
@@ -1457,7 +1458,7 @@ RETURNS:
      [integer! none!]
 ----
 
-=== square-root
+== square-root
 [source, red]
 ----
 USAGE:
@@ -1474,7 +1475,7 @@ RETURNS:
      [float!]
 ----
 
-=== stats
+== stats
 [source, red]
 ----
 USAGE:
@@ -1492,7 +1493,7 @@ RETURNS:
      [integer! block!]
 ----
 
-=== strict-equal?
+== strict-equal?
 [source, red]
 ----
 USAGE:
@@ -1507,7 +1508,7 @@ ARGUMENTS:
      value2       [any-type!] 
 ----
 
-=== switch
+== switch
 [source, red]
 ----
 USAGE:
@@ -1526,7 +1527,7 @@ REFINEMENTS:
         case         [block!] "Default block to evaluate."
 ----
 
-=== tangent
+== tangent
 [source, red]
 ----
 USAGE:
@@ -1546,7 +1547,7 @@ RETURNS:
      [float!]
 ----
 
-=== throw
+== throw
 [source, red]
 ----
 USAGE:
@@ -1564,7 +1565,7 @@ REFINEMENTS:
         word         [word!] 
 ----
 
-=== to-hex
+== to-hex
 [source, red]
 ----
 USAGE:
@@ -1585,7 +1586,7 @@ RETURNS:
      [issue!]
 ----
 
-=== to-local-file
+== to-local-file
 [source, red]
 ----
 USAGE:
@@ -1605,7 +1606,7 @@ RETURNS:
      [string!]
 ----
 
-=== transcode
+== transcode
 [source, red]
 ----
 USAGE:
@@ -1634,7 +1635,7 @@ RETURNS:
      [block!]
 ----
 
-=== try
+== try
 [source, red]
 ----
 USAGE:
@@ -1651,7 +1652,7 @@ REFINEMENTS:
      /all         => Catch also BREAK, CONTINUE, RETURN, EXIT and THROW exceptions.
 ----
 
-=== type?
+== type?
 [source, red]
 ----
 USAGE:
@@ -1668,7 +1669,7 @@ REFINEMENTS:
      /word        => Return a word value, rather than a datatype value.
 ----
 
-=== union
+== union
 [source, red]
 ----
 USAGE:
@@ -1691,7 +1692,7 @@ RETURNS:
      [block! hash! string! bitset! typeset!]
 ----
 
-=== unique
+== unique
 [source, red]
 ----
 USAGE:
@@ -1713,7 +1714,7 @@ RETURNS:
      [block! hash! string!]
 ----
 
-=== unless
+== unless
 [source, red]
 ----
 USAGE:
@@ -1728,7 +1729,7 @@ ARGUMENTS:
      then-blk     [block!] 
 ----
 
-=== unset
+== unset
 [source, red]
 ----
 USAGE:
@@ -1742,7 +1743,7 @@ ARGUMENTS:
      word         [word! block!] "Word or block of words."
 ----
 
-=== until
+== until
 [source, red]
 ----
 USAGE:
@@ -1756,7 +1757,7 @@ ARGUMENTS:
      body         [block!] 
 ----
 
-=== uppercase
+== uppercase
 [source, red]
 ----
 USAGE:
@@ -1777,7 +1778,7 @@ RETURNS:
      [any-string! char!]
 ----
 
-=== value?
+== value?
 [source, red]
 ----
 USAGE:
@@ -1794,7 +1795,7 @@ RETURNS:
      [logic!]
 ----
 
-=== wait
+== wait
 [source, red]
 ----
 USAGE:
@@ -1811,7 +1812,7 @@ REFINEMENTS:
      /all         => Returns all events in a block.
 ----
 
-=== while
+== while
 [source, red]
 ----
 USAGE:
@@ -1826,22 +1827,7 @@ ARGUMENTS:
      body         [block!] "Block to evaluate on each iteration."
 ----
 
-=== while
-[source, red]
-----
-USAGE:
-     WHILE cond body
-
-DESCRIPTION: 
-     Evaluates body as long as condition block evaluates to truthy value. 
-     WHILE is a native! value.
-
-ARGUMENTS:
-     cond         [block!] "Condition block to evaluate on each iteration."
-     body         [block!] "Block to evaluate on each iteration."
-----
-
-=== zero?
+== zero?
 [source, red]
 ----
 USAGE:
