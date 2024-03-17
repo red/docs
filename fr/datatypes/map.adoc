@@ -90,10 +90,7 @@ get/case '<map>/<key>
 select/case <map> <key>
 ----
 
-Une tentative d'accéder à une clé non définie dans une map:
-
-* produira une erreur si la syntaxe par chemin est utilisée.
-* renverra la valeur `none` si `select` est utilisé.
+Une tentative d'accéder à une clé non définie dans une map renverra la valeur `none`.
 
 Exemples:
 

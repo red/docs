@@ -90,10 +90,7 @@ get/case '<map>/<key>
 select/case <map> <key>
 ----
 
-Trying to access a key not defined in a map will:
-
-* produce an error if the path syntax is used.
-* return a `none` value if `select` is used.
+Trying to access a key not defined in a map will return a `none` value.
 
 Examples:
 
