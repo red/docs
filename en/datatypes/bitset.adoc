@@ -120,7 +120,7 @@ charset: func ["Shortcut for `make bitset!`"
 
 [NOTE]
 ====
-Values in the charset spec must be listed in ascending order.
+Values in the charset range specs must be listed in ascending order.
 ====
 
 == Complements
