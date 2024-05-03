@@ -118,6 +118,11 @@ charset: func ["Shortcut for `make bitset!`"
 == make bitset! #{000000000000FFC0000000007FFFFFE0}  
 ```
 
+[NOTE]
+====
+Values in the charset spec must be listed in ascending order.
+====
+
 == Complements
 
 Complemented bitsets can be created by including the word `not` in a block spec.
