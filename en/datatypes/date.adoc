@@ -148,8 +148,14 @@ make date! [<day> <month> <year>]
 make date! [<year> <month> <day>]
 make date! [<day> <month> <year> <time>]
 make date! [<day> <month> <year> <time> <zone>]
+make date! [<day> <month> <year> <time> <zone-h>]
+make date! [<day> <month> <year> <time> <zone-h> <zone-m>]
+make date! [<day> <month> <year> <hour>]
+make date! [<day> <month> <year> <hour> <minute>]
 make date! [<day> <month> <year> <hour> <minute> <second>]
 make date! [<day> <month> <year> <hour> <minute> <second> <zone>]
+make date! [<day> <month> <year> <hour> <minute> <second> <zone-h>]
+make date! [<day> <month> <year> <hour> <minute> <second> <zone-h> <zone-m>]
 
 <year>   : integer! value
 <month>  : integer! value
