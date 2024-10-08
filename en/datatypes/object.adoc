@@ -139,7 +139,7 @@ Use `type?` to return the datatype of a given value.
 
 === Functions
 
-`any-object?`, `class-of`, `context`, `distance?`, `dump-face`, `face?`, `fetch-help`, `foreach-face`, `get-scroller`, `help`, `help-string`, `layout`, `metrics?`, `object`, `object?`, `offset-to-caret`, `offset-to-char`, `overlap?`, `parse-func-spec`, `react`, `react?`, `request-font`, `rtd-layout`, `save`, `set-flag`, `set-focus`, `show`, `size-text`, `stop-reactor`, `unview`, `view`
+`any-object?`, `class-of`, `construct`, `context`, `distance?`, `dump-face`, `face?`, `fetch-help`, `foreach-face`, `get-scroller`, `help`, `help-string`, `layout`, `metrics?`, `object`, `object?`, `offset-to-caret`, `offset-to-char`, `overlap?`, `parse-func-spec`, `react`, `react?`, `request-font`, `rtd-layout`, `save`, `set-flag`, `set-focus`, `show`, `size-text`, `stop-reactor`, `unview`, `view`
 
 === Natives
 
