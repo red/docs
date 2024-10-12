@@ -25,7 +25,7 @@ make map! <spec>
 <spec> : block of key/value pairs or an integer value
 ----
 
-If the _spec_ argument is an integer, an empty `map!` is created with a pre-allocated number of slots (usually in order to populate the map dynamically).
+If the _spec_ argument is an integer, an empty `map!` is created with a pre-allocated number of key-value slots.
 
 [NOTE]
 ====
@@ -60,7 +60,6 @@ If the key is of *any-word!* type, the key type is converted to *set-word!* in t
 ====
 
 Another way to create a new map is to use the `copy` action on an existing one.
-
 
 == Retrieving values
 
