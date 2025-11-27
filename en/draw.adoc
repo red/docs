@@ -204,7 +204,7 @@ image <image> <top-left> <top-right> <bottom-left> <bottom-right> <color> crop <
 
 *Description*
 
-Paints an image using the provided information for position and width. If the image has no positioning information provided, then the image is painted at 0x0 coordinates. A color value can be optionally provided, it will be used for transparency. 
+Paints an image using the provided information for position and width. If the image has no positioning information provided, then the image is painted at 0x0 coordinates. A color value can be optionally provided, it will be used for transparency.
 
 [NOTE]
 ====
@@ -212,6 +212,30 @@ Paints an image using the provided information for position and width. If the im
 * `border` optional mode is not yet implemented.It is unlikely that this feature will be supported:
 * You can't use paths to specify images. Processing paths is expensive, so it's a bad fit for the `draw` dialect that's optimized for performance. Use selective evaluation (`compose`) instead.
 ====
+
+=== Shadow 
+
+*Syntax*
+
+----
+shadow <offset>
+shadow <offset> <color> <inset>
+shadow <offset> <blur> <inset>
+shadow <offset> <blur> <color> <inset>
+shadow <offset> <blur> <spread> <inset>
+shadow <offset> <blur> <spread> <color> <inset>
+shadow off
+
+<offset> : offset of the shadow (pair!).
+<blur>   : (optional) the blur radius (integer!).
+<spread> : (optional) the spread radius (integer!).
+<color>  : (optional) starting angle in degrees (tuple! word!).
+<inset>  : (optional) `inset` (word!)
+----
+
+*Description*
+
+Draws one or more shadow effect(s) on all subsequent drawn shapes (applies to all drawing commands). Issuing several `shadow` commands will draw multiple shadows. If the command's argument is the `off` keyword, all shadow effects are turned off on subsequent drawn shapes. The optional `inset` argument will change the shadow from an outer shadow (outset) to an inner shadow.
 
 === Text 
 
