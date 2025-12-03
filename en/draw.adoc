@@ -72,6 +72,8 @@ box <top-left> <bottom-right> <corner>
 
 Draws a box using the top-left (first argument) and bottom-right (second argument) vertices. An optional radius can be provided for making round corners.
 
+NOTE: the corners rounding effect takes precedence over eventual `line-join` setting.
+
 === Polygon 
 
 *Syntax*
@@ -568,6 +570,8 @@ Sets the new line joining mode for line operations. Following values are accepte
 image::../images/line-join.png[Line-join,align="center"]
 
 NOTE: `miter-bevel` mode selects automatically one or the other joining mode depending on the miter length (See https://msdn.microsoft.com/en-us/library/windows/desktop/ms534148%28v=vs.85%29.aspx[this page] for detailed explanation) .
+
+NOTE: the rounding effect in `box` command takes precedence over eventual `line-join` setting.
 
 === Line-cap 
 
