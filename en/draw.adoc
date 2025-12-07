@@ -835,15 +835,16 @@ shape [<commands>]
 
 *Description*
 
-The `shape` keywords gives access to the Shape sub-dialect drawing commands. The specific features of this drawing dialect are: 
+The Shape dialect allows the creation of custom shapes (mirroring the way SVG paths work). The `shape` keywords gives access to the Shape sub-dialect drawing commands. The specific features of this drawing dialect are: 
 
 * the pen position for drawing can be moved independently of drawing operations.
 * each drawing command starts from the current pen position.
-* shapes are automatically closed (no need to draw the last stroke back to start position).
 * the generated shapes can be fed to `fill-pen` for simple or sophisticated filling.
 * coordinates can be absolute (like in Draw) or relative to the last pen position.
 
 NOTE: All drawing commands are using absolute coordinates by default, using the lit-word version of the command switches the command to relative coordinates.
+
+NOTE: There is no concept of "sub-shapes", the shape is considered as a unique shape even if parts of it are disjoined.
 
 === Move
 
@@ -993,27 +994,6 @@ Draws a horizontal line from the current pen position.
 *Description*
 
 Draws a vertical line from the current pen position.
-
-=== Line-width
-
-Same as the Draw dialect.
-
-=== Line-join
-
-Same as the Draw dialect.
-
-=== Line-cap
-
-Same as the Draw dialect.
-
-=== Pen
-
-Same as the Draw dialect.
-
-=== Fill-pen
-
-Same as the Draw dialect.
-
 
 == Default values 
 
