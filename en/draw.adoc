@@ -991,9 +991,18 @@ Draws a horizontal line from the current pen position.
 <length> : length of the line segment (integer! float!).
 ----
 
+=== Close
+
+*Syntax*
+
+----
+close
+----
+
 *Description*
 
-Draws a vertical line from the current pen position.
+Draws a closing line from latest pen position and latest `move` command or 0x0 position.
+
 
 == Default values 
 
