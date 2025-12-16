@@ -1,0 +1,227 @@
+= Ref! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+`ref!` values denote named references, such as social media handles or identifiers with an implied domain name.
+
+`ref!` datatype belongs to `any-string!` typeset while being conceptually close to an `issue!` datatype, differing from it in implementation (string-like vs. symbol-like) and offered set of trade-offs.
+
+== Creation
+
+`ref!` values can be created using literal syntax at load-time or constructed at run-time using either a `make` constructor or a `to` conversion.
+
+=== Literal syntax
+
+`ref!` values support only one unique literal form described below.
+
+*Syntax*
+
+----
+<ref> format : @<name>
+
+<name> : optional name of a referent
+----
+
+* `<name>` is zero or more characters other than `# $ ' , = > @ \ ^`;
+* literal form is terminated by one of the `" ( ) ; < [ ] { }` or blank (space, tab, `CR`, `LF`) characters.
+
+*Examples*
+
+----
+@
+@red_lang
+@dockimbel
+@§2.1
+----
+
+=== Runtime construction
+
+Rules of `ref!` construction using `make` are as follows:
+
+* `float!` and `integer!` specs denote the number of bytes to pre-allocate (`float!` is truncated);
+* construction from any other datatype is equivalent to `to` <<Conversion, conversion>>.
+
+*Examples*
+
+----
+make ref! 9.2
+== @
+
+make ref! 14
+== @
+
+make ref! <ref>
+== @ref
+
+make ref! [red (_lang)]
+== @red_lang
+
+make ref! #{76616C7565}
+== @value
+
+make ref! none
+** cannot make error
+
+make ref! #datatype
+== @datatype
+----
+
+== Conversion
+
+`ref!` supports a subset of datatype conversions valid for `any-string!` typeset.
+ In particular, when converting a given value to `ref!`, the transformations described below are applied, followed by the prepending of a `@` character.
+
+.Datatypes that can be converted to `ref!`.
+[options="header" cols="1,5"]
+|===
+| Datatype | Description
+
+| `any-string!`
+| Content is copied verbatim.
+
+| `any-list!`
+| `form` ed representations of contained values are catenated together, outer delimiters are discarded.
+
+| `binary!`
+| Converted to string form if it contains a valid UTF-8 encoding.
+
+| `none!`
+| Forbidden.
+
+| Other
+| Equivalent to `form`.
+
+|===
+
+*Examples*
+
+----
+to-ref [f /o #o]
+== @foo
+
+to-ref #{626172}
+== @bar
+
+to-ref <qux>
+== @qux
+
+to-ref none
+** cannot make error
+----
+
+Being a part of `any-string!` typeset, `ref!` values support many target types for conversion; their list and descriptions are given in the table below.
+
+.Datatypes that can be converted from `ref!`.
+[options="header" cols="3,9"]
+|===
+| Datatype | Description
+
+| `any-list!`
+| Equivalent to enclosing `ref!` value in a container of a given datatype.
+
+| `any-string!`
+| Content is copied verbatim.
+
+| `number!`, `money!`, `time!`, `tuple!`
+| In general equivalent to conversion to `load` if `ref!` represents a well-formed literal of a given datatype.
+
+More details on supported literal formats can be found in the respective documentation. 
+
+| `none!`, `unset!`
+| Value of a given datatype is returned (singleton).
+
+| `logic!`
+| Logical `true` is returned, following language semantics.
+
+| `binary!`
+| UTF-8 encoded binary representation is returned as a result.
+
+| `char!`
+| First character, if present, is extracted.
+
+| Other
+| Forbidden.
+
+|===
+
+*Examples*
+
+----
+to-paren @ABC
+== (@ABC)
+
+to-tag @tag
+== <tag>
+
+to-float @+88.7
+== 88.7
+
+to-tuple @1.3.3.7
+== 1.3.3.7
+
+to-none @whatever
+== none
+
+to-logic @this-ref-is-false
+== true
+
+to-binary @matrix
+== #{6D6174726978}
+
+to-char @
+** cannot make error
+
+to-char @.:
+== #"."
+----
+
+== Operations
+
+`ref!` supports all series actions (except for `put`, `sort` and `trim`) and all types of comparison in addition to `min` and `max`.
+
+NOTE: `form` applied to `ref!` value discards a `@` character, while `mold` preserves it.
+
+*Examples*
+
+----
+reverse @alucard
+== @dracula
+
+find @haystack "needle"
+== none
+
+find @haystack 'stack
+== @stack
+
+skip @stackoverflow 5
+== @overflow
+
+@this = "this"
+== true
+
+@this = @that
+== false
+
+@that == @that
+== true
+
+min @A @Z
+== @A
+
+form @content
+== "content"
+
+mold/part @catastrophy 4
+== "@cat"
+----
+
+== Other functions
+
+Functions related to `ref!` datatype but not described in the previous sections are listed below:
+
+* `ref?` predicate that returns `true` if a given value has a `ref!` datatype;
+* changing case: `uppercase` and `lowercase`;
+* conversion of URL-style percent-encoded content: `dehex`.
+

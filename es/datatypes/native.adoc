@@ -1,0 +1,41 @@
+= Native! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+`Native!` values represent external functions that are written in Red/System for the sake of performance or convenience (e.g. accessing OS APIs). Natives are used like normal function values.
+
+`Native!` is a member of the following typesets: `any-function!`, `default!`
+
+== Creation
+
+Native values cannot be created at runtime.
+
+== Conversions
+
+No conversions are supported for `native!` values.
+
+== Comparisons
+
+Native values can be compared for sameness and equality with `same?`, `==`, `equal?`, `strict-equal?`, `not-equal?`, `<>`.
+
+== Testing values
+
+Use `native?` to check if a value is of the `native!` datatype.
+
+```red
+>> native? :do
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? :do
+== native!
+```
+
+== Predefined words
+
+Predefined `native!` values can be viewed by typing `help native!` in the Red console.

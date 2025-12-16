@@ -1,6 +1,7 @@
 = Red Programming Language Documentation
 
 * link:en[English]
+* link:es[Español]
 * link:cs[Česky]
 * link:ja[日本語]
 * link:zh-hans[简体中文]

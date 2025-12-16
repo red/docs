@@ -1,0 +1,154 @@
+= Block! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+Blocks are used to represent collections of data or code that can be evaluated at any point in time. They are a type of `series!` with no restriction on the type of values that can be referenced.
+
+Values and expressions in a block are not evaluated by default:
+
+----
+>> my-block: [print reverse "Hello" 2 * 2 42]
+== [print reverse "Hello" 2 * 2 42]
+
+>> my-block
+== [print reverse "Hello" 2 * 2 42]
+----
+
+The `native!` values `do` and `reduce` are used to trigger the evaluation of expressions in a block.
+
+* `do` evaluates a block and returns the result of the last expression:
+
+----
+>> do my-block
+olleH
+== 42
+----
+
+* `reduce` returns a copy of a block, evaluating all expressions:
+
+----
+>> reduce my-block
+olleH
+== [unset 4 42]
+----
+
+`Block!` is a member of the following typesets: `any-block!`, `any-list!`, `series!`
+
+== Creation
+
+Block values can be created using literal syntax, or at runtime using a `make` constructor or a `to` conversion.
+
+== Literal syntax
+
+A collection of values delimited by opening and closing square brackets, separated by spaces.
+
+`[]`
+
+`[one 2 "three"]`
+
+`[print 1.23]`
+
+
+Blocks can extend over multiple lines, and can contain other blocks.
+
+----
+[one
+2
+"three"
+]
+
+[one 2 "three" [x foo 1.23]]
+----
+
+
+Extra lines, spaces, and tabs are allowed as long as they do not break up values.
+
+Correct: `[42 print "foo"]`
+
+Incorrect: `[42 pr int "foo"]`
+
+== Runtime creation
+
+* `Make`
++
+To create an empty block pre-allocated for 10 elements:
+
+----
+>> make block! 10
+== []
+----
+
+To create a block of 10 elements with initial values set to none:
+
+----
+>> append/dup make block! 10 none 10
+== [none none none none none none none none none none]
+----
+
+* `To`
++
+----
+>> to block! {one 2 "three" 4:00}
+== [one 2 "three" 4:00:00]
+
+>> to block! "foo 1.23 me@me.com"
+== [foo 1.23 me@me.com]
+
+>> to block! 42
+== [42]
+----
+
+== Accessing block elements
+
+A block can be indexed with _path notation_, using integer values for 1-based indexing:
+
+----
+>> b: [12 [34 56]]
+== [12 [34 56]]
+
+>> b/1
+== 12
+
+>> b/2/2
+== 56
+----
+
+A block (and any `any-list!` value for that matter) can also be treated as a key/value store;
+in such case the first occurence of value, supplied to path, will be searched, and the value
+that follows it will be returned.
+
+----
+>> b: [x 12 y [z 34]]
+== [x 12 y [z 34]]
+
+>> b/x
+== 12
+
+>> b/y
+== [z 34]
+
+>> b/y/z
+== 34
+----
+
+== Comparisons
+
+All comparators can be applied on `block!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+
+== Testing values
+
+Use `block?` to check if a value is of the `block!` datatype.
+
+----
+>> block? [42]
+== true
+----
+
+Use `type?` to return the datatype of a given value.
+
+----
+>> type? [42]
+== block!
+----

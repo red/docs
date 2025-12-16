@@ -1,0 +1,107 @@
+= Glossary
+Version: Draft 1
+
+[glossary]
+Action:: 
+  One of a fixed set of functions all datatypes may support. Not all datatypes support all actions.
+Actor::
+  
+all-word!::
+  
+any-block!::
+  
+any-function!::
+  
+any-list!::
+  
+any-object!::
+  
+any-path!::
+  
+any-string!::
+  
+any-type!::
+  
+any-word!::
+  
+Block::
+    
+Compiler::
+    
+Console::
+    
+Context::
+    
+Datatype::
+  Datatypes are the foundation of Red...
+default!::
+  
+Dialect::
+    An embedded DSL that shares the same syntax as the Red language.
+Domain Specific Language (DSL)::
+    A computer language specialized to a particular application domain. Sometimes called a (POL) Problem Oriented Language.
+Draw::
+    
+Event::
+    
+external!::
+  
+Face::
+    
+Facet::
+    
+immediate!::
+ 
+Op::
+    A function with an infix interface, where the first arg appears to the left of the function name. 
+internal!::
+  
+Interpreter::
+    
+Layout::
+    
+libRed::
+    
+List::
+  
+Mezzanine::
+  This is a Rebol term. It is used to mean a function written in Rebol (as opposed to being written in C) that is included in the standard distribution. A mezzanine in Red is a function written wholly in Red that is included in the standard distribution. Mezzanine functions do not require compilation.
+ 
+Module::
+    
+Native:: 
+  Functions written in Red/System, and exposed for use in Red.  
+Number::
+    
+number!::
+    
+Object::
+    
+Pane::
+    
+Path::
+  
+Pseudo-type::
+  An informal name for `typeset`.
+Routine::
+  A Red/System function written inline in Red.  
+Runtime::
+    
+scalar!::
+    
+Series::
+    
+series!::
+  
+String::
+    
+Typeset::   
+  Typesets are groupings of datatypes with shared characteristics...
+Toolchain::
+    
+VID::
+    
+View::
+    
+Word::
+    

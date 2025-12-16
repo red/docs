@@ -1,0 +1,83 @@
+= Routine! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+A `routine!` value represents a function with a given Red spec and Red/System body.
+
+The routine specification takes Red datatypes as arguments and return value, and automatically converts them to appropriate Red/System types when called.
+
+Red/System documentation can be found here: https://static.red-lang.org/red-system-specs.html
+
+`Routine!` is a member of the following typesets: `default!`, `any-function!`
+
+== Creation
+
+Routine values can be created using the built-in function `routine`.
+
+== Literal syntax
+
+```
+<routine> ::= routine <routine-spec> <routine-body>
+<routine-spec> ::= [<docstring>° <routine-argument>* <locals>° <routine-return>°]
+<routine-argument> ::= <word> <argument doc>° | <word> [<type-literal>] <argument-doc>°
+<locals> ::= /local <routine-argument>*
+<routine-return> ::= return: [<type-literal>]
+<type-literal> ::= any-type! | <type-name>
+<routine-body> ::= <block>
+```
+
+=== Runtime creation
+
+Routine values are not allowed in the interpreter. They must be preceded by a set-word and then compiled.
+
+```red
+Red []
+
+increment: routine [
+    n       [integer!]
+    return: [integer!]
+][
+    n + 1
+]
+```
+
+
+Argument types for routines are restricted to the single words `any-type!`, `integer!`, `float!`, `logic!`, or to a type that has a Red/System struct! alias defined here: https://github.com/red/red/blob/master/runtime/datatypes/structures.reds
+
+`Integer!`, `float!`, and `logic!` are not translated to a Red/System equivalent.
+
+*Example*
+
+`block!` is translated to the Red/System equivalent:
+
+```red
+red-block!: alias struct! [
+	header 	[integer!]								;-- cell header
+	head	[integer!]								;-- block's head index (zero-based)
+	node	[node!]									;-- series node pointer
+	extra	[integer!]								;-- (reserved for block-derivative types)
+]
+```
+
+== Testing values
+
+Use `routine?` to check if a value is of the `routine!` datatype.
+
+```red
+routine? :increment
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+type? :increment
+```
+
+
+== Predefined words
+
+=== Functions
+
+`routine`, `routine?`

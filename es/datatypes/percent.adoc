@@ -1,0 +1,81 @@
+= Percent! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+`Percent!` values represent link:float.adoc[float!] values expressed as percentages.
+
+`Percent!` is a member of the following typesets: `number!`, `scalar!`
+
+
+== Creation
+
+Percent values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+
+```red
+>> 100%
+== 100%
+
+>> 12.2%
+== 12.2%
+
+>> .76%
+== 0.76%
+```
+
+```red
+>> make percent! 1
+== 100%
+
+>> make percent! .1
+== 10%
+
+>> make percent! .01
+== 1%
+```
+
+```red
+>> to percent! 1
+== 100%
+
+>> to percent! .1
+== 10%
+
+>> to percent! .01
+== 1%
+```
+
+== Literal syntax
+
+```
+<percent-literal> ::= <integer-literal>% | <float-literal>% 
+```
+
+== Comparisons
+
+All comparators can be applied on `percent!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+
+
+== Testing values
+
+Use `percent?` to check if a value is of the `percent!` datatype.
+
+```red
+>> percent? 42%
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? 42%
+== percent!
+```
+
+== Predefined words
+
+=== Functions
+
+`percent?`, `to-percent`

@@ -1,0 +1,198 @@
+= Path! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+The `path!` datatype represents a series of values delimited by slashes (`/`). `Path!` is a type of `block!` that is limited in the types of values that it can contain. `Word!`, `integer!`, `get-word!`, and `paren!` values are supported. 
+
+`Path!` is a member of the following typesets: `any-block!`, `any-path!`, `series!`
+
+=== Path Variations
+
+|========================================================================
+|*Syntax*|*Datatype*|*Testing Values*|*Conversion*
+|foo/bar|`path!`|`path?`|`to path!`
+|foo/bar:|link:set-path.adoc[set-path!]|`set-path?`|`to set-path!`
+|:foo/bar|link:get-path.adoc[get-path!]|`get-path?`|`to get-path!`
+|'foo/bar|link:lit-path.adoc[lit-path!]|`lit-path?`|`to lit-path!`
+|========================================================================
+
+== Creation
+
+Path values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+
+```red
+>> 'foo/bar/baz 
+== foo/bar/baz
+```
+
+```red
+>> make path! [foo bar baz]
+== foo/bar/baz
+```
+
+You can create an empty path of a given size by supplying an integer value as an argument to `make`:
+
+```red
+>> make path! 10
+== 
+```
+
+`To` conversion:
+
+```red
+>> to path! "foo bar baz"
+== foo/bar/baz
+```
+
+[NOTE, caption=Caution]
+
+It is possible to create `path!` values programmatically that do not conform to the lexical rules of a literal path. 
+
+```red
+>> mold to path! [a #[b: 2] c 1.2 /z]
+== "a/#(^/    b: 2^/)/c/1.2//z"
+
+>> load mold to path! [a #[b: 2] c 1.2 /z]
+*** Syntax Error: invalid path! at "a/#(    b: 2)/c/1.2//z"
+*** Where: do
+*** Stack: load  
+```
+
+== Literal syntax
+
+BNF:
+
+```
+<path-literal> ::= <path-head>/<selector>
+<path-head>    ::= <word-literal> | <path-literal>
+<selector> ::= <integer> | <word-literal> | :<word-literal> | <paren>
+```
+
+Parse:
+
+```
+path: [word! some selector]
+selector: [#"/" [integer! | word! | get-word! | paren!]]
+```
+
+Path-head datatypes: link:word.adoc[word!], `path!`
+
+Selector datatypes: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
+
+== Evaluation Steps
+
+Paths lead to a nested value, or to a more specific behavior in a function call. They must start with a word, and the value that the word refers to determines how the path will be evaluated. 
+
+* If the value is a function, the following expressions in the path must be `word!` values. These words are treated as refinements in the function call. 
+
+```red
+>> append/only [42][foo]
+== [42 [foo]]
+```
+
+An error will be raised if no corresponding refinement exists in the function:
+
+```red
+>> append/xyz [42][foo]
+*** Script Error: append has no refinement called xyz
+*** Where: append
+*** Stack: 
+```
+
+[NOTE]
+Paths are an active type and will evaluate stored functions. `Op!` values are not currently evaluated.
+
+```red
+>> f: does [42]
+== func [][42]
+
+>> insert b: [] :f
+== []
+
+>> b/1
+== 42
+```
+
+* If the value is not a function, the following rules apply:
+
+** If the next expression in the path is a word, it is used to `select` from the path-head value. The path-head value must be of a type that supports `select` (e.g. a `block!`, `map!`, or `object!`).
+
+```red
+>> blk: [foo bar baz]
+== [foo bar baz]
+
+>> blk/bar
+== baz
+```
+
+If the selection does not exist in the path-head value, `select` will return `none`:
+
+```red
+>> blk/sheboygan
+== none
+```
+
+* Word! expressions in paths, after the first, are not evaluated. If you want to evaluate them, use `get-word!` or `paren!` in the path.
+
+```red
+>> selector: 'bar
+== bar
+
+>> my-block: [foo bar baz]
+== [foo bar baz]
+
+>> my-block/:selector
+== baz
+```
+
+```red
+>> my-block/('bar) 
+== baz
+```
+
+* If the next expression in the path is an integer, it is used to `pick` from the path-head value. The path-head value must be of a type that supports `pick` (e.g. a `series!`, `tuple!`, or `date!`).
+
+```red
+>> blk: [foo bar baz qux]
+== [foo bar baz qux]
+
+>> blk/3  ; pick from the third index of blk
+== baz
+```
+
+If the integer falls outside the bounds of the path-head value, `pick` returns `none`:
+
+```red
+>> length? blk
+== 4
+
+>> blk/7
+== none
+
+>> blk/-1
+== none
+```
+
+== Testing values
+
+Use `path?` to check if a value is of the `path!` datatype.
+
+```red
+>> path? 'foo/bar
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? 'foo/bar
+== path!
+```
+
+== Predefined words
+
+=== Functions
+
+`any-block?`, `any-path?`, `path?`, `series?`, `to-path`

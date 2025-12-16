@@ -1,0 +1,61 @@
+= Tipos de Datos
+
+Cada valor en Red es de un tipo de dato específico. Los valores de Red están fuertemente tipados, pero las variables (palabras usadas para referirse a valores), no lo están. Los valores son la base de Red. Donde la mayoría de los lenguajes tienen 6-8 tipos de datos base, Red tiene casi 50. Muchos de estos tienen formas literales únicas. Hay algunos detalles de implementación de los cuales, en su mayoría, no necesitas preocuparte. Por ejemplo, `[native! action! function! routine!]` son todos tipos de funciones, y puedes usarlos sin conocer el tipo.
+
+Para usar Red efectivamente, deberías familiarizarte con todos los tipos de datos disponibles.
+
+== Tabla de Tipos de Datos
+
+* `-` indica que no hay forma literal para un valor. Estos valores deben ser creados con `make` o con sintaxis de construcción (lo cual está por definirse para muchos tipos).
+
+[cols="20,60,90"]
+|========================================================================
+|*Tipo*|*Forma Literal*|*Descripción*
+|link:datatypes/action.adoc[action!]|`-`|"Métodos" de tipos de datos en el modelo OO interno de Red.
+|link:datatypes/binary.adoc[binary!]|`2#{11111111}`, `16#{2A}`, `64#{2AQQ}`|Serie de bytes.
+|link:datatypes/bitset.adoc[bitset!]|`-`|Array de bits usados para almacenar valores booleanos.
+|link:datatypes/block.adoc[block!]|`[]`, `[one 2 "three"]`, `[print 1.23]`|Colecciones de datos o código que pueden ser evaluadas en cualquier momento.
+|link:datatypes/char.adoc[char!]|`#"z"`, `#"^C"`, `#"^(esc)"`|Puntos de código Unicode.
+|link:datatypes/datatype.adoc[datatype!]|`bitset!`, `string!`, `time!`, `word!`|Tipos válidos predefinidos para Red.
+|link:datatypes/date.adoc[date!]|`1999-10-5`, `5/10/1999`, `5-October-1999`|Fechas de calendario, basadas en el calendario Gregoriano.
+|link:datatypes/email.adoc[email!]|`adams@fourty-two.net`, `gregg@red-lang.org`|Direcciones de correo electrónico expresadas directamente.
+|link:datatypes/error.adoc[error!]|`-`|Valores `object!` especializados usados para condiciones de error.
+|link:datatypes/event.adoc[event!]|`-`|Valores tipo objeto que representan actividad externa. Efectivamente solo-lectura.
+|link:datatypes/file.adoc[file!]|`%foo`, `%alongfilename`, `%/C/`|Nombres de archivos, o nombres de directorios y rutas.
+|link:datatypes/float.adoc[float!]|`+123.4`, `-123.4`, `0042.0`, `60'000'12'3.4`|Número de 64 bits positivo o negativo que contiene un punto decimal.
+|link:datatypes/function.adoc[function!]|`-`|Funciones definidas por el usuario.
+|link:datatypes/get-path.adoc[get-path!]|`:foo/bar/baz`|Valor `path!` no evaluado.
+|link:datatypes/get-word.adoc[get-word!]|`:foo`|Valor `word!` no evaluado.
+|link:datatypes/handle.adoc[handle!]|`-`|Enteros opacos usados para interactuar con el sistema operativo.
+|link:datatypes/hash.adoc[hash!]|`-`|Interfaz tipo bloque con búsquedas rápidas.
+|link:datatypes/image.adoc[image!]|`-`|Serie de valores RGBA que representan píxeles en imágenes 2D.
+|link:datatypes/integer.adoc[integer!]|`1234`, `+1234`, `-1234`, `60'000'000`|Números de 32 bits sin punto decimal.
+|link:datatypes/issue.adoc[issue!]|`#555-555-5555`, `#ABC-123-xyx`, `#ID`|Hashtags, palabras clave e identificadores que no contienen espacios.
+|link:datatypes/lit-path.adoc[lit-path!]|`'foo/bar/baz`|Valor `path!` no evaluado (citado).
+|link:datatypes/lit-word.adoc[lit-word!]|`'foo`|Valor `word!` no evaluado.
+|link:datatypes/logic.adoc[logic!]|`true` `false`, `yes` `no`, `on` `off`|Valores booleanos.
+|link:datatypes/map.adoc[map!]|`\#[ ]`, `#[a: 1 b: 2]`|Array asociativo de pares clave/valor.
+|link:datatypes/money.adoc[money!]|`$123`, `-USD$1'234.56789` | Cantidad de una moneda específica (o genérica).
+|link:datatypes/native.adoc[native!]|`-`|Funciones externas escritas en Red/System.
+|link:datatypes/none.adoc[none!]|`-`|Valor que no pertenece a ningún otro tipo de dato. Análogo a nil o nothing.
+|link:datatypes/object.adoc[object!]|`-`|Contextos nombrados o sin nombre que contienen pares `word: value`.
+|link:datatypes/op.adoc[op!]|`-`|Función infija de dos argumentos.
+|link:datatypes/pair.adoc[pair!]|`42x42`|Coordenadas bidimensionales.
+|link:datatypes/paren.adoc[paren!]|`(one 2 "three" 4:00:00)`|`block!` evaluado inmediatamente.
+|link:datatypes/path.adoc[path!]|`foo/bar/baz`|Serie de valores delimitados por barras `/`. Limitado en los tipos de valores que pueden contener.
+|link:datatypes/percent.adoc[percent!]|`100%`, `0.76%`|Valores float expresados como porcentajes.
+|link:datatypes/ref.adoc[ref!]|`@foo` | Denota una referencia por nombre.
+|link:datatypes/refinement.adoc[refinement!]|`/bar`|Valores simbólicos usados como modificadores de funciones o extensiones de objetos, archivos, urls o rutas.
+|link:datatypes/routine.adoc[routine!]|`-`|Función con especificación Red y cuerpo Red/System.
+|link:datatypes/set-path.adoc[set-path!]|`foo/bar/baz:`|Establece una "referencia contextual" (palabra en un contexto, índice en una serie, o referencia con clave en una serie o mapa).
+|link:datatypes/set-word.adoc[set-word!]|`foo:`|Establece una referencia a un valor.
+|link:datatypes/string.adoc[string!]|`"foo"`|Secuencia de puntos de código Unicode (valores `char!`) envueltos en comillas.
+|link:datatypes/tag.adoc[tag!]|`<foo>`|Etiquetas y elementos de lenguaje de marcado.
+|link:datatypes/time.adoc[time!]|`0:01:00`, `3:02:01`, `0:05:00.45`|Valores de tiempo expresados directamente. Horas, minutos, segundos y milisegundos.
+|link:datatypes/tuple.adoc[tuple!]|`1.2.3`, `255.255.255.0`, `1.2.3.4.5.6.7.8.9.10.11.12`|Valores de color RGB y RGBA, direcciones IP y números de versión. De tres a doce enteros positivos separados por puntos decimales.
+|link:datatypes/typeset.adoc[typeset!]|`series!`, `number!`|Conjunto, o colección, de valores `datatype!` predefinidos.
+|link:datatypes/unset.adoc[unset!]|`-`|Valor único que representa ningún valor utilizable.
+|link:datatypes/url.adoc[url!]|\https://www.red-lang.org, \ftp://localhost|Localizadores Uniformes de Recursos expresados directamente.
+|link:datatypes/vector.adoc[vector!]|`-`|Secuencia ordenada de valores de tipo idéntico (`char!`, `integer!`, `percent!`, `float!`).
+|link:datatypes/word.adoc[word!]|`foo`|Valor simbólico que puede ser usado como una variable. Identificador que se refiere a un valor en un contexto dado.
+|========================================================================

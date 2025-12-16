@@ -1,0 +1,79 @@
+= Datatype! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+`Datatype!` represents all valid types that are predefined for Red. 
+
+`Datatype!` is a member of the following typesets: `default!`, `immediate!`
+
+== Creation
+
+`Datatype!` values are predefined for Red and cannot be created.
+
+== Literal syntax
+
+By convention, literal syntax is a `word!` value ending with an exclamation mark `!`.
+
+Examples: `bitset!`, `string!`, `time!`, `word!`
+
+== Conversions
+
+A `datatype!` value can be converted to any value of the typeset `any-word!`, and to the datatypes `issue!`, `refinement!`.
+
+```red
+>> to word! string!
+== string!
+
+>> to set-word! string!
+== string!:
+
+>> to lit-word! string!
+== 'string!
+
+>> to get-word! string!
+== :string!
+
+>> to issue! string!
+== #string!
+
+>> to refinement! string!
+== /string!
+```
+
+== Comparisons
+
+No comparisons are supported for `datatype!`.
+
+== Testing values
+
+Use `datatype?` to check if a value is of the `datatype!` datatype.
+
+```red
+>> datatype? string!
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? string!
+== datatype!
+```
+
+== Predefined words
+
+The word `datatype!` refers to all predefined datatypes. Predefined datatypes can be viewed by typing `help datatype!` in the Red console.
+
+=== Actions
+
+`copy`
+
+=== Functions
+
+`to-get-word`, `to-issue`, `to-lit-word`, `to-refinement`, `to-set-word`, `to-word`
+
+=== Natives
+
+`as`

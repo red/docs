@@ -1,0 +1,100 @@
+= Lit-path! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+A `lit-path!` value is an unevaluated (quoted) path! value.
+
+A `lit-path!` value will decay into a path! value when evaluated, such as when entered into the Red REPL.
+
+Lit-path! is a member of the following typesets: `any-block!`, `any-path!`, `series!`
+
+== Creation
+
+Lit-path values can be created using `quote` and literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+
+```red
+>> 'foo/bar/baz
+== foo/bar/baz
+
+>> type? 'foo/bar/baz
+== path!
+```
+
+```red
+>> quote 'foo/bar/baz
+== 'foo/bar/baz
+
+>> type? quote 'foo/bar/baz
+== lit-path!
+```
+
+```red
+>> make lit-path! [foo bar baz]
+== 'foo/bar/baz
+```
+
+```red
+>> to lit-path! [foo bar baz]
+== 'foo/bar/baz
+```
+
+You can create an empty lit-path of a given size by supplying an integer value as an argument to `make`:
+
+```red
+>> make lit-path! 10
+== '
+```
+
+== Literal syntax
+
+BNF:
+
+```
+<lit-path-literal> ::= '<path-literal>
+
+<path-literal> ::= <path-head>/<selector>
+<path-head>    ::= <word-literal> | <path-literal>
+<selector> ::= <integer> | <word-literal> | :<word-literal> | <paren>
+```
+
+Parse:
+```
+lit-path: [lit-word! some selector]
+selector: [#"/" [integer! | word! | get-word! | paren!]]
+```
+
+Path-head datatypes: link:lit-word.adoc[lit-word!], link:lit-path.adoc[lit-path!]
+
+Selector datatypes: link:integer.adoc[integer!], link:word.adoc[word!], link:get-word.adoc[get-word!], link:paren.adoc[paren!]
+
+
+== Testing values
+
+Use `lit-path?` to check if a value is of the `lit-path!` datatype.
+
+```red
+>> lit-path? first ['foo/bar]
+== true
+
+>> lit-path? quote 'foo/bar
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? first ['foo/bar]
+== lit-path!
+
+>> type? quote 'foo/bar
+== lit-path!
+```
+
+== Predefined words
+
+=== Functions
+
+`lit-path?`, `to-lit-path`

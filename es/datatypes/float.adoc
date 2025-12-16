@@ -1,0 +1,237 @@
+= Float! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+A `float!` value represents a 64-bit positive or negative number that contains a decimal point.
+
+Float values span a range from `-1.7E+308` to `+1.7E+308` and return `#INF` on overflow.
+
+Dividing by zero returns `1.#NaN`.
+
+`Float!` is a member of the following typesets: `immediate!`, `number!`, `scalar!`
+
+== Creation
+
+Float values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+
+== Literal syntax
+
+Zero or more digits, followed by a dot `.`, followed by one or more digits.
+
+A comma can be used in place of the dot for the decimal point.
+
+`123,4`
+
+[NOTE, caption=Note]
+
+A formed value will normalize a decimal comma to a decimal point as the decimal mark.
+
+
+`+` or `-` immediately before the first digit indicates the positive or negative sign of the `float!`.
+
+`+123.4`
+
+`-123.4`
+
+Leading zeros are ignored.
+
+```red
+>> +00123.4
+== 123.4
+```
+
+Single quote `'` is used as a place value separator for large values, and can appear anywhere after the first digit.
+
+```red
+>> 60'000'12'3.4
+== 60000123.4
+```
+
+A single quote `'` immediately before or after the decimal point will raise an error.
+
+```red
+>> 60'000'123'.4
+*** Syntax Error: invalid integer! at "60'000'123'.4"
+*** Where: do
+*** Stack: load 
+```
+
+```red
+>> 60'000'123.'4
+*** Syntax Error: invalid integer! at "60'000'123.'4"
+*** Where: do
+*** Stack: load 
+```
+
+=== Runtime creation
+
+* Literal syntax
+
++
+
+```red
+>> 100.1
+== 100.1
+```
+
+* `make`
+
++
+
+```red
+>> make float! 1
+== 1.0
+```
+
+* `to`
+
++
+
+```red
+>> to float! 42
+== 42.0
+```
+
+[NOTE, caption=Note]
+
+When supplying a value of `any-list!` to `make` or `to`, the `any-list!` value must contain two numbers. The result will be `first-number * (10 ** second-number)`.
+
+* `block`
+
++
+
+```red
+>> make float! [2 3]
+== 2000.0
+
+>> to float! [4 2]
+== 400.0
+```
+
+* `paren`
+
++
+
+```red
+>> make float! quote (2 3)
+== 2000.0
+
+>> to float! quote (4 2)
+== 400.0
+```
+
+* `hash`
+
++
+
+```red
+>> list: make hash! [2 3]
+== make hash! [2 3]
+
+>> to float! list
+== 2000.0
+
+>> list: make hash! [4 2]
+== make hash! [4 2]
+
+>> to float! list
+== 400.0
+```
+
+== Comparisons
+
+All comparators can be applied on `float!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+
+
+== Conversion
+
+A float value can be converted at runtime to `any-list!`, `binary!`, `char!`, `integer!`, `string!`, or `time!` by using a `to` conversion. 
+
+An `any-list!` value must contain two numbers. The result will be `first-number * (10 ** second-number)`.
+
+```red
+>> to float! [4 2]  ; 4 * (power 10 2)
+== 400.0
+```
+
+* `to binary!` interprets the first 8 bytes as a floating point number. If there are fewer than 8 bytes, #{00} bytes are prepended.
+
++
+
+```red
+>> to binary! 42.3
+== #{4045266666666666}
+```
+
+* Digits after the decimal point will be discarded when converting to `char!` or `integer!`. No rounding will take place.
+
++
+
+```red
+>> to char! 123.4
+== #"{"
+
+>> to char! 123  ; equivalent, since .4 is discarded
+== #"{"
+
+>> to integer! 123.4
+== 123
+```
+
+* `to string!`
+
++
+
+```red
+>> to string! 123.4
+== "123.4"
+```
+
+* `to time!` returns the number of seconds and milliseconds.
+
++
+
+```red
+>> to time! 42.7
+== 0:00:42.7
+```
+
+If `float!` and `integer!` are combined in an expression, the result will be a `float!` value.
+
+```red
+>> 123.4 * 42
+== 5182.8
+```
+
+== Testing values
+
+Use `float?` to check if a value is of the `float!` datatype.
+
+```red
+>> float? 123.4
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? 123.4
+== float!
+```
+
+== Predefined words
+
+=== Functions
+
+`acos`, `asin`, `atan`, `atan2`, `cos`, `distance?`, `float?`, `sin`, `sqrt`, `tan`, `to-float`
+
+=== Natives
+
+`arccosine`, `arcsine`, `arctangent`, `arctangent2`, `as-pair`, `cosine`, `exp`, `log-10`, `log-2`, `log-e`, `sine`, `square-root`, `tangent`
+
+=== Operators
+
+`**`
