@@ -1,0 +1,105 @@
+= Typeset! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+A `typeset!` value represents a set, or collection, of predefined `datatype!` values.
+
+`Typeset!` is a member of the following typesets: `default!`, `immediate!`
+
+== Creation
+
+`Typeset!` values can be created by using a `make` constructor or `to` conversion.
+
+== Literal syntax
+
+By convention, literal syntax is a `word!` value ending with an exclamation mark `!`.
+
+Examples: `any-list!`, `number!`, `series!`
+
+=== Runtime creation
+
+```
+<typeset> ::= make typeset! [<typeset-element>*]
+<typeset-element> ::= <typeset-name> | <datatype-name>
+```
+
+*Examples*
+
+```red
+>> number!: make typeset! [integer! float! percent!]
+== make typeset! [integer! float! percent!]
+
+>> collection!: make typeset! [block! paren! map!]
+== make typeset! [block! paren! map!]
+
+>> to typeset! [integer! float! percent!]
+== make typeset! [integer! float! percent!]
+```
+
+Empty typesets are allowed.
+
+```red
+>> empty!: make typeset! []
+== make typeset! []
+```
+
+== Conversions
+
+A `typeset!` value can be converted to any value of the typeset `any-list!`
+
+```red
+>> to block! number!
+== [integer! float! percent!]
+
+>> to paren! number!
+== (integer! float! percent!)
+
+>> to hash! number!
+== make hash! [integer! float! percent!]
+```
+
+== Comparisons
+
+No comparisons are supported for `typeset!`.
+
+== Data set operations
+
+The following data set operations are possible with `typeset!` values: 
+
+`difference`, `exclude`, `intersect`, `union`
+
+== Testing values
+
+Use `typeset?` to check if a value is of the `typeset!` datatype.
+
+```red
+>> typeset? number!
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? number!
+== typeset!
+```
+
+== Predefined words
+
+=== Actions
+
+`and~`, `complement`, `find`, `or~`, `xor~`
+
+=== Functions
+
+`to-typeset`
+
+=== Natives
+
+`difference`, `exclude`, `intersect`, `union`
+
+=== Operators
+
+`and`, `or`, `xor`

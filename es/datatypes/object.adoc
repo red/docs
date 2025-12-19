@@ -1,0 +1,146 @@
+= Object! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+`Object!` values represent named or unnamed contexts that contain `word: value` pairs.
+
+`Object!` is a member of the following typesets: `any-object!`, `default!`
+
+== Creation
+
+Object values can be created at runtime by using a `make` constructor, or by using the functions `context`, `object` and `construct`.
+
+`Make object!` creates a new object, evaluating the spec block.
+
+The functions `context` and `object` invoke `make object!`.
+
+*Using make:*
+
+```red
+>> foo: make object! [x: "bar" y: "baz"]
+== make object! [
+    x: "bar"
+    y: "baz"
+]
+
+>> foo: make object! [x: "bar" y: ()]   ; spec block is evaluated
+*** Script Error: y: needs a value
+*** Where: y
+*** Stack:  
+```
+
+*Using context:*
+
+```red
+>> foo: context [x: "bar" y: "baz"]
+== make object! [
+    x: "bar"
+    y: "baz"
+]
+
+>> foo: context [x: "bar" y: ()]   ; spec block is evaluated
+*** Script Error: y: needs a value
+*** Where: y
+*** Stack: context  
+```
+
+*Using object:*
+
+```red
+>> foo: object [x: "bar" y: "baz"] 
+== make object! [
+    x: "bar"
+    y: "baz"
+]
+
+>> foo: object [x: "bar" y: ()]   ; spec block is evaluated
+*** Script Error: y: needs a value
+*** Where: y
+*** Stack: object  
+```
+
+If the argument to make is an `object!` value, a new object will be created using the argument as a prototype:
+
+```red
+>> foo: make object! [x: "bar" y: "baz"]
+== make object! [
+    x: "bar"
+    y: "baz"
+]
+
+>> bar: make foo [z: 42]
+== make object! [
+    x: "bar"
+    y: "baz"
+    z: 42
+]
+```
+
+The `construct` function creates an object without evaluating the spec block:
+
+```red
+>> foo: construct [x: "bar" y: ()]
+== make object! [
+    x: "bar"
+    y: ()
+]
+```
+
+If the `/with` refinement is used with `construct`, a new object will be created that is an extension of the supplied `object!` value:
+
+```red
+>> bar: construct/with [a: 42] foo
+== make object! [
+    x: "bar"
+    y: ()
+    a: 42
+]
+```
+
+== Literal syntax
+
+```
+<object> ::= make object! <object-spec> | object <object-spec> | context <object-spec> |
+             make <object> <object-spec>
+
+<object-spec> ::= <block>
+```
+
+== Comparisons
+
+All comparators can be applied on `object!`: `=, ==, <>, >, <, >=, &lt;=, =?`. 
+
+
+== Testing values
+
+Use `object?` to check if a value is of the `object!` datatype.
+
+```red
+>> object? foo
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? foo
+== object!
+```
+
+
+== Predefined words
+
+=== Actions
+
+`copy`, `find`, `put`, `select`
+
+=== Functions
+
+`any-object?`, `class-of`, `construct`, `context`, `distance?`, `dump-face`, `face?`, `fetch-help`, `foreach-face`, `get-scroller`, `help`, `help-string`, `layout`, `metrics?`, `object`, `object?`, `offset-to-caret`, `offset-to-char`, `overlap?`, `parse-func-spec`, `react`, `react?`, `request-font`, `rtd-layout`, `save`, `set-flag`, `set-focus`, `show`, `size-text`, `stop-reactor`, `unview`, `view`
+
+=== Natives
+
+`bind`, `context?`, `extend`, `in`, `set`

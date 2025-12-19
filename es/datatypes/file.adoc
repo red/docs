@@ -1,0 +1,84 @@
+= File! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+`File!` values represent file names or directory names and paths.
+
+`File!` is a member of the following typesets: `any-string!`, `series!`
+
+== Creation
+
+File values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+
+```red
+>> %file-literal
+== %file-literal
+```
+
+```red
+>> make file! 'foo
+== %foo
+
+>> make file! "bar"
+== %bar
+
+>> make file! [a long file name]
+== %alongfilename
+```
+
+```red
+>> to file! "foo"
+== %foo
+
+>> to file! [foo bar baz]
+== %foobarbaz
+```
+
+== Literal syntax
+
+A percent sign `%` followed by one or more non whitespace characters, or by zero or more characters enclosed in `" "`.
+Whitespace characters must be escaped with `%<hex>` values unless enclosed in `" "`.
+
+`%foo`
+
+`%foo%20bar`
+
+`%"foo bar baz"`
+
+== Comparisons
+
+All comparators can be applied on `file!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+
+
+== Testing values
+
+Use `file?` to check if a value is of the `file!` datatype.
+
+```red
+>> file? %foo
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? %bar
+== file!
+```
+
+
+== Predefined words
+
+=== Actions
+
+`delete`, `modify`, `query`, `read`, `write`
+
+=== Functions
+
+`cd`, `change-dir`, `clean-path`, `dir?`, `dirize`, `do-file`, `do-thru`, `exists-thru?`, `file?`, `flip-exe-flag`, `list-dir`, `load`, `load-thru`, `make-dir`, `normalize-dir`, `path-thru`, `read-thru`, `request-dir`, `request-file`, `save`, `split-path`, `suffix?`, `to-file`, `to-red-file` 
+
+=== Natives
+
+`browse`, `call`, `checksum`, `dehex`

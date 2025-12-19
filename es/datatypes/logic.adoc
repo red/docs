@@ -1,0 +1,87 @@
+= Logic! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+The `logic!` datatype represents the boolean values `true` and `false`.
+
+`Logic!` is a member of the following typesets: `immediate!`
+
+== Creation
+
+Logic values can be created using literal syntax, or at runtime using a `make` constructor, or a `to` conversion.
+
+`to logic!` converts to `true` for any value except for `false` and `none`.
+
+```red
+>> to logic! 'hi
+== true
+
+>> to logic! 1
+== true
+
+>> to logic! 0
+== true
+
+>> to logic! none
+== false
+
+>> to logic! false
+== false
+```
+
+[NOTE]
+For boolean logic support, `true` and `false` values can be constructed from 1 and 0 using `make`.
+
+```red
+>> make logic! 1
+== true
+
+>> make logic! 0
+== false
+
+>> make integer! true
+== 1
+
+>> make integer! false
+== 0
+```
+
+== Literal syntax
+
+The predefined words `true` and `false`, or the serialized syntax:
+
+```red
+#(true)
+
+#(false)
+```
+
+== Testing values
+
+Use `logic?` to check if a value is of the `logic!` datatype.
+
+```red
+>> logic? on
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? false
+== logic!
+```
+
+
+== Predefined words
+
+`true`, `yes`, `on`
+
+`false`, `no`, `off`
+
+=== Functions
+
+`to-logic`

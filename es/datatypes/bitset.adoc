@@ -1,0 +1,252 @@
+= Bitset! datatype
+:toc:
+:numbered:
+
+// Adapted from https://www.red-lang.org/2013/11/041-introducing-parse.html
+
+== Abstract
+
+A `bitset!` value is an array of bits that is used to store boolean values. Bitset indexing is zero based with `1` values representing `true`, and `0` values representing `false`.
+
+`Bitset!` is a member of the following typesets: `default!`
+
+== Creation
+
+Bitset! values can be created by using a `make` constructor, a `to` conversion, or by using the function `charset`.
+
+== Runtime creation
+
+// from https://github.com/meijeru/red.specs-public
+
+```
+<bitset> ::= make bitset! <binary> | make bitset! <bitset-spec> | to bitset! <bitset-spec> | charset <bitset-spec>
+<bitset-spec> ::= <integer> | <char> | <string> | [<bit-position>*] | [not <bit-position>*]
+<bit-position> ::= <integer> | <char> | <string> | <char> - <char> | <integer> - <integer>
+```
+
+* `Make`
++
+
+```red
+>> make bitset! 50    ; create an empty bitset with places for at least 50 bits
+== make bitset! #{00000000000000}
+```
++
+```red
+>> make bitset! #"A"   ; create a bitset with bit 65 set
+== make bitset! #{000000000000000040} 
+```
++
+```red
+>> make bitset! "hi"   ; create a bitset with bits 104 and 105 set
+== make bitset! #{00000000000000000000000000C0}
+```
++
+```red
+>> make bitset! [120 "hello" #"A"]   ; create and set bits using different value representations
+== make bitset! #{00000000000000004000000004890080}
+```
++
+Using ranges:
++
+Ranges are defined using two `char!`, or `integer!` values, separated by a dash word.
++
+```red
+>> make bitset! [#"0" - #"9" #"a" - #"z"]   ; create a bitset using ranges of values
+== make bitset! #{000000000000FFC0000000007FFFFFE0}
+```
++
+Bitsets are auto-sized to fit the specification values provided. The size is rounded to the upper byte bound.
+
+* `To`
++
+
+Converting a value to a bitset value using `to` is equivalent to using `make bitset!`, with the exception that `integer!` values are not allowed.
+
+```red
+>> to bitset! 42
+*** Script Error: cannot MAKE/TO bitset! from: 42
+*** Where: to
+*** Stack:  
+```
+
+```red
+>> to bitset! #"A"   ; a bitset with bit 65 set
+== make bitset! #{000000000000000040}
+```
+
+```red
+>> to bitset! "hi"   ; a bitset with bits 104 and 105 set
+== make bitset! #{00000000000000000000000000C0}
+```
+
+```red
+>> to bitset! [#"0" - #"9" #"a" - #"z"]   ; a bitset using ranges of values
+== make bitset! #{000000000000FFC0000000007FFFFFE0}
+```
+
+* `Charset`
++
+
+```red
+>> source charset
+charset: func ["Shortcut for `make bitset!`" 
+    spec [block! integer! char! string!]
+][
+    make bitset! spec
+]
+```
+
++
+
+`Charset` is a shortcut for `make bitset!`, with the exception that `binary!` values are not allowed.
++
+```red
+>> charset #{2A}
+*** Script Error: charset does not allow binary! for its spec argument
+*** Where: charset
+*** Stack: charset  
+```
++
+```red
+>> charset [120 "hello" #"A"]   ; create and set bits using different value representations
+== make bitset! #{00000000000000004000000004890080}
+```
++
+```red
+>> charset [#"0" - #"9" #"a" - #"z"]   ; create a bitset using ranges of values
+== make bitset! #{000000000000FFC0000000007FFFFFE0}  
+```
+
+[NOTE]
+====
+Values in the charset range specs must be listed in ascending order.
+====
+
+== Complements
+
+Complemented bitsets can be created by including the word `not` in a block spec.
+
+```red
+charset [not "0123456789"]   ; all characters except digits
+== make bitset! [not #{000000000000FFC0}]
+```
+
+The `action!` value `complement` can also be used to create complemented bitsets.
+
+```red
+>> make bitset! 42
+== make bitset! #{000000000000}
+
+>> complement make bitset! 42
+== make bitset! [not #{000000000000}]
+```
+
+`Complement?` can be used to check if a bitset has been complemented.
+
+```red
+>> b: complement make bitset! 42
+== make bitset! [not #{000000000000}]
+
+>> complement? b
+== true
+```
+
+[NOTE]
+In order to cope with the wide range of Unicode characters, bits outside of the bitsets are treated as virtual bits
+so they can be tested and set without errors. The bitset size will auto-expand according to the needs. 
+This is still not enough to deal with big ranges such as a bitset for example, `all Unicode characters except digits`. For such cases, it is possible to define a complemented bitset that represents the complement range of the specified bits. This makes it possible to have large bitsets while using only a tiny memory portion.
+
+== Path notation
+
+For reading and writing single bits, use path notation.
+
+```red
+bs: charset [#"a" - #"z"]
+bs/97     ; will return true
+bs/40     ; will return false
+bs/97: false
+bs/97     ; will return false
+```
+
+== Data Set operations
+
+The following data set operations are possible with bitset values: `difference`, `exclude`, `intersect`, `union`
+
+```red
+>> a: charset "abc"
+== make bitset! #{00000000000000000000000070}
+
+>> b: charset "ABC"
+== make bitset! #{000000000000000070}
+```
+
+```red
+>> difference a b
+== make bitset! #{00000000000000007000000070}
+```
+
+```red
+>> exclude a b
+== make bitset! #{00000000000000000000000070}
+```
+
+```red
+>> intersect a b
+== make bitset! #{00000000000000000000000000}
+```
+
+
+Using `union`, you can merge two bitsets together to form a new bitset.
+
+```
+digit: charset "0123456789"
+lower: charset [#"a" - #"z"]
+upper: charset [#"A" - #"Z"]
+
+letters:  union lower upper
+hexa:     union upper digit
+alphanum: union letters digit
+```
+
+== Comparisons
+
+All comparators can be applied on `bitset!`: `=, ==, <>, >, <, >=, &lt;=, =?`.
+
+== Testing values
+
+Use `bitset?` to check if a value is of the `bitset!` datatype.
+
+```red
+>> b: make bitset! 42
+== make bitset! #{000000000000}
+
+>> bitset? b
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? b
+== bitset!
+```
+
+
+== Predefined words
+
+=== Actions
+
+`and~`, `append`, `clear`, `complement`, `copy`, `find`, `insert`, `length?`, `negate`, `or~`, `pick`, `poke`, `remove`, `xor~`
+
+=== Functions
+
+`bitset?`, `charset`, `to-bitset`
+
+=== Natives
+
+`complement?`, `difference`, `exclude`, `intersect`, `union`
+
+=== Operators
+
+`and`, `or`, `xor`

@@ -1,0 +1,73 @@
+= Op! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+`Op!` values are infix functions of two arguments that are constructed from existing `native!`, `action!`, `function!`, or `routine!` values.
+
+`Op!` values take evaluation precedence over other function types and over `set-word!` values. They cannot contain optional arguments. 
+
+`Op!` is a member of the following typesets: `any-function!`, `default!`
+
+== Creation
+
+Op values can be created at runtime by using a `make` constructor.
+
+=== Runtime creation
+
+```
+<op> ::= make op! <prefix-function>
+```
+
+*Examples*
+
+Logical `or` and `and` operators.
+
+```red
+>> ||: make op! func [a b][any [a b]]  ; return the first value that is true
+== make op! [[a b]]
+
+>> 1 || 2
+== 1
+
+>> false || 2
+== 2
+
+>> &&: make op! func [a b][all [a b]]  ; if all values are true, return the last value; else return none
+== make op! [[a b]]
+
+>> 1 && 2
+== 2
+
+>> false && 2
+== none
+```
+
+== Conversions
+
+No conversions are supported for `op!` values.
+
+== Comparisons
+
+Op values can be compared for sameness and equality with `same?`, `==`, `equal?`, `strict-equal?`, `not-equal?`, `<>`.
+
+== Testing values
+
+Use `op?` to check if a value is of the `op!` datatype.
+
+```red
+>> op? :&&
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? :||
+== op!
+```
+
+== Predefined words
+
+`Op!` values can be viewed by typing `help op!` in the Red console.

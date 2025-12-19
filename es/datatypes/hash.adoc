@@ -1,0 +1,140 @@
+= Hash! datatype
+:toc:
+:numbered:
+
+// partly adapted from https://www.red-lang.org/search/label/hash
+
+== Abstract
+
+A `hash!` value provides a block-like interface with fast lookups.
+
+The underlying hashing function is a custom implementation of the link:https://github.com/aappleby/smhasher[MurmurHash3] algorithm. 
+
+`Hash!` is a member of the following typesets: `default!`, `series!`, `any-block!`, `any-list!`
+
+== Creation
+
+Hash values can be created at runtime by using a `make` constructor or a `to` conversion.
+
+=== Runtime creation
+
+```red
+>> list: make hash! [a 123 "hello" b c 789]
+== make hash! [a 123 "hello" b c 789]
+```
+
+```red
+>> list: to hash! [a 123 "hello" b c 789]
+== make hash! [a 123 "hello" b c 789]
+```
+
+== Accessing `hash!` elements
+
+=== Using `path!` notation
+
+Getting a value, using `c` as a key.
+
+```red
+>> list/c
+== 789
+```
+
+Setting a value, using `c` as a key.
+
+```red
+>> list/c: 42
+== 42
+
+>> list
+== make hash! [a 123 "hello" b c 42]
+```
+
+=== Using `find`
+
+```red
+>> find list 'b
+== make hash! [b c 42]
+```
+
+=== Using `select`
+
+```red
+>> dict: make hash! [a 123 b 456 c 789]
+== make hash! [a 123 b 456 c 789]
+
+>> select dict 'c
+== 789
+
+>> dict: make hash! [2 123 4 456 6 2 8 789]
+== make hash! [2 123 4 456 6 2 8 789]
+
+>> select/skip dict 2 2
+== 123
+```
+
+== Data set operations
+
+The following data set operations are possible with hash values: `difference`, `exclude`, `intersect`, `union`, `unique`
+
+```red
+>> dict1: make hash! [a 123 b 456 c 789]
+== make hash! [a 123 b 456 c 789]
+
+>> dict2: make hash! [2 123 4 456 6 2 8 789]
+== make hash! [2 123 4 456 6 2 8 789]
+```
+
+```red
+>> difference dict1 dict2
+== make hash! [a b c 2 4 6 8]
+```
+
+```red
+>> exclude dict1 dict2
+== make hash! [a b c]
+```
+
+```red
+>> intersect dict1 dict2
+== make hash! [123 456 789]
+```
+
+```red
+>> union dict1 dict2
+== make hash! [a 123 b 456 c 789 2 4 6 8]
+```
+
+```red
+>> unique dict2
+== make hash! [2 123 4 456 6 8 789]
+```
+
+== Comparisons
+
+All comparators can be applied on `hash!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+
+== Testing values
+
+Use `hash?` to check if a value is of the `hash!` datatype.
+
+```red
+>> hash? dict1
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? dict2
+== hash!
+```
+
+== Predefined words
+
+=== Functions
+
+`average`, `hash?`, `path-thru`, `sum`, `to-hash`
+
+=== Natives
+
+`checksum`, `difference`, `exclude`, `extend`, `intersect`, `union`, `unique`

@@ -1,0 +1,129 @@
+= String! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+A `string!` value is a sequence of Unicode code points, or link:char.adoc[char!] values.
+
+`String!` is a member of the following typesets: `any-string!`, `default!`, `series!`
+
+== Creation
+
+String values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+
+```red
+>> s: make string! 100
+== ""
+```
+
+```red
+>> to string! 'foo
+== "foo"
+
+>> to string! [bar]
+== "bar"
+
+>> to string! 42
+== "42"
+```
+
+The `native!` values `form` and `mold` can also be used to convert a value to a user-friendly string or a source format string, respectively.
+
+```red
+>> form 'foo
+== "foo"
+```
+
+```red
+>> mold 'bar
+== "bar"
+```
+
+[NOTE, caption=Note]
+
+Attempting to convert `none` by `to` conversion raises an error.
+
+== Literal syntax
+
+Single-line string:
+
+Zero or more characters enclosed in quotation marks.
+
+`"foo"`
+
+Multi-line string:
+
+Zero or more characters enclosed in opening and closing braces.
+
+`{foo}` 
+
+A single-line string cannot contain unescaped new-line characters.
+
+```red
+>> cr
+== #"^M"
+
+>> lf
+== #"^/"
+
+>> crlf
+== "^M^/"
+```
+
+A multi-line string can contain new-line characters, quotation marks, and paired braces. Unpaired braces must be escaped by preceding the character with `^`, e.g. `{foo^{}`.
+
+Raw string:
+
+This syntax allows to input literal strings without the need to escape any of its characters. `^` and curly braces are treated as regular characters.
+
+`%{...}%`
+
+`%%{...}%%`
+
+`%%%{...}%%%`
+
+and so on...
+
+Any number of `%` character can be used in order to make the ending sequence not collide with string's content. The leading count of `%` must match the trailing count, otherwise a syntax error will occur on loading.
+
+
+== Comparisons
+
+All comparators can be applied on `string!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+
+
+== Testing values
+
+Use `string?` to check if a value is of the `string!` datatype.
+
+```red
+>> string? "foo"
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? "foo"
+== string!
+```
+
+== Predefined words
+
+=== Actions
+
+`find`, `form`, `mold`, `pick`, `poke`, `put`, `read`, `select`, `trim`
+
+=== Functions
+
+`a-an`, `any-string?`, `ask`, `charset`, `clean-path`, `dirize`, `ellipsize-at`, `help-string`, `input`, `load`, `pad`, `string?`, `to-string`
+
+=== Natives
+
+`as`, `call`, `checksum`, `debase`, `dehex`, `difference`, `do`, `enbase`, `exclude`, `get-env`, `intersect`, `lowercase`, `parse`, `set-env`, `to-local-file`, `union`, `unique`, `uppercase`
+
+=== Routines
+
+`set-current-dir`, `write-clipboard`, `write-stdout`

@@ -1,0 +1,141 @@
+= Pair! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+The `pair!` datatype is used to represent two-dimensional coordinates.
+
+`Pair!` is a member of the following typesets: `immediate!`, `scalar!`
+
+== Literal syntax
+
+A pair is written as two integers separated by an `x`.
+
+
+`1024×768`
+
+`-42x42`
+
+
+== Creation
+
+Pair values can be created using literal syntax, or at runtime by using a `make` constructor, `to` conversion, or `as-pair` native.
+
+```red
+>> make pair! [20 30]
+== 20x30
+
+>> make pair! 42
+== 42x42
+```
+
+
+```red
+>> to pair! [20 30]
+== 20x30
+
+>> to pair! 42
+== 42x42
+
+>> to pair! "42x42"
+== 42x42
+```
+
+`as-pair` takes an `x` and `y` argument of type `integer!` or `float!`. Float values will be truncated.
+
+```red
+>> as-pair 20 30
+== 20x30
+
+>> as-pair 1.23 42
+== 1x42
+```
+
+== Comparisons
+
+All comparators can be applied on `pair!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+
+When comparing `pair!` values, they are compared by their second parts, `/y`, and if it's equal in both numbers, they are compared by their first parts, `/x`. If both parts are the same, `pair!`s are equal. For example:
+
+```red
+>> 5x3 = 5x3
+== true
+
+>> 0x0 < 1x1
+== true
+
+>> 999x999 < 1x1
+== false
+
+>> 999x0 < 1x1
+== true
+
+>> sort [0x1 1x0 0x2 2x0 1x1 2x2]
+== [1x0 2x0 0x1 1x1 0x2 2x2]
+```
+
+== Arithmetic
+
+`+`, `-`, `*`, `/`, `%`, `//`, `add`, `subtract`,  `multiply`, `divide`, `remainder`, and `mod` can be used with `pair!` values.
+
+
+== Refinements
+
+Pairs support the refinements `/x` and `/y` for viewing and modifying coordinates.
+
+```red
+>> my-pair: 1024x768
+== 1024x768
+
+>> my-pair/x
+== 1024
+
+>> my-pair/y
+== 768
+
+>> my-pair/y: 42
+== 42
+
+>> my-pair
+== 1024x42
+```
+
+== Testing values
+
+Use `pair?` to check if a value is of the `pair!` datatype.
+
+```red
+>> pair? 42x42
+== true
+
+>> pair? 42
+== false
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? 42x42
+== pair!
+```
+
+== Predefined words
+
+=== Actions
+
+`absolute`, `add`, `and~`, `at`, `copy`, `divide`, `multiply`, `negate`, `or~`, `pick`, `remainder`, `reverse`, `round`, `skip`, `subtract`, `xor~`
+
+=== Functions
+
+`caret-to-offset`, `draw`, `first`, `make-face`, `metrics?`, `mod`, `modulo`, `offset-to-caret`, `offset-to-char`, `pair?`, `second`, `size-text`, `to-pair`, `within?`
+
+=== Natives
+
+`as-pair`, `case`, `extend`, `zero?`
+
+
+=== Operators
+
+`%`, `*`, `+`, `-`, `/`, `//`, `and`, `or`, `xor`

@@ -1,0 +1,60 @@
+= None! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+None represents "no useful value" or "no result". It's used as a sentinel/placeholder/dummy value, for three-valued logic, and as a function result to indicate failure.
+
+`None!` is a member of the following typesets: `immediate!`
+
+== Creation
+
+None values can be created using literal syntax, or at runtime using a `make` constructor, or a `to` conversion.
+
+----
+>> make none! 'x
+== none
+
+>> to none! 42
+== none
+----
+
+== Literal syntax
+
+The predefined word `none` or the serialized syntax:
+----
+#(none)
+----
+
+== Testing values
+
+Use `none?` to check if a value is of the `none!` datatype.
+
+----
+>> none? 1
+== false
+
+>> none? true
+== false
+
+>> none? none
+== true
+----
+
+Use `type?` to return the datatype of a given value.
+
+----
+>> type? none
+== none!
+----
+
+== Predefined words
+
+=== Functions
+
+`to-none`
+
+
+

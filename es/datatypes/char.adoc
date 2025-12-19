@@ -1,0 +1,221 @@
+= Char! datatype
+Version: Draft 3
+:toc:
+:numbered:
+
+== Abstract
+
+`Char!` values represent a Unicode code point. They are integer numbers in the range hexadecimal 00 to hexadecimal 10FFFF. (0 to 1,114,111 in decimal.) 
+
+`Char!` is a member of the following typesets: `immediate!`, `scalar!`
+
+== Characteristics
+
+'Char!' values are 'direct', 'atomic' and 'passive'.
+
+NOTE: This assumes that Type Characteristics have been defined earlier in the document.
+
+== Creation
+
+`Char!` values can be created using literal syntax or at runtime by using a 'make' constructor, a `to` conversion or using one of the many functions that act on `string!` values to extract a `char!` value.
+
+=== Literal syntax
+
+The basic literal formats for `char!` values is:
+
+----
+#"<character>"
+<character> : a single Unicode codepoint (usually entered via keystrokes)
+----
+
+The literal syntax also supports "escaped" characters for control characters and those characters which are not easily typed.
+
+The escape character in Red is '^' - codepoint U+005E. As a result, the ^ character itself must be escaped. The string literal for codepoint is #"^^" not #"^". In fact, #"^" is invalid.
+
+There are three forms of escaped character literals in Red, one for numeric codepoints, another for named characters and the other for "control" characters.
+
+The codepoint form is:
+
+----
+#"^(<codepoint>)"
+<codepoint> : a valid hexadecimal e.g. 00, ABCD, 10FFFFF
+----
+
+The "control" characters form is:
+
+----
+#"^<cc>"
+<cc> : A single character from the set - A-Z, [, \, ], _
+----
+
+.Escaped Control Characters
+[cols="2*"]
+|===
+
+|Escaped Character
+|Codepoint
+
+|#"^A" - #"^Z"
+|U+0001 - U+001A.
+
+|#"^["
+|U+001B
+
+|#"^\"
+|U+001C
+
+|#"^]"
+|U+001D
+
+|#"^_"
+|U+001F
+
+|===
+
+The "named" characters form is:
+
+----
+#"^(<name>)" or #"^<symbol>" 
+<name> : a name from Named Escaped Characters table
+<symbol> : a symbol from from Named Escaped Characters table
+----
+
+.Named Escaped Characters
+[cols="4*"]
+|===
+
+|name
+|symbol
+|character
+|codepoint
+
+|#"^(null)    
+|#"^@"    
+|null                
+|U+0000
+
+|#"^(back)"   
+|
+|backspace           
+|U+0008
+
+|#"^(tab)"    
+|#"^-" 
+|horizontal tab      
+|U+0009
+
+|#"^(line)"    
+|#"^/"   
+|line feed           
+|U+000A 
+
+|#"^(page)"   
+|
+|form feed           
+|U+000C
+
+|#"^(esc)"    
+|
+|escape              
+|U+001B
+
+|#"^(del)"    
+|#"^~"   
+|delete              
+|U+007F
+
+|
+|#"^""                      
+|" - double quote    
+|U+0022
+
+|
+|#"^^"
+|^ - caret           
+|U+005E
+
+|===
+
+
+== Comparisons
+
+All comparators can be applied on 'char!' values: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, `max` and `sort` are supported. Comparison of `char!` values is case sensitive.
+
+*Examples*
+
+----
+#"a" = #"A"
+== false
+#"a" =? #"a"
+== true
+max #"a" #"A"
+== #"a"
+sort [#"c" #"b" #"d" #"a"]
+== [#"a" #"b" #"c" #"d"]
+----
+
+
+== Arithmetic
+
+The full range of mathematical functions can be used with `char!` values. A `Math Error` is raised if the result of the arithmetic falls outside of the range 00 - 10FFFF (hexadecimal).
+
+*Examples*
+
+```red
+>> #"a" + 1
+== #"b"
+
+>> #"a" - 32
+== #"A"
+
+>> #"a" * 256
+== #"愀"
+
+>> #"a" - 98
+*** Math Error: math or number overflow
+*** Where: -
+*** Stack:  
+```
+
+[NOTE] 
+Arithmetic results will be cast to the type of the first argument for `char!` values.
+
+```red
+>> #"a" + 1
+== #"b"
+
+>> 1 + #"a"
+== 98
+
+>> #"a" - 32
+== #"A"
+
+>> 32 - #"a"
+== -65
+
+>> 256.00 * #"a"
+== 24832.0
+```
+
+== Predefined words
+
+----
+null             #"^@"
+newline          #"^/"
+slash            #"/"
+dbl-quote        #"^""
+space            #" "
+lf               #"^/"
+tab              #"^-"
+CR               #"^M"
+dot              #"."
+escape           #"^["
+sp               #" "
+comma            #","
+----
+
+== Other char-related functions
+
+Lowercase, Uppercase
+
+

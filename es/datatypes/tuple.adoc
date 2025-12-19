@@ -1,0 +1,105 @@
+= Tuple! datatype
+:toc:
+:numbered:
+
+
+== Abstract
+
+
+The `tuple!` datatype is used to represent rgb and rgba color values, ip addresses, and version numbers.
+
+A `tuple!` must have at least two decimal points and the digits must be positive integers in the range `0 - 255`.
+
+`Tuple!` is a member of the following typesets: `immediate!`, `scalar!`
+
+== Literal syntax
+
+
+A sequence of three to twelve positive integers separated by decimal points.
+
+`1.2.3`
+
+`255.255.255.0`
+
+`1.2.3.4.5.6.7.8.9.10.11.12`
+
+
+== Creation
+
+
+Tuple values can be created using literal syntax, or at runtime by using a `make` constructor or `to` conversion.
+
+```red
+>> make tuple! [1 2 3]
+== 1.2.3
+```
+
+```red
+>> to tuple! [42]
+== 42.0.0
+
+>> to tuple! [1 2 3]
+== 1.2.3
+```
+
+== Comparisons
+
+All comparators can be applied on `tuple!`: `=, ==, <>, >, <, >=, &lt;=, =?`. In addition, `min`, and `max` are also supported.
+
+`min` and `max` when applied to two `tuple!` arguments require tuples of the same size.
+
+```red
+>> min 1.2.3 4.5.6
+== 1.2.3
+
+>> max 1.2.3 4.5.6
+== 4.5.6
+```
+
+== Arithmetic
+
+`+`, `-`, `*`, `/`, `%`, `//`, `add`, `subtract`,  `multiply`, `divide`, `remainder`, and `mod` can be used with  `tuple!` values. 
+
+If the result of the arithmetic falls outside of the range `0 - 255`, the result will be cut off at `0` or `255`.
+
+```red
+>> gray
+== 128.128.128
+
+>> gray * 2
+== 255.255.255
+```
+
+== Testing values
+
+Use `tuple?` to check if a value is of the `tuple!` datatype.
+
+```red
+>> tuple? 1.2.3
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? 1.2.3
+== tuple!
+```
+
+== Predefined words
+
+=== Actions
+
+`add`, `subtract`, `multiply`, `divide`, `remainder`, `and~`, `or~`, `xor~`, `length?`, `pick`, `reverse`
+
+=== Functions
+
+`first`, `second`, `third`, `fourth`, `fifth`, `to-tuple`, `tuple?`, `mod`, `modulo`
+
+=== Natives
+
+`zero?`
+
+=== Operators
+
+`+`, `-`, `*`, `/`, `%`, `and`, `or`, `xor`

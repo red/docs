@@ -1,0 +1,75 @@
+= Issue! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+`Issue!` values are used to represent hashtags, keywords, and identifiers (like serial numbers) that don’t contain spaces.
+
+`Issue!` is a member of the following typesets: `all-word!`, `immediate!`
+
+
+== Creation
+
+Issue values can be created using literal syntax, or at runtime by using a `to` conversion.
+
+----
+>> to issue! "123.42-xxx"
+== #123.42-xxx
+
+>> to issue! #"R"
+== #R
+----
+
+
+== Literal syntax
+
+A pound sign `#` followed by a sequence of characters. `Issue!` values are terminated by whitespace, semicolon, or a delimiter marking the start of a new value (e.g. `[` starting a block).
+
+`#555-555-5555`
+
+`#CODE`1.2.3--42-8`
+
+`#ABC-123-xyx`
+
+
+== Comparisons
+
+All comparators can be applied on issues: `=, ==, <>, >, <, >=, &lt;=, =?`. 
+
+
+== Testing values
+
+Use `issue?` to check if a value is of the `issue!` datatype.
+
+----
+>> issue? #ABC-123-xyx
+== true
+
+>> my-word: #X11'xyz
+== #X11'xyz
+
+>> issue? my-word
+== true
+----
+
+Use `type?` to return the datatype of a given value.
+
+----
+>> type? #ABC-123-xyx
+== issue!
+
+>> type? my-word
+== issue!
+----
+
+
+== Predefined words
+
+=== Functions
+
+`hex-to-rgb`, `issue?`, `to-issue`
+
+=== Natives
+
+`to-hex`

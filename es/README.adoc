@@ -1,0 +1,10 @@
+= Documentación del Lenguaje de Programación Red
+
+== Versión en Español
+
+_Este es un trabajo en progreso, solo algunas partes están disponibles como documentación de referencia._
+
+Para más información sobre el lenguaje Red, por favor visita http://red-lang.org
+
+
+Únete al chat en https://gitter.im/red/Spanish[image:https://badges.gitter.im/red/docs.svg[https://gitter.im/red/Spanish]]

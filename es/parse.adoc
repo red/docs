@@ -1,0 +1,1160 @@
+= Parse dialect
+:imagesdir: ../images
+:toc:
+:toclevels: 3
+:numbered:
+
+== Overview
+
+Parse dialect is an embedded domain-specific language (DSL) of Red that allows concise processing of _input_ series with grammar _rules_. Parse's common use-cases are:
+
+* *Search:* locate specific patterns;
+* *Validation*: check the conformity of input to some specification;
+* *Extraction*: percolate data and aggregate values (e.g. scraping);
+* *Modification*: data transformations (insertion of values, removal, and changing of matched input);
+* *Language processing*: implementation of compilers, interpreters and lexical analyzers, particularly for DSLs;
+* *Encoding and decoding*: conversion of data formats from one to another.
+
+=== Usage
+
+Parse is invoked through the `parse` function using a simple default syntax (see <<Extra functions>> section for more details):
+
+----
+parse <input> <rules>
+
+<input> : any series! value except for image! and vector!
+<rules> : a block! value with valid Parse dialect content (top-level rule)
+----
+
+By default, `parse` returns `logic!` value to indicate whether or not provided grammar rules succeeded in fully matching the input series.
+
+=== Core principles
+
+Parse grammar rules define patterns that are used to _consume_ the input series. The basic evaluation step of Parse dialect is a rule _match_, which has one of the two outcomes:
+
+* When a given rule matches, it _succeeds_, and Parse (optionally) _advances_ past the matched portion of the input and past the matched rule;
+* If there is no match, rule _fails_, while Parse _backtracks_ and falls back on _alternative_ rules (if any).
+
+Input processing (_parsing_) is an indefinite application of this basic step, which is halted by either of the two terminating conditions:
+
+* Top-level rule failure: `parse` returns `false`, signaling failed match;
+* Full match of top-level rule and input exhaustion (i.e. reaching the end of the series): `parse` returns `true`, signaling succeeded match.
+
+CAUTION: If terminating conditions are not met, Parse may enter an infinite loop.
+
+=== Glossary
+
+Parse dialect is an enhanced member of https://en.wikipedia.org/wiki/Parsing_expression_grammar[Parsing Expression Grammar] (PEG) family of formal languages, differentiating itself by an extended set of features and deep integration with Red, but sharing the common meaning of core constructs and operations:
+
+Grammar rules::
+    Hierarchical expressions with virtually unlimited composability. Their syntax and semantics are described in <<Parse rules>> section.
+
+Advancing::
+    The advance of input series by a sequential match of grammar rules until top-level rule's success or failure.
+
+Fetching::
+    Search for a subsequent rule to apply after a successful match.
+
+Alternating (described in PEG as _ordered choice_)::
+    In case of a rule failure, attempt to match alternative rules following the next `|` ("pipe", "bar", "or else") word in the same block, one-by-one, until either some alternative rule succeeds or the end of the block is reached.
+
+Backtracking::
+    Restoration of input and rules to their positions before the rule failure. Other changes (such as side-effects and modification of input/rules) remain.
+
+Possessive matching::
+    Parse rules (mainly <<Repetition>>) always try to match as much input data as possible.
+
+== Parsing modes
+
+Parse offers a degree of flexibility by supporting different modes of operation.
+
+=== Case-sensitivity
+
+By default, Parse follows Red semantics and is case-insensitive. Case-sensitivity can be enabled with `/case` refinement and selectively turned on/off with `case` keyword. `case` changes comparison mode only for the rule that follows it and then restores it back, regardless of the rule's success or failure.
+
+*Syntax*
+
+----
+case <word>
+
+<word> : word! value
+----
+
+The value referred by word is treated as a logical flag according to standard Red semantics. Logical true enables case-sensitive mode, while logical false disables it.
+
+=== Collecting mode
+
+`collect` rule makes `parse` return a block instead of `logic!` value. Refer to <<Extraction>> section for details.
+
+=== Types of input
+
+Depending on the type of input series, some Parse rules are not applicable or behave differently.
+
+* `any-block!`: matching by character set has no meaning and always fails;
+* `any-string!`: matching by datatype or type set is not supported;
+* `binary!`: matching by datatype or type set is supported for UTF-8 encoded values; such match succeeds if matched portion of the input represents one of the datatype's literal forms. Blank characters before tokens are automatically skipped.
+
+*Example*
+
+----
+parse to binary! "3 words: matching by datatype" [number! set-word! 3 word!]
+----
+
+== Parse rules
+
+Grammar rules in Parse dialect can have several forms and usually have nested or recursive structure. Any given rule is one of the following:
+
+* Dialect-reserved _keyword_, optionally followed by arguments and options (see <<Parse rules, below>>);
+* Value of one of the following datatypes:
+    ** `datatype!` or `typeset!` that match input value by its <<Datatype, type>>;
+    ** `bitset!`, which represents <<Character set, character set>>;
+    ** `word!` that refers to well-formed sub-rule;
+    ** `lit-word!` or `lit-path!` — convenient shortcuts for <<Literal value, literal matching>> of `word!` and `path!` input values, respectively;
+    ** `set-word!`, used to <<Marking, set>> word to current input position;
+    ** `get-word!`, <<Restoring, restores>> input position to which word was set previously;
+    ** `block!` value that contains any number of sub-rules and `|` words, which act as delimiters for alternative rules;
+    ** `integer!` value, serves as a counter for <<Iteration count, repetition>> of a rule; two subsequent `integer!` values denote a range of possible iterations;
+    ** `paren!` value, acts as a dialect <<Expression evaluation, escape mechanism>> by evaluating contained Red expression and resuming Parse input processing; some Parse keywords use the value returned from expression according to their specified semantics;
+* Any other literal value not mentioned above, which is used as-is for direct matching of the input.
+
+NOTE: Parse is consistent with Red in using loose comparison for matching of literal values.
+
+Each rule is characterized by conditions under which it advances the input and succeeds. An overview of Parse rules (both reserved datatypes and keywords) is given in the table below.
+
+.Overview of Parse rules.
+[options="header" cols="2,3,2,2"]
+|===
+| Rule | Category | Advances | Succeeds
+
+| `case`
+| <<Parsing modes>>
+| Never
+| Always
+
+| `block!`
+| <<Composition>>
+| Depends
+| Depends
+
+| `word!`
+| <<Composition>>
+| Depends
+| Depends
+
+| Literal value
+| <<Direct matching>>
+| Depends
+| Depends
+
+| `lit-word!`
+| <<Direct matching>>
+| Depends
+| Depends
+
+| `lit-path!`
+| <<Direct matching>>
+| Depends
+| Depends
+
+| `datatype!`
+| <<Direct matching>>
+| Depends
+| Depends
+
+| `typeset!`
+| <<Direct matching>>
+| Depends
+| Depends
+
+| `bitset!`
+| <<Direct matching>>
+| Depends
+| Depends
+
+| `quote`
+| <<Direct matching>>
+| Depends
+| Depends
+
+| `skip`
+| <<Direct matching>>
+| Depends
+| Depends
+
+| `none`
+| <<Direct matching>>
+| Never
+| Always
+
+| `end`
+| <<Direct matching>>
+| Never
+| Depends
+
+| `opt`
+| <<Look-ahead>>
+| Depends
+| Always
+
+| `not`
+| <<Look-ahead>>
+| Never
+| Depends
+
+| `ahead`
+| <<Look-ahead>>
+| Never
+| Depends
+
+| `paren!`
+| <<Expression evaluation>>
+| Never
+| Always
+
+| `set-word!`
+| <<Positioning>>
+| Never
+| Always
+
+| `get-word!`
+| <<Positioning>>
+| Depends
+| Always
+
+| `integer!`
+| <<Repetition>>
+| Depends
+| Depends
+
+| `any`
+| <<Repetition>>
+| Depends
+| Always
+
+| `some`
+| <<Repetition>>
+| Depends
+| Depends
+
+| `while`
+| <<Repetition>>
+| Depends
+| Always
+
+| `to`
+| <<Search>>
+| Depends
+| Depends
+
+| `thru`
+| <<Search>>
+| Depends
+| Depends
+
+| `if`
+| <<Control flow>>
+| Never
+| Depends
+
+| `into`
+| <<Control flow>>
+| Depends
+| Depends
+
+| `fail`
+| <<Control flow>>
+| Never
+| Never
+
+| `break`
+| <<Control flow>>
+| Never
+| Always
+
+| `reject`
+| <<Control flow>>
+| Never
+| Never
+
+| `set`
+| <<Extraction>>
+| Depends
+| Depends
+
+| `copy`
+| <<Extraction>>
+| Depends
+| Depends
+
+| `collect`
+| <<Extraction>>
+| Depends
+| Depends
+
+| `keep`
+| <<Extraction>>
+| Depends
+| Depends
+
+| `remove`
+| <<Modification>>
+| Depends
+| Depends
+
+| `insert`
+| <<Modification>>
+| Always
+| Always
+
+| `change`
+| <<Modification>>
+| Depends
+| Depends
+
+|===
+
+NOTE: All example rules given in the sections below fully match their input.
+
+=== Composition
+
+`block!` rules directly group other rules, thus providing means of combination. `word!` rules indirectly refer to other rules and provide the means of abstraction. Together, they form the basis of Parse grammar composition.
+
+At the structural level, Parse grammar is composed of _sequences_ and _alternatives_.
+
+* A sequence of rules is a group of zero or more rules, terminated by the _end_ of the sequence. Such sequence succeeds if Parse, by successively matching its sub-rules (if any), reaches the end of the sequence. In case of any sub-rule's failure, Parse backtracks to the beginning of the failed sequence.
+* End of the sequence of rules is either the end of the wrapping block or an alternative _boundary_ (`|` word).
+* Alternative is an optional sequence that Parse attempts to match in case of the previous (i.e. located before the `|` boundary) sequence failure.
+
+=== Direct matching
+
+Rules described in this section directly match input data, and serve as basic building blocks from which more complex rules can be composed.
+
+==== Literal value
+
+Match by literal value succeeds and advances the input if said literal value is equal to the value at the current position.
+
+NOTE: By default, Parse uses loose comparison for equality checking. <<Case-sensitivity, Case-sensitive mode>> enforces case-sensitive comparison.
+
+*Example*
+
+----
+parse [today is 5-September-2012 #"," 20.3 degrees/celsius][
+    'yesterday 'was | 'today 'is 05/09/12 comma 2030e-2 ['degrees/fahrenheit | 'degrees/celsius]
+]
+----
+
+NOTE: For matching literal values reserved by Parse dialect, `quote` keyword is used as an escape mechanism.
+
+==== Datatype
+
+Match by datatype succeeds and advances the input if the input value is of a given type.
+
+*Example*
+
+----
+parse [#a 'bird /is :the word][issue! lit-word! refinement! get-word! word!]
+----
+
+NOTE: Matching by datatype is not supported for `any-string!` input; for `binary!` input, rules are described in <<Types of input>> section.
+
+==== Type set
+
+Match by typeset succeeds and advances the input if input value's datatype belongs to a given typeset.
+
+*Example*
+
+----
+banner: [
+               |
+              [_]
+             [___]
+            [_____]
+    Red programming language
+    https://www.red-lang.org
+]
+
+parse banner [default! series! any-block! any-list! all-word! any-word! any-type! any-string!]
+----
+
+NOTE: Matching by typeset is not supported for `any-string!` input; for `binary!` input, rules are described in <<Types of input>> section.
+
+==== Character set
+
+If the input series is of type `any-string!` or `binary!` and input value represents a Unicode Code Point (UCP) that belongs to a given character set, match succeeds and advances the input. In all other cases match fails.
+
+Refer to `bitset!` datatype https://doc.red-lang.org/en/datatypes/bitset.html[documentation] for the details on character set creation.
+
+*Example*
+
+----
+animal: charset [#"🦢" #"^(1F418)" 128007]
+follow: charset "🚶👣🚸"
+
+parse "👣 the white 🐇" [follow " the white " animal]
+----
+
+NOTE: Lowercase/uppercase variants of the same character have different UCPs. It follows that match by character set is case-sensitive, regardless of the <<Parsing modes, parsing mode>>.
+
+NOTE: For `binary!` input, only UCPs up to `255` are meaningful, since Parsing in this mode is byte-granular.
+
+==== `quote`
+
+Acts as an escape mechanism from Parse semantics by literally matching the value that follows it. This rule succeeds and advances the input if match by literal value succeeds.
+
+*Syntax*
+
+----
+quote <value>
+
+<value> : literal value to match
+----
+
+*Example*
+
+----
+parse [[integer!] matches 20][quote [integer!] quote matches quote 20]
+----
+
+==== `skip`
+
+Matches any value and advances the input. Fails only if the input position is at the tail (since there is no value to match).
+
+*Example*
+
+----
+parse <💓> [skip | the beat]
+----
+
+==== `none`
+
+No-op or catch-all rule, always matches and never advances the input.
+
+*Example*
+
+----
+parse reduce [none none][none #(none) ['none | none] none! none]
+----
+
+==== `end`
+
+Succeeds only if the input position is at the tail and never advances the input (since there is no more input to advance).
+
+*Example*
+
+----
+parse [(＊◕ᴗ◕＊)][end | skip [skip | end]]
+----
+
+=== Look-ahead
+
+Look-ahead rules offer more fine-grained control over matching, backtracking and input advancing.
+
+==== `opt`
+
+Optionally matches a given rule, which either does or does not advance the input. Always succeeds regardless of the match. 
+
+*Syntax*
+
+----
+opt <rule>
+
+<rule> : Parse rule (option) to match
+----
+
+*Example*
+
+----
+parse "maybe" [opt "or" "may" opt [#"b" #"e"] opt "not"]
+----
+
+==== `not`
+
+Invertor, succeeds if a given rule fails and vice versa. Never advances the input, regardless of the match.
+
+*Syntax*
+
+----
+not <rule>
+
+<rule> : Parse rule to invert
+----
+
+*Example*
+
+----
+parse [panama][not 'man not ['plan | 'canal] not word! | skip]
+----
+
+==== `ahead`
+
+Preemptively matches a given rule. Fails in case of a rule failure, otherwise succeeds without advancing the input.
+
+*Syntax*
+
+----
+ahead <rule>
+
+<rule> : Parse rule to look ahead
+----
+
+*Example*
+
+----
+parse [great times ahead][ahead ['great 'times] 'great ahead ['times ahead word! 'ahead] 'times skip] 
+----
+
+=== Expression evaluation
+
+`paren!` rule contains arbitrary Red expression that will be evaluated upon match. This rule always succeeds but does not advance the input.
+
+*Example*
+
+----
+parse [(did it match?)][
+    block! (not matched)
+    | (probe 'backtracked) quote (did it match?) (probe 'matched!)
+]
+----
+
+=== Positioning
+
+It is possible to mark the current Parse input position, or to rewind/fast-forward to a position in the same input series.
+
+==== Marking
+
+`set-word!` rule sets word to the current series position. It always succeeds and never advances the input.
+
+*Example*
+
+----
+check: quote (probe reduce [start :failed before after current end])
+match: [before: 'this none after:]
+
+parse [match this input][
+    start: quote [false start] failed:
+    | ahead [skip match] current: ['match 'this 'input] end: check
+]
+----
+
+==== Restoring
+
+`get-word!` rule sets the input position to the one referred by word. It always succeeds and either advances forward, stays put or resets back, depending on where the marker is located relatively to the current input position.
+
+*Example*
+
+----
+phrase: "and so on and so forth, 'til it gets boring"
+goes: skip find phrase comma 2
+end: tail phrase
+
+parse phrase [again: "and" :again ['it | :goes] "until the" | :end]
+----
+
+NOTE: Restoring position to series other than the input one is forbidden.
+
+=== Repetition
+
+Rules described below act as loops or iterators by matching either a specified number of times or until failure.
+
+NOTE: Repetition rules have possessive behavior, and will match as much input as possible.
+
+==== Iteration count
+
+Matches a given rule specified number of times. If range syntax is used, any number of matches in this range is accepted as successful.
+
+*Syntax*
+
+----
+<count> <rule>
+<count> <count> <rule>
+
+<count> : non-negative integer! value or word! referring to such value
+<rule>  : Parse rule to match a specified number of times
+----
+
+NOTE: When using range syntax, 1st integer (lower bound) must be less than or equal to 2nd integer (upper bound).
+
+*Example*
+
+----
+tuple:  [2 word!]
+triple: [3 skip]
+THX:    1138
+
+parse [G A T T A C A][2 3 tuple triple | 0 thx [triple tuple] 1 tuple 0 triple]
+----
+
+==== Recursion
+
+Parse rules can be recursively composed. Recursion level is limited by Parse's internal stack depth.
+
+*Example*
+
+----
+ping: [none pong]
+pong: [skip ping | end]
+
+parse https://google.com ping
+----
+
+==== `any`
+
+Matches given rule zero or more times (https://en.wikipedia.org/wiki/Kleene_star[Kleene star]), stops if the match failed or if input did not advance. Always succeeds.
+
+*Syntax*
+
+----
+any <rule>
+
+<rule> : Parse rule to match zero or more times
+----
+
+*Example*
+
+----
+letter: charset [#"a" - #"z" #"A" - #"Z"]
+digit:  charset [#"0" - #"9"]
+
+parse "Wow, 20 horses at 12,000 RPM!" [
+    any "Twin ceramic rotor drives on each wheel!"
+    "Wow" any [
+        comma any space any digit
+        space any letter any [not comma skip]
+    ]
+]
+----
+
+==== `some`
+
+Matches given rule one or more times (https://en.wikipedia.org/wiki/Kleene_star#Kleene_plus[Kleene plus]), stops if the match failed or if input did not advance. Succeeds if the rule matched at least once.
+
+*Syntax*
+
+----
+some <rule>
+
+<rule> : Parse rule to match one or more times
+----
+
+*Example*
+
+----
+parse [
+    skidamarink a dink a dink
+    skidamarink a doo
+][
+    some [
+        some none 'skidamarink
+        [some ['a 'dink] | 'a 'doo]
+    ]
+]
+----
+
+==== `while`
+
+Repeatedly matches a given rule, stopping only after the rule's failure. Always succeeds.
+
+CAUTION: If the rule does not fail, `while` stuck in an infinite loop.
+
+*Syntax*
+
+----
+while <rule>
+
+<rule> : Parse rule to match repeatedly
+----
+
+*Example*
+
+----
+parse [throw for a loop][
+    while [word! | (print "failed and backtracked on matching the end") [not end] :explicit failure]
+    | [while none] :infinite loop
+]
+----
+
+=== Search
+
+Search rules seek specified pattern by advancing the input until a match is found.
+
+==== `to`
+
+Repeatedly attempts to match a given rule until its a full match. If said rule fails, the input is advanced by one element, which counts as a partial match. In case of a full match, the input position is placed at the head of the matched portion. Succeeds if rule match succeeded.
+
+*Syntax*
+
+----
+to <rule>
+
+<rule> : Parse rule (pattern to put input position at)
+----
+
+*Example*
+
+----
+matrix: #{
+    416C6C20492073656520697320626C6F6E6465
+    2C206272756E657474652C201337526564C0DE
+}
+
+parse matrix [
+    to #{FACEFEED}
+    | to #{1337} #{1337} start: to #{C0DE} end: (print to string! copy/part start end) 2 skip
+]
+----
+
+==== `thru`
+
+Repeatedly attempts to match a given rule until its a full match. If said rule fails, the input is advanced by one element, which counts as a partial match. In case of a full match, the input position is placed at the tail of the matched portion. Succeeds if rule match succeeded.
+
+*Syntax*
+
+----
+thru <rule>
+
+<rule> : Parse rule (pattern to advance thru)
+----
+
+*Example*
+
+----
+parse 'per/aspera/ad/astra [thru 'aspera ad: to 'astra thru end (probe ad)]
+----
+
+=== Control flow
+
+Control flow rules direct execution of Parse with loop (<<Repetition>>) breaking, change of input, early exiting and conditional matching.
+
+==== `if`
+
+Conditional match, succeeds if a given Red expression evaluates to true. Never advances the input.
+
+*Syntax*
+
+----
+if <expression>
+
+<expression> : paren! expression
+----
+
+*Example*
+
+----
+parse [4 8 15 16 23 42][
+    some [mark: skip if (any [even? probe mark/1 find [15 23] first mark])]
+]
+----
+
+==== `into`
+
+If value at the current input position has datatype supported by Parse, `into` temporarily switches input to this value and matches it with a given rule. Once the match is finished, the input is restored and parsing continues past the matched value.
+
+*Syntax*
+
+----
+into <rule>
+
+<rule> : block! rule or word! that refers to such rule
+----
+
+*Example*
+
+----
+rule: [some [word! | into rule]]
+
+parse [we [need [to [go [deeper]]]]] rule
+----
+
+==== `fail`
+
+Forces enclosing rule to instantly fail if placed at the end of it. Never succeeds or advances the input.
+
+*Example*
+
+----
+parse foo@bar.baz [["quux" | some fail | "foo"] "@" [fail] | thru "bar.baz"]
+----
+
+==== `break`
+
+Forces enclosing `block!` rule to instantly succeed. Breaks the matching loop if used at the top-level of a <<Repetition, repetition>> rule. Always succeeds and never advances the input.
+
+*Example*
+
+----
+parse [break away from everything][some [break] 0 1 [break] [2 [break] | 3 word! [break] skip]]
+----
+
+==== `reject`
+
+Forces enclosing `block!` rule to instantly fail. Breaks the matching loop if used at the top-level of a <<Repetition, repetition>> rule. Never succeeds or advances the input.
+
+*Example*
+
+----
+parse quote (I made a choice that I regret) [
+    any [reject now] some [5 word! what: reject I see] is
+    | :what 'I [[reject get] | skip]
+]
+----
+
+=== Extraction
+
+Extraction rules copy out matched values from the input series.
+
+==== `set`
+
+Sets a given word to the first value in a matched portion of the input.
+
+NOTE: Word is set to `none` if the matched rule did not advance the input position.
+
+NOTE: For `binary!` input, word is set to `integer!` value between `0` and `255`.
+
+*Syntax*
+
+----
+set <word> <rule>
+
+<word> : word! value to set
+<rule> : Parse rule
+----
+
+
+*Example*
+
+----
+parse "🍩🕳️" [set hole ahead [2 skip] set donut [to end]]
+----
+
+==== `copy`
+
+Sets a given word to a copy of a matched portion of the input.
+
+NOTE: If the matched rule did not advance the input, word is set to an empty series of the same type as input.
+
+*Syntax*
+
+----
+copy <word> <rule>
+
+<word> : word! value to set
+<rule> : Parse rule
+----
+
+*Example*
+
+----
+parse [Huston do you copy?][2 word! copy Huston [2 word!] copy we opt "have a problem"]
+----
+
+==== `collect`
+
+Collects values matched by rules that are marked with `keep` keyword. Succeeds if a given rule succeeds, advancing past the matched input portion.
+
+`keep` rule succeeds if provided rule succeeds, inserting matched values into a block allocated by `collect` rule in which it resides.
+
+NOTE: Usage of `keep` keyword without wrapping `collect` is forbidden.
+
+*Syntax*
+
+----
+collect <rule>
+collect set <word> <rule>
+collect into <word> <rule>
+collect after <word> <rule>
+
+<word> : word! value
+<rule> : Parse rule
+----
+
+By default, values are inserted at the tail of a block. This behavior can be changed with the options described below.
+
+.`collect` options.
+[[collect-options]]
+[options="header" cols="1,9"]
+|===
+| Option | Description
+| `set`
+| Sets a given word to a block of collected values.
+| `into`
+| Inserts collected values into a series referred by a word, preserves series' index.
+| `after`
+| Appends collected values into a series referred by a word, preserves series' index.
+|===
+
+* If `collect` is used without `into` or `after` option in any of the rules, `parse` function will return a block of collected values (see <<Parsing modes>>); if top-level `collect` is used with `set` option, `parse` will return `logic!` value as usual.
+* First use of `collect` allocates a new block that is returned by `parse` function, any subsequent `collect` allocates at the tail of its predecessor's block; with `into` or `after` option, `collect` reuses provided series buffer rather than allocating a new block.
+
+Syntax for `keep`:
+
+----
+keep <rule>
+keep pick <rule>
+keep <expression>
+keep pick <expression>
+
+<rule>       : Parse rule
+<expression> : paren! expression
+----
+
+[[keep-options]]
+* If matched rule did not advance the input, `keep` does not keep anything.
+* If rule matched a single value, this value is kept; if `keep` is followed by a `copy` rule, then matched value is enclosed into a series of the same type as input.
+* If rule matched multiple values, they are grouped into a series of the same type as input; with `pick` option, values are not grouped but kept one-by-one (affects `any-block!` series only).
+* If `keep` is used with `paren!` expression, result of its evaluation is kept as-is; with `pick` option, values are not passed as-is but kept one-by-one (affects `any-block!` series only).
+
+*Example*
+
+----
+fruit: charset [#"^(1F346)" - #"^(1F353)"]
+plate: "tropical stuff: 🍌🍍 and other healthy food: 🥒🍅🥕"
+
+parse plate [
+    collect [
+        keep (quote fruits:) collect [some [keep fruit | skip] fail]
+        | keep (quote vegetables:) collect [to [#"🥒" | "Pickle Rick!"] keep pick [to end]]
+    ]
+]
+----
+
+=== Modification
+
+Parse can modify its input series by inserting new values and removing/changing a matched portion of the input.
+
+==== `remove`
+
+Either removes a portion of the input matched by a given rule or removes input between the current position and the marked one; after that, it succeeds and retains the current input position.
+
+NOTE: Removal of values is a forward-consuming operation. In other words, it counts as a match, despite the absence of input advancement.
+
+*Syntax*
+
+----
+remove <rule>
+remove <word>
+
+<rule> : Parse rule
+<word> : input postion
+----
+
+*Example*
+
+----
+parse [remove me <and me also> "but leave me be"][some [remove word!] mark: to string! remove mark skip]
+----
+
+==== `insert`
+
+Inserts literal value or result of expression evaluation, either at the current position or at the marked one. Always succeeds. Advances the input past the insertion if it was made at the current position, otherwise input position is retained.
+
+*Syntax*
+
+----
+insert <value>
+insert <expression>
+
+insert <word> <value>
+insert <word> <expression>
+
+insert only <value>
+insert only <expression>
+insert only <word> <value>
+insert only <word> <expression>
+
+<word>       : input position
+<value>      : literal value
+<expression> : paren! expression
+----
+
+If literal value is a `word!`, value referred by it will be used. `only` option enforces `insert/only` semantics.
+
+*Example*
+
+----
+ikea: [assembly]
+here: tail ikea
+
+parse ikea [
+	insert only here [🏗️ 🧰👷]
+	insert only (load "[manual]")
+	word!
+	insert ikea [some]
+	block!
+	insert [required]
+]
+----
+
+==== `change`
+
+Changes matched portion on the input to a literal value or a result of expression evaluation. In addition to that, it can change a portion of the input between the current position and the marked one. If the change was made at the current position, it succeeds and advances the input past the modified portion, otherwise input position is retained.
+
+*Syntax*
+
+----
+change <rule> <value>
+change <rule> <expression>
+
+change <word> <value>
+change <word> <expression>
+
+change only <rule> <value>
+change only <rule> <expression>
+change only <word> <value>
+change only <word> <expression>
+
+<rule>       : Parse rule
+<word>       : input position
+<value>      : literal value
+<expression> : paren! expression
+----
+
+If literal value is a `word!`, value referred by it will be used. `only` option enforces `change/only` semantics.
+
+*Example*
+
+----
+parse [some things never change][
+    change none (quote and) 2 skip mark: to end change only mark [do]
+]
+----
+
+== Parse events
+
+Parse dialect is implemented as a pushdown automaton; at each state transition, it emits an _event_ (`word!` value) that notifies the user about the parsing process. Interaction with events and internal Parse state is achieved via `/trace` refinement and callback function (see <<Extra functions, next section>>).
+
+The list of all events with conditions under which they occur is given below.
+
+.List of Parse events.
+[options="header" cols="1,4"]
+|===
+| Event | Description
+
+| `push`
+| After a rule is pushed on the stack.
+
+| `pop`
+| Before rule is popped from the stack.
+
+| `fetch`
+| Before a new rule is fetched.
+
+| `match`
+| After a value has matched.
+
+| `iterate`
+| After the beginning of a new iteration pass (see <<Repetition>>).
+
+| `paren`
+| After evaluation of `paren!` expression.
+
+| `end`
+| After reaching the end of the input.
+
+|===
+
+== Extra functions
+
+The entry point for Parse dialect is a `parse` native that accepts input series with a block of rules and supports additional refinements.
+
+.`parse` refinements.
+[options="header" cols="1,3"]
+|===
+| Refinement | Description
+| `/case`
+| Enable <<Parsing modes, case-sensitive mode>>.
+
+| `/part`
+| Limit parsing up to specified length or input position.
+
+| `/trace`
+| Interact with <<Parse events, event-based Parse API>> via provided _callback_.
+
+|===
+
+Callback function (`function!` value) with the following specification must be provided when `/trace` refinement is used.
+
+.Callback function specification.
+[options="header" cols="1,1,2"]
+|===
+| Argument | Type | Description
+
+| `event`
+| `word!`
+| One of the <<Parse events>>.
+
+| `match?`
+| `logic!`
+| Result of the last match.
+
+| `rule`
+| `block!`
+| Current rule at current position.
+
+| `input`
+| `series!`
+| Input series at current position.
+
+| `stack`
+| `block!`
+| Internal Parse rules stack.
+
+|===
+
+Callback function must return `logic!` value to indicate if parsing should be resumed (`true`) or not (`false`). 
+
+Default `on-parse-event` callback and its `parse-trace` wrapper are provided for debugging purposes.
+
+== Implementation notes
+
+Some design and implementation facets of Parse are briefly covered in this section.
+
+=== Loose comparison
+
+As was mentioned previously, Parse uses loose comparison for matching literal values, which is consistent with Red.
+
+*Example*
+
+----
+parse [I'm 100% <sure>][quote :I'M 1.0 "sure"]
+----
+
+=== Flat rule format
+
+To some extent, Parse supports _flat_ rules format, where rules are written linearly as variable-arity expressions rather than using nested blocks.
+
+*Example*
+
+----
+parse [on the count of three 1 2 3][collect set stash keep pick to ahead some 1 3 integer! remove any skip]
+----
+
+=== Open issues
+
+Pending bugs and design inconsistencies relevant to Parse are listed below.
+
+.Pending issues.
+[options="header" cols="2,6,1"]
+|===
+| Affected rules | Description | Tickets
+
+| `remove <position>`
+| The case where position comes after the current one is not handled.
+| https://github.com/red/red/issues/4199[#4199]
+
+| `break`, `reject`
+| Preemptive break of <<Repetition>> rules.
+| https://github.com/red/red/issues/4193[#4193]
+
+| `path!`
+| Usage of `path!` literal values inside rules is forbidden.
+| https://github.com/red/red/issues/3528[#3528]
+
+| `fail`, `break`, `reject`
+| Design of some <<Control flow>> rules is not finalized.
+| https://github.com/red/red/issues/3478[#3478], https://github.com/red/red/issues/3398[#3398]
+
+| `lit-word!`, `lit-path!`
+| Case-sensitive comparison is not handled properly.
+| https://github.com/red/red/issues/3029[#3029]
+
+|===

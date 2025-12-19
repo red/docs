@@ -1,0 +1,76 @@
+= Get-word! datatype
+:toc:
+:numbered:
+
+== Abstract
+
+A `get-word!` value retrieves an unevaluated word value from the context to which it is bound.
+
+`Get-word!` is a member of the following typesets: `any-word!`, `all-word!`, `immediate!`
+
+== Creation
+
+Get-word values can be created using literal syntax, or at runtime using a `to` conversion from the datatypes: `char!`, `logic!`, `string!`, `datatype!`, `issue!`, `refinement!`, and `lit-word!`.
+
+```red
+>> to get-word! #"X"
+== :X
+
+>> to get-word! true
+== :true
+
+>> to get-word! "Hello"
+== :Hello
+
+>> to get-word! float!
+== :float!
+
+>> to get-word! #A42
+== :A42
+
+>> to get-word! /only
+== :only
+
+>> to get-word! 'foo
+== :foo
+```
+
+== Literal syntax
+
+A colon `:` followed by one or more characters from the entire Unicode range, including punctuation characters from the ASCII subset: `! & ' * + - . < = > ? _ | ~``
+
+Illegal characters are control characters, whitespace characters, and punctuation characters from the ASCII subset: `/ \ ^ , [ ] ( ) { } " # $ % @ : ;`
+
+A `get-word!` value cannot start with a number.
+
+
+== Evaluation Steps
+
+* Find the context that the word is bound to. 
+
+* Return the value that is refered to in the context.
+
+** If the value is in the `any-function!` typeset, do not call the function. Return the literal value of the function.
+
+
+== Testing values
+
+Use `get-word?` to check if a value is of the `get-word!` datatype.
+
+```red
+>> get-word? first [:foo 'bar baz]
+== true
+```
+
+Use `type?` to return the datatype of a given value.
+
+```red
+>> type? first [:foo 'bar baz]
+== get-word!
+```
+
+== Predefined words
+
+=== Functions
+
+`to-get-word`
