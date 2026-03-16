@@ -1,19 +1,19 @@
-= Logic! datatype
+= El tipo Logic!
 :toc:
 :numbered:
 
 
-== Abstract
+== Resumen
 
-The `logic!` datatype represents the boolean values `true` and `false`.
+El tipo de dato `logic!` representa los valores booleanos `true` (verdadero) y `false` (falso).
 
-`Logic!` is a member of the following typesets: `immediate!`
+`Logic!` es miembro de los siguientes conjuntos de tipos: `immediate!`
 
-== Creation
+== Creación
 
-Logic values can be created using literal syntax, or at runtime using a `make` constructor, or a `to` conversion.
+Los valores lógicos pueden crearse usando sintaxis literal, o en tiempo de ejecución usando el constructor `make`, o una conversión `to`.
 
-`to logic!` converts to `true` for any value except for `false` and `none`.
+`to logic!` convierte a `true` cualquier valor excepto `false` y `none`.
 
 ```red
 >> to logic! 'hi
@@ -33,7 +33,7 @@ Logic values can be created using literal syntax, or at runtime using a `make` c
 ```
 
 [NOTE]
-For boolean logic support, `true` and `false` values can be constructed from 1 and 0 using `make`.
+Para soporte de lógica booleana, los valores `true` y `false` pueden construirse a partir de 1 y 0 usando `make`.
 
 ```red
 >> make logic! 1
@@ -49,9 +49,9 @@ For boolean logic support, `true` and `false` values can be constructed from 1 a
 == 0
 ```
 
-== Literal syntax
+== Sintaxis literal
 
-The predefined words `true` and `false`, or the serialized syntax:
+Las palabras predefinidas `true` y `false`, o la sintaxis serializada:
 
 ```red
 #(true)
@@ -59,16 +59,16 @@ The predefined words `true` and `false`, or the serialized syntax:
 #(false)
 ```
 
-== Testing values
+== Comprobación de valores
 
-Use `logic?` to check if a value is of the `logic!` datatype.
+Use `logic?` para comprobar si un valor es del tipo `logic!`.
 
 ```red
 >> logic? on
 == true
 ```
 
-Use `type?` to return the datatype of a given value.
+Use `type?` para obtener el tipo de dato de un valor dado.
 
 ```red
 >> type? false
@@ -76,12 +76,12 @@ Use `type?` to return the datatype of a given value.
 ```
 
 
-== Predefined words
+== Palabras predefinidas
 
 `true`, `yes`, `on`
 
 `false`, `no`, `off`
 
-=== Functions
+=== Funciones
 
 `to-logic`
