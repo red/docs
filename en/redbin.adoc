@@ -52,9 +52,12 @@ Several semi-formal lexical conventions are used throughout this document to des
 
 == Encoding format
 
-The _default_ encoding format is optimized for decoding speed, while the _compact_ format requires a smaller storage space (at the expense of much slower decoding).
+Redbin supports two encoding formats, selected by the `compact` bit of the header <<Header, flags>> field:
 
-NOTE: Specification of the compact encoding format is not yet defined.
+* the _default_ format is optimized for decoding speed: every record begins with a 32-bit header, fields have fixed sizes, and multi-byte values are kept naturally aligned;
+* the _compact_ format trades some of that regularity for a substantially smaller payload: each record begins with a one-byte tag instead of the 32-bit header, integer fields use a variable-length encoding, strings keep their in-memory UCS-1/2/4 encoding with the unit folded into the length field, and no alignment padding is ever inserted.
+
+Both formats encode the same records, in the same order, and share the same <<Reference, reference>>, binding, and cycle model; they differ only in how individual fields are laid out. Each section below documents both forms; the compact form is introduced field by field in <<Compact format conventions>> and then specified per record.
 
 The general layout of Redbin data is described below. Each definition links to a respective section in this document.
 
@@ -62,18 +65,121 @@ The general layout of Redbin data is described below. Each definition links to a
 <<Symbol table, Symbol table>>:: Optional; if present, contains interned strings used by records of symbolic datatypes.
 <<Records definitions, Payload>>:: Stores Redbin records that encode Red values.
 
-Data in these sections is stored in a little-endian format. All integer fields represent non-negative values, but since Red runtime interprets them as signed, they have an upper limit of 2^31^-1.
+Data in the default format is stored in a little-endian format. All integer fields represent non-negative values, but since Red runtime interprets them as signed, they have an upper limit of 2^31^-1.
+
+=== Compact format conventions
+
+The compact format reuses the record grammar of the default format but replaces its fixed-width fields with denser encodings. The conventions below apply to every compact record; individual record definitions refer back to them.
+
+==== Variable-length integers
+
+Two variable-length integer encodings are used, denoted `[varint]` and `[svarint]` in record definitions:
+
+`varint`:: An unsigned https://en.wikipedia.org/wiki/LEB128[LEB128] integer. Each byte carries 7 bits of value, least-significant group first; the high bit (`80h`) is set on every byte except the last. A 32-bit value takes 1 to 5 bytes. Decoders must reject an encoding that would overflow 32 bits.
+
+`svarint`:: A signed integer, https://en.wikipedia.org/wiki/Variable-length_quantity#Zigzag_encoding[zigzag]-mapped (`(n << 1) XOR (n >> 31)`, arithmetic shift) and then encoded as a `varint`, so that small-magnitude negative values stay short.
+
+==== Record tags
+
+Every compact value record begins with a one-byte `tag` in place of the default format's 32-bit `header`. The tag both identifies the datatype and carries a single per-datatype flag:
+
+.Layout of a compact record tag.
+[options="header" cols="1,9"]
+|===
+| Value | Description
+
+| `00h`
+| Invalid; never produced by an encoder. A run of `NUL` bytes therefore never decodes as a valid record.
+
+| `01h`-`3Eh`
+| Canonical record; the tag value _is_ the datatype `type` field.
+
+| `3Fh`
+| Escape: the datatype ID follows as a `varint`. Reserved for future datatypes with an ID &ge; 63; the canonical record body follows the ID.
+
+| `40h`
+| `modifier` flag (bit 6). Combined with any datatype tag (`41h`-`7Fh`), it sets a per-datatype variant bit, described with each record and summarized <<Compact modifier bit, below>>.
+
+| `80h`-`BFh`
+| `integer!` immediate: encodes the values `0` to `63` directly as `tag - 80h` (see <<integer, `integer!`>>).
+
+| `C0h`
+| <<Compact markers, New-line marker>>.
+
+| `C1h`
+| <<Compact markers, Reference marker>>.
+
+| `C2h`, `C3h`
+| Complete encodings of the `true` and `false` <<logic, `logic!`>> values.
+
+| `C4h`
+| <<Compact markers, Global-set marker>> (version 1 only).
+
+| `C5h`-`FFh`
+| Reserved.
+
+|===
+
+==== Compact markers
+
+A _marker_ is a standalone one-byte record that sets a one-shot flag consumed by the immediately following value record. Markers replace the per-record flag bits of the default format's header, so that a record pays for a flag only when the flag is set. At most one marker of each kind may precede a record; a marker that is not followed by a valid record is an error.
+
+New-line marker (`C0h`):: The following record's value carries the `new-line` flag (equivalent to header bit 31 in the default format).
+
+Reference marker (`C1h`):: The following record is in _referral_ form. Its buffer, binding, or context field is omitted and replaced by a trailing <<Reference, reference>> path (equivalent to header bit 19, `reference?`, in the default format).
+
+Global-set marker (`C4h`):: Version 1 only. The following `any-word!` record is a set-word bound to the global context and is followed by the value record it is set to (equivalent to header bit 25, `set?`, in the default format).
+
+==== Compact modifier bit
+
+The `modifier` bit (`40h`) of a record tag has a fixed meaning per datatype. When it is clear, the associated optional field is absent, so the common case pays nothing for it.
+
+.Meaning of the compact modifier bit per datatype.
+[options="header" cols="1,3"]
+|===
+| Datatype(s) | `modifier` set means
+
+| `any-block!`, `any-string!`, `binary!`, `vector!`, `image!`
+| non-zero `head`: a `head` `[varint]` field is present.
+
+| `any-word!`, `refinement!`
+| non-global binding: an `index` field and a context carrier follow.
+
+| `float!`, `percent!`, `time!`
+| the value is a whole number and is stored as an `[svarint]`.
+
+| `date!`
+| the value has a time component.
+
+| `tuple!`
+| the tuple size is not 3; an explicit size byte follows.
+
+| `bitset!`
+| the bitset is complemented.
+
+| `money!`
+| the amount is negative.
+
+| `object!`
+| the object owns one or more values (`on-change*` fields present).
+
+|===
+
+Multi-byte scalar fields (`data`, `time`, coordinates, etc.) remain little-endian, but are stored unaligned. There is no padding record and no tail padding anywhere in the compact format.
 
 == Header
 
 Redbin data starts with a header having the following format:
 
 ----
-magic="REDBIN" (6), version=1|2 (1), flags (1), length (4), size (4)
+Default: magic="REDBIN" (6), version=1|2 (1), flags (1), length (4), size (4)
+Compact: magic="REDBIN" (6), version=1|2 (1), flags (1), length [varint], size [varint]
 
 length : number of root records to load.
 size   : the size of records payload in bytes.
 ----
+
+In the compact format the `length` and `size` fields are encoded as `[varint]`; the fixed 6-byte magic, 1-byte `version`, and 1-byte `flags` fields are unchanged. When the `compressed` flag is set, the compressed stream begins immediately after the `flags` byte in both formats.
 
 The layout of `flags` field is described in the table below.
 
@@ -112,10 +218,12 @@ Table of offsets encoding is described below:
 
 ----
 Default: length (4), size (4), offset (4) * length
-Compact: TBD
+Compact: length [varint], size [varint], offset (4) * length
 ----
 
 `length` field contains the number of entries in the table. `size` field indicates the size of the strings buffer in bytes (including optional padding).
+
+The compact format keeps the per-symbol offsets table, so the decoder can locate any symbol by its index in place, exactly as the default format does. It drops only the per-string 64-bit padding and encodes the header `length` and `size` fields as `[varint]` (`size` is then the exact byte length of the strings buffer, with no padding). Each `offset` entry remains a 4-byte little-endian byte offset, stored unaligned. The strings buffer has the same UTF-8, `NUL`-terminated content in both formats.
 
 During the runtime booting process, these symbols are merged with Red's symbol table and the offsets are replaced by the symbol ID values from that table. <<Redbin codec, Runtime codec>> omits this merging stage and instantiates symbols in-place for each relevant decoded record.
 
@@ -216,7 +324,7 @@ This empty record is used to properly align 64-bit values.
 
 ----
 Default: header (4), length (4), offset (4) * length
-Compact: TBD
+Compact: length [varint], offset [varint] * length
 
 header/type=255
 ----
@@ -226,6 +334,8 @@ Reference records are used to encode various relations between Red values, such 
 `length` field specifies the number of `offset` fields contained inside a reference record; each `offset` field specifies a zero-based offset to an already loaded Red value thru its parent, starting from the root block. A list of such offsets effectively forms a path to a referenced value.
 
 Red value that is used as a parent to calculate offset into is called a _waypoint_; Red value to which the path is formed by a reference is called a _target_. Reference records are usually used by other value records to obtain datatype-specific parts that they share with the target. Red value record that contains a reference is called a _referral_. In all record definitions that follow, referral format is used to describe such a form of encoding, which is used only when `reference?` header flag of a respective value record is set.
+
+In the compact format a reference is not a standalone record and carries no tag (the `255` datatype ID is unused): it appears only as the trailing `length`/`offset` fields of a referral record, that is, a record preceded by the <<Compact markers, reference marker>> (`C1h`). Its `length` and `offset` fields are encoded as `[varint]`; their meaning is identical to the default format.
 
 Redbin records that can act as referrals are: `series!`, `map!`, `bitset!`, `any-word!`, `refinement!`, `object!`, `function!`.
 
@@ -301,52 +411,53 @@ This section describes the encoding of Redbin records that correspond to Red val
 
 ----
 Default: header (4), value (4)
-Compact: TBD
+Compact: tag (1), value [varint]
 
 header/type=1
 ----
 
-`value` field contains datatype ID represented as a 32-bit integer.
+`value` field contains datatype ID represented as a 32-bit integer. In the compact format it is a `[varint]`.
 
 ==== `unset!` anchor:unset[] 
 
 ----
 Default: header (4)
-Compact: TBD
+Compact: tag (1)
 
 header/type=2
 ----
 
-`unset!` is a singleton value and can be encoded as a `header` field with datatype ID.
+`unset!` is a singleton value and can be encoded as a `header` field with datatype ID. In the compact format it is a single `tag` byte.
 
 ==== `none!` anchor:none[] 
 
 ----
 Default: header (4)
-Compact: TBD
+Compact: tag (1)
 
 header/type=3
 ----
 
-`none!` is a singleton value and can be encoded as a `header` field with datatype ID.
+`none!` is a singleton value and can be encoded as a `header` field with datatype ID. In the compact format it is a single `tag` byte.
 
 ==== `logic!` anchor:logic[] 
 
 ----
 Default: header (4), value=0|1 (4)
-Compact: TBD
+Compact: C2h | C3h (1)
 
 header/type=4
 ----
 
-`value` content of `0` encodes a `false` value. Non-zero `value` content encodes a `true` value.
+`value` content of `0` encodes a `false` value. Non-zero `value` content encodes a `true` value. In the compact format the value is encoded as a single byte, `C2h` for `true` and `C3h` for `false`; the `type=4` tag is not used.
 
 ==== `block!` anchor:block[] 
 
 ----
 Default:  header (4), head (4), length (4), ... * length
 Referral: header (4), head (4), buffer [reference]
-Compact:  TBD
+Compact:  tag (1), head [varint], length [varint], ... * length
+Referral: ref-marker=C1h (1), tag (1), head [varint], reference
 
 header/type=5
 header/reference?=0|1
@@ -354,12 +465,15 @@ header/reference?=0|1
 
 The `head` field indicates a zero-based offset of the index position from the block's head. The `length` field contains the number of values to be stored in the block. The block values' records then follow the `length` field.
 
+In the compact format the `head` `[varint]` field is present only when the tag's `modifier` bit is set (i.e. `head` is non-zero); when `head` is zero it is omitted. The referral form is introduced by the <<Compact markers, reference marker>> and appends a <<Reference, reference>> path in place of the `length` field and the value records.
+
 ==== `paren!` anchor:paren[] 
 
 ----
 Default:  header (4), head (4), length (4), ... * length
 Referral: header (4), head (4), buffer [reference]
-Compact:  TBD
+Compact:  tag (1), head [varint], length [varint], ... * length
+Referral: ref-marker=C1h (1), tag (1), head [varint], reference
 
 header/type=6
 header/reference?=0|1
@@ -372,7 +486,8 @@ Same encoding rules as <<block, `block!`>>.
 ----
 Default:  header (4), head (4), length (4), data (unit * length), padding (1-3)
 Referral: header (4), head (4), buffer [reference]
-Compact:  TBD
+Compact:  tag (1), head [varint], length [varint], data (unit * length)
+Referral: ref-marker=C1h (1), tag (1), head [varint], reference
 
 header/type=7
 header/unit=1|2|4
@@ -381,12 +496,15 @@ header/reference?=0|1
 
 The `head` field has the same meaning as in other series records. The `unit` field indicates the encoding format of the string, only values of 1, 2, and 4 are valid. The `length` field contains the number of codepoints to be stored in the string, up to 16777215 codepoints (2^24^ - 1) are supported. The string is encoded in either UCS-1, UCS-2 or UCS-4 format, depending on the maximum width of contained codepoints. No NUL-terminating character is present in `data`, nor accounted for in the `length` field. An optional tail padding of 1 to 3 NUL bytes can be present to align the end of the `string!` record with a 32-bit boundary.
 
+The compact format keeps the string in its native UCS-1/2/4 form. It carries no separate `unit` field; instead the `length` `[varint]` packs both the codepoint count and the unit: its low two bits hold `log2(unit)` (`0`, `1` or `2` for UCS-1, UCS-2 or UCS-4) and its remaining high bits hold the codepoint count. The `data` field then holds `unit × count` raw bytes, in the same little-endian UCS encoding as the default format. No `unit` field, no `NUL` terminator and no tail padding are present. The `head` `[varint]` field, when present (tag `modifier` set), still counts codepoints from the string's head. As elsewhere, the referral form is introduced by the <<Compact markers, reference marker>>.
+
 ==== `file!` anchor:file[] 
 
 ----
 Default:  header (4), head (4), length (4), data (unit * length), padding (1-3)
 Referral: header (4), head (4), buffer [reference]
-Compact:  TBD
+Compact:  tag (1), head [varint], length [varint], data (unit * length)
+Referral: ref-marker=C1h (1), tag (1), head [varint], reference
 
 header/type=8
 header/unit=1|2|4
@@ -400,7 +518,8 @@ Same encoding rules as <<string, `string!`>>.
 ----
 Default:  header (4), head (4), length (4), data (unit * length), padding (1-3)
 Referral: header (4), head (4), buffer [reference]
-Compact:  TBD
+Compact:  tag (1), head [varint], length [varint], data (unit * length)
+Referral: ref-marker=C1h (1), tag (1), head [varint], reference
 
 header/type=9
 header/unit=1|2|4
@@ -413,40 +532,42 @@ Same encoding rules as <<string, `string!`>>.
 
 ----
 Default: header (4), value (4)
-Compact: TBD
+Compact: tag (1), value [varint]
 
 header/type=10
 ----
 
-`value` field contains a UCS-4 codepoint stored as a 32-bit integer.
+`value` field contains a UCS-4 codepoint stored as a 32-bit integer. In the compact format it is a `[varint]`.
 
 ==== `integer!` anchor:integer[] 
 
 ----
 Default: header (4), value (4)
-Compact: TBD
+Compact: 80h+value (1) | tag (1), value [svarint]
 
 header/type=11
 ----
 
-`value` field contains a signed 32-bit integer that encoded Red value represents.
+`value` field contains a signed 32-bit integer that encoded Red value represents. In the compact format, values from `0` to `63` are encoded as a single _immediate_ byte `80h + value` (tags `80h`-`BFh`); any other value is encoded as the `type=11` tag followed by an `[svarint]`.
 
 ==== `float!` anchor:float[] 
 
 ----
 Default: padding [padding], header (4), value (8)
-Compact: TBD
+Compact: tag/mod (1), value [svarint] | tag (1), value (8)
 
 header/type=12
 ----
 
 An optional `padding` field is added to properly align the `value` field at a 64-bit boundary. `value` field itself contains a 64-bit https://en.wikipedia.org/wiki/IEEE_754[IEEE 754] floating-point numeral.
 
+The compact format inserts no padding. When the value is a whole number exactly representable as a signed 32-bit integer, the tag's `modifier` bit is set and the value is stored as an `[svarint]`; otherwise the plain tag is followed by the 8-byte IEEE 754 numeral, little-endian. Values that are not exactly representable this way (including `-0.0`, the infinities, and `NaN`) always use the 8-byte form.
+
 ==== `context!` anchor:context[] 
 
 ----
 Default: header (4), length (4), symbol (4) * length, ... * length
-Compact: TBD
+Compact: tag (1), flags (1), length [varint], symbol [varint] * length, ... * length
 
 header/type=14
 header/kind=0|1|2
@@ -461,12 +582,38 @@ Contexts are Red values used internally by some datatypes like `function!`, `obj
 
 If `no-values` flag is set, it means that there are no value records following the symbols (empty context). If `stack?` flag is set, then the values are allocated on the stack instead of the heap memory. The `self?` flag is used to indicate that the context can handle a self-referencing word (`self` in objects).
 
+In the compact format the header flags are carried by a dedicated `flags` byte that immediately follows the `tag`; `length` and each `symbol` index are `[varint]`. The `flags` byte layout is:
+
+.Layout of the compact `context!` flags byte.
+[options="header" cols="1,9"]
+|===
+| Bits | Description
+
+| 7-5
+| Reserved.
+
+| 4
+| `values` flag; if set, value records follow the symbol list. This is the inverse of the default format's `no-values` flag.
+
+| 3
+| `self?` flag.
+
+| 2
+| `stack?` flag.
+
+| 1-0
+| `kind` field.
+
+|===
+
 ==== `word!` anchor:word[] 
 
 ----
 Default:  header (4), symbol (4), index (4), ...|context [object!|function!]
 Referral: header (4), symbol (4), index (4), context [reference]
-Compact:  TBD
+Compact:  tag (1), symbol [varint]
+          tag/mod (1), symbol [varint], index [svarint], context [object!|function!]
+Referral: ref-marker=C1h (1), tag/mod (1), symbol [varint], index [svarint], reference
 
 header/type=15
 header/set?=0|1
@@ -477,12 +624,16 @@ header/reference?=0|1
 
 NOTE: In the current implementation, enabled `set?` flag indicates that word is bound to a global context, but value record is omitted.
 
+The compact format has two forms. A word bound to the global context uses the _canonical_ form: the plain `tag` followed by the `symbol` `[varint]` only, with the `index` and context carrier omitted (the decoder re-derives the global binding from the symbol). A word bound to any other context sets the tag's `modifier` bit and appends an `index` `[svarint]` and the context carrier -- an inline `object!` or `function!` record, or, when the record is preceded by the <<Compact markers, reference marker>>, a <<Reference, reference>> path. The `set?` case (a global set-word followed by its value record) occurs only in version 1 streams, where it is introduced by the <<Compact markers, global-set marker>> (`C4h`).
+
 ==== `set-word!` anchor:set-word[] 
 
 ----
 Default:  header (4), symbol (4), index (4), ...|context [object!|function!]
 Referral: header (4), symbol (4), index (4), context [reference]
-Compact:  TBD
+Compact:  tag (1), symbol [varint]
+          tag/mod (1), symbol [varint], index [svarint], context [object!|function!]
+Referral: ref-marker=C1h (1), tag/mod (1), symbol [varint], index [svarint], reference
 
 header/type=16
 header/set?=0|1
@@ -496,7 +647,9 @@ Same encoding rules as <<word, `word!`>>.
 ----
 Default:  header (4), symbol (4), index (4), ...|context [object!|function!]
 Referral: header (4), symbol (4), index (4), context [reference]
-Compact:  TBD
+Compact:  tag (1), symbol [varint]
+          tag/mod (1), symbol [varint], index [svarint], context [object!|function!]
+Referral: ref-marker=C1h (1), tag/mod (1), symbol [varint], index [svarint], reference
 
 header/type=17
 header/set?=0|1
@@ -510,7 +663,9 @@ Same encoding rules as <<word, `word!`>>.
 ----
 Default:  header (4), symbol (4), index (4), ...|context [object!|function!]
 Referral: header (4), symbol (4), index (4), context [reference]
-Compact:  TBD
+Compact:  tag (1), symbol [varint]
+          tag/mod (1), symbol [varint], index [svarint], context [object!|function!]
+Referral: ref-marker=C1h (1), tag/mod (1), symbol [varint], index [svarint], reference
 
 header/type=18
 header/set?=0|1
@@ -524,7 +679,9 @@ Same encoding rules as <<word, `word!`>>.
 ----
 Default:  header (4), symbol (4), index (4), ...|context [object!|function!]
 Referral: header (4), symbol (4), index (4), context [reference]
-Compact:  TBD
+Compact:  tag (1), symbol [varint]
+          tag/mod (1), symbol [varint], index [svarint], context [object!|function!]
+Referral: ref-marker=C1h (1), tag/mod (1), symbol [varint], index [svarint], reference
 
 header/type=19
 header/set?=0|1
@@ -537,40 +694,40 @@ Same encoding rules as <<word, `word!`>>.
 
 ----
 Default: header (4), symbol (4)
-Compact: TBD
+Compact: tag (1), symbol [varint]
 
 header/type=20
 ----
 
-`symbol` field is an index in Redbin <<Symbol table, symbol table>>.
+`symbol` field is an index in Redbin <<Symbol table, symbol table>>. In the compact format it is a `[varint]`.
 
 ==== `native!` anchor:native[] 
 
 ----
 Default: header (4), ID (4), spec [block!]
-Compact: TBD
+Compact: tag (1), ID [varint], spec [block!]
 
 header/type=21
 ----
 
-`ID` field is an offset into the internal `natives/table` jump table, followed by a `block!` record encoding native's spec.
+`ID` field is an offset into the internal `natives/table` jump table, followed by a `block!` record encoding native's spec. In the compact format `ID` is a `[varint]`.
 
 ==== `action!` anchor:action[] 
 
 ----
 Default: header (4), ID (4), spec [block!]
-Compact: TBD
+Compact: tag (1), ID [varint], spec [block!]
 
 header/type=22
 ----
 
-`ID` field is an offset into the internal `actions/table` jump table, followed by a `block!` record encoding action's spec.
+`ID` field is an offset into the internal `actions/table` jump table, followed by a `block!` record encoding action's spec. In the compact format `ID` is a `[varint]`.
 
 ==== `op!` anchor:op[] 
 
 ----
 Default: header (4), parent [function!]|spec [block!], ID (4)
-Compact: TBD
+Compact: tag (1), parent [function!|native!|action!]
 
 header/type=23
 header/body?=0|1
@@ -581,18 +738,21 @@ If `body?` flag is set, it indicates that `op!` is derived from a `function!`;  
 
 If `body?` flag is set, then `header` field is followed by a `function!` record that encodes `op!` value's parent. Otherwise, it is followed by a `block!` record encoding `op!` value's spec, and then by an `ID` of either `action!` or `native!` value.
 
+The compact format needs neither the `body?` nor the `native?` flag: the `op!` tag is followed directly by the record of the value it is derived from -- a `function!`, `native!`, or `action!` record -- and the decoder takes the `op!` subtype from the datatype of that record.
+
 ==== `function!` anchor:function[] 
 
 ----
 Default:  header (4), spec-size (4), body-size (4), context [context!], spec [block!], body [block!]
 Referral: header (4), context [reference]
-Compact:  TBD
+Compact:  tag (1), spec-size [varint], body-size [varint], context [context!], spec [block!], body [block!]
+Referral: ref-marker=C1h (1), tag (1), reference
 
 header/type=24
 header/reference?=0|1
 ----
 
-`spec-size` and `body-size` specify sizes of `spec` and `body` blocks, respectively, and are used for pre-allocation by the decoder.
+`spec-size` and `body-size` specify sizes of `spec` and `body` blocks, respectively, and are used for pre-allocation by the decoder. In the compact format they are `[varint]` fields, and the referral form is introduced by the <<Compact markers, reference marker>>.
 
 The target of the reference is either `function!`, `op!`, or `any-word!`; `function!` value (loaded value, parent of `op!`, or context of `any-word!`) is copied over verbatim, which means that referral shares with it not only binding information, but also spec and body blocks.
 
@@ -601,7 +761,8 @@ The target of the reference is either `function!`, `op!`, or `any-word!`; `funct
 ----
 Default:  header (4), head (4), length (4), ... * length
 Referral: header (4), head (4), buffer [reference]
-Compact:  TBD
+Compact:  tag (1), head [varint], length [varint], ... * length
+Referral: ref-marker=C1h (1), tag (1), head [varint], reference
 
 header/type=25
 header/reference?=0|1
@@ -614,7 +775,8 @@ Same encoding rules as <<block, `block!`>>.
 ----
 Default:  header (4), head (4), length (4), ... * length
 Referral: header (4), head (4), buffer [reference]
-Compact:  TBD
+Compact:  tag (1), head [varint], length [varint], ... * length
+Referral: ref-marker=C1h (1), tag (1), head [varint], reference
 
 header/type=26
 header/reference?=0|1
@@ -627,7 +789,8 @@ Same encoding rules as <<block, `block!`>>.
 ----
 Default:  header (4), head (4), length (4), ... * length
 Referral: header (4), head (4), buffer [reference]
-Compact:  TBD
+Compact:  tag (1), head [varint], length [varint], ... * length
+Referral: ref-marker=C1h (1), tag (1), head [varint], reference
 
 header/type=27
 header/reference?=0|1
@@ -640,7 +803,8 @@ Same encoding rules as <<block, `block!`>>.
 ----
 Default:  header (4), head (4), length (4), ... * length
 Referral: header (4), head (4), buffer [reference]
-Compact:  TBD
+Compact:  tag (1), head [varint], length [varint], ... * length
+Referral: ref-marker=C1h (1), tag (1), head [varint], reference
 
 header/type=28
 header/reference?=0|1
@@ -653,7 +817,8 @@ Same encoding rules as <<block, `block!`>>.
 ----
 Default:  header (4), length (4), data (length), padding (1-3)
 Referral: header (4), buffer [reference]
-Compact:  TBD
+Compact:  tag (1), length [varint], data (length)
+Referral: ref-marker=C1h (1), tag (1), reference
 
 header/type=30
 header/complement?=0|1
@@ -661,12 +826,15 @@ header/complement?=0|1
 
 If `complement?` flag is set, it indicates that bitset is complemented. The `length` field encodes the number of bytes stored. `data` is a memory dump of `bitset!` series buffer, byte order is preserved. `data` field needs to be padded with enough NUL bytes to keep the next record aligned at a 32-bit boundary.
 
+In the compact format the `complement?` flag is carried by the tag's `modifier` bit, `length` is a `[varint]`, and no tail padding follows `data`. The referral form is introduced by the <<Compact markers, reference marker>>.
+
 ==== `object!` anchor:object[] 
 
 ----
 Default:  header (4), class (4), on-set (4), arity (4), context [context!]
 Referral: header (4), context [reference]
-Compact:  TBD
+Compact:  tag (1), class [svarint], on-change [svarint], on-deep-change [svarint], context [context!]
+Referral: ref-marker=C1h (1), tag (1), reference
 
 header/type=32
 header/owner?=0|1
@@ -675,34 +843,39 @@ header/reference?=0|1
 
 `class` field stores object's class ID. `on-set` field is a pair of 16-bit integers, each of which encodes an offset to `on-change*` and `on-deep-change*` function in object's values block. `arity` field has the same format as `on-set`, but encodes arities of the respective functions. These two fields are optional and are encoded only if `owner?` flag is set in record's header.
 
+In the compact format the `owner?` flag is carried by the tag's `modifier` bit and `class` is an `[svarint]`. The single default `on-set`/`arity` pair is replaced by two `[svarint]` fields, `on-change` and `on-deep-change`, holding the offsets to the respective functions in the object's values block; these are present only when `owner?` is set, and the function arities are recomputed by the decoder rather than stored. The referral form is introduced by the <<Compact markers, reference marker>>.
+
 ==== `typeset!` anchor:typeset[] 
 
 ----
 Default: header (4), array1 (4), array2 (4), array3 (4)
-Compact: TBD
+Compact: tag (1), length (1), data (length)
 
 header/type=33
 ----
 
 `array1`, `array2`, and `array3` fields form a bitset where an index of each `1` bit indicates a datatype ID contained inside a typeset.
 
+The compact format treats the three arrays as a single 12-byte little-endian bitset and trims its trailing zero bytes: `length` is a single byte giving the number of remaining bytes (`0` to `12`), followed by that many `data` bytes. The decoder zero-extends `data` back to 12 bytes.
+
 ==== `error!` anchor:error[] 
 
 ----
 Default: header (4), code (4), ... * 6
-Compact: TBD
+Compact: tag (1), code [varint], ... * 6
 
 header/type=34
 ----
 
-`code` field encodes error's identifier and is followed by 6 value records for error's fields: `arg1`, `arg2`, `arg3`, `near`, `where`, `stack`.
+`code` field encodes error's identifier and is followed by 6 value records for error's fields: `arg1`, `arg2`, `arg3`, `near`, `where`, `stack`. In the compact format `code` is a `[varint]`.
 
 ==== `vector!` anchor:vector[] 
 
 ----
 Default:  header (4), head (4), length (4), type (4), data (unit * length), padding (1-3)
 Referral: header (4), head (4), buffer [reference]
-Compact:  TBD
+Compact:  tag (1), head [varint], elem (1), length [varint], data (unit * length)
+Referral: ref-marker=C1h (1), tag (1), head [varint], reference
 
 header/type=35
 header/unit=1|2|4|8
@@ -728,33 +901,36 @@ header/unit=1|2|4|8
 
 The `data` field holds a list of values. If `unit` is equal to 1 or 2, `data` needs to be padded with NUL bytes up to a 32-bit boundary.
 
+In the compact format the `type` and `unit` fields are folded into a single `elem` byte computed as `(type << 2) OR log2(unit)`: the low two bits hold `log2(unit)` (values `0`-`3` for units 1, 2, 4, 8) and the upper bits hold the element datatype ID. The `head` `[varint]` field is present only when the tag's `modifier` bit is set, `length` is a `[varint]`, and no tail padding follows `data`. The referral form is introduced by the <<Compact markers, reference marker>>.
+
 ==== `pair!` anchor:pair[] 
 
 ----
 Default: header (4), x (4), y (4)
-Compact: TBD
+Compact: tag (1), x [svarint], y [svarint]
 
 header/type=37
 ----
 
-`x` and `y` fields encode the respective pair's elements as 32-bit integers.
+`x` and `y` fields encode the respective pair's elements as 32-bit integers. In the compact format they are `[svarint]` fields.
 
 ==== `percent!` anchor:percent[] 
 
 ----
 Default: padding [padding], header (4), value (8)
-Compact: TBD
+Compact: tag/mod (1), value [svarint] | tag (1), value (8)
 
 header/type=38
 ----
 
-Same encoding rules as <<float, `float!`>>.
+Same encoding rules as <<float, `float!`>>. In the compact whole-number short form the `[svarint]` stores the value scaled by 100 (i.e. in hundredths), so percentages that are exact multiples of `1%` avoid the 8-byte form; the short form is used only when it round-trips to the original value bit-for-bit.
 
 ==== `tuple!` anchor:tuple[] 
 
 ----
 Default: header (4), array1 (4), array2 (4), array3 (4)
-Compact: TBD
+Compact: tag (1), data (3)
+         tag/mod (1), size (1), data (size)
 
 header/type=39
 header/unit=3-12
@@ -762,49 +938,54 @@ header/unit=3-12
 
 `unit` field encodes tuple's size in bytes; only values from `3` to `12` are allowed. `array1`, `array2`, and `array3` fields together form a memory dump of tuple's slot payload.
 
+In the compact format a 3-byte tuple (the common colour case) uses the plain tag followed by exactly 3 `data` bytes. Any other size sets the tag's `modifier` bit and inserts a single `size` byte (`3`-`12`) before the `data` bytes. `data` holds the raw tuple bytes with no padding.
+
 ==== `map!` anchor:map[] 
 
 ----
 Default:  header (4), length (4), ... * length
 Referral: header (4), buffer [reference]
-Compact:  TBD
+Compact:  tag (1), length [varint], ... * length
+Referral: ref-marker=C1h (1), tag (1), reference
 
 header/type=40
 header/reference?=0|1
 ----
 
-The `length` field contains the number of elements (both keys and values) encoded.
+The `length` field contains the number of elements (both keys and values) encoded. In the compact format `length` is a `[varint]`, and the referral form is introduced by the <<Compact markers, reference marker>>. Unlike other series, `map!` has no `head` field, so its tag never uses the `modifier` bit.
 
 ==== `binary!` anchor:binary[] 
 
 ----
 Default:  header (4), head (4), length (4), data (length)
 Referral: header (4), head (4), buffer [reference]
-Compact:  TBD
+Compact:  tag (1), head [varint], length [varint], data (length)
+Referral: ref-marker=C1h (1), tag (1), head [varint], reference
 
 header/type=41
 header/reference?=0|1
 ----
 
-`data` field contains memory dump of binary's series buffer, byte order is preserved.
+`data` field contains memory dump of binary's series buffer, byte order is preserved. In the compact format the `head` `[varint]` field is present only when the tag's `modifier` bit is set, `length` is a `[varint]`, and the referral form is introduced by the <<Compact markers, reference marker>>.
 
 ==== `time!` anchor:time[] 
 
 ----
 Default: padding [padding], header (4), value (8)
-Compact: TBD
+Compact: tag/mod (1), value [svarint] | tag (1), value (8)
 
 header/type=43
 ----
 
-Same encoding rules as <<float, `float!`>>.
+Same encoding rules as <<float, `float!`>>. In the compact whole-number short form the `[svarint]` stores the number of whole seconds, so exact-second times avoid the 8-byte form.
 
 ==== `tag!` anchor:tag[] 
 
 ----
 Default:  header (4), head (4), length (4), data (unit * length), padding (1-3)
 Referral: header (4), head (4), buffer [reference]
-Compact:  TBD
+Compact:  tag (1), head [varint], length [varint], data (unit * length)
+Referral: ref-marker=C1h (1), tag (1), head [varint], reference
 
 header/type=44
 header/unit=1|2|4
@@ -818,7 +999,8 @@ Same encoding rules as <<string, `string!`>>.
 ----
 Default:  header (4), head (4), length (4), data (unit * length), padding (1-3)
 Referral: header (4), head (4), buffer [reference]
-Compact:  TBD
+Compact:  tag (1), head [varint], length [varint], data (unit * length)
+Referral: ref-marker=C1h (1), tag (1), head [varint], reference
 
 header/type=45
 header/unit=1|2|4
@@ -831,7 +1013,8 @@ Same encoding rules as <<string, `string!`>>.
 
 ----
 Default: header (4), date (4), time (8)
-Compact: TBD
+Compact: tag (1), date (4)
+         tag/mod (1), date (4), time (8)
 
 header/type=47
 ----
@@ -844,11 +1027,13 @@ year (15), time? (1), month (4), day (5), timezone (7)
 
 `year` and `timezone` sub-fields contain signed values. `time` field stores time value as a 64-bit float.
 
+In the compact format the 4-byte packed `date` field is stored as-is (little-endian), but the 8-byte `time` field is present only when the date value has a time component. This is signalled by the tag's `modifier` bit, which must agree with the `time?` sub-field of the packed `date`.
+
 ==== `money!` anchor:money[] 
 
 ----
 Default: header (4), currency (1), amount (11)
-Compact: TBD
+Compact: tag (1), currency (1), amount (11)
 
 header/type=49
 header/sign=0|1
@@ -856,12 +1041,15 @@ header/sign=0|1
 
 `amount` field is a sequence of nibbles representing the base (17) and subunit (5) of money value, byte order is preserved. If `sign` flag is set, the amount is interpreted as negative. `currency` field is an integer value representing currency ID (0 for generic money, &le; 255 for existing currency code).
 
+In the compact format the `sign` flag is carried by the tag's `modifier` bit; the fixed 1-byte `currency` and 11-byte `amount` fields are unchanged.
+
 ==== `ref!` anchor:ref[]
 
 ----
 Default:  header (4), head (4), length (4), data (unit * length), padding (1-3)
 Referral: header (4), head (4), buffer [reference]
-Compact:  TBD
+Compact:  tag (1), head [varint], length [varint], data (unit * length)
+Referral: ref-marker=C1h (1), tag (1), head [varint], reference
 
 header/type=50
 header/unit=1|2|4
@@ -874,19 +1062,22 @@ Same encoding rules as <<string, `string!`>>.
 
 ----
 Default: header (4), size (4), x (4), y (4) [, z (4) [, a (4)]]
-Compact: TBD
+Compact: tag (1), x (4), y (4) [, z (4)]
 
 header/type=51
 ----
 
 `x`, `y`, `z` and `a` fields encode the respective point's elements as 32-bit float numbers.
 
+The compact format omits the `size` field: the number of coordinates follows from the record's datatype (`point2D!` or `point3D!`), and the encoder emits the corresponding two or three 32-bit floats. Each coordinate is stored little-endian and unaligned.
+
 ==== `image!` anchor:image[]
 
 ----
 Default:  header (4), head (4), length (4), rgba (4 * width * height)
 Referral: header (4), head (4), buffer [reference]
-Compact:  TBD
+Compact:  tag (1), head [varint], width [varint], height [varint], rgba (4 * width * height)
+Referral: ref-marker=C1h (1), tag (1), head [varint], reference
 
 header/type=53
 header/reference?=0|1
@@ -894,14 +1085,16 @@ header/reference?=0|1
 
 `length` field is a pair of 16-bit integers encoding width and height of an image. `rgba` field contains RGBA content of an image (4 bytes per pixel) with preserved byte order.
 
+In the compact format the single packed `length` field is replaced by two `[varint]` fields, `width` and `height`. The `head` `[varint]` field is present only when the tag's `modifier` bit is set, and the referral form is introduced by the <<Compact markers, reference marker>>.
+
 ==== `IPv6!` anchor:ipv6[] 
 
 ----
 Default:  header (4), data (16)
-Compact:  TBD
+Compact:  tag (1), data (16)
 
 header/type=52
 header/unit=2
 ----
 
-The IPv6 address is encoded in network order in `data` field on 128-bit.
+The IPv6 address is encoded in network order in `data` field on 128-bit. The compact format carries no `unit` field (the length is fixed) and stores the 16 `data` bytes immediately after the `tag`.
