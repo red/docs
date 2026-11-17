@@ -823,28 +823,6 @@ view [
 * On Wayland (Linux), a window is never told that it was minimized: it gets no `minimize` event, and no `restore` event when it comes back from it.
 ====
 
-=== Changing a window's state anchor:changing-window-state[]
-
-A program minimizes, maximizes or restores a window by sending it the matching event with `send-event`:
-
-----
-send-event make event! [type: 'minimize face: win]
-send-event make event! [type: 'maximize face: win]
-send-event make event! [type: 'restore face: win]
-----
-
-* `minimize` and `maximize` do what the buttons of the window's title bar do. `send-event` returns `false` when the window has no such button: with the `no-min` flag for `minimize`, with the `no-max` flag or without the `resize` flag for `maximize`.
-* `restore` brings the window back to its normal size, whether it was minimized or maximized. It also puts the window in front of the other ones and gives it the keyboard focus. A window in full screen mode stays in that mode.
-* The window's actors then get the same events (`on-minimize`, `on-maximize`, `on-restore`) as when the user makes the change.
-* Without the `/no-wait` refinement, the change is made, and the actors get their event, before `send-event` returns. With it, Windows makes the change once the event loop runs again; on GTK and macOS, `/no-wait` has no effect yet.
-* `set-focus` on a window face sends it a `restore` event, after making the window visible if it was hidden.
-
-[NOTE]
-====
-* The operating system can refuse to bring a window in front while another application is active. Windows then flashes the window's taskbar button instead.
-* On Wayland (Linux), an application has no way to bring back a window by itself. `restore` shows such a window again when it is not the active one, and the compositor may then place it elsewhere on the screen.
-====
-
 === Event! datatype 
 
 An event value is an opaque object holding all the information about a given event. You access the event fields using path notation.
@@ -1027,6 +1005,28 @@ remove-event-func <handler>
 *Description*
 
 Disables a previously installed global event handler by removing it from the internal list.
+
+=== Changing a window's state anchor:changing-window-state[]
+
+A program minimizes, maximizes or restores a window by sending it the matching event with `send-event`:
+
+----
+send-event make event! [type: 'minimize face: win]
+send-event make event! [type: 'maximize face: win]
+send-event make event! [type: 'restore face: win]
+----
+
+* `minimize` and `maximize` do what the buttons of the window's title bar do. `send-event` returns `false` when the window has no such button: with the `no-min` flag for `minimize`, with the `no-max` flag or without the `resize` flag for `maximize`.
+* `restore` brings the window back to its normal size, whether it was minimized or maximized. It also puts the window in front of the other ones and gives it the keyboard focus. A window in full screen mode stays in that mode.
+* The window's actors then get the same events (`on-minimize`, `on-maximize`, `on-restore`) as when the user makes the change.
+* Without the `/no-wait` refinement, the change is made, and the actors get their event, before `send-event` returns. With it, Windows makes the change once the event loop runs again; on GTK and macOS, `/no-wait` has no effect yet.
+* `set-focus` on a window face sends it a `restore` event, after making the window visible if it was hidden.
+
+[NOTE]
+====
+* The operating system can refuse to bring a window in front while another application is active. Windows then flashes the window's taskbar button instead.
+* On Wayland (Linux), an application has no way to bring back a window by itself. `restore` shows such a window again when it is not the active one, and the compositor may then place it elsewhere on the screen.
+====
 
 == System/view object anchor:system-view-object[]
 
