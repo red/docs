@@ -104,6 +104,7 @@ Font objects are clones of `font!` template object. One font object can be refer
 |name| string!| no| Valid font name installed on the OS.
 |size| integer!| no| Font size in points.
 |style| word!, block!| no| Styling mode or block of styling modes.
+|weight| integer!| no| Font weight, from `1` to `999` (`400` is normal, `700` is bold).
 |angle| integer!| yes| Text writing angle in degrees (default is `0`).
 |color| tuple!| yes| Font color in R.G.B or R.G.B.A format.
 |anti-alias?| logic!, word!| no| Anti-aliasing mode (active/inactive or special mode). 
@@ -125,6 +126,26 @@ Available font styles:
 * `italic`
 * `underline`
 * `strike`
+
+Usual font weights (same scale as CSS and OpenType):
+
+* `100`: thin
+* `200`: extra-light
+* `300`: light
+* `400`: normal
+* `500`: medium
+* `600`: semi-bold
+* `700`: bold
+* `800`: extra-bold
+* `900`: black
+
+[NOTE]
+====
+* A font family rarely has a face for every weight: the face closest to the requested weight is used.
+* When `weight` is set, it takes precedence over the `bold` style. When it is `none` (the default), `style` decides.
+* On Linux (GTK), the weight is rounded to the nearest hundred.
+* `request-font` sets the `weight` field of the font it returns when the selected face is neither normal nor bold.
+====
 
 Available anti-aliasing modes:
 

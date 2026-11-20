@@ -562,6 +562,23 @@ font-name <name>
 Sets the current font name for the face's text.
 
 
+==== font-weight
+
+*Syntax*
+
+----
+font-weight <weight>
+
+<weight> : font weight, as a number or a name (integer! word!).
+----
+
+*Description*
+
+Sets the current font weight for the face's text. The weight is a number from `1` to `999` (`400` is normal, `700` is bold), or one of these names: `Light` (300), `Regular` (400), `Medium` (500), `SemiBold` (600), `Bold` (700). The `weight` field is described link:view.adoc#font-object[here].
+
+NOTE: `font-weight bold` sets the weight to 700, it does not add the `bold` style.
+
+
 ==== react
 
 This keyword can be used both as a face option or as a global keyword. Arbitrary number of `react` instances can be used.
